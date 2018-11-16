@@ -296,8 +296,7 @@ of Hello World to greet customers with.
 With the power of Azure, we have updated our first AL Hello World
 extension to a more modern version with automated translation.
 
-The complete source for the updated version is available here FIND A
-PLACE
+The complete source for the updated version is available here https://github.com/Microsoft/BCTech/tree/master/samples/HelloWorldV2
 
 Introducing more friends
 ------------------------
