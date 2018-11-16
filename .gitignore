@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# AL specific files
+.alpackages
+*.app
+launch.json
+
 # User-specific files
 *.suo
 *.user
