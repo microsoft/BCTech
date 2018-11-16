@@ -1,0 +1,23 @@
+{
+  "id": "a7a49c61-7712-400a-9fc5-bc35f8e02aa0",
+  "name": "Hello World",
+  "publisher": "Microsoft",
+  "brief": "The ability to greet your customers ",
+  "description": "The ability to greet your customers in multiple languages.",
+  "version": "2.0.0.0",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "13.0.0.0",
+  "application": "13.0.0.0",
+  "idRange": 
+    {
+      "from": 50100,
+      "to": 50149
+    },
+  "runtime": "2.0"
+  }
