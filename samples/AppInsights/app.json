@@ -1,0 +1,24 @@
+{
+  "id": "4eee3600-7686-4011-a413-1b48efa7411a",
+  "name": "AppInsights",
+  "publisher": "Vince SMB",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "13.0.0.0",
+  "application": "13.0.0.0",
+  "idRange": 
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ,
+  "runtime": "2.0"
+}
