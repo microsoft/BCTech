@@ -1,0 +1,26 @@
+{
+  "id": "1d09b989-3b1a-4354-a9f4-7dd1da7892d1",
+  "name": "TranslationTest",
+  "publisher": "Default publisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "13.0.0.0",
+  "application": "13.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "showMyCode": true,
+  "runtime": "4.0",
+  "features": ["TranslationFile"]
+}
