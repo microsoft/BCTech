@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "AzureStorageLibrary"
+		},
+		{
+			"path": "Demos/BlobStorageExplorer"
+		}
+	],
+	"settings": {}
+}
