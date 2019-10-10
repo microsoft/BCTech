@@ -116,34 +116,6 @@ page 50191 AzureBlobList
                     Refresh();
                 end;
             }
-
-            action("Download Monochrome")
-            {
-                ApplicationArea = All;
-                Promoted = true;
-                PromotedOnly = true;
-                Image = Picture;
-                Enabled = "Content-Type" = 'image/jpeg';
-
-                trigger OnAction()
-                var
-                    AzureBlobStorage: codeunit AzureBlobStorage;
-                    TempBlob: codeunit "Temp Blob";
-                    ins: InStream;
-                    outs: OutStream;
-                    name: Text;
-                begin
-                    TempBlob.CreateInStream(ins);
-                    AzureBlobStorage.GetBlob(Rec.GetBlobPath(), ins);
-                    TempBlob.CreateOutStream(outs);
-                    CopyStream(Outs, Ins);
-                    MakeMonochrome(TempBlob);
-                    TempBlob.CreateInStream(ins);
-
-                    name := Rec.Name;
-                    DownloadFromStream(ins, '', '', '', name);
-                end;
-            }
         }
     }
 
@@ -153,39 +125,4 @@ page 50191 AzureBlobList
     begin
         AzureBlobStorage.ListBlobs(Rec.GetFilter(Container), '', Rec);
     end;
-
-    // 
-    // Send the Jpg Image in the Temp to a AzureFunction as a Base64 encoded
-    // string. The AzureFunction returns a monochrome version of the image
-    // as a Base64 encoded string that is put back into the TempBlob.
-    // 
-    //                 MakeMonochrome(TempBlob);
-    //
-    local procedure MakeMonochrome(TempBlob: codeunit "Temp Blob");
-    var
-        Base64Convert: codeunit "Base64 Convert";
-        ImageAsString: Text;
-        Content: HttpContent;
-        Client: HttpClient;
-        Response: HttpResponseMessage;
-        Ins: InStream;
-        Outs: OutStream;
-        len: Integer;
-    begin
-        len := TempBlob.Length();
-        TempBlob.CreateInStream(Ins);
-        ImageAsString := Base64Convert.ToBase64(Ins);
-        Content.WriteFrom(ImageAsString);
-        Client.Post(
-            'https://imagehelperv62019.azurewebsites.net/api/MakeMonochrome?code=aMmhBXEgbYsTFI0Br9vqzpZlR/iZlBDneaG/BL8V81JbY2qikoBhng==',
-            Content,
-            Response);
-        if not Response.IsSuccessStatusCode() then
-            Error('MakeMonochrome: ' + Response.ReasonPhrase());
-
-        Response.Content().ReadAs(ImageAsString);
-        TempBlob.CreateOutStream(Outs);
-        Base64Convert.FromBase64(ImageAsString, Outs);
-    end;
-
 }
