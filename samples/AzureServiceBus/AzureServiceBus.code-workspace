@@ -5,9 +5,6 @@
 		},
 		{
 			"path": "Demos/QueueProcessing"
-		},
-		{
-			"path": "../samples/AzureStorage/AzureStorageLibrary"
 		}
 	],
 	"settings": {}
