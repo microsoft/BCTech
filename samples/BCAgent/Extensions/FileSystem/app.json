@@ -1,0 +1,37 @@
+{
+  "id": "35bf425f-02c0-4185-99c2-f0c7f7351a51",
+  "name": "FileSystem",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "Access to local file system throught the BC Agent",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "appId": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "publisher": "Microsoft",
+      "name": "System Application",
+      "version": "1.0.0.0"
+    },
+    {
+      "appId": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "publisher": "Microsoft",
+      "name": "Base Application",
+      "version": "15.0.0.0"
+    },
+    {
+      "appId": "71850005-df68-4f02-9458-818be2af3b41",
+      "name": "AzureServiceBusLibrary",
+      "publisher": "BCTech",
+      "version": "1.0.0.0"     
+    }
+  ],
+  "screenshots": [],
+  "platform": "15.0.0.0",
+  "showMyCode": true,
+  "runtime": "4.0"
+}

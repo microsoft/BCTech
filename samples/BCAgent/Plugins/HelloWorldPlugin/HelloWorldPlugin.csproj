@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BCAgentCommon\BCAgentCommon.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <FilesToDeploy Include="$(TargetDir)\*.dll" />
+      <FilesToDeploy Include="$(TargetDir)\*.pdb" />
+      <FilesToDeploy Include="$(TargetDir)\*.config" />
+    </ItemGroup>
+    <Message Text="Deploying plugin ..." />
+    <Copy SourceFiles="@(FilesToDeploy)" DestinationFolder="$(MSBuildProjectDirectory)\..\..\BCAgent\$(OutDir)\Plugins" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

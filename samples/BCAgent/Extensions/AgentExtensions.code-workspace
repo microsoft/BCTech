@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "Calculator"
+		},
+		{
+			"path": "../../AzureServiceBus/AzureServiceBusLibrary"
+		},
+		{
+			"path": "FileSystem"
+		},
+		{
+			"path": "FileBrowser"
+		}
+	],
+	"settings": {}
+}

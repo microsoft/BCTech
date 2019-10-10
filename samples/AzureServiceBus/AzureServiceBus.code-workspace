@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "AzureServiceBusLibrary"
+		},
+		{
+			"path": "Demos/QueueProcessing"
+		}
+	],
+	"settings": {}
+}
