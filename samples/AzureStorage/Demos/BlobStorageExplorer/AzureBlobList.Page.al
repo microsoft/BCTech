@@ -101,6 +101,25 @@ page 50191 AzureBlobList
                     DownloadFromStream(ins, '', '', '', name);
                 end;
             }
+            action(Copy)
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                PromotedOnly = true;
+                Image = Delete;
+
+                trigger OnAction()
+                var
+                    AzureBlobStorage: codeunit AzureBlobStorage;
+                    GetBlobName: page GetBlobName;
+                begin
+                    if GetBlobName.RunModal() <> Action::OK then
+                        exit;
+
+                    AzureBlobStorage.CopyBlob(Rec.GetBlobPath(), GetBlobName.GetBlobName());
+                    Refresh();
+                end;
+            }
             action(Delete)
             {
                 ApplicationArea = All;

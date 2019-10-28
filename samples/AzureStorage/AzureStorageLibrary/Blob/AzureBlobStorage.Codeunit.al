@@ -355,6 +355,28 @@ codeunit 50171 AzureBlobStorage
         CheckResponseCode(response);
     end;
 
+    //
+    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob
+    // 
+    procedure CopyBlob(SourcePath: Text; DestinationPath: Text)
+    var
+        TypeHelper: codeunit "Type Helper";
+        client: HttpClient;
+        request: HttpRequestMessage;
+        response: HttpResponseMessage;
+        headers: HttpHeaders;
+        SourceUri: Text;
+    begin
+        CheckInitialized();
+
+        TypeHelper.UriEscapeDataString(SourcePath);
+        SourceUri := ResourceUri + SourcePath;
+
+        InitializeRequest(request, PutVerbTok, DestinationPath, '', 'x-ms-copy-source:' + SourceUri, '', '');
+        client.Send(request, response);
+        CheckResponseCode(response);
+    end;
+
     local procedure CheckResponseCode(response: HttpResponseMessage)
     begin
         if not response.IsSuccessStatusCode() then
