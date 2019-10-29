@@ -480,6 +480,9 @@ codeunit 50171 AzureBlobStorage
         Signature: Text;
         header: Text;
     begin
+        if ContentLength = '0' then
+            ContentLength := '';
+
         Cr[1] := 10;
 
         stringToSign.Append(Verb + Cr +
