@@ -524,14 +524,154 @@ codeunit 50171 AzureBlobStorage
 
         Extension := Filename.Substring(IndexOfLastDot + 1).ToLower();
         case Extension of
+            'aac':
+                exit('audio/aac'); // AAC audio
+            'abw':
+                exit('application/x-abiword'); // AbiWord document
+            'arc':
+                exit('application/x-freearc'); // Archive document (multiple files embedded)
+            'avi':
+                exit('video/x-msvideo'); // AVI: Audio Video Interleave
+            'azw':
+                exit('application/vnd.amazon.ebook'); // Amazon Kindle eBook format
+            'bin':
+                exit('application/octet-stream'); // Any kind of binary data
+            'bmp':
+                exit('image/bmp'); // Windows OS/2 Bitmap Graphics
+            'bz':
+                exit('application/x-bzip'); // BZip archive
+            'bz2':
+                exit('application/x-bzip2'); // BZip2 archive
+            'csh':
+                exit('application/x-csh'); // C-Shell script
+            'css':
+                exit('text/css'); // Cascading Style Sheets (CSS)
+            'csv':
+                exit('text/csv'); // Comma-separated values (CSV)
+            'doc':
+                exit('application/msword'); // Microsoft Word
+            'docx':
+                exit('application/vnd.openxmlformats-officedocument.wordprocessingml.document'); // Microsoft Word (OpenXML)
+            'eot':
+                exit('application/vnd.ms-fontobject'); // MS Embedded OpenType fonts
+            'epub':
+                exit('application/epub+zip'); // Electronic publication (EPUB)
+            'gz':
+                exit('application/gzip'); // GZip Compressed Archive
+            'gif':
+                exit('image/gif'); // Graphics Interchange Format (GIF)
+            'htm':
+                exit('text/html'); // HyperText Markup Language (HTML)
+            'html':
+                exit('text/html'); // HyperText Markup Language (HTML)
+            'ico':
+                exit('image/vnd.microsoft.icon'); // Icon format
+            'ics':
+                exit('text/calendar'); // iCalendar format
+            'jar':
+                exit('application/java-archive'); // Java Archive (JAR)
+            'jpeg':
+                exit('image/jpeg'); // JPEG images
             'jpg':
-                exit('image/jpeg');
-            'pdf':
-                exit('application/pdf');
+                exit('image/jpeg'); // JPG images
+            'js':
+                exit('text/javascript'); // JavaScript
+            'json':
+                exit('application/json'); // JSON format
+            'jsonld':
+                exit('application/ld+json'); // JSON-LD format
+            'mid':
+                exit('audio/midi audio/x-midi'); // Musical Instrument Digital Interface (MIDI)
+            'midi':
+                exit('audio/midi audio/x-midi'); // Musical Instrument Digital Interface (MIDI)
+            'mjs':
+                exit('text/javascript'); // JavaScript module
+            'mp3':
+                exit('audio/mpeg'); // MP3 audio
+            'mpeg':
+                exit('video/mpeg'); // MPEG Video
+            'mpkg':
+                exit('application/vnd.apple.installer+xml'); // Apple Installer Package
+            'odp':
+                exit('application/vnd.oasis.opendocument.presentation'); // OpenDocument presentation document
+            'ods':
+                exit('application/vnd.oasis.opendocument.spreadsheet'); // OpenDocument spreadsheet document
+            'odt':
+                exit('application/vnd.oasis.opendocument.text'); // OpenDocument text document
+            'oga':
+                exit('audio/ogg'); // OGG audio
+            'ogv':
+                exit('video/ogg'); // OGG video
+            'ogx':
+                exit('application/ogg'); // OGG
+            'opus':
+                exit('audio/opus'); // Opus audio
+            'otf':
+                exit('font/otf'); // OpenType font
             'png':
-                exit('image/png');
+                exit('image/png'); // Portable Network Graphics
+            'pdf':
+                exit('application/pdf'); // Adobe Portable Document Format (PDF)
+            'php':
+                exit('application/php'); // Hypertext Preprocessor (Personal Home Page)
+            'ppt':
+                exit('application/vnd.ms-powerpoint'); // Microsoft PowerPoint
+            'pptx':
+                exit('application/vnd.openxmlformats-officedocument.presentationml.presentation'); // Microsoft PowerPoint (OpenXML)
+            'rar':
+                exit('application/x-rar-compressed'); // RAR archive
+            'rtf':
+                exit('application/rtf'); // Rich Text Format (RTF)
+            'sh':
+                exit('application/x-sh'); // Bourne shell script
+            'svg':
+                exit('image/svg+xml'); // Scalable Vector Graphics (SVG)
+            'swf':
+                exit('application/x-shockwave-flash'); // Small web format (SWF) or Adobe Flash document
+            'tar':
+                exit('application/x-tar'); // Tape Archive (TAR)
+            'tif':
+                exit('image/tiff'); // Tagged Image File Format (TIFF)
+            'tiff':
+                exit('image/tiff'); // Tagged Image File Format (TIFF)
+            'ts':
+                exit('video/mp2t'); // MPEG transport stream
+            'ttf':
+                exit('font/ttf'); // TrueType Font
             'txt':
-                exit('text/plain');
+                exit('text/plain'); // Text, (generally ASCII or ISO 8859-n)
+            'vsd':
+                exit('application/vnd.visio'); // Microsoft Visio
+            'wav':
+                exit('audio/wav'); // Waveform Audio Format
+            'weba':
+                exit('audio/webm'); // WEBM audio
+            'webm':
+                exit('video/webm'); // WEBM video
+            'webp':
+                exit('image/webp'); // WEBP image
+            'woff':
+                exit('font/woff'); // Web Open Font Format (WOFF)
+            'woff2':
+                exit('font/woff2'); // Web Open Font Format (WOFF)
+            'xhtml':
+                exit('application/xhtml+xml'); // XHTML
+            'xls':
+                exit('application/vnd.ms-excel'); // Microsoft Excel
+            'xlsx':
+                exit('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); // Microsoft Excel (OpenXML)
+            'xml':
+                exit('application/xml if not readable from casual users (RFC 3023, section 3)'); // XML
+            'xul':
+                exit('application/vnd.mozilla.xul+xml'); // XUL
+            'zip':
+                exit('application/zip'); // ZIP archive
+            '3gp':
+                exit('video/3gpp'); // 3GPP audio/video container
+            '3g2':
+                exit('video/3gpp2'); // 3GPP2 audio/video container
+            '7z':
+                exit('application/x-7z-compressed'); // 7-zip archive
             else
                 exit('');
         end;
