@@ -285,6 +285,30 @@ codeunit 50171 AzureBlobStorage
         CheckResponseCode(response);
     end;
 
+    procedure DeleteBlobs(ResourcePath: Text; Prefix: Text);
+    var
+        client: HttpClient;
+        request: HttpRequestMessage;
+        response: HttpResponseMessage;
+        BlobList: XmlNodeList;
+        BlobNode: XmlNode;
+        Node: XmlNode;
+        BlobsXml: XmlDocument;
+        i: Integer;
+        DeleteResourcePath: Text;
+    begin
+        ListBlobs(ResourcePath, Prefix, BlobsXml);
+
+        if BlobsXml.SelectNodes('/EnumerationResults/Blobs/Blob', BlobList) then begin
+            for i := 1 to BlobList.Count() do begin
+                BlobList.Get(i, BlobNode);
+                BlobNode.SelectSingleNode('Name', Node);
+
+                DeleteResourcePath := ResourcePath + '/' + Node.AsXmlElement().InnerText();
+                DeleteBlob(DeleteResourcePath);
+            end;
+        end;
+    end;
 
     //
     // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
@@ -371,7 +395,6 @@ codeunit 50171 AzureBlobStorage
     begin
         CheckInitialized();
 
-        TypeHelper.UriEscapeDataString(SourcePath);
         SourceUri := ResourceUri + SourcePath;
 
         InitializeRequest(request, PutVerbTok, DestinationPath, '', 'x-ms-copy-source:' + SourceUri, '', '');
@@ -400,6 +423,7 @@ codeunit 50171 AzureBlobStorage
         header: Text;
         index: Integer;
     begin
+
         UtcDateTime := TypeHelper.GetCurrUTCDateTimeAsText();
 
         request.GetHeaders(headers);
@@ -418,13 +442,16 @@ codeunit 50171 AzureBlobStorage
         end;
 
         // Add Authorization header
+        resourcePath := TypeHelper.UriEscapeDataString(resourcePath).Replace('%2F', '/');
+
         token := GetSasToken(methodVerb, ResourcePath, UtcDateTime, ContentLength, ContentType, CreateCanonicalizedParameters(parameters), xHeaderList);
         headers.Add('Authorization', token);
 
         request.Method := methodVerb;
         if parameters <> '' then
-            resourcePath := resourcePath + '?' + parameters;
-        request.SetRequestUri(ResourceUri + ResourcePath);
+            resourcePath := resourcePath + '?' + parameters.Replace('/', '%2F');
+
+        request.SetRequestUri(ResourceUri + resourcePath);
     end;
 
     local procedure CreateCanonicalizedParameters(parameters: Text): Text;
