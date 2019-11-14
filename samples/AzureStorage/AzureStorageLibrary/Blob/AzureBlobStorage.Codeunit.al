@@ -124,8 +124,6 @@ codeunit 50171 AzureBlobStorage
     begin
         CheckInitialized();
 
-        ResourcePath := LowerCase(ResourcePath);
-
         InitializeRequest(request, PutVerbTok, ResourcePath, 'restype=container');
         client.Send(request, response);
         CheckResponseCode(response);
