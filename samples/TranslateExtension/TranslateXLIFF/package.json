@@ -33,9 +33,11 @@
 		"@types/node": "^12.0.5",
 		"@types/xmldom": "^0.1.29",
 		"tslint": "^5.17.0",
-		"typed-rest-client": "^1.4.0",
 		"typescript": "^3.5.1",
 		"vscode": "^1.1.34",
+	},
+	"dependencies": {
+		"typed-rest-client": "^1.5.0",
 		"xmldom": "^0.1.27"
 	}
 }
