@@ -69,14 +69,21 @@ export class XLIFFTranslator {
             return;
         }
 
+        var sourceLanguage = fileElements[0].getAttribute('source-language');
+        if (util.isNull(sourceLanguage)) {
+            this.logger.log('Error: Missing source language');
+            return;
+        }
+
         var targetLanguage = fileElements[0].getAttribute('target-language');
         if (util.isNull(targetLanguage)) {
             this.logger.log('Error: Missing target language');
             return;
         }
 
-        this.logger.log('Translating to target language ' + targetLanguage);
-        var translatedDocument = await this.translateSources(doc, targetLanguage);
+        
+        this.logger.log('Translating from source language '+ sourceLanguage +'to target language ' + targetLanguage);
+        var translatedDocument = await this.translateSources(doc, sourceLanguage,targetLanguage);
         if (util.isUndefined(translatedDocument)) {
             return;
         }
@@ -110,14 +117,14 @@ export class XLIFFTranslator {
     }
 
     // Call the translation service to build a dictionary with the translated string
-    private async translateSources(doc: Document, targetLanguage: string): Promise<Document | undefined> {
+    private async translateSources(doc: Document,sourceLanguage: string, targetLanguage: string): Promise<Document | undefined> {
 
         // Get the sources to be translated
         var sources = this.getSourcesAsJson(doc);
       
         // Issue the REST call to the translation service
         this.logger.log('Invoking the translation service...');
-        const url = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=' + targetLanguage;
+        const url = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=' + sourceLanguage + '&to=' + targetLanguage;
         var headers: trc.IHeaders = {};
         headers['Content-Type'] = 'application/json';
         headers['Ocp-Apim-Subscription-Key'] = this.translationServiceApiKey;
