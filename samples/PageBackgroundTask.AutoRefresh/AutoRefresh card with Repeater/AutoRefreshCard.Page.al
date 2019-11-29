@@ -74,12 +74,17 @@ page 50110 "AutoRefresh Card"
         PbtParameters: Dictionary of [Text, Text];
     begin
         if (TaskId = PbtTaskId) then begin
-            // Results contains the records that has to be displayed.
-            // Updating the sub page repeater with the new list of results.
-            CurrPage.AutoRefreshList.Page.InitTempTable(Results);
-
             PbtParameters.Add('Sleep', '2000');
-            // Remark: Requires 2019 Wave 2 CU2 to work
+            if Results.ContainsKey('RecAfter') then begin
+                PbtParameters.Add('RecAfter', Results.Get('RecAfter'));
+                Results.Remove('RecAfter');
+            end;
+
+            // Results contains the new records that has to be displayed.
+            // Updating the sub page repeater with the new list of results.
+            CurrPage.AutoRefreshList.Page.UpdateSourceTable(Results);
+
+            // Remark: Requires 2019 Wave 2 CU2
             CurrPage.EnqueueBackgroundTask(PbtTaskId, Codeunit::"AutoRefresh GetRecords", PbtParameters);
         end;
     end;

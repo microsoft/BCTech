@@ -49,25 +49,28 @@ page 50111 "AutoRefresh Repeater Part"
         CurrPage.Update(false);
     end;
 
-    procedure InitTempTable(Results: Dictionary of [Text, Text])
+    procedure UpdateSourceTable(Results: Dictionary of [Text, Text])
     var
         IdKey: Text;
         Value: Text;
+        Modified: Boolean;
     begin
         // Any modification to the source table may introduce flickering.
         // Therefor we need to make sure we perform the least possible modifications on the source table.
-        // For this sample, we validate that using the number of records.
-        if (Results.Keys.Count() <> Rec.Count()) then begin
-            foreach IdKey in Results.Keys do begin
-                Evaluate(Id, IdKey);
-                Value := Results.Get(IdKey);
-                Evaluate(Date, SelectStr(1, Value));
-                Evaluate(CreatedBySessionId, SelectStr(2, Value));
-                if not Modify() then
-                    Insert();
-            end;
+        // For this sample, Results contains only newly added records.
+        Modified := false;
+        foreach IdKey in Results.Keys do begin
+            Evaluate(Id, IdKey);
+            Value := Results.Get(IdKey);
+            Evaluate(Date, SelectStr(1, Value));
+            Evaluate(CreatedBySessionId, SelectStr(2, Value));
+            if not Modify() then
+                Insert();
 
-            CurrPage.Update(false);
+            Modified := true;
         end;
+
+        if Modified then
+            CurrPage.Update(false);
     end;
 }
