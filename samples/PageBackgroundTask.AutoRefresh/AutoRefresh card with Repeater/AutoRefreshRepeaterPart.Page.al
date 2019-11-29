@@ -12,7 +12,7 @@ page 50111 "AutoRefresh Repeater Part"
     ModifyAllowed = false;
     InsertAllowed = false;
     DeleteAllowed = false;
-    SourceTableView = sorting(Id) order(descending);
+    SourceTableView = sorting(Id) order(ascending);
 
     layout
     {

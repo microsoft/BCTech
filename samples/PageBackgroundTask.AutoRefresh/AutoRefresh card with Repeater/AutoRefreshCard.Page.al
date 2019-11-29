@@ -24,7 +24,7 @@ page 50110 "AutoRefresh Card"
 
     actions
     {
-        area(Creation)
+        area(Processing)
         {
             action(AddInBackgroundSession)
             {
@@ -37,9 +37,7 @@ page 50110 "AutoRefresh Card"
                     StartSession(BackgroundSessionId, Codeunit::"AutoRefresh CreateRow");
                 end;
             }
-        }
-        area(Processing)
-        {
+
             action(EnqueueTooManyPBTs)
             {
                 Caption = 'Enqueue too many PBTs';
