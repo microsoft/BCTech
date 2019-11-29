@@ -11,9 +11,7 @@ page 50103 "Latest Rates Factbox wRepeater"
     InsertAllowed = false;
     DeleteAllowed = false;
     ModifyAllowed = false;
-    LinksAllowed = false;
     Editable = false;
-    RefreshOnActivate = false;
     Caption = 'Latest currency rates repeater';
 
     layout

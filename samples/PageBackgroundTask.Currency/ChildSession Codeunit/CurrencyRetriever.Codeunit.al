@@ -34,7 +34,8 @@ codeunit 50100 CurrencyRetriever
             jsonContentText := GetExchangeRate(date, currencyBase, currencies);
 
         // Parsing the exchange rates
-        ParseExchangeRate(results, jsonContentText);
+        if (jsonContentText <> 'null') then
+            ParseExchangeRate(results, jsonContentText);
 
         // Setting the page background task result
         Page.SetBackgroundTaskResult(results);
@@ -48,8 +49,30 @@ codeunit 50100 CurrencyRetriever
         jsonContentText: Text;
         Url: Text;
         RequestErr: Label 'An error occured when trying to get the exchange rates: \\%1:\\%2';
+        Currency: Text;
+        CurrencyList: List of [Text];
+        SupportedCurrencies: Text;
+        TextBuilder: TextBuilder;
     begin
-        Url := 'https://api.exchangeratesapi.io/' + Date + '?base=' + CurrencyBase + '&symbols=' + Currencies;
+        // Removing all non-supported currencies from the request
+        SupportedCurrencies := 'EUR,USD,JPY,BGN,CZK,DKK,GBP,HUF,PLN,RON,SEK,CHF,ISK,NOK,HRK,RUB,TRY,AUD,BRL,CAD,CNY,HKD,IDR,ILS,INR,KRW,MXN,MYR,NZD,PHP,SGD,THB,ZAR';
+        if not SupportedCurrencies.Contains(CurrencyBase) then
+            exit('null');
+
+        CurrencyList := Currencies.Split(',');
+        foreach currency in CurrencyList do
+            if SupportedCurrencies.Contains(currency) then begin
+                TextBuilder.Append(currency);
+                TextBuilder.Append(',');
+            end;
+
+        if TextBuilder.Length > 0 then
+            TextBuilder.Length(TextBuilder.Length - 1)
+        else
+            exit('null');
+
+        // Querying
+        Url := 'https://api.exchangeratesapi.io/' + Date + '?base=' + CurrencyBase + '&symbols=' + TextBuilder.ToText();
         client.Get(Url, responseMessage);
 
         if not responseMessage.IsSuccessStatusCode() then

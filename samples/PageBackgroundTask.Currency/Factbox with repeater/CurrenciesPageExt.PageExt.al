@@ -28,24 +28,27 @@ pageextension 50101 "Currencies PageExt" extends Currencies
     var
         PbtParameters: Dictionary of [Text, Text];
         Currency: Record Currency;
-        CurrenciesToRetrieve: Text;
         DemoAlCurrencySetup: Record "PBT Currency Sample Setup";
+        CurrenciesToRetrieveBuilder: TextBuilder;
     begin
         CurrPage."Latest rates repeater".Page.ResetTempTable();
         if (Code = '') then
             exit;
 
-        Currency.SetFilter(Code, '<>' + Code);
+        Currency.SetFilter(Code, '<>%1', Code);
         if Currency.FindSet then begin
             repeat
-                CurrenciesToRetrieve += Currency.Code + ',';
+                CurrenciesToRetrieveBuilder.Append(Currency.Code);
+                CurrenciesToRetrieveBuilder.Append(',');
             until Currency.Next = 0;
         end;
-        CurrenciesToRetrieve := CurrenciesToRetrieve.TrimEnd(',');
+
+        if CurrenciesToRetrieveBuilder.Length > 0 then
+            CurrenciesToRetrieveBuilder.Length(CurrenciesToRetrieveBuilder.Length - 1);
 
         PbtParameters.Set('Date', 'latest');
         PbtParameters.Set('CurrencyBase', Code);
-        PbtParameters.Set('Currencies', CurrenciesToRetrieve);
+        PbtParameters.Set('Currencies', CurrenciesToRetrieveBuilder.ToText());
         DemoAlCurrencySetup.Get('SETUP');
         PbtParameters.Set('SleepSimulation', Format(DemoAlCurrencySetup.SleepDurationFactboxRepeater)); // Delay to simulate a slow HTTP call
 
@@ -58,8 +61,10 @@ pageextension 50101 "Currencies PageExt" extends Currencies
     trigger OnPageBackgroundTaskCompleted(TaskId: Integer; Results: Dictionary of [Text, Text])
     begin
         if (TaskId = PbtTaskId) then begin
-            // Adding the current currency as 0 (so it looks better)
-            Results.Set(Code, '1.0');
+            // Adding the current currency as 1.0 (so it looks better)
+            if (Results.Count > 0) then
+                Results.Add(Code, '1.0');
+
             CurrPage."Latest rates repeater".Page.InitTempTable(Results);
         end;
     end;
