@@ -14,7 +14,7 @@ It also contains resources that help you get immediate value from the telemetry.
 
 Business Central can send telemetry to one or more **Azure Application Insights** (AppInsights) accounts.
 The first step thus is for you to create an AppInsights account.
-See HERE for instructions on how to do that.
+See [HERE](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-telemetry) for instructions on how to do that.
 Once you have created the AppInsights account, make a note of the *instrumentation key*.
 
 The next step depends on whether you are an ISV or a VAR.
