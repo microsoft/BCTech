@@ -39,7 +39,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/NAVDEMO/dashboard/master/BusinessCentralVARDashboard.json"
+          "uri": "[uri(deployment().properties.templateLink.uri, 'Templates/BusinessCentralVARDashboard.json')]"
         },
         "parameters": {
           "subscriptionid": { "value": "[variables('subscriptionid')]" },
