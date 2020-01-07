@@ -54,4 +54,6 @@ Each dashboard is a JSON file, that describes which *widgets* the dashboard shou
 
 We know that the dashboards we have provided might not match your needs exactly, and if you want to customize them, we recommend that you clone this repo and make your adjustments there, before importing the dashboard in the Azure portal.
 
+Adding dashboards is done by exporting a dashboard from the Azure Portal, running the ConvertExportedDashboardToDashboardTemplate.ps1 and then adding the new template to the resources section in azuredeploy.json.
+
 As we improve our dashboards, you can merge the changes into your cloned repo and in this way stay up-to-date.
