@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "SubscriptionId": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Subscription ID of the Application Insight Resource. Leave blank to use selected subscription."
+      }
+    },
+    "ResourceGroupName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Resource Group Name of the Applicationn Insight Resource. Leave blank to use selected resource group."
+      }
+    },
+    "AppInsightName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of Application Insight Resource."
+      }
+    }
+  },
+  "variables": {
+    "subscriptionid": "[if(equals(parameters('SubscriptionId'),''),subscription().subscriptionid,parameters('SubscriptionId'))]",
+    "resourcegroupname": "[if(equals(parameters('ResourceGroupName'),''),resourceGroup().name,parameters('ResourceGroupName'))]",
+    "appinsightname": "[parameters('AppInsightName')]",
+    "resourcelocation": "[resourceGroup().location]",
+    "appinsightresourceid": "[concat('/subscriptions/',variables('subscriptionid'),'/resourceGroups/',variables('resourcegroupname'),'/providers/microsoft.insights/components/',variables('appinsightname'))]",
+    "dashboardresourceid": "[concat('/subscriptions/',variables('subscriptionid'),'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Portal/dashboards/34c6ce6f-94bc-4730-975e-679bfe3f0612')]"
+  },
+  "resources": [
+    {
+      "name": "linkedTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri, 'Templates/BusinessCentralVARDashboard.json')]"
+        },
+        "parameters": {
+          "subscriptionid": { "value": "[variables('subscriptionid')]" },
+          "resourcegroupname": { "value": "[variables('resourcegroupname')]" },
+          "appinsightname": { "value": "[variables('appinsightname')]" },
+          "resourcelocation": { "value": "[variables('resourcelocation')]" },
+          "appinsightresourceid": { "value": "[variables('appinsightresourceid')]" },
+          "dashboardresourceid": { "value": "[variables('dashboardresourceid')]" }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

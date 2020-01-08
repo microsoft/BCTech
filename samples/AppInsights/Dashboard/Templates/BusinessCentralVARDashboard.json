@@ -1,0 +1,305 @@
+{
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+ "contentVersion": "1.0.0.0",
+ "parameters": {
+  "subscriptionid": { "type": "string" },
+  "resourcegroupname": { "type": "string" },
+  "appinsightname": { "type": "string" },
+  "resourcelocation": { "type": "string" },
+  "appinsightresourceid": { "type": "string" },
+  "dashboardresourceid": { "type": "string" }
+ },
+ "resources": [
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 4,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "settings": {
+                    "content": "This dashboard shows telemetry data for all my customers.\n\nIt was created using <a href='https://github.com/microsoft/BCTech/AppInsight/Dashboard'>https://github.com/microsoft/BCTech/AppInsight/Dashboard</a>.\n",
+                    "title": "Telemetry for my customers",
+                    "subtitle": "[parameters('appinsightname')]"
+                  }
+                }
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 0,
+              "y": 2,
+              "colSpan": 2,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "id",
+                  "value": "[parameters('appinsightresourceid')]"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AspNetOverviewPinnedPart",
+              "asset": {
+                "idInputName": "id",
+                "type": "ApplicationInsights"
+              },
+              "defaultMenuItemId": "overview"
+            }
+          },
+          "2": {
+            "position": {
+              "x": 2,
+              "y": 2,
+              "colSpan": 2,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": "[parameters('appinsightresourceid')]"
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/SearchNavButtonOverviewAdaptedPart",
+              "isAdapter": true,
+              "viewState": {
+                "content": {
+                  "configurationId": "blankSearch:?name=6901cc3f-11f1-4b92-a1ea-bae1d82fef96"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "3": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 6,
+              "rowSpan": 3
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| distinct tostring(customDimensions.AadTenantId), tostring(customDimensions.EnvironmentName)\r\n| summarize NumberOfEnvironments=count() by AadTenantId=customDimensions_AadTenantId\r\n"
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "DashboardId",
+                  "value": "[parameters('dashboardresourceid')]"
+                },
+                {
+                  "name": "PartId",
+                  "value": "ea648703-5485-4e06-88a0-40b401a7d5a4"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "My customers",
+                  "PartSubTitle": "[parameters('appinsightname')]",
+                  "Query": "traces\n| distinct tostring(customDimensions.AadTenantId), tostring(customDimensions.EnvironmentName)\n| summarize ['Environment count']=count() by ['AAD Tenant ID']=customDimensions_AadTenantId",
+                  "GridColumnsWidth": {
+                    "AadTenantId": "271px",
+                    "NumberOfEnvironments": "232px",
+                    "AAD Tenant ID": "278px"
+                  }
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "4": {
+            "position": {
+              "x": 0,
+              "y": 8,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\n| where operation_Name == \"Long Running Operation (SQL Query)\" \n| project timestamp, customDimensions.AadTenantId\n| summarize Instances=count() by AadTenantId=tostring(customDimensions_AadTenantId)\n"
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "916d6343-5813-417c-8650-5128d7a2bcdc"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Long-running SQL queries",
+                  "PartSubTitle": "[parameters('appinsightname')]",
+                  "Query": "traces\n| where operation_Name == \"Long Running Operation (SQL Query)\" \n| project timestamp, customDimensions.AadTenantId\n| summarize Occurrences=count() by ['AAD Tenant ID']=tostring(customDimensions_AadTenantId)\n",
+                  "GridColumnsWidth": {
+                    "AadTenantId": "276px",
+                    "AAD Tenant ID": "274px"
+                  }
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "local",
+                "granularity": "auto",
+                "relative": "48h"
+              },
+              "displayCache": {
+                "name": "Local Time",
+                "value": "Past 48 hours"
+              },
+              "filteredPartIds": [
+                "StartboardPart-AnalyticsPart-f4596131-e408-40dd-86ae-ff7b4e7cc00b",
+                "StartboardPart-AnalyticsPart-f4596131-e408-40dd-86ae-ff7b4e7cc00d"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "BusinessCentralVARDashboard",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "[parameters('resourcelocation')]",
+  "tags": {
+    "hidden-title": "Business Central VAR Dashboard"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
+ ],
+ "outputs": {}
+}
