@@ -1,0 +1,56 @@
+// web service execution time (raw data)
+Traces
+| where operation_Name == "Web Services Call"
+//| extend AADID = customDimensions.Cloud_RoleName
+| extend Category = customDimensions.category
+| extend ALObjectId = customDimensions.alObjectId
+| extend ExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+| project timestamp, operation_Id, session_Id, Category, ALObjectId, ExecutionTimeInMS, customDimensions 
+
+
+// web service execution time (summary)
+traces
+| where operation_Name == "Web Services Call"
+//| extend AADID = customDimensions.Cloud_RoleName
+| extend Category = customDimensions.category
+| extend ALObjectId = customDimensions.alObjectId
+| extend ExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+| summarize max(ExecutionTimeInMS), avg(ExecutionTimeInMS) by tostring(Category), tostring(ALObjectId)
+
+
+// successful logins (raw data)
+traces
+| where operation_Name contains "Authorization" 
+| extend ClientType = customDimensions.clientType
+| extend CompanyName = customDimensions.companyName
+| extend EnvironmentType = customDimensions.environmentType 
+| extend AuthorizationStatus = customDimensions.authorizationStatus
+| extend ExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+| where AuthorizationStatus == "Success"
+| project timestamp, operation_Id, session_Id
+, EnvironmentType 
+, AuthorizationStatus 
+, ClientType 
+, CompanyName 
+, ExecutionTimeInMS
+, customDimensions
+
+
+
+// slow logins - takes longer than 15 sec (raw data)
+traces
+| where operation_Name contains "Authorization" 
+| extend ClientType = customDimensions.clientType
+| extend CompanyName = customDimensions.companyName
+| extend EnvironmentType = customDimensions.environmentType 
+| extend AuthorizationStatus = customDimensions.authorizationStatus
+| extend ExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+| where AuthorizationStatus == "Success"
+| where ExecutionTimeInMS > 15000
+| project timestamp, operation_Id, session_Id
+, EnvironmentType 
+, AuthorizationStatus 
+, ClientType 
+, CompanyName 
+, ExecutionTimeInMS
+, customDimensions
