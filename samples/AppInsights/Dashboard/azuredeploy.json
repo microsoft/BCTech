@@ -58,7 +58,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(deployment().properties.templateLink.uri, 'Templates/BusinessCentralVARDashboard.json')]"
+          "uri": "[uri(deployment().properties.templateLink.uri, 'Templates/Kennie Test Dashboard.json')]"
         },
         "parameters": {
           "subscriptionid": { "value": "[variables('subscriptionid')]" },
