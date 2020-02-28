@@ -30,3 +30,47 @@ traces
 , entitlementSetIds = customDimensions.entitlementSetIds
 , message, customDimensions
 
+
+
+
+// successful authorization after the openCompany trigger (raw data)
+// Use extend if you need to filter on a column extracted from customDimensions
+// This example uses project-away to filter out all "internal" columns
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Authorization Succeeded (Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+| extend environmentName = customDimensions.environmentName
+| extend environmentType = customDimensions.environmentType
+| extend clientType = customDimensions.clientType
+| extend companyName = customDimensions.companyName
+| extend result = customDimensions.result
+// server timings are available from 16.0
+| extend serverExecutionTime = customDimensions.serverExecutionTime
+| extend sqlExecutes = customDimensions.sqlExecutes
+| extend sqlRowsRead = customDimensions.sqlRowsRead
+| extend totalTime = customDimensions.totalTime
+| project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
+
+
+// successful authorization after the openCompany trigger (raw data)
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// This example uses project to only include the columns needed in the result set
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Authorization Succeeded (Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+| project aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, result = customDimensions.result
+// server timings are available from 16.0
+, serverExecutionTime = customDimensions.serverExecutionTime
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, totalTime = customDimensions.totalTime
+, message, customDimensions
