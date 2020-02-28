@@ -27,7 +27,7 @@ traces
 | project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
 
 
-// Long running SQL queries (RAW data) - version with renames happening in project clause
+// Long running SQL queries (RAW data)
 // Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
 // This example uses project to only include the columns needed in the result set
 traces
@@ -50,4 +50,4 @@ traces
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
 , sqlStatement = customDimensions.sqlStatement
-
+, message, customDimensions
