@@ -10,6 +10,7 @@ traces
 // | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | extend aadID = customDimensions.aadTenantId
+| extend environmentType = customDimensions.environmentType
 | extend companyName = customDimensions.companyName
 | extend alObjectId = customDimensions.alObjectId
 | extend alObjectName = customDimensions.alObjectName
@@ -36,6 +37,7 @@ traces
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | extend aadID = customDimensions.aadTenantId
 | project environmentName=cloud_RoleInstance 
+, environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
