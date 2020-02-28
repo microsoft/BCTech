@@ -38,4 +38,4 @@ Here is an example to get you started:
 Now you will get an email whenever your app or your customers make HTTP calls that fail.
 
 # Resources
-* https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview
+* [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
