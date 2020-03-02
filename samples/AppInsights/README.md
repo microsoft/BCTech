@@ -38,12 +38,12 @@ Here is an example to get you started:
 Now you will get an email whenever your app or your customers make HTTP calls that fail.
 
 # Frequently Asked Questions (FAQ)
-**What is the data retention policy in AppInsights?**
+## What is the data retention policy in AppInsights?
 The default retention for Application Insights resources is 90 days. Different retention periods can be selected for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550 or 730 days.
 
 See <https://docs.microsoft.com/en-us/azure/azure-monitor/app/pricing#change-the-data-retention-period> 
 
-**How do I delete data from AppInsights?**
+## How do I delete data from AppInsights?
 Purge data in an Application Insights component by a set of user-defined filters.
 
 See <https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples> 
