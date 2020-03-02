@@ -48,5 +48,11 @@ Purge data in an Application Insights component by a set of user-defined filters
 
 See <https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples> 
 
+## Can I grant read-only access to AppInsights?
+To grant a person read-only access to AppInsights, go to the Access control (IAM) page in the AppInsights portal, and then add the role assignment "Reader" to the person. 
+
+You might also need to add the role assignment "Reader" to the person on the Resource Group for the AppInsights subscription.
+
+
 # Resources
 * [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
