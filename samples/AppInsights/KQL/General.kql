@@ -1,0 +1,18 @@
+// This query shows available signal in your Application Insights data store
+// use this query for installations running 16.0 or earlier
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| summarize count(operation_Name) by operation_Name
+
+
+// Use this query to track version changes (minor/major upgrades and/or hotfixes) in components in your environments
+// A version is only shown here if telemetry has been emitted (will happen if a user tries to login)
+traces
+| where timestamp > ago(60d)
+| extend aadID = tostring( customDimensions.aadTenantId )
+| extend environmentName = tostring( customDimensions.environmentName )
+| extend component = tostring( customDimensions.component )
+| extend componentVersion = tostring( customDimensions.componentVersion )
+| summarize max(timestamp) by aadID, environmentName, component, componentVersion
+| order by max_timestamp desc 
+| limit 10
