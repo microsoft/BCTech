@@ -2,14 +2,14 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "SubscriptionId": {
+    "AppInsightsSubscriptionId": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
         "description": "Subscription ID of the Azure Application Insight Resource. Leave blank to use selected subscription."
       }
     },
-    "ResourceGroupName": {
+    "AppInsightsResourceGroupName": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
@@ -24,9 +24,9 @@
     }
   },
   "variables": {
-    "subscriptionid": "[if(equals(parameters('SubscriptionId'),''),subscription().subscriptionid,parameters('SubscriptionId'))]",
-    "resourcegroupname": "[if(equals(parameters('ResourceGroupName'),''),resourceGroup().name,parameters('ResourceGroupName'))]",
-    "appinsightname": "[parameters('AppInsightName')]",
+    "subscriptionid": "[if(equals(parameters('AppInsightsSubscriptionId'),''),subscription().subscriptionid,parameters('AppInsightsSubscriptionId'))]",
+    "resourcegroupname": "[if(equals(parameters('AppInsightsResourceGroupName'),''),resourceGroup().name,parameters('AppInsightsResourceGroupName'))]",
+    "appinsightname": "[parameters('AppInsightsName')]",
     "resourcelocation": "[resourceGroup().location]",
     "appinsightresourceid": "[concat('/subscriptions/',variables('subscriptionid'),'/resourceGroups/',variables('resourcegroupname'),'/providers/microsoft.insights/components/',variables('appinsightname'))]",
     "dashboardresourceid": "[concat('/subscriptions/',variables('subscriptionid'),'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Portal/dashboards/34c6ce6f-94bc-4730-975e-679bfe3f0612')]"
