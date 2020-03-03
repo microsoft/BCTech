@@ -1,4 +1,4 @@
-# Template dashboards
+# Sample dashboards
 
 To reduce the time-to-value for you, we have prepared a set of dashboards that you can deploy to your Azure portal:
 1. Open Company Performance

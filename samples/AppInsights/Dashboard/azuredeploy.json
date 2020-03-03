@@ -2,30 +2,30 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "SubscriptionId": {
+    "AppInsightsSubscriptionId": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "Subscription ID of the Application Insight Resource. Leave blank to use selected subscription."
+        "description": "Subscription ID of the Azure Application Insight Resource. Leave blank to use selected subscription."
       }
     },
-    "ResourceGroupName": {
+    "AppInsightsResourceGroupName": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "Resource Group Name of the Applicationn Insight Resource. Leave blank to use selected resource group."
+        "description": "Resource Group Name of the Azure Application Insight Resource. Leave blank to use selected resource group."
       }
     },
-    "AppInsightName": {
+    "AppInsightsName": {
       "type": "string",
       "metadata": {
-        "description": "Name of Application Insight Resource."
+        "description": "Name of Azure Application Insights Resource."
       }
     }
   },
   "variables": {
-    "subscriptionid": "[if(equals(parameters('SubscriptionId'),''),subscription().subscriptionid,parameters('SubscriptionId'))]",
-    "resourcegroupname": "[if(equals(parameters('ResourceGroupName'),''),resourceGroup().name,parameters('ResourceGroupName'))]",
+    "subscriptionid": "[if(equals(parameters('AppInsightsSubscriptionId'),''),subscription().subscriptionid,parameters('AppInsightsSubscriptionId'))]",
+    "resourcegroupname": "[if(equals(parameters('AppInsightsResourceGroupName'),''),resourceGroup().name,parameters('AppInsightsResourceGroupName'))]",
     "appinsightname": "[parameters('AppInsightName')]",
     "resourcelocation": "[resourceGroup().location]",
     "appinsightresourceid": "[concat('/subscriptions/',variables('subscriptionid'),'/resourceGroups/',variables('resourcegroupname'),'/providers/microsoft.insights/components/',variables('appinsightname'))]",
