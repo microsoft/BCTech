@@ -80,7 +80,12 @@
                 }
               ],
               "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
-              "settings": {},
+              "settings": {
+                "content": {
+                  "PartTitle": "Open Company",
+                  "PartSubTitle": "Statistics"
+                }
+              },
               "asset": {
                 "idInputName": "ComponentId",
                 "type": "ApplicationInsights"
@@ -164,7 +169,12 @@
                 }
               ],
               "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
-              "settings": {},
+              "settings": {
+                "content": {
+                  "PartTitle": "Open Company",
+                  "PartSubTitle": "Count"
+                }
+              },
               "asset": {
                 "idInputName": "ComponentId",
                 "type": "ApplicationInsights"
@@ -248,7 +258,12 @@
                 }
               ],
               "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
-              "settings": {},
+              "settings": {
+                "content": {
+                  "PartTitle": "Open Company",
+                  "PartSubTitle": "Average time in ms"
+                }
+              },
               "asset": {
                 "idInputName": "ComponentId",
                 "type": "ApplicationInsights"
