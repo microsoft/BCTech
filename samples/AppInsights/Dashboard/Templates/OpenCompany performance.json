@@ -1,0 +1,293 @@
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 14,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "0eac3279-98e8-4f24-bc7e-217785e4dfdd",
+                    "ResourceGroup": "moagar-test-PartnerTelemetry",
+                    "Name": "AppInsightsClient1",
+                    "ResourceId": "/subscriptions/0eac3279-98e8-4f24-bc7e-217785e4dfdd/resourceGroups/moagar-test-PartnerTelemetry/providers/microsoft.insights/components/AppInsightsClient1"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\n//| where timestamp > ago(60d) // adjust as needed\n| where operation_Name == \"Authorization Succeeded (Open Company)\"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\n| extend aadID = tostring( customDimensions.aadTenantId )\n| extend executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan \n| extend environmentName = tostring( customDimensions.environmentName )\n| extend companyName = tostring( customDimensions.companyName )\n| summarize count(), min(executionTimeInMS), max(executionTimeInMS), avg(executionTimeInMS), stdev(executionTimeInMS) \n  by aadID, environmentName, companyName\n"
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "1468d4eb-193a-40bc-8215-a742e0215f68"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "AppInsightsClient1"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {},
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 0,
+              "y": 2,
+              "colSpan": 14,
+              "rowSpan": 3
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "0eac3279-98e8-4f24-bc7e-217785e4dfdd",
+                    "ResourceGroup": "moagar-test-PartnerTelemetry",
+                    "Name": "AppInsightsClient1",
+                    "ResourceId": "/subscriptions/0eac3279-98e8-4f24-bc7e-217785e4dfdd/resourceGroups/moagar-test-PartnerTelemetry/providers/microsoft.insights/components/AppInsightsClient1"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "// OpenCompany dashboard - count by timestamp\ntraces\n| where operation_Name == \"Authorization Succeeded (Open Company)\"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\n| extend aadID = tostring( customDimensions.aadTenantId )\n| extend executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan \n| extend environmentName = tostring( customDimensions.environmentName )\n| extend companyName = tostring( customDimensions.companyName )\n| summarize count() by timestamp\n"
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D"
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "count_",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  }
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "13785d51-1240-42da-8587-cfce6758beb6"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "AppInsightsClient1"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsChart"
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "Scatter"
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {},
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "2": {
+            "position": {
+              "x": 0,
+              "y": 5,
+              "colSpan": 14,
+              "rowSpan": 3
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "0eac3279-98e8-4f24-bc7e-217785e4dfdd",
+                    "ResourceGroup": "moagar-test-PartnerTelemetry",
+                    "Name": "AppInsightsClient1",
+                    "ResourceId": "/subscriptions/0eac3279-98e8-4f24-bc7e-217785e4dfdd/resourceGroups/moagar-test-PartnerTelemetry/providers/microsoft.insights/components/AppInsightsClient1"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "// OpenCompany dashboard - avg by timestamp\ntraces\n| where operation_Name == \"Authorization Succeeded (Open Company)\"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\n| extend aadID = tostring( customDimensions.aadTenantId )\n| extend executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan \n| extend environmentName = tostring( customDimensions.environmentName )\n| extend companyName = tostring( customDimensions.companyName )\n| summarize avg(executionTimeInMS) by timestamp\n"
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D"
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "avg_executionTimeInMS",
+                        "type": "real"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  }
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "10d04026-1e91-4433-a023-d8abd41457f6"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "AppInsightsClient1"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsChart"
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "Scatter"
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {},
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "utc",
+                "granularity": "auto",
+                "relative": "30d"
+              },
+              "displayCache": {
+                "name": "UTC Time",
+                "value": "Past 30 days"
+              },
+              "filteredPartIds": [
+                "StartboardPart-AnalyticsPart-a0d4fb6e-e790-4315-9188-890fb1082007",
+                "StartboardPart-AnalyticsPart-a0d4fb6e-e790-4315-9188-890fb1082009",
+                "StartboardPart-AnalyticsPart-a0d4fb6e-e790-4315-9188-890fb108200b"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "OpenCompany performance",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "OpenCompany performance"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
