@@ -1,4 +1,16 @@
 {
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+ "contentVersion": "1.0.0.0",
+ "parameters": {
+  "subscriptionid": { "type": "string" },
+  "resourcegroupname": { "type": "string" },
+  "appinsightname": { "type": "string" },
+  "resourcelocation": { "type": "string" },
+  "appinsightresourceid": { "type": "string" },
+  "dashboardresourceid": { "type": "string" }
+ },
+ "resources": [
+{
   "properties": {
     "lenses": {
       "0": {
@@ -16,10 +28,10 @@
                 {
                   "name": "ComponentId",
                   "value": {
-                    "SubscriptionId": "0eac3279-98e8-4f24-bc7e-217785e4dfdd",
-                    "ResourceGroup": "moagar-test-PartnerTelemetry",
-                    "Name": "AppInsightsClient1",
-                    "ResourceId": "/subscriptions/0eac3279-98e8-4f24-bc7e-217785e4dfdd/resourceGroups/moagar-test-PartnerTelemetry/providers/microsoft.insights/components/AppInsightsClient1"
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
                   }
                 },
                 {
@@ -44,7 +56,7 @@
                 },
                 {
                   "name": "PartSubTitle",
-                  "value": "AppInsightsClient1"
+                  "value": "[parameters('appinsightname')]"
                 },
                 {
                   "name": "resourceTypeMode",
@@ -87,10 +99,10 @@
                 {
                   "name": "ComponentId",
                   "value": {
-                    "SubscriptionId": "0eac3279-98e8-4f24-bc7e-217785e4dfdd",
-                    "ResourceGroup": "moagar-test-PartnerTelemetry",
-                    "Name": "AppInsightsClient1",
-                    "ResourceId": "/subscriptions/0eac3279-98e8-4f24-bc7e-217785e4dfdd/resourceGroups/moagar-test-PartnerTelemetry/providers/microsoft.insights/components/AppInsightsClient1"
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
                   }
                 },
                 {
@@ -132,7 +144,7 @@
                 },
                 {
                   "name": "PartSubTitle",
-                  "value": "AppInsightsClient1"
+                  "value": "[parameters('appinsightname')]"
                 },
                 {
                   "name": "resourceTypeMode",
@@ -171,10 +183,10 @@
                 {
                   "name": "ComponentId",
                   "value": {
-                    "SubscriptionId": "0eac3279-98e8-4f24-bc7e-217785e4dfdd",
-                    "ResourceGroup": "moagar-test-PartnerTelemetry",
-                    "Name": "AppInsightsClient1",
-                    "ResourceId": "/subscriptions/0eac3279-98e8-4f24-bc7e-217785e4dfdd/resourceGroups/moagar-test-PartnerTelemetry/providers/microsoft.insights/components/AppInsightsClient1"
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
                   }
                 },
                 {
@@ -216,7 +228,7 @@
                 },
                 {
                   "name": "PartSubTitle",
-                  "value": "AppInsightsClient1"
+                  "value": "[parameters('appinsightname')]"
                 },
                 {
                   "name": "resourceTypeMode",
@@ -283,11 +295,14 @@
       }
     }
   },
-  "name": "OpenCompany performance",
+  "name": "OpenCompanyperformance",
   "type": "Microsoft.Portal/dashboards",
-  "location": "INSERT LOCATION",
+  "location": "[parameters('resourcelocation')]",
   "tags": {
     "hidden-title": "OpenCompany performance"
   },
   "apiVersion": "2015-08-01-preview"
+}
+ ],
+ "outputs": {}
 }
