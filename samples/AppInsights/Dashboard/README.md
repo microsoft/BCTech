@@ -1,6 +1,7 @@
 # Template dashboards
 
-To reduce the time-to-value for you, we have prepared a set of dashboards that you can deploy to your Azure portal.
+To reduce the time-to-value for you, we have prepared a set of dashboards that you can deploy to your Azure portal:
+1. Open Company Performance
 
 Clicking the Deploy To Azure button below will launch the Azure Portal with an ARM template, where you need to specify the subscription, resource group and name of 
 your Application Insights Resource. All requested dashboards will be installed and you can now remove the ones you do not need.
@@ -8,6 +9,7 @@ your Application Insights Resource. All requested dashboards will be installed a
 <a href="https://freddyk.azurewebsites.net/api/AzureDeploy" target="_blank"><img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/></a>
 
 Each dashboard is a JSON file, that describes which *widgets* the dashboard should contain.
+
 
 
 # Clone the repo
