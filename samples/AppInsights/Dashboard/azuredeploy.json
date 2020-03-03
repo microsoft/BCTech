@@ -2,14 +2,14 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "AppInsightsSubscriptionId": {
+    "SubscriptionId": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
         "description": "Subscription ID of the Azure Application Insight Resource. Leave blank to use selected subscription."
       }
     },
-    "AppInsightsResourceGroupName": {
+    "ResourceGroupName": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
@@ -24,8 +24,8 @@
     }
   },
   "variables": {
-    "subscriptionid": "[if(equals(parameters('AppInsightsSubscriptionId'),''),subscription().subscriptionid,parameters('AppInsightsSubscriptionId'))]",
-    "resourcegroupname": "[if(equals(parameters('AppInsightsResourceGroupName'),''),resourceGroup().name,parameters('AppInsightsResourceGroupName'))]",
+    "subscriptionid": "[if(equals(parameters('SubscriptionId'),''),subscription().subscriptionid,parameters('SubscriptionId'))]",
+    "resourcegroupname": "[if(equals(parameters('ResourceGroupName'),''),resourceGroup().name,parameters('ResourceGroupName'))]",
     "appinsightname": "[parameters('AppInsightName')]",
     "resourcelocation": "[resourceGroup().location]",
     "appinsightresourceid": "[concat('/subscriptions/',variables('subscriptionid'),'/resourceGroups/',variables('resourcegroupname'),'/providers/microsoft.insights/components/',variables('appinsightname'))]",
