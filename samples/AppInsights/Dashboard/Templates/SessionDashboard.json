@@ -1,0 +1,238 @@
+{
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+ "contentVersion": "1.0.0.0",
+ "parameters": {
+  "subscriptionid": { "type": "string" },
+  "resourcegroupname": { "type": "string" },
+  "appinsightname": { "type": "string" },
+  "resourcelocation": { "type": "string" },
+  "appinsightresourceid": { "type": "string" },
+  "dashboardresourceid": { "type": "string" }
+ },
+ "resources": [
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 13,
+              "rowSpan": 3
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where operation_Name == \"Authorization Succeeded (Open Company)\"\r\n// do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n| extend environmentName = tostring( customDimensions.environmentName )\r\n| extend environmentType = tostring( customDimensions.environmentType )\r\n| extend companyName = tostring( customDimensions.companyName )\r\n| extend clientType = tostring( customDimensions.clientType )\r\n| summarize count() by aadID, environmentName, environmentType, companyName, clientType\r\n"
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "13627383-13e1-481a-8f39-ca84f8b09a4a"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Sessions",
+                  "PartSubTitle": "Statistics"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 13,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where operation_Name == \"Authorization Succeeded (Open Company)\"\r\n// do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n| extend environmentName = tostring( customDimensions.environmentName )\r\n| extend environmentType = tostring( customDimensions.environmentType )\r\n| extend companyName = tostring( customDimensions.companyName )\r\n| extend clientType = tostring( customDimensions.clientType )\r\n| summarize count() by timestamp, clientType\r\n"
+                },
+                {
+                  "name": "TimeRange",
+                  "value": "P1D"
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "count_",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "clientType",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  }
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "10d51f4a-6a7c-4a3d-998b-2230b50b4eb0"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsChart"
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "Bar"
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Session",
+                  "PartSubTitle": "Count by Session Type"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "utc",
+                "granularity": "auto",
+                "relative": "30d"
+              },
+              "displayCache": {
+                "name": "UTC Time",
+                "value": "Past 30 days"
+              },
+              "filteredPartIds": [
+                "StartboardPart-AnalyticsPart-4a94915e-280c-40a5-8100-05e8fcf9b108",
+                "StartboardPart-AnalyticsPart-4a94915e-280c-40a5-8100-05e8fcf9b10a"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "Sessions",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "[parameters('resourcelocation')]",
+  "tags": {
+    "hidden-title": "Sessions"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
+ ],
+ "outputs": {}
+}

@@ -1,0 +1,25 @@
+// these are the sample queries used to produce the Session dashboard
+
+// Session dashboard - statistics
+traces
+| where operation_Name == "Authorization Succeeded (Open Company)"
+// do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = tostring( customDimensions.aadTenantId )
+| extend environmentName = tostring( customDimensions.environmentName )
+| extend environmentType = tostring( customDimensions.environmentType )
+| extend companyName = tostring( customDimensions.companyName )
+| extend clientType = tostring( customDimensions.clientType )
+| summarize count() by aadID, environmentName, environmentType, companyName, clientType
+
+// Session dashboard - time series plot
+traces
+| where operation_Name == "Authorization Succeeded (Open Company)"
+// do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = tostring( customDimensions.aadTenantId )
+| extend environmentName = tostring( customDimensions.environmentName )
+| extend environmentType = tostring( customDimensions.environmentType )
+| extend companyName = tostring( customDimensions.companyName )
+| extend clientType = tostring( customDimensions.clientType )
+| summarize count() by timestamp, clientType
