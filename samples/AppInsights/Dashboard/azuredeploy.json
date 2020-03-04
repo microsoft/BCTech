@@ -33,7 +33,7 @@
   },
   "resources": [
     {
-      "name": "linkedTemplate",
+      "name": "OpenCompanyPerformanceDashboardTemplate",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "properties": {
