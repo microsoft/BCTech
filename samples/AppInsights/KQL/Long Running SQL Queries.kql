@@ -2,7 +2,7 @@
 
 
 // Long running SQL queries (RAW data)
-// Use extend if you need to filter on a column extracted from customDimensions
+// Use extend if you need to use a column extracted from customDimensions in a function (such as countof)
 // This example uses project-away to filter out all "internal" columns
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -10,19 +10,21 @@ traces
 // | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | extend aadID = customDimensions.aadTenantId
-| extend environmentType = customDimensions.environmentType
-| extend companyName = customDimensions.companyName
-| extend alObjectId = customDimensions.alObjectId
-| extend alObjectName = customDimensions.alObjectName
-| extend alObjectType = customDimensions.alObjectType
-| extend alStackTrace = customDimensions.alStackTrace
-| extend clientType = customDimensions.clientType
-| extend executionTime = customDimensions.executionTime
-| extend executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
-| extend extensionId = customDimensions.extensionId
-| extend extensionName = customDimensions.extensionName
-| extend extensionVersion = customDimensions.extensionVersion
-| extend sqlStatement = customDimensions.sqlStatement
+, sqlStatement = tostring(customDimensions.sqlStatement)
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, executionTime = customDimensions.executionTime
+, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+| extend numberOfJoins = countof(sqlStatement, "JOIN") 
+, numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
 | project-rename environmentName=cloud_RoleInstance 
 | project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
 
@@ -36,6 +38,9 @@ traces
 // | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | extend aadID = customDimensions.aadTenantId
+, sqlStatement = tostring(customDimensions.sqlStatement)
+|extend numberOfJoins = countof(sqlStatement, "JOIN") 
+, numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
 | project environmentName=cloud_RoleInstance 
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -49,5 +54,7 @@ traces
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
-, sqlStatement = customDimensions.sqlStatement
+, sqlStatement 
+, numberOfJoins 
+, numberOfOuterApplys 
 , message, customDimensions

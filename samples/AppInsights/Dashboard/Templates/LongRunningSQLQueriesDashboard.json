@@ -1,0 +1,304 @@
+{
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+ "contentVersion": "1.0.0.0",
+ "parameters": {
+  "subscriptionid": { "type": "string" },
+  "resourcegroupname": { "type": "string" },
+  "appinsightname": { "type": "string" },
+  "resourcelocation": { "type": "string" },
+  "appinsightresourceid": { "type": "string" },
+  "dashboardresourceid": { "type": "string" }
+ },
+ "resources": [
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 17,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| where customDimensions.alObjectId > 0 // filter out internal server calls\r\n| extend aadID = customDimensions.aadTenantId\r\n| extend environmentName=cloud_RoleInstance \r\n, environmentType = tostring( customDimensions.environmentType )\r\n, alObjectName = tostring( customDimensions.alObjectName )\r\n, alObjectType = tostring( customDimensions.alObjectType )\r\n, clientType = tostring( customDimensions.clientType )\r\n, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan \r\n, extensionName = tostring( customDimensions.extensionName )\r\n| where environmentType == 'Production'\r\n| summarize count(), max(executionTimeInMS), avg(executionTimeInMS) by alObjectName, alObjectType, clientType, extensionName  \r\n| order by avg_executionTimeInMS desc\r\n"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "13e32e13-41d6-49d2-9747-c529ba76b59f"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Overview across all tenants and environments",
+                  "PartSubTitle": "Use to identify systemic issues. Note that average execution time is calculated over the signal emitted by the server (for performance reasons only sql calls that takes longer than a server threshold are emitted)",
+                  "Query": "traces\n| where timestamp > ago(60d) // adjust as needed\n| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\n| where customDimensions.alObjectId > 0 // filter out internal server calls\n| extend aadID = customDimensions.aadTenantId\n| extend environmentName=cloud_RoleInstance \n, environmentType = tostring( customDimensions.environmentType )\n, alObjectName = tostring( customDimensions.alObjectName )\n, alObjectType = tostring( customDimensions.alObjectType )\n, clientType = tostring( customDimensions.clientType )\n, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan \n, extensionName = tostring( customDimensions.extensionName )\n, sqlStatement = tostring( customDimensions.sqlStatement )\n| where environmentType == 'Production'\n| summarize countOfExecutions = count(), max(executionTimeInMS), avg(executionTimeInMS) by alObjectName, alObjectType, clientType, extensionName, sqlStatement  \n| order by avg_executionTimeInMS desc\n"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 17,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| where customDimensions.alObjectId > 0 // filter out internal server calls\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n, environmentName=cloud_RoleInstance \r\n, environmentType = tostring( customDimensions.environmentType )\r\n, alObjectName = tostring( customDimensions.alObjectName )\r\n, alObjectType = tostring( customDimensions.alObjectType )\r\n, clientType = tostring( customDimensions.clientType )\r\n, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan \r\n, extensionName = tostring( customDimensions.extensionName )\r\n| where environmentType == 'Production'\r\n| summarize count(), max(executionTimeInMS), avg(executionTimeInMS) by aadID, environmentName, alObjectName, alObjectType, clientType, extensionName  \r\n| order by avg_executionTimeInMS desc\n"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "592052ea-1f44-4139-ac15-f3199899e4d5"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Tenant and environment overview",
+                  "PartSubTitle": "Use to identify issues for a particular tenant/environment. Note that average execution time is calculated over the signal emitted by the server (for performance reasons only sql calls that takes longer than a server threshold are emitted)",
+                  "Query": "traces\n| where timestamp > ago(60d) // adjust as needed\n| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\n| where customDimensions.alObjectId > 0 // filter out internal server calls\n| extend aadID = tostring( customDimensions.aadTenantId )\n, environmentName=cloud_RoleInstance \n, environmentType = tostring( customDimensions.environmentType )\n, alObjectName = tostring( customDimensions.alObjectName )\n, alObjectType = tostring( customDimensions.alObjectType )\n, clientType = tostring( customDimensions.clientType )\n, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan \n, extensionName = tostring( customDimensions.extensionName )\n| where environmentType == 'Production'\n| summarize countOfExecutions = count(), max(executionTimeInMS), avg(executionTimeInMS) by aadID, environmentName, alObjectName, alObjectType, clientType, extensionName  \n| order by avg_executionTimeInMS desc\n"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "2": {
+            "position": {
+              "x": 0,
+              "y": 8,
+              "colSpan": 17,
+              "rowSpan": 5
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| where customDimensions.alObjectId > 0 // filter out internal server calls\r\n| extend aadID = customDimensions.aadTenantId\r\n| extend sqlStatement = tostring( customDimensions.sqlStatement )\r\n| extend environmentName=cloud_RoleInstance \r\n, environmentType = tostring( customDimensions.environmentType )\r\n, alObjectName = tostring( customDimensions.alObjectName )\r\n, alObjectType = tostring( customDimensions.alObjectType )\r\n, clientType = tostring( customDimensions.clientType )\r\n, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan \r\n, extensionName = tostring( customDimensions.extensionName )\r\n, numberOfJoins = countof(sqlStatement, \"JOIN\") \r\n, numberOfOuterApplys = countof(sqlStatement, \"OUTER APPLY\") \r\n| where environmentType == 'Production'\r\n| project extensionName, alObjectName, sqlStatement, executionTimeInMS, numberOfJoins, numberOfOuterApplys, alStackTrace = customDimensions.alStackTrace, aadID, environmentName\r\n"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "11d5b84d-0843-46a9-ad14-5dcf9bf12d2a"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "SQL Query plans (across all environments)",
+                  "PartSubTitle": "Use this for troubleshooting",
+                  "Query": "traces\n| where timestamp > ago(60d) // adjust as needed\n| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\n| where customDimensions.alObjectId > 0 // filter out internal server calls\n| extend aadID = tostring( customDimensions.aadTenantId )\n| extend sqlStatement = tostring( customDimensions.sqlStatement )\n| extend environmentName=cloud_RoleInstance \n, environmentType = tostring( customDimensions.environmentType )\n, alObjectName = tostring( customDimensions.alObjectName )\n, alObjectType = tostring( customDimensions.alObjectType )\n, clientType = tostring( customDimensions.clientType )\n, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan \n, extensionName = tostring( customDimensions.extensionName )\n, numberOfJoins = countof(sqlStatement, \"JOIN\") \n, numberOfOuterApplys = countof(sqlStatement, \"OUTER APPLY\") \n, alStackTrace = tostring( customDimensions.alStackTrace )\n| where environmentType == 'Production'\n| summarize totalexecutionTimeInSec = sum(executionTimeInMS)/1000, countOfExecutions = count() by extensionName, alObjectName, sqlStatement, numberOfJoins, numberOfOuterApplys, alStackTrace\n| project extensionName, alObjectName, sqlStatement, countOfExecutions, totalexecutionTimeInSec, numberOfJoins, numberOfOuterApplys, alStackTrace\n| order by totalexecutionTimeInSec desc",
+                  "GridColumnsWidth": {
+                    "alObjectName": "267px",
+                    "alStackTrace": "406px"
+                  }
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "utc",
+                "granularity": "auto",
+                "relative": "30d"
+              },
+              "displayCache": {
+                "name": "UTC Time",
+                "value": "Past 30 days"
+              },
+              "filteredPartIds": [
+                "StartboardPart-AnalyticsPart-7345c1b0-e1ad-4cda-856e-0b16a4fba380",
+                "StartboardPart-AnalyticsPart-7345c1b0-e1ad-4cda-856e-0b16a4fba382",
+                "StartboardPart-AnalyticsPart-7345c1b0-e1ad-4cda-856e-0b16a4fba384"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "LongRunningSQLQueries",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "[parameters('resourcelocation')]",
+  "tags": {
+    "hidden-title": "Long Running SQL Queries"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
+ ],
+ "outputs": {}
+}

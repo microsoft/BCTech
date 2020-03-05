@@ -69,8 +69,26 @@
           "dashboardresourceid": { "value": "[variables('dashboardresourceid')]" }
         }
       }
+    },
+    {
+      "name": "LongRunningSQLQueriesDashboardTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri, 'Templates/LongRunningSQLQueriesDashboard.json')]"
+        },
+        "parameters": {
+          "subscriptionid": { "value": "[variables('subscriptionid')]" },
+          "resourcegroupname": { "value": "[variables('resourcegroupname')]" },
+          "appinsightname": { "value": "[variables('appinsightname')]" },
+          "resourcelocation": { "value": "[variables('resourcelocation')]" },
+          "appinsightresourceid": { "value": "[variables('appinsightresourceid')]" },
+          "dashboardresourceid": { "value": "[variables('dashboardresourceid')]" }
+        }
+      }
     }
-
   ],
   "outputs": {}
 }
