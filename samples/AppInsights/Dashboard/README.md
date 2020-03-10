@@ -4,8 +4,9 @@ To reduce the time-to-value for you, we have prepared a set of dashboards that y
 1. Open Company Performance
 2. Session overview
 3. Long Running SQL Queries
+4. Failed Authorization
 
-Clicking the Deploy To Azure button below will launch the Azure Portal with an ARM template, where you need to specify the subscription, resource group and name of 
+Clicking the *Deploy To Azure* button below will launch the Azure Portal with an ARM template, where you need to specify the subscription, resource group and name of 
 your Application Insights Resource. All requested dashboards will be installed and you can now remove the ones you do not need.
 
 <a href="https://freddyk.azurewebsites.net/api/AzureDeploy" target="_blank"><img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/></a>
