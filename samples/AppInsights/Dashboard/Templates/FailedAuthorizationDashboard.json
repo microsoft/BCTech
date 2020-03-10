@@ -1,0 +1,243 @@
+{
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+ "contentVersion": "1.0.0.0",
+ "parameters": {
+  "subscriptionid": { "type": "string" },
+  "resourcegroupname": { "type": "string" },
+  "appinsightname": { "type": "string" },
+  "resourcelocation": { "type": "string" },
+  "appinsightresourceid": { "type": "string" },
+  "dashboardresourceid": { "type": "string" }
+ },
+ "resources": [
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 17,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name in ( \r\n  \"Authorization Failed (Pre Open Company)\"  \r\n, \"Authorization Failed (Open Company)\"  \r\n) // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n, environmentName = tostring( customDimensions.environmentName )\r\n, failureReasonShort = case(\r\n  customDimensions.failureReason contains \"entitlements\", \"No entitlements\"\r\n, customDimensions.failureReason contains \"disabled\", \"User disabled\"\r\n, customDimensions.failureReason contains \"company\", \"No permission on company\" \r\n, customDimensions.failureReason\r\n)\r\n, failureReasonLong = case(\r\n  operation_Name == \"Authorization Failed (Open Company)\", strcat( tostring( customDimensions.failureReason ), \" (\", customDimensions.companyName, \")\")\r\n, tostring( customDimensions.failureReason )\r\n)\r\n| project timestamp, aadID, environmentName, failureReasonShort, failureReasonLong\r\n"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "1264356d-13bc-4740-86d5-decaa137d9d3"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Failed authorization across all tenants and environments",
+                  "PartSubTitle": "Raw data",
+                  "GridColumnsWidth": {
+                    "failureReasonLong": "699px",
+                    "failureReasonShort": "198px",
+                    "aadID": "268px"
+                  }
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 17,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "// Failed Athorization dashboard - raw data\r\ntraces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name in ( \r\n  \"Authorization Failed (Pre Open Company)\"  \r\n, \"Authorization Failed (Open Company)\"  \r\n) // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode in ('TODO-1 - coming in a later version of the schema', 'TODO-2 - coming in a later version of the schema')\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n, environmentName = tostring( customDimensions.environmentName )\r\n, failureReasonShort = case(\r\n  customDimensions.failureReason contains \"entitlements\", \"No entitlements\"\r\n, customDimensions.failureReason contains \"disabled\", \"User disabled\"\r\n, customDimensions.failureReason contains \"company\", \"No permission on company\" \r\n, customDimensions.failureReason\r\n)\r\n, failureReasonLong = case(\r\n  operation_Name == \"Authorization Failed (Open Company)\", strcat( tostring( customDimensions.failureReason ), \" (\", customDimensions.companyName, \")\")\r\n, tostring( customDimensions.failureReason )\r\n)\r\n| summarize count() by timestamp, failureReasonShort\n"
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "timestamp",
+                      "type": "datetime"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "count_",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [
+                      {
+                        "name": "failureReasonShort",
+                        "type": "string"
+                      }
+                    ],
+                    "aggregation": "Sum"
+                  }
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "65f5d0e6-139a-4c32-9e11-5a6bc1a10eff"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsChart"
+                },
+                {
+                  "name": "SpecificChart",
+                  "value": "Bar"
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Failed authorization (aggregated)",
+                  "PartSubTitle": "Count"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "utc",
+                "granularity": "auto",
+                "relative": "30d"
+              },
+              "displayCache": {
+                "name": "UTC Time",
+                "value": "Past 30 days"
+              },
+              "filteredPartIds": [
+                "StartboardPart-AnalyticsPart-c2e591d8-cb14-466b-b9a5-b6d7e72e0006",
+                "StartboardPart-AnalyticsPart-c2e591d8-cb14-466b-b9a5-b6d7e72e0008"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "FailedAuthorization",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "[parameters('resourcelocation')]",
+  "tags": {
+    "hidden-title": "Failed Authorization"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
+ ],
+ "outputs": {}
+}

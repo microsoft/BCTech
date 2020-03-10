@@ -40,12 +40,12 @@ traces
 | where operation_Name == "Authorization Failed (Pre Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
 // | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
 | extend aadID = customDimensions.aadTenantId
-| extend environmentName = customDimensions.environmentName
-| extend environmentType = customDimensions.environmentType
-| extend guestUser = customDimensions.guestUser
-| extend userType = customDimensions.userType
-| extend failureReason = customDimensions.failureReason
-| extend entitlementSetIds = customDimensions.entitlementSetIds
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, guestUser = customDimensions.guestUser
+, userType = customDimensions.userType
+, failureReason = customDimensions.failureReason
+, entitlementSetIds = customDimensions.entitlementSetIds
 | project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
 
 

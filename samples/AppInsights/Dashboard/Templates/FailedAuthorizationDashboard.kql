@@ -1,0 +1,46 @@
+// these are the sample queries used to produce the FailedAthorization dashboard
+
+// Failed Athorization dashboard - raw data
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name in ( 
+  "Authorization Failed (Pre Open Company)"  
+, "Authorization Failed (Open Company)"  
+) // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode in ('TODO-1 - coming in a later version of the schema', 'TODO-2 - coming in a later version of the schema')
+| extend aadID = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, failureReasonShort = case(
+  customDimensions.failureReason contains "entitlements", "No entitlements"
+, customDimensions.failureReason contains "disabled", "User disabled"
+, customDimensions.failureReason contains "company", "No permission on company" 
+, customDimensions.failureReason
+)
+, failureReasonLong = case(
+  operation_Name == "Authorization Failed (Open Company)", strcat( tostring( customDimensions.failureReason ), " (", customDimensions.companyName, ")")
+, tostring( customDimensions.failureReason )
+)
+| project timestamp, aadID, environmentName, failureReasonShort, failureReasonLong
+
+
+// Failed Athorization dashboard - timeline
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name in ( 
+  "Authorization Failed (Pre Open Company)"  
+, "Authorization Failed (Open Company)"  
+) // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode in ('TODO-1 - coming in a later version of the schema', 'TODO-2 - coming in a later version of the schema')
+| extend aadID = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, failureReasonShort = case(
+  customDimensions.failureReason contains "entitlements", "No entitlements"
+, customDimensions.failureReason contains "disabled", "User disabled"
+, customDimensions.failureReason contains "company", "No permission on company" 
+, customDimensions.failureReason
+)
+, failureReasonLong = case(
+  operation_Name == "Authorization Failed (Open Company)", strcat( tostring( customDimensions.failureReason ), " (", customDimensions.companyName, ")")
+, tostring( customDimensions.failureReason )
+)
+| summarize count() by timestamp, failureReasonShort
