@@ -1,0 +1,57 @@
+// these are the sample queries used to produce the Web Service Calls dashboard
+
+
+// statistics across environments
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = tostring( customDimensions.aadTenantId )
+, environmentName=cloud_RoleInstance 
+, environmentType = tostring( customDimensions.environmentType )
+, category = tostring( customDimensions.category )
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+| summarize numberOfWSCalls = count(), totalExecutionTimeInSec = sum(executionTimeInMS)/1000 by aadID, environmentName, environmentType, category
+| order by numberOfWSCalls desc
+
+
+// distribution of count across categories
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = tostring( customDimensions.aadTenantId )
+, environmentName=cloud_RoleInstance 
+, environmentType = tostring( customDimensions.environmentType )
+, category = tostring( customDimensions.category )
+| summarize numberOfWSCalls = count() by category
+
+
+// distribution of execution time across categories
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = tostring( customDimensions.aadTenantId )
+, environmentName=cloud_RoleInstance 
+, environmentType = tostring( customDimensions.environmentType )
+, category = tostring( customDimensions.category )
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+| summarize totalExecutionTimeInSec = sum(executionTimeInMS)/1000 by category
+
+
+// top 10 expensive calls in production
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = tostring( customDimensions.aadTenantId )
+, environmentName=cloud_RoleInstance 
+, environmentType = tostring( customDimensions.environmentType )
+, category = tostring( customDimensions.category )
+, endpoint = tostring( customDimensions.endpoint )
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+| where environmentType == 'Production'
+| summarize averageExecutionTimeInSec = avg(executionTimeInMS)/1000 by endpoint, category
+| order by averageExecutionTimeInSec desc
+| limit 10

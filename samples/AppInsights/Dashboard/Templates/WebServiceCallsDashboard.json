@@ -1,0 +1,400 @@
+{
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+ "contentVersion": "1.0.0.0",
+ "parameters": {
+  "subscriptionid": { "type": "string" },
+  "resourcegroupname": { "type": "string" },
+  "appinsightname": { "type": "string" },
+  "resourcelocation": { "type": "string" },
+  "appinsightresourceid": { "type": "string" },
+  "dashboardresourceid": { "type": "string" }
+ },
+ "resources": [
+{
+  "properties": {
+    "lenses": {
+      "0": {
+        "order": 0,
+        "parts": {
+          "0": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 17,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name == \"Web Services Call\" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n, environmentName=cloud_RoleInstance \r\n, environmentType = tostring( customDimensions.environmentType )\r\n, category = tostring( customDimensions.category )\r\n, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan \r\n| summarize numberOfWSCalls = count(), totalExecutionTimeInSec = sum(executionTimeInMS)/1000 by aadID, environmentName, environmentType, category\r\n| order by numberOfWSCalls desc\n"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "4321192b-cc5c-4c58-b13b-75cd9e39457b"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Web Service Calls - aggregated to category",
+                  "PartSubTitle": "Count of calls and total execution time"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "1": {
+            "position": {
+              "x": 0,
+              "y": 4,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "traces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name == \"Web Services Call\" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n, environmentName=cloud_RoleInstance \r\n, environmentType = tostring( customDimensions.environmentType )\r\n, category = tostring( customDimensions.category )\r\n, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan \r\n| summarize numberOfWSCalls = count() by category\r\n"
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "category",
+                      "type": "string"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "numberOfWSCalls",
+                        "type": "long"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  }
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "0bfed59e-40ae-40c3-9131-2318bd1439a6"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsDonut"
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Distribution of calls",
+                  "PartSubTitle": "Number of calls"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "2": {
+            "position": {
+              "x": 6,
+              "y": 4,
+              "colSpan": 6,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "// distribution of execution time across categories\r\ntraces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name == \"Web Services Call\" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n, environmentName=cloud_RoleInstance \r\n, environmentType = tostring( customDimensions.environmentType )\r\n, category = tostring( customDimensions.category )\r\n, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan \r\n| summarize totalExecutionTimeInSec = sum(executionTimeInMS)/1000 by category\r\n"
+                },
+                {
+                  "name": "Dimensions",
+                  "value": {
+                    "xAxis": {
+                      "name": "category",
+                      "type": "string"
+                    },
+                    "yAxis": [
+                      {
+                        "name": "totalExecutionTimeInSec",
+                        "type": "real"
+                      }
+                    ],
+                    "splitBy": [],
+                    "aggregation": "Sum"
+                  }
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "133a9f92-1115-40f3-b1a1-22289e5a4f89"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsDonut"
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Distribution of resources spent",
+                  "PartSubTitle": "Execution time"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          },
+          "3": {
+            "position": {
+              "x": 0,
+              "y": 8,
+              "colSpan": 12,
+              "rowSpan": 5
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "ComponentId",
+                  "value": {
+                    "SubscriptionId": "[parameters('subscriptionid')]",
+                    "ResourceGroup": "[parameters('resourcegroupname')]",
+                    "Name": "[parameters('appinsightname')]",
+                    "ResourceId": "[parameters('appinsightresourceid')]"
+                  }
+                },
+                {
+                  "name": "Query",
+                  "value": "// top 10 expensive calls in production\r\ntraces\r\n| where timestamp > ago(60d) // adjust as needed\r\n| where operation_Name == \"Web Services Call\" // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)\r\n// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'\r\n| extend aadID = tostring( customDimensions.aadTenantId )\r\n, environmentName=cloud_RoleInstance \r\n, environmentType = tostring( customDimensions.environmentType )\r\n, category = tostring( customDimensions.category )\r\n, endpoint = tostring( customDimensions.endpoint )\r\n, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan \r\n| where environmentType == 'Production'\r\n| summarize averageExecutionTimeInSec = avg(executionTimeInMS)/1000 by endpoint, category\r\n| order by averageExecutionTimeInSec desc\r\n| limit 10\r\n"
+                },
+                {
+                  "name": "Version",
+                  "value": "1.0"
+                },
+                {
+                  "name": "PartId",
+                  "value": "11ebdaeb-1383-47bb-a2b5-a1fbbb614f27"
+                },
+                {
+                  "name": "PartTitle",
+                  "value": "Analytics"
+                },
+                {
+                  "name": "PartSubTitle",
+                  "value": "[parameters('appinsightname')]"
+                },
+                {
+                  "name": "resourceTypeMode",
+                  "value": "components"
+                },
+                {
+                  "name": "ControlType",
+                  "value": "AnalyticsGrid"
+                },
+                {
+                  "name": "Dimensions",
+                  "isOptional": true
+                },
+                {
+                  "name": "TimeRange",
+                  "isOptional": true
+                },
+                {
+                  "name": "DashboardId",
+                  "isOptional": true
+                },
+                {
+                  "name": "SpecificChart",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/AppInsightsExtension/PartType/AnalyticsPart",
+              "settings": {
+                "content": {
+                  "PartTitle": "Top 10 expensive calls",
+                  "PartSubTitle": "Production environments only"
+                }
+              },
+              "asset": {
+                "idInputName": "ComponentId",
+                "type": "ApplicationInsights"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "utc",
+                "granularity": "auto",
+                "relative": "24h"
+              },
+              "displayCache": {
+                "name": "UTC Time",
+                "value": "Past 24 hours"
+              },
+              "filteredPartIds": [
+                "StartboardPart-AnalyticsPart-fcc42381-baa6-4987-b360-2040c4eee118",
+                "StartboardPart-AnalyticsPart-fcc42381-baa6-4987-b360-2040c4eee11a",
+                "StartboardPart-AnalyticsPart-fcc42381-baa6-4987-b360-2040c4eee11c",
+                "StartboardPart-AnalyticsPart-fcc42381-baa6-4987-b360-2040c4eee11e"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "WebServiceCalls",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "[parameters('resourcelocation')]",
+  "tags": {
+    "hidden-title": "Web Service Calls"
+  },
+  "apiVersion": "2015-08-01-preview"
+}
+ ],
+ "outputs": {}
+}
