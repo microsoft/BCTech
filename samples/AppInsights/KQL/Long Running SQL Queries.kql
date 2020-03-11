@@ -41,7 +41,8 @@ traces
 , sqlStatement = tostring(customDimensions.sqlStatement)
 |extend numberOfJoins = countof(sqlStatement, "JOIN") 
 , numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
-| project environmentName=cloud_RoleInstance 
+| project aadID
+, environmentName=cloud_RoleInstance 
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , alObjectId = customDimensions.alObjectId
