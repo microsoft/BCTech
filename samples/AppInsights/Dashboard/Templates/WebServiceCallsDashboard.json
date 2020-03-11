@@ -261,7 +261,7 @@
               "settings": {
                 "content": {
                   "PartTitle": "Distribution of resources spent",
-                  "PartSubTitle": "Execution time"
+                  "PartSubTitle": "Execution time (in seconds)"
                 }
               },
               "asset": {
