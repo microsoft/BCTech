@@ -1,0 +1,14 @@
+// Use a query like this as a condition in an alert on long logins
+traces
+| where operation_Name == "Authorization Succeeded (Open Company)"
+| extend ClientType = customDimensions.clientType
+, CompanyName = customDimensions.companyName
+, EnvironmentType = customDimensions.environmentType 
+, ExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+| where ExecutionTimeInMS > 10000 // change to a threshold that makes sense to your organization
+| project timestamp, operation_Id, session_Id
+, EnvironmentType 
+, ClientType 
+, CompanyName 
+, ExecutionTimeInMS
+
