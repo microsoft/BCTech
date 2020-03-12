@@ -19,7 +19,7 @@ Once you have created the AppInsights account, make a note of the *instrumentati
 
 The next step depends on whether you are an ISV or a VAR.
 
-If you are an **ISV**, you must specify the instrumentation key in your app.json file. Once you install your app in a Business Central environment, telemetry relating to yoru app will start to flow into your AppInsights account.
+**Still in private preview:** If you are an **ISV**, you must specify the instrumentation key in your app.json file. Once you install your app in a Business Central environment, telemetry relating to your app will start to flow into your AppInsights account.
 
 If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your AppInsights account.
 
