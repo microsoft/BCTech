@@ -23,3 +23,8 @@ We know that the dashboards we have provided might not match your needs exactly,
 Adding dashboards is done by exporting a dashboard from the Azure Portal, running the ConvertExportedDashboardToDashboardTemplate.ps1 and then adding the new template to the resources section in azuredeploy.json.
 
 As we improve our dashboards, you can merge the changes into your cloned repo and in this way stay up-to-date.
+
+
+
+# Disclaimer
+Sample code included in this repository is made available AS IS.

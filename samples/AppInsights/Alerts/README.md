@@ -11,3 +11,7 @@ Here is an example to get you started:
 Now you will get an email whenever your app or your customers make HTTP calls that fail.
 
 Please read more in the documentation for Application Insights: https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-unified-log
+
+
+# Disclaimer
+Sample code included in this repository is made available AS IS.

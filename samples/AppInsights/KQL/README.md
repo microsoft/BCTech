@@ -16,3 +16,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Web Service Request | 2020 release wave 1, RC| TBA |
 | Report Execution | 2020 release wave 1, RC| TBA |
 | Open Company timing | 2020 release wave 1, RC | TBA |
+
+
+# Disclaimer
+Sample code included in this repository is made available AS IS.
