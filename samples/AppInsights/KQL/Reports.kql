@@ -1,0 +1,168 @@
+// KQL samples - Report execution
+
+// successful report execution (raw data)
+// Use extend if you need to filter on a column extracted from customDimensions
+// This example uses project-away to filter out all "internal" columns
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Success report generation"   // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, numberOfRows = customDimensions.numberOfRows
+, result = customDimensions.result
+| project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
+
+
+// successful report execution (raw data)
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// This example uses project to only include the columns needed in the result set
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Success report generation"   // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+| project aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, numberOfRows = customDimensions.numberOfRows
+, result = customDimensions.result
+, message, customDimensions
+
+
+
+// failed report execution (raw data)
+// Use extend if you need to filter on a column extracted from customDimensions
+// This example uses project-away to filter out all "internal" columns
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Failed report generation"   // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, numberOfRows = customDimensions.numberOfRows
+, failureReason = customDimensions.result
+| project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
+
+
+
+// failed report execution (raw data)
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// This example uses project to only include the columns needed in the result set
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Failed report generation"   // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+| project aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, numberOfRows = customDimensions.numberOfRows
+, failureReason = customDimensions.result
+, message, customDimensions
+
+
+
+// cancelled report execution (raw data)
+// Use extend if you need to filter on a column extracted from customDimensions
+// This example uses project-away to filter out all "internal" columns
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Cancellation report generation"   // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, cancelReason = case(
+  message contains "The number of processed rows exceeded", "MaxRowsExceeded"
+, message contains "The action took longer to complete", "MaxTimeExceeded"
+, message contains "Received a cancellation request from the user", "UserCancelled"
+, "unknown"
+)
+| project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
+
+
+// cancelled report execution (raw data)
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// This example uses project to only include the columns needed in the result set
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where operation_Name == "Cancellation report generation"   // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
+// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| extend aadID = customDimensions.aadTenantId
+| project aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, cancelReason = case(
+  message contains "The number of processed rows exceeded", "MaxRowsExceeded"
+, message contains "The action took longer to complete", "MaxTimeExceeded"
+, message contains "Received a cancellation request from the user", "UserCancelled"
+, "unknown"
+)
+, message, customDimensions
