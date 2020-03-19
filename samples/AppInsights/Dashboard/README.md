@@ -12,6 +12,11 @@ your Application Insights Resource. All requested dashboards will be installed a
 
 <a href="https://freddyk.azurewebsites.net/api/AzureDeploy" referrerpolicy="origin" target="_blank"><img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/></a>
 
+[test][azuredeployfile]
+
+[azuredeployfile]: azuredeploy.json
+
+
 Each dashboard is a JSON file, that describes which *widgets* the dashboard should contain.
 
 
