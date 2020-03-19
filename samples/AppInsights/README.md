@@ -39,6 +39,9 @@ To grant a person read-only access to AppInsights, go to the Access control (IAM
 
 You might also need to add the role assignment "Reader" to the person on the Resource Group for the AppInsights subscription.
 
+## What about Privacy regulations such as GDPR?
+The Business Central service does not emit any End User Identifiable Information to AppInsights. So the telemetry is born GDPR compliant.
+
 
 # Resources
 * [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
