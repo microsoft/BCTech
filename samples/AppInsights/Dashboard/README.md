@@ -20,6 +20,8 @@ Each dashboard is a JSON file, that describes which *widgets* the dashboard shou
 
 We know that the dashboards we have provided might not match your needs exactly, and if you want to customize them, we recommend that you clone this repo and make your adjustments there, before importing the dashboard in the Azure portal.
 
+**Note:** The "Deploy To Azure" button above navigates to `https://portal.azure.com/#create/Microsoft.Template/uri/` followed by an escaped version of the URI of the azuredeploy.json file (In this repo: `https%3a%2f%2fraw.githubusercontent.com%2fmicrosoft%2fBCTech%2fmaster%2fsamples%2fAppInsights%2fDashboard%2fazuredeploy.json`). You will need to modify this URI for the button to deploy from your repository. 
+
 Adding dashboards is done by exporting a dashboard from the Azure Portal, running the ConvertExportedDashboardToDashboardTemplate.ps1 and then adding the new template to the resources section in azuredeploy.json.
 
 As we improve our dashboards, you can merge the changes into your cloned repo and in this way stay up-to-date.
