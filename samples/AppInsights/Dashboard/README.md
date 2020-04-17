@@ -10,7 +10,7 @@ To reduce the time-to-value for you, we have prepared a set of dashboards that y
 Clicking the *Deploy To Azure* button below will launch the Azure Portal with an ARM template, where you need to specify the subscription, resource group and name of 
 your Application Insights Resource. All requested dashboards will be installed and you can now remove the ones you do not need.
 
-<a href="https://freddyk.azurewebsites.net/api/AzureDeploy" target="_blank"><img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/></a>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fmicrosoft%2fBCTech%2fmaster%2fsamples%2fAppInsights%2fDashboard%2fazuredeploy.json" target="_blank"><img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/></a>
 
 Each dashboard is a JSON file, that describes which *widgets* the dashboard should contain.
 
@@ -19,6 +19,8 @@ Each dashboard is a JSON file, that describes which *widgets* the dashboard shou
 # Clone the repo
 
 We know that the dashboards we have provided might not match your needs exactly, and if you want to customize them, we recommend that you clone this repo and make your adjustments there, before importing the dashboard in the Azure portal.
+
+**Note:** The "Deploy To Azure" button above navigates to `https://portal.azure.com/#create/Microsoft.Template/uri/` followed by an escaped version of the URI of the azuredeploy.json file (In this repo: `https%3a%2f%2fraw.githubusercontent.com%2fmicrosoft%2fBCTech%2fmaster%2fsamples%2fAppInsights%2fDashboard%2fazuredeploy.json`). You will need to modify this URI for the button to deploy from your repository. 
 
 Adding dashboards is done by exporting a dashboard from the Azure Portal, running the ConvertExportedDashboardToDashboardTemplate.ps1 and then adding the new template to the resources section in azuredeploy.json.
 
