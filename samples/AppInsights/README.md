@@ -23,25 +23,6 @@ The next step depends on whether you are an ISV or a VAR.
 
 If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your AppInsights account.
 
-# Frequently Asked Questions (FAQ)
-## What is the data retention policy in AppInsights?
-The default retention for Application Insights resources is 90 days. Different retention periods can be selected for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550 or 730 days.
-
-See <https://docs.microsoft.com/en-us/azure/azure-monitor/app/pricing#change-the-data-retention-period> 
-
-## How do I delete data from AppInsights?
-Purge data in an Application Insights component by a set of user-defined filters.
-
-See <https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples> 
-
-## Can I grant read-only access to AppInsights?
-To grant a person read-only access to AppInsights, go to the Access control (IAM) page in the AppInsights portal, and then add the role assignment "Reader" to the person. 
-
-You might also need to add the role assignment "Reader" to the person on the Resource Group for the AppInsights subscription.
-
-## What about Privacy regulations such as GDPR?
-The Business Central service does not emit any End User Identifiable Information to AppInsights. So the telemetry is born GDPR compliant.
-
 
 # Resources
 * [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
