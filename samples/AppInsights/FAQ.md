@@ -5,7 +5,7 @@ Use this KQL query https://github.com/microsoft/BCTech/blob/master/samples/AppIn
 
 ## I deployed Azure dashboards, but they show no data
 If you have data present in AppInsights, please check the setting in the *Time range* selector on the  dashboard:
-![Time range selector in Azure Dashboard](dashboard.png)
+![Time range selector in Azure Dashboard](images/dashboard.png)
 
 ## What is the data retention policy in AppInsights?
 The default retention for Application Insights resources is 90 days. Different retention periods can be selected for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550 or 730 days.
