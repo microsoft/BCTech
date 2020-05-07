@@ -2,7 +2,7 @@
 
 A main obstacle when calling APIs is how to authenticate.
 
-The Admin Center API is based Azure Active Directory (AAD) authentication using the OAuth standard. OAuth can seem complicated at first, but once you understand the basics, it is easy to use and actually makes life much easier - especially when calling across AAD tenants.
+The Admin Center API is based on Azure Active Directory (AAD) authentication using the OAuth standard. OAuth can seem complicated at first, but once you understand the basics, it is easy to use and actually makes life much easier - especially when calling across AAD tenants.
 
 On this page, we explain a few simple steps that will get you up and running quickly.
 
@@ -40,7 +40,7 @@ On this page, we explain a few simple steps that will get you up and running qui
 
 
 
-## The Delegated Admin case
+## Specifically for Delegated Admins
 
 This section only applies to partners who have a reseller relationship with customers, also known as Delegated Admins.
 
