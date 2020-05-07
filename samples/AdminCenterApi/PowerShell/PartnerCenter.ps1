@@ -3,13 +3,12 @@
 # see their subscriptions, etc.
 
 
-# Install-Module PartnerCenter # only needs to be done once, see also https://docs.microsoft.com/powershell/module/partnercenter
+# Install-Module PartnerCenter  # only needs to be done once, see also https://docs.microsoft.com/powershell/module/partnercenter
 
 Connect-PartnerCenter
 
 
 # Get all customers
-Write-Host -ForegroundColor Cyan "Getting customers from Partner Center..."
 $customers = Get-PartnerCustomer
 Write-Host "Found $($customers.Length) customers."
 
@@ -21,10 +20,9 @@ $customers | Format-Table
 
 
 # Get subscriptions
-Write-Host -ForegroundColor Cyan "Getting the customers' subscriptions from Partner Center..."
 foreach ($customer in $customers)
 {
     Write-Host "$($customer.CustomerId), $($customer.Domain), $($customer.Name) has the following subscriptions:"
     $subscriptions = Get-PartnerCustomerSubscription -InputObject $customer
-    $subscriptions | % { Write-Output @{Status=$_.Status; Quantity=$_.Quantity; FriendlyName=$_.FriendlyName; IsTrial=$_.IsTrial } } | % {[PSCustomObject]$_} | Format-Table
+    $subscriptions | Select-Object -Property Status,Quantity,FriendlyName,IsTrial,CommitmentEndDate,AutoRenewEnabled | Format-Table
 }

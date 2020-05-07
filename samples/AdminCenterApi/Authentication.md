@@ -1,9 +1,10 @@
 # Authenticating to the Business Central Admin Center API
 
+A main obstacle when calling APIs is how to authenticate.
 
-TODO: link to Docs
+The Admin Center API is based Azure Active Directory (AAD) authentication using the OAuth standard. OAuth can seem complicated at first, but once you understand the basics, it is easy to use and actually makes life much easier - especially when calling across AAD tenants.
 
-
+On this page, we explain a few simple steps that will get you up and running quickly.
 
 
 
@@ -13,13 +14,13 @@ TODO: link to Docs
  2. *Register new application*
      - Click "App registrations"
      - Click "New registration"
-     - Give a name such as "App for managing customer Business Central environments"
+     - Give a name such as "App for managing Business Central environments"
      - Select "Accounts in any organizational directory (Any Azure AD directory - Multitenant)"
      - Add a redirect URI: "Public client/native" and "nativeBusinessCentralClient://auth"
      - Click "Register"
  3. Create the AAD application's service principal
      - On the AAD application's "Overview" page, locate the "Managed application in local directory" property
-     - If the value is a link that is called "Create Service Principal", then click that link
+     - If the value is a link called "Create Service Principal", then click that link
      - Navigate back in the browser to get back to the AAD application's "Overview" page
  4. Make a note of the "Application (client) ID"
  5. Add permission to call Business Central APIs:
@@ -41,11 +42,13 @@ TODO: link to Docs
 
 ## The Delegated Admin case
 
-If you are a VAR who has a Reseller relationship with your customers, then you can also manage your customers' Business Central environments.
+This section only applies to partners who have a reseller relationship with customers, also known as Delegated Admins.
 
-***TODO: add link to docs***
+As a delegated admin, you want to manage your customers' Business Central environments. This is different from an authentication perspective than managing your own Business Central environments.
 
-In order to call Business Central APIs fir a customer, you need to authenticate in the customer's AAD tenant, not in your own AAD tenant. This process normally requires an administrator of the customer's AAD tenant to give consent to your AAD application, however, this step can be avoided for delegated admins by adding your AAD application into the Admin Agents group in your own AAD tenant. This is described in more detail here: https://docs.microsoft.com/graph/auth-cloudsolutionprovider.
+In order to call Business Central APIs for a customer, you need to authenticate in the customer's AAD tenant, not in your own AAD tenant. This process normally requires an administrator of the customer's AAD tenant to give consent to your AAD application, however, this step can be avoided for delegated admins by adding your AAD application into the Admin Agents group in your own AAD tenant. This technique is described in more detail here: https://docs.microsoft.com/graph/auth-cloudsolutionprovider.
+
+In short, you need to execute the following PowerShell commands:
 
     Install-Module AzureAD
     Connect-AzureAD
@@ -54,4 +57,21 @@ In order to call Business Central APIs fir a customer, you need to authenticate 
     Add-AzureADGroupMember -ObjectId $adminAgentsGroup.ObjectId -RefObjectId $servicePrincipal.ObjectId
 
 Now it's all set up, and you should be able to use your AAD application (in your AAD tenant) to call
-into your customers' Business Central environments (in their AAD tenants)
+into your customers' Business Central environments (in their AAD tenants).
+
+
+
+## Obtain an Access Token
+
+You will use your newly registered AAD application to obtain a so-called *access token*, which is a long string that looks something like this:
+
+    eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSIsImtpZCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSJ9.eyJhdWQiOiJodHRwczovL2FwaS5idXNpbmVzc2NlbnRyYWwuZHluYW1pY3MuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2...yMTc3MTQ1ZTEwIl19.LZgQnXOLNNpJgBx5q7FOUgq5ka04lJkBw75kxMTUA7hFDEx6cVGOfVbnuv_Cj1RtnoxilXqGGPIkdyY6UN53oLYMiNhFUIooZF60XeO4rNzl2FCZlvzZR06MlQmpGWQSOUcS0Ey8U4yCbc5Y3TJJl9TlIa0ta8r-UaTY7rh-Y5jbadcwGbpw6uTHtN7Mc3WF1UqeYJbqvm_VlHEZoFORTHehUXcMDnIuPmx74oPUX46jw-WCqWp4PjNxO6GXoL-NsMVcwQ_Zt-H0aPkOevCAQ_KWtZRQA
+
+This string encodes different information, including who you are, and which API you want to call. You don't need to know all about access tokens - the main thing to know is that in order to use it, you need to send it in the Authorization header of each HTTP request, like this:
+
+    GET https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments
+    Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSIsImtpZCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSJ9.eyJhdWQiOiJodHRwczovL2FwaS5idXNpbmVzc2NlbnRyYWwuZHluYW1pY3MuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2...yMTc3MTQ1ZTEwIl19.LZgQnXOLNNpJgBx5q7FOUgq5ka04lJkBw75kxMTUA7hFDEx6cVGOfVbnuv_Cj1RtnoxilXqGGPIkdyY6UN53oLYMiNhFUIooZF60XeO4rNzl2FCZlvzZR06MlQmpGWQSOUcS0Ey8U4yCbc5Y3TJJl9TlIa0ta8r-UaTY7rh-Y5jbadcwGbpw6uTHtN7Mc3WF1UqeYJbqvm_VlHEZoFORTHehUXcMDnIuPmx74oPUX46jw-WCqWp4PjNxO6GXoL-NsMVcwQ_Zt-H0aPkOevCAQ_KWtZRQA
+
+To obtain an access token in PowerShell, you can follow the steps in the [Authenticate.ps1](PowerShell/Authenticate.ps1) script.
+
+And to use the access token to call the Admin Center API, you can follow the steps in e.g. the [Environments.ps1](PowerShell/Environments.ps1) script.

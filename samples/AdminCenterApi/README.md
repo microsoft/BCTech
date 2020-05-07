@@ -1,6 +1,6 @@
 # Introduction
 
-The [Business Central Administration Center](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center) can be used to manage Business Central environments.
+The [Business Central Administration Center](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center) can be used for managing Business Central environments.
 
 There is a corresponding [Business Central Administration Center API](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/administration-center-api), which can be used e.g. for automating management processes.
 
