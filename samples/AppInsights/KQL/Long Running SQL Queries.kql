@@ -1,7 +1,7 @@
 // KQL samples - Long Running SQL Queries
 
 // Important: if you query telemetry from an environment on version 15.0-15.2 
-// Then please see below for a sample query. The schema changed in 15.3 
+// Then please see below for a sample query. The schema changed starting in 15.3 
 
 // Long running SQL queries (RAW data)
 // Use extend if you need to use a column extracted from customDimensions in a function (such as countof)
@@ -67,11 +67,12 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
-| extend aadID = customDimensions.['AadTenantId']
-, executionTime = customDimensions.['Execution time (ms)']
-, sqlStatement = tostring( customDimensions.['SQL statement'] )
 | extend alObjectId = tostring( customDimensions.['AL Object Id'] )
-, alObjectName = tostring( customDimensions.['AL Object name'] )
+| where alObjectId > 0 // filter out internal server calls
+| extend aadID = customDimensions.['AadTenantId']
+       , executionTime = customDimensions.['Execution time (ms)']
+       , sqlStatement = tostring( customDimensions.['SQL statement'] )
+| extend alObjectName = tostring( customDimensions.['AL Object name'] )
 , alObjectType = tostring( customDimensions.['AL Object type'] )
 , alStackTrace = tostring( customDimensions.['AL Stack trace'] )
 , clientType = tostring( customDimensions.['Client type'] )
