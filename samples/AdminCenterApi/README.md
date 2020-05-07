@@ -4,12 +4,17 @@ The [Business Central Administration Center](https://docs.microsoft.com/en-us/dy
 
 There is a corresponding [Business Central Administration Center API](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/administration-center-api), which can be used e.g. for automating management processes.
 
-If you are a partner who has a reseller relationship to one or more customers, you can also use the API to manage your *customers'* Business Central environments.
-
-
 This repo contains code samples that are intended to get you started using the APIs.
 
-There is also a section on [authentication with Azure Active Directory (AAD)](Authentication.md).
+There is also an explanation of [Authenticating to the Business Central Admin Center API](Authentication.md).
+
+
+
+## Specifically for Delegated Admins
+
+If you are a partner who has a reseller relationship to one or more customers, also known as delegated admins, you can also use the APIs to manage your *customers'* Business Central environments.
+
+There is a dedicated section that covers [how to call Partner Center APIs](PowerShell/PartnerCenter.ps1), which e.g. can be used to list all your customers.
 
 
 

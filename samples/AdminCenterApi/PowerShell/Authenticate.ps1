@@ -10,29 +10,20 @@ $aadAppRedirectUri = "nativeBusinessCentralClient://auth" # partner's AAD app re
 
 
 # Load Microsoft.IdentityModel.Clients.ActiveDirectory.dll
-if (!(Test-Path $identityClientPath))
-{
-    Write-Error "There is no file at $identityClientPath"
-}
 Add-Type -Path $identityClientPath
 
 
 # Get access token
-Write-Host -ForegroundColor Cyan "Authenticating to Azure Active Directory in tenant $aadTenantId to get an access token for Business Central..."
 $ctx = [Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext]::new("https://login.microsoftonline.com/$aadTenantId")
 $redirectUri = New-Object -TypeName System.Uri -ArgumentList $aadAppRedirectUri
 $platformParameters = New-Object -TypeName Microsoft.IdentityModel.Clients.ActiveDirectory.PlatformParameters -ArgumentList ([Microsoft.IdentityModel.Clients.ActiveDirectory.PromptBehavior]::Always)
 $accessToken = $ctx.AcquireTokenAsync("https://api.businesscentral.dynamics.com", $aadAppId, $redirectUri, $platformParameters).GetAwaiter().GetResult().AccessToken
 
 
+# Print access token
+Write-Host (ConvertTo-Json (ConvertFrom-Json ([System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($accessToken.Split('.')[1])))) -Depth 99)
+Write-Host -ForegroundColor Cyan 'Authentication complete - we have an access token for Business Central, and it is stored in the $accessToken variable.'
+
+
 # Extract the AAD tenant id from the access token. If you ever have an access token, and you want to know in which customer AAD tenant it is valid, you can execute this line:
 $aadTenantId = (ConvertTo-Json (ConvertFrom-Json ([System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($accessToken.Split('.')[1])))).tid)
-
-
-# Print access token
-$middlePart = $accessToken.Split('.')[1]
-$middlePartBytes = [Convert]::FromBase64String($middlePart)
-$middlePartJson = [System.Text.Encoding]::UTF8.GetString($middlePartBytes)
-$middlePartJson = ConvertTo-Json (ConvertFrom-Json $middlePartJson) -Depth 99 # prettify json
-Write-Host $middlePartJson
-Write-Host -ForegroundColor Cyan 'Authentication complete - we have an access token for Business Central, and it is stored in the $accessToken variable.'
