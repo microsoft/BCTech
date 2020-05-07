@@ -1,10 +1,12 @@
 # This sample is relevant for partners who are registered as resellers for one or more customers.
-# It allows the partner to perform Partner Center operations programmatically, e.g., to enumerate customers
+# It allows the partner to perform Partner Center operations programmatically, e.g., to enumerate customers,
 # see their subscriptions, etc.
 
 
-# Install-Module PartnerCenter  # only needs to be done once, see also https://docs.microsoft.com/powershell/module/partnercenter
+Install-Module PartnerCenter  # only needs to be done once, see documentation at https://docs.microsoft.com/powershell/module/partnercenter
 
+
+# Authenticate to Partner Center
 Connect-PartnerCenter
 
 
