@@ -1,11 +1,4 @@
-In this folder, you will find samples of Kusto Query Language (KQL) for each type of signal that is send to Application Insights.
-
-You can use Kusto queries as the data source in a number of places. E.g.
-* the Logs part of Application Insights in the Azure portal
-* PowerBI reports
-* Azure Monitor Alerts
-* Azure Dashboards
-* Jupyter Notebooks (with the Kqlmagic extension)
+In this folder, you will find samples of Kusto Query Language (KQL) for each type of signal that is sent to Application Insights.
 
 Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
 
@@ -16,6 +9,18 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Web Service Request | 2020 release wave 1, RC| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
 | Report Execution | 2020 release wave 1, RC| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace | 
 | Open Company timing | 2020 release wave 1, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
+| Company life cycle | 2020 release wave 1, Update 1 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace (not live yet) |
+| Update errors due to exceptions in upgrade code | 2020 release wave 1, Update 1 | (pending docs link)) |
+
+
+# Usage of Kusto Queries
+You can use Kusto queries as the data source in a number of places. E.g.
+* the Logs part of Application Insights in the Azure portal
+* PowerBI reports
+* Azure Monitor Alerts
+* Azure Dashboards
+* Jupyter Notebooks (with the Kqlmagic extension)
+
 
 # Resources 
 Here are some resources for you to get started on Kusto Query Language (KQL)
