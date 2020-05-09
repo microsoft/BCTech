@@ -7,6 +7,11 @@ Use this KQL query https://github.com/microsoft/BCTech/blob/master/samples/AppIn
 If you have data present in AppInsights, please check the setting in the *Time range* selector on the  dashboard:
 ![Time range selector in Azure Dashboard](images/dashboard.png)
 
+## What does it cost?
+Application Insights is billed based on the volume of telemetry data that your application sends. The first 5 GB of data per month is free. Regarding data retention, every GB of data ingested can be retained at no charge for up to first 90 days.
+
+Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information
+
 ## What is the data retention policy in AppInsights?
 The default retention for Application Insights resources is 90 days. Different retention periods can be selected for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550 or 730 days.
 
