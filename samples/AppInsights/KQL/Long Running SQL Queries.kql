@@ -3,15 +3,17 @@
 // Important: if you query telemetry from an environment on version 15.0-15.2 
 // Then please see below for a sample query. The schema changed starting in 15.3 
 
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
 // Long running SQL queries (RAW data)
-// Use extend if you need to use a column extracted from customDimensions in a function (such as countof)
-// This example uses project-away to filter out all "internal" columns
 traces
 | where timestamp > ago(60d) // adjust as needed
-| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
-// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
+| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used 
+     or customDimensions.eventId == 'RT0005' // starting from version 16.1, the eventId is used to identity signal types
 | where customDimensions.alObjectId > 0 // filter out internal server calls
-| extend aadID = customDimensions.aadTenantId
+| extend eventId = customDimensions.eventId 
+, aadID = customDimensions.aadTenantId
 , sqlStatement = tostring(customDimensions.sqlStatement)
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -27,43 +29,12 @@ traces
 , extensionVersion = customDimensions.extensionVersion
 | extend numberOfJoins = countof(sqlStatement, "JOIN") 
 , numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
-| project-rename environmentName=cloud_RoleInstance 
-| project-away severityLevel, itemType, customMeasurements, client_Browser, client_City, client_CountryOrRegion, client_IP, client_OS, client_Type, client_StateOrProvince, client_Model , operation_SyntheticSource, operation_ParentId, user_Id, user_AuthenticatedId, user_AccountId , application_Version, sdkVersion, iKey, appId, appName, itemId, itemCount, operation_Name, operation_Id 
-
-
-// Long running SQL queries (RAW data)
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// This example uses project to only include the columns needed in the result set
-traces
-| where timestamp > ago(60d) // adjust as needed
-| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
-// | where customDimensions.eventCode == 'TODO - coming in a later version of the schema'
-| where customDimensions.alObjectId > 0 // filter out internal server calls
-| extend aadID = customDimensions.aadTenantId
-, sqlStatement = tostring(customDimensions.sqlStatement)
-|extend numberOfJoins = countof(sqlStatement, "JOIN") 
-, numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
-| project aadID
-, environmentName=cloud_RoleInstance 
-, environmentType = customDimensions.environmentType
-, companyName = customDimensions.companyName
-, alObjectId = customDimensions.alObjectId
-, alObjectName = customDimensions.alObjectName
-, alObjectType = customDimensions.alObjectType
-, alStackTrace = customDimensions.alStackTrace
-, clientType = customDimensions.clientType
-, executionTime = customDimensions.executionTime
-, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
-, extensionId = customDimensions.extensionId
-, extensionName = customDimensions.extensionName
-, extensionVersion = customDimensions.extensionVersion
-, sqlStatement 
-, numberOfJoins 
-, numberOfOuterApplys 
-, message, customDimensions,  
 
 
 // version that works on 15.0, 15.2, and 15.2 versions
+// note how all the calls to custom dimensions have to use the customDimensions.['<column name>'] syntax
+// which makes it cumbersome to write queries. 
+// This is why we changed the schema to use camelCasing for column names from 15.3 and onwards
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
