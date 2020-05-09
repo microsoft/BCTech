@@ -1,0 +1,31 @@
+// Spot database regressions: 
+// Look back last month for all environments and count number of Long Running Queries
+// Compare with this month
+
+let lastMonthsCounts =
+traces
+| where timestamp > ago(60d) 
+| where timestamp <= ago(30d) 
+| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used 
+     or customDimensions.eventId == 'RT0005' // starting from version 16.1, the eventId is used to identity signal types
+| where customDimensions.alObjectId > 0 // filter out internal server calls
+| extend aadId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, companyName = tostring( customDimensions.companyName )
+| summarize last_month_count=count() by aadId, environmentName, companyName 
+;
+let thisMonthsCounts =
+traces
+| where timestamp > ago(30d) 
+| where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used 
+//     or customDimensions.eventId == 'RT0005' // starting from version 16.1, the eventId is used to identity signal types
+//| where customDimensions.eventId == 'RT0005'
+| where customDimensions.alObjectId > 0 // filter out internal server calls
+| extend aadId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, companyName = tostring( customDimensions.companyName )
+| summarize this_month_count=count() by aadId, environmentName, companyName 
+;
+lastMonthsCounts 
+| join kind=inner ( thisMonthsCounts ) 
+    on $left.aadId == $right.aadId and $left.environmentName == $right.environmentName and $left.companyName == $right.companyName
