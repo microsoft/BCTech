@@ -2,7 +2,7 @@ In this folder, you will find samples of Kusto Query Language (KQL) for each typ
 
 Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
 
-|Signal | Emited from version, update | Documentation |
+|Signal | Emited from version, update | Documentation (use CTRL+click to open in a new tab) |
 | ------ | ------ | ------ |
 | Long running operation (SQL query) | 2019 release wave 2, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-long-running-sql-query-trace |
 | Authorization | 2019 release wave 2, Update 2| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
