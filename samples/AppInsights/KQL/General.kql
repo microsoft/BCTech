@@ -1,18 +1,27 @@
-// This query shows available signal in your Application Insights data store
-// use this query for installations running 16.0 or earlier
+// Available signal in your Application Insights data store
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
-| summarize count(operation_Name) by operation_Name
+| extend eventId = tostring( customDimensions.eventId )
+// starting in version 16.1, all signal will have an eventId identifier
+// earlier versions of the schema used operation_Name as the identifier
+| extend signalIdentifier = case(
+  eventId <> "", eventId,
+  operation_Name <> "", operation_Name, 
+  "Unknown signal type"
+) 
+| distinct signalIdentifier
+| order by signalIdentifier asc
+
 
 
 // Use this query to track version changes (minor/major upgrades and/or hotfixes) in components in your environments
 // A version is only shown here if telemetry has been emitted (will happen if a user tries to login)
 traces
-| where timestamp > ago(60d)
+| where timestamp > ago(60d) // change if your retention policy is different than the default
 | extend aadID = tostring( customDimensions.aadTenantId )
 | extend environmentName = tostring( customDimensions.environmentName )
 | extend component = tostring( customDimensions.component )
 | extend componentVersion = tostring( customDimensions.componentVersion )
 | summarize max(timestamp) by aadID, environmentName, component, componentVersion
-| order by max_timestamp desc 
+| order by aadID, environmentName,  max_timestamp desc 
 | limit 10
