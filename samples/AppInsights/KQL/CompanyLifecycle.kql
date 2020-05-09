@@ -1,0 +1,68 @@
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
+// See this section in the performance tuning guide
+// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#be-cautious-with-the-copy-company-operation
+
+// create company signal (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0001' // starting from version 16.1, the eventId is used to identity signal types
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, result = customDimensions.result
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, message, customDimensions
+
+
+// copy company signal (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0002' // starting from version 16.1, the eventId is used to identity signal types
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyNameSource = customDimensions.companyNameSource
+, companyNameDestination = customDimensions.companyNameDestination
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, result = customDimensions.result
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, message, customDimensions
+
+
+// delete company signal (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0003' // starting from version 16.1, the eventId is used to identity signal types
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, result = customDimensions.result
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, message, customDimensions
