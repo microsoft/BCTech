@@ -7,7 +7,6 @@
 
 
 # Get list of environments
-Write-Host -ForegroundColor Cyan "Listing environments for a customer..."
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments" `

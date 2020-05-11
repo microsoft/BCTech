@@ -7,7 +7,6 @@ $environmentName = "MyProd"
 
 
 # List installed apps
-Write-Host -ForegroundColor Cyan "Listing installed apps in environment $environmentName for a customer..."
 $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps" `
@@ -17,7 +16,6 @@ Write-Host $installedApps
 
 
 # Get available updates
-Write-Host -ForegroundColor Cyan "Getting available app updates for environment $environmentName for a customer..."
 $response= Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps/availableUpdates" `
@@ -29,7 +27,6 @@ Write-Host $availableUpdates
 # Update one of the apps
 $appIdToUpdate = "63ca2fa4-4f03-4f2b-a480-172fef340d3f"
 $appTargetVersion = "16.0.11240.12736"
-Write-Host -ForegroundColor Cyan "Scheduling an update of app $appIdToUpdate in environment $environmentName..."
 $response= Invoke-WebRequest `
     -Method Post `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/update" `
@@ -43,7 +40,6 @@ Write-Host $operationStatus
 
 
 # Check update status
-Write-Host -ForegroundColor Cyan "Checking status on the update operation..."
 $response= Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/operations" `
