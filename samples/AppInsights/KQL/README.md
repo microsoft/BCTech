@@ -10,7 +10,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Report Execution | 2020 release wave 1, RC| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace | 
 | Open Company timing | 2020 release wave 1, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
 | Company lifecycle (create/copy/delete) | 2020 release wave 1, Update 1 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace (not live yet) |
-| Update errors due to exceptions in upgrade code | 2020 release wave 1, Update 1 | (pending docs link) |
+| Update errors due to exceptions in upgrade code | 2020 release wave 1, Update 2 | (pending docs link) |
 
 
 # Usage of Kusto Queries
