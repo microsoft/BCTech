@@ -36,7 +36,7 @@ traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Failed report generation" // do note that in a later version of the schema, this field will not be used 
   or customDimensions.eventId == 'RT0006' // introduced in version 16.1
-| where failurcustomDimensions.result <> "Success"
+| where customDimensions.result <> "Success"
 | extend aadID = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
@@ -63,7 +63,7 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Cancellation report generation" // do note that in a later version of the schema, this field will not be used   
-or customDimensions.eventId == "RT0007" // introduced in version 16.1
+     or customDimensions.eventId == "RT0007" // introduced in version 16.1
 | extend aadID = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
