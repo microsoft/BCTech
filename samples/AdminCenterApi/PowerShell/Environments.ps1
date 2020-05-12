@@ -11,8 +11,7 @@ $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments" `
     -Headers @{Authorization=("Bearer $accessToken")}
-$environments = ConvertTo-Json (ConvertFrom-Json $response.Content) # prettify json
-Write-Host $environments
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Set AppInsights key
@@ -79,4 +78,9 @@ $response = Invoke-WebRequest `
               } | ConvertTo-Json) `
     -Headers @{Authorization=("Bearer $accessToken")} `
     -ContentType "application/json"
+
+
+
+
+
 

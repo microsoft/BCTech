@@ -11,8 +11,7 @@ $response = Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps" `
     -Headers @{Authorization=("Bearer $accessToken")}
-$installedApps = ConvertTo-Json (ConvertFrom-Json $response.Content) # prettify json
-Write-Host $installedApps
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Get available updates
@@ -20,13 +19,12 @@ $response= Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps/availableUpdates" `
     -Headers @{Authorization=("Bearer $accessToken")}
-$availableUpdates = ConvertTo-Json (ConvertFrom-Json $response.Content) # prettify json
-Write-Host $availableUpdates
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Update one of the apps
-$appIdToUpdate = "63ca2fa4-4f03-4f2b-a480-172fef340d3f"
-$appTargetVersion = "16.0.11240.12736"
+$appIdToUpdate = "334ef79e-547e-4631-8ba1-7a7f18e14de6"
+$appTargetVersion = "16.0.11240.12188"
 $response= Invoke-WebRequest `
     -Method Post `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/update" `
@@ -35,8 +33,7 @@ $response= Invoke-WebRequest `
               } | ConvertTo-Json) `
     -Headers @{Authorization=("Bearer $accessToken")} `
     -ContentType "application/json"
-$operationStatus = ConvertTo-Json (ConvertFrom-Json $response.Content) # prettify json
-Write-Host $operationStatus
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Check update status
@@ -44,6 +41,5 @@ $response= Invoke-WebRequest `
     -Method Get `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/operations" `
     -Headers @{Authorization=("Bearer $accessToken")}
-$operations = ConvertTo-Json (ConvertFrom-Json $response.Content) # prettify json
-Write-Host $operations
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
