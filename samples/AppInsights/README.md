@@ -24,7 +24,7 @@ The next step depends on whether you are an ISV or a VAR.
 If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your AppInsights account. You can also set the instrumentation key using the Business Central Administration Center API.
 
 
-# Resources
+# Resources (use CTRL + click to open in a new browser tab/page)
 * [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
 * [Business Central Administration Center API - How to set the telemetry key](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/administration-center-api#put-appinsights-key)
 
