@@ -3,14 +3,14 @@
 
 
 # Parameters
-$identityClientPath = "C:\Program Files\WindowsPowerShell\Modules\AzureAD\2.0.2.76\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" # Install-Module AzureAD to get this
-$aadTenantId = "14ae87bb-40fe-434a-b185-8eea9645e857"     # customer's tenant id
 $aadAppId = "a19cb26a-2e4c-408b-82e1-6311742ecc50"        # partner's AAD app id
 $aadAppRedirectUri = "nativeBusinessCentralClient://auth" # partner's AAD app redirect URI
 
+$aadTenantId = "14ae87bb-40fe-434a-b185-8eea9645e857"     # customer's tenant id
+
 
 # Load Microsoft.IdentityModel.Clients.ActiveDirectory.dll
-Add-Type -Path $identityClientPath
+Add-Type -Path "C:\Program Files\WindowsPowerShell\Modules\AzureAD\2.0.2.76\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" # Install-Module AzureAD to get this
 
 
 # Get access token

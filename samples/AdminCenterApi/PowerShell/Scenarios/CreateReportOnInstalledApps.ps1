@@ -35,7 +35,11 @@ function GetCustomersWithBusinessCentralSubscriptions()
         $bcSubscriptions = $subscriptions | ? -Property FriendlyName -Like "*business central*" | ? -Property Status -eq "active"
         if ($bcSubscriptions)
         {
-            Write-Output $customer.CustomerId
+            Write-Output @{
+                aadTenantId = $customer.CustomerId
+                domain = $customer.Domain
+                name = $customer.Name
+            }
             Write-Host " has Business Central license"
         }
         else
@@ -100,25 +104,27 @@ function GetEnvironmentAppAvailableUpdates($CustomerAadTenantId, $EnvironmentNam
 # MAIN SECTION
 
 # Get all customers from Partner Center
-$customerAadTenantIds = GetCustomersWithBusinessCentralSubscriptions
+$businessCentralCustomers = GetCustomersWithBusinessCentralSubscriptions
 
 # Query the Admin Center for these customers and their environments
 $result = @()
-foreach ($customerAadTenantId in $customerAadTenantIds)
+foreach ($businessCentralCustomer in $businessCentralCustomers)
 {
-    Write-Host -ForegroundColor Cyan "Processing customer tenant $customerAadTenantId..."
-    $customerEnvironments = GetCustomerEnvironments -CustomerAadTenantId $customerAadTenantId
+    Write-Host -ForegroundColor Cyan "Processing customer $($businessCentralCustomer.aadTenantId)..."
+    $customerEnvironments = GetCustomerEnvironments -CustomerAadTenantId $($businessCentralCustomer.aadTenantId)
 
     foreach ($customerEnvironment in $customerEnvironments)
     {
         Write-Host -NoNewline "  Processing environment $($customerEnvironment.name)..."
-        $environmentInstalledApps = GetEnvironmentInstalledApps -CustomerAadTenantId $customerAadTenantId -EnvironmentName $customerEnvironment.name
-        $environmentAvailableAppUpdates = GetEnvironmentAppAvailableUpdates -CustomerAadTenantId $customerAadTenantId -EnvironmentName $customerEnvironment.name
+        $environmentInstalledApps = GetEnvironmentInstalledApps -CustomerAadTenantId $($businessCentralCustomer.aadTenantId) -EnvironmentName $customerEnvironment.name
+        $environmentAvailableAppUpdates = GetEnvironmentAppAvailableUpdates -CustomerAadTenantId $($businessCentralCustomer.aadTenantId) -EnvironmentName $customerEnvironment.name
 
         foreach ($environmentInstalledApp in $environmentInstalledApps)
         {
             $result += @{
-                CustomerAadTenantId = $customerAadTenantId
+                CustomerAadTenantId = $($businessCentralCustomer.aadTenantId)
+                CustomerName = $($businessCentralCustomer.name)
+                CustomerDomain = $($businessCentralCustomer.domain)
                 EnvironmentName = $customerEnvironment.name
                 EnvironmentType = $customerEnvironment.type
                 Version = $customerEnvironment.applicationVersion
@@ -128,6 +134,8 @@ foreach ($customerAadTenantId in $customerAadTenantIds)
                 AppPublisher = $environmentInstalledApp.publisher
                 AppInstalledVersion = $environmentInstalledApp.version
                 AppAvailableUpdateVersion = ($environmentAvailableAppUpdates | ? -Property appId -EQ $environmentInstalledApp.id | Select-Object -First 1).version
+                QualifiedEnvironmentName = "$($businessCentralCustomer.aadTenantId) $($customerEnvironment.name)"
+                QualifiedAppName = "$($environmentInstalledApp.id) $($environmentInstalledApp.name)"
             }
         }
         Write-Host " done"
@@ -137,7 +145,7 @@ foreach ($customerAadTenantId in $customerAadTenantIds)
 # Save to file
 $result | 
    % { New-Object PSObject -Property $_ } | 
-   Select-Object -Property CustomerAadTenantId,EnvironmentName,EnvironmentType,Version,Country,AppId,AppName,AppPublisher,AppInstalledVersion,AppAvailableUpdateVersion | 
+   Select-Object -Property CustomerAadTenantId,CustomerName,CustomerDomain,EnvironmentName,EnvironmentType,Version,Country,AppId,AppName,AppPublisher,AppInstalledVersion,AppAvailableUpdateVersion,QualifiedEnvironmentName,QualifiedAppName | 
    Export-Csv -Path $outputFilePath -NoTypeInformation
 
 Write-Host "File saved to $outputFilePath. You can e.g. open it in Excel and make a pivot table analysis on it."
