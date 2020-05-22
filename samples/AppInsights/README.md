@@ -23,6 +23,18 @@ The next step depends on whether you are an ISV or a VAR.
 
 If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your AppInsights account. You can also set the instrumentation key using the Business Central Administration Center API.
 
+# Will you backport the Application Insights instrumentation to versions prior to 15.0?
+It took a lot of refactoring in the server and client to make this happen. So it is unlikely that we will backport the Application Insights instrumentation to versions prior to 15.0.
+
+For each new signal type we add, we try to backport to the current major release (16.x right now) if possible.
+
+For on-premises installations (private or public cloud), you can create an application/service that listens on the ETW (Event Tracing for Windows) events that we use for internal telemetry and then send them to appinsights. 
+
+This is documented here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tools-monitor-performance-counters-and-events and here https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/monitor-server-events
+
+See the Application Insights documentation for an introduction on how to emit telemetry from a .NET console application:
+[The Application Insights for .NET console applications](https://docs.microsoft.com/en-us/azure/azure-monitor/app/console)
+
 
 # Resources (use CTRL + click to open in a new browser tab/page)
 * [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
