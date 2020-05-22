@@ -28,7 +28,7 @@ It took a lot of refactoring in the server and client to make this happen. So it
 
 For each new signal type we add, we try to backport to the current major release (16.x right now) if possible.
 
-For on-premises installations (private or public cloud), you can create an application/service that listens on the ETW (Event Tracing for Windows) events that we use for internal telemetry and then send them to appinsights. 
+For on-premises installations (private or public cloud), you can create an application/service that listens on the ETW (Event Tracing for Windows) events that we use for internal telemetry and then send them to appinsights. Note that this approach is depending on internal telemetry events that might change and that are not documented by Microsoft.
 
 This is documented here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tools-monitor-performance-counters-and-events and here https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/monitor-server-events
 
