@@ -39,16 +39,17 @@ traces
      or customDimensions.eventId == "RT0004" // starting from version 16.1, the eventId is used to identity signal types
 | extend aadId = customDimensions.aadTenantId
 , eventId = customDimensions.eventId 
-| extend environmentName = customDimensions.environmentName
-| extend environmentType = customDimensions.environmentType
-| extend clientType = customDimensions.clientType
-| extend companyName = customDimensions.companyName
-| extend result = customDimensions.result
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, result = customDimensions.result
 // server timings are available from 16.0
+, sqlExecutes = customDimensions.sqlExecutes
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+, sqlRowsRead = customDimensions.sqlRowsRead
+, totalTime = customDimensions.totalTime
 | extend serverExecutionTime = customDimensions.serverExecutionTime
-| extend sqlExecutes = customDimensions.sqlExecutes
-| extend sqlRowsRead = customDimensions.sqlRowsRead
-| extend totalTime = customDimensions.totalTime
 
 
 // failed authorization after the openCompany trigger (raw data)
@@ -58,13 +59,14 @@ traces
      or customDimensions.eventId == "RT0002" // starting from version 16.1, the eventId is used to identity signal types
 | extend aadId = customDimensions.aadTenantId
 , eventId = customDimensions.eventId 
-| extend environmentName = customDimensions.environmentName
-| extend environmentType = customDimensions.environmentType
-| extend clientType = customDimensions.clientType
-| extend companyName = customDimensions.companyName
-| extend failureReason = customDimensions.failureReason
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, failureReason = customDimensions.failureReason
 // server timings are available from 16.0
+, sqlExecutes = customDimensions.sqlExecutes
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+, sqlRowsRead = customDimensions.sqlRowsRead
+, totalTime = customDimensions.totalTime
 | extend serverExecutionTime = customDimensions.serverExecutionTime
-| extend sqlExecutes = customDimensions.sqlExecutes
-| extend sqlRowsRead = customDimensions.sqlRowsRead
-| extend totalTime = customDimensions.totalTime
