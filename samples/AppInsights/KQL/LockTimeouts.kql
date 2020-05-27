@@ -1,0 +1,28 @@
+// this query shows how to join lock timeout events (RT0012) with the lock snapshot events (RT0013)
+let Timeouts = 
+traces 
+| where timestamp > ago(2d) // adjust to your needs
+| where customDimensions.eventId == 'RT0012'
+| extend snapshotId = tostring( customDimensions.snapshotId )
+// add filters on AAD id and environment name if needed
+//, aadId = customDimensions.aadTenantId
+//, environmentName = customDimensions.environmentName
+//| where aadId == 'abc'
+//| where environmentName == 'def'
+| project snapshotId, message, timestamp
+, alObjectIdLockTimeout = customDimensions.alObjectId
+, alStackTraceLockTimeout = customDimensions.alStackTrace
+, sqlTableLockTimeout = customDimensions.sqlTableName
+;
+Timeouts
+| join (traces
+| where customDimensions.eventId == 'RT0013'
+| extend snapshotId = tostring( customDimensions.snapshotId )
+| project snapshotId
+, alObjectIdHoldingLock = customDimensions.alObjectId
+, alStackTraceHoldingLock = customDimensions.alStackTrace
+, sqlTableLocked = customDimensions.sqlTableName
+)
+on $left.snapshotId == $right.snapshotId
+| order by snapshotId
+| project-away snapshotId, snapshotId1
