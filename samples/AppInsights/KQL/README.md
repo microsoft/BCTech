@@ -11,6 +11,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Open Company timing | 2020 release wave 1, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
 | Company lifecycle (create/copy/delete) | 2020 release wave 1, Update 1 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace (not live yet) |
 | Update errors due to exceptions in upgrade code | 2020 release wave 1, Update 2 | https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave1/dynamics365-business-central/update-error-telemetry-application-insights-partners (pending docs link) |
+| Database lock timeouts | 2020 release wave 1, Update 2 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-locks-trace (not live yet)|
 | Extension lifecycle | 2020 release wave 1, Update 2/3 | https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave1/dynamics365-business-central/extension-lifecycle-telemetry-application-insights-partners (pending docs link)  |
 
 # Usage of Kusto Queries
