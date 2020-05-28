@@ -14,44 +14,6 @@ $response = Invoke-WebRequest `
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
-# Set AppInsights key
-$environmentName = "MyProd"
-$newAppInsightsKey = "00000000-1111-2222-3333-444444444444"
-$response = Invoke-WebRequest `
-    -Method Post `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/settings/appinsightskey" `
-    -Body   (@{
-                 key = $newAppInsightsKey
-              } | ConvertTo-Json) `
-    -Headers @{Authorization=("Bearer $accessToken")} `
-    -ContentType "application/json"
-Write-Host "Responded with: $($response.StatusCode) $($response.StatusDescription)"
-
-
-# Get update window
-$environmentName = "MyProd"
-$response = Invoke-WebRequest `
-    -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/settings/upgrade" `
-    -Headers @{Authorization=("Bearer $accessToken")}
-Write-Host "Update window: $(ConvertTo-Json (ConvertFrom-Json $response.Content) )"
-
-
-# set update window
-$environmentName = "MyProd"
-$preferredStartTimeUtc = "2000-01-01T02:00:00Z"
-$preferredEndTimeUtc   = "2000-01-01T09:00:00Z"
-$response = Invoke-WebRequest `
-    -Method Put `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/settings/upgrade" `
-    -Body   (@{
-                 preferredStartTimeUtc = $preferredStartTimeUtc
-                 preferredEndTimeUtc   = $preferredEndTimeUtc
-              } | ConvertTo-Json) `
-    -Headers @{Authorization=("Bearer $accessToken")} `
-    -ContentType "application/json"
-
-
 # Create new environment
 $newEnvironmentName = "MyNewSandbox"
 $response = Invoke-WebRequest `
@@ -80,7 +42,34 @@ $response = Invoke-WebRequest `
     -ContentType "application/json"
 
 
+# Set AppInsights key
+$environmentName = "MyProd"
+$newAppInsightsKey = "00000000-1111-2222-3333-444444444444"
+$response = Invoke-WebRequest `
+    -Method Post `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/settings/appinsightskey" `
+    -Body   (@{
+                 key = $newAppInsightsKey
+              } | ConvertTo-Json) `
+    -Headers @{Authorization=("Bearer $accessToken")} `
+    -ContentType "application/json"
+Write-Host "Responded with: $($response.StatusCode) $($response.StatusDescription)"
 
 
+# Get database size
+$environmentName = "MyProd"
+$response = Invoke-WebRequest `
+    -Method Get `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/dbsize" `
+    -Headers @{Authorization=("Bearer $accessToken")}
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
+
+# Get support settings
+$environmentName = "MyProd"
+$response = Invoke-WebRequest `
+    -Method Get `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/support/applications/businesscentral/environments/$environmentName/supportcontact" `
+    -Headers @{Authorization=("Bearer $accessToken")}
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
