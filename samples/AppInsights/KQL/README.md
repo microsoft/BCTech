@@ -10,7 +10,7 @@ You can use Kusto queries as the data source in a number of places. E.g.
 
 
 # Resources 
-Here are some resources for you to get started on Kusto Query Language (KQL)
+Here are some resources for you to get started on Kusto Query Language (KQL). Use CTRL+click to open them in a new browser tab/window.
 * [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
 * [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
 * [I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
