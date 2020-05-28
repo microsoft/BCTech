@@ -1,19 +1,5 @@
 In this folder, you will find samples of Kusto Query Language (KQL) for each type of signal that is sent to Application Insights.
 
-Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
-
-|Signal | Emited from version, update | Documentation (use CTRL+click to open in a new tab) |
-| ------ | ------ | ------ |
-| Long running operation (SQL query) | 2019 release wave 2, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-long-running-sql-query-trace |
-| Authorization | 2019 release wave 2, Update 2| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
-| Web Service Request | 2020 release wave 1, RC| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
-| Report Execution | 2020 release wave 1, RC| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace | 
-| Open Company timing | 2020 release wave 1, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
-| Company lifecycle (create/copy/delete) | 2020 release wave 1, Update 1 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace (not live yet) |
-| Update errors due to exceptions in upgrade code | 2020 release wave 1, Update 2 | https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave1/dynamics365-business-central/update-error-telemetry-application-insights-partners (pending docs link) |
-| Database lock timeouts | 2020 release wave 1, Update 2 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-locks-trace (not live yet)|
-| Extension lifecycle | 2020 release wave 1, Update 2/3 | https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave1/dynamics365-business-central/extension-lifecycle-telemetry-application-insights-partners (pending docs link)  |
-
 # Usage of Kusto Queries
 You can use Kusto queries as the data source in a number of places. E.g.
 * the Logs part of Application Insights in the Azure portal
@@ -29,6 +15,21 @@ Here are some resources for you to get started on Kusto Query Language (KQL)
 * [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
 * [Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
 
+
+# Signal overview
+Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
+
+|Signal | Emited from version, update | Documentation (use CTRL+click to open in a new tab) |
+| ------ | ------ | ------ |
+| Long running operation (SQL query) | 2019 release wave 2, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-long-running-sql-query-trace |
+| Authorization | 2019 release wave 2, Update 2| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
+| Web Service Request | 2020 release wave 1, RC| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
+| Report Execution | 2020 release wave 1, RC| https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace | 
+| Open Company timing | 2020 release wave 1, RC | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
+| Company lifecycle (create/copy/delete) | 2020 release wave 1, Update 1 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace (not live yet) |
+| Update errors due to exceptions in upgrade code | 2020 release wave 1, Update 2 | https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave1/dynamics365-business-central/update-error-telemetry-application-insights-partners (pending docs link) |
+| Database lock timeouts | 2020 release wave 1, Update 2 | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-locks-trace (not live yet)|
+| Extension lifecycle | 2020 release wave 1, Update 2/3 | https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave1/dynamics365-business-central/extension-lifecycle-telemetry-application-insights-partners (pending docs link)  |
 
 
 # Disclaimer
