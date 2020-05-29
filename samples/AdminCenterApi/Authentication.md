@@ -17,6 +17,7 @@ On this page, we explain a few simple steps that will get you up and running qui
      - Give a name such as "App for managing Business Central environments"
      - Select "Accounts in any organizational directory (Any Azure AD directory - Multitenant)"
      - Add a redirect URI: "Public client/native" and "nativeBusinessCentralClient://auth"
+     - Add a redirect URI: "Public client/native" and "http://localhost" (this is needed if you run .NET Core)
      - Click "Register"
  3. Create the AAD application's service principal:
      - On the AAD application's "Overview" page, locate the "Managed application in local directory" property
@@ -72,6 +73,6 @@ This string encodes different information, including who you are, and which API 
     GET https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments
     Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSIsImtpZCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSJ9.eyJhdWQiOiJodHRwIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2...yMTc3MTQ1ZTEwIl19.LZgQnXOLNNpJgBx5q7FOUgq5ka04lJkBw75kxMTUA7hFDEL-NsMVcwQ_Zt-H0aPkOevCAQ_KWtZRQA
 
-To obtain an access token in PowerShell, you can follow the steps in the [Authenticate.ps1](PowerShell/Authenticate.ps1) script.
+To obtain an access token, you can follow the steps in either [Authenticate.ps1](PowerShell/Authenticate.ps1) for PowerShell or [Authenticate.cs](CSharp/Authenticate.cs) for C#.
 
-And to use the access token to call the Admin Center API, you can follow the steps in e.g. the [Environments.ps1](PowerShell/Environments.ps1) script.
+And to use the access token to call the Admin Center API, you can follow the steps in e.g. [Environments.ps1](PowerShell/Environments.ps1) for PowerShell or [Environments.cs](CSharp/Environments.cs) for C#.
