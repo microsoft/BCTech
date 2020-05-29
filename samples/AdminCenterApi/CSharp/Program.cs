@@ -32,6 +32,10 @@ namespace CSharp
             await Apps.GetAvailableAppUpdatesAsync(accessToken, "MyProd");
             await Apps.UpdateAppAsync(accessToken, "MyProd", "334ef79e-547e-4631-8ba1-7a7f18e14de6", "16.0.11240.12188");
             await Apps.GetAppOperationsAsync(accessToken, "MyProd", "334ef79e-547e-4631-8ba1-7a7f18e14de6");
+
+            // Manage active sessions
+            await Sessions.GetActiveSessionsAsync(accessToken, "MyProd");
+            await Sessions.CancelSessionAsync(accessToken, "MyProd", 12202);
         }
     }
 }
