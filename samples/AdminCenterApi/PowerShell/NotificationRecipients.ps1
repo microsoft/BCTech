@@ -15,13 +15,13 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 # Add a notification recipient
 $environmentName = "MyProd"
-$email = "partnernotifications@partnerdomain.com"
+$emailAddress = "partnernotifications@partnerdomain.com"
 $name = "Partner Notifications Mail Group"
 $response = Invoke-WebRequest `
     -Method PUT `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/settings/notification/recipients" `
     -Body   (@{
-                 email = $email
+                 email = $emailAddress
                  name = $name
               } | ConvertTo-Json) `
     -Headers @{Authorization=("Bearer $accessToken")} `

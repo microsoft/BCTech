@@ -22,6 +22,16 @@ namespace CSharp
             await Environments.SetAppInsightsKeyAsync(accessToken, "MyProd", new Guid("0da21b54-841e-4a64-a117-6092784245f9"));
             await Environments.GetDatabaseSizeAsync(accessToken, "MyProd");
             await Environments.GetSupportSettingsAsync(accessToken, "MyProd");
+
+            // Manage support settings
+            await NotificationRecipients.GetNotificationRecipientsAsync(accessToken);
+            await NotificationRecipients.AddNotificationRecipientAsync(accessToken, "partnernotifications@partnerdomain.com", "Partner Notifications Mail Group");
+
+            // Manage apps
+            await Apps.GetInstalledAppsAsync(accessToken, "MyProd");
+            await Apps.GetAvailableAppUpdatesAsync(accessToken, "MyProd");
+            await Apps.UpdateAppAsync(accessToken, "MyProd", "334ef79e-547e-4631-8ba1-7a7f18e14de6", "16.0.11240.12188");
+            await Apps.GetAppOperationsAsync(accessToken, "MyProd", "334ef79e-547e-4631-8ba1-7a7f18e14de6");
         }
     }
 }
