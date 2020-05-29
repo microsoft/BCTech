@@ -16,8 +16,7 @@ On this page, we explain a few simple steps that will get you up and running qui
      - Click "New registration"
      - Give a name such as "App for managing Business Central environments"
      - Select "Accounts in any organizational directory (Any Azure AD directory - Multitenant)"
-     - Add a redirect URI: "Public client/native" and "nativeBusinessCentralClient://auth"
-     - Add a redirect URI: "Public client/native" and "http://localhost" (this is needed if you run .NET Core)
+     - Add a redirect URI: "Public client/native" and "http://localhost"
      - Click "Register"
  3. Create the AAD application's service principal:
      - On the AAD application's "Overview" page, locate the "Managed application in local directory" property

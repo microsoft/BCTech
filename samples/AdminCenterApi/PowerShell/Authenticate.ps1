@@ -4,8 +4,7 @@
 
 # Parameters
 $aadAppId = "a19cb26a-2e4c-408b-82e1-6311742ecc50"        # partner's AAD app id
-$aadAppRedirectUri = "nativeBusinessCentralClient://auth" # partner's AAD app redirect URI
-
+$aadAppRedirectUri = "http://localhost"                   # partner's AAD app redirect URI
 $aadTenantId = "8c8dbccd-c171-4937-a134-e3c5a5dd0470"     # customer's tenant id
 
 
