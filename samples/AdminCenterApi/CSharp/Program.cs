@@ -36,6 +36,11 @@ namespace CSharp
             // Manage active sessions
             await Sessions.GetActiveSessionsAsync(accessToken, "MyProd");
             await Sessions.CancelSessionAsync(accessToken, "MyProd", 12202);
+
+            // Manage update settings
+            await UpdateSettings.GetUpdateWindowAsync(accessToken, "MyProd");
+            await UpdateSettings.SetUpdateWindowAsync(accessToken, "MyProd", new DateTime(2020, 06, 01, 4, 0, 0), new DateTime(2020, 06, 01, 11, 0, 0));
+            await UpdateSettings.GetScheduledUpdatesAsync(accessToken, "MyProd");
         }
     }
 }

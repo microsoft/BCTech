@@ -17,8 +17,8 @@ Write-Host "Update window: $(ConvertTo-Json (ConvertFrom-Json $response.Content)
 
 # Set update window
 $environmentName = "MyProd"
-$preferredStartTimeUtc = "2000-01-01T02:00:00Z"
-$preferredEndTimeUtc   = "2000-01-01T09:00:00Z"
+$preferredStartTimeUtc = "2020-06-01T02:00:00Z"
+$preferredEndTimeUtc   = "2020-06-01T09:00:00Z"
 $response = Invoke-WebRequest `
     -Method Put `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/settings/upgrade" `
