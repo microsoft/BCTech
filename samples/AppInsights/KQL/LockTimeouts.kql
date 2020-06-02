@@ -70,6 +70,6 @@ Timeouts
 , extensionVersionHoldingLock = customDimensions.extensionVersion
 )
 on$left.snapshotId == $right.snapshotId
-| orderby snapshotId
+| order by snapshotId
 | project-away snapshotId, snapshotId1
 
