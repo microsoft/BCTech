@@ -40,12 +40,11 @@ class Environments
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
         var body = new {
-            EnvironmentType = "Sandbox",
-            CountryCode = countryCode,
-            CopyFromEnvironmentName = sourceEnvironmentName
+            EnvironmentName = targetEnvironmentName,
+            Type = "Sandbox"
         };
         var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await httpClient.PutAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{targetEnvironmentName}", content);
+        HttpResponseMessage response = await httpClient.PostAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{sourceEnvironmentName}", content);
 
         Console.WriteLine($"Responded with {(int)response.StatusCode} {response.ReasonPhrase}");
         string responseBody = await response.Content.ReadAsStringAsync();

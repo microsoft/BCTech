@@ -31,12 +31,11 @@ $response = Invoke-WebRequest `
 $environmentName = "MyProd"
 $newEnvironmentName = "MyNewSandboxAsACopy"
 $response = Invoke-WebRequest `
-    -Method Put `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$newEnvironmentName" `
+    -Method Post `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName" `
     -Body   (@{
-                 EnvironmentType         = "Sandbox"
-                 CountryCode             = "DK"
-                 copyFromEnvironmentName = $environmentName
+                 EnvironmentName = $newEnvironmentName
+                 Type            = "Sandbox"
               } | ConvertTo-Json) `
     -Headers @{Authorization=("Bearer $accessToken")} `
     -ContentType "application/json"
