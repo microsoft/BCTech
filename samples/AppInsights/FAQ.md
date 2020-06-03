@@ -1,9 +1,29 @@
 # Frequently Asked Questions (FAQ)
 
+# How do I get started?
+Business Central can send telemetry to one or more **Azure Application Insights** (AppInsights) accounts.
+The first step thus is for you to create an AppInsights account.
+See [HERE](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-telemetry) for instructions on how to do that.
+
+Once you have created the AppInsights account, make a note of the *instrumentation key*.
+
+The next step depends on whether you are an ISV or a VAR.
+
+**Still in private preview:** If you are an **ISV**, you must specify the instrumentation key in your app.json file. Once you install your app in a Business Central environment, telemetry relating to your app will start to flow into your AppInsights account.
+
+If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your AppInsights account. You can also set the instrumentation key using the Business Central Administration Center API.
+
+These two pages contain resources on how to get started (use CTRL + click to open in a new browser tab/page):
+* [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
+* [Business Central Administration Center API - How to set the telemetry key](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/administration-center-api#put-appinsights-key)
+
 ## What does it cost?
 Application Insights is billed based on the volume of telemetry data that your application sends. Currently, the first 5 GB of data per month is free. Regarding data retention, every GB of data ingested can be retained at no charge for up to first 90 days.
 
 Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information on pricing.
+
+## Where can I learn more about Kusto Query Language (KQL)?
+Please visit the [KQL readme page](KQL/README.md) for resources on KQL.
 
 ## How can I see what data is available in my Application Insights subscription
 Use this KQL query https://github.com/microsoft/BCTech/blob/master/samples/Application Insights/KQL/General.kql to see if you have any data in your telemetry database, and also what kind of signal is present.
