@@ -10,11 +10,11 @@ This repo contains instructions for how you can obtain the telemetry.
 It also contains resources that help you get immediate value from the telemetry.
 
 
-# Obtain the telemetry in your AppInsights account
-
+# How do I start?
 Business Central can send telemetry to one or more **Azure Application Insights** (AppInsights) accounts.
 The first step thus is for you to create an AppInsights account.
 See [HERE](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-telemetry) for instructions on how to do that.
+
 Once you have created the AppInsights account, make a note of the *instrumentation key*.
 
 The next step depends on whether you are an ISV or a VAR.
@@ -22,18 +22,6 @@ The next step depends on whether you are an ISV or a VAR.
 **Still in private preview:** If you are an **ISV**, you must specify the instrumentation key in your app.json file. Once you install your app in a Business Central environment, telemetry relating to your app will start to flow into your AppInsights account.
 
 If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your AppInsights account. You can also set the instrumentation key using the Business Central Administration Center API.
-
-# Will you backport the Application Insights instrumentation to versions prior to 15.0?
-It took a lot of refactoring in the server and client to make this happen. So it is unlikely that we will backport the Application Insights instrumentation to versions prior to 15.0.
-
-For each new signal type we add, we try to backport to the current major release (16.x right now) if possible.
-
-For on-premises installations (private or public cloud), you can create an application/service that listens on the ETW (Event Tracing for Windows) events that we use for internal telemetry and then send them to appinsights. Note that this approach is depending on internal telemetry events that might change and that are not documented by Microsoft.
-
-This is documented here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tools-monitor-performance-counters-and-events and here https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/monitor-server-events
-
-See the Application Insights documentation for an introduction on how to emit telemetry from a .NET console application:
-[The Application Insights for .NET console applications](https://docs.microsoft.com/en-us/azure/azure-monitor/app/console)
 
 
 # Resources (use CTRL + click to open in a new browser tab/page)

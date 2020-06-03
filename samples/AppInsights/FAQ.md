@@ -30,6 +30,18 @@ You might also need to add the role assignment "Reader" to the person on the Res
 ## What about Privacy regulations such as GDPR?
 The Business Central service does not emit any End User Identifiable Information to AppInsights. So the telemetry is born GDPR compliant.
 
+# Will you backport the Application Insights instrumentation to versions prior to 15.0?
+It took a lot of refactoring in the server and client to make this happen. So it is unlikely that we will backport the Application Insights instrumentation to versions prior to 15.0.
+
+For each new signal type we add, we try to backport to the current major release (16.x right now) if possible.
+
+For on-premises installations (private or public cloud), you can create an application/service that listens on the ETW (Event Tracing for Windows) events that we use for internal telemetry and then send them to appinsights. Note that this approach is depending on internal telemetry events that might change and that are not documented by Microsoft.
+
+This is documented here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tools-monitor-performance-counters-and-events and here https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/monitor-server-events
+
+See the Application Insights documentation for an introduction on how to emit telemetry from a .NET console application:
+[The Application Insights for .NET console applications](https://docs.microsoft.com/en-us/azure/azure-monitor/app/console)
+
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
