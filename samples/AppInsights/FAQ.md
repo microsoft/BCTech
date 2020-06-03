@@ -1,41 +1,41 @@
 # Frequently Asked Questions (FAQ)
 
 ## What does it cost?
-Application Insights is billed based on the volume of telemetry data that your application sends. The first 5 GB of data per month is free. Regarding data retention, every GB of data ingested can be retained at no charge for up to first 90 days.
+Application Insights is billed based on the volume of telemetry data that your application sends. Currently, the first 5 GB of data per month is free. Regarding data retention, every GB of data ingested can be retained at no charge for up to first 90 days.
 
-Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information
+Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information on pricing.
 
-## How can I see what data is available in my AppInsights subscription
-Use this KQL query https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/General.kql to see if you have any data in your telemetry database, and also what kind of signal is present.
+## How can I see what data is available in my Application Insights subscription
+Use this KQL query https://github.com/microsoft/BCTech/blob/master/samples/Application Insights/KQL/General.kql to see if you have any data in your telemetry database, and also what kind of signal is present.
 
 ## I deployed Azure dashboards, but they show no data
-If you have data present in AppInsights, please check the setting in the *Time range* selector on the  dashboard:
+If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:
 ![Time range selector in Azure Dashboard](images/dashboard.png)
 
-## What is the data retention policy in AppInsights?
+## What is the data retention policy in Application Insights?
 The default retention for Application Insights resources is 90 days. Different retention periods can be selected for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550 or 730 days.
 
 See <https://docs.microsoft.com/en-us/azure/azure-monitor/app/pricing#change-the-data-retention-period> 
 
-## How do I delete data from AppInsights?
+## How do I delete data from Application Insights?
 Purge data in an Application Insights component by a set of user-defined filters.
 
 See <https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples> 
 
-## Can I grant read-only access to AppInsights?
-To grant a person read-only access to AppInsights, go to the Access control (IAM) page in the AppInsights portal, and then add the role assignment "Reader" to the person. 
+## Can I grant read-only access to Application Insights?
+To grant a person read-only access to Application Insights, go to the Access control (IAM) page in the Application Insights portal, and then add the role assignment "Reader" to the person. 
 
-You might also need to add the role assignment "Reader" to the person on the Resource Group for the AppInsights subscription.
+You might also need to add the role assignment "Reader" to the person on the Resource Group for the Application Insights subscription.
 
 ## What about Privacy regulations such as GDPR?
-The Business Central service does not emit any End User Identifiable Information to AppInsights. So the telemetry is born GDPR compliant.
+The Business Central service does not emit any End User Identifiable Information (EUII) to Application Insights. So the telemetry is born GDPR compliant. The service only emits data that is classified as either System Metadata or Organization Identifiable Information (OII). The meaning of these classifications are described here: [DataClassification Option Type](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/dataclassification/dataclassification-option)
 
 ## Will you backport the Application Insights instrumentation to versions prior to 15.0?
 It took a lot of refactoring in the server and client to make this happen. So it is unlikely that we will backport the Application Insights instrumentation to versions prior to 15.0.
 
 For each new signal type we add, we try to backport to the current major release (16.x right now) if possible.
 
-For on-premises installations (private or public cloud), you can create an application/service that listens on the ETW (Event Tracing for Windows) events that we use for internal telemetry and then send them to appinsights. Note that this approach is depending on internal telemetry events that might change and that are not documented by Microsoft.
+For on-premises installations (private or public cloud), you can create an application/service that listens on the ETW (Event Tracing for Windows) events that we use for internal telemetry and then send them to Application Insights. Note that this approach is depending on internal telemetry events that might change and that are not documented by Microsoft.
 
 This is documented here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tools-monitor-performance-counters-and-events and here https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/monitor-server-events
 
