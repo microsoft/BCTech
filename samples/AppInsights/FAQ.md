@@ -1,6 +1,6 @@
 # Frequently Asked Questions (FAQ)
 
-# How do I get started?
+## How do I get started?
 Business Central can send telemetry to one or more **Azure Application Insights** (AppInsights) accounts.
 The first step thus is for you to create an AppInsights account.
 See [HERE](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-telemetry) for instructions on how to do that.
