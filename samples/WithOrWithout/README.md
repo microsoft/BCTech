@@ -9,7 +9,7 @@ The extensibility model and the AL programming language is a successor to the C/
 ## TL;DR
 This document describes why and more importantly how, we are going to remove this pitfall from Business Central development in the future. 
 
-If you already feel intimidated by the length of this document please [see for yourself and try the sample code](README.md#see-for-yourself---try-the-sample-code) to at least get an understanding of the underlying problem and take look at the changes in the [Business Central 2020 Release Wave 2](README.md#business-central-release-2020-wave-2).
+If you already feel intimidated by the length of this document please [see for yourself and try the sample code](README.md#see-for-yourself---try-the-sample-code) to at least get an understanding of the underlying problem and take look at the changes in the [Business Central 2020 Release Wave 2](README.md#business-central-2020-release-wave-2).
 
 ## The `with` statement
 The `with` statement has always been controversial and a topic for almost religious discussions on readability. It brings the members of a variable into the closest [scope](README.md#symbol-lookup). While being convenient when writing code, it can make code harder to read (subject to personal preferences), but it can also prevent code in Business Central online from being upgraded without changes to the code or even worse - upgraded but with changed behavior.
