@@ -30,7 +30,7 @@ You might also need to add the role assignment "Reader" to the person on the Res
 ## What about Privacy regulations such as GDPR?
 The Business Central service does not emit any End User Identifiable Information to AppInsights. So the telemetry is born GDPR compliant.
 
-# Will you backport the Application Insights instrumentation to versions prior to 15.0?
+## Will you backport the Application Insights instrumentation to versions prior to 15.0?
 It took a lot of refactoring in the server and client to make this happen. So it is unlikely that we will backport the Application Insights instrumentation to versions prior to 15.0.
 
 For each new signal type we add, we try to backport to the current major release (16.x right now) if possible.
