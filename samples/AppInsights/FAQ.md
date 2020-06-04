@@ -25,7 +25,7 @@ Please check the documentation <https://azure.microsoft.com/en-us/pricing/detail
 Please visit the [KQL readme page](KQL/README.md) for resources on KQL.
 
 ## How can I see what data is available in my Application Insights subscription
-Use this KQL query https://github.com/microsoft/BCTech/blob/master/samples/Application Insights/KQL/General.kql to see if you have any data in your telemetry database, and also what kind of signal is present.
+Use this KQL query [AvailableSignal.kql](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/AvailableSignal.kql) to see if you have any data in your telemetry database, and also what kind of signal is present.
 
 ## I deployed Azure dashboards, but they show no data
 If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:
