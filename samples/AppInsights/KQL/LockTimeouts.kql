@@ -1,0 +1,75 @@
+// this query shows how to join lock timeout events (RT0012) with the lock snapshot events (RT0013)
+let Timeouts = 
+traces 
+| where timestamp > ago(2d) // adjust to your needs
+| where customDimensions.eventId == 'RT0012'
+| extend snapshotId = tostring( customDimensions.snapshotId )
+// add filters on AAD id and environment name if needed
+//, aadId = customDimensions.aadTenantId
+//, environmentName = customDimensions.environmentName
+//| where aadId == 'abc'
+//| where environmentName == 'def'
+| project snapshotId, message, timestamp
+, alObjectIdLockTimeout = customDimensions.alObjectId
+, alStackTraceLockTimeout = customDimensions.alStackTrace
+, sqlTableLockTimeout = customDimensions.sqlTableName
+;
+Timeouts
+| join (traces
+| where customDimensions.eventId == 'RT0013'
+| extend snapshotId = tostring( customDimensions.snapshotId )
+| project snapshotId
+, alObjectIdHoldingLock = customDimensions.alObjectId
+, alStackTraceHoldingLock = customDimensions.alStackTrace
+, sqlTableLocked = customDimensions.sqlTableName
+)
+on $left.snapshotId == $right.snapshotId
+| order by snapshotId
+| project-away snapshotId, snapshotId1
+
+
+   
+// this query joins lock timeout events (RT0012) with the lock snapshot events (RT0013)
+// It includes all details on both the session that experienced the lock timeout
+// as well as all details on sessions holding a lock at the time of the timeout
+let Timeouts = traces 
+| where timestamp > ago(15min) // adjust to your needs
+| where customDimensions.eventId == 'RT0012'
+| extend snapshotId = tostring( customDimensions.snapshotId )
+// add filters on AAD id and environment name if needed
+//, aadId = customDimensions.aadTenantId
+//, environmentName = customDimensions.environmentName
+//| where aadId == 'abc'
+//| where environmentName == 'def'
+| project snapshotId, message, timestamp
+, alObjectTypeLockTimeout = customDimensions.alObjectType
+, alObjectIdLockTimeout = customDimensions.alObjectId
+, alObjectNameLockTimeout = customDimensions.alObjectName
+, alStackTraceLockTimeout = customDimensions.alStackTrace
+, alExecutionMethodLockTimeout = customDimensions.alExecutingMethodScope
+, extensionNameLockTimeout = customDimensions.extensionName
+, extensionVersionLockTimeout = customDimensions.extensionVersion
+;
+Timeouts
+| join (traces
+| where customDimensions.eventId == 'RT0013'
+| extend snapshotId = tostring( customDimensions.snapshotId )
+| project snapshotId
+, alObjectTypeHoldingLock = customDimensions.alObjectType
+, alObjectIdHoldingLock = customDimensions.alObjectId
+, alObjectNameHoldingLock = customDimensions.alObjectName
+, alStackTraceHoldingLock = customDimensions.alStackTrace
+, alExecutionMethodHoldingLock = customDimensions.alExecutingMethodScope
+, sqlTableLocked = customDimensions.sqlTableName
+, sqlLockResourceType = customDimensions.sqlLockResourceType
+, sqlLockRequestMode = customDimensions.sqlLockRequestMode
+, sqlLockRequestStatus = customDimensions.sqlLockRequestStatus
+, sqlServerSessionId = customDimensions.sqlServerSessionId
+, alSessionIdHoldingLock = customDimensions.sessionId
+, extensionNameHoldingLock = customDimensions.extensionName
+, extensionVersionHoldingLock = customDimensions.extensionVersion
+)
+on$left.snapshotId == $right.snapshotId
+| order by snapshotId
+| project-away snapshotId, snapshotId1
+
