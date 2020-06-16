@@ -13,8 +13,8 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-| project 
-  eventId = customDimensions.eventId 
+| project timestamp
+, eventId = customDimensions.eventId 
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
@@ -41,8 +41,8 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-| project
-  eventId = customDimensions.eventId
+| project timestamp
+, eventId = customDimensions.eventId
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
@@ -82,4 +82,3 @@ traces
 , "unknown"
 )
 , message, customDimensions
-
