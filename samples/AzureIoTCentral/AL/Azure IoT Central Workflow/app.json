@@ -1,0 +1,37 @@
+{
+  "id": "5df8bcd0-e30e-497d-8fa2-a1a0bfcfec65",
+  "name": "Azure IoT Central Device Workflow",
+  "publisher": "Microsoft",
+  "version": "1.0.0.0",
+  "logo": "",
+  "screenshots": [],
+  "dependencies": [
+    {
+      "appId": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "name": "System Application",
+      "publisher": "Microsoft",
+      "version": "16.0.0.0"
+    },
+    {
+      "appId": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "name": "Base Application",
+      "publisher": "Microsoft",
+      "version": "16.0.0.0"
+    },
+    {
+      "appId": "e1d68c0a-3305-404e-b98e-64edb6e7c626",
+      "name": "Azure IoT Central API",
+      "publisher": "Microsoft",
+      "version": "1.0.0.0"
+    }
+  ],
+  "platform": "16.0.0.0",
+  "idRanges": [
+    {
+      "from": 51100,
+      "to": 51199
+    }
+  ],
+  "showMyCode": true,
+  "runtime": "4.0"
+}
