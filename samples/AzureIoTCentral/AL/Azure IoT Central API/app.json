@@ -1,0 +1,31 @@
+{
+  "id": "e1d68c0a-3305-404e-b98e-64edb6e7c626",
+  "name": "Azure IoT Central API",
+  "publisher": "Microsoft",
+  "version": "1.0.0.0",
+  "logo": "",
+  "screenshots": [],
+  "dependencies": [
+    {
+      "appId": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "name": "System Application",
+      "publisher": "Microsoft",
+      "version": "16.0.0.0"
+    },
+    {
+      "appId": "2582b0e2-18f6-40d4-b114-d894c37d7273",
+      "name": "Json",
+      "publisher": "Microsoft",
+      "version": "1.0.0.0"
+    }
+  ],
+  "platform": "16.0.0.0",
+  "idRanges": [
+    {
+      "from": 51000,
+      "to": 51099
+    }
+  ],
+  "showMyCode": false,
+  "runtime": "4.0"
+}
