@@ -46,7 +46,7 @@ The first step is to set up an Azure IoT Central app.
 3. If needed, we can edit the default URL. In this project we'll use **bc-cookie-jar.azureiotcentral.com**.
 4. Choose **Custom application (legacy)**.
 
-   > [!NOTE]
+   > **NOTE:**
    > While drafting this article, Azure IoT Central was updated with new features and user experiences. To follow the steps in this article, choose the **Custom Application (legacy)** template. If you choose **Custom Application** the steps in this article will not match the experience.
 
 5. Provide Azure subscription information.
@@ -140,7 +140,7 @@ To see the connection information that we’ll need to connect a real device to 
 ### Components of the cookie jar
 Here’s the list of components we’ll use for the cookie jar. 
 
-> [!NOTE]
+> **NOTE:**
 > You can connect many types of devices to Azure IoT Central. If a device can connect to the Internet, you can probably connect it to Azure IoT Central. For the list of Azure-certified devices, see [Browse Devices](https://catalog.azureiotsolutions.com/alldevices). 
 
 * Adafruit Feather Huzzah ESP8266: an Arduino compatible controller with built-in Wi-Fi capabilities. It’s also quite small.
@@ -168,7 +168,7 @@ And here’s how it looks when it’s assembled.
 ### Programming the device
 For this project the Arduino IDE was used to program the device. The IDE is can be downloaded for free from the [Arduino website](https://www.arduino.cc/). We can use other editors, but in this article refers to the Arduino IDE. Writing the code from scratch would require quite a bit of effort, but Azure IoT Central provides sample code for a number of architectures on their [GitHub page](https://github.com/Azure/iot-central-firmware), including the ESP8266 that this project uses. We just need to adjust it a little to get our connected cookie jar to emit data. We can look at the code in [./samples/AzureIoTCentral/Arduino/CookieJar](./Arduino/CookieJar) to explore the changes.
 
-> [!NOTE]
+> **NOTE:**
 > To upload the code to the device, we must install the Arduino IDE and follow the instructions to install the drivers for our board. For more information, see [Adafruit Feather Huzzah ESP8266](https://learn.adafruit.com/adafruit-feather-huzzah-esp8266). If we were using a different board, we’d need to adjust the libraries and board drivers accordingly. It’s a good idea to play around with the examples included in the IDE (File/Examples/Built-in Examples) to get a feel for the language and how to use the IDE. For example, how to compile and upload sketches, and so on.
 
 #### Arduino code
@@ -176,7 +176,7 @@ The samples on the IoT Central Github page differ for each architecture, so if w
 
 1. Download the sample code for the device architecture from [iot-central-firmware](https://github.com/Azure/iot-central-firmware), and place it in a folder called **CookieJar/src**.
 
-> [!NOTE]
+> **NOTE:**
 > The sample code contains some minor issues. To resolve them for the ESP8266, we might need to download the following fixes (if they are not yet merged): 
 >  * https://github.com/Azure/iot-central-firmware/pull/101 
 >  * https://github.com/Azure/iot-central-firmware/pull/102)
@@ -207,11 +207,11 @@ There are still a few things to set up before we upload the code to the device. 
 
 The setup is done and the code compiles, so we can try and upload it to the device. We recommend opening the serial monitor (Tools / Serial Monitor) the first few times to see what the device is doing. Make sure the device is connected to a computer with the USB cable 
 
-> [!NOTE]
+> **NOTE:**
 > Make sure the baud rate is correct. If gibberish displays, the rate is wrong. For example, in this sketch the rate is set to 512000, which means that the serial monitor should be set to the 500000 option.
 After the code is compiled and uploaded the device should connect to Wi-Fi, authenticate with Azure IoT Central, and start to emit telemetry.
 
-> [!NOTE]
+> **NOTE:**
 > Data is received instantly, there is approximately a two minute delay on the telemetry measurements graph. The delay applies only to the graph, our rules will trigger immediately.
 
 In the next few sections we’ll use more Azure services to connect Azure IoT Central to Business Central and get IoT data.
@@ -237,7 +237,7 @@ Now that the cookie jar is connected we can review the rule we set up, and inste
 
 We can now start adding steps to define what you want to happen when the rule is triggered. 
 
-> [!NOTE]
+> **NOTE:**
 > If we enable the logic app and return to IoT Central, open the device template we created. On the **Rules** tab there are now two actions in the **Actions** section, the email action we configured earlier and the new logic app. If we no longer want the email action to be triggered we can remove it.
 
 The next few steps in the logic app are a little tricky. First, the rule we defined will continuously trigger while the weight is within the threshold values. We want the rule to trigger only once. To prevent the rule from triggering, in IoT Central, configure a **Pending refill** property on the device. Also configure the rule to trigger only when **Pending refill** is **False**. This property indicates that we have been informed that the jar needs a refill and things are on hold until that happens. The jar will continue emitting telemetry every few seconds because the device doesn’t know about this property, but the rule in IoT Central will not trigger while Pending Refill is true. 
@@ -525,7 +525,7 @@ To make this workflow more secure, we can hide the input and output of critical 
 
 We can verify that our secrets aren’t exposed by clicking **Run** to trigger the logic app manually, and then checking the run history. The run history will show at which step a failure occurred.
 
-> [!NOTE]
+> **NOTE:**
 > Remember to restrict access to this logic app workflow. If someone can trigger this logic app they will be able to impersonate us in Business Central.
 
 In the next section we'll use this logic app workflow to call a custom API in Business Central, and then run a Business Central workflow to replenish the cookie jar.
