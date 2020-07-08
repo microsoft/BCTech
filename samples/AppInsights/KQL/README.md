@@ -31,7 +31,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Update errors due to exceptions in upgrade code | 2020 release wave 1 (16.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
 | Database lock timeouts | 2020 release wave 1 (16.2, later backported to 16.0 and 16.1 in SaaS) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-locks-trace |
 | Extension lifecycle | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
-| Client page views | 2020 release wave 1 (16.3) | (pending docs link) |
+| Client page views | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 
 
 # Disclaimer
