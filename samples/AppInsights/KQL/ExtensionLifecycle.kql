@@ -1,0 +1,386 @@
+// KQL samples - Extension lifecycle events 
+
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
+
+// ENVIRONMENT/SERVER-SIDE OPERATIONS
+// lifecycle is compile-publish-unpublish
+
+// extension compiled successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0020' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionCompilationDependencyList = customDimensions.extensionCompilationDependencyList
+, extensionCompilationResult = customDimensions.extensionCompilationResult
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, result = customDimensions.result
+, message, customDimensions
+
+
+// Extension failed to compile (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0021' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionCompilationDependencyList = customDimensions.extensionCompilationDependencyList
+, extensionCompilationResult = customDimensions.extensionCompilationResult
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message, customDimensions
+
+
+// Extension published successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0014' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionIsRad = customDimensions.extensionIsRad
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, message, customDimensions
+
+
+// Extension failed to publish (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0015' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionIsRad = customDimensions.extensionIsRad
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message, customDimensions
+
+
+// Extension unpublished successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0018' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, message, customDimensions
+
+
+// Extension failed to un-publish (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0019' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message, customDimensions
+
+
+// TENANT OPERATIONS
+// lifecycle is synchronize-install-update-uninstall
+
+// Extension synchronized successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0012' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, extensionSynchronizationMode = customDimensions.extensionSynchronizationMode
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, message, customDimensions
+
+
+// Extension synchronized failed (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0013' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, extensionSynchronizationMode = customDimensions.extensionSynchronizationMode
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message, customDimensions
+
+
+// Extension installed successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0010' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, message, customDimensions
+
+
+// Extension failed to install (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0011' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message, customDimensions
+
+
+// Extension updated successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0022' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersionFrom = customDimensions.extensionVersionFrom
+, extensionCulture = customDimensions.extensionCulture
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, message, customDimensions
+
+
+// Extension failed to update (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0023' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionCulture = customDimensions.extensionCulture
+, extensionVersionFrom = customDimensions.extensionVersionFrom
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message, customDimensions
+
+
+// Extension un-installed successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0016' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, doNotSaveData = customDimensions.doNotSaveData
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, message, customDimensions
+
+
+// Extension failed to un-install (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0017' 
+| extend aadID = tostring( customDimensions.aadTenantId )
+| project 
+  eventId = customDimensions.eventId
+, aadID
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message, customDimensions
