@@ -1,0 +1,10 @@
+// KQL samples - Page Views (browser usage)
+
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
+// Page views filtered to browsers used (RAW data)
+pageViews
+| where timestamp > ago(7d)
+| project client_Browser, aadTenantId=customDimensions.aadTenantId, companyName=customDimensions.companyName, environmentName=customDimensions.environmentName
+
