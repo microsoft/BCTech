@@ -9,7 +9,7 @@ $aadTenantId = "8c8dbccd-c171-4937-a134-e3c5a5dd0470"     # customer's tenant id
 
 
 # Load Microsoft.IdentityModel.Clients.ActiveDirectory.dll
-Add-Type -Path "C:\Program Files\WindowsPowerShell\Modules\AzureAD\2.0.2.76\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" # Install-Module AzureAD to get this
+Add-Type -Path "C:\Program Files\WindowsPowerShell\Modules\AzureAD\2.0.2.106\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" # Install-Module AzureAD to get this
 
 
 # Get access token
@@ -21,7 +21,7 @@ Write-Host -ForegroundColor Cyan 'Authentication complete - we have an access to
 
 # Peek inside the access token (this is just for education purposes; in actual API calls we'll just pass it as one long string)
 $middlePart = $accessToken.Split('.')[1]
-$middlePartPadded = "$middlePart$(''.PadLeft(4-$middlePart.Length%4,'='))"
+$middlePartPadded = "$middlePart$(''.PadLeft((4-$middlePart.Length%4)%4,'='))"
 $middlePartDecoded = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($middlePartPadded))
 $middlePartDecodedPretty = (ConvertTo-Json (ConvertFrom-Json $middlePartDecoded))
 Write-Host "Contents of the access token:"
