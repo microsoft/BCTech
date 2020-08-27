@@ -1,0 +1,14 @@
+// Use a query like this as a condition in an alert on failed upgrades due to exceptions thrown in (AL) upgrade code
+// signal introduced in Business Central 2020 release wave 1, version 16.2, so the alert works for updates to 16.3 or later
+traces
+| where timestamp > ago(1d)
+    and customDimensions.eventId == 'RT0010'
+// | where customDimensions.aadTenantId == '<insert AAD id here if needed>'
+// and customDimensions.environmentName == '<insert environment name here if needed>'
+| project timestamp
+, aadTenantId=customDimensions.aadTenantId
+, environmentName=customDimensions.environmentName 
+, extensionName=customDimensions.extensionName
+, extensionVersion=customDimensions.extensionVersion
+, extensionTargetedVersion=customDimensions.extensionTargetedVersion
+, message
