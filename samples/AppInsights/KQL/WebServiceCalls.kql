@@ -4,12 +4,6 @@
 // move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
 
 // Web Service Requests (RAW data)
-// KQL samples - Web Service Calls
-
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
-
-// Web Service Requests (RAW data)
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
 | where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used 
