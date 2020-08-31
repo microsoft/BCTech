@@ -33,9 +33,9 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Extension lifecycle | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
 | Client page views | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 | HTTP status and HTTP headers added to Web Service Request signal | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
-| Web Service Key Authentication | 2020 release wave 2 (17.0) | Pending link to release plan |
-| AL HttpClient signal (outgoing web service calls) | 2020 release wave 2 (17.0) | Pending link to release plan |
-| Long Running AL execution | 2020 release wave 2 (17.0) | Pending link to release plan |
+| Web Service Key Authentication | 2020 release wave 2 (17.0) | Release plan: https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave2/smb/dynamics365-business-central/signal-web-service-key-authentication-added-application-insights-telemetry-partners |
+| AL HttpClient signal (outgoing web service calls) | 2020 release wave 2 (17.0) | Release plan: https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave2/smb/dynamics365-business-central/signal-outgoing-web-service-requests-added-application-insights-telemetry-partners |
+| Long Running AL execution | 2020 release wave 2 (17.0) | Release plan: https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave2/smb/dynamics365-business-central/signal-about-long-running-al-execution-added-application-insights-telemetry-partners |
 | App Key Vault Secret Acquisitions | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-key-vault-trace (not live yet) |
 
 # Disclaimer
