@@ -21,7 +21,21 @@ Under the "Add new" tab, type "kqlmagic" and click Install:
 ![Install Kqlmagic](../images/install-kqlmagic-2.png)
 
 # How to connect Kqlmagic to an Azure Application Insights resource
-First, you must generate an API key for your Application Insights resource (you do that from within the Application Insights portal). You can then use the Application ID and API key to connect to Application Insights from the notebook. 
+You need two GUIDs to be able to read data from your Application Insights resource: 
+1. Application ID
+2. an API key
+
+Get the Application ID from the *API Access* page in the Application Insights portal:
+![Get Application ID](../images/api-access-1.png)
+
+Then generate an API key 
+![Get Application ID](../images/api-access-2.png)
+
+![Get Application ID](../images/api-access-3.png)
+
+![Get Application ID](../images/api-access-4.png)
+
+You can now use the Application ID and API key to connect to and read from the Application Insights resource from the notebook. 
 
 See more here: https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-kqlmagic#kqlmagic-with-application-insights
 
