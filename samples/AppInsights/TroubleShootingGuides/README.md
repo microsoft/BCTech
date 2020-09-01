@@ -14,11 +14,11 @@ Kqlmagic is a command that extends the capabilities of the Python kernel in Azur
 # Install and set up Kqlmagic
 To install and set up Kqlmagic, open a python notebook. Click the "Manage Packages" icon on the right of the notebook:
 
-![Manage Python packages](images/install-kqlmagic-1.png)
+![Manage Python packages](../images/install-kqlmagic-1.png)
 
 Under the "Add new" tab, type "kqlmagic" and click Install:
 
-![Install Kqlmagic](images/install-kqlmagic-2.png)
+![Install Kqlmagic](../images/install-kqlmagic-2.png)
 
 # How to connect Kqlmagic to an Azure Application Insights resource
 First, you must generate an API key for your Application Insights resource (you do that from within the Application Insights portal). You can then use the Application ID and API key to connect to Application Insights from the notebook. 
