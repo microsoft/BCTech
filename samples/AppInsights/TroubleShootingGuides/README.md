@@ -1,5 +1,10 @@
 Telemetry in Azure Application Insights is a very powerful tool to investigate issues after they have occured (where you cannot attach a debugger to troubleshoot the issue). Having a good arsenal of Kusto query language (KQL) scripts can be very handy, but sometimes executing KQL statements one by one in the Azure Application Insights portal can be tedious. This is where notebooks come in handy, and in this part of the samples repository we show you how to get started using Jupyter notebooks in Azure Data Studio. With the Kqlmagic module, you can now combine KQL with Python to create powerful interactive trouble shooting guides (TSGs).
 
+# Sample Trouble Shooting Guides (TSGs)
+Currently, this repository contains TSGs for 
+* Investigating performance issues (overview analysis)
+* Investigating login issues 
+
 # What is Azure Data Studio?
 Azure Data Studio is a cross-platform database tool for data professionals using the Microsoft family of on-premises and cloud data platforms on Windows, MacOS, and Linux. Azure Data Studio offers a modern editor experience with IntelliSense, code snippets, source control integration, and an integrated terminal. It's engineered with the data platform user in mind, with built-in charting of query result sets and customizable dashboards. 
 
@@ -39,8 +44,5 @@ You can now use the Application ID and API key to connect to and read from the A
 
 See more here: https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-kqlmagic#kqlmagic-with-application-insights
 
-# Sample Trouble Shooting Guides (TSGs)
-Currently, this repository contains TSGs for 
-* Investigating performance issues
 
 
