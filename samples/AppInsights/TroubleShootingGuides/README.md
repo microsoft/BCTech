@@ -4,6 +4,7 @@ Telemetry in Azure Application Insights is a very powerful tool to investigate i
 Currently, this repository contains TSGs for 
 * Investigating performance issues (overview analysis)
 * Investigating login issues 
+* Investigating if environments are using deprecated web service protocols
 
 # What is Azure Data Studio?
 Azure Data Studio is a cross-platform database tool for data professionals using the Microsoft family of on-premises and cloud data platforms on Windows, MacOS, and Linux. Azure Data Studio offers a modern editor experience with IntelliSense, code snippets, source control integration, and an integrated terminal. It's engineered with the data platform user in mind, with built-in charting of query result sets and customizable dashboards. 
