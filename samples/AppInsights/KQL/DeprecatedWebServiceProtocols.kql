@@ -1,0 +1,32 @@
+// KQL samples - Deprecated Web Service Protocols
+
+// Endpoints exposed from Business Central using Odata v3 has been deprecated and the feature will removed in Business Central 2021 release wave 1
+// See https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-w1#odata-v3
+
+// Usage of Odata v3 endpoints in the last 30 days
+traces
+| where timestamp > ago(30d) // change if your retention policy is different than the default
+| where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used 
+     or customDimensions.eventId == "RT0008" // starting from version 16.1, the eventId is used to identity signal types
+| where customDimensions.category == 'ODataV3'
+| project timestamp
+        , aadID = customDimensions.aadTenantId
+        , environmentType = customDimensions.environmentType
+        , environmentName = customDimensions.environmentName
+        , endpoint = customDimensions.endpoint
+
+
+// list of endpoints using OData v3 in the last 30 days
+traces
+| where 1==1 
+    and timestamp > ago(30d)
+    and customDimensions.eventId == 'RT0008'
+    and customDimensions.category == 'ODataV3'
+| project aadId = tostring( customDimensions.aadTenantId )
+        , environmentName = tostring( customDimensions.environmentName )
+        , category = tostring( customDimensions.category )
+        , endpoint = tostring( customDimensions.endpoint )
+| distinct aadId
+        , environmentName 
+        , category 
+        , endpoint
