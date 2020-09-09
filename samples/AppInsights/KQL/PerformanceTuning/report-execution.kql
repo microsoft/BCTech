@@ -1,0 +1,21 @@
+// Kusto query that can tell you how “set-based” reports are implemented
+//
+// The higher the number called sqlratio is, the more set-based the report is (it tells you how many sql rows are read per sql statement
+//
+// The query goes back 7 days and samples 100000 report executions
+
+traces
+| where timestamp > ago(7d)
+| where customDimensions.eventId == 'RT0006'
+| limit 100000
+| project numberOfRows = toint(customDimensions.numberOfRows)
+, sqlRowsRead = toint( customDimensions.sqlRowsRead )
+, sqlExecutes = toint( customDimensions.sqlExecutes )
+, alObjectName = tostring( customDimensions.alObjectName )
+, alObjectId = tostring( customDimensions.alObjectId )
+, extensionPublisher = tostring(customDimensions.extensionPublisher )
+| where isnotnull( sqlExecutes ) and isnotnull( sqlRowsRead )
+| summarize numberOfReportExecutions=count(), totalRows=sum(numberOfRows), totalSQLExecutes = sum(sqlExecutes), totalSQLRowsRead = sum(sqlRowsRead) by alObjectId, alObjectName
+| extend sqlratio = toreal(totalSQLRowsRead)/totalSQLExecutes
+, datasetratio = toreal(totalRows)/totalSQLExecutes
+| order by sqlratio asc
