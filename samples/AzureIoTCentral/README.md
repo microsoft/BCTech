@@ -30,13 +30,13 @@ Sending all that data directly to Business Central doesn’t sound like the righ
 ## Project Overview
 The steps in this sample project require an Azure subscription. 
 
-1. [Create an Application in Azure IoT Central](project-cookie-jar.md#)
-2. [Create Device Templates](project-cookie-jar.md#create-device-templates)
-3. [Set Up a Simulated Device](project-cookie-jar.md#set-up-a-simulated-device)
-4. [Set Up a Real Device](project-cookie-jar.md#set-up-a-real-device)
-5. [Create an Azure Logic Application](project-cookie-jar.md#create-an-azure-logic-application)
-6. [Azure IoT Central and Business Central](project-cookie-jar.md#azure-iot-central-and-business-central)
-7. [Set Up a Workflow in Business Central](project-cookie-jar.md#set-up-a-workflow-in-business-central)
+1. [Create an Application in Azure IoT Central](README.md#create-an-application-in-azure-iot-central)
+2. [Create Device Templates](README.md#create-device-templates)
+3. [Set Up a Simulated Device](README.md#set-up-a-simulated-device)
+4. [Set Up a Real Device](README.md#set-up-a-real-device)
+5. [Create an Azure Logic Application](README.md#create-an-azure-logic-application)
+6. [Azure IoT Central and Business Central](README.md#integrate-azure-iot-central-and-business-central)
+7. [Set Up a Workflow in Business Central](README.md#set-up-a-workflow-in-business-central)
 
 ## Create an Application in Azure IoT Central
 The first step is to set up an Azure IoT Central app.
@@ -539,7 +539,7 @@ Now that we have a secure way to get an access token for Business Central, we ca
 Now let’s get back to the logic app. When the rule from Azure IoT Central is triggered, the logic app will set **Pending Refill** to **True**, but before that we want it to call the API in Business Central to run some logic (for example, to create a purchase order for our cookies). Unfortunately, the Logic Apps Designer doesn’t let us add actions before the Update Device action, so we'll remove that action and add it again later.
 
 To call in to Business Central, we need an access token. 
-1. Find the app that we created for sending an email, and open the Logic App Designer. We did that in the [Create an Azure Logic Application](project-cookie-jar.md#create-an-Azure-Logic-Application) section.
+1. Find the app that we created for sending an email, and open the Logic App Designer. We did that in the [Create an Azure Logic Application](README.md#create-an-Azure-Logic-Application) section.
 1. Click **Add an action**, search for **azure logic apps**, and then select the **Choose a Logic Apps workflow** action.
 1. Select the logic app we created for getting an access token.
 1. Select the **Manual** action.
