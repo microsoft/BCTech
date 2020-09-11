@@ -4,6 +4,10 @@
 //
 // The query goes back 7 days and samples 100000 report executions
 
+// See tips on how to develop efficient reports in the performance tuning guide aka.ms/bcperformance
+// 
+// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#writing-efficient-reports
+
 traces
 | where timestamp > ago(7d)
 | where customDimensions.eventId == 'RT0006'
