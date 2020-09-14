@@ -1,0 +1,82 @@
+// KQL samples - App Key Vault events
+
+// Available in app telemetry (not environment telemetry) from version 17.0
+
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
+
+// App Key Vault initialization succeeded (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'RT0014' 
+| project 
+  eventId = customDimensions.eventId
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, keyVaultUrls = customDimensions.keyVaultUrls
+, message, customDimensions
+
+
+// App Key Vault initialization failed (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'RT0015' 
+| project 
+  eventId = customDimensions.eventId
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, failureReason = customDimensions.failureReason
+, message, customDimensions
+
+
+// App Key Vault secret retrieval succeeded from key vault (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'RT0016' 
+| project 
+  eventId = customDimensions.eventId
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, keyVaultUrl = customDimensions.keyVaultUrl
+, message, customDimensions
+
+
+// App Key Vault secret retrieval failed from key vault (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'RT0017' 
+| project 
+  eventId = customDimensions.eventId
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, failureReason = customDimensions.failureReason
+, message, customDimensions
