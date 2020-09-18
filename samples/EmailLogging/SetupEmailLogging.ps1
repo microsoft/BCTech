@@ -52,11 +52,29 @@ if ($executionPolicy -ne "RemoteSigned")
   Exit
 }
 
+Write-Host "Checking that ExchangeOnlineManagement is installed..."
+$exoModule = Get-InstalledModule ExchangeOnlineManagement | sort Version | select -last 1
+if ($exoModule)
+{
+  Write-Host "Updating ExchangeOnlineManagement..."
+  Update-Module ExchangeOnlineManagement
+  Write-Host "Getting ExchangeOnlineManagement module version..."
+  $exoModule = Get-InstalledModule ExchangeOnlineManagement | sort Version | select -last 1
+}
+else
+{
+  Write-Host "Installing ExchangeOnlineManagement..."
+  Install-Module ExchangeOnlineManagement -Force
+  Write-Host "Getting ExchangeOnlineManagement module version..."
+  $exoModule = Get-InstalledModule ExchangeOnlineManagement | sort Version | select -last 1
+}
+Write-Host "ExchangeOnlineManagement module version: $($psGetModule.Version)"
+
 Write-Host "Importing EXO module..."
 Import-Module ExchangeOnlineManagement
 
 Write-Host "Getting EXO module version..."
-$exoModule = Get-Module ExchangeOnlineManagement | sort Version | select -last 1
+$exoModule = Get-InstalledModule ExchangeOnlineManagement | sort Version | select -last 1
 Write-Host "EXO module version: $($exoModule.Version)"
 
 Write-Host "Connecting to Exchange Online..."
@@ -109,6 +127,8 @@ if (!($groupMembers.PrimarySmtpAddress | where { $_ -eq $EmailLoggingUser }))
 {
   Write-Host "Adding the email logging user to role group '$roleGroupName'"
   Add-RoleGroupMember -Identity $roleGroupName -Member $EmailLoggingUser
+  Write-Host "Checking members of role group '$roleGroupName'..."
+  $groupMembers = Get-RoleGroupMember -Identity $roleGroupName -ErrorAction SilentlyContinue
   if (!($groupMembers.PrimarySmtpAddress | where { $_ -eq $EmailLoggingUser }))
   {
     throw "The email logging user is not found in the list of members of role group '$roleGroupName'"
