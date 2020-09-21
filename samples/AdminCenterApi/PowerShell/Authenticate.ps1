@@ -9,7 +9,7 @@ $aadTenantId = "8c8dbccd-c171-4937-a134-e3c5a5dd0470"     # customer's tenant id
 
 
 # Load Microsoft.IdentityModel.Clients.ActiveDirectory.dll
-Add-Type -Path "C:\Program Files\WindowsPowerShell\Modules\AzureAD\2.0.2.106\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" # Install-Module AzureAD to get this
+Add-Type -Path "C:\Program Files\WindowsPowerShell\Modules\AzureAD\2.0.2.116\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" # Install-Module AzureAD to get this
 
 
 # Get access token
