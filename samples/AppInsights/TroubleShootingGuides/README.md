@@ -3,7 +3,8 @@ Telemetry in Azure Application Insights is a very powerful tool to investigate i
 # Sample Trouble Shooting Guides (TSGs)
 Currently, this repository contains TSGs for 
 * Investigating performance issues (overview analysis)
-* Investigating login issues 
+* Investigating web service issues (throttling, performance, bad endpoints)
+* Investigating login issues (authentication and authorization flows)
 * Investigating if environments are using deprecated web service protocols
 
 # What is Azure Data Studio?
