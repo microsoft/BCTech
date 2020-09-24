@@ -1,0 +1,32 @@
+// KQL samples - Long Running AL
+
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
+// Long running AL (RAW data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'RT0018' 
+    and customDimensions.alObjectId > 0 // filter out internal server calls
+| extend eventId = customDimensions.eventId 
+, aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, alMethod = customDimensions.alMethod
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, executionTime = customDimensions.executionTime
+, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+, extensionId = customDimensions.extensionId
+, extensionInfo = customDimensions.extensionInfo
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, longRunningThreshold = customDimensions.longRunningThreshold
+, longRunningThresholdInMS = toreal(totimespan(customDimensions.longRunningThreshold))/10000 //the datatype for executionTime is timespan 
+
+
