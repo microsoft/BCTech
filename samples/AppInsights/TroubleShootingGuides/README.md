@@ -1,7 +1,7 @@
 Telemetry in Azure Application Insights is a very powerful tool to investigate issues after they have occured (where you cannot attach a debugger to troubleshoot the issue). Having a good arsenal of Kusto query language (KQL) scripts can be very handy, but sometimes executing KQL statements one by one in the Azure Application Insights portal can be tedious. This is where notebooks come in handy, and in this part of the samples repository we show you how to get started using Jupyter notebooks in Azure Data Studio. With the Kqlmagic module, you can now combine KQL with Python to create powerful interactive trouble shooting guides (TSGs).
 
 # Sample Trouble Shooting Guides (TSGs)
-Currently, this repository contains TSGs for 
+This repository contains TSGs for 
 * Investigating performance issues (overview analysis)
 * Investigating performance issues in your code (analysis outside Microsoft code base)
 * Investigating web service issues (throttling, performance, bad endpoints)
