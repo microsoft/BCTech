@@ -1,0 +1,19 @@
+{
+  "id": "1802708a-1619-4aea-b1ac-ebc20ce6082f",
+  "name": "OAuth2 Flows",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "Sample on how to use all the OAuth 2.0 protocol authentication flows exposed by Microsoft Dynamics 365 Business Central.",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "17.0.0.0",
+  "application": "17.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "showMyCode": true,
+  "runtime": "6.0"
+}
