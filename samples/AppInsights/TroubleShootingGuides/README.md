@@ -1,6 +1,6 @@
 Telemetry in Azure Application Insights is a very powerful tool to investigate issues after they have occured (where you cannot attach a debugger to troubleshoot the issue). Having a good arsenal of Kusto query language (KQL) scripts can be very handy, but sometimes executing KQL statements one by one in the Azure Application Insights portal can be tedious. This is where notebooks come in handy, and in this part of the samples repository we show you how to get started using Jupyter notebooks in Azure Data Studio. With the Kqlmagic module, you can now combine KQL with Python to create powerful interactive trouble shooting guides (TSGs).
 
-# Sample Trouble Shooting Guides (TSGs)
+# Trouble Shooting Guides (TSGs)
 This repository contains TSGs for 
 * Investigating performance issues (overview analysis)
 * Investigating performance issues in your code (analysis outside Microsoft code base)
@@ -8,6 +8,7 @@ This repository contains TSGs for
 * Investigating data-related issues (long running queries, database locks, report performance)
 * Investigating login issues (authentication and authorization flows)
 * Investigating if environments are using deprecated web service protocols
+* Investigating lifecycle issues with extensions (compile, synchronize, publish, install, update, un-install, un-publish)
 
 | TSG | Description |
 | ----------- | ----------- |
@@ -16,6 +17,8 @@ This repository contains TSGs for
 | Web-services-TSG-version.ipynb | Use this TSG to analyze issues with web services: Is the environments being throttled? Analyze endpoint performance. Analyze failure reasons (HTTP codes 401, 404, 408, 426) |
 | Performance-partner-code-TSG.ipynb | Use this TSG to analyze performance problems in partner code. The TSG filters telemetry on object ids outside the ranges used for the base app and localizations (the code written by Microsoft) | 
 | Data-related-TSG.ipynb | Use this TSG to analyze data-related issues: Long running queries, database locks, reports that runs many sql statements | 
+| Extensions-TSG.ipynb | Use this TSG to analyze issues with the extension lifecycle (compile, synchronize, publish, install, update, un-install, un-publish). You can set filters on AAD tenant id, environment name, and extension id to troubleshoot all environments in a AAD tenant id, a single environment, single extensions, or any other combination of the three |
+
 
 
 # What is Azure Data Studio?
