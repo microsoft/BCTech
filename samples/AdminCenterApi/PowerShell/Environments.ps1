@@ -9,7 +9,7 @@
 # Get list of environments
 $response = Invoke-WebRequest `
     -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/applications/businesscentral/environments" `
     -Headers @{Authorization=("Bearer $accessToken")}
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
@@ -18,7 +18,7 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 $newEnvironmentName = "MyNewSandbox"
 $response = Invoke-WebRequest `
     -Method Put `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$newEnvironmentName" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/applications/businesscentral/environments/$newEnvironmentName" `
     -Body   (@{
                  EnvironmentType = "Sandbox"
                  CountryCode     = "DK"
@@ -32,7 +32,7 @@ $environmentName = "MyProd"
 $newEnvironmentName = "MyNewSandboxAsACopy"
 $response = Invoke-WebRequest `
     -Method Post `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/applications/businesscentral/environments/$environmentName" `
     -Body   (@{
                  EnvironmentName = $newEnvironmentName
                  Type            = "Sandbox"
@@ -46,7 +46,7 @@ $environmentName = "MyProd"
 $newAppInsightsKey = "00000000-1111-2222-3333-444444444444"
 $response = Invoke-WebRequest `
     -Method Post `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/settings/appinsightskey" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/applications/businesscentral/environments/$environmentName/settings/appinsightskey" `
     -Body   (@{
                  key = $newAppInsightsKey
               } | ConvertTo-Json) `
@@ -55,20 +55,37 @@ $response = Invoke-WebRequest `
 Write-Host "Responded with: $($response.StatusCode) $($response.StatusDescription)"
 
 
-# Get database size
-$environmentName = "MyProd"
-$response = Invoke-WebRequest `
-    -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/$environmentName/dbsize" `
-    -Headers @{Authorization=("Bearer $accessToken")}
-Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
-
-
 # Get support settings
 $environmentName = "MyProd"
 $response = Invoke-WebRequest `
     -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.1/support/applications/businesscentral/environments/$environmentName/supportcontact" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/support/applications/businesscentral/environments/$environmentName/supportcontact" `
     -Headers @{Authorization=("Bearer $accessToken")}
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
+
+
+# Get storage (database and file) used by an environment in KB
+$environmentName = "MyProd"
+$response = Invoke-WebRequest `
+    -Method Get `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/applications/businesscentral/environments/$environmentName/usedstorage" `
+    -Headers @{Authorization=("Bearer $accessToken")}
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
+
+
+# Get storage (database and file) across all environments
+$response = Invoke-WebRequest `
+    -Method Get `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/environments/usedstorage" `
+    -Headers @{Authorization=("Bearer $accessToken")}
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content)) 
+
+
+# Get all tenant quotas
+$response = Invoke-WebRequest `
+    -Method Get `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.3/environments/quotas" `
+    -Headers @{Authorization=("Bearer $accessToken")}
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
+
 
