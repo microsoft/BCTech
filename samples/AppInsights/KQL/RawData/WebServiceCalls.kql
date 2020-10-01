@@ -10,6 +10,7 @@ traces
      or customDimensions.eventId == "RT0008" // starting from version 16.1, the eventId is used to identity signal types
 | extend eventId = customDimensions.eventId 
 , aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
