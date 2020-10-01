@@ -2,7 +2,8 @@
 
 // httpHeaders and httpStatusCode only available from 16.3
 traces
-//| where timestamp  > ago(14d)
+| where 1==1
+//and timestamp  > ago(14d)
 and customDimensions.eventId == 'RT0008'
 and customDimensions.category == 'ODataV4'
 // httpHeaders and httpStatusCode only available from 16.3
