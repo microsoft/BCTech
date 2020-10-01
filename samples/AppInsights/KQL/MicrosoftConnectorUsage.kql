@@ -1,0 +1,33 @@
+// KQL samples - Web service requests (OData) from the Microsoft connectors for PowerBI, PowerApps, LogicApps, and Flow
+
+// httpHeaders and httpStatusCode only available from 16.3
+traces
+//| where timestamp  > ago(14d)
+and customDimensions.eventId == 'RT0008'
+and customDimensions.category == 'ODataV4'
+// httpHeaders and httpStatusCode only available from 16.3
+| extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
+| extend httpHeadersJSON = parse_json(httpHeadersTmp)
+| extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
+| where msUserAgent has 'AzureConnector' or msUserAgent has 'PowerBIConnector'
+| extend httpStatusCode = customDimensions.httpStatusCode
+, aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, endpoint = customDimensions.endpoint
+, connector = case( 
+// ms-dyn-useragent=AzureConnector/1.0 Flow/1.0 DynamicsSmbSaas/1.0.0.0
+msUserAgent matches regex "AzureConnector/(.)+Flow", 'Flow'
+// ["PowerBIConnector/1.0 PowerBI/1.0 Dynamics365BusinessCentral/1.1.5"]
+, msUserAgent matches regex "PowerBIConnector/", 'Power BI'
+// ms-dyn-useragent=AzureConnector/1.0 PowerApps/3.20092.39 DynamicsSmbSaas/1.0.0.0
+, msUserAgent matches regex "AzureConnector/(.)+PowerApps", 'PowerApps'
+// ms-dyn-useragent=AzureConnector/1.0 LogicApps/3.20092.39 DynamicsSmbSaas/1.0.0.0
+, msUserAgent matches regex "AzureConnector/(.)+LogicApps", 'LogicApps'
+, msUserAgent has 'AzureConnector', 'Unknown Azure connector'
+, 'Unknown connector' 
+)
+| project timestamp, msUserAgent, httpStatusCode, aadID, environmentName, environmentType, connector, endpoint, alObjectId, alObjectName, message

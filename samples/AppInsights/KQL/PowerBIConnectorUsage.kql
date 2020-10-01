@@ -1,14 +1,12 @@
 // KQL samples - Web service requests (OData) from the Microsoft PowerBI connector
 
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
 
 // httpHeaders and httpStatusCode only available from 16.3
 traces
-| where timestamp  > ago(7d)
-    and customDimensions.eventId == 'RT0008'
-    and customDimensions.category == 'ODataV4'
-// getting data out of the httpHeaders json structure in customDimensions require a few tricks
+| where timestamp  > ago(14d)
+and customDimensions.eventId == 'RT0008'
+and customDimensions.category == 'ODataV4'
+// httpHeaders and httpStatusCode only available from 16.3
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
@@ -21,4 +19,8 @@ traces
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , endpoint = customDimensions.endpoint
-| project timestamp, httpStatusCode, aadID, environmentName, environmentType, endpoint, alObjectId, alObjectName, message
+, connector = case( 
+  msUserAgent has 'PowerBIConnector', 'Power BI'
+, 'Unknown connector' 
+)
+| project timestamp, msUserAgent, httpStatusCode, aadID, environmentName, environmentType, connector, endpoint, alObjectId, alObjectName, message
