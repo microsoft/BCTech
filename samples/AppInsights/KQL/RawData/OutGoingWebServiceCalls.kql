@@ -1,0 +1,28 @@
+// KQL samples - Outgoing Web Service Requests 
+
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
+// Outgoing Web Service Requests from AL HttpClient (RAW data)
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+    and customDimensions.eventId == 'RT0019'
+| project eventId = customDimensions.eventId 
+, aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, alAuthenticationMethod = customDimensions.alAuthenticationMethod
+, alHttpTimeout = customDimensions.alHttpTimeout
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, endpoint = customDimensions.endpoint
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, httpMethod = customDimensions.httpMethod
+, httpStatusCode = customDimensions.httpReturnCode // not in the schema yet
+, httpHeaders = customDimensions.httpHeaders       
+, executionTime = customDimensions.serverExecutionTime
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
