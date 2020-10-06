@@ -1,0 +1,24 @@
+{
+  "id": "5d4d4215-fbe6-4b71-bc8e-8e033e9fb5d1",
+  "name": "Customer Loyalty",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "dependencies": [
+    {
+      "id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "publisher": "Microsoft",
+      "name": "System Application",
+      "version": "1.0.0.0"
+    },
+    {
+      "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "publisher": "Microsoft",
+      "name": "Base Application",
+      "version": "15.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "15.0.0.0",
+  "showMyCode": true,
+  "runtime": "6.0"
+}

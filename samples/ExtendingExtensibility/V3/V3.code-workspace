@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "base",
+			"path": "base"
+		},
+		{
+			"name": "ext",
+			"path": "ext"
+		}
+	],
+	"settings": {}
+}
