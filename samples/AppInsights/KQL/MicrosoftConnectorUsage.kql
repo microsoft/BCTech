@@ -10,7 +10,7 @@ and customDimensions.category == 'ODataV4'
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
-| where msUserAgent has 'AzureConnector' or msUserAgent has 'PowerBIConnector'
+| where msUserAgent has 'AzureConnector' or msUserAgent has 'PowerBIConnector' or msUserAgent has 'BusinessCentralLinkUnfurlingTeamsBot'
 | extend httpStatusCode = customDimensions.httpStatusCode
 , aadID = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
@@ -28,6 +28,8 @@ msUserAgent matches regex "AzureConnector/(.)+Flow", 'Flow'
 , msUserAgent matches regex "AzureConnector/(.)+PowerApps", 'PowerApps'
 // ms-dyn-useragent=AzureConnector/1.0 LogicApps/3.20092.39 DynamicsSmbSaas/1.0.0.0
 , msUserAgent matches regex "AzureConnector/(.)+LogicApps", 'LogicApps'
+// ms-dyn-useragent=BusinessCentralLinkUnfurlingTeamsBot
+, msUserAgent has "BusinessCentralLinkUnfurlingTeamsBot", 'MSTeams'
 , msUserAgent has 'AzureConnector', 'Unknown Azure connector'
 , 'Unknown connector' 
 )
