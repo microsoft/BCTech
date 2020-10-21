@@ -1,0 +1,6 @@
+
+...
+![alt text](https://106c4.wpc.azureedge.net/80106C4/Gallery-Prod/cdn/2015-02-24/prod20161101-microsoft-windowsazure-gallery/microsoftdynsmb.3a67602d-0a4f-4ae4-ad03-c1124f6ac3cf.1.0.2/Icon/small.png)
+# Sample extension to access cloud services in a tenant
+...
+
