@@ -26,7 +26,8 @@ traces
 , httpHeaders = customDimensions.httpHeaders       
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
-// these three lines httpHeadersTmp, httpHeadersJSON, and msUserAgent illustrate how to extract data from the httpHeaders dimension
+// these three lines httpHeadersTmp, httpHeadersJSON, and msUserAgent 
+// illustrate how to extract data from the httpHeaders dimension
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
