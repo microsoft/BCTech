@@ -1,0 +1,38 @@
+{
+  "id": "6b6ec0cb-65d6-43ae-8bdc-b854b69e4e9b",
+  "name": "Sample Services Access",
+  "publisher": "BCTech",
+  "version": "1.0.0.7",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "id":  "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "name":  "System Application",
+      "publisher":  "Microsoft",
+      "version":  "18.0.0.0"
+    },
+    {
+      "id":  "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "name":  "Base Application",
+      "publisher":  "Microsoft",
+      "version":  "18.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "17.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://SampleServicesAccess.com/help/",
+  "showMyCode": true,
+  "runtime": "7.0"
+}
