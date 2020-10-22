@@ -1,4 +1,5 @@
 This is a sample extension for Business Central to show how to get on-behalf access tokens to variety of services in AL.
+Given extension is possible to use with BusinessCentral starting from version 17.1
 
 Prerequisites:
 
