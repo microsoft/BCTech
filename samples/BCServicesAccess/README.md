@@ -4,8 +4,8 @@ Given extension is possible to use with Business Central starting from version 1
 
 Prerequisites:
 
-1. Azure AD app registration, see [How-To](https://github.com/microsoft/BCTech/wiki/How-To-for-OnBehalfOf-services-access-sample) here.
+1. Business Central 17.1 or later
+2. Azure AD app registration, see [How-To](https://github.com/microsoft/BCTech/wiki/How-To-for-OnBehalfOf-services-access-sample) here.
 
-How to use:
 
-[TODO]
+[How to Use](https://github.com/microsoft/BCTech/wiki/How-to-Use-BCServicesAccess-sample-extension)
