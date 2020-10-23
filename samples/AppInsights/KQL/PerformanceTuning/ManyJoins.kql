@@ -29,5 +29,31 @@ traces
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
-| extend numberOfJoins = countof(sqlStatement, "JOIN") 
+// this part of the query derives various insights from the SQL statement
+| extend operationType = case(
+  sqlStatement startswith "UPDATE", "UPDATE"
+, sqlStatement startswith "DELETE", "DELETE"
+, sqlStatement startswith "BeginTransaction", "BEGIN_TRANS"
+, sqlStatement matches regex "INSERT INTO", "INSERT"
+, sqlStatement startswith "SELECT", "SELECT"
+, sqlStatement matches regex "IF EXISTS \\(SELECT (.*)\\) SELECT", "SELECT'"
+, sqlStatement has "SELECT NEXT VALUE FOR", "SELECT_SEQUENCE_VALUE"
+, sqlStatement has "SELECT @@SPID", "SELECT_SPID"
+, sqlStatement matches regex "(.*)WITH", "SELECT"
+, sqlStatement startswith "CREATE TABLE", "CREATE_TABLE"
+, sqlStatement startswith "ALTER TABLE", "ALTER_TABLE"
+, sqlStatement startswith "exec sp_rename", "RENAME_TABLE" 
+, sqlStatement matches regex "(.*)DROP TABLE", "DROP_TABLE"
+, sqlStatement startswith "SET LOCK_TIMEOUT", "SET_LOCK_TIMEOUT"
+, sqlStatement has "sp_getapplock", "GET_APP_LOCK"
+, "UNKNOWN"
+)
+, numberOfJoins = countof(sqlStatement, "JOIN") 
 , numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
+, extensionIdsFromJOIN = tostring( extract_all("JOIN \"SQLDATABASE\"\\.dbo\\.\"CURRENTCOMPANY\\$.+?\\$(\\S+?)\"", sqlStatement) )
+| parse kind=regex sqlStatement with selectPart:string "FROM" rest:string
+| extend numberOfColumnsSelected = case(
+operationType == "SELECT", countof(selectPart,",") + 1
+, operationType == "SELECT'", countof(selectPart,",") + 1
+, 0
+)

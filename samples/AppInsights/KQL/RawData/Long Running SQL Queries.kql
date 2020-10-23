@@ -13,7 +13,7 @@ traces
      or customDimensions.eventId == 'RT0005' // starting from version 16.1, the eventId is used to identity signal types
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | extend eventId = customDimensions.eventId 
-, aadID = customDimensions.aadTenantId
+, aadTenantId = customDimensions.aadTenantId
 , sqlStatement = tostring(customDimensions.sqlStatement)
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -27,8 +27,34 @@ traces
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
-| extend numberOfJoins = countof(sqlStatement, "JOIN") 
+// this part of the query derives various insights from the SQL statement
+| extend operationType = case(
+  sqlStatement startswith "UPDATE", "UPDATE"
+, sqlStatement startswith "DELETE", "DELETE"
+, sqlStatement startswith "BeginTransaction", "BEGIN_TRANS"
+, sqlStatement matches regex "INSERT INTO", "INSERT"
+, sqlStatement startswith "SELECT", "SELECT"
+, sqlStatement matches regex "IF EXISTS \\(SELECT (.*)\\) SELECT", "SELECT'"
+, sqlStatement has "SELECT NEXT VALUE FOR", "SELECT_SEQUENCE_VALUE"
+, sqlStatement has "SELECT @@SPID", "SELECT_SPID"
+, sqlStatement matches regex "(.*)WITH", "SELECT"
+, sqlStatement startswith "CREATE TABLE", "CREATE_TABLE"
+, sqlStatement startswith "ALTER TABLE", "ALTER_TABLE"
+, sqlStatement startswith "exec sp_rename", "RENAME_TABLE" 
+, sqlStatement matches regex "(.*)DROP TABLE", "DROP_TABLE"
+, sqlStatement startswith "SET LOCK_TIMEOUT", "SET_LOCK_TIMEOUT"
+, sqlStatement has "sp_getapplock", "GET_APP_LOCK"
+, "UNKNOWN"
+)
+, numberOfJoins = countof(sqlStatement, "JOIN") 
 , numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
+, extensionIdsFromJOIN = tostring( extract_all("JOIN \"SQLDATABASE\"\\.dbo\\.\"CURRENTCOMPANY\\$.+?\\$(\\S+?)\"", sqlStatement) )
+| parse kind=regex sqlStatement with selectPart:string "FROM" rest:string
+| extend numberOfColumnsSelected = case(
+operationType == "SELECT", countof(selectPart,",") + 1
+, operationType == "SELECT'", countof(selectPart,",") + 1
+, 0
+)
 
 
 // version that works on 15.0, 15.2, and 15.2 versions
@@ -40,7 +66,7 @@ traces
 | where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
 | extend alObjectId = customDimensions.['AL Object Id']
 | where alObjectId > 0 // filter out internal server calls
-| extend aadID = customDimensions.['AadTenantId']
+| extend aadTenantId = customDimensions.['AadTenantId']
        , executionTime = customDimensions.['Execution time (ms)']
        , sqlStatement = tostring( customDimensions.['SQL statement'] )
 | extend alObjectName = tostring( customDimensions.['AL Object name'] )
@@ -53,5 +79,31 @@ traces
 , environmentName = tostring( customDimensions.['Environment name'] )
 , environmentType = tostring( customDimensions.['Environment type'] )
 , executionTimeInMS = toreal(totimespan(executionTime))/10000 //the datatype for executionTime is timespan 
+// this part of the query derives various insights from the SQL statement
+| extend operationType = case(
+  sqlStatement startswith "UPDATE", "UPDATE"
+, sqlStatement startswith "DELETE", "DELETE"
+, sqlStatement startswith "BeginTransaction", "BEGIN_TRANS"
+, sqlStatement matches regex "INSERT INTO", "INSERT"
+, sqlStatement startswith "SELECT", "SELECT"
+, sqlStatement matches regex "IF EXISTS \\(SELECT (.*)\\) SELECT", "SELECT'"
+, sqlStatement has "SELECT NEXT VALUE FOR", "SELECT_SEQUENCE_VALUE"
+, sqlStatement has "SELECT @@SPID", "SELECT_SPID"
+, sqlStatement matches regex "(.*)WITH", "SELECT"
+, sqlStatement startswith "CREATE TABLE", "CREATE_TABLE"
+, sqlStatement startswith "ALTER TABLE", "ALTER_TABLE"
+, sqlStatement startswith "exec sp_rename", "RENAME_TABLE" 
+, sqlStatement matches regex "(.*)DROP TABLE", "DROP_TABLE"
+, sqlStatement startswith "SET LOCK_TIMEOUT", "SET_LOCK_TIMEOUT"
+, sqlStatement has "sp_getapplock", "GET_APP_LOCK"
+, "UNKNOWN"
+)
 , numberOfJoins = countof(sqlStatement, "JOIN") 
 , numberOfOuterApplys = countof(sqlStatement, "OUTER APPLY") 
+, extensionIdsFromJOIN = tostring( extract_all("JOIN \"SQLDATABASE\"\\.dbo\\.\"CURRENTCOMPANY\\$.+?\\$(\\S+?)\"", sqlStatement) )
+| parse kind=regex sqlStatement with selectPart:string "FROM" rest:string
+| extend numberOfColumnsSelected = case(
+operationType == "SELECT", countof(selectPart,",") + 1
+, operationType == "SELECT'", countof(selectPart,",") + 1
+, 0
+)
