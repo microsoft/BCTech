@@ -15,6 +15,7 @@ traces
 | extend eventId = customDimensions.eventId 
 , aadTenantId = customDimensions.aadTenantId
 , sqlStatement = tostring(customDimensions.sqlStatement)
+, environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , alObjectId = customDimensions.alObjectId
