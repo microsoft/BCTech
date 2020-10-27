@@ -8,7 +8,6 @@ You can use Kusto queries as the data source in a number of places. E.g.
 * Azure Dashboards
 * Jupyter Notebooks (with the Kqlmagic extension)
 
-
 # Resources 
 Here are some resources for you to get started on Kusto Query Language (KQL). Use CTRL+click to open them in a new browser tab/window.
 * [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
@@ -16,6 +15,11 @@ Here are some resources for you to get started on Kusto Query Language (KQL). Us
 * [I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
 * [Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
 
+# KQL editors and clients
+You can write and execute KQL in various tools. E.g.
+* [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer), [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
+* In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
+* Application Insights portal (Under *Logs* in the *Monitoring* menu)
 
 # Signal overview
 Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
