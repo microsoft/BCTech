@@ -21,8 +21,8 @@ traces
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
-, httpMethod = customDimensions.httpMethod
-, httpStatusCode = customDimensions.httpReturnCode // not in the schema yet
+, httpMethod = toupper( customDimensions.httpMethod ) // httpMethod is logged as the value used in the AL code
+, httpStatusCode = customDimensions.httpReturnCode // included in the schema from version 16.4
 , httpHeaders = customDimensions.httpHeaders       
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
