@@ -18,6 +18,10 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
@@ -25,9 +29,6 @@ traces
 , clientType = customDimensions.clientType
 , executionTime = customDimensions.executionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
-, extensionId = customDimensions.extensionId
-, extensionName = customDimensions.extensionName
-, extensionVersion = customDimensions.extensionVersion
 // this part of the query derives various insights from the SQL statement
 | extend operationType = case(
   sqlStatement startswith "UPDATE", "UPDATE"

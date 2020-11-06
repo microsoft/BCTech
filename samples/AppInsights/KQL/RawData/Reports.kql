@@ -82,3 +82,25 @@ traces
 , "unknown"
 )
 , message, customDimensions
+
+
+// cancelled report execution, where COMMIT occurred (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'RT0011'
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = customDimensions.environmentName
+, environmentType = tostring( customDimensions.environmentType )
+, companyName = customDimensions.companyName
+, cancelReason = tostring( customDimensions.cancelReason )
+, component = customDimensions.component 
+, componentVersion = customDimensions.componentVersion 
+, clientType = customDimensions.clientType
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
