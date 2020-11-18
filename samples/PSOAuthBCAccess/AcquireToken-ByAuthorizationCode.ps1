@@ -3,7 +3,6 @@
    Token acquisition by authorization code
 
    Application registered in Azure AD should have 'Redirect URI' value set to 'http://localhost:8080/login' for 'Web' platform
-   Application registered in Azure AD should have 'Allow public client flows' set to 'Yes'
 #>
 
 Import-Module ./CommonData.psm1 -Force
@@ -27,7 +26,7 @@ Start-Process $AuthorizationRequestUrl
 # Local web server starts to handle authorization code callback
 $AuthorizationCode = ./Start-TestWebServer.ps1
 
-# acquire access token by authorization code
+# redeem authorization code to acquire access token
 $AuthenticationResult = Get-MsalToken -ClientId $ClientId -ClientSecret $ClientSecret -AuthorizationCode $AuthorizationCode -TenantId $TenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb -Scopes $BcScopes
 
 # use access token to get data from BC

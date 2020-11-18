@@ -2,22 +2,22 @@
 Import-Module MSAL.PS
 
 
-$ClientId = "451cc9af-4add-4703-8c1b-3e7983e8b59f"
-$RedirectUri = "msal451cc9af-4add-4703-8c1b-3e7983e8b59f://auth"
+$ClientId = "<Client ID>"
+$RedirectUri = "<desktop redirect Uri>"
 $RedirectUriWeb = "http://localhost:8080/login"
 
-$BaseAuthorityUri = "https://login.windows-ppe.net"
-$TenantId = "4f718582-e85c-4e91-bdd5-3402d203adee"
+$BaseAuthorityUri = "https://login.microsoftonline.com" # for pre-production environment, use "https://login.windows-ppe.net"
+$TenantId = "<Azure AD Tenant Id>"
 $AuthorityUri = "$BaseAuthorityUri/$TenantId"
 
 
-$BcAppIdUri = "https://projectmadeira-ppe.com"
+$BcAppIdUri = "https://projectmadeira.com" # for pre-production environment, use "https://projectmadeira-ppe.com"
 $BcScopes = @( "$BcAppIdUri/user_impersonation", "$BcAppIdUri/Financials.ReadWrite.All" )
 $BcAutomationScopes = @( "$BcAppIdUri/Automation.ReadWrite.All" )
 
-$BcBaseUri = "https://api.businesscentral.dynamics-tie.com"
+$BcBaseUri = "https://api.businesscentral.dynamics.com" # for pre-production environment, use "https://api.businesscentral.dynamics-tie.com"
 $BcEnvironment = "Production"
-$BcCompanyUrlEncoded = "CRONUS%20USA%2c%20Inc."
+$BcCompanyUrlEncoded = "<BC company urlencoded>"
 $BcWebServiceName = "Chart_of_Accounts"
 $BcAutomationServiceName = "automationCompanies"
 
