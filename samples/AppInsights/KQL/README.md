@@ -8,12 +8,13 @@ You can use Kusto queries as the data source in a number of places. E.g.
 * Azure Dashboards
 * Jupyter Notebooks (with the Kqlmagic extension)
 
-# Resources 
+# Learning resources (KQL)
 Here are some resources for you to get started on Kusto Query Language (KQL). Use CTRL+click to open them in a new browser tab/window.
 * [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
 * [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
 * [I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
 * [Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
+* [Microsoft Azure Data Explorer - Advanced KQL (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-advanced-query-capabilities/table-of-contents)
 
 # KQL editors and clients
 You can write and execute KQL in various tools. E.g.

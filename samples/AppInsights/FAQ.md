@@ -21,8 +21,8 @@ Application Insights is billed based on the volume of telemetry data that your a
 
 Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information on pricing.
 
-## Where can I learn more about Kusto Query Language (KQL)?
-Please visit the [KQL readme page](KQL/README.md) for resources on KQL.
+## Where can I learn more about Kusto Query Language (KQL) and Azure Data Studio?
+Please visit the [KQL README page](KQL/README.md) for learning resources on KQL and the [Trouble Shooting Guides README page](TroubleShootingGuides/README.md) for learning resources on Azure Data Studio.
 
 ## How can I see what data is available in my Application Insights subscription
 Use this KQL query [AvailableSignal.kql](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/AvailableSignal.kql) to see if you have any data in your telemetry database, and also what kind of signal is present.
