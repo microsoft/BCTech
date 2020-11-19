@@ -11,7 +11,9 @@ Prerequisites:
 
 Installed `MSAL.PS` Powershell module.
 
-Azure Active Directory App registration:
+In order to access **Business Central Automation API**, it is required to **[Setup Azure AD application in Business Central](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication#task-2-set-up-the-azure-ad-application-in-)** .
+
+**Azure AD Application** registration:
 
 1. Sign into azure portal under tenant admin user, go to **'Azure Active Directory'** - **'App registrations'**
 
