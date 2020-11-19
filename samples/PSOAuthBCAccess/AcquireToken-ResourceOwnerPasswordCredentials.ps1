@@ -12,7 +12,7 @@ Import-Module ./CommonData.psm1 -Force
 $UserCredential = Get-Credential
 
 # acquire access token with user credentials
-$AuthenticationResult = Get-MsalToken -ClientId $ClientId -RedirectUri $RedirectUri -TenantId $TenantId -Authority $AuthorityUri -UserCredential $UserCredential -Scopes $BcScopes
+$AuthenticationResult = Get-MsalToken -ClientId $ClientId -RedirectUri $RedirectUri -TenantId $AadTenantId -Authority $AuthorityUri -UserCredential $UserCredential -Scopes $BcScopes
 
 # use access token to get data from BC
 $BcResponse = Invoke-BCWebService -RequestUrl $SampleBCOdataUrl -AccessToken $AuthenticationResult.AccessToken

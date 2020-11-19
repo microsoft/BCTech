@@ -9,7 +9,7 @@ Import-Module ./CommonData.psm1 -Force
 
 Write-Host "Enter client secret:"
 $ClientSecret = Read-Host -AsSecureString
-$ClientApplication = New-MsalClientApplication -ClientId $ClientId -ClientSecret $ClientSecret -TenantId $TenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb
+$ClientApplication = New-MsalClientApplication -ClientId $ClientId -ClientSecret $ClientSecret -TenantId $AadTenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb
 
 $BcScopesList = New-Object 'System.Collections.Generic.List[string]'
 foreach ($BcScope in $BcScopes)
@@ -27,7 +27,7 @@ Start-Process $AuthorizationRequestUrl
 $AuthorizationCode = ./Start-TestWebServer.ps1
 
 # redeem authorization code to acquire access token
-$AuthenticationResult = Get-MsalToken -ClientId $ClientId -ClientSecret $ClientSecret -AuthorizationCode $AuthorizationCode -TenantId $TenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb -Scopes $BcScopes
+$AuthenticationResult = Get-MsalToken -ClientId $ClientId -ClientSecret $ClientSecret -AuthorizationCode $AuthorizationCode -TenantId $AadTenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb -Scopes $BcScopes
 
 # use access token to get data from BC
 $BcResponse = Invoke-BCWebService -RequestUrl $SampleBCOdataUrl -AccessToken $AuthenticationResult.AccessToken
