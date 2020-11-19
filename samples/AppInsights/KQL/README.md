@@ -42,7 +42,16 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | AL HttpClient signal (outgoing web service calls) | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-outgoing-trace |
 | Long Running AL execution | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-al-method-trace |
 | App Key Vault Secret Acquisitions | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-key-vault-trace  |
-| Extension lifecycle for app telemetry | 2020 release wave 2 (17.x) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Extension lifecycle for app telemetry | 2020 release wave 2 (17.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Sensitive Field Monitoring | 2020 release wave 2 (17.1) | (pending link to docs)) |
+| Retention Policy | 2020 release wave 2 (17.1) | (pending link to docs)) |
+| Performance Toolkit | 2020 release wave 2 (17.1) | (pending link to docs)) |
+| Job Queue | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Permissions | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Configuration Package | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Email | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Web Service Key Authentication | 2020 release wave 2 (17.x) | (pending link to docs)) |
+
 
 
 # Disclaimer
