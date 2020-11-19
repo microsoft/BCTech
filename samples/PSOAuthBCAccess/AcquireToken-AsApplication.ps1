@@ -5,7 +5,7 @@
 
 Import-Module ./CommonData.psm1 -Force
 
-Write-Host "Enter client secret:"
+Write-Host "Enter the secret for client $ClientId :"
 $ClientSecret = Read-Host -AsSecureString
 
 # acquire access token as application with client id and secret

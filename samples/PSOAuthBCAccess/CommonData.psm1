@@ -22,7 +22,7 @@ $BcWebServiceName = "Chart_of_Accounts"
 $BcAutomationServiceName = "automationCompanies"
 
 $SampleBCODataUrl = "$BcBaseUri/v2.0/$AadTenantId/$BcEnvironmentName/ODataV4/Company('$BcCompanyUrlEncoded')/$BcWebServiceName"
-$SampleBCAutomationUrl = "$BcBaseUri/v2.0/$AadTenantId/$BcEnvironmentName/api/microsoft/automation/v1.0/companies('$BcCompanyUrlEncoded')/$BcAutomationServiceName"
+$SampleBCAutomationUrl = "$BcBaseUri/v2.0/$AadTenantId/$BcEnvironmentName/api/microsoft/automation/v1.0/companies"
 
 function Invoke-BCWebService
 {

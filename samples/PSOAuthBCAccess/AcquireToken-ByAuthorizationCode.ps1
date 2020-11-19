@@ -7,7 +7,7 @@
 
 Import-Module ./CommonData.psm1 -Force
 
-Write-Host "Enter client secret:"
+Write-Host "Enter the secret for client $ClientId :"
 $ClientSecret = Read-Host -AsSecureString
 $ClientApplication = New-MsalClientApplication -ClientId $ClientId -ClientSecret $ClientSecret -TenantId $AadTenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb
 
