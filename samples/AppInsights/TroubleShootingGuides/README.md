@@ -46,7 +46,10 @@ Under the "Add new" tab, type "kqlmagic" and click Install:
 
 ![Install Kqlmagic](../images/install-kqlmagic-2.png)
 
-# How to connect Kqlmagic to an Azure Application Insights resource
+# Now what?
+You are now ready to run some notebooks. Either write your own or download some from this repository.
+
+# How to connect a notebook to an Azure Application Insights resource?
 You need two GUIDs to be able to read data from your Application Insights resource: 
 1. Application ID
 2. an API key
