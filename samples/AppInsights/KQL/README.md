@@ -20,6 +20,8 @@ Here are some resources for you to get started on Kusto Query Language (KQL). Us
 You can write and execute KQL in various tools. E.g.
 * [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
 * In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
+* In a Jupyter notebook hosted in Visual Studio Code (with the Python and Jupyter Notebooks extensions installed)
+
 * Application Insights portal (Under *Logs* in the *Monitoring* menu)
 
 # Signal overview
@@ -38,11 +40,20 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Extension lifecycle | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
 | Client page views | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 | HTTP status and HTTP headers added to Web Service Request signal | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
-| Web Service Key Authentication | 2020 release wave 2 (17.x) | Release plan: https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave2/smb/dynamics365-business-central/signal-web-service-key-authentication-added-application-insights-telemetry-partners |
 | AL HttpClient signal (outgoing web service calls) | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-outgoing-trace |
 | Long Running AL execution | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-al-method-trace |
 | App Key Vault Secret Acquisitions | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-key-vault-trace  |
-| Extension lifecycle for app telemetry | 2020 release wave 2 (17.x) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Extension lifecycle for app telemetry | 2020 release wave 2 (17.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Sensitive Field Monitoring | 2020 release wave 2 (17.1) | (pending link to docs)) |
+| Retention Policy | 2020 release wave 2 (17.1) | (pending link to docs)) |
+| Performance Toolkit | 2020 release wave 2 (17.1) | (pending link to docs)) |
+| Job Queue | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Permissions | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Configuration Package | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Email | 2020 release wave 2 (17.2) | (pending link to docs)) |
+| Web Service Key Authentication | 2020 release wave 2 (17.x) | Release plan: https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave2/smb/dynamics365-business-central/signal-web-service-key-authentication-added-application-insights-telemetry-partners |
+
+
 
 
 # Disclaimer

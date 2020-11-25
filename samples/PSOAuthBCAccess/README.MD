@@ -11,7 +11,9 @@ Prerequisites:
 
 Installed `MSAL.PS` Powershell module.
 
-Azure Active Directory App registration:
+In order to access **Business Central Automation API**, it is required to **[Setup Azure AD application in Business Central](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication#task-2-set-up-the-azure-ad-application-in-)** .
+
+**Azure AD Application** registration:
 
 1. Sign into azure portal under tenant admin user, go to **'Azure Active Directory'** - **'App registrations'**
 
@@ -38,7 +40,7 @@ Change values in **CommonData.psm1** module:
 
   * Set **`$ClientId`** in the module to registered application Client Id value 
   * Set **`$RedirectUri`** in the module to registered application Web redirect Uri
-  * Set **`$TenantId`** in the module to Azure AD Tenant Id where Business Central is located
+  * Set **`$AadTenantId`** in the module to Azure AD Tenant Id where Business Central is located
   * Set **`$BcCompanyUrlEncoded`** in the module to Url-encoded name of the company in BC tenant
 
 ## Disclaimer
