@@ -17,12 +17,11 @@ $BcAutomationScopes = @( "$BcAppIdUri/.default" )
 
 $BcBaseUri = "https://api.businesscentral.dynamics.com"
 $BcEnvironmentName = "Production"
-$BcCompanyUrlEncoded = "<Url-encoded company name>"
 $BcWebServiceName = "Chart_of_Accounts"
 $BcAutomationServiceName = "automationCompanies"
 
-$SampleBCODataUrl = "$BcBaseUri/v2.0/$AadTenantId/$BcEnvironmentName/ODataV4/Company('$BcCompanyUrlEncoded')/$BcWebServiceName"
-$SampleBCAutomationUrl = "$BcBaseUri/v2.0/$AadTenantId/$BcEnvironmentName/api/microsoft/automation/v1.0/companies"
+$SampleBCODataUrl = "$BcBaseUri/v2.0/$AadTenantId/$BcEnvironmentName/api/v2.0/companies"
+$SampleBCAutomationUrl = "$BcBaseUri/v2.0/$AadTenantId/$BcEnvironmentName/api/microsoft/automation/v2.0/companies"
 
 function Invoke-BCWebService
 {
@@ -39,17 +38,6 @@ function Invoke-BCWebService
 }
 
 function Write-BCWebServiceResponse
-{
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory=$true)]
-        [PSObject] $Response
-    )
-
-    $Response.value | Format-Table -Property No, Name
-}
-
-function Write-BCAutomationResponse
 {
     [CmdletBinding()]
     param (

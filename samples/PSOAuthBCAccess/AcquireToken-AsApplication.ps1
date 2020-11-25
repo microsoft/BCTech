@@ -13,4 +13,4 @@ $AuthenticationResult = Get-MsalToken -ClientId $ClientId -ClientSecret $ClientS
 
 # use access token to call BC automation web service
 $BcResponse = Invoke-BCWebService -RequestUrl $SampleBCAutomationUrl -AccessToken $AuthenticationResult.AccessToken
-Write-BCAutomationResponse -Response $BcResponse
+Write-BCWebServiceResponse -Response $BcResponse
