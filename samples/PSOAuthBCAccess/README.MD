@@ -41,7 +41,6 @@ Change values in **CommonData.psm1** module:
   * Set **`$ClientId`** in the module to registered application Client Id value 
   * Set **`$RedirectUri`** in the module to registered application Web redirect Uri
   * Set **`$AadTenantId`** in the module to Azure AD Tenant Id where Business Central is located
-  * Set **`$BcCompanyUrlEncoded`** in the module to Url-encoded name of the company in BC tenant
 
 ## Disclaimer
 
