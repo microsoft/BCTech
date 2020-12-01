@@ -1,0 +1,21 @@
+// Kusto query that can show you the top 20 slowest AL methods
+
+// The query goes back 7 days
+
+// See tips on how to develop efficient AL code in the performance tuning guide aka.ms/bcperformance
+
+traces
+| where timestamp > ago(7d) and customDimensions.eventId == 'RT0018'
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alMethod = tostring( customDimensions.alMethod )
+, alObjectId = toint( customDimensions.alObjectId )
+, alObjectName = tostring( customDimensions.alObjectName )
+, executionTime = customDimensions.executionTime
+, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+, extensionName = tostring( customDimensions.extensionName )
+| extend executionTimeInSec = executionTimeInMS / 1000
+| summarize count(), dcount( aadTenantId ), sum( executionTimeInSec ), avg( executionTimeInSec ) by alMethod, alObjectName, extensionName
+| order by avg_executionTimeInSec desc 
+| limit 20
