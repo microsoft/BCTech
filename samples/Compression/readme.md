@@ -34,4 +34,4 @@ If not provided, the server is assumed to be running on the local machine.
 
 Below is an example of the output
 
-![](media/BCCompressionCliExampleOutput.png "BCCompressionCli example outup")
+![](media/BCCompressionCliExampleOutput.PNG "BCCompressionCli example outup")
