@@ -1,5 +1,8 @@
 In this folder, you will find samples that illustrate how you can use Application Insights data in PowerBI reports.
 
+# Authentication support
+Currently, Power BI only supports AAD authentication to Application Insights. This means that the approaches we use in Jupyter notebooks (using App id and API key) and Azure Dashboards (using Application Insights subscription id, Application Insights name, and Application Insights resource group) are not applicable in Power BI. To use Power BI with data from Application Insights, the user of the report must be in the same AAD tenant as the Application Insights resource and need to have read access to Application Insights resource.
+
 # Convert a KQL query into a M query
 If you have a nice KQL query that you want to use in Power BI, then do as follows
 1) run the query in the Application Insights portal (under Logs)
