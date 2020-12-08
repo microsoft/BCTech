@@ -70,3 +70,36 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
 | extend serverExecutionTime = customDimensions.serverExecutionTime
+
+
+// client type is not known pre-open company
+// You need to join RT0001 to RT0002/RT0004 if you need both userType and clientType
+let authStepOne =  
+traces
+| where 1==1 
+and timestamp > ago(1d) // adjust as needed
+| where customDimensions.eventId in ('RT0001', 'RT0003')
+| extend aadTenantId = tostring( customDimensions.aadTenantId)
+, environmentName = tostring( customDimensions.environmentName)
+, environmentType = tostring( customDimensions.environmentType)
+, platformVersion = tostring(customDimensions.componentVersion)
+, userType = tostring(customDimensions.userType)
+| project timestamp
+, aadTenantId, environmentName, environmentType
+, platformVersion
+, userType
+, operation_Id
+;
+let authStepTwo =  
+traces
+| where 1==1 
+and timestamp > ago(1d) // adjust as needed
+| where customDimensions.eventId in ('RT0002', 'RT0004')
+| extend clientType = tostring(customDimensions.clientType)
+| project timestamp
+, clientType
+, operation_Id
+;
+authStepOne
+| join kind=leftouter authStepTwo on $left.operation_Id == $right.operation_Id
+| project-away timestamp1, operation_Id, operation_Id1
