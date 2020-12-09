@@ -1,0 +1,28 @@
+// KQL samples - sensitive field monitoring
+// https://docs.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
+
+
+// Sensitive field value has changed: <field name> in table <table name> (RAW data)
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+    and customDimensions.eventId == 'AL0000CTE'
+| project timestamp, eventId=customDimensions.eventId, message
+, componentVersion = customDimensions.componentVersion
+, aadTenantId = customDimensions.aadTenantId
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, altableCaption = customDimensions.altableCaption
+, alfieldCaption = customDimensions.alfieldCaption
+
+
+// Sensitive field monitor status has changed to [Yes|No]
+traces
+| where customDimensions.eventId == 'AL0000DD3'
+| project timestamp, eventId=customDimensions.eventId, message
+, componentVersion = customDimensions.componentVersion
+, aadTenantId = customDimensions.aadTenantId
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, almonitorStatus = customDimensions.almonitorStatus
+
+
