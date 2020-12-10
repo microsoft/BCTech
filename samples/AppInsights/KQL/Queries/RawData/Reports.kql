@@ -18,6 +18,7 @@ traces
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
@@ -46,6 +47,7 @@ traces
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
