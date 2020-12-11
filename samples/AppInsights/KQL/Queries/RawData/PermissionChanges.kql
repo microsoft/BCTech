@@ -1,0 +1,105 @@
+// KQL samples - Permission changes
+
+// User-defined permission set added (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E2A'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alNumberOfUserDefinedPermissionSets = customDimensions.alNumberOfUserDefinedPermissionSets
+, alPermissionSetId = customDimensions.alPermissionSetId
+
+
+// User-defined permission set removed (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E2B'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alNumberOfUserDefinedPermissionSets = customDimensions.alNumberOfUserDefinedPermissionSets
+, alPermissionSetId = customDimensions.alPermissionSetId
+
+
+// Permission set link added (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E28'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alSourcePermissionSetId = customDimensions.alSourcePermissionSetId
+, alLinkedPermissionSetId = customDimensions.alLinkedPermissionSetId
+, alNumberOfUserDefinedPermissionSetLinks = customDimensions.alNumberOfUserDefinedPermissionSetLinks
+
+
+// Permission set link removed (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E29'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alSourcePermissionSetId = customDimensions.alSourcePermissionSetId
+, alLinkedPermissionSetId = customDimensions.alLinkedPermissionSetId
+, alNumberOfUserDefinedPermissionSetLinks = customDimensions.alNumberOfUserDefinedPermissionSetLinks
+
+
+// Permission set assigned to user (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E2C'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alPermissionSetId = customDimensions.alPermissionSetId
+
+
+// Permission set removed from user
+ (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E2D'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alPermissionSetId = customDimensions.alPermissionSetId
+
+
+// Permission set assigned to user group (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E2E'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alPermissionSetId = customDimensions.alPermissionSetId
+, alUserGroupId = customDimensions.alUserGroupId
+
+
+// Permission set removed from user group (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E2F'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alPermissionSetId = customDimensions.alPermissionSetId
+, alUserGroupId = customDimensions.alUserGroupId
