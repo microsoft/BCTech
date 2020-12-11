@@ -1,0 +1,86 @@
+// KQL samples - Configuration Package Lifecycle
+
+// Configuration package export started (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E3F'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alExecutionId = customDimensions.alExecutionId
+, alPackageCode = customDimensions.alPackageCode
+
+
+// Configuration package exported successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E3G'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alExecutionId = customDimensions.alExecutionId
+, alPackageCode = customDimensions.alPackageCode
+, alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
+
+
+// Configuration package import started (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E3H'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alExecutionId = customDimensions.alExecutionId
+, alPackageCode = customDimensions.alPackageCode
+
+
+// Configuration package imported successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E3I'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alExecutionId = customDimensions.alExecutionId
+, alPackageCode = customDimensions.alPackageCode
+, alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
+
+
+// Configuration package apply started (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E3N'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alExecutionId = customDimensions.alExecutionId
+, alPackageCode = customDimensions.alPackageCode
+
+
+// Configuration package applied successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E3O'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alExecutionId = customDimensions.alExecutionId
+, alPackageCode = customDimensions.alPackageCode
+, alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
+
+
+// Configuration package deleted successfully (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E3P'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alPackageCode = customDimensions.alPackageCode
