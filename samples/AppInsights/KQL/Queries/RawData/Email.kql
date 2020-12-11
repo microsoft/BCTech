@@ -1,0 +1,26 @@
+// KQL samples - Email
+
+// Email sent successfully (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000CTV'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alEmailMessageID = customDimensions.alEmailMessageID
+, alConnector = customDimensions.alConnector
+
+
+// Failed to send email (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000CTP'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alEmailMessageID = customDimensions.alEmailMessageID
+, alConnector = customDimensions.alConnector
