@@ -1,0 +1,45 @@
+// KQL samples - Job Queue
+
+// Job queue entry enqueued (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E24'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alJobQueueId = customDimensions.alJobQueueId 	
+, alJobQueueIsRecurring = customDimensions.alJobQueueIsRecurring 	
+, alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueStatus = customDimensions.alJobQueueStatus
+
+
+// Job queue entry started (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E25'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alJobQueueId = customDimensions.alJobQueueId 	
+, alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueStatus = customDimensions.alJobQueueStatus
+
+
+// Job queue entry finished (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000E26'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alJobQueueId = customDimensions.alJobQueueId 	
+, alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueStatus = customDimensions.alJobQueueStatus
+, alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
+, alJobQueueResult = customDimensions.alJobQueueResult
