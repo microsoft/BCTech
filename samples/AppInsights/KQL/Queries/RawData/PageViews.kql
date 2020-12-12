@@ -21,7 +21,7 @@ pageViews
 , deviceScreenResolution = customDimensions.deviceScreenResolution
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, eventId = customDimensions.eventId
+, eventId = customDimensions.eventID // note that this is different from other signal
 , expandedFastTabs = customDimensions.expandedFastTabs
 , factboxExpanded = customDimensions.factboxExpanded
 , hostType = customDimensions.hostType

@@ -1,3 +1,28 @@
+// lock timeouts (raw data)
+traces 
+| where 1==1 
+    and customDimensions.eventId == 'RT0012'
+    and timestamp > ago(2d) // adjust to your needs
+| extend
+  componentVersion = customDimensions.componentVersion
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, aadTenantId = customDimensions.aadTenantId
+, alObjectId = customDimensions.alObjectId
+, companyName = customDimensions.companyName
+, clientType = customDimensions.clientType
+, alObjectType = customDimensions.alObjectType
+, alObjectName = customDimensions.alObjectName
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, alStackTrace = customDimensions.alStackTrace
+, sqlStatement = customDimensions.sqlStatement
+, sqlServerSessionId = customDimensions.sqlServerSessionId
+, snapshotId = customDimensions.snapshotId
+, sessionId = customDimensions.sessionId
+
+
 // this query shows how to join lock timeout events (RT0012) with the lock snapshot events (RT0013)
 let Timeouts = 
 traces 
