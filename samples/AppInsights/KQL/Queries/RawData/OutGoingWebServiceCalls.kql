@@ -22,7 +22,8 @@ traces
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
 , httpMethod = toupper( customDimensions.httpMethod ) // httpMethod is logged as the value used in the AL code
-, httpStatusCode = customDimensions.httpReturnCode // included in the schema from version 16.4
+// httpReturnCode was deprecated in version 17.2. Use httpStatusCode instead 
+, httpStatusCode = case( isnotempty(httpStatusCode), httpStatusCode, httpReturnCode ) 
 , httpHeaders = customDimensions.httpHeaders       
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
@@ -31,3 +32,5 @@ traces
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
+
+
