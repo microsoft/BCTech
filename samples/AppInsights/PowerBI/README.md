@@ -1,5 +1,13 @@
 In this folder, you will find samples that illustrate how you can use Application Insights data in PowerBI reports.
 
+# Performance Report
+To use the Performance Report, do as follows
+1) Download and install Power BI Desktop: https://powerbi.microsoft.com/en-us/downloads/
+2) Download the Performance Report.pbit template file
+3) Open the Performance Report.pbit template file in Power BI Desktop
+4) Fill in parameters (Azure Application Insights App id is required. Get it from the *API Access* menu in the Azure Application Insights portal). 
+5) (Optional) Save the report as a normal .pbix file
+
 # Authentication support
 Currently, Power BI only supports AAD authentication to Application Insights. This means that the approaches we use in Jupyter notebooks (using App id and API key) and Azure Dashboards (using Application Insights subscription id, Application Insights name, and Application Insights resource group) are not applicable in Power BI. To use Power BI with data from Application Insights, the user of the report must be in the same AAD tenant as the Application Insights resource and need to have read access to Application Insights resource.
 
