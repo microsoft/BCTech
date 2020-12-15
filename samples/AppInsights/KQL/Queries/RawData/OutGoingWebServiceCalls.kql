@@ -23,7 +23,7 @@ traces
 , extensionVersion = customDimensions.extensionVersion
 , httpMethod = toupper( customDimensions.httpMethod ) // httpMethod is logged as the value used in the AL code
 // httpReturnCode was deprecated in version 17.2. Use httpStatusCode instead 
-, httpStatusCode = case( isnotempty(httpStatusCode), httpStatusCode, httpReturnCode ) 
+, httpStatusCode = case( isnotempty(customDimensions.httpStatusCode), customDimensions.httpStatusCode, customDimensions.httpReturnCode ) 
 , httpHeaders = customDimensions.httpHeaders       
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
