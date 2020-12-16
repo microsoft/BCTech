@@ -1,10 +1,15 @@
 In this folder, you will find samples that illustrate how you can use Application Insights data in PowerBI reports.
 
-# Performance Report
-To use the Performance Report, do as follows
+# Available reports
+This repository contains Power BI reports for 
+* Investigating performance issues 
+* Investigating errors
+
+# How to use the reports
+To use the Performance or Error report, do as follows
 1) Download and install Power BI Desktop: https://powerbi.microsoft.com/en-us/downloads/
-2) Download the Performance Report.pbit template file
-3) Open the Performance Report.pbit template file in Power BI Desktop
+2) Download the .pbit template file
+3) Open the .pbit template file in Power BI Desktop
 4) Fill in parameters (Azure Application Insights App id is required. Get it from the *API Access* menu in the Azure Application Insights portal). 
 5) (Optional) Save the report as a normal .pbix file
 
