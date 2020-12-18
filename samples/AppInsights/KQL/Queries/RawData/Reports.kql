@@ -29,6 +29,8 @@ traces
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
 , numberOfRows = customDimensions.numberOfRows
 , result = customDimensions.result
+// reportingEngine dimension added in version 17.3
+, reportingEngine = customDimensions.reportingEngine
 , message, customDimensions
 
 
@@ -58,6 +60,8 @@ traces
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
 , numberOfRows = customDimensions.numberOfRows
+// reportingEngine dimension added in version 17.3
+, reportingEngine = customDimensions.reportingEngine
 , message, customDimensions
 
 
@@ -83,6 +87,8 @@ traces
 , message contains "Received a cancellation request from the user", "UserCancelled"
 , "unknown"
 )
+// reportingEngine dimension added in version 17.3
+, reportingEngine = customDimensions.reportingEngine
 , message, customDimensions
 
 
@@ -106,3 +112,5 @@ traces
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace
+// reportingEngine dimension added in version 17.3
+, reportingEngine = customDimensions.reportingEngine
