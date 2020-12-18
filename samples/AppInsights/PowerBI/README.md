@@ -8,8 +8,8 @@ This repository contains Power BI reports for
 # How to use the reports
 To use the Performance or Error report, do as follows
 1) Download and install Power BI Desktop: https://powerbi.microsoft.com/en-us/downloads/
-2) Download the .pbit template file
-3) Open the .pbit template file in Power BI Desktop
+2) Download the .pbit template files from the *Reports* directory
+3) Open a .pbit template file in Power BI Desktop
 4) Fill in parameters (Azure Application Insights App id is required. Get it from the *API Access* menu in the Azure Application Insights portal). 
 5) (Optional) Save the report as a normal .pbix file
 
@@ -28,3 +28,6 @@ Read more about this topic here: https://docs.microsoft.com/en-us/azure/azure-mo
 If your Application Insights resource contain data from multiple environments, then you might want to use parameters in your Power BI reports. In the sample report *PartnerTelemetryTemplate.pbix*, you can see how to use parameters to achieve this.
 
 Read more about Power BI parameters topic here: https://powerbi.microsoft.com/en-us/blog/deep-dive-into-query-parameters-and-power-bi-templates/
+
+# Want to modify the standard reports?
+All M queries used in the standard reports are available in the *M queries* directory. You can use them if you want to create your own reports based on the data sources defined in the standard reports.
