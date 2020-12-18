@@ -1,0 +1,29 @@
+// KQL samples - Authentication using web service key
+
+// successful authentication (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == "RT0020" 
+| extend aadTenantId = customDimensions.aadTenantId
+, eventId = customDimensions.eventId 
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// note that in versions 17.0-17.2, category is always 'API' (bug was fixed in 17.3)
+, category = customDimensions.category
+, endpoint = customDimensions.endpoint
+, authenticationStatus = customDimensions.authenticationStatus
+, authenticationType = customDimensions.authenticationType
+
+// failed authentication (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == "RT0021" 
+| extend aadTenantId = customDimensions.aadTenantId
+, eventId = customDimensions.eventId 
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// note that in versions 17.0-17.2, category is always 'API' (bug was fixed in 17.3)
+, category = customDimensions.category
+, endpoint = customDimensions.endpoint
+, authenticationStatus = customDimensions.authenticationStatus
+, authenticationType = customDimensions.authenticationType
