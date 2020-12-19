@@ -1,7 +1,11 @@
 # Videos about telemetry
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
-https://youtube.com/embed/gFG5E9Xd5bA
+## Dynamics 365 Business Central: Developers can emit telemetry to Application Insights from AL code (1 min)
+https://www.youtube.com/watch?v=gFG5E9Xd5bA
+
+## Monitoring Dynamics 365 BC with Application Insights and Jupyter Notebooks by Duilio Tacconi (56 min)
+https://www.youtube.com/watch?v=Q9OEZSblr2Y
 
 
 
