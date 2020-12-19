@@ -6,11 +6,9 @@ Watch this 1 min video to learn how custom telemetry works. If you develop exten
 
 [![Dynamics 365 Business Central Feature overview 2020: Developers can emit telemetry to Application Insights from AL code (1 min)](https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg)](https://www.youtube.com/watch?v=gFG5E9Xd5bA)
 
-[![Dynamics 365 Business Central Feature overview 2020: Developers can emit telemetry to Application Insights from AL code (1 min)](https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg) =250x](https://www.youtube.com/watch?v=gFG5E9Xd5bA)
-
 
 <p align="center">
-<a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg"></a>
+<a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg" width="200"></a>
 </p>
 
  
