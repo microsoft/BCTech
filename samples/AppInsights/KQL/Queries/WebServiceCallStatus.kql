@@ -1,0 +1,18 @@
+// KQL samples - Web Service Calls (in/out) status
+
+traces
+| where timestamp > ago(1d) // adjust as needed
+| where customDimensions.eventId == "RT0008" or customDimensions.eventId == "RT0019"
+| project 
+  aadID = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, category = customDimensions.category
+, endpoint = customDimensions.endpoint
+, direction = case(
+  customDimensions.eventId == "RT0008", 'Incoming'
+, customDimensions.eventId == "RT0019", 'Outgoing'
+, 'Other'
+)
+, httpStatusCode = tostring( customDimensions.httpStatusCode )
+| evaluate pivot(httpStatusCode)
