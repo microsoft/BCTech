@@ -1,0 +1,19 @@
+{
+  "id": "315fa537-8fd9-4fb6-9aa3-b8d9992917f4",
+  "name": "CustomAPI",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "Custom API with two API pages CarBrand and CarModel",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "17.0.0.0",
+  "application": "17.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "showMyCode": true,
+  "runtime": "6.0"
+}
