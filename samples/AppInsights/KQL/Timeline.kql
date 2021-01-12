@@ -1,0 +1,49 @@
+traces
+| where timestamp >= datetime(2021-01-08 10:00:18.0587533) // adjust as needed
+| where timestamp <= datetime(2021-01-08 16:29:18.0587533) // adjust as needed
+| where customDimensions.aadTenantId == "<insert here>"
+    and customDimensions.environmentName == '<insert here>'
+| where appInsightsEventId !in ( 'RT0003', 'AL0000EAV')
+| extend detail = case(
+  customDimensions.eventId == 'RT0005',  strcat('Operation: ', 
+        case(
+          customDimensions.sqlStatement startswith "UPDATE", "UPDATE"
+        , customDimensions.sqlStatement startswith "DELETE", "DELETE"
+        , customDimensions.sqlStatement startswith "BeginTransaction", "BEGIN_TRANS"
+        , customDimensions.sqlStatement matches regex "INSERT INTO", "INSERT"
+        , customDimensions.sqlStatement startswith "SELECT", "SELECT"
+        , customDimensions.sqlStatement matches regex "IF EXISTS \\(SELECT (.*)\\) SELECT", "SELECT'"
+        , customDimensions.sqlStatement has "SELECT NEXT VALUE FOR", "SELECT_SEQUENCE_VALUE"
+        , customDimensions.sqlStatement has "SELECT @@SPID", "SELECT_SPID"
+        , customDimensions.sqlStatement matches regex "(.*)WITH", "SELECT"
+        , customDimensions.sqlStatement startswith "CREATE TABLE", "CREATE_TABLE"
+        , customDimensions.sqlStatement startswith "ALTER TABLE", "ALTER_TABLE"
+        , customDimensions.sqlStatement startswith "exec sp_rename", "RENAME_TABLE" 
+        , customDimensions.sqlStatement matches regex "(.*)DROP TABLE", "DROP_TABLE"
+        , customDimensions.sqlStatement startswith "SET LOCK_TIMEOUT", "SET_LOCK_TIMEOUT"
+        , customDimensions.sqlStatement has "sp_getapplock", "GET_APP_LOCK"
+        , "UNKNOWN"
+        ) )
+, customDimensions.eventId == 'RT0006', case( customDimensions.result!='Success', '', strcat('Rows: ', customDimensions.numberOfRows) )
+, customDimensions.eventId == 'RT0008', strcat('HttpCode: ', customDimensions.httpStatusCode )
+, customDimensions.eventId == 'RT0004', strcat('Session type: ', customDimensions.clientType)
+, customDimensions.eventId == 'RT0018', strcat('Method: ', customDimensions.alMethod)
+, customDimensions.eventId == 'RT0019', strcat('HttpCode: ', customDimensions.httpStatusCode )
+, ''
+)
+| extend detail1 = case(
+  customDimensions.eventId == 'RT0005', customDimensions.executionTime
+, customDimensions.eventId == 'RT0006', case( customDimensions.result!='Success', '', customDimensions.totalTime )
+, customDimensions.eventId == 'RT0008', customDimensions.totalTime
+, customDimensions.eventId == 'RT0018', customDimensions.executionTime  
+, customDimensions.eventId == 'RT0019', customDimensions.totalTime
+, ''
+)
+| extend operation = case (
+  customDimensions.eventId == 'AL0000CST', 'Purchase document posted'
+, customDimensions.eventId == 'AL0000CSU', 'Sales document posted'  
+, customDimensions.eventId == 'RT0004', 'Session started'  
+, message
+)
+| project timestamp, session_id=operation_Id, operation, detail, detail1, objectName=customDimensions.alObjectName, extensionPublisher=customDimensions.extensionPublisher, eventId=customDimensions.eventId
+| order by timestamp asc
