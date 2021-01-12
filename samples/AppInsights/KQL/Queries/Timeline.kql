@@ -3,7 +3,7 @@ traces
 | where timestamp <= datetime(2021-01-08 16:29:18.0587533) // adjust as needed
 | where customDimensions.aadTenantId == "<insert here>"
     and customDimensions.environmentName == '<insert here>'
-| where appInsightsEventId !in ( 'RT0003', 'AL0000EAV')
+| where customDimensions.eventId !in ( 'RT0003', 'AL0000EAV')
 | extend detail = case(
   customDimensions.eventId == 'RT0005',  strcat('Operation: ', 
         case(
