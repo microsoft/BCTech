@@ -27,6 +27,7 @@ Source = Json.Document(Web.Contents("https://api.applicationinsights.io/v1/apps/
 , alObjectName = tostring( customDimensions.alObjectName )
 , alObjectType = tostring( customDimensions.alObjectType )
 , executionTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, reportingEngine = tostring( customDimensions.reportingEngine )
 , numberOfRows = customDimensions.numberOfRows
 , sqlExecutes = toint( customDimensions.sqlExecutes )
 , sqlRowsRead = toint( customDimensions.sqlRowsRead )
@@ -46,6 +47,7 @@ Source = Json.Document(Web.Contents("https://api.applicationinsights.io/v1/apps/
 , ObjectName = alObjectName
 , ObjectType = alObjectType
 , ExecutionTimeInMS = executionTimeInMS
+, ReportingEngine = reportingEngine
 , SqlExecutes = sqlExecutes
 , SqlRowsRead = sqlRowsRead
 | summarize Count=count()
@@ -53,7 +55,7 @@ Source = Json.Document(Web.Contents("https://api.applicationinsights.io/v1/apps/
 , SumSqlExecutes = sum(SqlExecutes)
 , SumSqlRowsRead = sum(SqlRowsRead)
 by bin(timestamp, 1h)
-, AadTenantId, EnvironmentName, EnvironmentType, PlatformVersion, ClientType
+, AadTenantId, EnvironmentName, EnvironmentType, PlatformVersion, ClientType, ReportingEngine
 , ExtensionId, ExtensionName, ExtensionVersion, ExtensionPublisher
 , ObjectType, ObjectId, ObjectName
 ",#"x-ms-app"="AAPBI",#"prefer"="ai.response-thinning=true"],Timeout=#duration(0,0,4,0)])),
