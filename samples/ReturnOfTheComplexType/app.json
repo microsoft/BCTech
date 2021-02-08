@@ -1,0 +1,26 @@
+{
+  "id": "99d9993c-e40b-4810-9ee0-be45d5d0bfdb",
+  "name": "ReturnOfTheComplexType",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "18.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://ReturnOfTheComplexType.com/help/",
+  "showMyCode": true,
+  "runtime": "7.0"
+}
