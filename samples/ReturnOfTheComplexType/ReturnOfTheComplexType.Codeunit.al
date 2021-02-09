@@ -13,6 +13,7 @@ codeunit 50130 ReturnOfTheComplexType
         // Get first customer with name starting with 'spo'
         Customer := GetCustomerByName('spo');
 
+        // Get and Show bing html.
         Message(GetBingHtml());
     end;
 
