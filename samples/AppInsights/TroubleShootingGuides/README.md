@@ -54,6 +54,7 @@ in a Python code cell (just create a new notebook and change to the Python Kerne
 
 **2021-02-09 update:** For some users, the KQL Magic installation fails with another error. Please try these two steps 
 
+
 Step 1:
 ```python
 import sys
