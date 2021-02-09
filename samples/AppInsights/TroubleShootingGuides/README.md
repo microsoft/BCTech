@@ -42,7 +42,7 @@ To install and set up Kqlmagic, open a python notebook. Click the "Manage Packag
 
 ![Manage Python packages](../images/install-kqlmagic-1.png)
 
-Under the "Add new" tab, type "kqlmagic" and click Install:
+Under the "Add new" tab, type "kqlmagic" and click Install (we generally recommend people to install non “dev” version of Kqlmagic):
 
 ![Install Kqlmagic](../images/install-kqlmagic-2.png)
 
