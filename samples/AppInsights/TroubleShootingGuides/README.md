@@ -52,6 +52,20 @@ pip install numpy==1.19.3
 ```
 in a Python code cell (just create a new notebook and change to the Python Kernel).
 
+**2021-02-09 update:** For some users, the KQL Magic installation fails with another error. Please try these two steps 
+Step 1:
+```python
+import sys
+!{sys.executable} -m pip install --upgrade pip
+```
+
+Step 2:
+```python
+import sys
+!{sys.executable} -m pip install Kqlmagic --no-cache-dir --upgrade
+```
+in a Python code cell (just create a new notebook and change to the Python Kernel).
+
 # Now what?
 You are now ready to run some notebooks. Either write your own or download some from this repository.
 
