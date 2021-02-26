@@ -1,0 +1,21 @@
+﻿- title: "Troubleshooting guides (TSGs) based on telemetry"
+  url: /README
+  sections:
+  - title: "README (which TSGs are good for what)"
+    url: /README
+  - title: "Database issues"
+    url: /Data-related-TSG
+  - title: "Deprecated feature usage"
+    url: /Deprecated-Webservice-protocols-TSG
+  - title: "Extension issues"
+    url: /Extensions-TSG
+  - title: "Login issues"
+    url: /Login-issues-TSG
+  - title: "Microsoft connector issues"
+    url: /Microsoft-Connectors-TSG
+  - title: "Performance issues in partner code"
+    url: /Performance-partner-code-TSG
+  - title: "Performance overview"
+    url: /Performance-overview-TSG
+  - title: "Web service issues"
+    url: /Web-services-TSG
