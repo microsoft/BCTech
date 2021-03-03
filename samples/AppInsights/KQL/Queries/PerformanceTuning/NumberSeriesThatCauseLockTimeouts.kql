@@ -1,0 +1,72 @@
+// Kusto query that can show you lock timeouts caused by number series (that could be changed to the non-blocking versio)
+
+// Read more in the performance tuning guide (aka.ms/bcperformance)
+// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#use-number-series-that-allow-gaps
+
+// The query goes back 7 days
+
+traces
+| where timestamp > ago(7d) and customDimensions.eventId == 'RT0012'
+| project
+  componentVersion = customDimensions.componentVersion
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, aadTenantId = customDimensions.aadTenantId
+, alObjectId = customDimensions.alObjectId
+, companyName = customDimensions.companyName
+, clientType = customDimensions.clientType
+, alObjectType = customDimensions.alObjectType
+, alObjectName = customDimensions.alObjectName
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, alStackTrace = customDimensions.alStackTrace
+, sqlStatement = customDimensions.sqlStatement
+, sqlServerSessionId = customDimensions.sqlServerSessionId
+, snapshotId = customDimensions.snapshotId
+, sessionId = customDimensions.sessionId
+| where alObjectName == 'NoSeriesManagement'
+| where sqlStatement matches regex "No_ Series Line.+WITH\\(UPDLOCK\\)"
+| extend alVictim = case (
+  alStackTrace matches regex 'Gen. Jnl.-Post Batch\\"\\(CodeUnit 13\\).CheckDocumentNo', 'Gen. Jnl.-Post Batch (CodeUnit 13)'
+, alStackTrace matches regex 'Customer\\(Table 18\\).OnInsert', 'Customer (Table 18)'
+, alStackTrace matches regex 'Customer\\(Table 18\\).AssistEdit', 'Customer (Table 18)'
+, alStackTrace matches regex 'Vendor\\(Table 23\\).OnInsert', 'Vendor (Table 23)'
+, alStackTrace matches regex 'Item\\(Table 27\\).OnInsert', 'Item (Table 27)'
+, alStackTrace matches regex 'Sales Header\\"\\(Table 36\\).InitInsert', 'Sales Header (Table 36)'
+, alStackTrace matches regex 'SalesHeader - OnAfterInitRecord', 'Sales Header (Table 36)'
+, alStackTrace matches regex 'SalesHeader - OnBeforeInsertRecord', 'Sales Header (Table 36)'
+, alStackTrace matches regex 'Sales Header\\"\\(Table 36\\).AssistEdit', 'Sales Header (Table 36)'
+, alStackTrace matches regex 'Purch.-Post\\"\\(CodeUnit 90\\).UpdatePostingNos', 'Purch.-Post (CodeUnit 90)'
+, alStackTrace matches regex 'Purchase Header\\"\\(Table 38\\).InitInsert', 'Purchase Header (Table 38)'
+, alStackTrace matches regex 'Purchase Header\\"\\(Table 38\\).AssistEdit', 'Purchase Header (Table 38)'
+, alStackTrace matches regex 'Requisition Line\\"\\(Table 246\\).SetReplenishmentSystemFromProdOrder', 'Requisition Line (Table 246)'
+, alStackTrace matches regex 'Assembly Header\\"\\(Table 900\\).OnInsert', 'Assembly Header (Table 900)'
+, alStackTrace matches regex 'Assembly Header\\"\\(Table 900\\).AssistEdit', 'Assembly Header (Table 900)'
+, alStackTrace matches regex 'Copy Job\\"\\(Page 1040\\).ValidateUserInput', 'Copy Job (Page 1040)'
+, alStackTrace matches regex 'Mini Customer Template\\"\\(Table 1300\\).InitCustomerNo', 'Mini Customer Template (Table 1300)'
+, alStackTrace matches regex 'Item Template\\"\\(Table 1301\\).InitItemNo', 'Item Template (Table 1301)'
+, alStackTrace matches regex 'Mini Vendor Template\\"\\(Table 1303\\).InitVendorNo', 'Mini Vendor Template (Table 1303)'
+, alStackTrace matches regex 'CustCont-Update\\"\\(CodeUnit 5056\\).OnInsert', 'Contact (CodeUnit 5056)'
+, alStackTrace matches regex 'CustCont-Update\\"\\(CodeUnit 5056\\).InsertNewContact', 'Contact (CodeUnit 5056)'
+, alStackTrace matches regex 'Contact\\(Table 5050\\).OnInsert', 'Contact (Table 5050)'
+, alStackTrace matches regex 'Service Header\\"\\(Table 5900\\).OnInsert', 'Service Header (Table 5900)'
+, alStackTrace matches regex 'Service Header\\"\\(Table 5900\\).AssistEdit', 'Service Header (Table 5900)'
+, alStackTrace matches regex 'Production Order\\"\\(Table 5405\\).OnInsert', 'Production Order (Table 5405)'
+, alStackTrace matches regex 'Item Tracking Lines\\"\\(Page 6510\\).AssignNewLotNo', 'Item Tracking Lot no (Page 6510)'
+, alStackTrace matches regex 'Sales-Post\\"\\(CodeUnit 80\\).OnRun', 'Sales order posting (CodeUnit 80)'
+, alStackTrace matches regex '\\(CodeUnit 91\\).OnAfterConfirmPost', 'Purchase order posting (CodeUnit 91)'
+, alStackTrace matches regex '\\(CodeUnit 92\\).OnAfterConfirmPost', 'Purchase order posting (CodeUnit 92)'
+, alStackTrace matches regex 'Transfer Header\\"\\(Table 5740\\).OnInsert', 'Transfer Header (Table 5740)'
+, alStackTrace matches regex 'Whse.-Post Receipt\\"\\(CodeUnit 5760\\).Code', 'Whse.-Post Receipt (CodeUnit 5760)'
+, alStackTrace matches regex 'Whse.-Post Shipment\\"\\(CodeUnit 5763\\).Code', 'Whse.-Post Shipment (CodeUnit 5763)'
+, alStackTrace matches regex 'Warehouse Activity Header\\"\\(Table 5766\\).OnInsert', 'Warehouse Activity Header (Table 5766)'
+, alStackTrace matches regex 'Process Proposal Lines\\"\\(CodeUnit 11000000\\).CreatePaymentHistory', 'Process Proposal Lines (CodeUnit 11000000)'
+, alStackTrace matches regex 'Service Contract Header\\"\\(Table 5965\\).OnInsert', 'Service Contract Header (Table 5965)'
+, alStackTrace matches regex 'Serv-Documents Mgt.\\"\\(CodeUnit 5988\\).SetNoSeries', 'Serv-Documents Mgt. (CodeUnit 5988)'
+, alStackTrace matches regex 'Whse.-Activity-Register\\"\\(CodeUnit 7307\\).CheckLines', 'Whse.-Activity-Register (CodeUnit 7307)'
+, alStackTrace matches regex 'Warehouse Receipt Header\\"\\(Table 7316\\).OnInsert', 'Warehouse Receipt Header (Table 7316)'
+, alStackTrace matches regex 'Warehouse Receipt Header\\"\\(Table 7316\\).AssistEdit', 'Warehouse Receipt Header (Table 7316)'
+, alStackTrace matches regex 'Warehouse Shipment Header\\"\\(Table 7320\\).OnInsert', 'Warehouse Shipment Header (Table 7320)'
+, 'other' // these are likely from per-tenant extensions or app source apps
+)
