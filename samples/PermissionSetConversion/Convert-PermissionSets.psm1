@@ -515,7 +515,7 @@ function Convert-PermissionSets
     $Symbols = ProccessSymbols $SymbolsFolder
 
     Write-Host "Quering permissions from $DatabaseServer $DatabaseName"
-    $Permissions = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query 'Select * from Permission order by [Role ID]'
+    $Permissions = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query 'Select [Role ID],[Object Type],[Object ID],[Read Permission],[Insert Permission],[Modify Permission],[Delete Permission],[Execute Permission],[Security Filter] from Permission UNION Select [Role ID],[Object Type],[Object ID],[Read Permission],[Insert Permission],[Modify Permission],[Delete Permission],[Execute Permission],[Security Filter] from [Tenant Permission] order by [Role ID]'
     $PermissionSets = @{}
 
     foreach($Permission in $Permissions)
@@ -555,7 +555,7 @@ function Convert-PermissionSets
         }
     }
 
-    $PermissionSetTableContent = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query 'Select * from [Permission Set]'
+    $PermissionSetTableContent = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query 'Select [Role ID], Name from [Permission Set] UNION Select [Role ID], Name from [Tenant Permission Set]'
     WritePermissionSets $PermissionSets $Destination $PermissionSetTableContent
 }
 
