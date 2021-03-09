@@ -36,6 +36,13 @@ Watch this 9 min video to learn how to write Kusto queries against Business Cent
 <br>
 </p>
 
+### How to troubleshoot issues using the Jupyter Notebook troubleshooting guides (8 min)
+Watch this 8 min video to learn how to troubleshoot issues using the Jupyter Notebook troubleshooting guides. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=B3EL0xdvaUY"><img src="https://img.youtube.com/vi/B3EL0xdvaUY/0.jpg" width="300"></a>
+<br>
+</p>
+
 ### Dynamics 365 Business Central Feature overview 2020: Developers can emit telemetry to Application Insights from AL code (1 min)
 Watch this 1 min video to learn how custom telemetry works. If you develop extensions for Business Central, then this is a must-see. Tip: **CTRL+click** to open in a new window.
 <p align="center">
