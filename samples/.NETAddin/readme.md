@@ -145,11 +145,11 @@ architecture:
 ### Structure of the sample
 
 The code for this sample is available here on the
-[BCTech](https://github.com/microsoft/BCTech) GitHub repository.
+[BCTech](https://github.com/microsoft/BCTech/tree/master/samples/.NETAddin) GitHub repository.
 
 It is structured in the following way:
 
--   dotNet folder: contains the .NET add-in code. The project can be
+-   WordDocManagerAddin folder: contains the .NET add-in code. The project can be
     opened and compiled in Visual Studio
 
 -   ALAddin folder: contains the AL extension using the .NET add-in.
