@@ -1,0 +1,12 @@
+{
+  "id": "8fcbe51c-ede6-47b9-97e7-981218c0e5a9",
+  "name": "WordDocManagerNoAddin",
+  "publisher": "Microsoft",
+  "version": "1.0.0.0",
+  "screenshots": [],
+  "application": "18.0.0.0",
+  "platform": "18.0.0.0",
+  "showMyCode": true,
+  "target": "Cloud",
+  "runtime": "7.0"
+}
