@@ -149,18 +149,18 @@ The code for this sample is available here on the
 
 It is structured in the following way:
 
--   WordDocManagerAddin folder: contains the .NET add-in code. The project can be
+-   [WordDocManagerAddin folder](https://github.com/microsoft/BCTech/tree/master/samples/.NETAddin/WordDocManagerAddin): contains the .NET add-in code. The project can be
     opened and compiled in Visual Studio
 
--   ALAddin folder: contains the AL extension using the .NET add-in.
+-   [ALAddin folder](https://github.com/microsoft/BCTech/tree/master/samples/.NETAddin/ALAddin): contains the AL extension using the .NET add-in.
     This is the “before” extension. It compiles in Visual Studio Code
     with the "target": "OnPrem" setting.
 
--   ALNoAddin folder: contains the AL extension once refactored to use
+-   [ALNoAddin folder](https://github.com/microsoft/BCTech/tree/master/samples/.NETAddin/ALNoAddin): contains the AL extension once refactored to use
     the Azure Function App instead of the .NET add-in. It compiles in
     Visual Studio Code with the "target": "Cloud" setting.
 
--   WordDocManagerAzureFunc: contains the Azure Function App that
+-   [WordDocManagerAzureFunc folder](https://github.com/microsoft/BCTech/tree/master/samples/.NETAddin/WordDocManagerAzureFunc): contains the Azure Function App that
     replaces the add-in. It can be compiled and deployed from Visual
     Studio Code (once you have installed the necessary VSCode
     extensions).
