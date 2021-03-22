@@ -45,15 +45,7 @@ To install and set up Kqlmagic, open a python notebook. Click the "Manage Packag
 Under the "Add new" tab, type "kqlmagic" and click Install (we generally recommend people to install non “dev” version of Kqlmagic):
 
 ![Install Kqlmagic](../images/install-kqlmagic-2.png)
-
-If the installation of KQL Magic fails, you might be hit by a bug in Windows that affects Python. Sorry! Fix is on its way. Until then, run this command 
-```python
-pip install numpy==1.19.3
-```
-in a Python code cell (just create a new notebook and change to the Python Kernel).
-
-**2021-02-09 update:** For some users, the KQL Magic installation fails with another error. Please try these two steps 
-
+For some users, the KQL Magic installation fails with an error. Please try these two steps 
 
 Step 1:
 ```python
