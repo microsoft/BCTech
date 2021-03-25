@@ -45,10 +45,11 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 
 # Install AppSource app 
-# Remember to read the the app provider's terms of use and privacy policy. 
-# Understand that the rights to use this app do not come from Microsoft, unless Microsoft is the provider. To acknowledge set "AcceptIsvEula" to $true.
+# Remember to read the the app provider's terms of use and privacy policy on AppSource. 
+# Understand that the rights to use this app do not come from Microsoft, unless Microsoft is the provider. 
+# To acknowledge set "AcceptIsvEula" to $true.
 
-$appIdToInstall = "6992416f-3f39-4d3c-8242-3fff61350bea"
+$appIdToInstall = "638dd7bc-cb27-4c70-9e1d-963fdd46da19"
 $appTargetVersion = "17.0.40514.0"
 
 try {
@@ -56,7 +57,7 @@ try {
         -Method Post `
         -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/BusinessCentral/environments/$environmentName/apps/$appIdToInstall/install" `
         -Body   (@{
-                    "AcceptIsvEula" = $false
+                    "AcceptIsvEula" = $false #set to $true once you've read the the app provider's terms of use and privacy policy
                     "targetVersion" = $appTargetVersion
                     "languageId" = "1033"    
                     "installOrUpdateNeededDependencies" = $false
@@ -76,6 +77,12 @@ catch [System.Net.WebException]
     Write-Error $respBody -ErrorAction Stop
 } 
 
+# Check install status
+$response= Invoke-WebRequest `
+    -Method Get `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/BusinessCentral/environments/$environmentName/apps/$appIdToInstall/operations" `
+    -Headers @{Authorization=("Bearer $accessToken")}
+Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
 # Uninstall AppSource app
 $appIdToUninstall = "6992416f-3f39-4d3c-8242-3fff61350bea"
