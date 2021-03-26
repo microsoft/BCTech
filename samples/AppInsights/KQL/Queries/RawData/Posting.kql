@@ -1,0 +1,25 @@
+// KQL samples - Posting
+
+traces
+| where timestamp > ago(7d) // adjust to your needs
+    and appInsightsEventId  in ('AL0000CST', 'AL0000CSU', 'AL0000CZ0')
+| extend documentType = case(
+    customDimensions.eventId == 'AL0000CST', 'PurchaseDocument'
+  , customDimensions.eventId == 'AL0000CSU', 'SalesDocument'
+  , customDimensions.eventId == 'AL0000CZ0', 'SalesInvoice'  
+  , 'Unknown signal'
+)
+, extensionVersion = customDimensions.extensionVersion
+// schema changed slightly in 18.0, where the dimension is called alNumberOfLines 
+| extend numberOfLines = iff( isnotempty(customDimensions.alNumberOfLines), customDimensions.alNumberOfLines, customDimensions.['alNumber of lines'])
+| project TIMESTAMP
+, message
+, extensionVersion // bc app version
+, eventId = customDimensions.eventId
+, alDocumentNumber = customDimensions.alDocumentNumber // only available from 18.0 and later
+, documentType
+, numberOfLines
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
