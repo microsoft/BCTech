@@ -56,7 +56,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Web Service Key Authentication | 2020 release wave 2 (17.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-access-key-trace |
 | Reporting engine in reporting signal | 2020 release wave 2 (17.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 | HTTP authorization | 2020 release wave 2 (17.3) | (pending docs), sample KQL code updated |
-
+| Client page views (for ISVs) | 2020 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 
 
 
