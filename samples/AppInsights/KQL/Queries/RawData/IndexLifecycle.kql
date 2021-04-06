@@ -1,0 +1,42 @@
+// KQL samples - Index lifecycle events 
+
+// index added (using a table extension) (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0024' 
+| project 
+  timestamp
+, eventId = customDimensions.eventId
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName=customDimensions.extensionName
+, keyMaintainSIFTIndex = customDimensions.keyMaintainSIFTIndex
+, keyMaintainSQLIndex = customDimensions.keyMaintainSQLIndex
+, keySqlIndexFields = customDimensions.keySqlIndexFields
+, keySumIndexFields = customDimensions.keySumIndexFields
+, keyFields = customDimensions.keyFields
+, keyName = customDimensions.keyName
+, message
+, customDimensions
+
+
+// index removed (using a table extension) (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0025' 
+| project 
+  timestamp
+, eventId = customDimensions.eventId
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName=customDimensions.extensionName
+, keyMaintainSIFTIndex = customDimensions.keyMaintainSIFTIndex
+, keyMaintainSQLIndex = customDimensions.keyMaintainSQLIndex
+, keySqlIndexFields = customDimensions.keySqlIndexFields
+, keySumIndexFields = customDimensions.keySumIndexFields
+, keyFields = customDimensions.keyFields
+, keyName = customDimensions.keyName
+, message
+, customDimensions
