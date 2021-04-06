@@ -22,8 +22,8 @@ traces
 , httpHeaders = customDimensions.httpHeaders       // httpHeaders only available from 16.3
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
-// these three lines httpHeadersTmp, httpHeadersJSON, and msUserAgent 
-// illustrate how to extract data from the httpHeaders dimension
-| extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
+// these lines illustrate how to extract data from the httpHeaders dimension
+| extend httpHeadersTmp =  tostring( httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
+| extend httpAuthorization = tostring( httpHeadersJSON.['Authorization'] ) // Authorization header (truncated) available from 17.3
