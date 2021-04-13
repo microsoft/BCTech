@@ -2,7 +2,7 @@
 
 traces
 | where timestamp > ago(7d) // adjust to your needs
-    and appInsightsEventId  in ('AL0000CST', 'AL0000CSU', 'AL0000CZ0')
+    and customDimensions.eventId  in ('AL0000CST', 'AL0000CSU', 'AL0000CZ0')
 | extend documentType = case(
     customDimensions.eventId == 'AL0000CST', 'PurchaseDocument'
   , customDimensions.eventId == 'AL0000CSU', 'SalesDocument'
