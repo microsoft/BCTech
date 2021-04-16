@@ -1,0 +1,6 @@
+// Available envisroments in your Application Insights data store
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+| summarize min(timestamp), max(timestamp), count()  by aadTenantId, environmentName
