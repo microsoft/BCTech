@@ -398,3 +398,47 @@ traces
 , result = customDimensions.result
 , failureReason = customDimensions.failureReason
 , message, customDimensions
+
+
+
+// Dependent extension installed successfully (raw data)
+// This signal was added in 18.1
+traces
+| where timestamp > ago(5d)
+| where customDimensions.eventId == 'LC0026'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, componentVersion = customDimensions.componentVersion
+, component = customDimensions.component
+, environmentType = customDimensions.environmentType
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, eventId = customDimensions.eventId
+, parentExtensionId = customDimensions.parentExtensionId
+, message
+, customDimensions
+
+
+
+// Dependent extension failed to install (raw data)
+// This signal was added in 18.1
+traces
+| where timestamp > ago(5d)
+| where customDimensions.eventId == 'LC0027'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, componentVersion = customDimensions.componentVersion
+, component = customDimensions.component
+, doNotSaveData = customDimensions.doNotSaveData
+, environmentType = customDimensions.environmentType
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, eventId = customDimensions.eventId
+, parentExtensionId = customDimensions.parentExtensionId
+, message
+, customDimensions
+
