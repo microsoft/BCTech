@@ -1,0 +1,43 @@
+// KQL samples - Retention Policy
+// https://docs.microsoft.com/en-us/dynamics365-release-plan/2020wave2/smb/dynamics365-business-central/define-retention-policies
+
+
+// Retention Policy Log Entry Logged: Info
+traces
+| where timestamp > ago(60d) // change as needed
+    and customDimensions.eventId == 'AL0000D3L'
+| project timestamp, eventId=customDimensions.eventId, message
+, alCompanyName = customDimensions.alCompanyName
+, alLogEntry = customDimensions.alLogEntry
+
+
+// Records Deleted Using Retention Policy: Deleted <record count> records from Table <Table id>, <Table name>
+traces
+| where timestamp > ago(60d) // change as needed
+    and customDimensions.eventId == 'AL0000D6H'
+| project timestamp, eventId=customDimensions.eventId, message
+, alCompanyName = customDimensions.alCompanyName
+, alRecordsDeleted = customDimensions.alRecordsDeleted
+, alManualRun = customDimensions.alManualRun
+, alTableName = customDimensions.alTableName
+, alTableNo = customDimensions.alTableNo
+
+
+// First retention policy enabled on: <company name>
+traces
+| where timestamp > ago(60d) // change as needed
+    and customDimensions.eventId == 'AL0000D6I'
+| project timestamp, eventId=customDimensions.eventId, message
+, alCompanyName = customDimensions.alCompanyName
+, alTableName = customDimensions.alTableName
+, alTableNo = customDimensions.alTableNo
+
+
+// Last retention policy disabled on: <company name>
+traces
+| where timestamp > ago(60d) // change as needed
+    and customDimensions.eventId == 'AL0000D6J'
+| project timestamp, eventId=customDimensions.eventId, message
+, alCompanyName = customDimensions.alCompanyName
+, alTableName = customDimensions.alTableName
+, alTableNo = customDimensions.alTableNo
