@@ -2,6 +2,33 @@
 // https://docs.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
 
 
+// Sensitive field monitor status has changed to [Yes|No]
+traces
+| where customDimensions.eventId == 'AL0000DD3'
+| project timestamp, eventId=customDimensions.eventId, message
+, componentVersion = customDimensions.componentVersion
+, aadTenantId = customDimensions.aadTenantId
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, extensionVersion  = customDimensions.extensionVersion // base app version
+// the custom dimension alMonitorStatus changed slightly in 18.0
+, alMonitorStatus = iff( isempty(customDimensions.alMonitorStatus), customDimensions.almonitorStatus, customDimensions.alMonitorStatus )
+
+
+// Sensitive field added to monitor 
+// only available from 18.0
+traces
+| where customDimensions.eventId == 'AL0000DD3' 
+| project timestamp, eventId=customDimensions.eventId, message
+, componentVersion = customDimensions.componentVersion
+, aadTenantId = customDimensions.aadTenantId
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, extensionVersion  = customDimensions.extensionVersion 
+, alTableNumber = customDimensions.alTableNumber 
+, alFieldNumber = customDimensions.alFieldNumber 
+
+
 // Sensitive field value has changed: <field name> in table <table name> (RAW data)
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
@@ -11,18 +38,9 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentType = customDimensions.environmentType
 , environmentName = customDimensions.environmentName
-, altableCaption = customDimensions.altableCaption
-, alfieldCaption = customDimensions.alfieldCaption
-
-
-// Sensitive field monitor status has changed to [Yes|No]
-traces
-| where customDimensions.eventId == 'AL0000DD3'
-| project timestamp, eventId=customDimensions.eventId, message
-, componentVersion = customDimensions.componentVersion
-, aadTenantId = customDimensions.aadTenantId
-, environmentType = customDimensions.environmentType
-, environmentName = customDimensions.environmentName
-, almonitorStatus = customDimensions.almonitorStatus
-
-
+, extensionVersion  = customDimensions.extensionVersion // base app version
+, alTableNumber = customDimensions.alTableNumber // only available from 18.0
+, alFieldNumber = customDimensions.alFieldNumber // only available from 18.0
+// the custom dimensions alTableCaption and alFieldCaption changed slightly in 18.0
+, alTableCaption = iff( isempty(customDimensions.alTableCaption), customDimensions.altableCaption, customDimensions.alTableCaption )
+, alFieldCaption = iff( isempty(customDimensions.alFieldCaption), customDimensions.alfieldCaption, customDimensions.alFieldCaption )
