@@ -58,6 +58,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | HTTP authorization | 2020 release wave 2 (17.3) | pending link to docs, sample KQL code updated |
 | Client page views (for ISVs) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 | Index/Key lifecycle | 2021 release wave 1 (18.0) | pending link to docs, sample KQL code updated |
+| Sensitive Field Monitoring (field added/removed) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
 | Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | (pending docs), sample KQL code updated |
 
 
