@@ -60,6 +60,14 @@ Watch this 56 min video to learn how about Business Central and how to use the t
 </p>
 
 
+### How to add Azure Alerts as push notifications on your phone (4 min)
+Watch this 4 min video to learn how to add Azure Alerts as push notifications on your phone. The Alerts section in this repository contain sample queries that you can use as a starting point.  Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=nqqVEISjSGE"><img src="https://img.youtube.com/vi/nqqVEISjSGE/0.jpg" width="300"></a>
+<br>
+</p>
+
+
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
 

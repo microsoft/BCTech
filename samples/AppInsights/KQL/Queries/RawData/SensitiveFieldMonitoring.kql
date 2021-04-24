@@ -18,7 +18,7 @@ traces
 // Sensitive field added to monitor 
 // only available from 18.0
 traces
-| where customDimensions.eventId == 'AL0000DD3' 
+| where customDimensions.eventId == 'AL0000EMW' 
 | project timestamp, eventId=customDimensions.eventId, message
 , componentVersion = customDimensions.componentVersion
 , aadTenantId = customDimensions.aadTenantId
