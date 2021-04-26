@@ -12,7 +12,7 @@ traces
 , extensionVersion = customDimensions.extensionVersion
 // schema changed slightly in 18.0, where the dimension is called alNumberOfLines 
 | extend numberOfLines = iff( isnotempty(customDimensions.alNumberOfLines), customDimensions.alNumberOfLines, customDimensions.['alNumber of lines'])
-| project TIMESTAMP
+| project timestamp
 , message
 , extensionVersion // bc app version
 , eventId = customDimensions.eventId
