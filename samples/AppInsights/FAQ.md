@@ -21,11 +21,23 @@ Application Insights is billed based on the volume of telemetry data that your a
 
 Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information on pricing.
 
+To reduce ingestion cost, you can
+* set limits on daily data ingestion
+* reduce data ingestion by sampling to only ingest a percentage of the inbound data
+* set alerts on cost thresholds being exceeded to get notified if this happens
+
+Azure monitor alerts are billed separately.
+
+Here is a quote from a partner using telemetry:
+_We have been using telemetry for some months now and have enabled 20+ apps as well as environment data from dev systems and build pipelines. Last month we ingested 800+ traces that corresponded to 2.3GB of data._
+
+Eventually we will hit some of those thresholds, but then we can decide if we want to invest a certain sum on telemetry (probably will) and how much. Looking at it today we will probably limit ingestion and once that no longer suffices add sampling.
+
 ## Where can I learn more about Kusto Query Language (KQL) and Azure Data Studio?
 Please visit the [KQL README page](KQL/README.md) for learning resources on KQL and the [Trouble Shooting Guides README page](TroubleShootingGuides/README.md) for learning resources on Azure Data Studio.
 
 ## How can I see what data is available in my Application Insights subscription
-Use this KQL query [AvailableSignal.kql](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/AvailableSignal.kql) to see if you have any data in your telemetry database, and also what kind of signal is present.
+Use this KQL query [AvailableSignal.kql](KQL/Queries/AvailableSignal.kql) to see if you have any data in your telemetry database, and also what kind of signal is present.
 
 ## I deployed Azure dashboards, but they show no data
 If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:

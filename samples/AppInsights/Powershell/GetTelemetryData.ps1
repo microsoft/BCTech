@@ -51,19 +51,27 @@ function get_data([string] $kql_query){
 function pp_data($response){
     $json = ConvertFrom-Json $response.Content
     $header_row = $null
-    $header_row = $json.tables.columns | Select-Object name # only works if the KQL query have more than one column
+
+    # Application insights return different data structure when result is only one column
+    # so this will (silently) fail for those queries
+    $header_row = $json.tables.columns | Select-Object name 
+
     $column_count = $header_row.Count
-       
+
     $result = @()
+
+    # Application insights return different data structure when result is only one row
+    # so this will fail for those queries
     foreach ($row in $json.tables.rows) {
         $rowdata = new-object PSObject
         for ($i = 0; $i -lt $column_count; $i++) {
-          $rowdata | add-member -membertype NoteProperty -name $header_row[$i].name -value $row[$i]
+            $rowdata | add-member -membertype NoteProperty -name $header_row[$i].name -value $row[$i]    
         }
         $result += $rowdata
         $rowdata = $null
     }
-    $result
+
+   $result
 }
 
 
