@@ -1,3 +1,7 @@
+//Telemetry Event IDs in Application Insights
+///https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-event-ids
+let eventIdJson = externaldata(eventId: string, area: string, message: string)[h@'https://raw.githubusercontent.com/mortenbraemer/BCTech/master/samples/AppInsights/KQL/TelemetryEventID.json']with(format='multijson')
+;
 // 30 day overview of signal types in your Application Insights data store
 let lookback = 30d 
 ;
@@ -7,6 +11,8 @@ traces
 | extend eventId = tostring( customDimensions.eventId )
 | summarize count() by eventId
 | extend table_name = 'traces'
+| join kind = inner (eventIdJson) on $left.eventId == $right.eventId
+| project eventId, table_name, count_, area, message
 ;
 let pageview_stats =
 pageViews
@@ -14,7 +20,11 @@ pageViews
 | extend eventId = tostring( customDimensions.eventID )
 | summarize count() by eventId
 | extend table_name = 'pageViews'
+| join kind = inner (eventIdJson) on $left.eventId == $right.eventId
+| project eventId, table_name, count_, area, message
 ;
 traces_stats
 | union pageview_stats
 | order by count_ desc
+| join kind = inner (eventIdJson) on $left.eventId == $right.eventId
+| project eventId, table_name, count_, area, message
