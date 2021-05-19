@@ -1,0 +1,67 @@
+// update errors caused by exceptions thrown in upgrade codeunits
+traces 
+| where timestamp > ago(2d) // adjust to your needs
+    and customDimensions.eventId == 'RT0010'
+// add filters on AAD id and environment name if needed
+//| where customDimensions.aadTenantId == 'abc'
+//| where customDimensions.environmentName == 'def'
+| project message, timestamp
+, aadTenantId = customDimensions.aadTenantId
+, alObjectId = customDimensions.alObjectId
+, alStackTrace = customDimensions.alStackTrace
+, companyName = customDimensions.companyName
+, componentVersion = customDimensions.componentVersion
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, eventId = customDimensions.eventId
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionTargetedVersion = customDimensions.extensionTargetedVersion
+, extensionVersion = customDimensions.extensionVersion
+, failureReason = customDimensions.failureReason
+, failureType = customDimensions.failureType
+
+
+
+// upgrade tag method HasUpgradeTag in Codeunit 9999 "Upgrade Tag" called 
+traces 
+| where timestamp > ago(2d) // adjust to your needs
+    and customDimensions.eventId == 'AL0000EJ9'
+// add filters on AAD id and environment name if needed
+//| where customDimensions.aadTenantId == 'abc'
+//| where customDimensions.environmentName == 'def'
+| project message, timestamp
+, aadTenantId = customDimensions.aadTenantId
+, companyName = customDimensions.alCompanyName
+, componentVersion = customDimensions.componentVersion
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, eventId = customDimensions.eventId
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionVersion = customDimensions.extensionVersion
+, upgradeTag = customDimensions.alUpgradeTag
+, executionContext = customDimensions.alExecutionContext
+, value = customDimensions.alValue
+
+
+
+// upgrade tag method SetUpgradeTag in Codeunit 9999 "Upgrade Tag" called 
+traces 
+| where timestamp > ago(2d) // adjust to your needs
+    and customDimensions.eventId == 'AL0000EJA'
+// add filters on AAD id and environment name if needed
+//| where customDimensions.aadTenantId == 'abc'
+//| where customDimensions.environmentName == 'def'
+| project message, timestamp
+, aadTenantId = customDimensions.aadTenantId
+, companyName = customDimensions.alCompanyName
+, componentVersion = customDimensions.componentVersion
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, eventId = customDimensions.eventId
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionVersion = customDimensions.extensionVersion
+, upgradeTag = customDimensions.alUpgradeTag
+, executionContext = customDimensions.alExecutionContext

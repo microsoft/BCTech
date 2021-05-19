@@ -36,7 +36,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Report Execution | 2020 release wave 1 (16.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace | 
 | Open Company timing | 2020 release wave 1 (16.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
 | Company lifecycle (create/copy/delete) | 2020 release wave 1 (16.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace |
-| Update errors due to exceptions in upgrade code | 2020 release wave 1 (16.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
+| Upgrade errors due to exceptions in upgrade code | 2020 release wave 1 (16.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
 | Database lock timeouts | 2020 release wave 1 (16.2, later backported to 16.0 and 16.1 in SaaS) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-locks-trace |
 | Extension lifecycle | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
 | Client page views | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
@@ -59,6 +59,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Client page views (for ISVs) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 | Index/Key lifecycle | 2021 release wave 1 (18.0) | pending link to docs, sample KQL code updated |
 | Sensitive Field Monitoring (field added/removed) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
+| Upgrade tag signal | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
 | Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | (pending docs), sample KQL code updated |
 
 
