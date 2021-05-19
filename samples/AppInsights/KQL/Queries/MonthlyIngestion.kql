@@ -1,0 +1,20 @@
+// 30 day overview of signal types in your Application Insights data store
+let lookback = 30d 
+;
+let traces_stats = 
+traces
+| where timestamp > ago(lookback) 
+| extend eventId = tostring( customDimensions.eventId )
+| summarize count() by eventId
+| extend table_name = 'traces'
+;
+let pageview_stats =
+pageViews
+| where timestamp > ago(lookback) 
+| extend eventId = tostring( customDimensions.eventID )
+| summarize count() by eventId
+| extend table_name = 'pageViews'
+;
+traces_stats
+| union pageview_stats
+| order by count_ desc
