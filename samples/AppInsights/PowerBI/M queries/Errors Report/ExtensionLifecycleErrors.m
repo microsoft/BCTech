@@ -44,6 +44,7 @@ Source = Json.Document(Web.Contents("https://api.applicationinsights.io/v1/apps/
 , ExtensionPublisher = extensionPublisher
 , ExtensionVersion = extensionVersion
 , FailureType = failureType
+, DateAsInteger = format_datetime(timestamp,'yyyyMMdd')
 ",#"x-ms-app"="AAPBI",#"prefer"="ai.response-thinning=true"],Timeout=#duration(0,0,4,0)])),
 TypeMap = #table(
 { "AnalyticsTypes", "Type" }, 
