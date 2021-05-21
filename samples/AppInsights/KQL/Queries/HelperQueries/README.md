@@ -1,24 +1,37 @@
-# Get alerts when something is not right
-If something happens in your environment or for one of your customers that you need to take action on, it is better that the system sends you an alert. Azure Application Insights makes it easy to define such alerts.
+In this folder, you will find samples of Kusto Query Language (KQL) that can be used to quickly answer common questions, such as 
 
-## How do I create alerts in Azure Application Insights?
-Here is an example to get you started:
- 1. Open the Azure portal and locate your Application Insights resource
- 2. Click "Alerts" in the navigation pane on the left
- 3. Use one of the KQL samples from this section in the condition for a custom log search 
+# Which environments log telemetry to my resource?
+Run the query *AvailableEnvironments.kql*
 
-## How do I get alerts via email?
-If you want alerts via email, you can just create a new action group in your Application Insights resource, and in your alerts add an action to send an email.
+# Which signal is present in my resource?
+Run the query *AvailableSignal.kql*
 
-## How do I get alerts via Microsoft Teams?
-You can also send alerts to a channel in Microsoft Teams. See an example of how to set that up here: https://dailydotnettips.com/sending-your-azure-application-insights-alerts-to-team-sites-using-azure-logic-app/
+# How much data is ingested in my resource?
+Run the query *MonthlyIngestion.kql*
 
-## How do I get alerts on my phone?
-This video shows how you can get alerts as push notifications on your phone: https://www.youtube.com/watch?v=nqqVEISjSGE
+# Which browsers are users using?
+Run the query *BrowserUsage.kql*
 
-## Want to learn more about Azure Monitor alerts?
-Please read more in the documentation for Azure Application Insights: https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-unified-log
+# When was upgrades happening?
+Run the query *ComponentUpdates.kql*
 
+# Are we using deprecated protocols or features?
+Run the query *DeprecatedWebServiceProtocols.kql*
+
+# How do I troubleshoot web service issues?
+Run the query *WebServiceCallStatus.kql*
+
+# How do I troubleshoot Microsoft connectors?
+Run the query *MicrosoftConnectorUsage.kql*
+
+# How do I troubleshoot traffic from Microsoft Power BI?
+Run the query *PowerBIConnectorUsage.kql*
+
+# How can I get a timeline of what happens in a session?
+Run the query *Timeline.kql*
+
+# How can I distinguish data from a per-tenant extension, an appsource extension, or from Microsoft base app?
+Use the code snippet *partnerCodePredicate.kql* in your queries
 
 
 # Disclaimer

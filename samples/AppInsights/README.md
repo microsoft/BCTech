@@ -1,11 +1,14 @@
-# Introduction
+# What is Business Central telemetry?
 
-Business Central in the cloud continuously emits telemetry about events that happen in the service.
+Business Central continuously emits telemetry about events that happen in the service.
 
+# What can I use telemetry for?
 This telemetry can be useful for partners, e.g., when troubleshooting an issue or to determine how often a feature is used.
 
+# What kind of telemetry exists?
 As a developer of an app (typically referred to as an **ISV**), which gets installed in a Business Central environment, or as the partner on record for a customer (typically referred to as a **VAR**), you can obtain some of this telemetry.
 
+# What resources can I find in aka.ms/bctelemetrysamples?
 This repo contains instructions for how you can obtain the telemetry.
 
 It also contains resources that help you get immediate value from the telemetry.

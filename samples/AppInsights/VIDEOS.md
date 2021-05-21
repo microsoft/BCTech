@@ -2,11 +2,11 @@
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
 
-## Learn Business Central telemetry in a week
+## Want to Learn Business Central telemetry in a week?
 Haven't got the time to learn Business Central telemetry? Good news: we have recorded a series of short videos on the topic. Watch one every morning for a week and you should be up and running. 
 
 
-### How to get started with Application Insights (4 min)
+### How do I get started with Application Insights? (4 min)
 Watch this 4 min video to learn how to connect an environment or an extension to Azure Application Insights. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=f4rxr20QG04"><img src="https://img.youtube.com/vi/f4rxr20QG04/0.jpg" width="300"></a>
@@ -14,7 +14,7 @@ Watch this 4 min video to learn how to connect an environment or an extension to
 </p>
 
 
-### How to analyze performance using the Power BI performance report (8 min)
+### How can I analyze performance using the Power BI performance report? (8 min)
 Watch this 8 min video to learn how to use the standard Power BI performance report to triage performance issues happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=Kbq6YB8VU-8"><img src="https://img.youtube.com/vi/Kbq6YB8VU-8/0.jpg" width="300"></a>
@@ -22,28 +22,28 @@ Watch this 8 min video to learn how to use the standard Power BI performance rep
 </p>
 
 
-### How to triage errors using the Power BI error report (6 min)
+### How can I triage errors using the Power BI error report? (6 min)
 Watch this 6 min video to learn how to use the standard Power BI error report to triage errors happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=ByealbDQqIU"><img src="https://img.youtube.com/vi/ByealbDQqIU/0.jpg" width="300"></a>
 <br>
 </p>
 
-### How to create custom Kusto queries I Dynamics 365 Business Central (9 min)
+### How can I write custom Kusto queries in Dynamics 365 Business Central? (9 min)
 Watch this 9 min video to learn how to write Kusto queries against Business Central telemetry. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=A1e9ZMo5xcY"><img src="https://img.youtube.com/vi/A1e9ZMo5xcY/0.jpg" width="300"></a>
 <br>
 </p>
 
-### How to troubleshoot issues using the Jupyter Notebook troubleshooting guides (8 min)
+### How can I troubleshoot issues using the Jupyter Notebook troubleshooting guides? (8 min)
 Watch this 8 min video to learn how to troubleshoot issues using the Jupyter Notebook troubleshooting guides. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=B3EL0xdvaUY"><img src="https://img.youtube.com/vi/B3EL0xdvaUY/0.jpg" width="300"></a>
 <br>
 </p>
 
-### Dynamics 365 Business Central Feature overview 2020: Developers can emit telemetry to Application Insights from AL code (1 min)
+### How can I emit telemetry to Azure Application Insights from AL code? (1 min)
 Watch this 1 min video to learn how custom telemetry works. If you develop extensions for Business Central, then this is a must-see. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg" width="300"></a>
@@ -60,7 +60,7 @@ Watch this 56 min video to learn how about Business Central and how to use the t
 </p>
 
 
-### How to add Azure Alerts as push notifications on your phone (4 min)
+### How can I add Azure Alerts as push notifications on my phone? (4 min)
 Watch this 4 min video to learn how to add Azure Alerts as push notifications on your phone. The Alerts section in this repository contain sample queries that you can use as a starting point.  Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=nqqVEISjSGE"><img src="https://img.youtube.com/vi/nqqVEISjSGE/0.jpg" width="300"></a>

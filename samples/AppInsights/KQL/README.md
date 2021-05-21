@@ -1,6 +1,6 @@
 In this folder, you will find samples of Kusto Query Language (KQL) for each type of signal that is sent to Application Insights.
 
-# Usage of Kusto Queries
+# Where can I use Kusto Queries?
 You can use Kusto queries as the data source in a number of places. E.g.
 * the Logs part of Application Insights in the Azure portal
 * PowerBI reports
@@ -8,7 +8,7 @@ You can use Kusto queries as the data source in a number of places. E.g.
 * Azure Dashboards
 * Jupyter Notebooks (with the Kqlmagic extension)
 
-# Learning resources (KQL)
+# Where can I learn more about KQL?
 Here are some resources for you to get started on Kusto Query Language (KQL). Use CTRL+click to open them in a new browser tab/window.
 * [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
 * [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
@@ -16,7 +16,7 @@ Here are some resources for you to get started on Kusto Query Language (KQL). Us
 * [Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
 * [Microsoft Azure Data Explorer - Advanced KQL (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-advanced-query-capabilities/table-of-contents)
 
-# KQL editors and clients
+# Which tools can I use (KQL editors and clients)?
 You can write and execute KQL in various tools. E.g.
 * [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
 * In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
@@ -25,7 +25,7 @@ You can write and execute KQL in various tools. E.g.
 * PowerShell (using the REST api). See an example here: https://demiliani.com/2020/12/16/using-powershell-to-retrieve-your-dynamics-365-business-central-telemetry/
 
 
-# Signal overview
+# What signal is available in which version?
 Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
 
 |Signal | Emitted from version, update | Documentation (use CTRL+click to open in a new tab) |
@@ -61,7 +61,6 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Sensitive Field Monitoring (field added/removed) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
 | Upgrade tag signal | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
 | Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | (pending docs), sample KQL code updated |
-
 
 
 

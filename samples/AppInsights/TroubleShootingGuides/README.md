@@ -1,6 +1,6 @@
 Telemetry in Azure Application Insights is a very powerful tool to investigate issues after they have occurred (where you cannot attach a debugger to troubleshoot the issue). Having a good arsenal of Kusto query language (KQL) scripts can be very handy, but sometimes executing KQL statements one by one in the Azure Application Insights portal can be tedious. This is where notebooks come in handy, and in this part of the samples repository we show you how to get started using Jupyter notebooks in Azure Data Studio. With the Kqlmagic module, you can now combine KQL with Python to create powerful interactive trouble shooting guides (TSGs).
 
-# Jupyter Notebook Trouble Shooting Guides (TSGs)
+# Which Jupyter Notebook Trouble Shooting Guides (TSGs) are available?
 This repository contains Jupyter Notebook TSGs for 
 * Investigating performance issues (overview analysis)
 * Investigating performance issues in your code (analysis outside Microsoft code base)
@@ -27,17 +27,17 @@ Azure Data Studio is a cross-platform database tool for data professionals using
 # What is Kqlmagic?
 Kqlmagic is a command that extends the capabilities of the Python kernel in Azure Data Studio notebooks. You can combine Python and Kusto query language (KQL) to query and visualize data using rich Plot.ly library integrated with render commands. Kqlmagic brings you the benefit of notebooks, data analysis, and rich Python capabilities all in the same location. Supported data sources with Kqlmagic include Azure Data Explorer, Application Insights, and Azure Monitor logs.
 
-# Learning resources (Azure Data Studio)
+# How do I learni more about Azure Data Studio?
 Here are some resources for you to get started on Azure Data Studio. Use CTRL+click to open them in a new browser tab/window.
 * [How to Start with Microsoft Azure Data Explorer (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-starting/table-of-contents)
 * [Exploring Data in Microsoft Azure Using Kusto Query Language and Azure Data Explorer (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-exploring/table-of-contents)
 
-# Get up and running (install and configure Azure Data Studio)
+# How do I install and configure Azure Data Studio?
 1. First, you need to download and install Azure Data Studio. See how to here: https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio
 2. Now create a new notebook (needed for steps 3+4 below) and choose the Python3 kernel, see https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-tutorial-python-kernel#create-a-notebook
 3. Install a Python kernel for Azure Data Studio (let Azure Data Studio do it for you or reuse an existing Python installation). See how to here: https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-tutorial-python-kernel#change-the-python-kernel
 
-# Install and set up Kqlmagic
+# How do I install and set up Kqlmagic?
 To install and set up Kqlmagic, open a python notebook. Click the "Manage Packages" icon on the right of the notebook:
 
 ![Manage Python packages](../images/install-kqlmagic-1.png)
@@ -60,10 +60,10 @@ import sys
 ```
 in a Python code cell (just create a new notebook and change to the Python Kernel).
 
-# Now what?
+# I have installed the tools. Now what?
 You are now ready to run some notebooks. Either write your own or download some from this repository.
 
-# How to connect a notebook to an Azure Application Insights resource?
+# How do I connect a notebook to an Azure Application Insights resource?
 You need two GUIDs to be able to read data from your Application Insights resource: 
 1. Application ID
 2. an API key
@@ -84,3 +84,7 @@ See more here: https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-
 
 
 
+# Disclaimer
+Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
+
+THE SAMPLE CODE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL MICROSOFT OR ITS LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE SAMPLE CODE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

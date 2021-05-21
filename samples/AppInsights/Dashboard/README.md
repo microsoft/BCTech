@@ -1,4 +1,4 @@
-# Sample dashboards
+# How do I get started with Azure dashboards?
 
 To reduce the time-to-value for you, we have prepared a set of dashboards that you can deploy to your Azure portal:
 1. Open Company Performance
@@ -15,8 +15,7 @@ your Application Insights Resource. All requested dashboards will be installed a
 Each dashboard is a JSON file, that describes which *widgets* the dashboard should contain.
 
 
-
-# Clone the repo
+# How can I make my own Azure dashboards?
 
 We know that the dashboards we have provided might not match your needs exactly, and if you want to customize them, we recommend that you clone this repo and make your adjustments there, before importing the dashboard in the Azure portal.
 

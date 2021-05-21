@@ -1,10 +1,10 @@
 In this folder, you will find samples that illustrate how you can query Azure Application Insights data using Powershell.
 
-# Available scripts
+# Which Powershell scripts are available?
 This repository contains Powershell for 
 * querying Azure Application Insights
 
-# How to use the script
+# How do I use Powershell scripts to query telemetry?
 To use the script, do as follows
 1) Go the Azure Application Insights portal, go to the *API Access* menu, and copy the application id and generate an API key 
 2) Open Powershell and 
