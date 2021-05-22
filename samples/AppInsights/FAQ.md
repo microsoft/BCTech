@@ -32,13 +32,17 @@ To reduce ingestion cost, you can
 * reduce data ingestion by sampling to only ingest a percentage of the inbound data (see https://docs.microsoft.com/en-us/azure/azure-monitor/app/sampling#ingestion-sampling)
 * set alerts on cost thresholds being exceeded to get notified if this happens
 
-Use this KQL query [MonthlyIngestion.kql](KQL/Queries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
+Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
+
+See all helper queries here: [HelperQueries](KQL/Queries/HelperQueries/)
 
 ## Where can I learn more about Kusto Query Language (KQL) and Azure Data Studio?
 Please visit the [KQL README page](KQL/README.md) for learning resources on KQL and the [Trouble Shooting Guides README page](TroubleShootingGuides/README.md) for learning resources on Azure Data Studio.
 
 ## How can I see what data is available in my Application Insights subscription
-Use this KQL query [AvailableSignal.kql](KQL/Queries/AvailableSignal.kql) to see if you have any data in your telemetry database, and also what kind of signal is present.
+Use this KQL query [AvailableSignal.kql](KQL/Queries/HelperQueries/AvailableSignal.kql) to see if you have any data in your telemetry database, and also what kind of signal is present.
+
+See all helper queries here: [HelperQueries](KQL/Queries/HelperQueries/)
 
 ## I deployed Azure dashboards, but they show no data
 If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:

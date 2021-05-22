@@ -1,6 +1,8 @@
 # What is Business Central telemetry?
-
 Business Central continuously emits telemetry about events that happen in the service.
+
+Read more about telemetry here: https://aka.ms/bctelemetry
+
 
 # What can I use telemetry for?
 This telemetry can be useful for partners, e.g., when troubleshooting an issue or to determine how often a feature is used.
