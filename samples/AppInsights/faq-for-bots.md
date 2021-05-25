@@ -98,9 +98,6 @@ Please check the documentation <https://azure.microsoft.com/en-us/pricing/detail
 
 Azure monitor alerts are billed separately.
 
-Here is a quote from a partner using telemetry:
-_We have been using telemetry for some months now and have enabled 20+ apps as well as environment data from dev systems and build pipelines. Last month we ingested 800+ traces that corresponded to 2.3GB of data. Eventually we might hit some of those thresholds, but then we can decide if we want to spend money on telemetry (probably will) and how much. With our current setup, we will probably limit ingestion and once that no longer suffices, we will add sampling to the mix._
-
 Please visit the [FAQ](FAQ.md) for more frequently asked questions.
 
 ## How can I reduce telemetry cost?
@@ -130,22 +127,21 @@ Please visit the [FAQ](FAQ.md) for more frequently asked questions.
 
 
 ## I deployed Azure dashboards, but they show no data
-If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:
-![Time range selector in Azure Dashboard](images/dashboard.png)
+If you have data present in Application Insights, please check the setting in the *Time range* selector on the dashboard.
 
 Please visit the [FAQ](FAQ.md) for more frequently asked questions.
 
 ## What is the data retention policy in Application Insights?
 The default retention for Application Insights resources is 90 days. Different retention periods can be selected for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550 or 730 days.
 
-See <https://docs.microsoft.com/en-us/azure/azure-monitor/app/pricing#change-the-data-retention-period> 
+See https://docs.microsoft.com/en-us/azure/azure-monitor/app/pricing#change-the-data-retention-period
 
 Please visit the [FAQ](FAQ.md) for more frequently asked questions.
 
 ## How do I delete data from Application Insights?
 Purge data in an Application Insights component by a set of user-defined filters.
 
-See <https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples> 
+See https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples
 
 Please visit the [FAQ](FAQ.md) for more frequently asked questions.
 
@@ -241,7 +237,7 @@ Please visit the [KQL FAQ](KQL) for more frequently asked questions about Kusto 
 
 
 # Where can I learn more about KQL?
-Here are some resources for you to get started on Kusto Query Language (KQL). Use CTRL+click to open them in a new browser tab/window.
+Here are some resources for you to get started on Kusto Query Language (KQL):
 * [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
 * [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
 * [I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
@@ -423,7 +419,7 @@ To use the script, do as follows
 2) Open Powershell and 
 a) run GetTelemetryData.ps1 -appid <app id> -apikey <api key> -kqlquery <kql query you want to run>
 or
-b) pipe the content of a text file with a KQL query into the script: Get-Content <file> | .\GetTelemetryData.ps1 -appid <app id> -apikey <api key> 
+b) pipe the content of a text file with a KQL query into the script
 
 Please visit the [Powershell FAQ](Powershell) for more frequently asked questions about using Powershell with Kusto queries.
 
@@ -478,26 +474,21 @@ Please visit the [Troubleshooting FAQ](TroubleShootingGuides) for more frequentl
 Please visit the [Troubleshooting FAQ](TroubleShootingGuides) for more frequently asked questions about using jupyter notebook troubleshooting guides.
 
 # How do I install and set up Kqlmagic?
-To install and set up Kqlmagic, open a python notebook. Click the "Manage Packages" icon on the right of the notebook:
+To install and set up Kqlmagic, open a python notebook. Click the "Manage Packages" icon on the right of the notebook.
 
-![Manage Python packages](../images/install-kqlmagic-1.png)
+Under the "Add new" tab, type "kqlmagic" and click Install (we generally recommend people to install non “dev” version of Kqlmagic)
 
-Under the "Add new" tab, type "kqlmagic" and click Install (we generally recommend people to install non “dev” version of Kqlmagic):
 
-![Install Kqlmagic](../images/install-kqlmagic-2.png)
 For some users, the KQL Magic installation fails with an error. Please try these two steps 
 
 Step 1:
-```python
 import sys
 !{sys.executable} -m pip install --upgrade pip
-```
 
 Step 2:
-```python
 import sys
 !{sys.executable} -m pip install Kqlmagic --no-cache-dir --upgrade
-```
+
 in a Python code cell (just create a new notebook and change to the Python Kernel).
 
 Please visit the [Troubleshooting FAQ](TroubleShootingGuides) for more frequently asked questions about using jupyter notebook troubleshooting guides.
@@ -508,15 +499,9 @@ You need two GUIDs to be able to read data from your Application Insights resour
 1. Application ID
 2. an API key
 
-Get the Application ID from the *API Access* page in the Application Insights portal:
-![Get Application ID](../images/api-access-1.png)
+Get the Application ID from the *API Access* page in the Application Insights portal.
 
-Then generate an API key 
-![Get Application ID](../images/api-access-2.png)
-
-![Get Application ID](../images/api-access-3.png)
-
-![Get Application ID](../images/api-access-4.png)
+Then generate an API key.
 
 You can now use the Application ID and API key to connect to and read from the Application Insights resource from the notebook. 
 
