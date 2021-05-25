@@ -775,3 +775,5 @@ Sessions started
 Web Service Requests
 
 Read more here: [Performance tuning guide - performance telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#performance-telemetry)
+
+Read more here: <a href="https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#performance-telemetry">Performance tuning guide - performance telemetry</a>
