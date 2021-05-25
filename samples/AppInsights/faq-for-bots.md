@@ -401,9 +401,9 @@ Learn more about Business Central Power BI here: [Power BI FAQ](https://github.c
 
 
 # How can I modify the standard reports?
-All M queries used in the standard reports are available in the *M queries* directory. You can use them if you want to create your own reports based on the data sources defined in the standard reports.
+All M queries used in the standard reports are available in the "M queries" directory. You can use them if you want to create your own reports based on the data sources defined in the standard reports.
 
-Learn more about Business Central Power BI here: [Power BI FAQ](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md)
+Learn more about Business Central Power BI here: <a href="https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md">Power BI FAQ</a>
 
 
 # Which Powershell scripts are available?
