@@ -391,20 +391,13 @@ If you have a nice KQL query that you want to use in Power BI, then do as follow
 2) Click *Export* and choose *Export to Power BI (M query)*. This downloads a M query as a txt file.
 3) Follow the instructions in the txt file to use the M query as a datasource in PowerBI 
 
-Read more about this topic here: [Power BI documentation - export to Power BI](https://docs.microsoft.com/en-us/azure/azure-monitor/app/export-power-bi)
-
 Learn more about Business Central Power BI here: [Power BI FAQ](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md)
 
 
 # How do I use PowerBI parameters to set properties such as AAD tenant id and environment name?
 If your Application Insights resource contain data from multiple environments, then you might want to use parameters in your Power BI reports. In the sample report *PartnerTelemetryTemplate.pbix*, you can see how to use parameters to achieve this.
 
-Read more about Power BI parameters topic here: [Power BI documentation - Power BI parameters](https://powerbi.microsoft.com/en-us/blog/deep-dive-into-query-parameters-and-power-bi-templates/)
-
 Learn more about Business Central Power BI here: [Power BI FAQ](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md)
-
-Learn more about Business Central Power BI here: <a href="https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md">Power BI FAQ</a>
-
 
 
 # How can I modify the standard reports?
