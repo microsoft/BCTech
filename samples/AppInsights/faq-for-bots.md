@@ -433,14 +433,16 @@ Please visit the [Troubleshooting FAQ](https://github.com/microsoft/BCTech/tree/
 
 # Which Jupyter Notebook Trouble Shooting Guides (TSGs) are available?
 This repository contains Jupyter Notebook TSGs for 
-* Investigating performance issues (overview analysis)
-* Investigating performance issues in your code (analysis outside Microsoft code base)
-* Investigating web service issues (throttling, performance, bad endpoints)
-* Investigating Microsoft connector (PowerBI, PowerApps, LogicApps, or Flow) issues (throttling, performance, bad endpoints)
-* Investigating data-related issues (long running queries, database locks, report performance)
-* Investigating login issues (authentication and authorization flows)
-* Investigating if environments are using deprecated web service protocols
-* Investigating lifecycle issues with extensions (compile, synchronize, publish, install, update, un-install, un-publish)
+<ul>
+<li>Investigating performance issues (overview analysis)</li>
+<li>Investigating performance issues in your code (analysis outside Microsoft code base)</li>
+<li>Investigating web service issues (throttling, performance, bad endpoints)</li>
+<li>Investigating Microsoft connector (PowerBI, PowerApps, LogicApps, or Flow) issues (throttling, performance, bad endpoints)</li>
+<li>Investigating data-related issues (long running queries, database locks, report performance)</li>
+<li>Investigating login issues (authentication and authorization flows)</li>
+<li>Investigating if environments are using deprecated web service protocols</li>
+<li>Investigating lifecycle issues with extensions (compile, synchronize, publish, install, update, un-install, un-publish)</li>
+<ul>
 
 Please visit the [Troubleshooting FAQ](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides) for more frequently asked questions about using jupyter notebook troubleshooting guides.
 
@@ -457,12 +459,14 @@ Kqlmagic is a command that extends the capabilities of the Python kernel in Azur
 Please visit the [Troubleshooting FAQ](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides) for more frequently asked questions about using jupyter notebook troubleshooting guides.
 
 
-# How do I learni more about Azure Data Studio?
+# How do I learn more about Azure Data Studio?
 Here are some resources for you to get started on Azure Data Studio. 
 
 [How to Start with Microsoft Azure Data Explorer (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-starting/table-of-contents)
 
+
 [Exploring Data in Microsoft Azure Using Kusto Query Language and Azure Data Explorer (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-exploring/table-of-contents)
+
 
 Please visit the [Troubleshooting FAQ](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides) for more frequently asked questions about using jupyter notebook troubleshooting guides.
 
