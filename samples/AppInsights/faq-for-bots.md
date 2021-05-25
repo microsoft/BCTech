@@ -745,7 +745,7 @@ A job queue entry was enqueued.
 A job queue entry was started.
 A job queue entry finished. Provides information as to whether it was successful or failed.
 
-Read more here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-job-queue-lifecycle-trace
+Read more here: [Job Queue Signal documentation](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-job-queue-lifecycle-trace)
 
 
 # How can I analyze when users cannot login?
@@ -761,7 +761,7 @@ The next stage occurs after a successful authorization attempt, when trying to o
 
 Read more here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace
 
-Also, try out the login issues TSG. Learn more about Business Central troubleshooting guides here: https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/TroubleShootingGuides/README.md
+Also, try out the login issues TSG. Learn more about Business Central troubleshooting guides here: https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/TroubleShootingGuides
 
 
 # How can I analyze performance, it is slow?
