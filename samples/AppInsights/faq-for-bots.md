@@ -403,6 +403,9 @@ Read more about Power BI parameters topic here: [Power BI documentation - Power 
 
 Learn more about Business Central Power BI here: [Power BI FAQ](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md)
 
+Learn more about Business Central Power BI here: <a href="https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md">Power BI FAQ</a>
+
+
 
 # How can I modify the standard reports?
 All M queries used in the standard reports are available in the *M queries* directory. You can use them if you want to create your own reports based on the data sources defined in the standard reports.
@@ -775,5 +778,3 @@ Sessions started
 Web Service Requests
 
 Read more here: [Performance tuning guide - performance telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#performance-telemetry)
-
-Read more here: <a href="https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#performance-telemetry">Performance tuning guide - performance telemetry</a>
