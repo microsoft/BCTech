@@ -233,22 +233,43 @@ Please visit the Dashboard FAQ (https://github.com/microsoft/BCTech/tree/master/
 
 # Where can I use Kusto Queries?
 You can use Kusto queries as the data source in a number of places. E.g.
-* the Logs part of Application Insights in the Azure portal
-* PowerBI reports
-* Azure Monitor Alerts
-* Azure Dashboards
-* Jupyter Notebooks (with the Kqlmagic extension)
+
+
+the Logs part of Application Insights in the Azure portal
+
+
+PowerBI reports
+
+
+Azure Monitor Alerts
+
+
+Azure Dashboards
+
+
+Jupyter Notebooks (with the Kqlmagic extension)
+
 
 Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL) for more frequently asked questions about Kusto queries.
 
-
 # Where can I learn more about KQL?
 Here are some resources for you to get started on Kusto Query Language (KQL):
-* [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
-* [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
-* [I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
-* [Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
-* [Microsoft Azure Data Explorer - Advanced KQL (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-advanced-query-capabilities/table-of-contents)
+
+
+[Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
+
+
+[Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
+
+
+[I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
+
+
+[Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
+
+
+[Microsoft Azure Data Explorer - Advanced KQL (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-advanced-query-capabilities/table-of-contents)
+
 
 Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL) for more frequently asked questions about Kusto queries.
 
