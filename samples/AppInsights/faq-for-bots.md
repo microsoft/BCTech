@@ -276,11 +276,25 @@ Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/sample
 
 # Which tools can I use (KQL editors and clients)?
 You can write and execute KQL in various tools. E.g.
-* [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
-* In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
-* In a Jupyter notebook hosted in Visual Studio Code (with the Python and Jupyter Notebooks extensions installed)
-* Application Insights portal (Under *Logs* in the *Monitoring* menu)
-* PowerShell (using the REST api). See an example here: https://demiliani.com/2020/12/16/using-powershell-to-retrieve-your-dynamics-365-business-central-telemetry/
+
+
+[Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is 
+
+
+[How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
+
+
+In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
+
+
+In a Jupyter notebook hosted in Visual Studio Code (with the Python and Jupyter Notebooks extensions installed)
+
+
+Application Insights portal (Under *Logs* in the *Monitoring* menu)
+
+
+PowerShell (using the REST api). See an example here: https://demiliani.com/2020/12/16/using-powershell-to-retrieve-your-dynamics-365-business-central-telemetry/
+
 
 Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL) for more frequently asked questions about Kusto queries.
 
@@ -292,30 +306,42 @@ Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/sample
 
 
 # Do you have Kusto (KQL) queries for performance investigations?
-Yes, the *PerformanceTuning* folder have queries that can help you investigate a performance issue.
+The PerformanceTuning folder in https://aka.ms/bctelemetrysamples have queries that can help you investigate a performance issue.
 
 Note that there also exist predefined troubleshooting guides for performance investigations both in the form ofJupyter notebooks and as a Power BI report.
 
+
 Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL) for more frequently asked questions about Kusto queries.
 
+
 Learn more about Business Central Power BI here: https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/PowerBI/README.md
+
 
 Learn more about Business Central troubleshooting guides here: https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/TroubleShootingGuides/README.md
 
 
 # Where can I find example KQL queries for each of the event ids in telemetry?
-The folder *ExampleQueriesForEachArea* have KQL scripts with KQL queries for each type of event id present in telemetry.
+The folder ExampleQueriesForEachArea in https://aka.ms/bctelemetrysamples have KQL scripts with KQL queries for each type of event id present in telemetry.
+
 
 Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL) for more frequently asked questions about Kusto queries.
+
 
 Read more about telemetry here: https://aka.ms/bctelemetry
 
 
 # Which helper KQL queries are useful for what?
-The folder *HelperQueries* have KQL scripts with KQL queries that can be used to quickly answer common questions, such as 
-* which environments log telemetry to my resource?
-* which signal is present in my resource?
-* How much data is ingested in my resource?
+The folder HelperQueries in https://aka.ms/bctelemetrysamples have KQL scripts with KQL queries that can be used to quickly answer common questions, such as 
+
+
+which environments log telemetry to my resource?
+
+
+which signal is present in my resource?
+
+
+How much data is ingested in my resource?
+
 
 Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL) for more frequently asked questions about Kusto queries.
 
@@ -323,13 +349,15 @@ Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/sample
 
 
 # Which environments log telemetry to my resource?
-Run the query *AvailableEnvironments.kql*
+To analyze which environments log telemetry to your Application Insights resource, run the helper query AvailableEnvironments.kql
+
 
 Get all helper queries here: https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL/Queries/HelperQueries
 
 
 # Which signal is present in my resource?
-Run the query *AvailableSignal.kql*
+To analyze which signal is present in your Application Insights resource, run the helper query AvailableSignal.kql
+
 
 Get all helper queries here: https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL/Queries/HelperQueries
 
