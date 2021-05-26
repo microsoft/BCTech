@@ -739,11 +739,7 @@ Read more here: [PageView Signal documentation](https://docs.microsoft.com/en-us
 
 
 # How can I analyze Job Queue Lifecycle (job queue entry was enqueued, job queue entry was started, job queue entry finished)?
-Job queue lifecycle telemetry gathers data about the following operations:
-
-* A job queue entry was enqueued.
-* A job queue entry was started.
-* A job queue entry finished. Provides information as to whether it was successful or failed.
+Job queue lifecycle telemetry gathers data about the following operations: a job queue entry was enqueued, started, or finished.
 
 Read more here: [Job Queue Signal documentation](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-job-queue-lifecycle-trace)
 
