@@ -326,7 +326,7 @@ Jupyter Notebooks (with the Kqlmagic extension)
 
 Please visit the KQL FAQ (https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/KQL) for more frequently asked questions about Kusto queries.
 
-# Where can I learn more about KQL?
+# Where can I learn more about KQL (and SQL)?
 Here are some resources for you to get started on Kusto Query Language (KQL):
 
 
@@ -798,7 +798,7 @@ Configuration package telemetry gathers data about the following operations on c
 Read more here: [Configuration Package Signal documentation](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-configuration-package-trace)
 
 
-# How can I analyze Database Lock Timeout?
+# How can I analyze (SQL) Database Lock Timeout?
 Database lock timeout telemetry gathers information about database locks that have timed out. The telemetry data allows you to troubleshoot what caused these locks.
 
 
@@ -894,7 +894,7 @@ The Business Central Server server will emit telemetry about the execution time 
 Read more here: [Long Running AL Signal documentation](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-al-method-trace)
 
 
-# How can I analyze Long Running Operation (SQL Query queries)?
+# How can I analyze Long Running Operation (SQL) queries?
 A SQL query that takes longer than 1000 milliseconds to execute will be sent to your Application Insights resource.
 
 
@@ -962,7 +962,7 @@ Outgoing web service request telemetry gathers data about outgoing web service r
 Read more here: [Outgoing Web Services Signal documentation](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-outgoing-trace)
 
 
-# How can I analyze indexes?
+# How can I analyze (SQL) indexes?
 The table index trace gathers data when a index is added to, modified, or removed from a base table by a table extension.
 
 
