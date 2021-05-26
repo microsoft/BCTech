@@ -433,16 +433,15 @@ Please visit the [Troubleshooting FAQ](https://github.com/microsoft/BCTech/tree/
 
 # Which Jupyter Notebook Trouble Shooting Guides (TSGs) are available?
 This repository contains Jupyter Notebook TSGs for 
-<ul>
-<li>Investigating performance issues (overview analysis)</li>
-<li>Investigating performance issues in your code (analysis outside Microsoft code base)</li>
-<li>Investigating web service issues (throttling, performance, bad endpoints)</li>
-<li>Investigating Microsoft connector (PowerBI, PowerApps, LogicApps, or Flow) issues (throttling, performance, bad endpoints)</li>
-<li>Investigating data-related issues (long running queries, database locks, report performance)</li>
-<li>Investigating login issues (authentication and authorization flows)</li>
-<li>Investigating if environments are using deprecated web service protocols</li>
-<li>Investigating lifecycle issues with extensions (compile, synchronize, publish, install, update, un-install, un-publish)</li>
-<ul>
+
+* Investigating performance issues (overview analysis)
+* Investigating performance issues in your code (analysis outside Microsoft code base)
+* Investigating web service issues (throttling, performance, bad endpoints)
+* Investigating Microsoft connector (PowerBI, PowerApps, LogicApps, or Flow) issues (throttling, performance, bad endpoints
+* Investigating data-related issues (long running queries, database locks, report performance)
+* Investigating login issues (authentication and authorization flows)
+* Investigating if environments are using deprecated web service protocols
+* Investigating lifecycle issues with extensions (compile, synchronize, publish, install, update, un-install, un-publish)
 
 Please visit the [Troubleshooting FAQ](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides) for more frequently asked questions about using jupyter notebook troubleshooting guides.
 
@@ -605,15 +604,13 @@ Read more here: [Email Signal documentation](https://docs.microsoft.com/en-us/dy
 
 # How can I analyze Extension Lifecycle (Compile an extension, Synchronize an extension, Publish an extension, Install an extension, Update an extension, Uninstall an extension, Unpublish an extension)?
 Extension lifecycle telemetry gathers data about the success or failure of the following extension-related operations:
-Compiling an extension
-Synchronizing an extension
-Publishing an extension
-Installing an extension
-Updating an extension
-Uninstalling an extension
-Unpublishing an extension
-
-Failed operations result in a trace log entry that includes a reason for the failure.
+* Compiling an extension
+* Synchronizing an extension
+* Publishing an extension
+* Installing an extension
+* Updating an extension
+* Uninstalling an extension
+* Unpublishing an extension
 
 Read more here: [Extension Lifecycle Signal documentation](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace)
 
