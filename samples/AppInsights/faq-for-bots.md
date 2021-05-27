@@ -688,20 +688,7 @@ To install and set up Kqlmagic, open a python notebook. Click the "Manage Packag
 Under the "Add new" tab, type "kqlmagic" and click Install (we generally recommend people to install non “dev” version of Kqlmagic)
 
 
-For some users, the KQL Magic installation fails with an error. Please try these two steps 
-
-
-Step 1:
-import sys
-!{sys.executable} -m pip install --upgrade pip
-
-
-Step 2:
-import sys
-!{sys.executable} -m pip install Kqlmagic --no-cache-dir --upgrade
-
-
-in a Python code cell (just create a new notebook and change to the Python Kernel).
+For some users, the KQL Magic installation fails with an error. The Troubleshooting FAQ have solutions for this (see link below).
 
 
 Please visit the [Troubleshooting FAQ](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides) for more frequently asked questions about using jupyter notebook troubleshooting guides.
@@ -1051,7 +1038,7 @@ Read more here: [Authorization signal documentation](https://docs.microsoft.com/
 Also, try out the login issues TSG. Learn more about Business Central troubleshooting guides here: [Troubleshooting guide FAQ](https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/TroubleShootingGuides)
 
 
-# How can I analyze performance, it is slow?
+# How can I analyze performance (it is slow)?
 The following performance telemetry is available in Azure Application Insights (if that has been configured for the environment or app):
 
 
@@ -1077,3 +1064,7 @@ Web Service Requests
 
 
 Read more here: [Performance tuning guide - performance telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#performance-telemetry)
+
+
+# Can I see errors in telemetry?
+Currently, errors are not submitted to telemetry. It might be added in a future release of Business Central.
