@@ -1,40 +1,17 @@
-# Visual Studio Rest Client samples for Business Central access token acquisition and usage
+# Visual Studio Rest Client sample for Business Central access token acquisition and usage using Service-to-Service (S2S)
 
+This samples provides a  Rest Client script, showing how to leverage OAuth Client Credentials (S2S) flow, to connect to Dynamics 365 Business Central. The samples makes it very easy to see exactly which HTTP requests are constructed in order to first get an access token and then using the token to interact with Business Central APIs. You can use any Http Client to create the same requests, should you not want to use an OAuth library.
 
 Prerequisites:
+* Setup the AAD application in the Azure Portal and configure the app in Business Centralm by following [these steps](https://github.com/microsoft/BCTech/tree/master/samples/PSOAuthBCAccess).
+* Install the [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) for Visual Studio Code.
 
-Installed `MSAL.PS` Powershell module.
 
-In order to access **Business Central Automation API**, it is required to **[Setup Azure AD application in Business Central](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication#task-2-set-up-the-azure-ad-application-in-)** .
+Usage:
 
-**Azure AD Application** registration:
+Make sure to change the `<Fill in>` in the sample to match the Azure Application created in Azure Portal. 
+For guidiance on using the REST Client, please refer the the [documentation](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).  
 
-1. Sign into azure portal under tenant admin user, go to **'Azure Active Directory'** - **'App registrations'**
-
-2. Click **'+ New registration'**. Provide a **'Name'** for application, set **'Supported account types'** to **"Accounts in this organizational directory only"**. Click **'Register'** button.
-
-3. Setup API permissions for newly created application, go to **'API permissions'**:
-    * In order to acquire tokens as application (used for automation APIs), add: **'Dynamics 365 Business Central'** - **'Application permissions'** - **'Automation.ReadWrite.All'**
-    * In order to acquire tokens as user, i.e. impersonate somebody (used to call BC web services), add: **'Dynamics 365 Business Central'** - **'Delegated permissions'** - **'Financials.ReadWrite.All'**
-
-4. After permissions are added, click **'Grant admin consent for ...'**. Status in the table of permissions shoud change to **'Granted'**
-
-5. Setup client secret (used in authorization code flow scenario and application scenario):
-    * Go to **'Certificates & secrets'** - **'Client secrets'**, click **'+ New client secret'**
-    * Add some description, choose **'Expires'** setting and click **'Add'**
-    * After secret is created, copy secret **'Value'** and save for later.
-
-6. Setup Redirect Uris:
-    * For authorization code flow it is required to setup redirect Uri for web platform. Go to **'Authentication'** - **'Platform configurations'**, click **'+ Add a platform'**. Choose **'Web'**, enter **`'http://localhost:8080/login'`** as redirect Uri. Click **'Configure'**.
-    * For interactive and ROPC flows it is required to setup redirect Uri for mobile and desktop platform. Go to **'Authentication'** - **'Platform configurations'**, click **'+ Add a platform'**. Choose **'Mobile and desktop applications'**, click to switch on **'... (MSAL only)'** redirect Uri. Click **'Configure'**.
-
-7. In order to use Resource Owner Password Credential flow, allow public client flows. Go to **'Authentication'** - **'Advanced settings'**, and set **'Allow public client flows'** to **'Yes'**. Click **'Save'** button at the top.
-
-Change values in **CommonData.psm1** module:
-
-  * Set **`$ClientId`** in the module to registered application Client Id value 
-  * Set **`$RedirectUri`** in the module to registered application Web redirect Uri
-  * Set **`$AadTenantId`** in the module to Azure AD Tenant Id where Business Central is located
 
 ## Disclaimer
 
