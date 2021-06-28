@@ -1,0 +1,179 @@
+// KQL samples - App source validation events
+
+// Available in app telemetry (not environment telemetry) from version 18.4
+
+// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
+// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+
+// to follow all events in a particular request, use this query
+// note that events have different custom dimensions, so some columns might be empty for some rows
+let _requestId = "e31b8fb1-f790-457f-8a07-f3ae9bc411b2";
+traces
+| extend requestId = customDimensions.validationRequestId
+| where requestId == _requestId
+| extend eventId = customDimensions.eventId
+| extend failureReason = customDimensions.failureReason
+| extend countryRegions = customDimensions.countryRegions
+| extend versions = customDimensions.versions 
+| extend countryRegion = customDimensions.countryRegion
+| extend version = customDimensions.version
+| extend extensionName = customDimensions.extensionName
+| extend extensionId = customDimensions.extensionId
+| extend extensionVersion = customDimensions.extensionVersion
+| extend extensionPublisher = customDimensions.extensionPublisher
+| extend extensions = customDimensions.extensions
+| extend allExtensions = customDimensions.allExtensions
+| extend baselineExtensions = customDimensions.baselineExtensions
+| extend diagnosticCode = customDimensions.diagnosticCode
+| extend diagnosticMessage = customDimensions.diagnosticMessage
+| extend diagnosticSeverity = customDimensions.diagnosticSeverity
+| extend severity = customDimensions.severity
+| project timestamp, requestId, severityLevel, severity
+, eventId, message
+, countryRegion, versions, countryRegions, version
+, extensionName, extensionId, extensionPublisher, extensionVersion
+, extensions, allExtensions, baselineExtensions, failureReason, diagnosticCode, diagnosticMessage, diagnosticSeverity, customDimensions
+| order by timestamp asc
+
+
+// AppSource submission validation request started
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0028' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegions = customDimensions.countryRegions
+, versions = customDimensions.versions 
+, extensions = customDimensions.extensions
+, message, timestamp, customDimensions
+
+
+// AppSource submission validation request completed successfully
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0029' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegions = customDimensions.countryRegions
+, versions = customDimensions.versions 
+, extensions = customDimensions.extensions
+, message, timestamp, customDimensions
+
+
+// (Version, country-region) validation started
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0030' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensions = customDimensions.extensions
+, allExtensions = customDimensions.allExtensions
+, baselineExtensions = customDimensions.baselineExtensions
+, message, timestamp, customDimensions
+
+
+// (Version, country-region) validation completed successfully
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0031' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensions = customDimensions.extensions
+, allExtensions = customDimensions.allExtensions
+, baselineExtensions = customDimensions.baselineExtensions
+, message, timestamp, customDimensions
+
+
+// Extension validation started
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0032' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensionName = customDimensions.extensionName
+, message, timestamp, customDimensions
+
+
+// Extension validation completed successfully
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0033' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensionName = customDimensions.extensionName
+, message, timestamp, customDimensions
+
+
+// Validation diagnostic reported
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0034' 
+| project 
+  eventId = customDimensions.eventId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensions = customDimensions.extensions
+, allExtensions = customDimensions.allExtensions
+, baselineExtensions = customDimensions.baselineExtensions
+, failureReason = customDimensions.failureReason
+, message, timestamp, customDimensions
+
+
+// AppSource submission validation request completed with failures
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0035' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegions = customDimensions.countryRegions
+, versions = customDimensions.versions 
+, extensions = customDimensions.extensions
+, failureReason = customDimensions.failureReason
+, message, timestamp, customDimensions
+
+
+// (Version, country-region) validation completed with failures
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0036' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensions = customDimensions.extensions
+, allExtensions = customDimensions.allExtensions
+, baselineExtensions = customDimensions.baselineExtensions
+, failureReason = customDimensions.failureReason
+, message, timestamp, customDimensions
+
+
+// Extension validation completed with failures
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0037' 
+| project 
+  eventId = customDimensions.eventId
+, requestId = customDimensions.validationRequestId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensionName = customDimensions.extensionName
+, failureReason = customDimensions.failureReason
+, message, timestamp, customDimensions
+
+
