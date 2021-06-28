@@ -20,7 +20,7 @@ In order to access **Business Central Automation API**, it is required to **[Set
 2. Click **'+ New registration'**. Provide a **'Name'** for application, set **'Supported account types'** to **"Accounts in this organizational directory only"**. Click **'Register'** button.
 
 3. Setup API permissions for newly created application, go to **'API permissions'**:
-    * In order to acquire tokens as application (used for automation APIs), add: **'Dynamics 365 Business Central'** - **'Application permissions'** - **'Automation.ReadWrite.All'**
+    * In order to acquire tokens as application (used for automation APIs), add: **'Dynamics 365 Business Central'** - **'Application permissions'** - **'API.ReadWrite.All'** or **'Automation.ReadWrite.All'**
     * In order to acquire tokens as user, i.e. impersonate somebody (used to call BC web services), add: **'Dynamics 365 Business Central'** - **'Delegated permissions'** - **'Financials.ReadWrite.All'**
 
 4. After permissions are added, click **'Grant admin consent for ...'**. Status in the table of permissions shoud change to **'Granted'**
