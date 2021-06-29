@@ -1,16 +1,16 @@
 # Visual Studio Rest Client sample for Business Central access token acquisition and usage using Service-to-Service (S2S)
 
-This samples provides a  Rest Client script, showing how to leverage OAuth Client Credentials (S2S) flow, to connect to Dynamics 365 Business Central. The samples makes it very easy to see exactly which HTTP requests are constructed in order to first get an access token and then using the token to interact with Business Central APIs. You can use any Http Client to create the same requests, should you not want to use an OAuth library.
+This sample provides a Rest Client script, showing how to leverage OAuth Client Credentials (S2S) flow, to connect to Dynamics 365 Business Central. The sample makes it quite easy to see exactly which HTTP requests are constructed to first get an access token and then using the token to interact with Business Central APIs. You can use any Http Client to create the same requests, should you not want to use an OAuth library.
 
 Prerequisites:
-* Setup the AAD application in the Azure Portal and configure the app in Business Centralm by following [these steps](https://github.com/microsoft/BCTech/tree/master/samples/PSOAuthBCAccess).
+* Setup the AAD application in the Azure Portal and configure the app in Business Central by following [these steps](https://github.com/microsoft/BCTech/tree/master/samples/PSOAuthBCAccess).
 * Install the [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) for Visual Studio Code.
 
 
 Usage:
 
 Make sure to change the `<Fill in>` in the sample to match the Azure Application created in Azure Portal. 
-For guidiance on using the REST Client, please refer the the [documentation](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).  
+For guidance on using the REST Client, please refer to the [documentation](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).
 
 
 ## Disclaimer
