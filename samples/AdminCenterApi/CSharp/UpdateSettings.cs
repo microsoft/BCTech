@@ -17,7 +17,7 @@ class UpdateSettings
             PreferredStartTimeUtc = preferredStartTime,
             PreferredEndTimeUtc = preferredEndTime,
         };
-        UpgradeSettings newUpgradeSettings = adminCenterClient.AddOrUpdateUpgradeSettings("BusinessCentral", environmentName, upgradeSettings);
+        UpgradeSettings newUpgradeSettings = adminCenterClient.SetUpgradeSettings("BusinessCentral", environmentName, upgradeSettings);
         Utils.ConsoleWriteLineAsJson(newUpgradeSettings);
     }
 

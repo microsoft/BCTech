@@ -31,7 +31,7 @@ class Environments
             EnvironmentName = targetEnvironmentName,
             Type = "Sandbox",
         };
-        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment newEnvironment = adminCenterClient.CreateCopyOfEnvironment("BusinessCentral", sourceEnvironmentName, copyEnvironmentRequest);
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment newEnvironment = adminCenterClient.CopyEnvironment("BusinessCentral", sourceEnvironmentName, copyEnvironmentRequest);
         Utils.ConsoleWriteLineAsJson(newEnvironment);
     }
 
@@ -41,18 +41,18 @@ class Environments
         {
             Key = appInsightsKey.ToString(),
         };
-        adminCenterClient.SetAppInsightsKey("BusinessCentral", environmentName, applicationInsights);
+        adminCenterClient.SetApplicationInsightsInstrumentationKey("BusinessCentral", environmentName, applicationInsights);
     }
 
     internal static void GetDatabaseSize(AdminCenterClient adminCenterClient, string environmentName)
     {
-        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment environment = adminCenterClient.GetEnvironmentByName("BusinessCentral", environmentName, skipDbSize: false);
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment environment = adminCenterClient.GetEnvironment("BusinessCentral", environmentName, skipDbSize: false);
         Utils.ConsoleWriteLineAsJson(environment.DatabaseSize);
     }
 
     internal static void GetSupportSettings(AdminCenterClient adminCenterClient, string environmentName)
     {
-        SupportContact supportContact = adminCenterClient.GetSupportContact("BusinessCentral", environmentName);
+        SupportContact supportContact = adminCenterClient.GetSupportContactInformation("BusinessCentral", environmentName);
         Utils.ConsoleWriteLineAsJson(supportContact);
     }
 }

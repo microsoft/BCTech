@@ -5,7 +5,7 @@ class Sessions
 {
     internal static void GetActiveSessions(AdminCenterClient adminCenterClient, string environmentName)
     {
-        EnvironmentSessionListResult environmentSessions = adminCenterClient.GetActiveSessions("BusinessCentral", environmentName);
+        EnvironmentSessionListResult environmentSessions = adminCenterClient.GetSessions("BusinessCentral", environmentName);
         foreach (var environmentSession in environmentSessions.Value)
         {
             Utils.ConsoleWriteLineAsJson(environmentSession);
@@ -14,6 +14,6 @@ class Sessions
 
     internal static void CancelSession(AdminCenterClient adminCenterClient, string environmentName, int sessionId)
     {
-        adminCenterClient.RemoveActiveSession("BusinessCentral", environmentName, sessionId.ToString());
+        adminCenterClient.RemoveSession("BusinessCentral", environmentName, sessionId.ToString());
     }
 }

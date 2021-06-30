@@ -19,7 +19,7 @@ class NotificationRecipients
             Email = emailAddress,
             Name = name,
         };
-        NotificationRecipient addedNotificationRecipient = adminCenterClient.AddOrUpdateNotificationRecipient(notificationRecipient);
+        NotificationRecipient addedNotificationRecipient = adminCenterClient.SetNotificationRecipient(notificationRecipient);
         Utils.ConsoleWriteLineAsJson(addedNotificationRecipient);
     }
 }
