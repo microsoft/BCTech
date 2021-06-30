@@ -1,55 +1,47 @@
 using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Microsoft.Dynamics.BusinessCentral.AdminCenter;
+using Microsoft.Dynamics.BusinessCentral.AdminCenter.Models;
 
 class Apps
 {
-     internal static async Task GetInstalledAppsAsync(string accessToken, string environmentName)
+    internal static void GetInstalledApps(AdminCenterClient adminCenterClient, string environmentName)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        HttpResponseMessage response = await httpClient.GetAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{environmentName}/apps");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        EnvironmentAppListResult environmentApps = adminCenterClient.GetEnvironmentApps("BusinessCentral", environmentName);
+        foreach (var environmentApp in environmentApps.Value)
+        {
+            Utils.ConsoleWriteLineAsJson(environmentApp);
+        }
     }
 
-     internal static async Task GetAvailableAppUpdatesAsync(string accessToken, string environmentName)
+    internal static void GetAvailableAppUpdates(AdminCenterClient adminCenterClient, string environmentName)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        HttpResponseMessage response = await httpClient.GetAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{environmentName}/apps/availableUpdates");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        EnvironmentAppUpdateListResult environmentAppUpdates = adminCenterClient.GetAvailableEnvironmentAppUpdates("BusinessCentral", environmentName);
+        foreach (var environmentAppUpdate in environmentAppUpdates.Value)
+        {
+            Utils.ConsoleWriteLineAsJson(environmentAppUpdate);
+        }
     }
 
-    internal static async Task UpdateAppAsync(string accessToken, string environmentName, string appId, string newAppVersion)
+    internal static void UpdateApp(AdminCenterClient adminCenterClient, string environmentName, Guid appId, string newAppVersion)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        var body = new {
-            TargetVersion = newAppVersion
+        var scheduleEnvironmentAppInstallRequest = new ScheduleEnvironmentAppInstallRequest
+        {
+            TargetVersion = newAppVersion,
+            UseEnvironmentUpdateWindow = false,
+            AcceptIsvEula = true,
+            InstallOrUpdateNeededDependencies = true,
+            AllowPreviewVersion = false,
         };
-        var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await httpClient.PostAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{environmentName}/apps/{appId}/update", content);
-
-        Console.WriteLine($"Responded with {(int)response.StatusCode} {response.ReasonPhrase}");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        EnvironmentAppOperation environmentAppOperation = adminCenterClient.ScheduleEnvironmentAppInstall("BusinessCentral", environmentName, appId, scheduleEnvironmentAppInstallRequest);
+        Utils.ConsoleWriteLineAsJson(environmentAppOperation);
     }
 
-      internal static async Task GetAppOperationsAsync(string accessToken, string environmentName, string appId)
+    internal static void GetAppOperations(AdminCenterClient adminCenterClient, string environmentName, Guid appId)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        HttpResponseMessage response = await httpClient.GetAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{environmentName}/apps/{appId}/operations");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        EnvironmentAppOperationListResult environmentAppOperations = adminCenterClient.GetEnvironmentAppOperations("BusinessCentral", environmentName, appId);
+        foreach (var environmentAppOperation in environmentAppOperations.Value)
+        {
+            Utils.ConsoleWriteLineAsJson(environmentAppOperation);
+        }
     }
 }
