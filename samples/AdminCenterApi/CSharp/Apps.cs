@@ -6,19 +6,19 @@ class Apps
 {
     internal static void GetInstalledApps(AdminCenterClient adminCenterClient, string environmentName)
     {
-        EnvironmentAppListResult environmentApps = adminCenterClient.GetInstalledApps("BusinessCentral", environmentName);
-        foreach (var environmentApp in environmentApps.Value)
+        EnvironmentAppListResult installedApps = adminCenterClient.GetInstalledApps("BusinessCentral", environmentName);
+        foreach (var installedApp in installedApps.Value)
         {
-            Utils.ConsoleWriteLineAsJson(environmentApp);
+            Utils.ConsoleWriteLineAsJson(installedApp);
         }
     }
 
     internal static void GetAvailableAppUpdates(AdminCenterClient adminCenterClient, string environmentName)
     {
-        EnvironmentAppUpdateListResult environmentAppUpdates = adminCenterClient.GetAvailableAppUpdates("BusinessCentral", environmentName);
-        foreach (var environmentAppUpdate in environmentAppUpdates.Value)
+        EnvironmentAppUpdateListResult appUpdates = adminCenterClient.GetAvailableAppUpdates("BusinessCentral", environmentName);
+        foreach (var appUpdate in appUpdates.Value)
         {
-            Utils.ConsoleWriteLineAsJson(environmentAppUpdate);
+            Utils.ConsoleWriteLineAsJson(appUpdate);
         }
     }
 
@@ -32,14 +32,14 @@ class Apps
             InstallOrUpdateNeededDependencies = true,
             AllowPreviewVersion = false,
         };
-        EnvironmentAppOperation environmentAppOperation = adminCenterClient.ScheduleAppInstall("BusinessCentral", environmentName, appId, scheduleEnvironmentAppInstallRequest);
-        Utils.ConsoleWriteLineAsJson(environmentAppOperation);
+        EnvironmentAppOperation appOperation = adminCenterClient.ScheduleAppInstall("BusinessCentral", environmentName, appId, scheduleEnvironmentAppInstallRequest);
+        Utils.ConsoleWriteLineAsJson(appOperation);
     }
 
     internal static void GetAppOperations(AdminCenterClient adminCenterClient, string environmentName, Guid appId)
     {
-        EnvironmentAppOperationListResult environmentAppOperations = adminCenterClient.GetAppOperations("BusinessCentral", environmentName, appId);
-        foreach (var environmentAppOperation in environmentAppOperations.Value)
+        EnvironmentAppOperationListResult appOperations = adminCenterClient.GetAppOperations("BusinessCentral", environmentName, appId);
+        foreach (var environmentAppOperation in appOperations.Value)
         {
             Utils.ConsoleWriteLineAsJson(environmentAppOperation);
         }

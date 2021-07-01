@@ -5,10 +5,10 @@ class Sessions
 {
     internal static void GetActiveSessions(AdminCenterClient adminCenterClient, string environmentName)
     {
-        EnvironmentSessionListResult environmentSessions = adminCenterClient.GetSessions("BusinessCentral", environmentName);
-        foreach (var environmentSession in environmentSessions.Value)
+        EnvironmentSessionListResult sessions = adminCenterClient.GetSessions("BusinessCentral", environmentName);
+        foreach (var session in sessions.Value)
         {
-            Utils.ConsoleWriteLineAsJson(environmentSession);
+            Utils.ConsoleWriteLineAsJson(session);
         }
     }
 
