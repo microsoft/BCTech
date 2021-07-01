@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.4.0" />
-    <PackageReference Include="Microsoft.Dynamics.BusinessCentral.AdminCenter" Version="2.7.21181.5" />
+    <PackageReference Include="Microsoft.Dynamics.BusinessCentral.AdminCenter" Version="2.7.21182.1" />
   </ItemGroup>
 
 </Project>

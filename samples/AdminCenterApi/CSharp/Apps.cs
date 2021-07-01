@@ -6,7 +6,7 @@ class Apps
 {
     internal static void GetInstalledApps(AdminCenterClient adminCenterClient, string environmentName)
     {
-        EnvironmentAppListResult environmentApps = adminCenterClient.GetApps("BusinessCentral", environmentName);
+        EnvironmentAppListResult environmentApps = adminCenterClient.GetInstalledApps("BusinessCentral", environmentName);
         foreach (var environmentApp in environmentApps.Value)
         {
             Utils.ConsoleWriteLineAsJson(environmentApp);
