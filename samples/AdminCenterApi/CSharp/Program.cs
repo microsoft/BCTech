@@ -10,7 +10,7 @@ namespace CSharp
         {
             // Create a token credential, which enables us to authenticate to the Business Central Admin Center APIs.
             //   Note 1: This will open the AAD login page in a browser window.
-            // Note 2: You can also skip passing in options altogether if you want to log into your own Business Central admin center, i.e., not a delegated admin scenario
+            //   Note 2: You can also skip passing in options altogether if you want to log into your own Business Central admin center, i.e., not a delegated admin scenario
             var interactiveBrowserCredentialOptions = new InteractiveBrowserCredentialOptions
             {
                 ClientId = "a19cb26a-2e4c-408b-82e1-6311742ecc50",  // partner's AAD app id
