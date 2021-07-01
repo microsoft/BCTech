@@ -1,87 +1,58 @@
 using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Microsoft.Dynamics.BusinessCentral.AdminCenter;
+using Microsoft.Dynamics.BusinessCentral.AdminCenter.Models;
 
 class Environments
 {
-     internal static async Task ListEnvironmentsAsync(string accessToken)
+    internal static void ListEnvironments(AdminCenterClient adminCenterClient)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        HttpResponseMessage response = await httpClient.GetAsync("https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        EnvironmentListResult environments = adminCenterClient.GetEnvironments();
+        foreach (var environment in environments.Value)
+        {
+            Utils.ConsoleWriteLineAsJson(environment);
+        }
     }
 
-    internal static async Task CreateNewEnvironmentAsync(string accessToken, string newEnvironmentName, string environmentType, string countryCode)
+    internal static void CreateNewEnvironment(AdminCenterClient adminCenterClient, string newEnvironmentName, string environmentType, string countryCode)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        var body = new {
-            EnvironmentType = environmentType,
-            CountryCode = countryCode
+        var createEnvironmentRequest = new CreateEnvironmentRequest
+        {
+            CountryCode = countryCode,
+            EnvironmentType = environmentType
         };
-        var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await httpClient.PutAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{newEnvironmentName}", content);
-
-        Console.WriteLine($"Responded with {(int)response.StatusCode} {response.ReasonPhrase}");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment newEnvironment = adminCenterClient.CreateEnvironment("BusinessCentral", newEnvironmentName, createEnvironmentRequest);
+        Utils.ConsoleWriteLineAsJson(newEnvironment);
     }
 
-    internal static async Task CopyProductionEnvironmentToSandboxEnvironmentAsync(string accessToken, string sourceEnvironmentName, string targetEnvironmentName, string countryCode)
+    internal static void CopyProductionEnvironmentToSandboxEnvironment(AdminCenterClient adminCenterClient, string sourceEnvironmentName, string targetEnvironmentName)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        var body = new {
+        var copyEnvironmentRequest = new CopyEnvironmentRequest
+        {
             EnvironmentName = targetEnvironmentName,
-            Type = "Sandbox"
+            Type = "Sandbox",
         };
-        var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await httpClient.PostAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{sourceEnvironmentName}", content);
-
-        Console.WriteLine($"Responded with {(int)response.StatusCode} {response.ReasonPhrase}");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment newEnvironment = adminCenterClient.CopyEnvironment("BusinessCentral", sourceEnvironmentName, copyEnvironmentRequest);
+        Utils.ConsoleWriteLineAsJson(newEnvironment);
     }
 
-     internal static async Task SetAppInsightsKeyAsync(string accessToken, string environmentName, Guid appInsightsKey)
+    internal static void SetAppInsightsKey(AdminCenterClient adminCenterClient, string environmentName, Guid appInsightsKey)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        var body = new {
-            key = appInsightsKey.ToString()
+        var applicationInsights = new ApplicationInsights
+        {
+            Key = appInsightsKey.ToString(),
         };
-        var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await httpClient.PostAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{environmentName}/settings/appinsightskey", content);
-
-        Console.WriteLine($"Responded with {(int)response.StatusCode} {response.ReasonPhrase}");
+        adminCenterClient.SetApplicationInsightsInstrumentationKey("BusinessCentral", environmentName, applicationInsights);
     }
 
-    internal static async Task GetDatabaseSizeAsync(string accessToken, string environmentName)
+    internal static void GetDatabaseSize(AdminCenterClient adminCenterClient, string environmentName)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        HttpResponseMessage response = await httpClient.GetAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments/{environmentName}/dbsize");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment environment = adminCenterClient.GetEnvironment("BusinessCentral", environmentName, skipDbSize: false);
+        Utils.ConsoleWriteLineAsJson(environment.DatabaseSize);
     }
 
-    internal static async Task GetSupportSettingsAsync(string accessToken, string environmentName)
+    internal static void GetSupportSettings(AdminCenterClient adminCenterClient, string environmentName)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-        HttpResponseMessage response = await httpClient.GetAsync($"https://api.businesscentral.dynamics.com/admin/v2.1/support/applications/businesscentral/environments/{environmentName}/supportcontact");
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented));
+        SupportContact supportContact = adminCenterClient.GetSupportContactInformation("BusinessCentral", environmentName);
+        Utils.ConsoleWriteLineAsJson(supportContact);
     }
 }

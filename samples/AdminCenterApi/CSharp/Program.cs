@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
+using Azure.Identity;
+using Microsoft.Dynamics.BusinessCentral.AdminCenter;
 
 namespace CSharp
 {
@@ -8,39 +9,49 @@ namespace CSharp
         // Authentication parameters
         const string aadAppId = "a19cb26a-2e4c-408b-82e1-6311742ecc50";         // partner's AAD app id
         const string aadAppRedirectUri = "http://localhost";                    // partner's AAD app redirect URI
-        const string aadTenantId = "8c8dbccd-c171-4937-a134-e3c5a5dd0470";      // customer's tenant id
+        const string aadTenantId = "f5b6b245-5dd2-4bf5-94d4-35ef04d73c6d";      // customer's tenant id
 
-        static async Task Main(string[] args)
+        static void Main()
         {
-            // Get an access token that we can use for making calls to the Business Central Admin Center APIs
-            string accessToken = await Authenticate.GetAccessTokenAsync(aadAppId, aadAppRedirectUri, aadTenantId);
+            // Create a token credential, which enables us to authenticate to the Business Central Admin Center APIs.
+            // Note: this will open the AAD login page in a browser window.
+            var interactiveBrowserCredentialOptions = new InteractiveBrowserCredentialOptions
+            {
+                ClientId = aadAppId,
+                RedirectUri = new Uri(aadAppRedirectUri),
+                TenantId = aadTenantId,
+            };
+            var tokenCredential = new InteractiveBrowserCredential(interactiveBrowserCredentialOptions);
+
+            // Create the Admin Center client
+            var adminCenterClient = new AdminCenterClient(tokenCredential);
 
             // Manage environments
-            await Environments.ListEnvironmentsAsync(accessToken);
-            await Environments.CreateNewEnvironmentAsync(accessToken, "MyNewSandbox2", "Sandbox", "DK");
-            await Environments.CopyProductionEnvironmentToSandboxEnvironmentAsync(accessToken, "MyProd", "MyNewSandboxAsACopy", "DK");
-            await Environments.SetAppInsightsKeyAsync(accessToken, "MyProd", new Guid("0da21b54-841e-4a64-a117-6092784245f9"));
-            await Environments.GetDatabaseSizeAsync(accessToken, "MyProd");
-            await Environments.GetSupportSettingsAsync(accessToken, "MyProd");
+            Environments.ListEnvironments(adminCenterClient);
+            Environments.CreateNewEnvironment(adminCenterClient, "MySandbox", "Sandbox", "DK");
+            Environments.CopyProductionEnvironmentToSandboxEnvironment(adminCenterClient, "MyProd", "MySandboxAsACopy");
+            Environments.SetAppInsightsKey(adminCenterClient, "MyProd", new Guid("0da21b54-841e-4a64-a117-6092784245f9"));
+            Environments.GetDatabaseSize(adminCenterClient, "MyProd");
+            Environments.GetSupportSettings(adminCenterClient, "MyProd");
 
             // Manage support settings
-            await NotificationRecipients.GetNotificationRecipientsAsync(accessToken);
-            await NotificationRecipients.AddNotificationRecipientAsync(accessToken, "partnernotifications@partnerdomain.com", "Partner Notifications Mail Group");
+            NotificationRecipients.GetNotificationRecipients(adminCenterClient);
+            NotificationRecipients.AddNotificationRecipient(adminCenterClient, "partnernotifications@partnerdomain.com", "Partner Notifications Mail Group");
 
             // Manage apps
-            await Apps.GetInstalledAppsAsync(accessToken, "MyProd");
-            await Apps.GetAvailableAppUpdatesAsync(accessToken, "MyProd");
-            await Apps.UpdateAppAsync(accessToken, "MyProd", "334ef79e-547e-4631-8ba1-7a7f18e14de6", "16.0.11240.12188");
-            await Apps.GetAppOperationsAsync(accessToken, "MyProd", "334ef79e-547e-4631-8ba1-7a7f18e14de6");
+            Apps.GetInstalledApps(adminCenterClient, "MyProd");
+            Apps.GetAvailableAppUpdates(adminCenterClient, "MyProd");
+            Apps.UpdateApp(adminCenterClient, "MyProd", new Guid( "334ef79e-547e-4631-8ba1-7a7f18e14de6"), "16.0.11240.12188");
+            Apps.GetAppOperations(adminCenterClient, "MyProd", new Guid("334ef79e-547e-4631-8ba1-7a7f18e14de6"));
 
             // Manage active sessions
-            await Sessions.GetActiveSessionsAsync(accessToken, "MyProd");
-            await Sessions.CancelSessionAsync(accessToken, "MyProd", 12202);
+            Sessions.GetActiveSessions(adminCenterClient, "MyProd");
+            Sessions.CancelSession(adminCenterClient, "MyProd", 196719);
 
             // Manage update settings
-            await UpdateSettings.GetUpdateWindowAsync(accessToken, "MyProd");
-            await UpdateSettings.SetUpdateWindowAsync(accessToken, "MyProd", new DateTime(2020, 06, 01, 4, 0, 0), new DateTime(2020, 06, 01, 11, 0, 0));
-            await UpdateSettings.GetScheduledUpdatesAsync(accessToken, "MyProd");
+            UpdateSettings.GetUpdateWindow(adminCenterClient, "MyProd");
+            UpdateSettings.SetUpdateWindow(adminCenterClient, "MyProd", new DateTime(2020, 06, 01, 4, 15, 0), new DateTime(2020, 06, 01, 11, 30, 0));
+            UpdateSettings.GetScheduledUpdates(adminCenterClient, "MyProd");
         }
     }
 }
