@@ -10,7 +10,7 @@ namespace CSharp
         {
             // Create a token credential, which enables us to authenticate to the Business Central Admin Center APIs.
             //   Note 1: This will open the AAD login page in a browser window.
-              // Note 2: You can also skip passing in options altogether if you want to log into your own Business Central admin center, i.e., not a delegated admin scenario
+            // Note 2: You can also skip passing in options altogether if you want to log into your own Business Central admin center, i.e., not a delegated admin scenario
             var interactiveBrowserCredentialOptions = new InteractiveBrowserCredentialOptions
             {
                 ClientId = "a19cb26a-2e4c-408b-82e1-6311742ecc50",  // partner's AAD app id
@@ -37,7 +37,7 @@ namespace CSharp
             // Manage apps
             Apps.GetInstalledApps(adminCenterClient, "MyProd");
             Apps.GetAvailableAppUpdates(adminCenterClient, "MyProd");
-            Apps.UpdateApp(adminCenterClient, "MyProd", new Guid( "334ef79e-547e-4631-8ba1-7a7f18e14de6"), "16.0.11240.12188");
+            Apps.UpdateApp(adminCenterClient, "MyProd", new Guid("334ef79e-547e-4631-8ba1-7a7f18e14de6"), "16.0.11240.12188");
             Apps.GetAppOperations(adminCenterClient, "MyProd", new Guid("334ef79e-547e-4631-8ba1-7a7f18e14de6"));
 
             // Manage active sessions
