@@ -134,26 +134,14 @@ page 50100 "Test OAuth2 Flows"
                             ClientCredentialsV1();
                         GrantType::AuthCodeV1:
                             AuthorizationCodeV1();
-                        GrantType::OBOV1:
-                            OnBehalfOfV1();
                         GrantType::AuthCodeCacheV1:
                             AcquireAuthCodeTokenFromCacheV1();
-                        GrantType::OBOTokTokCachV1:
-                            OnBehalfAccessAndTokenCacheV1();
-                        GrantType::OBONewTokTokCachV1:
-                            OnBehalfOfByTokenCacheV1();
                         GrantType::ClientCredsV2:
                             ClientCredentialsV2();
                         GrantType::AuthCodeV2:
                             AuthorizationCodeV2();
-                        GrantType::OBOV2:
-                            OnBehalfOfV2();
                         GrantType::AuthCodeCacheV2:
                             AcquireAuthCodeTokenFromCacheV2();
-                        GrantType::OBOTokTokCachV2:
-                            OnBehalfAccessAndTokenCacheV2();
-                        GrantType::OBONewTokTokCachV2:
-                            OnBehalfOfByTokenCacheV2();
                     end;
                 end;
             }
@@ -201,7 +189,7 @@ page 50100 "Test OAuth2 Flows"
     var
         OAuth2: Codeunit Oauth2;
         APICalls: Codeunit APICalls;
-        GrantType: Option ClientCredsV1,AuthCodeV1,OBOV1,AuthCodeCacheV1,OBOTokTokCachV1,OBONewTokTokCachV1,ClientCredsV2,AuthCodeV2,OBOV2,AuthCodeCacheV2,OBOTokTokCachV2,OBONewTokTokCachV2;
+        GrantType: Option ClientCredsV1,AuthCodeV1,AuthCodeCacheV1,ClientCredsV2,AuthCodeV2,AuthCodeCacheV2;
         ClientId: Text;
         ClientSecret: Text;
         MicrosoftOAuth2Url: Text;
@@ -243,44 +231,11 @@ page 50100 "Test OAuth2 Flows"
         SetResultStyle();
     end;
 
-    local procedure OnBehalfOfV1()
-    begin
-        OAuth2.AcquireOnBehalfOfToken(RedirectURL, ResourceURL, AccessToken);
-
-        if AccessToken = '' then
-            DisplayErrorMessage('')
-        else
-            Result := 'Success';
-        SetResultStyle();
-    end;
-
     local procedure AcquireAuthCodeTokenFromCacheV1()
     begin
         OAuth2.AcquireAuthorizationCodeTokenFromCache(ClientId, ClientSecret, RedirectURL, MicrosoftOAuth2Url, ResourceURL, AccessToken);
 
         if AccessToken = '' then
-            DisplayErrorMessage('')
-        else
-            Result := 'Success';
-        SetResultStyle();
-    end;
-
-    local procedure OnBehalfAccessAndTokenCacheV1()
-    begin
-        OAuth2.AcquireOnBehalfAccessTokenAndRefreshToken(MicrosoftOAuth2Url, RedirectURL, ResourceURL, AccessToken, TokenCache);
-
-        if (TokenCache = '') or (AccessToken = '') then
-            DisplayErrorMessage('')
-        else
-            Result := 'Success';
-        SetResultStyle();
-    end;
-
-    local procedure OnBehalfOfByTokenCacheV1()
-    begin
-        OAuth2.AcquireOnBehalfOfTokenByRefreshToken(UserEmail, RedirectURL, ResourceURL, TokenCache, AccessToken, NewTokenCache);
-
-        if (AccessToken = '') or (TokenCache = '') then
             DisplayErrorMessage('')
         else
             Result := 'Success';
@@ -318,20 +273,6 @@ page 50100 "Test OAuth2 Flows"
         SetResultStyle();
     end;
 
-    local procedure OnBehalfOfV2()
-    var
-        Scopes: List of [Text];
-    begin
-        Scopes.Add(ResourceURL + '.default');
-        OAuth2.AcquireOnBehalfOfToken(RedirectURL, Scopes, AccessToken);
-
-        if AccessToken = '' then
-            DisplayErrorMessage('')
-        else
-            Result := 'Success';
-        SetResultStyle();
-    end;
-
     local procedure AcquireAuthCodeTokenFromCacheV2()
     var
         Scopes: List of [Text];
@@ -340,34 +281,6 @@ page 50100 "Test OAuth2 Flows"
         OAuth2.AcquireAuthorizationCodeTokenFromCache(ClientId, ClientSecret, RedirectURL, MicrosoftOAuth2Url, Scopes, AccessToken);
 
         if AccessToken = '' then
-            DisplayErrorMessage('')
-        else
-            Result := 'Success';
-        SetResultStyle();
-    end;
-
-    local procedure OnBehalfAccessAndTokenCacheV2()
-    var
-        Scopes: List of [Text];
-    begin
-        Scopes.Add(ResourceURL + '.default');
-        OAuth2.AcquireOnBehalfAccessTokenAndRefreshToken(MicrosoftOAuth2Url, RedirectURL, Scopes, AccessToken, TokenCache);
-
-        if (AccessToken = '') or (TokenCache = '') then
-            DisplayErrorMessage('')
-        else
-            Result := 'Success';
-        SetResultStyle();
-    end;
-
-    local procedure OnBehalfOfByTokenCacheV2()
-    var
-        Scopes: List of [Text];
-    begin
-        Scopes.Add(ResourceURL + '.default');
-        OAuth2.AcquireOnBehalfOfTokenByRefreshToken(UserEmail, RedirectURL, Scopes, TokenCache, AccessToken, NewTokenCache);
-
-        if (AccessToken = '') or (TokenCache = '') then
             DisplayErrorMessage('')
         else
             Result := 'Success';
