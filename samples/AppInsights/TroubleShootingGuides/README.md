@@ -10,6 +10,7 @@ This repository contains Jupyter Notebook TSGs for
 * Investigating login issues (authentication and authorization flows)
 * Investigating if environments are using deprecated web service protocols
 * Investigating lifecycle issues with extensions (compile, synchronize, publish, install, update, un-install, un-publish)
+* Investigating results for the technical validation of AppSource submissions
 
 | TSG | Description |
 | ----------- | ----------- |
@@ -20,6 +21,8 @@ This repository contains Jupyter Notebook TSGs for
 | Performance-partner-code-TSG.ipynb | Use this TSG to analyze performance problems in partner code. The TSG filters telemetry on object ids outside the ranges used for the base app and localizations (the code written by Microsoft) | 
 | Data-related-TSG.ipynb | Use this TSG to analyze data-related issues: Long running queries, database locks, reports that runs many sql statements | 
 | Extensions-TSG.ipynb | Use this TSG to analyze issues with the extension lifecycle (compile, synchronize, publish, install, update, un-install, un-publish). You can set filters on AAD tenant id, environment name, and extension id to troubleshoot all environments in a AAD tenant id, a single environment, single extensions, or any other combination of the three |
+| AppSource-Submission-TSG.ipynb | Use this TSG to analyze the results of the technical validation of AppSource submissions. You can see whether your submission passed the technical validation, which errors were reported, which countries and releases were validated, but also which baselines were used for breaking change validation |
+
 
 # What is Azure Data Studio?
 Azure Data Studio is a cross-platform database tool for data professionals using the Microsoft family of on-premises and cloud data platforms on Windows, MacOS, and Linux. Azure Data Studio offers a modern editor experience with IntelliSense, code snippets, source control integration, and an integrated terminal. It's engineered with the data platform user in mind, with built-in charting of query result sets and customizable dashboards. 
