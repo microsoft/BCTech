@@ -3,6 +3,8 @@
   sections:
   - title: "README (which TSGs are good for what)"
     url: /README
+  - title: "AppSource submission results"
+    url: /AppSource-Submission-TSG
   - title: "Database issues"
     url: /Data-related-TSG
   - title: "Deprecated feature usage"
