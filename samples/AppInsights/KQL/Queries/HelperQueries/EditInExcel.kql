@@ -1,0 +1,21 @@
+// KQL sample to troubleshoot issues with Edit in Excel
+
+let correlationId = "<insert correlation id>";
+traces
+| where timestamp > ago(1h)
+//| where operation_Id == correlationId or session_Id == correlationId // Uncomment this line when correlation id is set above
+| where customDimensions.eventId == 'RT0008'
+    and customDimensions.category == 'ODataV4'
+| extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
+| extend httpHeadersJSON = parse_json(httpHeadersTmp)
+| where httpHeadersJSON.['ms-dyn-useragent'] contains "DynamicsOfficeApp"
+| extend httpStatusCode = customDimensions.httpStatusCode
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, endpoint = customDimensions.endpoint
+, totalTime = customDimensions.totalTime
+| project timestamp, customDimensions, httpStatusCode, aadTenantId, environmentName, environmentType, endpoint, alObjectId, alObjectName, message, totalTime
