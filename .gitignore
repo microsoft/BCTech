@@ -16,6 +16,8 @@ launch.json.local
 rad.json
 *.xlf
 
+samples/AdminCenterApi/PowerShell/lib
+
 # User-specific files
 *.suo
 *.user
