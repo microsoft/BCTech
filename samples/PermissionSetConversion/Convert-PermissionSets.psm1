@@ -303,7 +303,7 @@ function WritePermissionSets
         {
             New-Item $File | Out-Null
         }
-        Set-Content $File $Content
+        Set-Content $File $Content -Encoding UTF8
     }
 }
 
