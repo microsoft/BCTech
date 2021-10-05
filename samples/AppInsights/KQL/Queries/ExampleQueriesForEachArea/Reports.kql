@@ -25,6 +25,10 @@ traces
 , alStackTrace = customDimensions.alStackTrace
 , serverExecutionTime = customDimensions.serverExecutionTime
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+// sqlDatabaseAccessIntent dimension added in version 19.1
+, sqlDatabaseAccessIntent = customDimensions.sqlDatabaseAccessIntent 
+, sqlExecutes = customDimensions.sqlExecutes 
+, sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
 , numberOfRows = customDimensions.numberOfRows
@@ -62,6 +66,8 @@ traces
 , numberOfRows = customDimensions.numberOfRows
 // reportingEngine dimension added in version 17.3
 , reportingEngine = customDimensions.reportingEngine
+// sqlDatabaseAccessIntent dimension added in version 19.1
+, sqlDatabaseAccessIntent = customDimensions.sqlDatabaseAccessIntent 
 , message, customDimensions
 
 

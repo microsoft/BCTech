@@ -62,7 +62,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Upgrade tag signal | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
 | Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | (pending docs), sample KQL code updated |
 | Appsource validation | 2021 release wave 1 (18.4) | (pending docs), sample KQL code updated |
-
+| Use of read scale-out in reporting | 2021 release wave 1 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 
 
 # Disclaimer
