@@ -1,4 +1,4 @@
-In this folder, you will find samples that illustrate how you can use Application Insights data in PowerBI reports.
+In this folder, you will find samples that illustrate how you can use Azure Application Insights data in PowerBI reports.
 
 # Which Power BI reports are available?
 This repository contains Power BI reports for 

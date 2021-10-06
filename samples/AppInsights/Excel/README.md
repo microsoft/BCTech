@@ -1,4 +1,4 @@
-In this folder, you will find samples that illustrate how you can make refreshable reports in Application Insights using Excel.
+In this folder, you will find samples that illustrate how you can make refreshable reports in Excel with data from Azure Application Insights.
 
 # How do I convert a KQL query into a (refreshable) Excel report?
 If you have a nice KQL query that you want to use in Excel, then do as follows
