@@ -20,11 +20,8 @@ Takes an SQL schema definition and generates the appropriate files to have this 
 
 ## Example
 
-See an example usage on `run.ps1`:
 ```
-.\SQLSchema-To-ALExtension.ps1 .\examples\GP-TWO-schema.sql -OutputFolder .\examples\GP-TWO\ -ExtensionName ExtendGPMigration -TablesSubfolder GPTables -GenSQLStatsQuery
+.\SQLSchema-To-ALExtension.ps1 .\path-to-sql-schema.sql -OutputFolder .\path-output-folder\ -ExtensionName YourExtensionName -TablesSubfolder GPTables -GenSQLStatsQuery
 ```
 
-The sample output can be seen under `examples\GP-TWO`:
-- The extension is under `examples\GP-TWO\ExtendGPMigration`
-- An SQL query to gather information of the imported tables is on `examples\GP-TWO\stats.sql`, which can be useful as a sanity test for the cloud migration.
+See an extension created with this script in `PTEExample`.
