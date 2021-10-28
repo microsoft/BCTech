@@ -1,0 +1,28 @@
+// KQL samples - Feature Telemetry
+
+// Available from version 19.1
+
+traces
+| where timestamp > ago(5d)
+| extend Category = customDimensions.alCategory
+| where Category == "FeatureTelemetry"
+| extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
+ , aadTenantId = customDimensions.aadTenantId
+ , Environment = customDimensions.environmentType
+ , SubCategory = customDimensions.alSubCategory
+ , FeatureName = customDimensions.alFeatureName
+ , EventName = customDimensions.alEventName
+ , CallerAppName = customDimensions.alCallerAppName
+ , CallerAppVersionMajor = customDimensions.alCallerAppVersionMajor
+ , CallerAppVersionMinor = customDimensions.alCallerAppVersionMinor
+ , ClientType = customDimensions.alClientType
+ , Company = customDimensions.alCompany
+ , IsEvaluationCompany = customDimensions.alIsEvaluationCompany
+ , TenantLicenseState = customDimensions.alTenantLicenseState
+ , IsAdmin = customDimensions.alIsAdmin
+ , CountryCode = customDimensions.alCountryCode
+ , IsExpectedUpdate = customDimensions.alIsExpectedUpdate
+ , CallerCustomDimensions = bag_remove_keys(customDimensions, dynamic(['alCategory', 'aadTenantId', 'environmentType', 'alSubCategory', 'alFeatureName', 'alEventName',
+    'alCallerAppName', 'alCallerAppVersionMajor', 'alCallerAppVersionMinor', 'alClientType', 'alCompany', 'alIsEvaluationCompany', 'alTenantLicenseState', 'alIsAdmin', 'alCountryCode', 'alIsExpectedUpdate']))
+| project aadTenantId, Date, Environment, SubCategory, FeatureName, EventName, CallerAppName, CallerAppVersionMajor, CallerAppVersionMinor,
+    ClientType, Company, IsEvaluationCompany, TenantLicenseState, IsAdmin, CountryCode, CallerCustomDimensions

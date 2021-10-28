@@ -1,0 +1,26 @@
+{
+  "id": "58dc68f7-c68c-43f2-bce4-3162f634f7f5",
+  "name": "Feature Telemetry Sample",
+  "publisher": "Default publisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "18.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "showMyCode": true,
+  "runtime": "7.2",
+  "applicationInsightsConnectionString": "<your connection string here>"
+}
