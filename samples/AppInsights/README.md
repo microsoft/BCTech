@@ -3,19 +3,15 @@ Business Central continuously emits telemetry about events that happen in the se
 
 Read more about telemetry here: https://aka.ms/bctelemetry
 
-
 # What can I use telemetry for?
-This telemetry can be useful for partners, e.g., when troubleshooting an issue or to determine how often a feature is used.
-
-# What kind of telemetry exists?
-As a developer of an app (typically referred to as an **ISV**), which gets installed in a Business Central environment, or as the partner on record for a customer (typically referred to as a **VAR**), you can obtain some of this telemetry.
+Telemetry can be useful for troubleshooting an issue or to determine how often a feature is used.
 
 # What resources can I find in aka.ms/bctelemetrysamples?
-This repo contains instructions for how you can obtain the telemetry.
-
-It also contains resources that help you get immediate value from the telemetry.
+This repo contains instructions for how you can obtain the telemetry and resources that help you get immediate value from the telemetry.
 
 Please visit the [FAQ page](FAQ.md) for any questions on how to get started, pricing, privacy, and more.
+
+Want some easy to digest introductions to Business Central telemetry? Watch a few short videos to get started: [Business Central Telemetry Videos](Videos.md).
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
