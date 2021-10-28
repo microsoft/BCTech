@@ -13,7 +13,7 @@ FeatureTelemetry.LogUsage(<tag>, <feature name>, <event name>);
 
 After the telemetry is emitted, the data can be aggregated and displayed (for example, using FeatureUsage Power BI report).
 
-![FeatureUsage report](/FeatureUsageReport.png?raw=true "Feature Usage report")
+![FeatureUsage report](FeatureUsageReport.png)
 
 ## Description
 There are 3 different kinds of events that a feature can log through the `Feature Telemetry` codeunit.
