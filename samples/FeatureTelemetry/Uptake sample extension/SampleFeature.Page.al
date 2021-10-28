@@ -15,7 +15,7 @@ page 50100 "Sample Feature"
         {
             group(Information)
             {
-                InstructionalText = 'This sample page allows you to test Feature Telemetry. If application insights connection string in app.json is filled in, running the Run processing action will emit telemetry to you app insights account.';
+                InstructionalText = 'This sample page allows you to test Feature Telemetry. If application insights connection string in app.json is filled in, running the Emit feature telemetry action will emit telemetry to you app insights account.';
             }
         }
     }
