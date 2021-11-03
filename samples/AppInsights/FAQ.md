@@ -30,6 +30,8 @@ _We have been using telemetry for some months now and have enabled 20+ apps as w
 To reduce ingestion cost, you can
 * set limits on daily data ingestion
 * reduce data ingestion by sampling to only ingest a percentage of the inbound data (see https://docs.microsoft.com/en-us/azure/azure-monitor/app/sampling#ingestion-sampling)
+* set a daily limit of how much data that can be ingested
+* purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
 * set alerts on cost thresholds being exceeded to get notified if this happens
 
 Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
@@ -62,6 +64,8 @@ See <https://docs.microsoft.com/en-us/azure/azure-monitor/app/pricing#change-the
 Purge data in an Application Insights component by a set of user-defined filters.
 
 See <https://docs.microsoft.com/en-us/rest/api/application-insights/components/purge#examples> 
+
+You can use Powershell to setup a purge process, see an example here: [How do I use Powershell to delete telemetry data?](Powershell/README.md)
 
 ## Can I grant read-only access to Application Insights?
 To grant a person read-only access to Application Insights, go to the Access control (IAM) page in the Application Insights portal, and then add the role assignment "Reader" to the person. 

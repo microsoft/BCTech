@@ -14,6 +14,9 @@ b) pipe the content of a text file with a KQL query into the script: Get-Content
 
 Limitations: The current version of the script fails if either the KQL query only returns one column or one row. See comments in the code to learn more (and do reach out if you have a solution for this).
 
+# How do I use Powershell to delete telemetry data?
+See an example here: https://demiliani.com/2021/03/30/deleting-application-insights-telemetry-data-on-demand-with-powershell/
+
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
 
