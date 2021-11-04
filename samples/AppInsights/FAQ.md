@@ -1,4 +1,4 @@
-# Frequently Asked Questions (FAQ)
+# Business Central Telemetry FAQ (Frequently Asked Questions)
 
 ## How do I get started?
 Business Central can send telemetry to one or more **Azure Application Insights** (Application Insights) accounts.
