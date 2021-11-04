@@ -5,6 +5,7 @@ To simplify the labor-intensive process of monitoring health and uptake of appli
 - Common information is sent together with every feature telemetry message, which allows for advanced filtering capabilities.
 
 # How to use
+> **_NOTE:_**  `Telemetry` and `Feature Telemetry` codeunits will only work if there is an implementation of the `Telemetry Logger` interface in any extension from your publisher (see [example](Uptake%20sample%20extension/MyTelemetryLogger.Codeunit.al)).
 
 Using the `Feature Telemetry` codeunit is extremely easy. For example, to register the usage of a feature it's enough to use the following method:
 ```
