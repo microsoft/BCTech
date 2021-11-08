@@ -23,6 +23,10 @@ traces
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace
+, numberOfRows = customDimensions.numberOfRows
+, result = customDimensions.result
+// reportingEngine dimension was added in version 17.3
+, reportingEngine = customDimensions.reportingEngine
 , serverExecutionTime = customDimensions.serverExecutionTime
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 // sqlDatabaseAccessIntent dimension added in version 19.1
@@ -31,10 +35,6 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
-, numberOfRows = customDimensions.numberOfRows
-, result = customDimensions.result
-// reportingEngine dimension added in version 17.3
-, reportingEngine = customDimensions.reportingEngine
 , message, customDimensions
 
 
@@ -59,15 +59,13 @@ traces
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace
 , failureReason = customDimensions.result
+, numberOfRows = customDimensions.numberOfRows
+// reportingEngine dimension added in version 17.3
+, reportingEngine = customDimensions.reportingEngine
 , serverExecutionTime = customDimensions.serverExecutionTime
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
-, numberOfRows = customDimensions.numberOfRows
-// reportingEngine dimension added in version 17.3
-, reportingEngine = customDimensions.reportingEngine
-// sqlDatabaseAccessIntent dimension added in version 19.1
-, sqlDatabaseAccessIntent = customDimensions.sqlDatabaseAccessIntent 
 , message, customDimensions
 
 
