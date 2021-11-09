@@ -1,0 +1,4 @@
+// KQL snippet to only get values during office hours (time is displayed in UTC)
+
+| extend hour = hourofday(timestamp)
+| where hour >= 9 and hour < 17
