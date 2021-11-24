@@ -1,4 +1,4 @@
-﻿Import-Module "sqlps" -DisableNameChecking
+Import-Module "sqlps" -DisableNameChecking
 
 # The integer values of the types as specified
 # by the "Object Type" option field on the Permission table
@@ -509,7 +509,7 @@ function Convert-PermissionSets
 
     foreach($App in $Apps)
     {
-        DownloadSymbolsFromDatabase -DatabaseServer $DatabaseServer -DatabaseName $DatabaseName -PackageId $App.ID -PackageSize $App.Size -Path (Join-Path $SymbolsFolder ($App.Name))
+        DownloadSymbolsFromDatabase -DatabaseServer $DatabaseServer -DatabaseName $DatabaseName -PackageId $App.ID -PackageSize $App.Size -Path (Join-Path $SymbolsFolder ([string]::Join("_", $App.Name.Split([system.io.path]::GetInvalidFileNameChars(), [StringSplitOptions]::RemoveEmptyEntries)).TrimEnd('.')))
     }
     
     $Symbols = ProccessSymbols $SymbolsFolder
