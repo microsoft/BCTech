@@ -1,0 +1,26 @@
+// Kusto query that can show you SQL queries that hold a database lock
+
+// See tips on how to develop efficient AL code with fewer locking issues in the performance tuning guide aka.ms/bcperformance
+
+traces
+| where timestamp > ago(1d) // adjust as needed
+    and customDimensions.eventId == 'RT0005'
+| where customDimensions.sqlStatement has 'UPDLOCK'
+| project eventId = customDimensions.eventId 
+, aadTenantId = customDimensions.aadTenantId
+, sqlStatement = tostring(customDimensions.sqlStatement)
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, executionTime = customDimensions.executionTime
+, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+| take 1

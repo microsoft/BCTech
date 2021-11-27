@@ -9,9 +9,9 @@
 // https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#writing-efficient-reports
 
 traces
-| where timestamp > ago(7d)
+| where timestamp > ago(7d) // adjust as needed
 | where customDimensions.eventId == 'RT0006'
-| limit 100000
+| limit 100000 // adjust as needed
 | project numberOfRows = toint(customDimensions.numberOfRows)
 , sqlRowsRead = toint( customDimensions.sqlRowsRead )
 , sqlExecutes = toint( customDimensions.sqlExecutes )

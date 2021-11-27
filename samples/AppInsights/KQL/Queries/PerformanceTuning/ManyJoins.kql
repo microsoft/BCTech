@@ -2,14 +2,13 @@
 
 // Important: This query only works on environments on version 15.3 and newer
 
-
 // This KQL query looks for long runnning SQL queries where there are more than 2 joins
 // This section in the performance tuning guide discusses table extensions and their impact on performance
 // https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#table-extension-impact-on-performance
 // Note that joins can also come from a query object
 
 traces
-| where timestamp > ago(60d) // adjust as needed
+| where timestamp > ago(1d) // adjust as needed
 | where customDimensions.eventId == 'RT0005'
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | extend sqlStatement = tostring(customDimensions.sqlStatement)
