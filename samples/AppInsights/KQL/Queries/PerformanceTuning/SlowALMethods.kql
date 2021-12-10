@@ -1,11 +1,10 @@
 // Kusto query that can show you the top 20 slowest AL methods
 
-// The query goes back 7 days
-
 // See tips on how to develop efficient AL code in the performance tuning guide aka.ms/bcperformance
 
 traces
-| where timestamp > ago(7d) and customDimensions.eventId == 'RT0018'
+| where timestamp > ago(1d) // adjust as needed
+and customDimensions.eventId == 'RT0018'
 | extend aadTenantId = tostring( customDimensions.aadTenantId )
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType

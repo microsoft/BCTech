@@ -19,10 +19,11 @@ Here are some resources for you to get started on Kusto Query Language (KQL). Us
 # Which tools can I use (KQL editors and clients)?
 You can write and execute KQL in various tools. E.g.
 * [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
+* [Azure Data Explorer](https://dataexplorer.azure.com). Here is [How to connect to Application Insights in Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
 * In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
 * In a Jupyter notebook hosted in Visual Studio Code (with the Python and Jupyter Notebooks extensions installed)
 * Application Insights portal (Under *Logs* in the *Monitoring* menu)
-* PowerShell (using the REST api). See an example here: https://demiliani.com/2020/12/16/using-powershell-to-retrieve-your-dynamics-365-business-central-telemetry/
+* PowerShell (using the REST api). See an example here: [Powershell samples](../Powershell)
 
 
 # What signal is available in which version?
@@ -63,7 +64,13 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | (pending docs), sample KQL code updated |
 | Appsource validation | 2021 release wave 1 (18.4) | (pending docs), sample KQL code updated |
 | Use of read scale-out in reporting | 2021 release wave 1 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
-| Feature Telemetry | 2021 release wave 1 (19.1) | (pending docs) |
+| Feature Telemetry | 2021 release wave 2 (19.1) | (pending docs) |
+| Database deadlocks | 2022 release wave 1 (20.0) | (pending link to release note) |
+| Database wait statistics | 2022 release wave 1 (20.0) | (pending link to release note) |
+| Verbose telemetry enabled | 2022 release wave 1 (20.0) | (pending link to release note) |
+| General error dialogs | 2022 release wave 1 (20.0) | (pending link to release note) |
+| Permission error dialogs | 2022 release wave 1 (20.0) | (pending link to release note) |
+| Use of read scale-out in web service calls | 2022 release wave 1 (20.0) | (pending link to release note) |
 
 
 # Disclaimer

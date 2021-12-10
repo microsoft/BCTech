@@ -3,10 +3,9 @@
 // Read more in the performance tuning guide (aka.ms/bcperformance)
 // https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#use-number-series-that-allow-gaps
 
-// The query goes back 7 days
-
 traces
-| where timestamp > ago(7d) and customDimensions.eventId == 'RT0012'
+| where timestamp > ago(1d) // adjust as needed
+and customDimensions.eventId == 'RT0012'
 | project
   componentVersion = customDimensions.componentVersion
 , environmentType = customDimensions.environmentType
