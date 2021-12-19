@@ -1,0 +1,28 @@
+// KQL query that identifies Open in Excel pages, where the page code is not provided 
+// by Microsoft (so either per-tenant extensions or appsource extensions)
+//
+// To tune this code, add conditional AL logic that use Session.ClientType to 
+// not do UI things when running the page as a web service
+traces
+| where timestamp > ago(14d)
+| where customDimensions.eventId == 'RT0008'
+    and customDimensions.category == 'ODataV4'
+| extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
+| extend httpHeadersJSON = parse_json(httpHeadersTmp)
+| where httpHeadersJSON.['ms-dyn-useragent'] contains "DynamicsOfficeApp"
+| extend alObjectName = customDimensions.alObjectName
+, alObjectId = toint( customDimensions.alObjectId )
+| where alObjectName <> ""
+|extend alObjectType = customDimensions.alObjectType
+, endpoint = customDimensions.endpoint
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
+| extend codeOwnership = case(
+      alObjectId between (50000 .. 99999), 'ENVIRONMENT'
+    , alObjectId between (1000000 .. 69999999), 'ISV_ONPREM'
+    , alObjectId between (70000000 .. 74999999), 'ISV_ONLINE'
+    , 'MICROSOFT'
+)
+| where codeOwnership <> 'MICROSOFT'
+| project alObjectId=tostring(alObjectId), alObjectName, alObjectType, executionTimeInMS, codeOwnership
+| summarize count(), sum(executionTimeInMS), any(alObjectName), any(alObjectType), any(codeOwnership) by alObjectId
+| order by count_ desc 
