@@ -31,6 +31,10 @@ traces
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 // sqlDatabaseAccessIntent dimension added in version 19.1
 , sqlDatabaseAccessIntent = customDimensions.sqlDatabaseAccessIntent 
+// reportAction dimension added in version 20.0
+, reportAction = customDimensions.reportAction
+// documentFormat dimension added in version 20.0
+, documentFormat = customDimensions.documentFormat
 , sqlExecutes = customDimensions.sqlExecutes 
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
@@ -62,6 +66,10 @@ traces
 , numberOfRows = customDimensions.numberOfRows
 // reportingEngine dimension added in version 17.3
 , reportingEngine = customDimensions.reportingEngine
+// reportAction dimension added in version 20.0
+, reportAction = customDimensions.reportAction
+// documentFormat dimension added in version 20.0
+, documentFormat = customDimensions.documentFormat
 , serverExecutionTime = customDimensions.serverExecutionTime
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
@@ -93,6 +101,10 @@ traces
 )
 // reportingEngine dimension added in version 17.3
 , reportingEngine = customDimensions.reportingEngine
+// reportAction dimension added in version 20.0
+, reportAction = customDimensions.reportAction
+// documentFormat dimension added in version 20.0
+, documentFormat = customDimensions.documentFormat
 , message, customDimensions
 
 
@@ -118,3 +130,7 @@ traces
 , alStackTrace = customDimensions.alStackTrace
 // reportingEngine dimension added in version 17.3
 , reportingEngine = customDimensions.reportingEngine
+// reportAction dimension added in version 20.0
+, reportAction = customDimensions.reportAction
+// documentFormat dimension added in version 20.0
+, documentFormat = customDimensions.documentFormat
