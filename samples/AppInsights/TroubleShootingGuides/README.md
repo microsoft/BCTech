@@ -30,7 +30,7 @@ Azure Data Studio is a cross-platform database tool for data professionals using
 # What is Kqlmagic?
 Kqlmagic is a command that extends the capabilities of the Python kernel in Azure Data Studio notebooks. You can combine Python and Kusto query language (KQL) to query and visualize data using rich Plot.ly library integrated with render commands. Kqlmagic brings you the benefit of notebooks, data analysis, and rich Python capabilities all in the same location. Supported data sources with Kqlmagic include Azure Data Explorer, Application Insights, and Azure Monitor logs.
 
-# How do I learni more about Azure Data Studio?
+# How do I learn more about Azure Data Studio?
 Here are some resources for you to get started on Azure Data Studio. Use CTRL+click to open them in a new browser tab/window.
 * [How to Start with Microsoft Azure Data Explorer (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-starting/table-of-contents)
 * [Exploring Data in Microsoft Azure Using Kusto Query Language and Azure Data Explorer (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-exploring/table-of-contents)
@@ -45,7 +45,7 @@ To install and set up Kqlmagic, open a python notebook. Click the "Manage Packag
 
 ![Manage Python packages](../images/install-kqlmagic-1.png)
 
-Under the "Add new" tab, type "kqlmagic" and click Install (we generally recommend people to install non “dev” version of Kqlmagic):
+Under the "Add new" tab, type "kqlmagic" and click Install (we generally recommend people not to install “dev” version of Kqlmagic):
 
 ![Install Kqlmagic](../images/install-kqlmagic-2.png)
 For some users, the KQL Magic installation fails with an error. Please try these two steps 
