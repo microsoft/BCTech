@@ -30,3 +30,30 @@ traces
         , environmentName 
         , category 
         , endpoint
+
+
+// Endpoints exposed from Business Central using basic authentication has been deprecated and the feature will removed in Business Central 2022 release wave 1
+// See https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-platform
+
+// list of end points that use basic authentication in the last 30 days
+traces
+| where 1==1 
+    and timestamp > ago(30d)
+    and customDimensions.eventId == 'RT0008'
+// httpHeaders only available from 16.3        
+| extend httpHeaders = customDimensions.httpHeaders       
+| extend httpHeadersTmp =  tostring( httpHeaders)
+| extend httpHeadersJSON = parse_json(httpHeadersTmp)
+| extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
+// Authorization header (truncated) available from 17.3
+| extend httpAuthorization = tostring( httpHeadersJSON.['Authorization'] ) 
+| where httpAuthorization == '["Basic <redacted>"]'
+| project aadId = tostring( customDimensions.aadTenantId )
+        , environmentName = tostring( customDimensions.environmentName )
+        , category = tostring( customDimensions.category )
+        , endpoint = tostring( customDimensions.endpoint )
+        , httpAuthorization
+| distinct aadId
+        , environmentName 
+        , category 
+        , endpoint
