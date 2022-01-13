@@ -75,6 +75,9 @@ You might also need to add the role assignment "Reader" to the person on the Res
 ## What about Privacy regulations such as GDPR?
 The Business Central service does not emit any End User Identifiable Information (EUII) to Application Insights. So the telemetry is born GDPR compliant. The service only emits data that is classified as either System Metadata or Organization Identifiable Information (OII). The meaning of these classifications are described here: [DataClassification Option Type](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/dataclassification/dataclassification-option)
 
+## Can I get telemetry in Azure Application Insights for on-premises installations?
+Yes, telemetry also work for on-premises installations (private or public cloud). A few events are not emitted when running Business Central on-premises (see an overview here https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview). See here how to enable telemetry on-premises: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-enable-application-insights#enable-on-tenants
+
 ## Will you backport the Application Insights instrumentation to versions prior to 15.0?
 It took a lot of refactoring in the server and client to make this happen. So it is unlikely that we will backport the Application Insights instrumentation to versions prior to 15.0.
 
