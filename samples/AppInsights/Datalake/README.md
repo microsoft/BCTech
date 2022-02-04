@@ -39,6 +39,10 @@ If you use CSV files as the file format in the data lake, it is important to fol
 - always end your kusto query with an explicit 'project' operator and do not use whitespace or special characters in column names. A common practice is to only use lowercase alphanumeric characters (a-z0-9) and underscore, e.g. company_name.
 - always sanitize data fields in the KQL query to exclude separator and newline characters
 
+# How do I use data in the datalake in Power BI? 
+Once you have data in the datalake, you can setup Power BI dataflows to consume it easily in Power BI.
+
+Read more here: https://docs.microsoft.com/en-us/power-bi/transform-model/dataflows/dataflows-introduction-self-service
 
 # Must I use Azure Data Factory and Azure Datalake gen2?
 No, you can use any tool you like to read data from Azure Application Insights and any data store to store the results. 
