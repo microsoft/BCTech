@@ -1,0 +1,37 @@
+// KQL query that shows duration of upgrade steps. If upgrade times out, steps that were started not not completed will show with no duration.
+
+
+let _startDateTime = ago(2d);         // adjust as needed 
+let _endDateTime = ago(1d);         // adjust as needed 
+let _aadTenantId = '<add value here>';
+let _environmentName = '<add value here>';
+traces
+| where timestamp >= _startDateTime and timestamp <= _endDateTime
+| where customDimensions.aadTenantId == _aadTenantId
+    and customDimensions.environmentName == _environmentName
+| where customDimensions.alCategory == "ALUpgrade"
+| where appInsightsEventId == "AL0000EJA"
+| project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
+, customDimensions
+, companyName = tostring(customDimensions.alCompanyName)
+, timestamp
+, session_Id
+, aadTenantId = tostring(customDimensions.aadTenantId)
+, environmentName = tostring(customDimensions.environmentName)
+| join kind=leftouter (
+traces
+| where timestamp >= _startDateTime and timestamp <= _endDateTime
+| where customDimensions.aadTenantId == _aadTenantId
+    and customDimensions.environmentName == _environmentName
+| where customDimensions.alCategory == "ALUpgrade"
+| where appInsightsEventId == "AL0000EJ9"
+| project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
+, companyName = tostring(customDimensions.alCompanyName )
+, timestamp
+, session_Id
+, aadTenantId = tostring(customDimensions.aadTenantId)
+, environmentName = tostring(customDimensions.environmentName)
+) on aadTenantId, session_Id, companyName, alUpgradeTag
+| extend duration = TIMESTAMP - TIMESTAMP1
+| project TIMESTAMP, duration, companyName, alUpgradeTag
+| order by TIMESTAMP asc 
