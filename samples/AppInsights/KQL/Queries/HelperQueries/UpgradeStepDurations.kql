@@ -18,7 +18,7 @@ traces
 , session_Id
 , aadTenantId = tostring(customDimensions.aadTenantId)
 , environmentName = tostring(customDimensions.environmentName)
-| join kind=leftouter (
+| join kind=rightouter (
 traces
 | where timestamp >= _startDateTime and timestamp <= _endDateTime
 | where customDimensions.aadTenantId == _aadTenantId
