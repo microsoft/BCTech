@@ -1,0 +1,23 @@
+{
+  "id": "455b9dcd-46db-49a1-828a-b0acae2f33c7",
+  "name": "DataverseCustomOptionMapping",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "Customization of Dataverse option mapping integration with BC Industry - Dataverse Industry mapping.",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.0"
+}
