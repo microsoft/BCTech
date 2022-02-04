@@ -5,7 +5,20 @@ let _startDateTime = ago(2d);         // adjust as needed
 let _endDateTime = ago(1d);         // adjust as needed 
 let _aadTenantId = '<add value here>';
 let _environmentName = '<add value here>';
-traces
+traces // upgrade step started
+| where timestamp >= _startDateTime and timestamp <= _endDateTime
+| where customDimensions.aadTenantId == _aadTenantId
+    and customDimensions.environmentName == _environmentName
+| where customDimensions.alCategory == "ALUpgrade"
+| where appInsightsEventId == "AL0000EJ9"
+| project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
+, companyName = tostring(customDimensions.alCompanyName )
+, step_started = timestamp
+, session_Id
+, aadTenantId = tostring(customDimensions.aadTenantId)
+, environmentName = tostring(customDimensions.environmentName)
+| join kind=leftouter (
+traces // upgrade step finished successfullay
 | where timestamp >= _startDateTime and timestamp <= _endDateTime
 | where customDimensions.aadTenantId == _aadTenantId
     and customDimensions.environmentName == _environmentName
@@ -14,24 +27,11 @@ traces
 | project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
 , customDimensions
 , companyName = tostring(customDimensions.alCompanyName)
-, timestamp
-, session_Id
-, aadTenantId = tostring(customDimensions.aadTenantId)
-, environmentName = tostring(customDimensions.environmentName)
-| join kind=rightouter (
-traces
-| where timestamp >= _startDateTime and timestamp <= _endDateTime
-| where customDimensions.aadTenantId == _aadTenantId
-    and customDimensions.environmentName == _environmentName
-| where customDimensions.alCategory == "ALUpgrade"
-| where appInsightsEventId == "AL0000EJ9"
-| project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
-, companyName = tostring(customDimensions.alCompanyName )
-, timestamp
+, step_finished = timestamp
 , session_Id
 , aadTenantId = tostring(customDimensions.aadTenantId)
 , environmentName = tostring(customDimensions.environmentName)
 ) on aadTenantId, session_Id, companyName, alUpgradeTag
-| extend duration = TIMESTAMP - TIMESTAMP1
-| project TIMESTAMP, duration, companyName, alUpgradeTag
-| order by TIMESTAMP asc 
+| extend duration = step_finished - step_started
+| project timestamp, duration, companyName, alUpgradeTag
+| order by timestamp asc 
