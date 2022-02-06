@@ -61,8 +61,8 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Index/Key lifecycle | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-table-index-trace#enabled |
 | Sensitive Field Monitoring (field added/removed) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
 | Upgrade tag signal | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
-| Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | (pending docs), sample KQL code updated |
-| Appsource validation | 2021 release wave 1 (18.4) | (pending docs), sample KQL code updated |
+| Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Appsource validation | 2021 release wave 1 (18.4) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-appsource-submission-validation-trace |
 | Use of read scale-out in reporting | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 | Feature Telemetry | 2021 release wave 2 (19.1) | (pending docs) |
 | Database deadlocks | 2022 release wave 1 (20.0) | (pending link to release note) |
