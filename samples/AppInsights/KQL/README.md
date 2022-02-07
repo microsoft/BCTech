@@ -65,6 +65,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Appsource validation | 2021 release wave 1 (18.4) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-appsource-submission-validation-trace |
 | Use of read scale-out in reporting | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 | Feature Telemetry | 2021 release wave 2 (19.1) | (pending docs) |
+| Task Scheduler Telemetry | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-task-scheduler-trace |
 | Database deadlocks | 2022 release wave 1 (20.0) | (pending link to release note) |
 | Database wait statistics | 2022 release wave 1 (20.0) | (pending link to release note) |
 | Verbose telemetry enabled | 2022 release wave 1 (20.0) | (pending link to release note) |

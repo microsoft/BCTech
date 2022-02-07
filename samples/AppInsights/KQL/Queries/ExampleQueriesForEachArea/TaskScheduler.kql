@@ -1,0 +1,162 @@
+// KQL samples - Task Scheduler events 
+
+// Task created (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0040'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, eventId = customDimensions.eventId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+, message
+, customDimensions
+
+
+// Task ready (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0041'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, eventId = customDimensions.eventId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+, message
+, customDimensions
+
+
+// Task removed (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0042'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, eventId = customDimensions.eventId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+, message
+, customDimensions
+
+
+// Task completed (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0043'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, attemptNumber = customDimensions.attemptNumber
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, eventId = customDimensions.eventId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, result = customDimensions.result
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, totalTime = customDimensions.totalTime
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+, message
+, customDimensions
+
+
+// Task cancelled (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0044'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, attemptNumber = customDimensions.attemptNumber
+, cancelReasonMessage = customDimensions.cancelReasonMessage
+, cancelReason = customDimensions.cancelReason
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, eventId = customDimensions.eventId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, result = customDimensions.result
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, totalTime = customDimensions.totalTime
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+, message
+, customDimensions
+
+
+// Task failed (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0045'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, attemptNumber = customDimensions.attemptNumber
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, eventId = customDimensions.eventId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, failureReason = customDimensions.failureReason
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, result = customDimensions.result
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, totalTime = customDimensions.totalTime
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+, message
+, customDimensions
