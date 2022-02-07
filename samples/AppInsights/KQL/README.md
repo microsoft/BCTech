@@ -66,7 +66,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Use of read scale-out in reporting | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 | Feature Telemetry | 2021 release wave 2 (19.1) | (pending docs) |
 | Task Scheduler Telemetry | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-task-scheduler-trace |
-| Database deadlocks | 2022 release wave 1 (20.0) | (pending link to release note) |
+| Database deadlocks | 2022 release wave 1 (20.0) | No KQL sample yet, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-when-database-deadlock-occurs-this-logged-telemetry |
 | Database wait statistics | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/performance-partners-get-database-insights-through-virtual-tables-in-client-pages |
 | Verbose telemetry enabled | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-action-enabling-detailed-telemetry-logged-telemetry |
 | General error dialogs | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-error-dialogs-are-logged-telemetry |
