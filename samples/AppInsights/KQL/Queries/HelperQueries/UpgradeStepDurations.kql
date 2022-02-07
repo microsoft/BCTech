@@ -10,7 +10,7 @@ traces // upgrade step started
 | where customDimensions.aadTenantId == _aadTenantId
     and customDimensions.environmentName == _environmentName
 | where customDimensions.alCategory == "ALUpgrade"
-| where appInsightsEventId == "AL0000EJ9"
+| where customDimensions.eventId == "AL0000EJ9"
 | project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
 , companyName = tostring(customDimensions.alCompanyName )
 , step_started = timestamp
@@ -23,7 +23,7 @@ traces // upgrade step finished successfullay
 | where customDimensions.aadTenantId == _aadTenantId
     and customDimensions.environmentName == _environmentName
 | where customDimensions.alCategory == "ALUpgrade"
-| where appInsightsEventId == "AL0000EJA"
+| where customDimensions.eventId == "AL0000EJA"
 | project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
 , customDimensions
 , companyName = tostring(customDimensions.alCompanyName)
