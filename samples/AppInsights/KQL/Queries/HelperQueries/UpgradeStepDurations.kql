@@ -11,7 +11,8 @@ traces // upgrade step started
     and customDimensions.environmentName == _environmentName
 | where customDimensions.alCategory == "ALUpgrade"
 | where customDimensions.eventId == "AL0000EJ9"
-| project alUpgradeTag = tostring(customDimensions.alUpgradeTag)
+| project timestamp
+, alUpgradeTag = tostring(customDimensions.alUpgradeTag)
 , companyName = tostring(customDimensions.alCompanyName )
 , step_started = timestamp
 , session_Id
