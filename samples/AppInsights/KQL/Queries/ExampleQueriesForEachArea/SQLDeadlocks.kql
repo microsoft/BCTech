@@ -1,0 +1,44 @@
+// KQL samples - SQL Deadlocks
+
+// Not fully tested yet, minor changes might be added before release
+
+// SQL deadlocks (RAW data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'RT0028' // starting from version 16.1, the eventId is used to identity signal types
+| where customDimensions.alObjectId > 0 // filter out internal server calls
+| extend eventId = customDimensions.eventId 
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, sessionId = customDimensions.sessionId
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace
+, clientType = customDimensions.clientType
+, sqlStatement = tostring(customDimensions.sqlStatement)
+, sqlServerSessionId = customDimensions.sqlServerSessionId
+| extend operationType = case(
+  sqlStatement startswith "UPDATE", "UPDATE"
+, sqlStatement startswith "DELETE", "DELETE"
+, sqlStatement startswith "BeginTransaction", "BEGIN_TRANS"
+, sqlStatement matches regex "INSERT INTO", "INSERT"
+, sqlStatement startswith "SELECT", "SELECT"
+, sqlStatement matches regex "IF EXISTS \\(SELECT (.*)\\) SELECT", "SELECT'"
+, sqlStatement has "SELECT NEXT VALUE FOR", "SELECT_SEQUENCE_VALUE"
+, sqlStatement has "SELECT @@SPID", "SELECT_SPID"
+, sqlStatement matches regex "(.*)WITH", "SELECT"
+, sqlStatement startswith "CREATE TABLE", "CREATE_TABLE"
+, sqlStatement startswith "ALTER TABLE", "ALTER_TABLE"
+, sqlStatement startswith "exec sp_rename", "RENAME_TABLE" 
+, sqlStatement matches regex "(.*)DROP TABLE", "DROP_TABLE"
+, sqlStatement startswith "SET LOCK_TIMEOUT", "SET_LOCK_TIMEOUT"
+, sqlStatement has "sp_getapplock", "GET_APP_LOCK"
+, "UNKNOWN"
+)

@@ -1,0 +1,41 @@
+// KQL samples - Database wait statistics snapshots
+
+// Database wait statistics snapshot taken (raw data)
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'RT0025'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, eventId = customDimensions.eventId
+, snapshotId = customDimensions.snapshotId 
+, message
+, customDimensions
+
+
+// Database wait statistics snapshot entry (raw data)
+// Need to join on snapshotId 
+traces
+| where 1==1
+    and timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'RT0026'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, databaseWaitStatisticsCategory = customDimensions.databaseWaitStatisticsCategory
+, databaseSignalWaitTimeInMs = customDimensions.databaseSignalWaitTimeInMs
+, databaseWaitingTasksCount = customDimensions.databaseWaitingTasksCount
+, databaseMaxWaitTimeInMs = customDimensions.databaseMaxWaitTimeInMs
+, databaseStartedDuration = customDimensions.databaseStartedDuration
+, databaseWaitTimeInMs = customDimensions.databaseWaitTimeInMs
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, eventId = customDimensions.eventId
+, snapshotId = customDimensions.snapshotId 
+, message
+, customDimensions
