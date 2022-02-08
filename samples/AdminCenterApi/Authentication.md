@@ -69,7 +69,7 @@ You will use your newly registered AAD application to obtain a so-called *access
 
 This string encodes different information, including who you are, and which API you want to call. You don't need to know all about access tokens - the main thing to know is that in order to use it, you need to send it in the Authorization header of each HTTP request, like this:
 
-    GET https://api.businesscentral.dynamics.com/admin/v2.1/applications/businesscentral/environments
+    GET https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments
     Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSIsImtpZCI6IkN0VHVoTUptRDVNN0RMZHpEMnYyeDNRS1NSWSJ9.eyJhdWQiOiJodHRwIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2...yMTc3MTQ1ZTEwIl19.LZgQnXOLNNpJgBx5q7FOUgq5ka04lJkBw75kxMTUA7hFDEL-NsMVcwQ_Zt-H0aPkOevCAQ_KWtZRQA
 
 To obtain an access token, you can follow the steps in either [Authenticate.ps1](PowerShell/Authenticate.ps1) for PowerShell or [Authenticate.cs](CSharp/Authenticate.cs) for C#.
