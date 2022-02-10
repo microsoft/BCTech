@@ -77,4 +77,16 @@ class Environments
         SupportContact supportContact = adminCenterClient.GetSupportContactInformation("BusinessCentral", environmentName);
         Utils.ConsoleWriteLineAsJson(supportContact);
     }
+
+    internal static void GetEnvironmentOperations(AdminCenterClient adminCenterClient, string environmentName)
+    {
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperationListResult operations = adminCenterClient.GetOperations("BusinessCentral", environmentName);
+        Utils.ConsoleWriteLineAsJson(operations);
+    }
+
+    internal static void GetOperationsForAllEnvironments(AdminCenterClient adminCenterClient)
+    {
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperationListResult operations = adminCenterClient.GetOperationsForAllEnvironments();
+        Utils.ConsoleWriteLineAsJson(operations);
+    }
 }
