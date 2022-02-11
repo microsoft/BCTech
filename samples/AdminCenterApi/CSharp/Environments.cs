@@ -20,8 +20,8 @@ class Environments
             CountryCode = countryCode,
             EnvironmentType = environmentType
         };
-        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment newEnvironment = adminCenterClient.CreateEnvironment("BusinessCentral", newEnvironmentName, createEnvironmentRequest);
-        Utils.ConsoleWriteLineAsJson(newEnvironment);
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperation environmentOperation = adminCenterClient.CreateEnvironment("BusinessCentral", newEnvironmentName, createEnvironmentRequest);
+        Utils.ConsoleWriteLineAsJson(environmentOperation);
     }
 
     internal static void CopyProductionEnvironmentToSandboxEnvironment(AdminCenterClient adminCenterClient, string sourceEnvironmentName, string targetEnvironmentName)
@@ -31,8 +31,30 @@ class Environments
             EnvironmentName = targetEnvironmentName,
             Type = "Sandbox",
         };
-        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.Environment newEnvironment = adminCenterClient.CopyEnvironment("BusinessCentral", sourceEnvironmentName, copyEnvironmentRequest);
-        Utils.ConsoleWriteLineAsJson(newEnvironment);
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperation environmentOperation = adminCenterClient.CopyEnvironment("BusinessCentral", sourceEnvironmentName, copyEnvironmentRequest);
+        Utils.ConsoleWriteLineAsJson(environmentOperation);
+    }
+
+    internal static void RenameEnvironment(AdminCenterClient adminCenterClient, string currentEnvironmentName, string newEnvironmentName)
+    {
+        var renameEnvironmentRequest = new RenameEnvironmentRequest
+        {
+            NewEnvironmentName = newEnvironmentName
+         };
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperation environmentOperation = adminCenterClient.RenameEnvironment("BusinessCentral", currentEnvironmentName, renameEnvironmentRequest);
+        Utils.ConsoleWriteLineAsJson(environmentOperation);
+    }
+
+    internal static void RestartEnvironment(AdminCenterClient adminCenterClient, string environmentName)
+    {
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperation environmentOperation = adminCenterClient.RestartEnvironment("BusinessCentral", environmentName);
+        Utils.ConsoleWriteLineAsJson(environmentOperation);
+    }
+
+    internal static void RemoveEnvironment(AdminCenterClient adminCenterClient, string environmentName)
+    {
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperation environmentOperation = adminCenterClient.RemoveEnvironment("BusinessCentral", environmentName);
+        Utils.ConsoleWriteLineAsJson(environmentOperation);
     }
 
     internal static void SetAppInsightsKey(AdminCenterClient adminCenterClient, string environmentName, Guid appInsightsKey)
@@ -54,5 +76,17 @@ class Environments
     {
         SupportContact supportContact = adminCenterClient.GetSupportContactInformation("BusinessCentral", environmentName);
         Utils.ConsoleWriteLineAsJson(supportContact);
+    }
+
+    internal static void GetEnvironmentOperations(AdminCenterClient adminCenterClient, string environmentName)
+    {
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperationListResult operations = adminCenterClient.GetOperations("BusinessCentral", environmentName);
+        Utils.ConsoleWriteLineAsJson(operations);
+    }
+
+    internal static void GetOperationsForAllEnvironments(AdminCenterClient adminCenterClient)
+    {
+        Microsoft.Dynamics.BusinessCentral.AdminCenter.Models.EnvironmentOperationListResult operations = adminCenterClient.GetOperationsForAllEnvironments();
+        Utils.ConsoleWriteLineAsJson(operations);
     }
 }

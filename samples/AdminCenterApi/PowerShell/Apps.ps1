@@ -9,7 +9,7 @@ $environmentName = "MyProd"
 # List installed apps
 $response = Invoke-WebRequest `
     -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/businesscentral/environments/$environmentName/apps" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/apps" `
     -Headers @{Authorization=("Bearer $accessToken")}
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
@@ -17,7 +17,7 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 # Get available updates
 $response= Invoke-WebRequest `
     -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/businesscentral/environments/$environmentName/apps/availableUpdates" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/apps/availableUpdates" `
     -Headers @{Authorization=("Bearer $accessToken")}
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
@@ -27,7 +27,7 @@ $appIdToUpdate = "334ef79e-547e-4631-8ba1-7a7f18e14de6"
 $appTargetVersion = "16.0.11240.12188"
 $response= Invoke-WebRequest `
     -Method Post `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/update" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/update" `
     -Body   (@{
                  targetVersion = $appTargetVersion
               } | ConvertTo-Json) `
@@ -39,7 +39,7 @@ Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 # Check update status
 $response= Invoke-WebRequest `
     -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/operations" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/apps/$appIdToUpdate/operations" `
     -Headers @{Authorization=("Bearer $accessToken")}
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
@@ -55,7 +55,7 @@ $appTargetVersion = "17.0.40514.0"
 try {
     $response= Invoke-WebRequest `
         -Method Post `
-        -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/BusinessCentral/environments/$environmentName/apps/$appIdToInstall/install" `
+        -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/BusinessCentral/environments/$environmentName/apps/$appIdToInstall/install" `
         -Body   (@{
                     "AcceptIsvEula" = $false #set to $true once you've read the the app provider's terms of use and privacy policy
                     "targetVersion" = $appTargetVersion
@@ -80,7 +80,7 @@ catch [System.Net.WebException]
 # Check install status
 $response= Invoke-WebRequest `
     -Method Get `
-    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/BusinessCentral/environments/$environmentName/apps/$appIdToInstall/operations" `
+    -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/BusinessCentral/environments/$environmentName/apps/$appIdToInstall/operations" `
     -Headers @{Authorization=("Bearer $accessToken")}
 Write-Host (ConvertTo-Json (ConvertFrom-Json $response.Content))
 
@@ -89,7 +89,7 @@ $appIdToUninstall = "6992416f-3f39-4d3c-8242-3fff61350bea"
 try {
     $response= Invoke-WebRequest `
         -Method Post `
-        -Uri    "https://api.businesscentral.dynamics.com/admin/v2.6/applications/BusinessCentral/environments/$environmentName/apps/$appIdToUninstall/uninstall" `
+        -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/BusinessCentral/environments/$environmentName/apps/$appIdToUninstall/uninstall" `
         -Body   (@{
                     "uninstallDependents" = $true 
                     "useEnvironmentUpdateWindow" = $false
