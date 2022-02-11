@@ -22,6 +22,9 @@ It is totally up to you. Maybe you do not need all details years back in time, b
 
 Read more in the documentation here: https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-data-explorer?tabs=data-factory
 
+See also this blog post by Bert Verbeek: https://www.bertverbeek.nl/blog/2022/02/10/two-ways-of-exporting-bc-telemetry/
+
+
 # How do I make daily extracts?
 ```kql
 // start your query with defining a date_to_query variable that is populated when the pipeline runs
