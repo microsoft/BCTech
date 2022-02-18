@@ -68,6 +68,15 @@ Watch this 4 min video to learn how to add Azure Alerts as push notifications on
 </p>
 
 
+### I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min)
+Watch Microsoft MVP Steve Endow explore the topic of Business Central telemetry and error handling. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=pALCUTk_pgA"><img src="https://img.youtube.com/vi/pALCUTk_pgA/0.jpg" width="300"></a>
+<br>
+</p>
+
+
+
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
 
