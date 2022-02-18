@@ -68,12 +68,20 @@ Watch this 4 min video to learn how to add Azure Alerts as push notifications on
 </p>
 
 
-### I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min)
+### I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min) by Microsoft MVP Steve Endow
 Watch Microsoft MVP Steve Endow explore the topic of Business Central telemetry and error handling. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=pALCUTk_pgA"><img src="https://img.youtube.com/vi/pALCUTk_pgA/0.jpg" width="300"></a>
 <br>
 </p>
+
+### Areopa webinar: Telemetry for Business Central - what are the benefits? (61 min) by Microsoft MVP Krzysztof Bialowas
+Telemetry for Business Central is one of the key features regarding troubleshooting. Also, it can be a useful tool to get more insights into how users use your app or the whole system. If you are a partner or customer first line of support, you should learn how you can use the telemetry. During the webinar, I will show how ISVs and VARs can use Telemetry - not only using KQL but more friendly tools such as Azure Data Factory, Power BI, or Power Automate. Check what you can do to be more proactive in supporting your users.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=XMwMqEY5Ebs"><img src="https://img.youtube.com/vi/XMwMqEY5Ebs/0.jpg" width="300"></a>
+<br>
+</p>
+
 
 
 
