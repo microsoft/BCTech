@@ -2,7 +2,7 @@
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
 
-## Want to Learn Business Central telemetry in a week?
+## Want to Learn Business Central telemetry in 30 minutes?
 Haven't got the time to learn Business Central telemetry? Good news: we have recorded a series of short videos on the topic. Watch one every morning for a week and you should be up and running. 
 
 
