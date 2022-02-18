@@ -28,11 +28,13 @@ _We have been using telemetry for some months now and have enabled 20+ apps as w
 
 ## How can I reduce cost?
 To reduce ingestion cost, you can
-* set limits on daily data ingestion
 * reduce data ingestion by sampling to only ingest a percentage of the inbound data (see https://docs.microsoft.com/en-us/azure/azure-monitor/app/sampling#ingestion-sampling)
 * set a daily limit of how much data that can be ingested
-* purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
 * set alerts on cost thresholds being exceeded to get notified if this happens
+
+To reduce data retention cost, you can
+* purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
+
 
 Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
 
