@@ -66,7 +66,7 @@ Telemetry for Business Central is one of the key features regarding troubleshoot
 <br>
 </p>
 
-### 2021-12-23 Getting started with Telemetry in Business Central by Microsoft MVP Erik Hougaard
+### 2021-12-23 Getting started with Telemetry in Business Central (24 min) by Microsoft MVP Erik Hougaard
 Watch Microsoft MVP Erik Hougaard explore the topic of Jupyter notebook troubleshooting guides using Business Central telemetry. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=j5k9xEIkwHg"><img src="https://img.youtube.com/vi/j5k9xEIkwHg/0.jpg" width="50%"></a>
