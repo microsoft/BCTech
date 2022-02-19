@@ -52,7 +52,29 @@ Watch this 1 min video to learn how custom telemetry works. If you develop exten
 
 ## Other videos
 
-### BC techtalk 2020: Monitoring Dynamics 365 BC with Application Insights and Jupyter Notebooks by Duilio Tacconi (56 min)
+### 2022-02-10 I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min) by Microsoft MVP Steve Endow
+Watch Microsoft MVP Steve Endow explore the topic of Business Central telemetry and error handling. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=pALCUTk_pgA"><img src="https://img.youtube.com/vi/pALCUTk_pgA/0.jpg" width="75%"></a>
+<br>
+</p>
+
+### 2022-01-18 Areopa webinar: Telemetry for Business Central - what are the benefits? (61 min) by Microsoft MVP Krzysztof Bialowas
+Telemetry for Business Central is one of the key features regarding troubleshooting. Also, it can be a useful tool to get more insights into how users use your app or the whole system. If you are a partner or customer first line of support, you should learn how you can use the telemetry. During the webinar, I will show how ISVs and VARs can use Telemetry - not only using KQL but more friendly tools such as Azure Data Factory, Power BI, or Power Automate. Check what you can do to be more proactive in supporting your users.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=XMwMqEY5Ebs"><img src="https://img.youtube.com/vi/XMwMqEY5Ebs/0.jpg" width="300"></a>
+<br>
+</p>
+
+### 2021-12-23 Getting started with Telemetry in Business Central by Microsoft MVP Erik Hougaard
+Watch Microsoft MVP Erik Hougaard explore the topic of Jupyter notebook troubleshooting guides using Business Central telemetry. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=j5k9xEIkwHg"><img src="https://img.youtube.com/vi/j5k9xEIkwHg/0.jpg" width="300"></a>
+<br>
+</p>
+
+
+### 2020-12-09 BC techtalk 2020: Monitoring Dynamics 365 BC with Application Insights and Jupyter Notebooks by Duilio Tacconi (56 min)
 Watch this 56 min video to learn how about Business Central and how to use the troubleshooting guides (TSGs) we added as Jupyter Notebooks. If you need to troubleshoot anything in a Business Central environment (both on-prem and in the cloud), then this is a must-see. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=Q9OEZSblr2Y"><img src="https://img.youtube.com/vi/Q9OEZSblr2Y/0.jpg" width="300"></a>
@@ -60,7 +82,7 @@ Watch this 56 min video to learn how about Business Central and how to use the t
 </p>
 
 
-### How can I add Azure Alerts as push notifications on my phone? (4 min)
+### 2019-03-28 How can I add Azure Alerts as push notifications on my phone? (4 min)
 Watch this 4 min video to learn how to add Azure Alerts as push notifications on your phone. The Alerts section in this repository contain sample queries that you can use as a starting point.  Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=nqqVEISjSGE"><img src="https://img.youtube.com/vi/nqqVEISjSGE/0.jpg" width="300"></a>
@@ -68,19 +90,6 @@ Watch this 4 min video to learn how to add Azure Alerts as push notifications on
 </p>
 
 
-### I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min) by Microsoft MVP Steve Endow
-Watch Microsoft MVP Steve Endow explore the topic of Business Central telemetry and error handling. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=pALCUTk_pgA"><img src="https://img.youtube.com/vi/pALCUTk_pgA/0.jpg" width="300"></a>
-<br>
-</p>
-
-### Areopa webinar: Telemetry for Business Central - what are the benefits? (61 min) by Microsoft MVP Krzysztof Bialowas
-Telemetry for Business Central is one of the key features regarding troubleshooting. Also, it can be a useful tool to get more insights into how users use your app or the whole system. If you are a partner or customer first line of support, you should learn how you can use the telemetry. During the webinar, I will show how ISVs and VARs can use Telemetry - not only using KQL but more friendly tools such as Azure Data Factory, Power BI, or Power Automate. Check what you can do to be more proactive in supporting your users.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=XMwMqEY5Ebs"><img src="https://img.youtube.com/vi/XMwMqEY5Ebs/0.jpg" width="300"></a>
-<br>
-</p>
 
 
 
