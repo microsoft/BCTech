@@ -9,7 +9,7 @@ Haven't got the time to learn Business Central telemetry? Good news: we have rec
 ### How do I get started with Application Insights? (4 min)
 Watch this 4 min video to learn how to connect an environment or an extension to Azure Application Insights. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=f4rxr20QG04"><img src="https://img.youtube.com/vi/f4rxr20QG04/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=f4rxr20QG04"><img src="https://img.youtube.com/vi/f4rxr20QG04/0.jpg" width="50%"></a>
 <br>
 </p>
 
@@ -17,7 +17,7 @@ Watch this 4 min video to learn how to connect an environment or an extension to
 ### How can I analyze performance using the Power BI performance report? (8 min)
 Watch this 8 min video to learn how to use the standard Power BI performance report to triage performance issues happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=Kbq6YB8VU-8"><img src="https://img.youtube.com/vi/Kbq6YB8VU-8/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=Kbq6YB8VU-8"><img src="https://img.youtube.com/vi/Kbq6YB8VU-8/0.jpg" width="50%"></a>
 <br>
 </p>
 
@@ -25,28 +25,28 @@ Watch this 8 min video to learn how to use the standard Power BI performance rep
 ### How can I triage errors using the Power BI error report? (6 min)
 Watch this 6 min video to learn how to use the standard Power BI error report to triage errors happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=ByealbDQqIU"><img src="https://img.youtube.com/vi/ByealbDQqIU/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=ByealbDQqIU"><img src="https://img.youtube.com/vi/ByealbDQqIU/0.jpg" width="50%"></a>
 <br>
 </p>
 
 ### How can I write custom Kusto queries in Dynamics 365 Business Central? (9 min)
 Watch this 9 min video to learn how to write Kusto queries against Business Central telemetry. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=A1e9ZMo5xcY"><img src="https://img.youtube.com/vi/A1e9ZMo5xcY/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=A1e9ZMo5xcY"><img src="https://img.youtube.com/vi/A1e9ZMo5xcY/0.jpg" width="50%"></a>
 <br>
 </p>
 
 ### How can I troubleshoot issues using the Jupyter Notebook troubleshooting guides? (8 min)
 Watch this 8 min video to learn how to troubleshoot issues using the Jupyter Notebook troubleshooting guides. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=B3EL0xdvaUY"><img src="https://img.youtube.com/vi/B3EL0xdvaUY/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=B3EL0xdvaUY"><img src="https://img.youtube.com/vi/B3EL0xdvaUY/0.jpg" width="50%"></a>
 <br>
 </p>
 
 ### How can I emit telemetry to Azure Application Insights from AL code? (1 min)
 Watch this 1 min video to learn how custom telemetry works. If you develop extensions for Business Central, then this is a must-see. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg" width="50%"></a>
 <br>
 </p>
 
@@ -55,21 +55,21 @@ Watch this 1 min video to learn how custom telemetry works. If you develop exten
 ### 2022-02-10 I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min) by Microsoft MVP Steve Endow
 Watch Microsoft MVP Steve Endow explore the topic of Business Central telemetry and error handling. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=pALCUTk_pgA"><img src="https://img.youtube.com/vi/pALCUTk_pgA/0.jpg" width="75%"></a>
+<a href="https://www.youtube.com/watch?v=pALCUTk_pgA"><img src="https://img.youtube.com/vi/pALCUTk_pgA/0.jpg" width="50%"></a>
 <br>
 </p>
 
 ### 2022-01-18 Areopa webinar: Telemetry for Business Central - what are the benefits? (61 min) by Microsoft MVP Krzysztof Bialowas
 Telemetry for Business Central is one of the key features regarding troubleshooting. Also, it can be a useful tool to get more insights into how users use your app or the whole system. If you are a partner or customer first line of support, you should learn how you can use the telemetry. During the webinar, I will show how ISVs and VARs can use Telemetry - not only using KQL but more friendly tools such as Azure Data Factory, Power BI, or Power Automate. Check what you can do to be more proactive in supporting your users.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=XMwMqEY5Ebs"><img src="https://img.youtube.com/vi/XMwMqEY5Ebs/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=XMwMqEY5Ebs"><img src="https://img.youtube.com/vi/XMwMqEY5Ebs/0.jpg" width="50%"></a>
 <br>
 </p>
 
 ### 2021-12-23 Getting started with Telemetry in Business Central by Microsoft MVP Erik Hougaard
 Watch Microsoft MVP Erik Hougaard explore the topic of Jupyter notebook troubleshooting guides using Business Central telemetry. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=j5k9xEIkwHg"><img src="https://img.youtube.com/vi/j5k9xEIkwHg/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=j5k9xEIkwHg"><img src="https://img.youtube.com/vi/j5k9xEIkwHg/0.jpg" width="50%"></a>
 <br>
 </p>
 
@@ -77,7 +77,7 @@ Watch Microsoft MVP Erik Hougaard explore the topic of Jupyter notebook troubles
 ### 2020-12-09 BC techtalk 2020: Monitoring Dynamics 365 BC with Application Insights and Jupyter Notebooks by Duilio Tacconi (56 min)
 Watch this 56 min video to learn how about Business Central and how to use the troubleshooting guides (TSGs) we added as Jupyter Notebooks. If you need to troubleshoot anything in a Business Central environment (both on-prem and in the cloud), then this is a must-see. Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=Q9OEZSblr2Y"><img src="https://img.youtube.com/vi/Q9OEZSblr2Y/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=Q9OEZSblr2Y"><img src="https://img.youtube.com/vi/Q9OEZSblr2Y/0.jpg" width="50%"></a>
 <br>
 </p>
 
@@ -85,7 +85,7 @@ Watch this 56 min video to learn how about Business Central and how to use the t
 ### 2019-03-28 How can I add Azure Alerts as push notifications on my phone? (4 min)
 Watch this 4 min video to learn how to add Azure Alerts as push notifications on your phone. The Alerts section in this repository contain sample queries that you can use as a starting point.  Tip: **CTRL+click** to open in a new window.
 <p align="center">
-<a href="https://www.youtube.com/watch?v=nqqVEISjSGE"><img src="https://img.youtube.com/vi/nqqVEISjSGE/0.jpg" width="300"></a>
+<a href="https://www.youtube.com/watch?v=nqqVEISjSGE"><img src="https://img.youtube.com/vi/nqqVEISjSGE/0.jpg" width="50%"></a>
 <br>
 </p>
 
