@@ -29,6 +29,7 @@ Source = Json.Document(Web.Contents("https://api.applicationinsights.io/v1/apps/
 , executionTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
 , reportingEngine = tostring( customDimensions.reportingEngine )
 , numberOfRows = customDimensions.numberOfRows
+, sqlDatabaseAccessIntent = tostring( customDimensions.sqlDatabaseAccessIntent )
 , sqlExecutes = toint( customDimensions.sqlExecutes )
 , sqlRowsRead = toint( customDimensions.sqlRowsRead )
 | where isnotempty( alObjectId )
@@ -48,6 +49,7 @@ Source = Json.Document(Web.Contents("https://api.applicationinsights.io/v1/apps/
 , ObjectType = alObjectType
 , ExecutionTimeInMS = executionTimeInMS
 , ReportingEngine = reportingEngine
+, sqlDatabaseAccessIntent
 , SqlExecutes = sqlExecutes
 , SqlRowsRead = sqlRowsRead
 | summarize Count=count()
@@ -55,7 +57,7 @@ Source = Json.Document(Web.Contents("https://api.applicationinsights.io/v1/apps/
 , SumSqlExecutes = sum(SqlExecutes)
 , SumSqlRowsRead = sum(SqlRowsRead)
 by bin(timestamp, 1h)
-, AadTenantId, EnvironmentName, EnvironmentType, PlatformVersion, ClientType, ReportingEngine
+, AadTenantId, EnvironmentName, EnvironmentType, PlatformVersion, ClientType, ReportingEngine, sqlDatabaseAccessIntent
 , ExtensionId, ExtensionName, ExtensionVersion, ExtensionPublisher
 , ObjectType, ObjectId, ObjectName
 ",#"x-ms-app"="AAPBI",#"prefer"="ai.response-thinning=true"],Timeout=#duration(0,0,4,0)])),
@@ -78,6 +80,7 @@ ColumnsWithType = Table.Join(Columns, {"type"}, TypeMap , {"AnalyticsTypes"}),
 Rows = Table.FromRows(DataTable[rows], Columns[name]), 
 Table = Table.TransformColumnTypes(Rows, Table.ToList(ColumnsWithType, (c) => { c{0}, c{3}}))
 in
-Table
+Table,
+    #"Renamed Columns" = Table.RenameColumns(AnalyticsQuery,{{"ClientType", "Client type"}, {"EnvironmentName", "Environment name"}, {"EnvironmentType", "Environment type"}, {"ExtensionName", "Extension"}, {"ReportingEngine", "Reporting engine"}, {"PlatformVersion", "Platform version"}, {"ObjectId", "Object id"}, {"AadTenantId", "AAD tenant"}})
 in 
-AnalyticsQuery
+#"Renamed Columns"
