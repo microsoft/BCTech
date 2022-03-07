@@ -71,11 +71,11 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Database wait statistics | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/performance-partners-get-database-insights-through-virtual-tables-in-client-pages |
 | Verbose telemetry enabled | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-action-enabling-detailed-telemetry-logged-telemetry |
 | General error dialogs | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-error-dialogs-are-logged-telemetry |
-| Permission error dialogs | 2022 release wave 1 (20.0) | (pending link to release note) |
-| Use of read scale-out in web service calls | 2022 release wave 1 (20.0) | (pending link to release note) |
 | Report action and document type in reporting | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 | Environment lifecycle and configuration changes| 2022 release wave 1 (20.0) | (pending link to release note) |
 | Session stops | 2022 release wave 1 (20.0) | (pending link to release note) |
+| Use of read scale-out in web service calls | 2022 release wave 1 (20.x) | (pending link to release note) |
+| Permission error dialogs | 2022 release wave 1 (20.x) | (pending link to release note) |
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
