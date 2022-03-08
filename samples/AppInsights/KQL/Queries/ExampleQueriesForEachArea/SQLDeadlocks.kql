@@ -1,11 +1,11 @@
 // KQL samples - SQL Deadlocks
 
-// Not fully tested yet, minor changes might be added before release
+// Not fully tested yet, minor changes might be added before the release of 20.0
 
 // SQL deadlocks (RAW data)
 traces
 | where timestamp > ago(60d) // adjust as needed
-| where customDimensions.eventId == 'RT0028' // starting from version 16.1, the eventId is used to identity signal types
+| where customDimensions.eventId == 'RT0028' 
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | extend eventId = customDimensions.eventId 
 , aadTenantId = customDimensions.aadTenantId
