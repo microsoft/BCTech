@@ -1,0 +1,71 @@
+----------------
+Perf report TODO
+----------------
+
+Recommendations
+    LRQ outside MS code
+    Recurring task scheduler/job queue jobs with LRQ
+    Recurring failing task scheduler/job queue jobs
+
+Pages
+    Task scheduler perf - need sum/avg/min/max measures 
+    job queue perf - need sum/avg/min/max measures
+    Open Company: fix MS headings
+    Report perf - need avg/min/max measures 
+    Report - add company filter
+
+
+-----------------
+Error report TODO
+-----------------
+
+Pages
+    Job queue error fails to load
+
+Recommendations
+    Permission errors
+    Task scheduler errors
+
+
+------------
+Partner asks
+------------
+Filter Business Hours (8 to 18) and After Hours (18 to 8)
+Database wait statistics (RT0025 and RT0026)
+In report section there is a list of extensions. Not sure what that is for.
+Maybe also that you can filter on company name?
+In the Open Company section. Combine the two graph Avg execution and count into one graph.
+Adding LC0024 - Analyzing Table Index Trace Telemetry. So you can see what is happing if someones adds some keys that you aren't aware of or removed some key. So your performance is getting slower.
+Some statistics are misleading. Like Min and Avg for Long Running AL. As it only looks at the small subset of runs that are very slow Min is the fastest of the slowest and Avg is the average of those that are very slow.  The Max makes sense and some performance buckets might make sense.
+On "Report" I would like some averages, the Sum* values are not useful. 
+Drill through from Long Running SQL Queries/AL methods to Timeline.kql with timestamp +- 5 min
+
+
+
+----
+DONE
+----
+
+DONE: In my view it would be nice that (at least) the Tenant ID, Environment Type and Environment Name is synced between the pages. 
+Possible with a "Filter page" at the front, where the global fileters would be set - I think it make the use of the report much easier.
+
+DONE: Also, for your backlog, it would be nice to see some of the metrics - e.g. avg. page view time across tenants. Like a chart, where the value is the avg. page view, the x-axis is time (date by hour) and each tenant has its own value. So I can compare "user perception" of performance across all tenants.
+
+DONE: The recommendations are a good idea, but I got a list of reports "not using Read Scale-out", turns out most of them were our posting reports. So not helpful. 
+
+DONE: Long Running SQL Queries with many joins (Recommendations)
+
+DONE: Error dialogs (RT0030)
+
+DONE: Task Scheduler events 
+DONE: Maybe adding the JobQueue also. Because that can also impact the performance. So how many they have started.
+
+Works: The "Outbound calls" page does not update "Count by http code" and "Average exe time" when changing Tenant ID, Environment Type or Name
+
+
+Not possible: 
+Speaking of the Tenant ID - a mapping between ID and domain name would be really nice. I don't know if it is available, I have thought about creating a file with the mapping for my own reports.
+
+Current limitation in client telemetry: On "Page views" all environments show as type Prod, even sandboxes.
+
+
