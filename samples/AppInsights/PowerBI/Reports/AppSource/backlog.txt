@@ -15,14 +15,11 @@ Perf report TODO
 Recommendations
     LRQ outside MS code
     Recurring task scheduler/job queue jobs with LRQ
-    Long held locks (LRQ with UPDLOCK and duration > 30000 ms)
 
 Pages
     Add company filter to OnOpenCompanyPerf report
 
 Dataset
-    LRQ: add measure for Long held locks (LRQ with UPDLOCK and duration > 30000 ms)
-    LRQ: add measure outside MS code
     Add measure for Recurring task scheduler/job queue jobs with LRQ
     
     Add dataset and page for Table Indexes
