@@ -6,7 +6,7 @@ Is it possible for the report consumer to define things such as
 * their timezone (all timestamps are in UTC)?
 * their definition of working hours (per tenant?)
 
-Find a nice way to layout the recommendations.
+Find a nice way to layout recommendations tiles.
 
 ----------------
 Perf report TODO
@@ -15,35 +15,35 @@ Perf report TODO
 Recommendations
     LRQ outside MS code
     Recurring task scheduler/job queue jobs with LRQ
-    Recurring failing task scheduler/job queue jobs 
     Long held locks (LRQ with UPDLOCK and duration > 30000 ms)
 
 Pages
     Add company filter to OnOpenCompanyPerf report
 
 Dataset
-    Add company to OnOpenCompanyPerf table
+    LRQ: add measure for Long held locks (LRQ with UPDLOCK and duration > 30000 ms)
+    LRQ: add measure outside MS code
+    Add measure for Recurring task scheduler/job queue jobs with LRQ
     Add dataset and page for Table Indexes
+    Add dataset and page for Database deadlocks
     Add dataset and page for Database wait statistics (RT0025 and RT0026)
-
-
 
 -----------------
 Error report TODO
 -----------------
 
 Recommendations
-    Permission errors
+    Permission errors (20.1)
     Task scheduler errors
+    Recurring failing task scheduler/job queue jobs 
 
 Pages
     Permisssions errors (20.1)
     Add company filter to OnOpenCompanyError report
 
 Dataset
-    Add company to OnOpenCompanyError table
-
-
+    Add dataset for Permisssions errors (20.1)
+    Add measure for Recurring failing task scheduler/job queue jobs
 
 ------------
 Partner asks
