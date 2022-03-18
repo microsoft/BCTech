@@ -20,7 +20,7 @@ Recommendations
 
 Pages
     Check How to use the report text boxes
-    Open Company: fix AVG measure in report
+    
 
 Dataset
     
