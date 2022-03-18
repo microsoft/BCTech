@@ -24,6 +24,7 @@ Dataset
     LRQ: add measure for Long held locks (LRQ with UPDLOCK and duration > 30000 ms)
     LRQ: add measure outside MS code
     Add measure for Recurring task scheduler/job queue jobs with LRQ
+    
     Add dataset and page for Table Indexes
     Add dataset and page for Database deadlocks
     Add dataset and page for Database wait statistics (RT0025 and RT0026)
