@@ -6,6 +6,7 @@ Is it possible for the report consumer to define things such as
 * their timezone (all timestamps are in UTC)?
 * their definition of working hours (per tenant?)
 
+Find a nice way to layout the recommendations.
 
 ----------------
 Perf report TODO
@@ -19,7 +20,6 @@ Recommendations
 
 Pages
     Check How to use the report text boxes
-    Reports: add company filter on report
     Open Company: fix AVG measure in report
 
 Dataset
