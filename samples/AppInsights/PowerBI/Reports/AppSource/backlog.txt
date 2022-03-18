@@ -1,3 +1,12 @@
+-----------------
+Both reports TODO
+-----------------
+
+Is it possible for the report consumer to define things such as 
+* their timezone (all timestamps are in UTC)?
+* their definition of working hours (per tenant?)
+
+
 ----------------
 Perf report TODO
 ----------------
@@ -9,9 +18,14 @@ Recommendations
     Long held locks (LRQ with UPDLOCK and duration > 30000 ms)
 
 Pages
+    Check How to use the report text boxes
+
     Open Company: fix AVG measure in dataset 
-    Reports: add companyName = customDimensions.companyName to dataset and add company filter on report
+    Reports: add company filter on report
     Add dataset and page for Table Indexes
+    Add dataset and page for Database wait statistics (RT0025 and RT0026)
+
+
 
 -----------------
 Error report TODO
@@ -29,18 +43,13 @@ Recommendations
 Partner asks
 ------------
 Filter Business Hours (8 to 18) and After Hours (18 to 8)
-Database wait statistics (RT0025 and RT0026)
-In the Open Company section. Combine the two graph Avg execution and count into one graph.
-Adding LC0024 - Analyzing Table Index Trace Telemetry. So you can see what is happing if someones adds some keys that you aren't aware of or removed some key. So your performance is getting slower.
-Some statistics are misleading. Like Min and Avg for Long Running AL. As it only looks at the small subset of runs that are very slow Min is the fastest of the slowest and Avg is the average of those that are very slow.  The Max makes sense and some performance buckets might make sense.
 Drill through from Long Running SQL Queries/AL methods to Timeline.kql with timestamp +- 5 min
-
 
 
 ----
 DONE
 ----
-
+WONTFIX: In the Open Company section. Combine the two graph Avg execution and count into one graph.
 DONE: In my view it would be nice that (at least) the Tenant ID, Environment Type and Environment Name is synced between the pages. 
 Possible with a "Filter page" at the front, where the global fileters would be set - I think it make the use of the report much easier.
 DONE: Also, for your backlog, it would be nice to see some of the metrics - e.g. avg. page view time across tenants. Like a chart, where the value is the avg. page view, the x-axis is time (date by hour) and each tenant has its own value. So I can compare "user perception" of performance across all tenants.
@@ -51,7 +60,12 @@ DONE: Task Scheduler events
 DONE: Maybe adding the JobQueue also. Because that can also impact the performance. So how many they have started.
 DONE: On "Report" I would like some averages, the Sum* values are not useful. 
 DONE: The "Outbound calls" page does not update "Count by http code" and "Average exe time" when changing Tenant ID, Environment Type or Name
+DONE: Some statistics are misleading. Like Min and Avg for Long Running AL. As it only looks at the small subset of runs that are very slow Min is the fastest of the slowest and Avg is the average of those that are very slow.  The Max makes sense and some performance buckets might make sense.
+
 TODO: Maybe also that you can filter on company name in reports page?
+TODO: Database wait statistics (RT0025 and RT0026)
+TODO: Adding LC0024 - Analyzing Table Index Trace Telemetry. So you can see what is happing if someones adds some keys that you aren't aware of or removed some key. So your performance is getting slower.
+
 
 Not possible: 
 Speaking of the Tenant ID - a mapping between ID and domain name would be really nice. I don't know if it is available, I have thought about creating a file with the mapping for my own reports.
