@@ -19,9 +19,11 @@ Recommendations
 
 Pages
     Check How to use the report text boxes
-
-    Open Company: fix AVG measure in dataset 
     Reports: add company filter on report
+    Open Company: fix AVG measure in report
+
+Dataset
+    
     Add dataset and page for Table Indexes
     Add dataset and page for Database wait statistics (RT0025 and RT0026)
 
