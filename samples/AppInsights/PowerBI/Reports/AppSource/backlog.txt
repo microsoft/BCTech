@@ -19,11 +19,10 @@ Recommendations
     Long held locks (LRQ with UPDLOCK and duration > 30000 ms)
 
 Pages
-    Check How to use the report text boxes
-    
+    Add company filter to OnOpenCompanyPerf report
 
 Dataset
-    
+    Add company to OnOpenCompanyPerf table
     Add dataset and page for Table Indexes
     Add dataset and page for Database wait statistics (RT0025 and RT0026)
 
@@ -33,12 +32,17 @@ Dataset
 Error report TODO
 -----------------
 
-Pages
-    Permisssions errors (20.1)
-
 Recommendations
     Permission errors
     Task scheduler errors
+
+Pages
+    Permisssions errors (20.1)
+    Add company filter to OnOpenCompanyError report
+
+Dataset
+    Add company to OnOpenCompanyError table
+
 
 
 ------------
