@@ -1,4 +1,6 @@
-In this folder, you will find the source code for the PowerBI app report on Dynamics 365 Business Central telemetry in Azure Application Insights.
+In this folder, you will find the source code for the PowerBI app report on Dynamics 365 Business Central telemetry in Azure Application Insights. 
+
+Note that the app is still being testing in a beta program. It is fully functional, though.
 
 # Power BI prerequisites
 While the app is not on Appsource, you need to allow it to be installed. 
