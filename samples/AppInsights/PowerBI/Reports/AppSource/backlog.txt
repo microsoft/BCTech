@@ -8,6 +8,8 @@ Is it possible for the report consumer to define things such as
 
 Find a nice way to layout recommendations tiles.
 
+Dataset: modify parameter text for app id
+
 ----------------
 Perf report TODO
 ----------------
@@ -18,6 +20,7 @@ Recommendations
 
 Pages
     Add company filter to OnOpenCompanyPerf report
+    Company name filter duplicate on reports page
 
 Dataset
     Add measure for Recurring task scheduler/job queue jobs with LRQ
