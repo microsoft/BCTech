@@ -21,7 +21,6 @@ Recommendations
 Pages
     Add company filter to OnOpenCompanyPerf report
     Company name filter duplicate on reports page
-    Use SqlOperationType on LRQ report
 
 Dataset
     Add measure for Recurring task scheduler/job queue jobs with LRQ
