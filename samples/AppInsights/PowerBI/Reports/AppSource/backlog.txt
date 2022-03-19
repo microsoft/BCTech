@@ -21,14 +21,12 @@ Recommendations
 Pages
     Add company filter to OnOpenCompanyPerf report
     Company name filter duplicate on reports page
+    Use SqlOperationType on LRQ report
 
 Dataset
     Add measure for Recurring task scheduler/job queue jobs with LRQ
-    LRQ: bug in Joins and SIFT calculation or report
-    Add dataset and page for Table Indexes
-    Add dataset and page for Database deadlocks
-    Add dataset and page for Database wait statistics (RT0025 and RT0026)
-
+    Add dataset and page for Database wait statistics (RT0025 and RT0026)   
+    
 -----------------
 Error report TODO
 -----------------
@@ -39,11 +37,25 @@ Recommendations
 
 Pages
     Permisssions errors (20.1)
+    Add page for Database deadlocks
 
 Dataset
     Add dataset for Permisssions errors (20.1)
     Add measure for Recurring failing task scheduler/job queue jobs
 
+
+-------------
+Change report
+-------------
+
+Pages
+    Add page for Index lifecycle
+    Add page for extension lifecycle
+    Add page for environment lifecycle
+
+Dataset
+    Add dataset for extension lifecycle
+    Add dataset for environment lifecycle
 
 ------------
 Partner asks
