@@ -21,7 +21,7 @@ Pages
 
 Dataset
     Add measure for Recurring task scheduler/job queue jobs with LRQ
-    
+    LRQ: bug in Joins and SIFT calculation or report
     Add dataset and page for Table Indexes
     Add dataset and page for Database deadlocks
     Add dataset and page for Database wait statistics (RT0025 and RT0026)
@@ -32,16 +32,15 @@ Error report TODO
 
 Recommendations
     Permission errors (20.1)
-    Task scheduler errors
     Recurring failing task scheduler/job queue jobs 
 
 Pages
     Permisssions errors (20.1)
-    Add company filter to OnOpenCompanyError report
 
 Dataset
     Add dataset for Permisssions errors (20.1)
     Add measure for Recurring failing task scheduler/job queue jobs
+
 
 ------------
 Partner asks
