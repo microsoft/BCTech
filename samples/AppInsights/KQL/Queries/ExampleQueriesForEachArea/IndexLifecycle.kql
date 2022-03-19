@@ -10,7 +10,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, extensionName=customDimensions.extensionName
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
 , keyMaintainSIFTIndex = customDimensions.keyMaintainSIFTIndex
 , keyMaintainSQLIndex = customDimensions.keyMaintainSQLIndex
 , keySqlIndexFields = customDimensions.keySqlIndexFields
@@ -31,7 +34,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, extensionName=customDimensions.extensionName
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
 , keyMaintainSIFTIndex = customDimensions.keyMaintainSIFTIndex
 , keyMaintainSQLIndex = customDimensions.keyMaintainSQLIndex
 , keySqlIndexFields = customDimensions.keySqlIndexFields
