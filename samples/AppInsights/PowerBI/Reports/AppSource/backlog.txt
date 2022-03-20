@@ -11,7 +11,15 @@ Find a nice way to layout recommendations tiles.
 Dataset
     modify parameter text for app id
     Add extensionPublisher everywhere where extension is present
-
+        IncomingWebServiceCallPerformance
+        IncomingWebServiceErrors
+        Index lifecycle
+        LockTimeouts
+        LongRunningALMethods
+        LongRunningSQLQueries
+        OutgoingWebServiceCallPerformance
+        OutgoingWebServiceErrors
+        SQLDeadlocks
 
 ----------------
 Perf report TODO
@@ -24,7 +32,6 @@ Recommendations
 Pages
     Add page for Database wait statistics (RT0025 and RT0026)   
     Add extensionPublisher everywhere where extension is present
-
 
 Dataset
     Add measure for Recurring task scheduler/job queue jobs with LRQ
@@ -57,14 +64,22 @@ Change report
 Pages
     Index lifecycle
         how to use
+        column names
     Company lifecycle 
         how to use
+        column names
     Extension lifecycle
         how to use
+        column names
     Environment lifecycle
+
+    All changes page
 
 Dataset
     Add dataset for environment lifecycle
+    Add dataset for All changes (when, what, where) - can we do it in DAX? 
+        UNION(table1, table2, table3)
+        SELECTCOLUMNS(Info, "StateCountry", [State]&", "&[Country])
 
 ------------
 Partner asks
@@ -88,10 +103,11 @@ DONE: Maybe adding the JobQueue also. Because that can also impact the performan
 DONE: On "Report" I would like some averages, the Sum* values are not useful. 
 DONE: The "Outbound calls" page does not update "Count by http code" and "Average exe time" when changing Tenant ID, Environment Type or Name
 DONE: Some statistics are misleading. Like Min and Avg for Long Running AL. As it only looks at the small subset of runs that are very slow Min is the fastest of the slowest and Avg is the average of those that are very slow.  The Max makes sense and some performance buckets might make sense.
+DONE: Adding LC0024 - Analyzing Table Index Trace Telemetry. So you can see what is happing if someones adds some keys that you aren't aware of or removed some key. So your performance is getting slower.
+DONE: Maybe also that you can filter on company name in reports page?
 
-TODO: Maybe also that you can filter on company name in reports page?
 TODO: Database wait statistics (RT0025 and RT0026)
-TODO: Adding LC0024 - Analyzing Table Index Trace Telemetry. So you can see what is happing if someones adds some keys that you aren't aware of or removed some key. So your performance is getting slower.
+
 
 
 Not possible: 
