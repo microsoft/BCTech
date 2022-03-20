@@ -39,6 +39,8 @@ Recommendations
     Recurring failing task scheduler/job queue jobs 
 
 Pages
+    About this report
+    Add how to use boxes 
     Permisssions errors (20.1)
     Add page for Database deadlocks
     Add extensionPublisher everywhere where extension is present
@@ -55,12 +57,13 @@ Change report
 Pages
     Index lifecycle
         how to use
-        add count measure
-    Add page for extension lifecycle
-    Add page for environment lifecycle
+    Company lifecycle 
+        how to use
+    Extension lifecycle
+        how to use
+    Environment lifecycle
 
 Dataset
-    Add dataset for company lifecycle
     Add dataset for environment lifecycle
 
 ------------
