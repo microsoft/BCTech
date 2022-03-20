@@ -53,12 +53,14 @@ Change report
 -------------
 
 Pages
-    Add page for Index lifecycle
+    Index lifecycle
+        how to use
+        add count measure
     Add page for extension lifecycle
     Add page for environment lifecycle
 
 Dataset
-    Add dataset for extension lifecycle
+    Add dataset for company lifecycle
     Add dataset for environment lifecycle
 
 ------------
