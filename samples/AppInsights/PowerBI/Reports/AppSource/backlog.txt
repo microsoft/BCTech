@@ -63,23 +63,18 @@ Change report
 
 Pages
     Index lifecycle
-        how to use
         column names
     Company lifecycle 
-        how to use
         column names
     Extension lifecycle
-        how to use
         column names
-    Environment lifecycle
-
     All changes page
+        add count
+
+    Environment lifecycle
 
 Dataset
     Add dataset for environment lifecycle
-    Add dataset for All changes (when, what, where) - can we do it in DAX? 
-        UNION(table1, table2, table3)
-        SELECTCOLUMNS(Info, "StateCountry", [State]&", "&[Country])
 
 ------------
 Partner asks
