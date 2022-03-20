@@ -62,15 +62,6 @@ Change report
 -------------
 
 Pages
-    Index lifecycle
-        column names
-    Company lifecycle 
-        column names
-    Extension lifecycle
-        column names
-    All changes page
-        add count
-
     Environment lifecycle
 
 Dataset
