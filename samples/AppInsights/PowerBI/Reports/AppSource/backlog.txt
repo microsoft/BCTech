@@ -8,7 +8,10 @@ Is it possible for the report consumer to define things such as
 
 Find a nice way to layout recommendations tiles.
 
-Dataset: modify parameter text for app id
+Dataset
+    modify parameter text for app id
+    Add extensionPublisher everywhere where extension is present
+
 
 ----------------
 Perf report TODO
@@ -19,12 +22,13 @@ Recommendations
     Recurring task scheduler/job queue jobs with LRQ
 
 Pages
-    Add company filter to OnOpenCompanyPerf report
-    Company name filter duplicate on reports page
+    Add page for Database wait statistics (RT0025 and RT0026)   
+    Add extensionPublisher everywhere where extension is present
+
 
 Dataset
     Add measure for Recurring task scheduler/job queue jobs with LRQ
-    Add dataset and page for Database wait statistics (RT0025 and RT0026)   
+    Add dataset for Database wait statistics (RT0025 and RT0026)   
     
 -----------------
 Error report TODO
@@ -37,6 +41,7 @@ Recommendations
 Pages
     Permisssions errors (20.1)
     Add page for Database deadlocks
+    Add extensionPublisher everywhere where extension is present
 
 Dataset
     Add dataset for Permisssions errors (20.1)
