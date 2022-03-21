@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "SlowExtension1"
+		},
+		{
+			"path": "SlowExtension2"
+		}
+	],
+	"settings": {}
+}
