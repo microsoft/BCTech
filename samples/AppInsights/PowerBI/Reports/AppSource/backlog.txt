@@ -9,7 +9,9 @@ Is it possible for the report consumer to define things such as
 Find a nice way to layout recommendations tiles.
 
 Dataset
-    Index - object id not a sum
+    TimeOfDay dimension
+    Link timestamp on session table to TimeOfDay
+    Session table: add measure
 
 ----------------
 Perf report TODO
@@ -20,6 +22,9 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
+    Daily usage - remove sum from visual
+    Reports - hide code owner visual
+
     Add page for Database wait statistics (RT0025 and RT0026)   
     Add page for Configuration package perf
 
@@ -37,6 +42,9 @@ Recommendations
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
+    About the report - need more details
+    Data foundation - sort order
+
     Add page for Database deadlocks
     20.1: Permisssions errors
     Add page for Configuration package errors
@@ -51,16 +59,15 @@ Change report
 -------------
 
 Pages
-
+    All changes - do not show environments
 Dataset
-    
+
 
 ------------
 Usage report
 ------------
 
 Pages
-    Data foundation
     Logins
     Clients
     Integrations (in/out ws)
@@ -71,6 +78,8 @@ Pages
     Field Monitoring
     Permission changes
     Retention Policy
+    Data foundation
+
 
 Dataset
     Feature uptake
