@@ -50,7 +50,6 @@ Recommendations
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
-    About this report
     Add how to use boxes 
     Add extensionPublisher everywhere where extension is present
     Add page for Database deadlocks
@@ -67,7 +66,6 @@ Change report
 -------------
 
 Pages
-    Global filters do not work
 
 Dataset
     
