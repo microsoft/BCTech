@@ -16,7 +16,6 @@ Perf report TODO
 ----------------
 
 Recommendations
-    Fix layout
     LRQ outside MS code?
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
