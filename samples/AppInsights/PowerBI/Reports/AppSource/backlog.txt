@@ -38,9 +38,6 @@ Recommendations
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
-    Add how to use boxes 
-    Add extensionPublisher everywhere where extension is present
-
     Add page for Database deadlocks
     20.1: Permisssions errors
     Add page for Configuration package errors
