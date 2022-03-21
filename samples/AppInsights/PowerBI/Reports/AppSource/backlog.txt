@@ -9,7 +9,7 @@ Is it possible for the report consumer to define things such as
 Find a nice way to layout recommendations tiles.
 
 Dataset
-    modify parameter text for app id
+
 
 ----------------
 Perf report TODO
@@ -21,9 +21,6 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
-    Data foundation
-    Add extensionPublisher everywhere where extension is present
-
     Add page for Database wait statistics (RT0025 and RT0026)   
     Add page for Configuration package perf
 
