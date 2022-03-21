@@ -10,16 +10,6 @@ Find a nice way to layout recommendations tiles.
 
 Dataset
     modify parameter text for app id
-    Add extensionPublisher everywhere where extension is present
-        IncomingWebServiceCallPerformance
-        IncomingWebServiceErrors
-        Index lifecycle
-        LockTimeouts
-        LongRunningALMethods
-        LongRunningSQLQueries
-        OutgoingWebServiceCallPerformance
-        OutgoingWebServiceErrors
-        SQLDeadlocks
 
 ----------------
 Perf report TODO
@@ -33,6 +23,7 @@ Recommendations
 Pages
     Data foundation
     Add extensionPublisher everywhere where extension is present
+
     Add page for Database wait statistics (RT0025 and RT0026)   
     Add page for Configuration package perf
 
@@ -52,6 +43,7 @@ Recommendations
 Pages
     Add how to use boxes 
     Add extensionPublisher everywhere where extension is present
+
     Add page for Database deadlocks
     20.1: Permisssions errors
     Add page for Configuration package errors
