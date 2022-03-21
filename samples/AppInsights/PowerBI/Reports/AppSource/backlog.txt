@@ -26,36 +26,41 @@ Perf report TODO
 ----------------
 
 Recommendations
-    LRQ outside MS code
-    Recurring task scheduler/job queue jobs with LRQ
+    Fix layout
+    LRQ outside MS code?
+    Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
-    Add page for Database wait statistics (RT0025 and RT0026)   
+    Data foundation
     Add extensionPublisher everywhere where extension is present
+    Add page for Database wait statistics (RT0025 and RT0026)   
+    Add page for Configuration package perf
 
 Dataset
-    Add measure for Recurring task scheduler/job queue jobs with LRQ
+    Pending bug in NST: Add measure for Recurring task scheduler/job queue jobs with LRQ
     Add dataset for Database wait statistics (RT0025 and RT0026)   
-    
+    Configuration package perf
+
 -----------------
 Error report TODO
 -----------------
 
 Recommendations
-    Permission errors (20.1)
-    Recurring failing task scheduler/job queue jobs 
+    20.1: Permission errors
+    Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
     About this report
     Add how to use boxes 
-    Permisssions errors (20.1)
-    Add page for Database deadlocks
     Add extensionPublisher everywhere where extension is present
+    Add page for Database deadlocks
+    20.1: Permisssions errors
+    Add page for Configuration package errors
 
 Dataset
-    Add dataset for Permisssions errors (20.1)
-    Add measure for Recurring failing task scheduler/job queue jobs
-
+    20.1: Add dataset for Permisssions errors
+    Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
+    Configuration package errors
 
 -------------
 Change report
@@ -66,6 +71,32 @@ Pages
 
 Dataset
     
+
+------------
+Usage report
+------------
+
+Pages
+    Data foundation
+    Logins
+    Clients
+    Integrations (in/out ws)
+    Connectors (Teams, Excel, Power BI, ...)
+    Page views
+    Reports
+    Feature uptake
+    Field Monitoring
+    Permission changes
+    Retention Policy
+
+Dataset
+    Feature uptake
+    Field Monitoring
+    Permission changes
+    Retention Policy
+    Add connector dimension (Teams, Excel, Power BI, ...) to WS table
+
+
 
 ------------
 Partner asks
