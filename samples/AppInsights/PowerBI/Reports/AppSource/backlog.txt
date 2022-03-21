@@ -63,7 +63,6 @@ Change report
 
 Pages
     Global filters do not work
-    Environment lifecycle
 
 Dataset
     
