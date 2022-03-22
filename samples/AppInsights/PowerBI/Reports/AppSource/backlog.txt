@@ -9,6 +9,8 @@ Is it possible for the report consumer to define things such as
 Find a nice way to layout recommendations tiles.
 
 Dataset
+    Reports 
+        add dimensions for layout, document type, ...
 
 ----------------
 Perf report TODO
@@ -19,6 +21,7 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
+    Reports - add filters on layout, document type, ...
     Add page for Database wait statistics (RT0025 and RT0026)   
     Add page for Configuration package perf
 
@@ -38,6 +41,7 @@ Recommendations
 Pages
     About the report - need more details
     Data foundation - sort order
+    Reports - add filters on layout, document type, ...
 
     Add page for Database deadlocks
     20.1: Permisssions errors
@@ -65,7 +69,7 @@ Pages
     Integrations (in/out ws)
     Connectors (Teams, Excel, Power BI, ...)
     Page views
-    Reports
+    Reports - add layout, document type, ... 
     Feature uptake
     Field Monitoring
     Permission changes
