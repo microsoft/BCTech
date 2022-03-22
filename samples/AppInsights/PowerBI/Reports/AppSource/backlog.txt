@@ -11,6 +11,17 @@ Find a nice way to layout recommendations tiles.
 Dataset
     Reports 
         add dimensions for layout, document type, ...
+    Page views add dimensions
+        appId
+        appName
+        appPublisher
+        appVersion
+        companyName
+        deviceScreenResolution
+        deviceLocale
+        hostType
+    Connector calls 
+    Integrations - combine in/out ws calls
 
 ----------------
 Perf report TODO
@@ -68,7 +79,7 @@ Usage report
 Pages
     Integrations (in/out ws)
     Connectors (Teams, Excel, Power BI, ...)
-    Page views
+    Page views - add extra dimensions when in the dataset
     Reports - add layout, document type, ... 
     Feature uptake
     Field Monitoring
