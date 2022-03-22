@@ -11,21 +11,10 @@ Find a nice way to layout recommendations tiles.
 Dataset
     Reports 
         add dimensions for layout, document type, ...
-    Page views add dimensions
 
-    DONE: 
-        appId
-        appName
-        appPublisher
-        appVersion
-
-        companyName
-        deviceScreenResolution
-        deviceLocale
-        hostType
     Connector calls 
 
-    DONE: Integrations - combine in/out ws calls
+    Page views: add count, avg(duration) measures
 
 ----------------
 Perf report TODO
@@ -39,6 +28,7 @@ Pages
     Reports - add filters on layout, document type, ...
     Add page for Database wait statistics (RT0025 and RT0026)   
     Add page for Configuration package perf
+    Page views: fix 
 
 Dataset
     Pending bug in NST: Add measure for Recurring task scheduler/job queue jobs with LRQ
