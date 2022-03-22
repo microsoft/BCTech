@@ -27,4 +27,16 @@ Scenario "Dizzy Rainbow"
   Execute
   Cleanup
   Hint
+
+
+
+
+Kalman's scenarios:
+There is one that has code to create 2000 (configurable) customers and then an action on items that traverses  them based on a filter on “Address  2” in the meantime also calling calcfields on various  flowfields.
+There is another I use to demo snapshot debugging with sufficiently deep stackframes. 
+
+Ihor's scenarios:
+"DB Operation tracker" - abuse of the global triggers
+"Word Template Extensions" - filtering on a field with no index (on a table that has a lot of records)
+
 ```
