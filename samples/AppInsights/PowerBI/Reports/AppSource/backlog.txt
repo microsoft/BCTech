@@ -12,16 +12,20 @@ Dataset
     Reports 
         add dimensions for layout, document type, ...
     Page views add dimensions
+
+    DONE: 
         appId
         appName
         appPublisher
         appVersion
+
         companyName
         deviceScreenResolution
         deviceLocale
         hostType
     Connector calls 
-    Integrations - combine in/out ws calls
+
+    DONE: Integrations - combine in/out ws calls
 
 ----------------
 Perf report TODO
