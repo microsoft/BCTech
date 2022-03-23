@@ -9,12 +9,7 @@ Is it possible for the report consumer to define things such as
 Find a nice way to layout recommendations tiles.
 
 Dataset
-    Reports 
-        add dimensions for layout, document type, ...
-
     Connector calls 
-
-    Page views: add count, avg(duration) measures
 
 ----------------
 Perf report TODO
@@ -25,10 +20,8 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
-    Reports - add filters on layout, document type, ...
     Add page for Database wait statistics (RT0025 and RT0026)   
     Add page for Configuration package perf
-    Page views: fix 
 
 Dataset
     Pending bug in NST: Add measure for Recurring task scheduler/job queue jobs with LRQ
@@ -71,10 +64,7 @@ Usage report
 ------------
 
 Pages
-    Integrations (in/out ws)
     Connectors (Teams, Excel, Power BI, ...)
-    Page views - add extra dimensions when in the dataset
-    Reports - add layout, document type, ... 
     Feature uptake
     Field Monitoring
     Permission changes
