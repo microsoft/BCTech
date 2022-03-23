@@ -20,7 +20,7 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
-    Add page for Configuration package perf
+    Add std. dev to ws call report
     Add page for Database wait statistics (RT0025 and RT0026)   
 
 Dataset
@@ -41,7 +41,6 @@ Pages
     Add page for Database deadlocks
 
     20.1: Permisssions errors
-    Add page for Configuration package errors
 
 Dataset
     20.1: Add dataset for Permisssions errors

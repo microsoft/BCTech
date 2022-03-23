@@ -22,6 +22,7 @@ traces
 , 'Unknown'
 )
 , alExecutionId = tostring( customDimensions.alExecutionId )
+, alErrorCount = customDimensions.alErrorCount
 ;
 let completed =
 traces
@@ -37,7 +38,7 @@ started
 | extend durationMS = datetime_diff('MilliSecond', end_time, start_time)
 | project-away alExecutionId1
 | extend Status = case(
-  isnotempty(end_time), 'Completed'
+, isnotempty(end_time), 'Completed'
 , operation == 'Delete', 'Completed' // no end event exists for delete operation
 , isempty(end_time) and start_time > ago(8h), 'Running'
 , 'Failed'
@@ -140,6 +141,8 @@ traces
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 , alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
+, alErrorCount = customDimensions.alErrorCount	
+, alFieldCount = customDimensions.alFieldCount
 
 
 // Configuration package deleted successfully (raw data)
