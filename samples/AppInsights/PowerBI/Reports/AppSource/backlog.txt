@@ -4,12 +4,12 @@ Both reports TODO
 
 Is it possible for the report consumer to define things such as 
 * their timezone (all timestamps are in UTC)? Use an optional parameter
-* their definition of working hours (per tenant?) Use an optional parameter
+* their definition of working hours (per tenant?) Use optionals parameters
 
 Find a nice way to layout recommendations tiles.
 
 Dataset
-    Connector calls 
+    Connector calls
 
 ----------------
 Perf report TODO
@@ -20,13 +20,12 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
-    Add page for Database wait statistics (RT0025 and RT0026)   
     Add page for Configuration package perf
+    Add page for Database wait statistics (RT0025 and RT0026)   
 
 Dataset
     Pending bug in NST: Add measure for Recurring task scheduler/job queue jobs with LRQ
     Add dataset for Database wait statistics (RT0025 and RT0026)   
-    Configuration package perf
 
 -----------------
 Error report TODO
@@ -39,9 +38,8 @@ Recommendations
 Pages
     About the report - need more details
     Data foundation - sort order
-    Reports - add filters on layout, document type, ...
-
     Add page for Database deadlocks
+
     20.1: Permisssions errors
     Add page for Configuration package errors
 
@@ -55,7 +53,7 @@ Change report
 -------------
 
 Pages
-    All changes - do not show environments
+    All changes - does not show environments
 
 Dataset
 
@@ -114,5 +112,3 @@ TODO: Database wait statistics (RT0025 and RT0026)
 Not possible: 
 Speaking of the Tenant ID - a mapping between ID and domain name would be really nice. I don't know if it is available, I have thought about creating a file with the mapping for my own reports.
 Current limitation in client telemetry: On "Page views" all environments show as type Prod, even sandboxes.
-
-
