@@ -8,7 +8,6 @@ Is it possible for the report consumer to define things such as
 
 Dataset
     Add std. dev to ws call report
-    session performance: add hour of day
 
     Make a data foundation table?
 
