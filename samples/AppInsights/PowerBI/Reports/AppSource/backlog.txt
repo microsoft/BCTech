@@ -10,8 +10,6 @@ Find a nice way to layout recommendations tiles.
 
 Dataset
     Make a data foundation table?
-    ws incoming - object id is Sum (should not)
-    ws incoming - make two count measures connector/other
 
 ----------------
 Perf report TODO
