@@ -15,10 +15,10 @@ traces
 , component = customDimensions.component
 , componentVersion = customDimensions.componentVersion
 , operation = case(
-  appInsightsEventId == 'AL0000E3F', 'Export'
-, appInsightsEventId == 'AL0000E3H', 'Import'
-, appInsightsEventId == 'AL0000E3N', 'Apply'
-, appInsightsEventId == 'AL0000E3P', 'Delete'
+  customDimensions.eventId == 'AL0000E3F', 'Export'
+, customDimensions.eventId == 'AL0000E3H', 'Import'
+, customDimensions.eventId == 'AL0000E3N', 'Apply'
+, customDimensions.eventId == 'AL0000E3P', 'Delete'
 , 'Unknown'
 )
 , alExecutionId = tostring( customDimensions.alExecutionId )
