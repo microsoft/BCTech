@@ -9,7 +9,6 @@ Is it possible for the report consumer to define things such as
 Find a nice way to layout recommendations tiles.
 
 Dataset
-    Connector calls
 
 ----------------
 Perf report TODO
@@ -38,6 +37,7 @@ Recommendations
 Pages
     About the report - need more details
     Data foundation - sort order
+    Add page on Connector errors?
     Add page for Database deadlocks
 
     20.1: Permisssions errors
@@ -62,7 +62,6 @@ Usage report
 ------------
 
 Pages
-    Connectors (Teams, Excel, Power BI, ...)
     Feature uptake
     Field Monitoring
     Permission changes
@@ -75,9 +74,6 @@ Dataset
     Field Monitoring
     Permission changes
     Retention Policy
-    Add connector dimension (Teams, Excel, Power BI, ...) to WS table
-
-
 
 ------------
 Partner asks
