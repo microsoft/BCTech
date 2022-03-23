@@ -3,8 +3,8 @@ Both reports TODO
 -----------------
 
 Is it possible for the report consumer to define things such as 
-* their timezone (all timestamps are in UTC)?
-* their definition of working hours (per tenant?)
+* their timezone (all timestamps are in UTC)? Use an optional parameter
+* their definition of working hours (per tenant?) Use an optional parameter
 
 Find a nice way to layout recommendations tiles.
 
