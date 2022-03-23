@@ -9,6 +9,9 @@ Is it possible for the report consumer to define things such as
 Find a nice way to layout recommendations tiles.
 
 Dataset
+    Make a data foundation table?
+    ws incoming - object id is Sum (should not)
+    ws incoming - make two count measures connector/other
 
 ----------------
 Perf report TODO
@@ -31,13 +34,13 @@ Error report TODO
 -----------------
 
 Recommendations
+    Fix layout (align to perf layout)
+    Connector errors
     20.1: Permission errors
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
     About the report - need more details
-    Data foundation - sort order
-    Add page on Connector errors?
     Add page for Database deadlocks
 
     20.1: Permisssions errors
@@ -62,7 +65,6 @@ Usage report
 ------------
 
 Pages
-
     Feature uptake
     Field Monitoring
     Permission changes
