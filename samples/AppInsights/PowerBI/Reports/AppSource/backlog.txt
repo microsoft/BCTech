@@ -62,6 +62,7 @@ Usage report
 ------------
 
 Pages
+
     Feature uptake
     Field Monitoring
     Permission changes
