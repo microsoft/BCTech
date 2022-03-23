@@ -6,9 +6,10 @@ Is it possible for the report consumer to define things such as
 * their timezone (all timestamps are in UTC)? Use an optional parameter
 * their definition of working hours (per tenant?) Use optionals parameters
 
-Find a nice way to layout recommendations tiles.
-
 Dataset
+    Add std. dev to ws call report
+    session performance: add hour of day
+
     Make a data foundation table?
 
 ----------------
@@ -20,9 +21,8 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
+    session performance: add hour of day
     Add std. dev to ws call report
-    incoming ws: move count 
-
 
     Add page for Database wait statistics (RT0025 and RT0026)   
 
@@ -40,23 +40,12 @@ Recommendations
 
 Pages
     About the report - need more details
-    Ext lc errors: count texts
-    Outgoing: header texts
 
     20.1: Permisssions errors
 
 Dataset
     20.1: Add dataset for Permisssions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
-
--------------
-Change report
--------------
-
-Pages
-    All changes - does not show environments
-
-Dataset
 
 
 ------------
@@ -65,7 +54,6 @@ Usage report
 
 Pages
     Sessions: use hour of day
-    Connectors: change hour visual
 
     Feature uptake
     Field Monitoring
@@ -79,6 +67,17 @@ Dataset
     Field Monitoring
     Permission changes
     Retention Policy
+
+
+-------------
+Change report
+-------------
+
+Pages
+    All changes - does not show environments
+
+Dataset
+
 
 ------------
 Partner asks
