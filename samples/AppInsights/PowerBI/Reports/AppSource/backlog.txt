@@ -21,6 +21,8 @@ Recommendations
 
 Pages
     Add std. dev to ws call report
+    incoming ws: move count 
+
 
     Add page for Database wait statistics (RT0025 and RT0026)   
 
@@ -38,14 +40,12 @@ Recommendations
 
 Pages
     About the report - need more details
+    Ext lc errors: count texts
+    Outgoing: header texts
 
     20.1: Permisssions errors
 
 Dataset
-    LoginErrors
-        Hour dimension
-        Short error reason
-
     20.1: Add dataset for Permisssions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
 
@@ -64,6 +64,9 @@ Usage report
 ------------
 
 Pages
+    Sessions: use hour of day
+    Connectors: change hour visual
+
     Feature uptake
     Field Monitoring
     Permission changes
