@@ -21,6 +21,7 @@ Recommendations
 
 Pages
     Add std. dev to ws call report
+
     Add page for Database wait statistics (RT0025 and RT0026)   
 
 Dataset
@@ -32,14 +33,12 @@ Error report TODO
 -----------------
 
 Recommendations
-    Fix layout (align to perf layout)
-    Connector errors
+
     20.1: Permission errors
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
     About the report - need more details
-    Add page for Database deadlocks
 
     20.1: Permisssions errors
 
@@ -63,9 +62,6 @@ Usage report
 ------------
 
 Pages
-    Connector
-        Fix visual title (client type)
-
     Feature uptake
     Field Monitoring
     Permission changes
