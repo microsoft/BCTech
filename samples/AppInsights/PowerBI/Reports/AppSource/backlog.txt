@@ -8,7 +8,6 @@ Is it possible for the report consumer to define things such as
 
 Dataset
     Add std. dev to ws call report
-
     Make a data foundation table?
 
 ----------------
@@ -21,7 +20,6 @@ Recommendations
 
 Pages
     Add std. dev to ws call report
-
     Add page for Database wait statistics (RT0025 and RT0026)   
 
 Dataset
@@ -38,7 +36,6 @@ Recommendations
 
 Pages
     About the report - need more details
-
     20.1: Permisssions errors
 
 Dataset
@@ -51,27 +48,24 @@ Usage report
 ------------
 
 Pages
-    Feature uptake
+    Feature telemetry
+
     Field Monitoring
     Permission changes
     Retention Policy
     Data foundation
 
+
 Dataset
-    Feature uptake
-    Field Monitoring
-    Permission changes
-    Retention Policy
 
 
 -------------
 Change report
 -------------
-
 Pages
-    All changes - does not show environments
 
 Dataset
+    Permission changes
 
 
 ------------
