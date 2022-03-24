@@ -7,7 +7,6 @@ Is it possible for the report consumer to define things such as
 * their definition of working hours (per tenant?) Use optionals parameters
 
 Dataset
-    Add std. dev to ws call report
     Make a data foundation table?
 
 ----------------
@@ -23,6 +22,7 @@ Pages
     Add page for Database wait statistics (RT0025 and RT0026)   
 
 Dataset
+    Add std. dev to ws call report
     Pending bug in NST: Add measure for Recurring task scheduler/job queue jobs with LRQ
     Add dataset for Database wait statistics (RT0025 and RT0026)   
 
@@ -39,7 +39,7 @@ Pages
     20.1: Permisssions errors
 
 Dataset
-    20.1: Add dataset for Permisssions errors
+    20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
 
 
@@ -58,6 +58,8 @@ Change report
 -------------
 Pages
     Feature uptake 
+    Permission set changes
+
 Dataset
     Feature uptake 
     Permission changes
