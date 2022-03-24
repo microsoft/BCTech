@@ -20,7 +20,6 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
-    Daily usage: add time of day and day of week visuals
     Add std. dev to ws call report
 
     Add page for Database wait statistics (RT0025 and RT0026)   
