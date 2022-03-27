@@ -8,7 +8,6 @@ Is it possible for the report consumer to define things such as
 
 Dataset
     Make a data foundation table?
-    
 
 ----------------
 Perf report TODO
@@ -37,6 +36,7 @@ Recommendations
 
 Pages
     About the report - need more details
+    Deprecated features: mention online
     20.1: Permisssions errors
 
 Dataset
@@ -49,7 +49,9 @@ Usage report
 ------------
 
 Pages
+    WSK: filtering on the aad tenant is not working
     Data foundation
+    Deprecated features: mention online
 
 Dataset
 
