@@ -38,7 +38,7 @@ Recommendations
     20.1: Permission errors
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
-Pages
+Pages    
     About the report - need more details
     20.1: Permisssions errors
     Error message votes: does not follow global filter. Why?
