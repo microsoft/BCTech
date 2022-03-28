@@ -34,20 +34,14 @@ Dataset
 Error report TODO
 -----------------
 
-All pages: write which version the signal is available in
-
-
 Recommendations
-    Conf package errors
-    Deadlocks
     20.1: Permission errors
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
-    wsk errors: check filters
     About the report - need more details
-    Deprecated features: mention online
     20.1: Permisssions errors
+    Error message votes: does not follow global filter. Why?
 
 Dataset
     20.1: Add dataset for Permissions errors
