@@ -8,10 +8,13 @@ Is it possible for the report consumer to define things such as
 
 Dataset
     Make a data foundation table?
+    Add 60, 90 days to parameter
 
 ----------------
 Perf report TODO
 ----------------
+
+All pages: write which version the signal is available in
 
 Recommendations
     LRQ outside MS code?
@@ -22,6 +25,7 @@ Pages
     Add page for Database wait statistics (RT0025 and RT0026)   
 
 Dataset
+    Add measure for LRQ last period vs. this period
     Add std. dev to ws call report
     Pending bug in NST: Add measure for Recurring task scheduler/job queue jobs with LRQ
     Add dataset for Database wait statistics (RT0025 and RT0026)   
@@ -30,11 +34,17 @@ Dataset
 Error report TODO
 -----------------
 
+All pages: write which version the signal is available in
+
+
 Recommendations
+    Conf package errors
+    Deadlocks
     20.1: Permission errors
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages
+    wsk errors: check filters
     About the report - need more details
     Deprecated features: mention online
     20.1: Permisssions errors
@@ -48,8 +58,11 @@ Dataset
 Usage report
 ------------
 
+All pages: write which version the signal is available in
+
+
 Pages
-    WSK: filtering on the aad tenant is not working
+    Sessions page: client type vs. session type
     Data foundation
     Deprecated features: mention online
 
@@ -59,6 +72,10 @@ Dataset
 -------------
 Change report
 -------------
+
+All pages: write which version the signal is available in
+
+
 Pages
     Feature uptake 
     Permission set changes
