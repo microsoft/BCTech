@@ -63,7 +63,7 @@ Change report
 -------------
 
 All pages: write which version the signal is available in
-
+(data available from version 17.3)
 
 Pages
     Feature uptake 
