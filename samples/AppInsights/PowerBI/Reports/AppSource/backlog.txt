@@ -7,7 +7,6 @@ Is it possible for the report consumer to define things such as
 * their definition of working hours (per tenant?) Use optionals parameters
 
 Dataset
-    Make a data foundation table?
     Add 60, 90 days to parameter?
 
 ----------------
@@ -21,6 +20,7 @@ Recommendations
     Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
 
 Pages
+    Data foundation: change layout
     Add std. dev to ws call report
     Add page for Database wait statistics (RT0025 and RT0026)   
 
@@ -39,7 +39,7 @@ Recommendations
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
 
 Pages    
-    About the report - need more details
+    About the report - change after refactoring
     20.1: Permisssions errors
     Error message votes: does not follow global filter. Why?
 
@@ -53,8 +53,7 @@ Usage report
 ------------
 
 Pages
-    Data foundation
-    
+        
 Dataset
 
 
