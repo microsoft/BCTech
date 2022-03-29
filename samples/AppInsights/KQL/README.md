@@ -65,7 +65,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
 | Appsource validation | 2021 release wave 1 (18.4) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-appsource-submission-validation-trace |
 | Use of read scale-out in reporting | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
-| Feature Telemetry | 2021 release wave 2 (19.1) | (pending docs) |
+| Feature Telemetry | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-feature-telemetry |
 | Task Scheduler Telemetry | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-task-scheduler-trace |
 | Database deadlocks | 2022 release wave 1 (20.0) | Draft KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-when-database-deadlock-occurs-this-logged-telemetry |
 | Database wait statistics | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/performance-partners-get-database-insights-through-virtual-tables-in-client-pages |
