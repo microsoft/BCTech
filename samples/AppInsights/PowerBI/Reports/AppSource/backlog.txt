@@ -8,7 +8,7 @@ Is it possible for the report consumer to define things such as
 
 Dataset
     Make a data foundation table?
-    Add 60, 90 days to parameter
+    Add 60, 90 days to parameter?
 
 ----------------
 Perf report TODO
@@ -52,14 +52,9 @@ Dataset
 Usage report
 ------------
 
-All pages: write which version the signal is available in
-
-
 Pages
-    Sessions page: client type vs. session type
     Data foundation
-    Deprecated features: mention online
-
+    
 Dataset
 
 
