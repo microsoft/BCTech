@@ -17,7 +17,42 @@ All pages: write which version the signal is available in
 
 Recommendations
     LRQ outside MS code?
-    Pending bug in NST: Recurring task scheduler/job queue jobs with LRQ
+
+// Recurring task scheduler jobs with LRQ
+let tasks =
+AppInsightsTraces
+| where TIMESTAMP > ago(1d)
+| where appInsightsEventId == 'LC0043'
+//| where customDimensions.result == 'Success'
+//| where customDimensions.aadTenantId == '5cde4a4c-7ce0-4b0f-a111-687b1a4065b6'
+| project session_Id
+, task_start = datetime_add('millisecond', -toint(totimespan(customDimensions.totalTime))/10000, TIMESTAMP) 
+, task_end = TIMESTAMP 
+, task_duration_sec = toint(totimespan(customDimensions.totalTime))/10000000
+, aadTenantId = customDimensions.aadTenantId
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, taskId = tostring(customDimensions.taskId)
+;
+let lrq =
+AppInsightsTraces
+| where TIMESTAMP > ago(1d)
+| where appInsightsEventId == 'RT0005'
+//| where customDimensions.aadTenantId == '5cde4a4c-7ce0-4b0f-a111-687b1a4065b6'
+| project session_Id
+, sqlTimestamp = TIMESTAMP
+, sqlStatement = tostring(customDimensions.sqlStatement)
+, sqlExecutionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+;
+tasks
+| join kind=inner lrq on $left.session_Id == $right.session_Id
+| where sqlTimestamp between (task_start .. task_end)
+| summarize num_lrq=count(), sql_time_spent_sec = sum(sqlExecutionTimeInMS)/1000
+, task_time_spent_sec = sum(task_duration_sec)
+by taskId
+| take 5
 
 Pages
     Data foundation: change layout
@@ -65,6 +100,8 @@ All pages: write which version the signal is available in
 (data available from version 17.3)
 
 Pages
+    Environment updates
+    Extension updates
     Feature uptake 
     Permission set changes
 
