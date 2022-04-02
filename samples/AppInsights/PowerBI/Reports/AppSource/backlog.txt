@@ -63,7 +63,7 @@ by taskId
 
 Pages
     LRQ: A number showing Tenants affected in the two tables would be relevant to us
-    LRAL: Would be nice with Sum Time (ms)
+
     Data foundation: change layout
     Add std. dev to ws call report
     Add page for Database wait statistics (RT0025 and RT0026)   
