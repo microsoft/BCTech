@@ -6,6 +6,11 @@ Is it possible for the report consumer to define things such as
 * their timezone (all timestamps are in UTC)? Use an optional parameter
 * their definition of working hours (per tenant?) Use optionals parameters
 
+Is there any way to show the individual traces from app insights entries in the report, or open app insight with a prefilled kusto query? I don’t think they are part of the dataset, but looking at them would often be the next step when analyzing how to deal with a problem. 
+
+Ability to translate the AAD tenantId to a customer name would make a huge difference.
+
+
 Dataset
     Add 60, 90 days to parameter?
 
@@ -54,7 +59,11 @@ tasks
 by taskId
 | take 5
 
+
+
 Pages
+    LRQ: A number showing Tenants affected in the two tables would be relevant to us
+    LRAL: Would be nice with Sum Time (ms)
     Data foundation: change layout
     Add std. dev to ws call report
     Add page for Database wait statistics (RT0025 and RT0026)   
@@ -79,6 +88,7 @@ Pages
     Error message votes: does not follow global filter. Why?
 
 Dataset
+    Outgoing ws calls: add callstack
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
 
