@@ -16,7 +16,6 @@ Ability to translate the AAD tenantId to a customer name would make a huge diffe
     json parameter?
 
 Dataset
-    Add 60, 90 days to parameter?
     Possible to do imcremental loading
 
 ----------------
