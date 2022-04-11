@@ -10,7 +10,11 @@ and customDimensions.category == 'ODataV4'
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
-| where msUserAgent has 'AzureConnector' or msUserAgent has 'PowerBIConnector' or msUserAgent has 'BusinessCentralLinkUnfurlingTeamsBot'
+| extend IsMsConnector = 
+    msUserAgent has 'AzureConnector' or 
+    msUserAgent has 'PowerBIConnector' or 
+    msUserAgent has 'BusinessCentralLinkUnfurlingTeamsBot' or
+    msUserAgent has 'TeamsIntegrationService'
 | extend httpStatusCode = customDimensions.httpStatusCode
 , aadID = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
@@ -19,18 +23,21 @@ and customDimensions.category == 'ODataV4'
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , endpoint = customDimensions.endpoint
+, isMsConnector
 , connector = case( 
 // ms-dyn-useragent=AzureConnector/1.0 Flow/1.0 DynamicsSmbSaas/1.0.0.0
-msUserAgent matches regex "AzureConnector/(.)+Flow", 'Flow'
-// ["PowerBIConnector/1.0 PowerBI/1.0 Dynamics365BusinessCentral/1.1.5"]
-, msUserAgent matches regex "PowerBIConnector/", 'Power BI'
+msUserAgent matches regex 'AzureConnector/(.)+Flow', 'Power Automate'
+// ['PowerBIConnector/1.0 PowerBI/1.0 Dynamics365BusinessCentral/1.1.5']
+, msUserAgent matches regex 'PowerBIConnector/', 'Power BI'
 // ms-dyn-useragent=AzureConnector/1.0 PowerApps/3.20092.39 DynamicsSmbSaas/1.0.0.0
-, msUserAgent matches regex "AzureConnector/(.)+PowerApps", 'PowerApps'
+, msUserAgent matches regex 'AzureConnector/(.)+PowerApps', 'PowerApps'
 // ms-dyn-useragent=AzureConnector/1.0 LogicApps/3.20092.39 DynamicsSmbSaas/1.0.0.0
-, msUserAgent matches regex "AzureConnector/(.)+LogicApps", 'LogicApps'
+, msUserAgent matches regex 'AzureConnector/(.)+LogicApps', 'LogicApps'
 // ms-dyn-useragent=BusinessCentralLinkUnfurlingTeamsBot
-, msUserAgent has "BusinessCentralLinkUnfurlingTeamsBot", 'MSTeams'
+, msUserAgent has 'BusinessCentralLinkUnfurlingTeamsBot', 'Microsoft Teams'
+// ms-dyn-useragent=TeamsIntegrationService
+, msUserAgent has 'TeamsIntegrationService', 'Microsoft Teams'
 , msUserAgent has 'AzureConnector', 'Unknown Azure connector'
 , 'Unknown connector' 
 )
-| project timestamp, msUserAgent, httpStatusCode, aadID, environmentName, environmentType, connector, endpoint, alObjectId, alObjectName, message
+| project timestamp, msUserAgent, httpStatusCode, aadID, environmentName, environmentType, isMsConnector, connector, endpoint, alObjectId, alObjectName, message

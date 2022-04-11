@@ -1,5 +1,49 @@
 // KQL samples - Configuration Package Lifecycle
 
+// This query combines all start/end signal below and computes a status and duration in milliseconds (if Status is completed)
+let started =
+traces
+| where timestamp > ago(3d) // adjust as needed
+| where customDimensions.eventId in ( 'AL0000E3F', 'AL0000E3H', 'AL0000E3N', 'AL0000E3P' )
+| project 
+  start_time = timestamp
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, operation = case(
+  customDimensions.eventId == 'AL0000E3F', 'Export'
+, customDimensions.eventId == 'AL0000E3H', 'Import'
+, customDimensions.eventId == 'AL0000E3N', 'Apply'
+, customDimensions.eventId == 'AL0000E3P', 'Delete'
+, 'Unknown'
+)
+, alExecutionId = tostring( customDimensions.alExecutionId )
+, alErrorCount = customDimensions.alErrorCount
+;
+let completed =
+traces
+| where timestamp > ago(3d) // adjust as needed
+| where customDimensions.eventId in ( 'AL0000E3G', 'AL0000E3I', 'AL0000E3O' )
+| project 
+  end_time = timestamp
+, alExecutionId = tostring( customDimensions.alExecutionId )
+, PackageCode = tostring( customDimensions.alPackageCode )
+;
+started 
+| join kind=leftouter completed on $left.alExecutionId == $right.alExecutionId
+| extend durationMS = datetime_diff('MilliSecond', end_time, start_time)
+| project-away alExecutionId1
+| extend Status = case(
+, isnotempty(end_time), 'Completed'
+, operation == 'Delete', 'Completed' // no end event exists for delete operation
+, isempty(end_time) and start_time > ago(8h), 'Running'
+, 'Failed'
+)
+
 // Configuration package export started (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -8,6 +52,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 
@@ -20,6 +68,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 , alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
@@ -33,6 +85,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 
@@ -45,6 +101,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 , alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
@@ -58,6 +118,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 
@@ -70,9 +134,15 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 , alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
+, alErrorCount = customDimensions.alErrorCount	
+, alFieldCount = customDimensions.alFieldCount
 
 
 // Configuration package deleted successfully (raw data)
@@ -83,4 +153,8 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName // introduced in 20.0
+, clientType = customDimensions.clientType // introduced in 20.0
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
 , alPackageCode = customDimensions.alPackageCode

@@ -35,6 +35,10 @@ traces
 , reportAction = customDimensions.reportAction
 // documentFormat dimension added in version 20.0
 , documentFormat = customDimensions.documentFormat
+// layout dimensions added in version 20.0
+, LayoutAppId = customDimensions.layoutAppId
+, LayoutName = customDimensions.layoutName
+, LayoutType = customDimensions.layoutType
 , sqlExecutes = customDimensions.sqlExecutes 
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
