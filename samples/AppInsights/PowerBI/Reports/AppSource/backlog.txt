@@ -16,7 +16,7 @@ Ability to translate the AAD tenantId to a customer name would make a huge diffe
     json parameter?
 
 Dataset
-    Possible to do imcremental loading
+    Possible to do incremental loading
 
 ----------------
 Perf report TODO
@@ -74,7 +74,7 @@ Pages
 Dataset
     Add measure for LRQ last period vs. this period
     Add std. dev to ws call report
-    Pending bug in NST: Add measure for Recurring task scheduler/job queue jobs with LRQ
+    Add measure for Recurring task scheduler/job queue jobs with LRQ
     Add dataset for Database wait statistics (RT0025 and RT0026)   
 
 -----------------
@@ -83,12 +83,11 @@ Error report TODO
 
 Recommendations
     20.1: Permission errors
-    Pending bug in NST: Recurring failing task scheduler/job queue jobs 
-    Pending bug in NST: Fix wsk + basic auth
+    Recurring failing task scheduler/job queue jobs 
 
 Pages    
     About the report - change after refactoring
-    Pending bug in NST: Fix wsk + basic auth    
+    Fix wsk + basic auth message
     Outgoing ws calls: add callstack  
     20.1: Permisssions errors
     Error message votes: does not follow global filter. Why?
@@ -105,10 +104,9 @@ Usage report
 ------------
 
 Pages
-    Pending bug in NST: Fix wsk + basic auth
 
 Dataset
-    Pending bug in NST: Fix wsk + basic auth
+
 
 -------------
 Change report
