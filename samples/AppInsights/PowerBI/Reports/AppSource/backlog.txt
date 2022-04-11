@@ -2,6 +2,8 @@
 Both reports TODO
 -----------------
 
+How to get it to appsource?
+
 Is it possible for the report consumer to define things such as 
 * their timezone (all timestamps are in UTC)? Use an optional parameter
 * their definition of working hours (per tenant?) Use optionals parameters
@@ -9,10 +11,13 @@ Is it possible for the report consumer to define things such as
 Is there any way to show the individual traces from app insights entries in the report, or open app insight with a prefilled kusto query? I don’t think they are part of the dataset, but looking at them would often be the next step when analyzing how to deal with a problem. 
 
 Ability to translate the AAD tenantId to a customer name would make a huge difference.
-
+    url as parameter, load from xlsx file?
+    string parameter: csv list of (aadTenant, name)
+    json parameter?
 
 Dataset
     Add 60, 90 days to parameter?
+    Possible to do imcremental loading
 
 ----------------
 Perf report TODO
@@ -62,8 +67,7 @@ by taskId
 
 
 Pages
-    LRQ: A number showing Tenants affected in the two tables would be relevant to us
-
+    LRQ: A number showing #Tenants affected in the two tables would be relevant to us
     Data foundation: change layout
     Add std. dev to ws call report
     Add page for Database wait statistics (RT0025 and RT0026)   
@@ -81,14 +85,18 @@ Error report TODO
 Recommendations
     20.1: Permission errors
     Pending bug in NST: Recurring failing task scheduler/job queue jobs 
+    Pending bug in NST: Fix wsk + basic auth
 
 Pages    
     About the report - change after refactoring
+    Pending bug in NST: Fix wsk + basic auth    
+    Outgoing ws calls: add callstack  
     20.1: Permisssions errors
     Error message votes: does not follow global filter. Why?
 
 Dataset
-    Outgoing ws calls: add callstack
+    Outgoing ws calls: add callstack 
+    Pending bug in NST: Fix wsk + basic auth
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
 
@@ -98,9 +106,10 @@ Usage report
 ------------
 
 Pages
-        
-Dataset
+    Pending bug in NST: Fix wsk + basic auth
 
+Dataset
+    Pending bug in NST: Fix wsk + basic auth
 
 -------------
 Change report
@@ -146,7 +155,6 @@ DONE: Adding LC0024 - Analyzing Table Index Trace Telemetry. So you can see what
 DONE: Maybe also that you can filter on company name in reports page?
 
 TODO: Database wait statistics (RT0025 and RT0026)
-
 
 
 Not possible: 
