@@ -1,0 +1,29 @@
+{
+  "id": "ff410389-c6a8-4a44-ae8f-69fe2e41e1ae",
+  "name": "Slow Code Examples",
+  "publisher": "Microsoft",
+  "version": "1.0.0.0",
+  "brief": "Examples of actions that run for a long time.",
+  "description": "A test extension that includes examples of slowly running code. These examples can be used for testing performance troubleshooting tools.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "19.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": false,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "8.0"
+}
