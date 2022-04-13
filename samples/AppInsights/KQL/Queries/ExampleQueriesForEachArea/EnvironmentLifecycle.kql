@@ -740,6 +740,122 @@ traces
 
 
 //
+// Environment configuration changes
+//
+// Environment configuration changed (excluding update window changes)
+//
+// EnvironmentConfigurationChanged = "LC0142";
+// EnvironmentConfigurationChangeFailed = "LC0143";
+// EnvironmentConfigurationDeleted = "LC0144";
+// EnvironmentConfigurationDeleteFailed = "LC0145";
+//
+// Environment update window changed
+// EnvironmentUpdateWindowChanged = "LC0146";
+// EnvironmentUpdateWindowChangeFailed = "LC0147";
+//
+
+// Environment configuration key updated
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0142'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentConfigurationKey = customDimensions.environmentConfigurationKey
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, oldValue = customDimensions.oldValue
+, newValue = customDimensions.newValue
+
+// Environment configuration key failed to update
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0143'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentConfigurationKey = customDimensions.environmentConfigurationKey
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, oldValue = customDimensions.oldValue
+, newValue = customDimensions.newValue
+, totalTime = customDimensions.totalTime
+
+
+// Environment configuration key deleted
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0144'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentConfigurationKey = customDimensions.environmentConfigurationKey
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, oldValue = customDimensions.oldValue
+
+// Environment configuration key failed to be deleted
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0145'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentConfigurationKey = customDimensions.environmentConfigurationKey
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, oldValue = customDimensions.oldValue
+, totalTime = customDimensions.totalTime
+
+// Environment update window was modified
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0146'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, newUpdateWindowStartTimeUtc = customDimensions.newUpdateWindowStartTimeUtc
+, newUpdateWindowEndTimeUtc = customDimensions.newUpdateWindowEndTimeUtc
+, oldUpdateWindowStartTimeUtc = customDimensions.oldUpdateWindowStartTimeUtc
+, oldUpdateWindowEndTimeUtc = customDimensions.oldUpdateWindowEndTimeUtc
+
+// Environment update window modification failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0147'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, newUpdateWindowStartTimeUtc = customDimensions.newUpdateWindowStartTimeUtc
+, newUpdateWindowEndTimeUtc = customDimensions.newUpdateWindowEndTimeUtc
+, oldUpdateWindowStartTimeUtc = customDimensions.oldUpdateWindowStartTimeUtc
+, oldUpdateWindowEndTimeUtc = customDimensions.oldUpdateWindowEndTimeUtc
+, totalTime = customDimensions.totalTime
+
+
+
+
+
+//
 // Event blocks 
 //
 
@@ -874,14 +990,6 @@ traces
 
 
 
-// Environment configuration changed (excluding update window changes)
-EnvironmentConfigurationChanged = "LC0142";
-EnvironmentConfigurationChangeFailed = "LC0143";
-EnvironmentConfigurationDeleted = "LC0144";
-EnvironmentConfigurationDeleteFailed = "LC0145";
-// Environment update window changed
-EnvironmentUpdateWindowChanged = "LC0146";
-EnvironmentUpdateWindowChangeFailed = "LC0147";
 // Environment delete
 EnvironmentDeleteScheduled = "LC0148"; // Currently not used but we may start emitting this from TMS
 EnvironmentDeleteStarted = "LC0149";
