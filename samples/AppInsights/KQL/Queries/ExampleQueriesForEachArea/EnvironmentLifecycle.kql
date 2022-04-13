@@ -636,6 +636,57 @@ traces
 , failureReason = customDimensions.failureReason
 
 
+
+//
+// Environment session cancelled from TAC
+//
+// EnvironmentSessionCancelStarted = "LC0136";
+// EnvironmentSessionCancelSucceeded = "LC0137";
+// EnvironmentSessionCancelFailed = "LC0138";
+//
+
+// Environment session cancellation started from TAC
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0136'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sessionId = customDimensions.sessionId
+
+// Environment session cancelled successfully from TAC
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0137'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sessionId = customDimensions.sessionId
+, totalTime = customDimensions.totalTime
+
+// Environment session cancellation from TAC failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0138'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, sessionId = customDimensions.sessionId
+
+
 //
 // Event blocks 
 //
@@ -772,12 +823,6 @@ traces
 
 
 
-
-
-// Environment session cancel
-EnvironmentSessionCancelStarted = "LC0136";
-EnvironmentSessionCancelSucceeded = "LC0137";
-EnvironmentSessionCancelFailed = "LC0138";
 // Environment DB export
 EnvironmentDatabaseExportStarted = "LC0139";
 EnvironmentDatabaseExportSucceeded = "LC0140";
