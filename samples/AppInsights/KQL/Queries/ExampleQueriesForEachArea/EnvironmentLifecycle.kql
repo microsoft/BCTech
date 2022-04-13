@@ -687,6 +687,58 @@ traces
 , sessionId = customDimensions.sessionId
 
 
+
+//
+// Environment database exports
+//
+// EnvironmentDatabaseExportStarted = "LC0139";
+// EnvironmentDatabaseExportSucceeded = "LC0140";
+// EnvironmentDatabaseExportFailed = "LC0141";
+//
+
+// Environment database export operation started
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0139'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, blobUrl = customDimensions.blobUrl
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+// Environment database exported successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0140'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, blobUrl = customDimensions.blobUrl
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+// Environment database export operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == ''
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, blobUrl = customDimensions.blobUrl
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, totalTime = customDimensions.totalTime
+
+
 //
 // Event blocks 
 //
@@ -701,7 +753,6 @@ traces
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-
 
 
 PartnerDiagnosticsBlockEnvironmentInfo 
@@ -823,10 +874,6 @@ traces
 
 
 
-// Environment DB export
-EnvironmentDatabaseExportStarted = "LC0139";
-EnvironmentDatabaseExportSucceeded = "LC0140";
-EnvironmentDatabaseExportFailed = "LC0141";
 // Environment configuration changed (excluding update window changes)
 EnvironmentConfigurationChanged = "LC0142";
 EnvironmentConfigurationChangeFailed = "LC0143";
