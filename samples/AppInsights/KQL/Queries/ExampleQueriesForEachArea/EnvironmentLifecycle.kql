@@ -542,6 +542,99 @@ traces
 , totalTime = customDimensions.totalTime
 
 
+//
+// Environment move to another AAD tenant
+//
+// EnvironmentMoveToAnotherAadTenantScheduled = "LC0131";
+// EnvironmentMoveToAnotherAadTenantSchedulingFailed = "LC0132";
+// EnvironmentMoveToAnotherAadTenantStarted = "LC0133";
+// EnvironmentMoveToAnotherAadTenantSucceeded = "LC0134";
+// EnvironmentMoveToAnotherAadTenantFailed = "LC0135";
+//
+
+
+// Environment move to different AAD tenant operation scheduled
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0131'
+| project timestamp
+, message
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceAadTenantId = customDimensions.sourceAadTenantId
+, destinationAadTenantId = customDimensions.destinationAadTenantId
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, registeredForMoveDateUtc = customDimensions.registeredForMoveDateUtc
+
+// Environment move to different AAD tenant operation scheduling failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0132'
+| project timestamp
+, message
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceAadTenantId = customDimensions.sourceAadTenantId
+, destinationAadTenantId = customDimensions.destinationAadTenantId
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, registeredForMoveDateUtc = customDimensions.registeredForMoveDateUtc
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+
+// Environment move to different AAD tenant started
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0133'
+| project timestamp
+, message
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceAadTenantId = customDimensions.sourceAadTenantId
+, destinationAadTenantId = customDimensions.destinationAadTenantId
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+
+// Environment move to different AAD tenant completed successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0134'
+| project timestamp
+, message
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceAadTenantId = customDimensions.sourceAadTenantId
+, destinationAadTenantId = customDimensions.destinationAadTenantId
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, totalTime = customDimensions.totalTime
+
+// Environment move to different AAD tenant failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0135'
+| project timestamp
+, message
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceAadTenantId = customDimensions.sourceAadTenantId
+, destinationAadTenantId = customDimensions.destinationAadTenantId
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+
 
 //
 // Event blocks 
@@ -557,6 +650,7 @@ traces
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+
 
 
 PartnerDiagnosticsBlockEnvironmentInfo 
@@ -680,12 +774,6 @@ traces
 
 
 
-// Environment move to another AAD tenant
-EnvironmentMoveToAnotherAadTenantScheduled = "LC0131";
-EnvironmentMoveToAnotherAadTenantSchedulingFailed = "LC0132";
-EnvironmentMoveToAnotherAadTenantStarted = "LC0133";
-EnvironmentMoveToAnotherAadTenantSucceeded = "LC0134";
-EnvironmentMoveToAnotherAadTenantFailed = "LC0135";
 // Environment session cancel
 EnvironmentSessionCancelStarted = "LC0136";
 EnvironmentSessionCancelSucceeded = "LC0137";
