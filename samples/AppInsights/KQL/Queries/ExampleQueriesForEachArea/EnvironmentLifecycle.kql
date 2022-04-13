@@ -1,0 +1,1433 @@
+// KQL samples - Environment lifecycle events (update/)
+
+
+//
+// Environment update (AKA tenant upgrade) events
+//
+// EnvironmentUpdateAvailable = "LC0100"
+// EnvironmentUpdateScheduled = "LC0101"
+// EnvironmentUpdateMissed = "LC0102"
+// EnvironmentUpdatePostponed = "LC0103"
+// EnvironmentUpdateResumed = "LC0104"
+// EnvironmentUpdateStarted = "LC0105"
+// EnvironmentUpdateSucceeded = "LC0106"
+// EnvironmentUpdateFailed = "LC0107"
+//
+
+// Environment update available for scheduling
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0100' 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+
+// Environment update scheduled
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0101' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, canPartnerReschedule = customDimensions.canPartnerReschedule
+, updateDateSelectedByPartner = customDimensions.updateDateSelectedByPartner
+
+// Environment update missed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0102' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+
+// Environment update postponed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0103' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+
+// Environment update resumed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0104' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+
+// Environment update started
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0105' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, initiatedFrom = customDimensions.initiatedFrom
+, remainingTimeInUpdateWindow = customDimensions.remainingTimeInUpdateWindow
+
+// Environment updated successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0106' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, initiatedFrom = customDimensions.initiatedFrom
+, totalTime = customDimensions.totalTime
+
+// Environment failed to update
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0107' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, initiatedFrom = customDimensions.initiatedFrom
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+, failureCode = customDimensions.failureCode
+, recovered = customDimensions.recovered
+
+
+
+//
+// Environment start/stop/restart events
+//
+// Environment restart from TAC
+// EnvironmentRestartInitiated = "LC0110";
+// EnvironmentRestartSucceeded = "LC0111";
+// EnvironmentRestartFailed = "LC0112";
+//
+// Environment start (any origin)
+// EnvironmentStartInitiated = "LC0113";
+// EnvironmentStartSucceeded = "LC0114";
+// EnvironmentStartFailed = "LC0115";
+//
+// Environment stop (any origin)
+// EnvironmentStopInitiated = "LC0116";
+// EnvironmentStopSucceeded = "LC0117";
+// EnvironmentStopFailed = "LC0118";
+//
+
+// Environment restart operation initiated
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0110' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+// Environment restarted successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0111' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+// Environment restart operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0112' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+
+// Environment start operation initiated
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0113' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+// Environment started successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0114' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+// Environment start operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0115'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+
+// Environment stop operation initiated
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0116'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+//Environment stopped successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0117'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+// Environment stop operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0118'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+
+
+//
+// Environment copy events
+//
+// EnvironmentCopyToNewEnvironmentStarted = "LC0119";
+// EnvironmentCopyToNewEnvironmentSucceeded = "LC0120";
+// EnvironmentCopyToNewEnvironmentFailed = "LC0121";
+// EnvironmentCopyFromExistingEnvironmentStarted = "LC0122";
+// EnvironmentCopyFromExistingEnvironmentSucceeded = "LC0123";
+// EnvironmentCopyFromExistingEnvironmentFailed = "LC0124";
+//
+
+// Environment copy operation started on source
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0119'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, destinationEnvironmentType = customDimensions.destinationEnvironmentType
+, destinationEnvironmentVersion = customDimensions.destinationEnvironmentVersion
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+// Environment copied successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0120'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, destinationEnvironmentType = customDimensions.destinationEnvironmentType
+, destinationEnvironmentVersion = customDimensions.destinationEnvironmentVersion
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+// Environment copy operation failed on source
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0121'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, destinationEnvironmentType = customDimensions.destinationEnvironmentType
+, destinationEnvironmentVersion = customDimensions.destinationEnvironmentVersion
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+
+// Environment copy operation started on destination
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0122'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, sourceEnvironmentType = customDimensions.sourceEnvironmentType
+, sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
+
+// Environment copied successfully to destination
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0123'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, sourceEnvironmentType = customDimensions.sourceEnvironmentType
+, sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
+, totalTime = customDimensions.totalTime
+
+// Environment copy operation failed on destination
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0124'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, sourceEnvironmentType = customDimensions.sourceEnvironmentType
+, sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+
+//
+// Event blocks 
+//
+
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == ''
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+PartnerDiagnosticsBlockEnvironmentInfo 
+[PartnerTelemetryKey("aadTenantId")]
+[PartnerTelemetryKey("environmentName")]
+[PartnerTelemetryKey("environmentType")]
+[PartnerTelemetryKey("applicationFamily")]
+[PartnerTelemetryKey("countryCode")]
+
+
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+|aadTenantId|[!INCLUDE[aadTenantId](../includes/include-telemetry-dimension-aadtenantid.md)]|
+|applicationFamily|[!INCLUDE[applicationFamily](../includes/include-telemetry-dimension-application-family.md)]|
+|countryCode|[!INCLUDE[countryCode](../includes/include-telemetry-dimension-country-code.md)]|
+|environmentName|[!INCLUDE[environmentName](../includes/include-telemetry-dimension-environment-name.md)]|
+|environmentType|[!INCLUDE[environmentType](../includes/include-telemetry-dimension-environment-type.md)]|
+
+
+PartnerDiagnosticsBlockEnvironmentUpdateInfo
+[PartnerTelemetryKey("sourceVersion", AllowEmpty = true)]
+[PartnerTelemetryKey("destinationVersion", AllowEmpty = true)]
+[PartnerTelemetryKey("updatePeriodStartDateUtc", AllowEmpty = true)]
+[PartnerTelemetryKey("updatePeriodEndDateUtc", AllowEmpty = true)]
+[PartnerTelemetryKey("registeredForUpdateOnOrAfterDateUtc", AllowEmpty = true)]
+
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+
+|destinationVersion|[!INCLUDE[destinationVersion](../includes/include-telemetry-dimension-update-destination-version.md)]|
+|registeredForUpdateOnOrAfterDateUtc|[!INCLUDE[registeredForUpdateOnOrAfterDateUtc](../includes/include-telemetry-dimension-registered-for-update-on-or-after-date.md)]|
+|sourceVersion|[!INCLUDE[sourceVersion](../includes/include-telemetry-dimension-update-source-version.md)]|
+|updatePeriodEndDateUtc|[!INCLUDE[updatePeriodEndDateUtc](../includes/include-telemetry-dimension-update-period-end-date.md)]|
+|updatePeriodStartDateUtc|[!INCLUDE[updatePeriodStartDateUtc](../includes/include-telemetry-dimension-update-period-start-date.md)]|
+
+
+
+PartnerDiagnosticsBlockEnvironmentUpdateWindow
+[PartnerTelemetryKey("updateWindowStartTimeUtc", AllowEmpty = true)]
+[PartnerTelemetryKey("updateWindowEndTimeUtc", AllowEmpty = true)]
+[PartnerTelemetryKey("ignoreUpdateWindow")]
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+
+|updateWindowEndTimeUtc|[!INCLUDE[updateWindowEndDateUtc](../includes/include-telemetry-dimension-update-window-end-date.md)]|
+|updateWindowStartTimeUtc|[!INCLUDE[updateWindowStartDateUtc](../includes/include-telemetry-dimension-update-window-start-date.md)]|
+|ignoreUpdateWindow|[!INCLUDE[ignoreUpdateWindow](../includes/include-telemetry-dimension-ignore-update-window.md)]|
+
+
+PartnerDiagnosticsBlockDestinationEnvironmentInfo
+[PartnerTelemetryKey("destinationEnvironmentName")]
+[PartnerTelemetryKey("destinationEnvironmentType")]
+[PartnerTelemetryKey("destinationEnvironmentVersion")]
+
+, destinationEnvironmentName = customDimensions.destinationEnvironmentName
+, destinationEnvironmentType = customDimensions.destinationEnvironmentType
+, destinationEnvironmentVersion = customDimensions.destinationEnvironmentVersion
+
+|destinationEnvironmentName|[!INCLUDE[destinationEnvironmentName](../includes/include-telemetry-dimension-destination-environment-name.md)]|
+|destinationEnvironmentType|[!INCLUDE[destinationEnvironmentType](../includes/include-telemetry-dimension-destination-environment-type.md)]|
+|destinationEnvironmentVersion|[!INCLUDE[destinationEnvironmentVersion](../includes/include-telemetry-dimension-destination-environment-version.md)]|
+
+
+PartnerDiagnosticsBlockSourceEnvironmentInfo
+[PartnerTelemetryKey("sourceEnvironmentName")]
+[PartnerTelemetryKey("sourceEnvironmentType")]
+[PartnerTelemetryKey("sourceEnvironmentVersion")]
+
+, sourceEnvironmentName = customDimensions.sourceEnvironmentName
+, sourceEnvironmentType = customDimensions.sourceEnvironmentType
+, sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
+
+|sourceEnvironmentName|[!INCLUDE[sourceEnvironmentName](../includes/include-telemetry-dimension-source-environment-name.md)]|
+|sourceEnvironmentType|[!INCLUDE[sourceEnvironmentType](../includes/include-telemetry-dimension-source-environment-type.md)]|
+|sourceEnvironmentVersion|[!INCLUDE[sourceEnvironmentVersion](../includes/include-telemetry-dimension-source-environment-version.md)]|
+
+
+
+PartnerDiagnosticsBlockEnvironmentOperation
+[PartnerTelemetryKey("initiatedFrom")]
+, initiatedFrom = customDimensions.initiatedFrom
+|initiatedFrom|[!INCLUDE[initiatedFrom](../includes/include-telemetry-dimension-initiated-from.md)]|
+
+
+PartnerDiagnosticsBlockOperationSuccessInfo
+[PartnerTelemetryKey("totalTime")
+, totalTime = customDimensions.totalTime
+|totalTime|[!INCLUDE[totalTime](../includes/include-telemetry-dimension-total-time.md)]|
+
+
+PartnerDiagnosticsBlockOperationFailureInfo
+[PartnerTelemetryKey("totalTime")]
+[PartnerTelemetryKey("failureReason")]
+, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
+|totalTime|[!INCLUDE[totalTime](../includes/include-telemetry-dimension-total-time.md)]|
+|failureReason|[!INCLUDE[failureReason](../includes/include-telemetry-dimension-failure-reason.md)]|
+
+
+
+
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == '' 
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+
+
+
+// Environment PIT restore
+EnvironmentRestoreToNewEnvironmentStarted = "LC0125";
+EnvironmentRestoreToNewEnvironmentSucceeded = "LC0126";
+EnvironmentRestoreToNewEnvironmentFailed = "LC0127";
+EnvironmentRestoreFromExistingEnvironmentStarted = "LC0128";
+EnvironmentRestoreFromExistingEnvironmentSucceeded = "LC0129";
+EnvironmentRestoreFromExistingEnvironmentFailed = "LC0130";
+// Environment move to another AAD tenant
+EnvironmentMoveToAnotherAadTenantScheduled = "LC0131";
+EnvironmentMoveToAnotherAadTenantSchedulingFailed = "LC0132";
+EnvironmentMoveToAnotherAadTenantStarted = "LC0133";
+EnvironmentMoveToAnotherAadTenantSucceeded = "LC0134";
+EnvironmentMoveToAnotherAadTenantFailed = "LC0135";
+// Environment session cancel
+EnvironmentSessionCancelStarted = "LC0136";
+EnvironmentSessionCancelSucceeded = "LC0137";
+EnvironmentSessionCancelFailed = "LC0138";
+// Environment DB export
+EnvironmentDatabaseExportStarted = "LC0139";
+EnvironmentDatabaseExportSucceeded = "LC0140";
+EnvironmentDatabaseExportFailed = "LC0141";
+// Environment configuration changed (excluding update window changes)
+EnvironmentConfigurationChanged = "LC0142";
+EnvironmentConfigurationChangeFailed = "LC0143";
+EnvironmentConfigurationDeleted = "LC0144";
+EnvironmentConfigurationDeleteFailed = "LC0145";
+// Environment update window changed
+EnvironmentUpdateWindowChanged = "LC0146";
+EnvironmentUpdateWindowChangeFailed = "LC0147";
+// Environment delete
+EnvironmentDeleteScheduled = "LC0148"; // Currently not used but we may start emitting this from TMS
+EnvironmentDeleteStarted = "LC0149";
+EnvironmentDeleteSucceeded = "LC0150";
+EnvironmentDeleteFailed = "LC0151";
+// Environment rename
+EnvironmentRenameStarted = "LC0152";
+EnvironmentRenameSucceeded = "LC0153";
+EnvironmentRenameFailed = "LC0154";
+// Environment app hotfix via FAME
+EnvironmentAppHotfixScheduled = "LC0155";
+EnvironmentAppHotfixSchedulingFailed = "LC0156";
+EnvironmentAppHotfixCanceled = "LC0157";
+EnvironmentAppHotfixStarted = "LC0158";
+EnvironmentAppHotfixSucceeded = "LC0159";
+EnvironmentAppHotfixFailed = "LC0160";
+// Environment app install (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
+EnvironmentAppInstallScheduled = "LC0161";
+EnvironmentAppInstallSchedulingFailed = "LC0162";
+EnvironmentAppInstallStarted = "LC0163";
+EnvironmentAppInstallSucceeded = "LC0164";
+EnvironmentAppInstallFailed = "LC0165";
+EnvironmentAppDependencyInstallRequired = "LC0166";
+// Environment app update (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
+EnvironmentAppUpdateScheduled = "LC0167";
+EnvironmentAppUpdateSchedulingFailed = "LC0168";
+EnvironmentAppUpdateStarted = "LC0169";
+EnvironmentAppUpdateSucceeded = "LC0170";
+EnvironmentAppUpdateFailed = "LC0171";
+EnvironmentAppDependencyUpdateRequired = "LC0172";
+// Environment app uninstall (only scheduling as NST telemetry has the rest of signals, canceling is not supported yet)
+EnvironmentAppUninstallScheduled = "LC0173";
+EnvironmentAppUninstallSchedulingFailed = "LC0174";
+
+
+
+// 
+// Environment update operations
+// 
+
+Environment update available for scheduling: [environment name] to version [source version]
+LC0100
+  "environmentVersion": "19.4.35398.35925",
+  "applicationFamily": "BusinessCentral",
+  "environmentType": "Sandbox",
+  "environmentName": "Update_195",
+  "countryCode": "NL",
+  "aadTenantId": "7765755c-c98b-4858-9c5c-9e32d18a1ef4",
+
+  "registeredForUpdateOnOrAfterDateUtc": "2022-04-04T21:00:00.0000000Z",
+  "updatePeriodStartDateUtc": "2022-03-10T21:00:00.0000000Z",
+  "updatePeriodEndDateUtc": "2022-04-11T10:04:37.7470000Z",
+  "destinationVersion": "19.5.36567.36634",
+  "sourceVersion": "19.4.35398.35925"
+
+// Environment update scheduled
+Environment update scheduled: [environment name] to version [destination version], update on or after date: [upgrade window start as defined in TAC]
+LC0101	
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0101' 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, destinationVersion = customDimensions.destinationVersion
+, sourceVersion = customDimensions.sourceVersion
+, updateDateSelectedByPartner = customDimensions.updateDateSelectedByPartner
+, canPartnerReschedule = customDimensions.canPartnerReschedule
+, message
+
+  "registeredForUpdateOnOrAfterDateUtc": "2022-04-11T21:00:00.0000000Z",
+  "updatePeriodStartDateUtc": "2022-03-10T21:00:00.0000000Z",
+  "updateWindowStartTimeUtc": "22:00:00",
+  "updateWindowEndTimeUtc": "05:00:00",
+  "updatePeriodEndDateUtc": "2022-04-14T22:04:02.9930000Z",
+  "ignoreUpdateWindow": "False",
+  "destinationVersion": "19.5.36567.36634",
+  "sourceVersion": "19.4.35398.35925",
+  "updateDateSelectedByPartner": "True",
+  "canPartnerReschedule": "True"
+
+
+
+Environment update scheduled: [environment name] to version [destination version], update on or after date: [date registered in TAC]
+LC0101
+  "environmentVersion": "19.4.35398.35925",
+  "applicationFamily": "BusinessCentral",
+  "environmentType": "Sandbox",
+  "environmentName": "Test_20_02_2022",
+  "aadTenantId": "7765755c-c98b-4858-9c5c-9e32d18a1ef4",
+  "countryCode": "NL",
+
+  "registeredForUpdateOnOrAfterDateUtc": "2022-04-11T21:00:00.0000000Z",
+  "updatePeriodStartDateUtc": "2022-03-10T21:00:00.0000000Z",
+  "updateWindowStartTimeUtc": "22:00:00",
+  "updateWindowEndTimeUtc": "05:00:00",
+  "updatePeriodEndDateUtc": "2022-04-14T22:04:02.9930000Z",
+  "ignoreUpdateWindow": "False",
+  "destinationVersion": "19.5.36567.36634",
+  "sourceVersion": "19.4.35398.35925",
+
+  "updateDateSelectedByPartner": "True",
+  "canPartnerReschedule": "True"
+
+
+Environment update missed: {this.EnvironmentInfo.EnvironmentName} to version {this.UpdateInfo.DestinationVersion}
+LC0102
+
+
+LC0103
+LC0104
+
+
+// Environment update started
+Environment update started: [environment name] to version [destination version]
+LC0105
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0105' 
+| project aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, environmentVersion = customDimensions.environmentVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, destinationVersion = customDimensions.destinationVersion
+, sourceVersion = customDimensions.sourceVersion
+, initiatedFrom = customDimensions.initiatedFrom
+, remainingTimeInUpdateWindow = customDimensions.remainingTimeInUpdateWindow
+, message
+
+environmentVersion
+  "registeredForUpdateOnOrAfterDateUtc": "2022-04-12T02:00:00.0000000Z",
+  "updatePeriodStartDateUtc": "2022-04-05T15:51:16.0000000Z",
+  "updateWindowStartTimeUtc": "02:00:00",
+  "updateWindowEndTimeUtc": "09:30:00",
+  "updatePeriodEndDateUtc": "2022-04-24T22:00:00.0000000Z",
+  "ignoreUpdateWindow": "False",
+  "destinationVersion": "19.4.194.0",
+  "sourceVersion": "19.3.193.0",
+  "initiatedFrom": "TenantAdminCenter",
+  "remainingTimeInUpdateWindow": "07:28:59.8830000"
+
+
+
+// Environment updated successfully
+Environment updated successfully: [environment name] to version [destination version]
+LC0106
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0106' 
+| project aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, environmentVersion = customDimensions.environmentVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, totalTime = customDimensions.totalTime
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, destinationVersion = customDimensions.destinationVersion
+, sourceVersion = customDimensions.sourceVersion
+, initiatedFrom = customDimensions.initiatedFrom
+, message
+
+environmentVersion
+  "totalTime": "00:12:14.2338631",
+  "registeredForUpdateOnOrAfterDateUtc": "2022-04-12T02:00:00.0000000Z",
+  "updatePeriodStartDateUtc": "2022-04-05T15:51:16.0000000Z",
+  "updateWindowStartTimeUtc": "02:00:00",
+  "updateWindowEndTimeUtc": "09:30:00",
+  "updatePeriodEndDateUtc": "2022-04-24T22:00:00.0000000Z",
+  "ignoreUpdateWindow": "False",
+  "destinationVersion": "19.4.194.0",
+  "sourceVersion": "19.3.193.0",
+  "initiatedFrom": "TenantAdminCenter"
+
+
+
+// Environment failed to update
+Environment failed to update: [environment name] to version [destination version]
+LC0107
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0107' 
+| project aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, environmentVersion = customDimensions.environmentVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, totalTime = customDimensions.totalTime
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
+, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
+, destinationVersion = customDimensions.destinationVersion
+, sourceVersion = customDimensions.sourceVersion
+, initiatedFrom = customDimensions.initiatedFrom
+, failureReason
+, failureCode
+, recovered
+, message
+
+environmentVersion
+  "registeredForUpdateOnOrAfterDateUtc": "2022-04-11T21:00:00.0000000Z",
+  "updatePeriodStartDateUtc": "",
+  "updateWindowStartTimeUtc": "22:00:00",
+  "updateWindowEndTimeUtc": "04:00:00",
+  "updatePeriodEndDateUtc": "",
+  "ignoreUpdateWindow": "False",
+  "destinationVersion": "19.5.36567.36634",
+  "sourceVersion": "19.2.32968.33612",
+  "initiatedFrom": "TenantAdminCenter",
+  "failureReason": "Update failed with an error:\r\n\nPer-tenant extension 'Cap Vignes - Recuperation de donnees' version 1.0.202106.5128 by 'Cap Vision' failed to compile. Extension compilation failed\r\nDataStructuresAndTransformations/GuidedExperienceSubs.Codeunit.al(19,44): error AL0132: '\"Manual Setup Category\"' does not contain a definition for 'Cap Vignes'", 
+  "failureCode": "PteCompilation",
+  "recovered": "True"
+
+
+
+
+
+// 
+// Environment start/stop/restart
+// 
+
+Environment restart operation initiated: [environment name]
+LC0110
+environmentVersion
+
+Environment restarted successfully: [environment name]
+LC0111
+  "totalTime": "00:00:37.4535272"
+environmentVersion
+
+Environment start operation initiated: [environment name]
+LC0113
+environmentVersion
+
+
+Environment started successfully: [environment name]
+LC0114
+  "totalTime": "00:00:46.2584776"
+environmentVersion
+
+Environment stop operation initiated: [environment name]
+LC0116
+environmentVersion
+
+Environment stopped successfully: [environment name]
+LC0117
+  "totalTime": "00:00:04.0000452"
+environmentVersion
+
+
+// 
+// Environment copy operations
+// 
+
+Environment copy operation started on source: [environment name] to [destination environment name]
+LC0119
+environmentVersion
+  "destinationEnvironmentVersion": "19.4.0.0",
+  "destinationEnvironmentType": "Sandbox",
+  "destinationEnvironmentName": "RAPP"
+
+Environment copied successfully: [environment name] to [destination environment name]
+LC0120
+environmentVersion
+  "totalTime": "00:06:07.4128328",
+  "destinationEnvironmentVersion": "19.4.0.0",
+  "destinationEnvironmentType": "Sandbox",
+  "destinationEnvironmentName": "RAPP"
+
+Environment copy operation failed on source: [environment name] to [destination environment name]
+LC0121
+environmentVersion
+  "totalTime": "00:07:46.2725452",
+  "destinationEnvironmentVersion": "19.5.36567.36634",
+  "destinationEnvironmentType": "Sandbox",
+  "destinationEnvironmentName": "Dev",
+  "failureReason": "One or more PTEs from the source environment (Sandbox) failed to compile on the destination environment (Dev) and must be fixed. The operation should not be retried. Detailed error: \nPer-tenant extension 'Dynamic Ship 2.6.8060 Hotfix' version 1.10.0.0 by 'Insight Works' failed to compile. Extension compilation failed\r\nsrc/pageextension/Pag-Ext87052.IWShipmentOptionsPart.al(26,20): error AL0155: A member of type Action with name 'IWOpenCardAction' is already defined in Page 'DSHIP Shipment Options Part' by the extension 'Dynamic Ship: Integrated Shipping by Insight Works (2.6.8125.1)'.."
+
+Environment copy operation started on destination: [environment name] to [destination environment name]
+LC0122
+environmentVersion
+  "sourceEnvironmentVersion": "19.4.0.0",
+  "sourceEnvironmentName": "Production",
+  "sourceEnvironmentType": "Production"
+
+Environment copied successfully to destination: [environment name] to [destination environment name]
+LC0123
+environmentVersion
+  "totalTime": "00:06:07.4128328",
+  "sourceEnvironmentVersion": "19.4.0.0",
+  "sourceEnvironmentName": "Production",
+  "sourceEnvironmentType": "Production"
+
+Environment copy operation failed on destination: [environment name] to [destination environment name]
+LC0124
+environmentVersion
+  "totalTime": "00:09:33.7957766",
+  "sourceEnvironmentVersion": "19.5.36567.36634",
+  "sourceEnvironmentName": "Production",
+  "sourceEnvironmentType": "Production",
+  "failureReason": "One or more PTEs from the source environment (Production) failed to compile on the destination environment (Sandbox_041122) and must be fixed. The operation should not be retried. Detailed error: \nPer-tenant extension 'Dynamic Ship 2.6.8060 Hotfix' version 1.10.0.0 by 'Insight Works' failed to compile. Extension compilation failed\r\nsrc/pageextension/Pag-Ext87052.IWShipmentOptionsPart.al(26,20): error AL0155: A member of type Action with name 'IWOpenCardAction' is already defined in Page 'DSHIP Shipment Options Part' by the extension 'Dynamic Ship: Integrated Shipping by Insight Works (2.6.8125.1)'.."
+
+
+
+// 
+// Environment point in time restore operations
+// 
+
+Environment point-in-time restore operation started on source: [environment name] to [destination environment name]
+LC0125
+environmentVersion
+  "destinationEnvironmentVersion": "19.5.36567.36634",
+  "destinationEnvironmentType": "Sandbox",
+  "destinationEnvironmentName": "ARMSB",
+  "pointInTimeUtc": "2022-04-11T15:00:00.0000000Z"
+}
+
+
+
+Environment point-in-time restored successfully: [environment name] to [destination environment name]
+LC0126
+environmentVersion
+  "destinationEnvironmentVersion": "19.5.36567.36634",
+  "destinationEnvironmentType": "Production",
+  "destinationEnvironmentName": "grupoposta",
+  "pointInTimeUtc": "2022-03-31T06:00:00.0000000Z"
+  "totalTime": "00:09:37.1685691"
+
+
+message	eventId	customDimensions
+Environment point-in-time restore operation failed on source: [environment name] to [destination environment name]
+LC0127
+environmentVersion
+  "destinationEnvironmentVersion": "19.5.36567.36634",
+  "destinationEnvironmentType": "Sandbox",
+  "destinationEnvironmentName": "Sandbox4",
+  "pointInTimeUtc": "2022-04-10T09:00:00.0000000Z"
+  "totalTime": "00:35:05.3256654",
+failureReason ?
+
+
+
+Environment point-in-time restore operation started on destination: [environment name] to [destination environment name]
+LC0128
+environmentVersion
+  "sourceEnvironmentVersion": "19.5.36567.36634",
+  "sourceEnvironmentName": "Sandbox4",
+  "sourceEnvironmentType": "Sandbox",
+  "pointInTimeUtc": "2022-04-08T14:56:00.0000000Z"
+
+
+
+Environment point-in-time restored successfully to destination: [environment name] to [destination environment name]
+LC0129
+environmentVersion
+  "sourceEnvironmentVersion": "19.5.36567.36634",
+  "sourceEnvironmentName": "Production",
+  "sourceEnvironmentType": "Production",
+  "pointInTimeUtc": "2022-03-31T06:00:00.0000000Z"
+  "totalTime": "00:09:37.1685691",
+
+
+Environment point-in-time restore operation failed on destination: [environment name] to [destination environment name]
+LC0130
+environmentVersion
+  "totalTime": "00:35:05.3256654",
+  "sourceEnvironmentVersion": "19.5.36567.36634",
+  "sourceEnvironmentName": "Production",
+  "sourceEnvironmentType": "Production",
+  "pointInTimeUtc": "2022-04-10T09:00:00.0000000Z"
+
+failureReason ?
+
+
+
+// 
+// Move environment to different AAD tenant
+// 
+These event do not have dimensions aadTenantId and environmentName
+Instead they have
+  "sourceAadTenantId": "af50ef05-d14c-4c93-bd7c-406e5747bd4e",
+  "sourceEnvironmentName": "Production",
+
+
+Environment move to [destination Aad Tenant Id] AAD tenant operation scheduled to run at [Date registered in TAC for the move]: [source environment name]
+LC0131
+  "environmentVersion": "19.5.36567.36634",
+  "destinationEnvironmentName": "Production",
+  "sourceEnvironmentName": "Production",
+  "destinationAadTenantId": "21c486bb-f566-495c-8b5b-5afdf47ade38",
+  "sourceAadTenantId": "af50ef05-d14c-4c93-bd7c-406e5747bd4e",
+  "registeredForMoveDateUtc": "2022-04-06T06:08:25.8230953Z"
+}
+
+
+
+Environment move to [destination Aad Tenant Id] AAD tenant operation started: [source environment name]
+LC0133
+  "environmentVersion": "19.5.36567.36634",
+  "destinationEnvironmentName": "Production",
+  "sourceEnvironmentName": "Production",
+  "destinationAadTenantId": "21c486bb-f566-495c-8b5b-5afdf47ade38",
+  "sourceAadTenantId": "af50ef05-d14c-4c93-bd7c-406e5747bd4e"
+
+
+Environment moved to [destination Aad Tenant Id] AAD tenant successfully: [source environment name]
+LC0134
+  "environmentVersion": "19.5.36567.36634",
+  "totalTime": "00:00:43.0015680",
+  "destinationEnvironmentName": "Production",
+  "sourceEnvironmentName": "Production",
+  "destinationAadTenantId": "21c486bb-f566-495c-8b5b-5afdf47ade38",
+  "sourceAadTenantId": "af50ef05-d14c-4c93-bd7c-406e5747bd4e"
+
+
+
+// 
+// Session cancellations initiated from TAC
+// 
+
+Environment session [Session id] cancellation started: [environment name]
+LC0136
+  "environmentVersion": "19.3.193.0",
+  "countryCode": "US",
+  "sessionId": "6264"
+
+
+Environment session [Session id] cancelled successfully: [environment name]
+LC0137
+  "environmentVersion": "19.3.193.0",
+  "countryCode": "US",
+  "totalTime": "00:00:00.4063560",
+  "sessionId": "6264"
+
+
+
+// 
+// Database export operations
+// 
+
+Environment database export operation started: [environment name]
+LC0139
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "FR",
+  "blobUrl": "https://520ifinasasstorage1.blob.core.windows.net/bcexport/PM_FR_Production_20221512_1215.bac"
+
+
+Environment database exported successfully: [environment name]
+LC0140
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "ES",
+  "totalTime": "00:18:46.4195238",
+  "blobUrl": "https://520ifinasasstorage1.blob.core.windows.net/bcexport/PM_ES_Production_20221512_1215.bac"
+
+
+
+
+// 
+// Environment configuration changes
+// 
+
+Environment configuration key [key] updated for environment [environment name] to value: [value]
+LC0142
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "US",
+  "environmentConfigurationKey": "ApplicationInsightsKey",
+  "newValue": "InstrumentationKey=7f716e20-008f-4987-b919-9e6c602340f4;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/"
+
+
+Environment configuration key [key] deleted for environment: [environment name]
+LC0144	{
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "US",
+  "environmentConfigurationKey": "ApplicationInsightsKey",
+  "oldValue": "InstrumentationKey=7f716e20-008f-4987-b919-9e6c602340f4;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/"
+}
+
+
+
+Environment configuration key [key] failed to delete for environment: [environment name]
+LC0145
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "DE",
+  "totalTime": "00:00:00",
+  "failureReason": "The operation could not be executed due to validation errors. Try running the operation again. If the issue persists, please contact Microsoft Support and provide the Operation ID with the request.",
+  "environmentConfigurationKey": "ApplicationInsightsKey",
+  "oldValue": "InstrumentationKey=873c8ac4-eb9d-4fbc-8d12-1666fdb50857;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/"
+}
+
+
+Environment update window was modified for environment: [environment name]
+LC0146
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "US",
+  "newUpdateWindowStartTimeUtc": "14:00:00",
+  "newUpdateWindowEndTimeUtc": "20:00:00"
+}
+
+
+
+// 
+// Environment delete operations
+// 
+
+Environment delete operation started: [environment name]
+LC0149
+  "environmentVersion": "19.4.0.0",
+  "countryCode": "NL",
+  "aadTenantId": "2b067ca0-570c-4004-b10e-5d615d9ea795",
+  "deletionReason": "Requested by user"
+
+
+Environment deleted successfully: [environment name]
+LC0150
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "AT",
+  "deletionReason": "Requested by user",
+  "totalTime": "00:00:43.8137506"
+
+
+// 
+// Environment rename operations
+// 
+
+Environment rename operation started: [environment name] to [destination environment name]
+LC0152
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "ES",
+  "newEnvironmentName": "Sandbox"
+
+Environment renamed successfully: [environment name] to [destination environment name]
+LC0153
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "ES",
+  "totalTime": "00:00:07.8125559",
+  "newEnvironmentName": "Sandbox"
+
+
+
+// 
+// Environment app hotfix operations
+// 
+
+Environment app [extension name] hotfix to version [extension version] scheduled for environment: [environment name]
+LC0155
+  "extensionDestinationVersion": "19.4.15236.164",
+  "useEnvironmentUpdateWindow": "False",
+  "extensionSourceVersion": "19.4.14652.164",
+  "environmentVersion": "19.4.0.0",
+  "extensionPublisher": "Boltrics",
+  "runAfterDateUtc": "2022-04-11T22:15:46.0526691Z",
+  "countryCode": "NL",
+  "extensionName": "3PL Reports EU LanguagePack",
+  "extensionId": "b49f1a4d-95c9-4e85-b1d3-65a539e93d32",
+
+
+Environment app [extension name] hotfix to version [extension version] scheduling failed for environment: [environment name]
+LC0156
+  "extensionDestinationVersion": "19.2.99000.1",
+  "useEnvironmentUpdateWindow": "False",
+  "environmentVersion": "19.2.0.0",
+  "runAfterDateUtc": "2020-03-05T17:30:00.0000000Z",
+  "countryCode": "CA",
+  "extensionId": "d58ad3b5-92cf-4374-a951-af970c30929f",
+  "failureReason": "Validation failed with errors: \r\nA hotfix has already been scheduled for the specified environment\r\n-App ID: 'd58ad3b5-92cf-4374-a951-af970c30929f'\r\n-Environment: 'Sandbox, Sandbox-Apr05'"
+
+
+Environment app [extension name] hotfix to version [extension version] started for environment: [environment name]
+LC0158
+  "extensionDestinationVersion": "19.5.36567.39020",
+  "useEnvironmentUpdateWindow": "False",
+  "extensionSourceVersion": "19.5.36567.36841",
+  "environmentVersion": "19.5.36567.36634",
+  "extensionPublisher": "Microsoft",
+  "runAfterDateUtc": "2022-04-11T21:51:06.2870000Z",
+  "countryCode": "DK",
+  "extensionName": "_Exclude_APIV2_",
+  "extensionId": "10cb69d9-bc8a-4d27-970a-9e110e9db2a5",
+
+
+Environment app [extension name] hotfix to version [extension version] applied successfully for environment: [environment name]
+LC0159
+  "extensionDestinationVersion": "19.5.36567.38884",
+  "useEnvironmentUpdateWindow": "False",
+  "extensionSourceVersion": "19.5.36567.38715",
+  "environmentVersion": "19.5.36567.36634",
+  "extensionPublisher": "Microsoft",
+  "runAfterDateUtc": "2022-04-10T00:19:26.5600000Z",
+  "extensionName": "Base Application",
+  "countryCode": "BE",
+  "extensionId": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+  "totalTime": "00:00:04.1874657"
+
+
+Environment app [extension name] hotfix to version [extension version] failed for environment: [environment name]
+LC0160
+  "extensionDestinationVersion": "19.5.36567.38715",
+  "useEnvironmentUpdateWindow": "False",
+  "extensionSourceVersion": "19.5.36567.38625",
+  "environmentVersion": "19.5.36567.36634",
+  "extensionPublisher": "Microsoft",
+  "runAfterDateUtc": "2022-04-08T21:25:52.9830000Z",
+  "extensionName": "Base Application",
+  "countryCode": "IT",
+  "extensionId": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+  "totalTime": "00:01:54.9660417",
+  "failureReason": "Failed to apply app hotfix on environment for an unknown reason, please contact support.\r\n-Environment: 'Production'\r\n-Operation ID: '5b322f82-c153-4da5-8510-a7616685886b'"
+
+
+
+// 
+// Environment app install/upgrade operations
+// 
+
+
+// What is this?
+Environment app '4fbbc02c-1b72-4771-9885-b49c8526a4ca' install version latest compatible started for environment: Production
+LC0163
+  "environmentVersion": "19.5.36567.36634",
+  "extensionDestinationVersion": "latest compatible",
+  "useEnvironmentUpdateWindow": "False",
+  "countryCode": "NO",
+  "allowDependencyUpdate": "True",
+  "allowPreviewVersion": "False",
+  "runAfterDateUtc": "2022-04-10T12:34:46.5436491Z",
+  "extensionScope": "Tenant",
+  "extensionId": "4fbbc02c-1b72-4771-9885-b49c8526a4ca"
+
+// What is this?
+Environment app '4fbbc02c-1b72-4771-9885-b49c8526a4ca' install version latest compatible succeeded for environment: Production
+LC0164
+  "telemetrySchemaVersion": "0.1",
+  "environmentVersion": "19.5.36567.36634",
+  "applicationFamily": "BusinessCentral",
+  "environmentType": "Production",
+  "environmentName": "Production",
+  "deprecatedKeys": "",
+  "extensionDestinationVersion": "latest compatible",
+  "useEnvironmentUpdateWindow": "False",
+  "countryCode": "NO",
+  "aadTenantId": "8995d608-5a16-4aaa-8093-9c554e9a2373",
+  "allowDependencyUpdate": "True",
+  "allowPreviewVersion": "False",
+  "component": "Dynamics 365 Business Central Control Plane",
+  "runAfterDateUtc": "2022-04-10T12:34:46.5436491Z",
+  "extensionScope": "Tenant",
+  "eventId": "LC0164",
+  "extensionId": "4fbbc02c-1b72-4771-9885-b49c8526a4ca",
+  "totalTime": "00:00:10.2033201"
+
+
+// What is this?
+Environment app 'f691223e-3b18-4428-ad36-04bc70f455d3' install version latest compatible failed for environment: Sandbox9
+LC0165
+  "extensionDestinationVersion": "latest compatible",
+  "useEnvironmentUpdateWindow": "False",
+  "environmentVersion": "19.5.36567.36634",
+  "runAfterDateUtc": "2022-04-09T16:22:26.5761499Z",
+  "deprecatedKeys": "",
+  "countryCode": "CA",
+  "extensionId": "f691223e-3b18-4428-ad36-04bc70f455d3",
+  "totalTime": "00:00:04.4375968",
+  "allowDependencyUpdate": "True",
+  "allowPreviewVersion": "False",
+  "extensionScope": "Tenant",
+  "failureReason": "App f691223e-3b18-4428-ad36-04bc70f455d3 failed to install/update, errors encountered:\r\nThe application object of type 'Page' with the ID '80001' is defined in multiple apps. The apps are: Target - From Sandbox by ArcherPoint Inc. 19.0.0.2; RemoveDomainUserSetup by ArcherPoint Inc. 19.0.0.0.\r\n"
+
+
+Environment app [extension name] install/update to version [extension version] requires automatically installing a new dependency app [dependency extension name] version [dependency extension version] for environment: [environment name]
+LC0166
+  "extensionDestinationVersion": "19.2203.12168.0",
+  "useEnvironmentUpdateWindow": "False",
+  "environmentVersion": "19.2204.11968.0",
+  "extensionPublisher": "cegeka-dsa",
+  "extensionName": "SandboxClone",
+  "countryCode": "NL",
+  "extensionId": "fcb940e7-f3e8-4b51-b4a5-8ea0271e4b43",
+  "allowDependencyUpdate": "False",
+  "allowPreviewVersion": "False",
+  "extensionScope": "Tenant",
+  "dependencyExtensionDestinationVersion": "19.0.220331.3",
+  "dependencyExtensionPublisher": "Simova GmbH",
+  "dependencyExtensionScope": "Global",
+  "dependencyExtensionName": "CORE by Simova",
+  "dependencyExtensionId": "54aec485-4258-464c-89c7-2f2c76791bd7"
+
+
+Environment app [extension name] update to version [extension version] scheduled for environment: [environment name]
+LC0167
+  "extensionDestinationVersion": "19.2.32968.37549",
+  "useEnvironmentUpdateWindow": "False",
+  "extensionSourceVersion": "19.2.32968.35947",
+  "environmentVersion": "19.2.0.1",
+  "extensionPublisher": "Microsoft",
+  "runAfterDateUtc": "2022-04-12T00:37:29.9924350Z",
+  "countryCode": "US",
+  "extensionName": "System Application",
+  "extensionId": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+  "allowDependencyUpdate": "False",
+  "allowPreviewVersion": "False",
+  "extensionScope": "Global"
+
+
+Environment app 'b9207dc8-e910-4c0d-85fc-7b7ec3e03112' update to version [extension destination version] scheduling failed for environment: [environment name]
+LC0168
+  "extensionDestinationVersion": "7.5.1.29430",
+  "useEnvironmentUpdateWindow": "False",
+  "environmentVersion": "19.5.36567.36634",
+  "runAfterDateUtc": "2022-04-11T12:47:07.8413784Z",
+  "countryCode": "GB",
+  "extensionId": "b9207dc8-e910-4c0d-85fc-7b7ec3e03112",
+  "component": "Dynamics 365 Business Central Control Plane",
+  "allowDependencyUpdate": "False",
+  "allowPreviewVersion": "False",
+  "extensionScope": "Global",
+  "failureReason": "Validation failed with errors: \r\nTarget app version must be higher than installed app version.\r\n-App ID: 'b9207dc8-e910-4c0d-85fc-7b7ec3e03112'\r\n-Environment: 'WFE-UpdatetoBC20-110422-AO-UK'\r\n-Installed App Version: '7.5.1.29430'\r\n-Target App Version: '7.5.1.29430'"
+
+
+
+Environment app '152208a0-9dc4-4a79-ba8f-28a5e99c99a1' update to version latest compatible started for environment: [environment name]
+LC0169
+  "extensionSourceVersion": "1.0.0.37",
+  "extensionDestinationVersion": "latest compatible",
+  "extensionId": "152208a0-9dc4-4a79-ba8f-28a5e99c99a1",
+  "environmentVersion": "19.5.36567.36634",
+  "allowDependencyUpdate": "True",
+  "runAfterDateUtc": "2022-04-10T13:51:19.3786418Z",
+  "applicationFamily": "BusinessCentral",
+  "useEnvironmentUpdateWindow": "False",
+  "component": "Dynamics 365 Business Central Control Plane",
+  "extensionScope": "Tenant",
+  "countryCode": "SG",
+  "allowPreviewVersion": "False"
+
+
+Environment app 'a981b2e3-4642-4ffd-8eea-e6aae9482497' update to version latest compatible succeeded for environment: [environment name]
+LC0170
+  "extensionDestinationVersion": "latest compatible",
+  "useEnvironmentUpdateWindow": "False",
+  "extensionSourceVersion": "0.0.4.62",
+  "allowDependencyUpdate": "True",
+  "allowPreviewVersion": "False",
+  "environmentVersion": "19.5.36567.36634",
+  "runAfterDateUtc": "2022-04-10T12:46:10.9006285Z",
+  "extensionScope": "Tenant",
+  "extensionId": "a981b2e3-4642-4ffd-8eea-e6aae9482497",
+  "countryCode": "FR",
+  "totalTime": "00:00:17.2521474"
+
+
+Environment app '96856d9d-681e-4970-8d65-24a40f5b1abe' update to version latest compatible failed for environment: [environment name]
+LC0171
+  "environmentVersion": "19.5.36567.36634",
+  "countryCode": "AU",
+  "totalTime": "00:00:15.5473888",
+  "extensionDestinationVersion": "latest compatible",
+  "useEnvironmentUpdateWindow": "False",
+  "extensionSourceVersion": "1.0.0.410",
+  "allowDependencyUpdate": "True",
+  "allowPreviewVersion": "False",
+  "runAfterDateUtc": "2022-04-12T03:14:40.1990160Z",
+  "extensionScope": "Tenant",
+  "extensionId": "96856d9d-681e-4970-8d65-24a40f5b1abe",
+  "failureReason": "App 96856d9d-681e-4970-8d65-24a40f5b1abe failed to install/update, errors encountered:\r\nCould not upgrade the NAV extension 'E360-CS-CCC-Customisations by Eagle360 1.0.0.411' due to the following error: 'TableExtension CustomerExt :: The field 'Override Blocked Ship' cannot be located. Removing fields is not allowed.\r\nTableExtension CustomerExt :: The field 'Prev. Blocked' cannot be located. Removing fields is not allowed.'.\r\n"
+
+
+
+Environment app [extension name] install/update to version [extension destination version] requires automatically updating existing dependency app [dependency extension name] to version [dependency extension version] for environment: [environment name]
+LC0172
+  "extensionDestinationVersion": "19.0.71.0",
+  "useEnvironmentUpdateWindow": "False",
+  "environmentVersion": "19.5.36567.36634",
+  "extensionPublisher": "EOS Solutions",
+  "countryCode": "IT",
+  "extensionName": "Advanced Document Reporting",
+  "extensionId": "b2dd1d81-3e95-46a8-94ef-8c32d872bf0c",
+  "allowDependencyUpdate": "False",
+  "allowPreviewVersion": "False",
+  "extensionScope": "Global",
+  "dependencyExtensionDestinationVersion": "19.0.83.0",
+  "dependencyExtensionPublisher": "EOS Solutions",
+  "dependencyExtensionScope": "Global",
+  "dependencyExtensionName": "Common Data Layer",
+  "dependencyExtensionId": "4e2a89a2-9049-496c-8b3a-f4eee6399b0e"
+
+
+
+
+
+No signal to test
+
+LC0108
+LC0109
+LC0112
+LC0115
+LC0118
+LC0132
+LC0135
+LC0138
+LC0141
+LC0143
+LC0147
+LC0148
+LC0151
+LC0154
+LC0157
+LC0161
+LC0162
+LC0173
+LC0174
+
+
