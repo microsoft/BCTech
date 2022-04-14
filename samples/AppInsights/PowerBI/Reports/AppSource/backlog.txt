@@ -83,6 +83,7 @@ Error report TODO
 Recommendations
     20.1: Permission errors
     Recurring failing task scheduler/job queue jobs 
+    Javier: Use new measure: Count Outgoing ws errors
 
 Pages    
     About the report - change after refactoring
@@ -127,6 +128,7 @@ Pages
     Extension updates
     Feature uptake 
     Permission set changes
+    Javier: Indexes is empty even when showing up in all changes
 
 Dataset
     Feature uptake 
