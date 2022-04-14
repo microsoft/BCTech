@@ -859,6 +859,7 @@ traces
 // EnvironmentDeleteStarted = "LC0149";
 // EnvironmentDeleteSucceeded = "LC0150";
 // EnvironmentDeleteFailed = "LC0151";
+//
 
 // Environment delete operation started
 traces
@@ -901,6 +902,60 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , failureReason = customDimensions.failureReason
+, totalTime = customDimensions.totalTime
+
+
+
+//
+// Environment rename operations
+//
+// 
+// EnvironmentRenameStarted = "LC0152";
+// EnvironmentRenameSucceeded = "LC0153";
+// EnvironmentRenameFailed = "LC0154";
+
+
+// Environment rename operation started
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0152'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, newEnvironmentName = customDimensions.newEnvironmentName
+
+PartnerDiagnosticsBlockOperationSuccessInfo
+// Environment renamed successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0153'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, newEnvironmentName = customDimensions.newEnvironmentName
+, totalTime = customDimensions.totalTime
+
+// Environment rename operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0154'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, newEnvironmentName = customDimensions.newEnvironmentName
 , totalTime = customDimensions.totalTime
 
 
@@ -1040,10 +1095,6 @@ traces
 
 
 
-// Environment rename
-EnvironmentRenameStarted = "LC0152";
-EnvironmentRenameSucceeded = "LC0153";
-EnvironmentRenameFailed = "LC0154";
 // Environment app hotfix via FAME
 EnvironmentAppHotfixScheduled = "LC0155";
 EnvironmentAppHotfixSchedulingFailed = "LC0156";
