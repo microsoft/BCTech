@@ -852,6 +852,56 @@ traces
 , totalTime = customDimensions.totalTime
 
 
+//
+// Environment delete operations
+//
+// EnvironmentDeleteScheduled = "LC0148"; // Currently not used but we may start emitting this from TMS
+// EnvironmentDeleteStarted = "LC0149";
+// EnvironmentDeleteSucceeded = "LC0150";
+// EnvironmentDeleteFailed = "LC0151";
+
+// Environment delete operation started
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0149'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, deletionReason = customDimensions.deletionReason
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+PartnerDiagnosticsBlockOperationSuccessInfo
+// Environment deleted successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0150'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, deletionReason = customDimensions.deletionReason
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+// Environment delete operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0151'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, deletionReason = customDimensions.deletionReason
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, totalTime = customDimensions.totalTime
 
 
 
@@ -990,11 +1040,6 @@ traces
 
 
 
-// Environment delete
-EnvironmentDeleteScheduled = "LC0148"; // Currently not used but we may start emitting this from TMS
-EnvironmentDeleteStarted = "LC0149";
-EnvironmentDeleteSucceeded = "LC0150";
-EnvironmentDeleteFailed = "LC0151";
 // Environment rename
 EnvironmentRenameStarted = "LC0152";
 EnvironmentRenameSucceeded = "LC0153";
