@@ -908,12 +908,11 @@ traces
 
 //
 // Environment rename operations
-//
 // 
 // EnvironmentRenameStarted = "LC0152";
 // EnvironmentRenameSucceeded = "LC0153";
 // EnvironmentRenameFailed = "LC0154";
-
+//
 
 // Environment rename operation started
 traces
@@ -961,6 +960,145 @@ traces
 
 
 //
+// Environment app hotfixes via FAME
+// 
+// EnvironmentAppHotfixScheduled = "LC0155";
+// EnvironmentAppHotfixSchedulingFailed = "LC0156";
+// EnvironmentAppHotfixCanceled = "LC0157";
+// EnvironmentAppHotfixStarted = "LC0158";
+// EnvironmentAppHotfixSucceeded = "LC0159";
+// EnvironmentAppHotfixFailed = "LC0160";
+//
+
+
+// Environment app hotfix scheduled by FAME
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0155'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+
+// Environment app hotfix scheduling by FAME failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0156'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, failureReason = customDimensions.failureReason
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, totalTime = customDimensions.totalTime
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+
+// Environment app hotfix canceled by FAME
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0157'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+
+// Environment app hotfix started by FAME
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0158'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+
+// Environment app hotfix applied successfully by FAME
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0159'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, totalTime = customDimensions.totalTime
+
+// Environment app hotfix by FAME failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0160'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, failureReason = customDimensions.failureReason
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, totalTime = customDimensions.totalTime
+
+
+
+//
 // Event blocks 
 //
 
@@ -974,6 +1112,35 @@ traces
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+
+
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("extensionId")]
+[PartnerTelemetryKey("extensionName")]
+[PartnerTelemetryKey("extensionPublisher")]
+[PartnerTelemetryKey("extensionScope")]
+[PartnerTelemetryKey("extensionSourceVersion")]
+[PartnerTelemetryKey("extensionDestinationVersion")]
+[PartnerTelemetryKey("useEnvironmentUpdateWindow")]
+[PartnerTelemetryKey("runAfterDateUtc")]
+
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+
+extensionId
+extensionName
+extensionPublisher
+extensionScope
+extensionSourceVersion
+extensionDestinationVersion
+useEnvironmentUpdateWindow
+runAfterDateUtc
 
 
 PartnerDiagnosticsBlockEnvironmentInfo 
@@ -1095,13 +1262,7 @@ traces
 
 
 
-// Environment app hotfix via FAME
-EnvironmentAppHotfixScheduled = "LC0155";
-EnvironmentAppHotfixSchedulingFailed = "LC0156";
-EnvironmentAppHotfixCanceled = "LC0157";
-EnvironmentAppHotfixStarted = "LC0158";
-EnvironmentAppHotfixSucceeded = "LC0159";
-EnvironmentAppHotfixFailed = "LC0160";
+
 // Environment app install (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
 EnvironmentAppInstallScheduled = "LC0161";
 EnvironmentAppInstallSchedulingFailed = "LC0162";
