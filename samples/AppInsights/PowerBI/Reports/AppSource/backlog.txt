@@ -93,7 +93,6 @@ Pages
 
 Dataset
     Outgoing ws calls: add callstack (if added by the server team)
-    Pending bug in NST: Fix wsk + basic auth
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
     Environment upgrade error: LC0107
