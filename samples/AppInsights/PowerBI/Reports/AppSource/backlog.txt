@@ -83,7 +83,6 @@ Error report TODO
 Recommendations
     20.1: Permission errors
     Recurring failing task scheduler/job queue jobs 
-    Javier: Use new measure: Count Outgoing ws errors
 
 Pages    
     About the report - change after refactoring
@@ -93,7 +92,7 @@ Pages
     Error message votes: does not follow global filter. Why?
 
 Dataset
-    Outgoing ws calls: add callstack 
+    Outgoing ws calls: add callstack (if added by the server team)
     Pending bug in NST: Fix wsk + basic auth
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs

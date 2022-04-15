@@ -1098,8 +1098,33 @@ traces
 
 
 
+
+
+
+
+
+// Environment app install (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
+EnvironmentAppInstallScheduled = "LC0161";
+EnvironmentAppInstallSchedulingFailed = "LC0162";
+EnvironmentAppInstallStarted = "LC0163";
+EnvironmentAppInstallSucceeded = "LC0164";
+EnvironmentAppInstallFailed = "LC0165";
+EnvironmentAppDependencyInstallRequired = "LC0166";
+// Environment app update (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
+EnvironmentAppUpdateScheduled = "LC0167";
+EnvironmentAppUpdateSchedulingFailed = "LC0168";
+EnvironmentAppUpdateStarted = "LC0169";
+EnvironmentAppUpdateSucceeded = "LC0170";
+EnvironmentAppUpdateFailed = "LC0171";
+EnvironmentAppDependencyUpdateRequired = "LC0172";
+// Environment app uninstall (only scheduling as NST telemetry has the rest of signals, canceling is not supported yet)
+EnvironmentAppUninstallScheduled = "LC0173";
+EnvironmentAppUninstallSchedulingFailed = "LC0174";
+
+
+
 //
-// Event blocks 
+// Event blocks - will be removed after GA
 //
 
 traces
@@ -1263,21 +1288,4 @@ traces
 
 
 
-// Environment app install (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
-EnvironmentAppInstallScheduled = "LC0161";
-EnvironmentAppInstallSchedulingFailed = "LC0162";
-EnvironmentAppInstallStarted = "LC0163";
-EnvironmentAppInstallSucceeded = "LC0164";
-EnvironmentAppInstallFailed = "LC0165";
-EnvironmentAppDependencyInstallRequired = "LC0166";
-// Environment app update (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
-EnvironmentAppUpdateScheduled = "LC0167";
-EnvironmentAppUpdateSchedulingFailed = "LC0168";
-EnvironmentAppUpdateStarted = "LC0169";
-EnvironmentAppUpdateSucceeded = "LC0170";
-EnvironmentAppUpdateFailed = "LC0171";
-EnvironmentAppDependencyUpdateRequired = "LC0172";
-// Environment app uninstall (only scheduling as NST telemetry has the rest of signals, canceling is not supported yet)
-EnvironmentAppUninstallScheduled = "LC0173";
-EnvironmentAppUninstallSchedulingFailed = "LC0174";
 
