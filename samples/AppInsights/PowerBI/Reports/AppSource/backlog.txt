@@ -22,7 +22,8 @@ Dataset
 Perf report TODO
 ----------------
 
-All pages: write which version the signal is available in
+All pages: write which version the signal is available in (data available from version 17.3)
+
 
 Recommendations
     LRQ outside MS code?
@@ -92,7 +93,6 @@ Pages
     Error message votes: does not follow global filter. Why?
 
 Dataset
-    Outgoing ws calls: add callstack (if added by the server team)
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
     Environment upgrade error: LC0107
@@ -102,7 +102,7 @@ Dataset
     Environment app [extension name] hotfix to version [extension version] failed for environment: [environment name], LC0160
     Environment app 'b9207dc8-e910-4c0d-85fc-7b7ec3e03112' update to version [extension destination version] scheduling failed for environment: WFE-UpdatetoBC20-110422-AO-UK, LC0168
     Environment app '96856d9d-681e-4970-8d65-24a40f5b1abe' update to version latest compatible failed for environment: Prod, LC0171
-
+    Outgoing ws calls: add callstack (if added by the server team)
 
 
 ------------
@@ -118,8 +118,6 @@ Dataset
 Change report
 -------------
 
-All pages: write which version the signal is available in
-(data available from version 17.3)
 
 Pages
     Environment updates
