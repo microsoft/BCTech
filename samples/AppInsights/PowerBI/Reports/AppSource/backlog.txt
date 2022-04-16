@@ -22,9 +22,6 @@ Dataset
 Perf report TODO
 ----------------
 
-All pages: write which version the signal is available in (data available from version 17.3)
-
-
 Recommendations
     LRQ outside MS code?
 
