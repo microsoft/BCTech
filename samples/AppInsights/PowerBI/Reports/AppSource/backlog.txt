@@ -82,8 +82,7 @@ Recommendations
     Recurring failing task scheduler/job queue jobs 
 
 Pages    
-    Fix wsk + basic auth message
-    Outgoing ws calls: add callstack  
+    Outgoing ws calls: add callstack (if added by the server team) 
     20.1: Permisssions errors
     Error message votes: does not follow global filter. Why?
 
@@ -113,13 +112,12 @@ Dataset
 Change report
 -------------
 
-
 Pages
     Environment updates
     Extension updates
     Feature uptake 
     Permission set changes
-    Javier: Indexes is empty even when showing up in all changes
+    Javier: Indexes is empty even when showing up in all changes (cannot reproduce)
 
 Dataset
     Feature uptake 
