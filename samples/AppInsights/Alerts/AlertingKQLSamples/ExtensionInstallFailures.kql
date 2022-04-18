@@ -1,0 +1,19 @@
+// Use a query like this as a condition in an alert on failed installations
+
+traces
+| where timestamp > ago(1d)
+| where customDimensions.eventId == 'LC0011' 
+// | where customDimensions.aadTenantId == '<insert AAD id here if needed>'
+// and customDimensions.environmentName == '<insert environment name here if needed>'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName 
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
+, result = customDimensions.result
+, failureReason = customDimensions.failureReason
+, message

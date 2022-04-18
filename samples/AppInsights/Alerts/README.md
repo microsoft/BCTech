@@ -1,4 +1,4 @@
-# Get alerts when something is not right
+# Get alerts when something happens
 If something happens in your environment or for one of your customers that you need to take action on, it is better that the system sends you an alert. Azure Application Insights makes it easy to define such alerts.
 
 ## How do I create alerts in Azure Application Insights?

@@ -64,7 +64,6 @@ by taskId
 
 Pages
     LRQ: A number showing #Tenants affected in the two tables would be relevant to us
-    Data foundation: change layout
     Add std. dev to ws call report
     Add page for Database wait statistics (RT0025 and RT0026)   
 
@@ -83,7 +82,6 @@ Recommendations
     Recurring failing task scheduler/job queue jobs 
 
 Pages    
-    About the report - change after refactoring
     Fix wsk + basic auth message
     Outgoing ws calls: add callstack  
     20.1: Permisssions errors
