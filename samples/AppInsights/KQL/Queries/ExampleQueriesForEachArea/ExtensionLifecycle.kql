@@ -925,17 +925,65 @@ traces
 
 
 
-
-
-
-
-
-
-
-// Environment app uninstall (only scheduling as NST telemetry has the rest of signals, canceling is not supported yet)
+//
+// Environment app uninstall (only scheduling events available as the server telemetry has the rest of uninstall signals
+//
 // TAC only
-EnvironmentAppUninstallScheduled = "LC0173";
-EnvironmentAppUninstallSchedulingFailed = "LC0174";
+// EnvironmentAppUninstallScheduled = "LC0173";
+// EnvironmentAppUninstallSchedulingFailed = "LC0174";
+//
+
+
+// Environment app uninstall scheduled
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0173'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependentsUninstall = customDimensions.allowDependentsUninstall
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, deleteData = customDimensions.deleteData
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+
+
+// Environment app uninstall scheduling failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0174'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependentsUninstall = customDimensions.allowDependentsUninstall
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, deleteData = customDimensions.deleteData
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, failureReason = customDimensions.failureReason
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, totalTime = customDimensions.totalTime
+
+
+
+
 
 
 
@@ -1231,3 +1279,21 @@ PartnerDiagnosticsBlockEnvironmentAppOperation
 [PartnerTelemetryKey("dependencyExtensionScope")]
 [PartnerTelemetryKey("dependencyExtensionDestinationVersion")]
 Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' install/update to version {this.AppOperation.ExtensionDestinationVersion} requires automatically updating existing dependency app '{this.DependencyExtensionName}' to version {this.DependencyExtensionDestinationVersion} for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+
+
+// TAC only
+EnvironmentAppUninstallScheduled = "LC0173";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("deleteData")]
+[PartnerTelemetryKey("allowDependentsUninstall")]
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' uninstall scheduled for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+EnvironmentAppUninstallSchedulingFailed = "LC0174";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("deleteData")]
+[PartnerTelemetryKey("allowDependentsUninstall")]
+PartnerDiagnosticsBlockSchedulingFailureInfo
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' uninstall scheduling failed for environment: {this.EnvironmentInfo.EnvironmentName}");
