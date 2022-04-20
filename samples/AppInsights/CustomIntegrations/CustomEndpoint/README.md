@@ -65,10 +65,10 @@ The settings of the Azure Function must be specified under Configuration, Applic
 | Institution | Obligated | Description |
 | ----------- | --------- | ----------- |
 | BCApplicationInsightsConnectionStrings | Yes | One or more full connection string of the AppInsights resource. Multiple values must be separated by a pipe sign (\\|). The received messages are forwarded to the AppInsights resource with the same instrumentation key. If the instrumentation key in the message does not appear in one of the specified connection strings, the event will not be processed. |
-| ExcludeEventIdList | new | A list of event IDs to exclude. Multiple values must be separated by a semicolon.
-The event ids may contain the wildcards * and ? contain. One ? counts as one character and a * for an unlimited number of characters. <br> Examples: <br> LC004? exclude messages LC0040 through LC0049. <br> RT* excludes all messages that start with RT. <br> Note : if this setting is not specified, all messages will be forwarded. |
+| ExcludeEventIdList | new | A list of event IDs to exclude. Multiple values must be separated by a semicolon. The event ids may contain the wildcards * and ? contain. One ? counts as one character and a * for an unlimited number of characters. <br> Examples: <br> LC004? exclude messages LC0040 through LC0049. <br> RT* excludes all messages that start with RT. <br> Note : if this setting is not specified, all messages will be forwarded. |
 | ExcludeEventTypes | new | A list of event types to exclude. Multiple values must be separated by a semicolon. Possible values: _AppTraces_ and _AppPageViews_ |
 | EnableLogs | new | If set, log messages are generated. These can be monitored in real-time in the Logs screen under Code + Test of the function. Possible values: _true_ or _false_. The default value if not set is _false_. |
+
 
 
 
