@@ -23,7 +23,9 @@ The Azure Function _Custom Telemetry Handler_ is intended to be able to filter t
 
 ### Architecture
 The _Custom Telemetry Handler_ is placed between Business Central and Azure Application Insights. Business Central sends the events to the _Custom Telemetry Handler_ where the events are captured, filtered and then forwarded to Azure Application Insights.
- 
+
+![Custom Telemetry Handler Architecture](diagram.png)
+
 The _Custom Telemetry Handler_ is an Azure Function, built in .Net 6. It is also possible to turn it into a local web API.
 
 ### Installation
@@ -54,7 +56,7 @@ https://bccustomtelemetryhandler.azurewebsites.net/
 
 Then the AppInsights Connection String for Business Central should be:
 ```
-InstrumentationKey=<guid>;IngestionEndpoint= https://bccustomtelemetryhandler.azurewebsites.net/
+InstrumentationKey=<guid>;IngestionEndpoint=https://bccustomtelemetryhandler.azurewebsites.net/
 ```
 
 Note, only the URL part of the connection string needs to be replaced, the guid remains the same.
