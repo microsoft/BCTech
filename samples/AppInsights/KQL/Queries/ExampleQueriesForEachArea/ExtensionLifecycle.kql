@@ -987,21 +987,20 @@ traces
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 //
 // Event blocks - will be removed after GA
 //
-
-traces
-| where timestamp > ago(30d) // adjust as needed
-| where customDimensions.eventId == ''
-| project timestamp
-, message
-, aadTenantId = customDimensions.aadTenantId
-, applicationFamily = customDimensions.applicationFamily
-, countryCode = customDimensions.countryCode
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
-
 
 PartnerDiagnosticsBlockEnvironmentAppOperation
 [PartnerTelemetryKey("extensionId")]
@@ -1012,15 +1011,6 @@ PartnerDiagnosticsBlockEnvironmentAppOperation
 [PartnerTelemetryKey("extensionDestinationVersion")]
 [PartnerTelemetryKey("useEnvironmentUpdateWindow")]
 [PartnerTelemetryKey("runAfterDateUtc")]
-
-, extensionId = customDimensions.extensionId
-, extensionName = customDimensions.extensionName
-, extensionPublisher = customDimensions.extensionPublisher
-, extensionScope = customDimensions.extensionScope
-, extensionSourceVersion = customDimensions.extensionSourceVersion
-, extensionDestinationVersion = customDimensions.extensionDestinationVersion
-, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
-, runAfterDateUtc = customDimensions.runAfterDateUtc
 
 extensionId
 extensionName
@@ -1039,13 +1029,6 @@ PartnerDiagnosticsBlockEnvironmentInfo
 [PartnerTelemetryKey("applicationFamily")]
 [PartnerTelemetryKey("countryCode")]
 
-
-, aadTenantId = customDimensions.aadTenantId
-, applicationFamily = customDimensions.applicationFamily
-, countryCode = customDimensions.countryCode
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
-
 |aadTenantId|[!INCLUDE[aadTenantId](../includes/include-telemetry-dimension-aadtenantid.md)]|
 |applicationFamily|[!INCLUDE[applicationFamily](../includes/include-telemetry-dimension-application-family.md)]|
 |countryCode|[!INCLUDE[countryCode](../includes/include-telemetry-dimension-country-code.md)]|
@@ -1060,12 +1043,6 @@ PartnerDiagnosticsBlockEnvironmentUpdateInfo
 [PartnerTelemetryKey("updatePeriodEndDateUtc", AllowEmpty = true)]
 [PartnerTelemetryKey("registeredForUpdateOnOrAfterDateUtc", AllowEmpty = true)]
 
-, sourceVersion = customDimensions.sourceVersion
-, destinationVersion = customDimensions.destinationVersion
-, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
-, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
-, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc
-
 |destinationVersion|[!INCLUDE[destinationVersion](../includes/include-telemetry-dimension-update-destination-version.md)]|
 |registeredForUpdateOnOrAfterDateUtc|[!INCLUDE[registeredForUpdateOnOrAfterDateUtc](../includes/include-telemetry-dimension-registered-for-update-on-or-after-date.md)]|
 |sourceVersion|[!INCLUDE[sourceVersion](../includes/include-telemetry-dimension-update-source-version.md)]|
@@ -1078,9 +1055,6 @@ PartnerDiagnosticsBlockEnvironmentUpdateWindow
 [PartnerTelemetryKey("updateWindowStartTimeUtc", AllowEmpty = true)]
 [PartnerTelemetryKey("updateWindowEndTimeUtc", AllowEmpty = true)]
 [PartnerTelemetryKey("ignoreUpdateWindow")]
-, updateWindowStartTimeUtc = customDimensions.updateWindowStartTimeUtc
-, updateWindowEndTimeUtc = customDimensions.updateWindowEndTimeUtc
-, ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
 
 |updateWindowEndTimeUtc|[!INCLUDE[updateWindowEndDateUtc](../includes/include-telemetry-dimension-update-window-end-date.md)]|
 |updateWindowStartTimeUtc|[!INCLUDE[updateWindowStartDateUtc](../includes/include-telemetry-dimension-update-window-start-date.md)]|
@@ -1092,10 +1066,6 @@ PartnerDiagnosticsBlockDestinationEnvironmentInfo
 [PartnerTelemetryKey("destinationEnvironmentType")]
 [PartnerTelemetryKey("destinationEnvironmentVersion")]
 
-, destinationEnvironmentName = customDimensions.destinationEnvironmentName
-, destinationEnvironmentType = customDimensions.destinationEnvironmentType
-, destinationEnvironmentVersion = customDimensions.destinationEnvironmentVersion
-
 |destinationEnvironmentName|[!INCLUDE[destinationEnvironmentName](../includes/include-telemetry-dimension-destination-environment-name.md)]|
 |destinationEnvironmentType|[!INCLUDE[destinationEnvironmentType](../includes/include-telemetry-dimension-destination-environment-type.md)]|
 |destinationEnvironmentVersion|[!INCLUDE[destinationEnvironmentVersion](../includes/include-telemetry-dimension-destination-environment-version.md)]|
@@ -1106,10 +1076,6 @@ PartnerDiagnosticsBlockSourceEnvironmentInfo
 [PartnerTelemetryKey("sourceEnvironmentType")]
 [PartnerTelemetryKey("sourceEnvironmentVersion")]
 
-, sourceEnvironmentName = customDimensions.sourceEnvironmentName
-, sourceEnvironmentType = customDimensions.sourceEnvironmentType
-, sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
-
 |sourceEnvironmentName|[!INCLUDE[sourceEnvironmentName](../includes/include-telemetry-dimension-source-environment-name.md)]|
 |sourceEnvironmentType|[!INCLUDE[sourceEnvironmentType](../includes/include-telemetry-dimension-source-environment-type.md)]|
 |sourceEnvironmentVersion|[!INCLUDE[sourceEnvironmentVersion](../includes/include-telemetry-dimension-source-environment-version.md)]|
@@ -1118,37 +1084,22 @@ PartnerDiagnosticsBlockSourceEnvironmentInfo
 
 PartnerDiagnosticsBlockEnvironmentOperation
 [PartnerTelemetryKey("initiatedFrom")]
-, initiatedFrom = customDimensions.initiatedFrom
+
 |initiatedFrom|[!INCLUDE[initiatedFrom](../includes/include-telemetry-dimension-initiated-from.md)]|
 
 
 PartnerDiagnosticsBlockOperationSuccessInfo
 [PartnerTelemetryKey("totalTime")
-, totalTime = customDimensions.totalTime
+
 |totalTime|[!INCLUDE[totalTime](../includes/include-telemetry-dimension-total-time.md)]|
 
 
 PartnerDiagnosticsBlockOperationFailureInfo
 [PartnerTelemetryKey("totalTime")]
 [PartnerTelemetryKey("failureReason")]
-, totalTime = customDimensions.totalTime
-, failureReason = customDimensions.failureReason
+
 |totalTime|[!INCLUDE[totalTime](../includes/include-telemetry-dimension-total-time.md)]|
 |failureReason|[!INCLUDE[failureReason](../includes/include-telemetry-dimension-failure-reason.md)]|
-
-
-
-
-
-traces
-| where timestamp > ago(30d) // adjust as needed
-| where customDimensions.eventId == '' 
-| project timestamp
-, message
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
-
 
 
 
