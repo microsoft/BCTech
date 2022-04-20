@@ -756,17 +756,180 @@ traces
 
 
 
-
+//
 // Environment app update (this partially duplicates NST signals, but we have more info on orchestration, canceling is not supported yet)
+//
 // TAC only
-EnvironmentAppUpdateScheduled = "LC0167";
-EnvironmentAppUpdateSchedulingFailed = "LC0168";
+// EnvironmentAppUpdateScheduled = "LC0167";
+// EnvironmentAppUpdateSchedulingFailed = "LC0168";
+//
 // All operations except when installing from VSCODE
-EnvironmentAppUpdateStarted = "LC0169";
-EnvironmentAppUpdateSucceeded = "LC0170";
-EnvironmentAppUpdateFailed = "LC0171";
+// EnvironmentAppUpdateStarted = "LC0169";
+// EnvironmentAppUpdateSucceeded = "LC0170";
+// EnvironmentAppUpdateFailed = "LC0171";
+// 
 // TAC only - Some app lifecycle event needed this
-EnvironmentAppDependencyUpdateRequired = "LC0172";
+// EnvironmentAppDependencyUpdateRequired = "LC0172";
+//
+
+
+// Environment app update scheduled (TAC only)
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0167'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependencyUpdate = customDimensions.allowDependencyUpdate
+, allowPreviewVersion = customDimensions.allowPreviewVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+
+
+// Environment app update scheduling failed (TAC only)
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0168'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependencyUpdate = customDimensions.allowDependencyUpdate
+, allowPreviewVersion = customDimensions.allowPreviewVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, failureReason = customDimensions.failureReason
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, totalTime = customDimensions.totalTime
+
+
+// Environment app update started (not emitted if extension was updated from VSCODE)
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0169'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependencyUpdate = customDimensions.allowDependencyUpdate
+, allowPreviewVersion = customDimensions.allowPreviewVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+
+
+// Environment app update succeeded
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0170'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependencyUpdate = customDimensions.allowDependencyUpdate
+, allowPreviewVersion = customDimensions.allowPreviewVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, totalTime = customDimensions.totalTime
+
+
+
+
+// Environment app update failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0171'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependencyUpdate = customDimensions.allowDependencyUpdate
+, allowPreviewVersion = customDimensions.allowPreviewVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, failureReason = customDimensions.failureReason
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, totalTime = customDimensions.totalTime
+
+
+// Environment app install/update requires automatically updating existing dependency app (TAC only)
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0172'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, allowDependencyUpdate = customDimensions.allowDependencyUpdate
+, allowPreviewVersion = customDimensions.allowPreviewVersion
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, dependencyExtensionId = customDimensions.dependencyExtensionId
+, dependencyExtensionName = customDimensions.dependencyExtensionName
+, dependencyExtensionPublisher = customDimensions.dependencyExtensionPublisher
+, dependencyExtensionScope = customDimensions.dependencyExtensionScope
+, dependencyExtensionDestinationVersion = customDimensions.dependencyExtensionDestinationVersion
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+
+
+
+
+
+
+
+
+
 
 
 // Environment app uninstall (only scheduling as NST telemetry has the rest of signals, canceling is not supported yet)
@@ -1005,3 +1168,66 @@ PartnerDiagnosticsBlockEnvironmentAppOperation
 [PartnerTelemetryKey("dependencyExtensionScope")]
 [PartnerTelemetryKey("dependencyExtensionDestinationVersion")]
 Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}', version '{this.AppOperation.ExtensionDestinationVersion}' installation/update requires automatically installing a new dependency app '{this.DependencyExtensionName}', version {this.DependencyExtensionDestinationVersion} for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+
+
+
+
+// TAC only
+EnvironmentAppUpdateScheduled = "LC0167";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("allowPreviewVersion")]
+[PartnerTelemetryKey("allowDependencyUpdate")]
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' update to version {this.AppOperation.ExtensionDestinationVersion} scheduled for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+
+EnvironmentAppUpdateSchedulingFailed = "LC0168";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("allowPreviewVersion")]
+[PartnerTelemetryKey("allowDependencyUpdate")]
+PartnerDiagnosticsBlockSchedulingFailureInfo
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' update to version {this.AppOperation.ExtensionDestinationVersion} scheduling failed for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+
+// All operations except when installing from VSCODE
+EnvironmentAppUpdateStarted = "LC0169";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("allowPreviewVersion")]
+[PartnerTelemetryKey("allowDependencyUpdate")]
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' update to version {this.AppOperation.ExtensionDestinationVersion} started for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+
+EnvironmentAppUpdateSucceeded = "LC0170";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("allowPreviewVersion")]
+[PartnerTelemetryKey("allowDependencyUpdate")]
+PartnerDiagnosticsBlockOperationSuccessInfo
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' update to version {this.AppOperation.ExtensionDestinationVersion} succeeded for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+
+EnvironmentAppUpdateFailed = "LC0171";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("allowPreviewVersion")]
+[PartnerTelemetryKey("allowDependencyUpdate")]
+PartnerDiagnosticsBlockOperationFailureInfo
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' update to version {this.AppOperation.ExtensionDestinationVersion} failed for environment: {this.EnvironmentInfo.EnvironmentName}");
+
+
+// TAC only - Some app lifecycle event needed this
+EnvironmentAppDependencyUpdateRequired = "LC0172";
+PartnerDiagnosticsBlockEnvironmentInfo
+PartnerDiagnosticsBlockEnvironmentAppOperation
+[PartnerTelemetryKey("allowPreviewVersion")]
+[PartnerTelemetryKey("allowDependencyUpdate")]
+
+[PartnerTelemetryKey("dependencyExtensionId")]
+[PartnerTelemetryKey("dependencyExtensionName")]
+[PartnerTelemetryKey("dependencyExtensionPublisher")]
+[PartnerTelemetryKey("dependencyExtensionScope")]
+[PartnerTelemetryKey("dependencyExtensionDestinationVersion")]
+Message => Invariant($"Environment app '{this.AppOperation.GetAppDisplayName()}' install/update to version {this.AppOperation.ExtensionDestinationVersion} requires automatically updating existing dependency app '{this.DependencyExtensionName}' to version {this.DependencyExtensionDestinationVersion} for environment: {this.EnvironmentInfo.EnvironmentName}");
