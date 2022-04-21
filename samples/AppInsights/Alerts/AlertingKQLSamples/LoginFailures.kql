@@ -2,7 +2,7 @@
 
 traces
 | where timestamp > ago(1d) // adjust as needed
-| where customDimensions.eventId in ("RT0004", "RT0002")
+| where customDimensions.eventId in ("RT0001", "RT0002")
 | project timestamp 
 , session_Id
 , aadTenantId = customDimensions.aadTenantId 
