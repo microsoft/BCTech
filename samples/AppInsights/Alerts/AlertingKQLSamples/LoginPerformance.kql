@@ -8,4 +8,4 @@ traces
 , clientType = customDimensions.clientType
 , companyName = customDimensions.companyName
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
-| where ExecutionTimeInMS > 10000 // change to a threshold that makes sense to your organization
+| where executionTimeInMS > 10000 // change to a threshold that makes sense to your organization
