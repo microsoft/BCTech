@@ -1,0 +1,16 @@
+// sample KQL query that shows how to define a mapping from aadTenantId to domain name
+// The example then shows how you can join the mapping data to the data in Application Insights
+
+let aadLookup =
+// populate this datatable with your own mapping data
+datatable(aadTenantId:string, domainName:string)[
+  'f9eef8d3-f5ee-46ed-8dba-2bf988758f7e', 'Contoso DK'
+, 'e17137f8-4e54-45d1-a3ff-ba0fd8d41532', 'Fabrikam'
+, '9f236858-f767-4261-88d3-7bdb1c327f7d', 'Kennies KQL factory'    
+]
+;
+traces
+// define filters on timestamp, eventId and other dimensions here
+| extend aadTenantId=customDimensions.aadTenantId
+| join kind=rightouter aadLookup on $left.aadTenantId == $right.aadTenantId
+// now you have a new column called "domainName". It might be empty if no match can be found on customDimensions.aadTenantId
