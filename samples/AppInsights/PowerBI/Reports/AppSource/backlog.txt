@@ -103,6 +103,10 @@ Usage report
 ------------
 
 Pages
+    Reports - looks weird
+    Dep features - looks weird
+    Page views - looks weird
+    Connectors - looks weird
 
 Dataset
 
