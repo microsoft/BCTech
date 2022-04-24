@@ -1,0 +1,7 @@
+{
+    "map":
+    [
+        { "AAD tenant id":"afabebd6-a583-46f8-8c4f-d0483f697600" , "Domain":"Contoso" },
+        { "AAD tenant id":"c632f481-ed8a-41fb-a080-394b2a1f8206" , "Domain":"Fabrikam" }
+    ]
+}
