@@ -123,6 +123,11 @@ Pages
     Javier: Indexes is empty even when showing up in all changes (cannot reproduce)
 
 Dataset
+    Changes: add new count measure
+    Environments: ok
+    Companies: ok
+    Extensions: ok
+    
     Feature uptake 
     Permission changes
 
