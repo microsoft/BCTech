@@ -84,9 +84,7 @@ Pages
     Outgoing ws calls: add callstack (if added by the server team) 
     20.1: Permisssions errors
     Error message votes: does not follow global filter. Why?
-
-    Conf packages: missing filter visual + wrong count measure
-
+    
 Dataset
 
     20.1: Add dataset for Permissions errors
