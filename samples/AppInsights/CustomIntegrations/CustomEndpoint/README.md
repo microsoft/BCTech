@@ -71,8 +71,9 @@ The settings of the Azure Function must be specified under Configuration, Applic
 | ExcludeEventTypes | new | A list of event types to exclude. Multiple values must be separated by a semicolon. Possible values: _AppTraces_ and _AppPageViews_ |
 | EnableLogs | new | If set, log messages are generated. These can be monitored in real-time in the Logs screen under Code + Test of the function. Possible values: _true_ or _false_. The default value if not set is _false_. |
 
+### Kudos
 
-
+The guidance and code sample in this directory was written by Arend-Jan Kauffmann. The Azure function was developed for the partner [Mysolution](https://www.mysolution.com/) in the Netherlands and they agreed to share it with the community (yay!).
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
