@@ -64,7 +64,7 @@ by taskId
 
 Pages
     Add std. dev to ws call report
-    Add page for Database wait statistics (RT0025 and RT0026)   
+    Add page for Database wait statistics (RT0025 and RT0026)
 
 Dataset
     Add measure for LRQ last period vs. this period
