@@ -6,23 +6,38 @@
 /// <summary>
 /// Provides an example of slowly running code.
 /// </summary>
-codeunit 50101 "Ping Pong"
+codeunit 50101 "Ping Pong" implements "Slow Code Example"
 {
     Access = Internal;
 
-    procedure Ping(HitCount: Integer)
+    procedure RunSlowCode()
+    begin
+        Ping(0);
+    end;
+
+    procedure GetHint(): Text
+    begin
+        exit('Try using the performance profiler.');
+    end;
+
+    procedure IsBackground(): Boolean
+    begin
+        exit(false);
+    end;
+
+    local procedure Ping(HitCount: Integer)
     begin
         if HandleTheBall(HitCount) then
             Pong(HitCount + 1);
     end;
 
-    procedure Pong(HitCount: Integer)
+    local procedure Pong(HitCount: Integer)
     begin
         if HandleTheBall(HitCount) then
             Ping(HitCount + 1);
     end;
 
-    procedure HandleTheBall(HitCount: Integer): Boolean
+    local procedure HandleTheBall(HitCount: Integer): Boolean
     begin
         Sleep(500);
 

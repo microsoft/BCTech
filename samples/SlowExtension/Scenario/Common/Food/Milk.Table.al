@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
 
-table 50100 Milk
+table 50102 Milk
 {
     DataClassification = SystemMetadata;
 

@@ -6,11 +6,26 @@
 /// <summary>
 /// Provides an example of slowly running code.
 /// </summary>
-codeunit 50102 "Hefty Search"
+codeunit 50102 "Hefty Search" implements "Slow Code Example"
 {
     Access = Internal;
 
-    procedure FindCustomerExtensions()
+    procedure RunSlowCode()
+    begin
+        FindCustomerExtensions();
+    end;
+
+    procedure GetHint(): Text
+    begin
+        exit('Try checking long running queries in telemetry and the ''Database Missing Indexes''.');
+    end;
+
+    procedure IsBackground(): Boolean
+    begin
+        exit(false);
+    end;
+
+    local procedure FindCustomerExtensions()
     var
         AllObjWithCaption: Record AllObjWithCaption;
         NAVAppInstalledApp: Record "NAV App Installed App";

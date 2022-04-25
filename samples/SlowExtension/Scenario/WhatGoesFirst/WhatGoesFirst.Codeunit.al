@@ -6,7 +6,7 @@
 /// <summary>
 /// Provides an example of slowly running code.
 /// </summary>
-codeunit 50104 "What Goes First"
+codeunit 50104 "What Goes First" implements "Slow Code Example"
 {
     Access = Internal;
     TableNo = "Job Queue Entry";
@@ -17,6 +17,32 @@ codeunit 50104 "What Goes First"
             PrepareBreakfastMilkFirst()
         else
             PrepareBreakfastCerealFirst();
+    end;
+
+    procedure RunSlowCode()
+    var
+        FirstPersonJobQueue: Record "Job Queue Entry";
+        SecondPersonJobQueue: Record "Job Queue Entry";
+        FoodManagement: Codeunit "Food Management";
+        SessionId: Integer;
+    begin
+        FoodManagement.SetupFood();
+
+        FirstPersonJobQueue."Parameter String" := 'Milk first';
+        SecondPersonJobQueue."Parameter String" := 'Cereal First';
+
+        Session.StartSession(SessionId, Codeunit::"What Goes First", CompanyName(), FirstPersonJobQueue);
+        Session.StartSession(SessionId, Codeunit::"What Goes First", CompanyName(), SecondPersonJobQueue);
+    end;
+
+    procedure GetHint(): Text
+    begin
+        exit('Try checking lock timeout telemetry or the ''Database Locks'' page.');
+    end;
+
+    procedure IsBackground(): Boolean
+    begin
+        exit(true);
     end;
 
     local procedure PrepareBreakfastMilkFirst()

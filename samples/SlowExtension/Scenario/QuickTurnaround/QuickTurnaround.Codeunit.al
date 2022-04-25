@@ -6,11 +6,26 @@
 /// <summary>
 /// Provides an example of slowly running code.
 /// </summary>
-codeunit 50103 "Quick Turnaround"
+codeunit 50103 "Quick Turnaround" implements "Slow Code Example"
 {
     Access = Internal;
 
-    procedure EasyComeEasyGo()
+    procedure RunSlowCode()
+    begin
+        EasyComeEasyGo();
+    end;
+
+    procedure GetHint(): Text
+    begin
+        exit('Try using the performance profiler or check the telemetry for long running queries.');
+    end;
+
+    procedure IsBackground(): Boolean
+    begin
+        exit(false);
+    end;
+
+    local procedure EasyComeEasyGo()
     begin
         AddCustomers(200);
         RemoveCustomers();
