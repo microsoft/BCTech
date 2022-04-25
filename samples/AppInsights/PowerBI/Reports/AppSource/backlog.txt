@@ -86,6 +86,7 @@ Pages
     Error message votes: does not follow global filter. Why?
 
 Dataset
+
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
     Environment upgrade error: LC0107
@@ -123,11 +124,6 @@ Pages
     Javier: Indexes is empty even when showing up in all changes (cannot reproduce)
 
 Dataset
-    Changes: add new count measure
-    Environments: ok
-    Companies: ok
-    Extensions: ok
-    
     Feature uptake 
     Permission changes
 
