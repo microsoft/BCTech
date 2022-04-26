@@ -20,4 +20,6 @@ Then upload the extension, either using the Extension Management page, or just p
 
 # Running the scenarios
 
-Open page 50100, and it will explain how to run the scenarios.
+Use global search (alt-q) and search for the "Slow Code Examples" page (page 50100).
+
+Once opened, the page will explain how to run the scenarios.
