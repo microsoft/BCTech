@@ -14,9 +14,9 @@ In addition to getting some hands-on experience with these tools, the examples a
 
 # Installing the extension
 
-Build the extension (e.g. against your Business Central Online sandbox environment)
+Build the extension (e.g. against your Business Central Online sandbox environment).
 
-Upload the extension (either in the Extension Management page, or publish directly from VS Code)
+Then upload the extension (either in the Extension Management page, or publish directly from VS Code).
 
 # Running the scenarios
 
