@@ -17,6 +17,28 @@ The report comes with sample data.
 # Connect to Azure Application Insights
 To connect the report to an Azure Application Insights resource, you need one thing: the Application Insights app id (get it from the API Access menu in the Azure Application Insights portal). 
 
+# Configure the (AAD Tenant id, customer) mapping
+You define the (AAD tenant id, domain name) mapping in the app parameter _AAD tenant mapping_, that you set when you configure the app to read data from your Azure Application Insights resource (you can also change parameter values after configuring the app).
+
+![Mapping](mapping.png)
+
+The mapping must be uploaded as a (minified) json file with the following format:
+```
+{
+    "map":
+    [
+        { "AAD tenant id":"005bbe22-5949-4acb-9d24-3fb396c64a52" , "Domain":"Contoso 1" },
+        { "AAD tenant id":"0140d8e7-ef60-4cc3-9a6b-b89042b3ea1f" , "Domain":"Contoso 2" }        
+    ]
+}
+```
+
+(see examples of the json format and the corresponding minified file here)
+
+A minified json file is just a json file where all newlines have been removed. This is needed for Power BI to be able to read the data.
+
+You can also use Powershell to produce the json input. This repository have the script _Get-AADMapping.ps1_ that makes this easy.
+
 # Learn more
 Microsoft MVP Yun Zhu wrote this fantastic blog post where he walks you through the installation and configuration process end-to-end in great detail:  https://yzhums.com/24811/
 
