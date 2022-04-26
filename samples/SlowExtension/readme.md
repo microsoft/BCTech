@@ -1,42 +1,23 @@
-These extensions are meant for demo and training purposes.
+# Purpose of this extension
 
-The extensions implement different cases of bad-performing AL Code. Some examples:
+**This extension is meant for demo and training purposes.**
+
+The extension implements different scenarios with bad-performing AL Code. Some examples:
  - Long-running queries
  - Running substantial code in OnAfterGetRecord
  - Listening for too many database triggers
 
-With these extensions, you can execute scenarios that trigger these bad behaviors. What you can do next is try to troubleshoot them using the available tools:
- - Profiler (both in VSCode and the in-client version)
- - In-client pages with performance information
- - Telemetry
+You can run these scenarios and use the standard troubleshooting tools to identify the root cause.
+
 
 In addition to getting some hands-on experience with these tools, the examples also make it easy to _demonstrate_ to others how the tools work.
 
+# Installing the extension
 
-## Slow Scenarios Page
-```
-Scenario "Odd Enigma"
-  Setup                   -> creates 1000 records
-  Execute                 -> runs a scenario that takes maybe 5 seconds, ending with "finished - it took 5.112 seconds - why was it slow? Can be re-executed
-  Cleanup                 -> deletes the 1000 records again
-  Hint                    -> shows a dialog with a hint reg. how to find the root cause (e.g. "Have you looked at telemetry?" or "Do you know of the Database Locks page?")
-  Explanation             -> shows a dialog with a longer explanation of what happens (e.g. "This scenario iterates through 1000 Customer records, and for each one it calls OnAfterGetRe...")
+Follow these steps:
+1. Build the extension (e.g. against your Business Central Online sandbox environment)
+2. Upload the extension (either in the Extension Management page, or publish directly from VS Code)
 
-Scenario "Dizzy Rainbow"
-  Setup
-  Execute
-  Cleanup
-  Hint
+# Running the scenarios
 
-
-
-
-Kalman's scenarios:
-There is one that has code to create 2000 (configurable) customers and then an action on items that traverses  them based on a filter on “Address  2” in the meantime also calling calcfields on various  flowfields.
-There is another I use to demo snapshot debugging with sufficiently deep stackframes. 
-
-Ihor's scenarios:
-"DB Operation tracker" - abuse of the global triggers
-"Word Template Extensions" - filtering on a field with no index (on a table that has a lot of records)
-
-```
+Open page 50100, and it will explain how to run the scenarios.
