@@ -20,7 +20,7 @@ To connect the report to an Azure Application Insights resource, you need one th
 # Configure the (AAD Tenant id, customer) mapping
 You define the (AAD tenant id, domain name) mapping in the app parameter _AAD tenant mapping_, that you set when you configure the app to read data from your Azure Application Insights resource (you can also change parameter values after configuring the app).
 
-![Mapping](mapping.png)
+![Mapping](../../../images/mapping.png)
 
 The mapping must be uploaded as a (minified) json file with the following format:
 ```
