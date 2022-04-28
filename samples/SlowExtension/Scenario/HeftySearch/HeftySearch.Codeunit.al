@@ -17,7 +17,7 @@ codeunit 50102 "Hefty Search" implements "Slow Code Example"
 
     procedure GetHint(): Text
     begin
-        exit('Try checking long running queries in telemetry and the ''Database Missing Indexes''.');
+        exit('Try checking long running queries in telemetry and the ''Database Missing Indexes'' page');
     end;
 
     procedure IsBackground(): Boolean
@@ -31,7 +31,8 @@ codeunit 50102 "Hefty Search" implements "Slow Code Example"
         NAVAppInstalledApp: Record "NAV App Installed App";
         ExtensionsWithCustomerObject: Text;
     begin
-        AllObjWithCaption.SetFilter("Object Caption", '*%1*', 'Customer');
+        SelectLatestVersion();
+        AllObjWithCaption.SetFilter("Object Caption", '*%1*', CreateGuid());
         if AllObjWithCaption.FindSet() then
             repeat
                 if NAVAppInstalledApp.Get(AllObjWithCaption."App Package ID") then
