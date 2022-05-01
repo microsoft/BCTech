@@ -33,11 +33,11 @@ The mapping must be uploaded as a (minified) json file with the following format
 }
 ```
 
-(see examples of the json format and the corresponding minified file here)
+(see examples of the json format and the corresponding minified file here: [Tenant mapping examples](./tenant-mapping))
 
 A minified json file is just a json file where all newlines have been removed. This is needed for Power BI to be able to read the data.
 
-You can also use Powershell to produce the json input. This repository have the script _Get-AADMapping.ps1_ that makes this easy.
+You can also use Powershell to produce the json input. This repository has a script [Get-AADMapping.ps1](./tenant-mapping/Get-AADMapping.ps1) that makes this easy.
 
 # Learn more
 Microsoft MVP Yun Zhu wrote this fantastic blog post where he walks you through the installation and configuration process end-to-end in great detail:  https://yzhums.com/24811/
