@@ -54,10 +54,6 @@ Use this KQL query [AvailableSignal.kql](KQL/Queries/HelperQueries/AvailableSign
 
 See all helper queries here: [HelperQueries](KQL/Queries/HelperQueries/)
 
-## I deployed Azure dashboards, but they show no data
-If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:
-![Time range selector in Azure Dashboard](images/dashboard.png)
-
 ## What is the data retention policy in Application Insights?
 The default retention for Application Insights resources is 90 days. Different retention periods can be selected for each Application Insights resource. The full set of available retention periods is 30, 60, 90, 120, 180, 270, 365, 550 or 730 days.
 
@@ -95,6 +91,11 @@ See the Application Insights documentation for an introduction on how to emit te
 
 
 Another option is to emit ETW events to Azure Log Analytics, see Marije Brummels blog post [Using Azure Log Analytics on older Dynamics NAV versions (blog post)](https://marijebrummel.blog/2021/11/28/using-azure-log-analytics-on-older-dynamics-nav-versions/) or her Github sample repo [Using Azure Log Analytics with Dynamics NAV (Github repo)](https://github.com/marijebrummel/Azure.LogAnalytics.NAV) for examples.
+
+## I deployed Azure dashboards, but they show no data
+If you have data present in Application Insights, please check the setting in the *Time range* selector on the  dashboard:
+![Time range selector in Azure Dashboard](images/dashboard.png)
+
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
