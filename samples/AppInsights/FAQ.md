@@ -31,6 +31,7 @@ To reduce ingestion cost, you can
 * reduce data ingestion by sampling to only ingest a percentage of the inbound data (see https://docs.microsoft.com/en-us/azure/azure-monitor/app/sampling#ingestion-sampling)
 * set a daily limit of how much data that can be ingested
 * set alerts on cost thresholds being exceeded to get notified if this happens
+* use a custom endpoint, see [How do I send telemetry data to a different endpoint than Azure Application Insights?](CustomIntegrations/CustomEndpoint/README.md)
 
 To reduce data retention cost, you can
 * purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
