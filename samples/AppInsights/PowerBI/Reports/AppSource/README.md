@@ -17,6 +17,8 @@ The report comes with sample data.
 # Connect to Azure Application Insights
 To connect the report to an Azure Application Insights resource, you need one thing: the Application Insights app id (get it from the API Access menu in the Azure Application Insights portal). 
 
+![Workspace](../../../images/pbi_app_app_id.png)
+
 # Configure the (AAD Tenant id, customer) mapping
 You define the (AAD tenant id, domain name) mapping in the app parameter _AAD tenant mapping_, that you set when you configure the app to read data from your Azure Application Insights resource (you can also change parameter values after configuring the app).
 
