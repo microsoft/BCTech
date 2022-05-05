@@ -1,6 +1,6 @@
 {
   "id": "ff410389-c6a8-4a44-ae8f-69fe2e41e1ae",
-  "name": "Slow Code Examples",
+  "name": "SlowCodeExamples",
   "publisher": "Microsoft 'BCTech' GitHub repo",
   "version": "1.0.0.0",
   "brief": "Examples of actions that run for a long time.",
