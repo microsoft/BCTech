@@ -71,7 +71,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Verbose telemetry enabled | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-action-enabling-detailed-telemetry-logged-telemetry |
 | General error dialogs | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-error-dialogs-are-logged-telemetry |
 | Report action and document type in reporting | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
-| Environment lifecycle and configuration changes| 2022 release wave 1 (20.0) | (pending link to release note) |
+| Environment lifecycle and configuration changes| 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-environment-lifecycle-trace |
 | Permission error dialogs | 2022 release wave 1 (20.1) | KQL sample ready, (pending link to release note) |
 | Session stops | 2022 release wave 1 (20.0) | (pending link to release note) |
 | Use of read scale-out in web service calls | 2022 release wave 1 (20.x) | (pending link to release note) |
