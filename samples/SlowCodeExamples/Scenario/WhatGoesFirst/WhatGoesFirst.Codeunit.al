@@ -43,7 +43,7 @@ codeunit 50104 "What Goes First" implements "Slow Code Example"
 
     procedure GetHint(): Text
     begin
-        exit('Try checking lock timeout telemetry or the ''Database Locks'' page.');
+        exit('Try checking the ''Database Locks'' page or long running queries in telemetry.');
     end;
 
     local procedure PrepareBreakfastMilkFirst()
