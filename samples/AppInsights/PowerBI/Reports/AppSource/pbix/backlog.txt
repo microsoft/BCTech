@@ -18,7 +18,6 @@ Perf report TODO
 
 Recommendations
     LRQ outside MS code?
-    Tiles do not carry the filter from the analysis page
 
 // Recurring task scheduler jobs with LRQ
 let tasks =

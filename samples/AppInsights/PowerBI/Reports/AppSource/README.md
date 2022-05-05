@@ -39,6 +39,16 @@ A minified json file is just a json file where all newlines have been removed. T
 
 You can also use Powershell to produce the json input. This repository has a script [Get-AADMapping.ps1](./tenant-mapping/Get-AADMapping.ps1) that makes this easy.
 
+# Change parameters after initial configuration
+Once you completed the setup of the app, how can you change parameters such as _Application Insights application id_ or _Lookback period_?
+
+You can change configuration settings by going to the Power BI portal, open the workspace for the installed app, go to settings, and then Parameters.
+
+![Workspace](../../../images/pbi_app_workspace.png)
+
+![Parameters](../../../images/pbi_app_parameters.png)
+
+
 # Learn more
 Microsoft MVP Yun Zhu wrote this fantastic blog post where he walks you through the installation and configuration process end-to-end in great detail:  https://yzhums.com/24811/
 
