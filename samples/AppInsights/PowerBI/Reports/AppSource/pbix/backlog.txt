@@ -105,13 +105,6 @@ Dataset
 
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
-    Environment upgrade error: LC0107
-    Environment PIT restore error: LC0127 and LC0130
-    Environment configuration key [key] failed to delete for environment [environment name]: LC0145
-    Environment app [extension name] hotfix to version [extension version] scheduling failed for environment: [environment name] LC0156
-    Environment app [extension name] hotfix to version [extension version] failed for environment: [environment name], LC0160
-    Environment app 'b9207dc8-e910-4c0d-85fc-7b7ec3e03112' update to version [extension destination version] scheduling failed for environment: WFE-UpdatetoBC20-110422-AO-UK, LC0168
-    Environment app '96856d9d-681e-4970-8d65-24a40f5b1abe' update to version latest compatible failed for environment: Prod, LC0171
     Outgoing ws calls: add callstack (if added by the server team)
 
 
@@ -133,8 +126,6 @@ Change report
 -------------
 
 Pages
-    Environment updates
-    Extension updates
     Feature uptake 
     Permission set changes
     Javier: Indexes is empty even when showing up in all changes (cannot reproduce)
