@@ -23,21 +23,24 @@ codeunit 50105 "Fridge Race" implements "Slow Code Example"
     procedure RunSlowCode()
     var
         FoodManagement: Codeunit "Food Management";
+        ParallelSessions: Codeunit "Parallel Sessions";
+        SessionIDs: List of [Integer];
         SessionId: Integer;
     begin
         FoodManagement.SetupFood();
+
         Session.StartSession(SessionId, Codeunit::"Fridge Race");
+        SessionIDs.Add(SessionID);
+
         Session.StartSession(SessionId, Codeunit::"Fridge Race");
+        SessionIDs.Add(SessionID);
+
+        ParallelSessions.WaitForSessionsToComplete(SessionIDs);
     end;
 
     procedure GetHint(): Text
     begin
         exit('Try checking deadlocks telemetry.');
-    end;
-
-    procedure IsBackground(): Boolean
-    begin
-        exit(true);
     end;
 
     local procedure FetchMilk(var Milk: Record Milk): Boolean

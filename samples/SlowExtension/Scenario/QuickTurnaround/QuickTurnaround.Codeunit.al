@@ -20,11 +20,6 @@ codeunit 50103 "Quick Turnaround" implements "Slow Code Example"
         exit('Try using the performance profiler or check the telemetry for long running queries.');
     end;
 
-    procedure IsBackground(): Boolean
-    begin
-        exit(false);
-    end;
-
     local procedure EasyComeEasyGo()
     begin
         AddCustomers(200);

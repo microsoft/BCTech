@@ -20,11 +20,6 @@ codeunit 50101 "Ping Pong" implements "Slow Code Example"
         exit('Try using the performance profiler.');
     end;
 
-    procedure IsBackground(): Boolean
-    begin
-        exit(false);
-    end;
-
     local procedure Ping(HitCount: Integer)
     begin
         if HandleTheBall(HitCount) then

@@ -76,20 +76,14 @@ page 50101 "Slow Code Examples List"
     var
         ExampleStartDateTime: DateTime;
     begin
-        if SlowCodeExample.IsBackground() then begin
-            SlowCodeExample.RunSlowCode();
-            Message(BackgroundRunTxt, ScenarioName);
-        end else begin
-            ExampleStartDateTime := CurrentDateTime();
-            SlowCodeExample.RunSlowCode();
-            Message(ForegroundRunTxt, ScenarioName, CurrentDateTime() - ExampleStartDateTime);
-        end;
+        ExampleStartDateTime := CurrentDateTime();
+        SlowCodeExample.RunSlowCode();
+        Message(ForegroundRunTxt, ScenarioName, CurrentDateTime() - ExampleStartDateTime);
     end;
 
     var
         Style: Text;
         Indentation: Integer;
-        BackgroundRunTxt: Label 'Scenario ''%1'' is being executed in the background - where is the time spent?';
         ForegroundRunTxt: Label 'Scenario ''%1'' took %2 to execute - where was the time spent?';
         BackgroundRun: Label 'Something is running in the background';
         TestEmailChoiceTxt: Label 'Choose the action that you would like to see a hint about:';

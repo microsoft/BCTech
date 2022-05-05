@@ -15,23 +15,17 @@ enum 50100 "Slow Code Examples" implements "Slow Code Example"
     {
         Implementation = "Slow Code Example" = "Ping Pong";
     }
-
-    value(2; "Crafty Shark")
-    {
-        Implementation = "Slow Code Example" = "Hefty Search";
-    }
-
-    value(3; "Feisty Wings")
+    value(2; "Feisty Wings")
     {
         Implementation = "Slow Code Example" = "Quick Turnaround";
     }
 
-    value(4; "Long Thunder")
+    value(3; "Long Thunder")
     {
         Implementation = "Slow Code Example" = "Fridge Race";
     }
 
-    value(5; "Silver Gambit")
+    value(4; "Silver Gambit")
     {
         Implementation = "Slow Code Example" = "What Goes First";
     }

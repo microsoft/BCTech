@@ -12,5 +12,4 @@ interface "Slow Code Example"
 
     procedure RunSlowCode();
     procedure GetHint(): Text;
-    procedure IsBackground(): Boolean;
 }

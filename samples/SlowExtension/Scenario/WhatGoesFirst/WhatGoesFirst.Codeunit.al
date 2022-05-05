@@ -9,11 +9,11 @@
 codeunit 50104 "What Goes First" implements "Slow Code Example"
 {
     Access = Internal;
-    TableNo = "Job Queue Entry";
+    TableNo = "Parallel Session Entry";
 
     trigger OnRun()
     begin
-        if Rec."Parameter String" = 'Milk first' then
+        if Rec.Parameter = 'Milk first' then
             PrepareBreakfastMilkFirst()
         else
             PrepareBreakfastCerealFirst();
@@ -21,28 +21,29 @@ codeunit 50104 "What Goes First" implements "Slow Code Example"
 
     procedure RunSlowCode()
     var
-        FirstPersonJobQueue: Record "Job Queue Entry";
-        SecondPersonJobQueue: Record "Job Queue Entry";
+        FirstPersonEntry: Record "Parallel Session Entry";
+        SecondPersonEntry: Record "Parallel Session Entry";
         FoodManagement: Codeunit "Food Management";
-        SessionId: Integer;
+        ParallelSessions: Codeunit "Parallel Sessions";
+        SessionID: Integer;
+        SessionIDs: List of [Integer];
     begin
         FoodManagement.SetupFood();
 
-        FirstPersonJobQueue."Parameter String" := 'Milk first';
-        SecondPersonJobQueue."Parameter String" := 'Cereal First';
+        FirstPersonEntry.Parameter := 'Milk first';
+        SecondPersonEntry.Parameter := 'Cereal First';
 
-        Session.StartSession(SessionId, Codeunit::"What Goes First", CompanyName(), FirstPersonJobQueue);
-        Session.StartSession(SessionId, Codeunit::"What Goes First", CompanyName(), SecondPersonJobQueue);
+        Session.StartSession(SessionID, Codeunit::"What Goes First", CompanyName(), FirstPersonEntry);
+        SessionIDs.Add(SessionID);
+        Session.StartSession(SessionID, Codeunit::"What Goes First", CompanyName(), SecondPersonEntry);
+        SessionIDs.Add(SessionID);
+
+        ParallelSessions.WaitForSessionsToComplete(SessionIDs);
     end;
 
     procedure GetHint(): Text
     begin
         exit('Try checking lock timeout telemetry or the ''Database Locks'' page.');
-    end;
-
-    procedure IsBackground(): Boolean
-    begin
-        exit(true);
     end;
 
     local procedure PrepareBreakfastMilkFirst()
