@@ -50,6 +50,16 @@ You can change configuration settings by going to the Power BI portal, open the 
 
 ![Parameters](../../../images/pbi_app_parameters.png)
 
+# Sharing the app with coworkers and others
+Once installed, it is possible to share the app with coworkers and others (e.g. customers). 
+
+Do this:
+1. Share the Power BI workspace with the person. This will make the app appear under _Workspaces_ in their Power BI portal.
+2. Provide the url to the person and ask them to open it in a browser. This will make the app appear under _Apps_ in their Power BI portal.
+
+Read more here [Share Power BI reports and dashboards with coworkers and others](https://docs.microsoft.com/en-us/power-bi/collaborate-share/service-share-dashboards)
+
+
 
 # Learn more
 Microsoft MVP Yun Zhu wrote this fantastic blog post where he walks you through the installation and configuration process end-to-end in great detail:  https://yzhums.com/24811/
