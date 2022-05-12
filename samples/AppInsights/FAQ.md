@@ -36,6 +36,7 @@ To reduce ingestion cost, you can
 To reduce data retention cost, you can
 * purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
 
+![Cost](images/cost.png)
 
 Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
 
