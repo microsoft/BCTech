@@ -1,5 +1,5 @@
 -----------------
-Both reports TODO
+App TODO
 -----------------
 
 How to get it to appsource?
@@ -11,6 +11,9 @@ Is there any way to show the individual traces from app insights entries in the 
 
 Dataset
     Possible to do incremental loading? Probably not with the API approach
+    Add telemetry user id where possible (20.0)
+
+
 
 ----------------
 Perf report TODO
@@ -102,7 +105,6 @@ Pages
     Error message votes: does not follow global filter. Why?
 
 Dataset
-
     20.1: Add dataset for Permissions errors
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
     Outgoing ws calls: add callstack (if added by the server team)
