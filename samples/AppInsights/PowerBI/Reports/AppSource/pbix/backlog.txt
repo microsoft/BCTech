@@ -135,7 +135,8 @@ AadTenantId = tostring( customDimensions.aadTenantId  )
  , TenantLicenseState = customDimensions.alTenantLicenseState
  , IsAdmin = customDimensions.alIsAdmin
  , CountryCode = customDimensions.alCountryCode
-
+ , ErrorText = customDimensions.alErrorText 
+ , ErrorCallStack = customDimensions.alErrorCallStack
 
 
 ------------
