@@ -12,6 +12,7 @@ Is there any way to show the individual traces from app insights entries in the 
 Dataset
     Possible to do incremental loading? Probably not with the API approach
     Add telemetry user id where possible (20.0)
+    Add Hour of Day filters on pages where data is aggregated
 
 
 
