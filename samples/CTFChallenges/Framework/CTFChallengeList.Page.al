@@ -44,7 +44,7 @@ page 50101 "CTF Challenges List"
 
                         case Rec."Entry Type" of
                             Rec."Entry Type"::RunCode:
-                                RunSlowCode(CTFChallenge, ScenarioName);
+                                RunChallenge(CTFChallenge, ScenarioName);
                             Rec."Entry Type"::Hint:
                                 Message(CTFChallenge.GetHints());
                         end
@@ -56,9 +56,9 @@ page 50101 "CTF Challenges List"
 
     trigger OnOpenPage()
     var
-        SlowCodeExamples: Codeunit "CTF Challenges";
+        CTFChallenges: Codeunit "CTF Challenges";
     begin
-        SlowCodeExamples.Get(Rec);
+        CTFChallenges.Get(Rec);
     end;
 
     trigger OnAfterGetRecord()
@@ -72,12 +72,12 @@ page 50101 "CTF Challenges List"
         end;
     end;
 
-    local procedure RunSlowCode(SlowCodeExample: Interface "CTF Challenge"; ScenarioName: Text)
+    local procedure RunChallenge(CTFChallenge: Interface "CTF Challenge"; ScenarioName: Text)
     var
         ExampleStartDateTime: DateTime;
     begin
         ExampleStartDateTime := CurrentDateTime();
-        SlowCodeExample.RunChallenge();
+        CTFChallenge.RunChallenge();
         Message(ForegroundRunTxt, ScenarioName, CurrentDateTime() - ExampleStartDateTime);
     end;
 
