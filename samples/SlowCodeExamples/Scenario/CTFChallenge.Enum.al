@@ -4,29 +4,29 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// The list of all slow code examples.
+/// The list of all CTF challenges.
 /// </summary>
-enum 50100 "Slow Code Examples" implements "Slow Code Example"
+enum 50100 "CTF Challenge" implements "CTF Challenge"
 {
     Extensible = false;
     Access = Internal;
 
     value(1; "Mellow Spectator")
     {
-        Implementation = "Slow Code Example" = "Ping Pong";
+        Implementation = "CTF Challenge" = "Ping Pong";
     }
     value(2; "Feisty Wings")
     {
-        Implementation = "Slow Code Example" = "Quick Turnaround";
+        Implementation = "CTF Challenge" = "Quick Turnaround";
     }
 
     value(3; "Long Thunder")
     {
-        Implementation = "Slow Code Example" = "Fridge Race";
+        Implementation = "CTF Challenge" = "Fridge Race";
     }
 
     value(4; "Silver Gambit")
     {
-        Implementation = "Slow Code Example" = "What Goes First";
+        Implementation = "CTF Challenge" = "What Goes First";
     }
 }

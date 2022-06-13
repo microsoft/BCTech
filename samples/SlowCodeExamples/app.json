@@ -1,10 +1,10 @@
 {
   "id": "ff410389-c6a8-4a44-ae8f-69fe2e41e1ae",
-  "name": "SlowCodeExamples",
+  "name": "CTF Challenges",
   "publisher": "Microsoft 'BCTech' GitHub repo",
   "version": "1.0.0.0",
-  "brief": "Examples of actions that run for a long time.",
-  "description": "A test extension that includes examples of slowly running code. These examples can be used for testing performance troubleshooting tools.",
+  "brief": "CTF challenges for troubleshooting in Business Central.",
+  "description": "A test extension that includes capture-the-flag-style challenges for troubleshooting in Business Centrsl.",
   "privacyStatement": "",
   "EULA": "",
   "help": "",

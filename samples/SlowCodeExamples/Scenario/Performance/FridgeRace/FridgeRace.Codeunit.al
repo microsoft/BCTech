@@ -4,9 +4,9 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// Provides an example of slowly running code.
+/// A performance CTF challenge.
 /// </summary>
-codeunit 50105 "Fridge Race" implements "Slow Code Example"
+codeunit 50105 "Fridge Race" implements "CTF Challenge"
 {
     Access = Internal;
 
@@ -20,7 +20,7 @@ codeunit 50105 "Fridge Race" implements "Slow Code Example"
         end;
     end;
 
-    procedure RunSlowCode()
+    procedure RunChallenge()
     var
         FoodManagement: Codeunit "Food Management";
         ParallelSessions: Codeunit "Parallel Sessions";
@@ -38,9 +38,17 @@ codeunit 50105 "Fridge Race" implements "Slow Code Example"
         ParallelSessions.WaitForSessionsToComplete(SessionIDs);
     end;
 
-    procedure GetHint(): Text
+    procedure GetHints(): List of [Text]
+    var
+        Hints: List of [Text];
     begin
-        exit('Try checking deadlocks telemetry.');
+        Hints.Add('Try checking lock timeout telemetry.');
+        exit(Hints);
+    end;
+
+    procedure GetCategory(): Enum "CTF Category"
+    begin
+        exit(Enum::"CTF Category"::Performance);
     end;
 
     local procedure FetchMilk(var Milk: Record Milk): Boolean

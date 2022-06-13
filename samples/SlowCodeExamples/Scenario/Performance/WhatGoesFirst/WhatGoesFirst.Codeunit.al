@@ -4,9 +4,9 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// Provides an example of slowly running code.
+/// A performance CTF challenge.
 /// </summary>
-codeunit 50104 "What Goes First" implements "Slow Code Example"
+codeunit 50104 "What Goes First" implements "CTF Challenge"
 {
     Access = Internal;
     TableNo = "Parallel Session Entry";
@@ -19,7 +19,7 @@ codeunit 50104 "What Goes First" implements "Slow Code Example"
             PrepareBreakfastCerealFirst();
     end;
 
-    procedure RunSlowCode()
+    procedure RunChallenge()
     var
         FirstPersonEntry: Record "Parallel Session Entry";
         SecondPersonEntry: Record "Parallel Session Entry";
@@ -41,9 +41,17 @@ codeunit 50104 "What Goes First" implements "Slow Code Example"
         ParallelSessions.WaitForSessionsToComplete(SessionIDs);
     end;
 
-    procedure GetHint(): Text
+    procedure GetHints(): List of [Text]
+    var
+        Hints: List of [Text];
     begin
-        exit('Try checking the ''Database Locks'' page or long running queries in telemetry.');
+        Hints.Add('Try checking the ''Database Locks'' page or long running queries in telemetry.');
+        exit(Hints);
+    end;
+
+    procedure GetCategory(): Enum "CTF Category"
+    begin
+        exit(Enum::"CTF Category"::Performance);
     end;
 
     local procedure PrepareBreakfastMilkFirst()

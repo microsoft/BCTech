@@ -4,20 +4,28 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// Provides an example of slowly running code.
+/// A performance CTF challenge.
 /// </summary>
-codeunit 50101 "Ping Pong" implements "Slow Code Example"
+codeunit 50101 "Ping Pong" implements "CTF Challenge"
 {
     Access = Internal;
 
-    procedure RunSlowCode()
+    procedure RunChallenge()
     begin
         Ping(0);
     end;
 
-    procedure GetHint(): Text
+    procedure GetHints(): List of [Text]
+    var
+        Hints: List of [Text];
     begin
-        exit('Try using the performance profiler.');
+        Hints.Add('Try using the performance profiler.');
+        exit(Hints);
+    end;
+
+    procedure GetCategory(): Enum "CTF Category"
+    begin
+        exit(Enum::"CTF Category"::Performance);
     end;
 
     local procedure Ping(HitCount: Integer)

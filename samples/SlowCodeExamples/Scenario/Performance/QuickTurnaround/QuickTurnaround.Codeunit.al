@@ -4,20 +4,28 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// Provides an example of slowly running code.
+/// A performance CTF challenge.
 /// </summary>
-codeunit 50103 "Quick Turnaround" implements "Slow Code Example"
+codeunit 50103 "Quick Turnaround" implements "CTF Challenge"
 {
     Access = Internal;
 
-    procedure RunSlowCode()
+    procedure RunChallenge()
     begin
         EasyComeEasyGo();
     end;
 
-    procedure GetHint(): Text
+    procedure GetHints(): List of [Text]
+    var
+        Hints: List of [Text];
     begin
-        exit('Try using the performance profiler or check the telemetry for long running queries.');
+        Hints.Add('Try using the performance profiler or check the telemetry for long running queries.');
+        exit(Hints);
+    end;
+
+    procedure GetCategory(): Enum "CTF Category"
+    begin
+        exit(Enum::"CTF Category"::Performance);
     end;
 
     local procedure EasyComeEasyGo()

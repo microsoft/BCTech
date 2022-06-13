@@ -4,21 +4,21 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// The list of examples of slowly running code.
+/// The list of examples of CTF Challenges.
 /// </summary>
-page 50101 "Slow Code Examples List"
+page 50101 "CTF Challenges List"
 {
-    Caption = 'Slow Code Examples List';
+    Caption = 'CTF Challenges List';
     PageType = ListPart;
     UsageCategory = Administration;
-    SourceTable = "Slow Code Example";
+    SourceTable = "CTF Challenge";
 
     layout
     {
         area(Content)
         {
 
-            repeater("Slow Code Examples")
+            repeater("CTF Challenges")
             {
                 ShowCaption = false;
                 FreezeColumn = DisplayText;
@@ -36,17 +36,17 @@ page 50101 "Slow Code Examples List"
 
                     trigger OnDrillDown()
                     var
-                        SlowCodeExample: Interface "Slow Code Example";
+                        CTFChallenge: Interface "CTF Challenge";
                         ScenarioName: Text;
                     begin
-                        SlowCodeExample := Rec."Slow Code Example";
-                        ScenarioName := Enum::"Slow Code Examples".Names().Get(Rec."Slow Code Example".AsInteger());
+                        CTFChallenge := Rec."CTF Challenge";
+                        ScenarioName := Enum::"CTF Challenge".Names().Get(Rec."CTF Challenge".AsInteger());
 
                         case Rec."Entry Type" of
                             Rec."Entry Type"::RunCode:
-                                RunSlowCode(SlowCodeExample, ScenarioName);
+                                RunSlowCode(CTFChallenge, ScenarioName);
                             Rec."Entry Type"::Hint:
-                                Message(SlowCodeExample.GetHint());
+                                Message(CTFChallenge.GetHints());
                         end
                     end;
                 }
@@ -56,7 +56,7 @@ page 50101 "Slow Code Examples List"
 
     trigger OnOpenPage()
     var
-        SlowCodeExamples: Codeunit "Slow Code Examples";
+        SlowCodeExamples: Codeunit "CTF Challenges";
     begin
         SlowCodeExamples.Get(Rec);
     end;
@@ -72,12 +72,12 @@ page 50101 "Slow Code Examples List"
         end;
     end;
 
-    local procedure RunSlowCode(SlowCodeExample: Interface "Slow Code Example"; ScenarioName: Text)
+    local procedure RunSlowCode(SlowCodeExample: Interface "CTF Challenge"; ScenarioName: Text)
     var
         ExampleStartDateTime: DateTime;
     begin
         ExampleStartDateTime := CurrentDateTime();
-        SlowCodeExample.RunSlowCode();
+        SlowCodeExample.RunChallenge();
         Message(ForegroundRunTxt, ScenarioName, CurrentDateTime() - ExampleStartDateTime);
     end;
 

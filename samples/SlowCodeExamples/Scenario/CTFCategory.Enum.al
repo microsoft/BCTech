@@ -4,12 +4,13 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// Inteface for slow running code examples.
 /// </summary>
-interface "Slow Code Example"
+enum 50101 "CTF Category"
 {
+    Extensible = false;
     Access = Internal;
 
-    procedure RunSlowCode();
-    procedure GetHint(): Text;
+    value(1; "Performance")
+    {
+    }
 }

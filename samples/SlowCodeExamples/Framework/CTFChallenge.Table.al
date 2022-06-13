@@ -4,16 +4,16 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// The temporary table to hold information about slow running examples
+/// The temporary table to hold information about CTF challenges.
 /// </summary>
-table 50100 "Slow Code Example"
+table 50100 "CTF Challenge"
 {
     TableType = Temporary;
     Access = Internal;
 
     fields
     {
-        field(1; "Slow Code Example"; Enum "Slow Code Examples")
+        field(1; "CTF Challenge"; Enum "CTF Challenge")
         {
         }
         field(2; "Entry Type"; Option)
@@ -28,7 +28,7 @@ table 50100 "Slow Code Example"
 
     keys
     {
-        key(PK; "Slow Code Example", "Entry Type")
+        key(PK; "CTF Challenge", "Entry Type")
         {
             Clustered = true;
         }

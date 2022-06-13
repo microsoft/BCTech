@@ -4,16 +4,14 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// Provides examples of slowly running code.
+/// The main page for interacting with CTF challenges.
 /// </summary>
-page 50100 "Slow Code Examples"
+page 50100 "CTF Challenges"
 {
-    Caption = 'Slow Code Examples';
+    Caption = 'CTF Challenge';
     PageType = Document;
     ApplicationArea = All;
     UsageCategory = Administration;
-    AboutTitle = 'About slow code examples';
-    AboutText = 'Use the actions on this page to test performance troubleshooting tools.';
 
     layout
     {
@@ -48,7 +46,7 @@ page 50100 "Slow Code Examples"
             {
                 ShowCaption = false;
 
-                part("Slow Code Examples List"; "Slow Code Examples List")
+                part("Slow Code Examples List"; "CTF Challenges List")
                 {
                     Caption = 'Slow Code Examples';
                     ApplicationArea = All;
