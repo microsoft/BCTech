@@ -3,32 +3,34 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
 
-/// <summary>
-/// The temporary table to hold information about CTF challenges.
-/// </summary>
-table 50100 "CTF Challenge"
+table 50102 Milk
 {
-    TableType = Temporary;
     Access = Internal;
+    DataClassification = SystemMetadata;
 
     fields
     {
-        field(1; "CTF Challenge"; Enum "CTF Challenge")
+        field(1; "Carton No."; Integer)
         {
+            AutoIncrement = true;
         }
-        field(2; "Entry Type"; Option)
+        field(2; "Cal Per 100 ml"; Integer)
         {
-            DataClassification = SystemMetadata;
-            OptionMembers = Name,RunCode,Hint;
+            InitValue = 40;
         }
-        field(3; "Display Text"; Text[2048])
+        field(3; "Plant-Based"; Boolean)
         {
+            InitValue = true;
+        }
+        field(4; "Amount Left"; Decimal)
+        {
+            InitValue = 1.0;
         }
     }
 
     keys
     {
-        key(PK; "CTF Challenge", "Entry Type")
+        key(PK; "Carton No.")
         {
             Clustered = true;
         }

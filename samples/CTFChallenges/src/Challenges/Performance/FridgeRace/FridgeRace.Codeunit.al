@@ -66,6 +66,16 @@ codeunit 50105 "Fridge Race" implements "CTF Challenge"
 
     local procedure GoToAnotherRoom()
     begin
-        Sleep(30000);
+        Wait();
+    end;
+
+    local procedure Wait()
+    begin
+        Flag_38dfbb00();
+    end;
+
+    local procedure Flag_38dfbb00()
+    begin
+        Sleep(32000);
     end;
 }

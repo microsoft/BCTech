@@ -20,6 +20,7 @@ codeunit 50101 "Ping Pong" implements "CTF Challenge"
         Hints: List of [Text];
     begin
         Hints.Add('Try using the performance profiler.');
+        Hints.Add('Record the scenario with the performance profiler, enable the ''Show technical information'' switch and check the ''Call Tree'' section.');
         exit(Hints);
     end;
 
@@ -44,9 +45,16 @@ codeunit 50101 "Ping Pong" implements "CTF Challenge"
     begin
         Sleep(500);
 
-        if HitCount > 10 then
+        if HitCount > 5 then begin
+            Flag_f4509017();
             exit(false);
+        end;
 
         exit(true);
+    end;
+
+    local procedure Flag_f4509017()
+    begin
+        Sleep(500);
     end;
 }

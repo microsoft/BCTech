@@ -3,25 +3,22 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
 
-table 50101 Cereal
+table 50103 "Quick Item Flag_6e5b1753"
 {
+    Access = Internal;
     DataClassification = SystemMetadata;
 
     fields
     {
-        field(1; "Box No."; Integer)
+        field(1; "No."; Integer)
         {
             AutoIncrement = true;
-        }
-        field(4; "Amount Left"; Decimal)
-        {
-            InitValue = 2.0;
         }
     }
 
     keys
     {
-        key(PK; "Box No.")
+        key(PK; "No.")
         {
             Clustered = true;
         }

@@ -19,7 +19,7 @@ codeunit 50103 "Quick Turnaround" implements "CTF Challenge"
     var
         Hints: List of [Text];
     begin
-        Hints.Add('Try using the performance profiler or check the telemetry for long running queries.');
+        Hints.Add('Try checking the telemetry for long running queries.');
         exit(Hints);
     end;
 
@@ -30,27 +30,26 @@ codeunit 50103 "Quick Turnaround" implements "CTF Challenge"
 
     local procedure EasyComeEasyGo()
     begin
-        RemoveCereal();
-        AddCereal(5000);
-        RemoveCereal();
+        RemoveItems();
+        AddItems(5000);
+        RemoveItems();
     end;
 
-    local procedure AddCereal(Number: Integer)
+    local procedure AddItems(Number: Integer)
     var
-        Cereal: Record Cereal;
+        QuickItem: Record "Quick Item Flag_6e5b1753";
         Iterator: Integer;
     begin
         for Iterator := 1 to Number do begin
-            Cereal.Init();
-            Cereal."Box No." := Iterator;
-            Cereal.Insert();
+            QuickItem."No." := Iterator;
+            QuickItem.Insert();
         end;
     end;
 
-    local procedure RemoveCereal()
+    local procedure RemoveItems()
     var
-        Cereal: Record Cereal;
+        QuickItem: Record "Quick Item Flag_6e5b1753";
     begin
-        Cereal.DeleteAll();
+        QuickItem.DeleteAll();
     end;
 }

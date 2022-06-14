@@ -8,7 +8,7 @@
 /// </summary>
 page 50100 "CTF Challenges"
 {
-    Caption = 'CTF Challenge';
+    Caption = 'CTF Challenges';
     PageType = Document;
     ApplicationArea = All;
     UsageCategory = Administration;
@@ -46,9 +46,9 @@ page 50100 "CTF Challenges"
             {
                 ShowCaption = false;
 
-                part("Slow Code Examples List"; "CTF Challenges List")
+                part("CTF Challenges List"; "CTF Challenges List")
                 {
-                    Caption = 'Slow Code Examples';
+                    Caption = 'Challenges';
                     ApplicationArea = All;
                 }
 

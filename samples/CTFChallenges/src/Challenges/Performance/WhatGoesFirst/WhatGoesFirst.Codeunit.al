@@ -57,14 +57,14 @@ codeunit 50104 "What Goes First" implements "CTF Challenge"
     local procedure PrepareBreakfastMilkFirst()
     begin
         AddMilk();
-        FetchCereal();
+        FetchCereal_Flag_a7e2b268();
         AddCereal();
     end;
 
     local procedure PrepareBreakfastCerealFirst()
     begin
         AddCereal();
-        FetchMilk();
+        FetchMilk_Flag_a7e2b268();
         AddMilk();
     end;
 
@@ -92,12 +92,12 @@ codeunit 50104 "What Goes First" implements "CTF Challenge"
         end;
     end;
 
-    local procedure FetchCereal()
+    local procedure FetchCereal_Flag_a7e2b268()
     begin
         Sleep(5000);
     end;
 
-    local procedure FetchMilk()
+    local procedure FetchMilk_Flag_a7e2b268()
     begin
         Sleep(5000);
     end;

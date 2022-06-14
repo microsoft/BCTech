@@ -15,6 +15,7 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
     {
         Implementation = "CTF Challenge" = "Ping Pong";
     }
+
     value(2; "Feisty Wings")
     {
         Implementation = "CTF Challenge" = "Quick Turnaround";
