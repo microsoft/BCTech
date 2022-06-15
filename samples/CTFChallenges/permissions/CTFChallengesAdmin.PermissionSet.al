@@ -3,27 +3,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
 
-/// <summary>
-/// Settings for CTF challeneges
-/// </summary>
-table 50104 "CTF Challenges Setup"
+permissionset 50100 "CTF Challenges Admin"
 {
-    Access = Internal;
+    Assignable = true;
 
-    fields
-    {
-        field(1; "No."; Integer)
-        {
-        }
-        // use CTF mode 
-
-    }
-
-    keys
-    {
-        key(PK; "No.")
-        {
-            Clustered = true;
-        }
-    }
+    Permissions = tabledata "CTF Challenges Setup" = RIMD;
 }

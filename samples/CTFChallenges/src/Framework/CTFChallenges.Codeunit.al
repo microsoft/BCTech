@@ -10,6 +10,52 @@ codeunit 50100 "CTF Challenges"
 {
     Access = Internal;
 
+    procedure GetCTFChallenegesBanner(): Text
+    var
+        BannerText: TextBuilder;
+    begin
+        BannerText.AppendLine('Each scenario listed below contains a "bad implementation" that leads to poor performance.');
+        BannerText.AppendLine('What you should do:');
+        BannerText.AppendLine('    1. Run a scenario - and observe that it''s pretty slow.');
+        BannerText.Append('    2. Use available troubleshooting tools to find out why the scenario is slow.');
+        exit(BannerText.ToText());
+    end;
+
+    procedure GetExternalCTFChallenegesBanner(): Text
+    var
+        BannerText: TextBuilder;
+    begin
+        BannerText.AppendLine('Please follow the instructions in the CTF portal to get the challenge names.');
+        BannerText.Append('After that, you can enter the name of the challenege in the field below.');
+        exit(BannerText.ToText());
+    end;
+
+    procedure GetHintKeys(): Text
+    var
+        CryptographyManagement: Codeunit "Cryptography Management";
+        Challenge: Enum "CTF Challenge";
+        ICTFChallenge: Interface "CTF Challenge";
+        ChallengeName: Text;
+        HintText: Text;
+        HintIndex: Integer;
+        HintKeysText: TextBuilder;
+        HashAlgorithmType: Option MD5,SHA1,SHA256,SHA384,SHA512;
+        HashText: Text;
+    begin
+        foreach Challenge in Challenge.Ordinals() do begin
+            ChallengeName := Challenge.Names().Get(Challenge.AsInteger());
+            ICTFChallenge := Challenge;
+
+            for HintIndex := 1 to ICTFChallenge.GetHints().Count() do begin
+                HintText := ICTFChallenge.GetHints().Get(HintIndex);
+                HashText := CryptographyManagement.GenerateHash(HintText, HashAlgorithmType::SHA256);
+                HintKeysText.AppendLine(StrSubstNo('%1 Hint %2: CTF_%3', ChallengeName, HintIndex, HashText.Substring(1, 8)));
+            end;
+        end;
+
+        exit(HintKeysText.ToText());
+    end;
+
     procedure Get(var CTFChallenge: Record "CTF Challenge")
     var
         CategoriesWithChallenges: Dictionary of [Enum "CTF Category", List of [Enum "CTF Challenge"]];

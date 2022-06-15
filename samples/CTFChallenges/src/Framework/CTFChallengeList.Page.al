@@ -36,9 +36,11 @@ page 50101 "CTF Challenges List"
 
                     trigger OnDrillDown()
                     var
+                        CTFExternalHintVerification: Page "CTF External Hint Verification";
                         CTFChallenge: Interface "CTF Challenge";
                         ScenarioName: Text;
                         HintIndex: Integer;
+                        HintText: Text;
                     begin
                         case Rec."Entry Type" of
                             Rec."Entry Type"::RunCode:
@@ -51,7 +53,17 @@ page 50101 "CTF Challenges List"
                                 begin
                                     CTFChallenge := Rec."CTF Challenge";
                                     Evaluate(HintIndex, Rec."Display Text".Split(' ').Get(2));
-                                    Message(CTFChallenge.GetHints().Get(HintIndex));
+                                    HintText := CTFChallenge.GetHints().Get(HintIndex);
+
+                                    // Handle the verification from the external CTF portal
+                                    if IsExternalCTFMode then begin
+                                        CTFExternalHintVerification.SetHint(HintText);
+                                        CTFExternalHintVerification.LookupMode := true;
+                                        if CTFExternalHintVerification.RunModal() <> Action::LookupOK then
+                                            exit;
+                                    end;
+
+                                    Message(HintText);
                                 end;
                         end
                     end;
@@ -61,7 +73,11 @@ page 50101 "CTF Challenges List"
     }
 
     trigger OnOpenPage()
+    var
+        CTFChallengesSetup: Record "CTF Challenges Setup";
     begin
+        CTFChallengesSetup.FindFirst();
+        IsExternalCTFMode := CTFChallengesSetup."External Mode";
         UpdateRec();
     end;
 
@@ -77,18 +93,20 @@ page 50101 "CTF Challenges List"
             EnumOrdinal := Rec."CTF Challenge".Ordinals.Get(IndexOfFilter);
             CTFChallenge := Enum::"CTF Challenge".FromInteger(EnumOrdinal);
             CurrentFilter := CTFChallenge;
-            IsFiltered := true;
+            IsFilterApplied := true;
             UpdateRec();
-        end;
+        end else
+            Rec.DeleteAll();
     end;
 
     local procedure UpdateRec()
     var
         CTFChallenges: Codeunit "CTF Challenges";
     begin
-        if IsFiltered then
-            CTFChallenges.Get(Rec, CurrentFilter)
-        else
+        if IsExternalCTFMode then begin
+            if IsFilterApplied then
+                CTFChallenges.Get(Rec, CurrentFilter);
+        end else
             CTFChallenges.Get(Rec);
     end;
 
@@ -125,7 +143,8 @@ page 50101 "CTF Challenges List"
         Style: Text;
         Indentation: Integer;
         CurrentFilter: Enum "CTF Challenge";
-        IsFiltered: Boolean;
+        IsExternalCTFMode: Boolean;
+        IsFilterApplied: Boolean;
         ForegroundRunTxt: Label 'Scenario ''%1'' took %2 to execute - where was the time spent?';
         BackgroundRun: Label 'Something is running in the background';
         TestEmailChoiceTxt: Label 'Choose the action that you would like to see a hint about:';

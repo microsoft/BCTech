@@ -17,11 +17,12 @@ page 50100 "CTF Challenges"
     {
         area(Content)
         {
-            group(Info)
+            group(CTFChallengesBanner)
             {
                 ShowCaption = false;
+                Visible = not IsExternalMode;
 
-                group(VerticalAlignmentInfo)
+                group(VerticalAlignment)
                 {
                     ShowCaption = false;
 
@@ -31,7 +32,32 @@ page 50100 "CTF Challenges"
                         Caption = 'This page is used for demo & training purposes';
                         Style = Strong;
                     }
-                    field(Description; DescriptionTxt)
+                    field(Description; CTFChallenegesBanner)
+                    {
+                        ApplicationArea = All;
+                        Editable = false;
+                        ShowCaption = false;
+                        MultiLine = true;
+                        Caption = ' ';
+                    }
+                }
+            }
+            group(CTFExtenralChallengesBanner)
+            {
+                ShowCaption = false;
+                Visible = IsExternalMode;
+
+                group(VerticalAlignmentExternalChallenge)
+                {
+                    ShowCaption = false;
+
+                    label(HeaderExternalChallenge)
+                    {
+                        ApplicationArea = All;
+                        Caption = 'This page is used for demo & training purposes';
+                        Style = Strong;
+                    }
+                    field(DescriptionExternalChallenge; CTFExternalChallenegesBanner)
                     {
                         ApplicationArea = All;
                         Editable = false;
@@ -42,14 +68,34 @@ page 50100 "CTF Challenges"
                     }
                 }
             }
-            group(Scenarios)
+            grid(Scenarios)
             {
                 ShowCaption = false;
+                GridLayout = Columns;
 
-                part("CTF Challenges List"; "CTF Challenges List")
+                group(FilteredChallenges)
                 {
-                    Caption = 'Challenges';
-                    ApplicationArea = All;
+                    ShowCaption = false;
+
+                    field(FilterChallenge; FilterChallenge)
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Challenge Name';
+                        Visible = IsExternalMode;
+
+                        trigger OnValidate()
+                        begin
+                            CurrPage."CTF Challenges List".Page.SetFilter(FilterChallenge);
+                            CurrPage."CTF Challenges List".Page.Update();
+                        end;
+                    }
+
+                    part("CTF Challenges List"; "CTF Challenges List")
+                    {
+                        Visible = not (IsExternalMode and (FilterChallenge = ''));
+                        Caption = 'Challenges';
+                        ApplicationArea = All;
+                    }
                 }
 
                 group(Help)
@@ -86,16 +132,21 @@ page 50100 "CTF Challenges"
 
     trigger OnOpenPage()
     var
-        TypeHelper: Codeunit "Type Helper";
+        CTFChallenges: Codeunit "CTF Challenges";
     begin
-        DescriptionTxt := 'Each scenario listed below contains a "bad implementation" that leads to poor performance.' + TypeHelper.NewLine();
-        DescriptionTxt += 'What you should do:' + TypeHelper.NewLine();
-        DescriptionTxt += '    1. Run a scenario - and observe that it''s pretty slow.' + TypeHelper.NewLine();
-        DescriptionTxt += '    2. Use available troubleshooting tools to find out why the scenario is slow.'
+        CTFChallenegesBanner := CTFChallenges.GetCTFChallenegesBanner();
+        CTFExternalChallenegesBanner := CTFChallenges.GetExternalCTFChallenegesBanner();
+
+        CTFChallengesSetup.Findfirst();
+        IsExternalMode := CTFChallengesSetup."External Mode";
     end;
 
     var
+        CTFChallengesSetup: Record "CTF Challenges Setup";
         PerfToolsTxt: Label 'How to Work with a Performance Problem';
-        DescriptionTxt: Text;
+        IsExternalMode: Boolean;
+        CTFChallenegesBanner: Text;
+        CTFExternalChallenegesBanner: Text;
+        FilterChallenge: Text;
         PerfToolsUrlTxt: Label 'https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-work-perf-problem#which-tools-are-good-when';
 }
