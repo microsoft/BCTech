@@ -8,5 +8,6 @@ permissionsetextension 50100 "CTF Challenges" extends "System App - Basic"
 
     Permissions = tabledata Cereal = RIMD,
                   tabledata Milk = RIMD,
-                  tabledata "Quick Item Flag_6e5b1753" = RIMD;
+                  tabledata "Quick Item Flag_6e5b1753" = RIMD,
+                  tabledata "CTF Challenges Setup" = R;
 }
