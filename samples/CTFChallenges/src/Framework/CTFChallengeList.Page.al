@@ -31,7 +31,7 @@ page 50101 "CTF Challenges List"
                 {
                     ApplicationArea = All;
                     Editable = false;
-                    Caption = 'Challanges';
+                    Caption = 'Challenges';
                     StyleExpr = Style;
 
                     trigger OnDrillDown()

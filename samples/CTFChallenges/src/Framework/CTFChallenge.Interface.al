@@ -4,7 +4,7 @@
 // ------------------------------------------------------------------------------------------------
 
 /// <summary>
-/// The inteface for CTF challeneges.
+/// The inteface for CTF challenges.
 /// </summary>
 interface "CTF Challenge"
 {

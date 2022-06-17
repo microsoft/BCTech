@@ -32,7 +32,7 @@ page 50100 "CTF Challenges"
                         Caption = 'This page is used for demo & training purposes';
                         Style = Strong;
                     }
-                    field(Description; CTFChallenegesBanner)
+                    field(Description; CTFChallengesBanner)
                     {
                         ApplicationArea = All;
                         Editable = false;
@@ -57,7 +57,7 @@ page 50100 "CTF Challenges"
                         Caption = 'This page is used for demo & training purposes';
                         Style = Strong;
                     }
-                    field(DescriptionExternalChallenge; CTFExternalChallenegesBanner)
+                    field(DescriptionExternalChallenge; CTFExternalChallengesBanner)
                     {
                         ApplicationArea = All;
                         Editable = false;
@@ -97,35 +97,6 @@ page 50100 "CTF Challenges"
                         ApplicationArea = All;
                     }
                 }
-
-                group(Help)
-                {
-                    ShowCaption = false;
-
-                    label("LinkText")
-                    {
-                        ApplicationArea = All;
-                        Caption = 'For help on how to troubleshoot see:';
-                    }
-                    field(LearnMore; PerfToolsTxt)
-                    {
-                        ApplicationArea = All;
-                        Editable = false;
-                        ShowCaption = false;
-                        Caption = ' ';
-                        ToolTip = 'View information about performance troubleshooting tools.';
-
-                        trigger OnDrillDown()
-                        begin
-                            Hyperlink(PerfToolsUrlTxt);
-                        end;
-                    }
-                    label("HintDescription")
-                    {
-                        ApplicationArea = All;
-                        Caption = 'Each scenario also provides a hint that leads you in the right direction for that scenario.';
-                    }
-                }
             }
         }
     }
@@ -134,8 +105,8 @@ page 50100 "CTF Challenges"
     var
         CTFChallenges: Codeunit "CTF Challenges";
     begin
-        CTFChallenegesBanner := CTFChallenges.GetCTFChallenegesBanner();
-        CTFExternalChallenegesBanner := CTFChallenges.GetExternalCTFChallenegesBanner();
+        CTFChallengesBanner := CTFChallenges.GetCTFChallengesBanner();
+        CTFExternalChallengesBanner := CTFChallenges.GetExternalCTFChallengesBanner();
 
         CTFChallengesSetup.Findfirst();
         IsExternalMode := CTFChallengesSetup."External Mode";
@@ -145,8 +116,8 @@ page 50100 "CTF Challenges"
         CTFChallengesSetup: Record "CTF Challenges Setup";
         PerfToolsTxt: Label 'How to Work with a Performance Problem';
         IsExternalMode: Boolean;
-        CTFChallenegesBanner: Text;
-        CTFExternalChallenegesBanner: Text;
+        CTFChallengesBanner: Text;
+        CTFExternalChallengesBanner: Text;
         FilterChallenge: Text;
         PerfToolsUrlTxt: Label 'https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-work-perf-problem#which-tools-are-good-when';
 }

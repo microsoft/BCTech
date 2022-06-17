@@ -10,23 +10,25 @@ codeunit 50100 "CTF Challenges"
 {
     Access = Internal;
 
-    procedure GetCTFChallenegesBanner(): Text
+    procedure GetCTFChallengesBanner(): Text
     var
         BannerText: TextBuilder;
     begin
-        BannerText.AppendLine('Each scenario listed below contains a "bad implementation" that leads to poor performance.');
+        BannerText.AppendLine('Each scenario listed below contains a "bad implementation" of some kind, e.g., an implementation that leads to poor performance.');
         BannerText.AppendLine('What you should do:');
-        BannerText.AppendLine('    1. Run a scenario - and observe that it''s pretty slow.');
-        BannerText.Append('    2. Use available troubleshooting tools to find out why the scenario is slow.');
+        BannerText.AppendLine('    1. Run a scenario - and observe that it''s not working as expected.');
+        BannerText.AppendLine('    2. Use available troubleshooting tools to find out why.');
+        BannerText.AppendLine('');
+        BannerText.AppendLine('When you see the flag - which is on the format "Flag_xxxxxxxx" - then you know you have found the problem.');
         exit(BannerText.ToText());
     end;
 
-    procedure GetExternalCTFChallenegesBanner(): Text
+    procedure GetExternalCTFChallengesBanner(): Text
     var
         BannerText: TextBuilder;
     begin
         BannerText.AppendLine('Please follow the instructions in the CTF portal to get the challenge names.');
-        BannerText.Append('After that, you can enter the name of the challenege in the field below.');
+        BannerText.Append('After that, you can enter the name of the challenge in the field below.');
         exit(BannerText.ToText());
     end;
 
