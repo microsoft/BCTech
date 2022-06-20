@@ -1,0 +1,16 @@
+// Use a query like this as a condition in an alert on job queue failures
+
+traces
+| where timestamp > ago(1d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E26'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alJobQueueId = customDimensions.alJobQueueId 	
+, alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueStatus = customDimensions.alJobQueueStatus
+, alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
+, alJobQueueResult = customDimensions.alJobQueueResult
+| where alJobQueueResult !in( '', 'Success' )
