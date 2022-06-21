@@ -9,6 +9,8 @@ Go to the PBI admin portal.
 Under Tenant settings, Go to Template App settings. Here you can enable template apps that are not listed on app source.
 Remember to set the setting back after installing the beta version of the app.
 
+![Prereq](../../../images/power-bi-prereq.png)
+
 # Get the report
 Use this link to install/update the template app: https://aka.ms/bctelemetryreport 
 
