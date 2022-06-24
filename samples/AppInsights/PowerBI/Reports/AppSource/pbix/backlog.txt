@@ -20,6 +20,9 @@ Dataset
 Perf report TODO
 ----------------
 
+Change design to new layout
+
+
 Recommendations
     LRQ outside MS code?
 
@@ -97,46 +100,19 @@ Error report TODO
 -----------------
 
 Recommendations
-    20.1: Permission errors
     Recurring failing task scheduler/job queue jobs 
 
 Pages    
     Outgoing ws calls: add callstack (if added by the server team) 
-    20.1: Permisssions errors
-    Error message votes: does not follow global filter. Why?
-    Feature telemetry errors
 
 Dataset
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
     Outgoing ws calls: add callstack (if added by the server team)
 
 Add 
-•	alErrorCallStack
-•	alErrorText
+	alErrorCallStack
+	alErrorText
 to email errors
-
-
-Feature telemetry errors:
-AppInsightsTraces
-| where TIMESTAMP > ago(14d)
-| where customDimensions.alCategory == "FeatureTelemetry"
-| where customDimensions.alSubCategory == 'Error'
-//| take 500
-| project 
-AadTenantId = tostring( customDimensions.aadTenantId  )
-, FeatureName = tostring( customDimensions.alFeatureName )
- , EventName = tostring( customDimensions.alEventName )
- , CallerAppName = customDimensions.alCallerAppName
- , CallerAppVersionMajor = customDimensions.alCallerAppVersionMajor
- , CallerAppVersionMinor = customDimensions.alCallerAppVersionMinor
- , ClientType = customDimensions.alClientType
- , Company = customDimensions.alCompany
- , IsEvaluationCompany = customDimensions.alIsEvaluationCompany
- , TenantLicenseState = customDimensions.alTenantLicenseState
- , IsAdmin = customDimensions.alIsAdmin
- , CountryCode = customDimensions.alCountryCode
- , ErrorText = customDimensions.alErrorText 
- , ErrorCallStack = customDimensions.alErrorCallStack
 
 
 ------------
@@ -152,9 +128,9 @@ Pages
 Dataset
 
 
--------------
-Change report
--------------
+---------------------
+Administration report
+---------------------
 
 Pages
     Feature uptake 
