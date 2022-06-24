@@ -1,0 +1,12 @@
+// Use a query like this as a condition in an alert on failed appsource validations
+
+traces
+| where timestamp > ago(1d)
+| where customDimensions.eventId == 'LC0037' 
+| project timestamp
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, failureReason = customDimensions.failureReason
+, message

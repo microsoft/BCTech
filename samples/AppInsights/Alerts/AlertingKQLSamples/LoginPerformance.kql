@@ -1,0 +1,11 @@
+// Use a query like this as a condition in an alert on long logins
+
+traces
+| where customDimensions.eventId == "RT0004" 
+| project aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000
+| where executionTimeInMS > 10000 // change to a threshold that makes sense to your organization

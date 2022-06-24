@@ -1,0 +1,16 @@
+// Use a query like this as a condition in an alert on when new updates are available for environment(s)
+
+traces
+| where timestamp > ago(1d)
+| where customDimensions.eventId == 'LC0100' 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, sourceVersion = customDimensions.sourceVersion
+, destinationVersion = customDimensions.destinationVersion
+, updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
+, updatePeriodEndDateUtc = customDimensions.updatePeriodEndDateUtc
+, registeredForUpdateOnOrAfterDateUtc = customDimensions.registeredForUpdateOnOrAfterDateUtc

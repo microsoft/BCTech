@@ -18,21 +18,25 @@ https://portal.azure.com/#@<AAD tenant id>/blade/Microsoft_Azure_Monitoring_Logs
 (substitute the strings "<id>" with the actual values)
 
 
-Stefano Demiliani has written out this example in great details. Read more on his blog here: https://demiliani.com/2022/01/11/create-a-link-to-an-application-insights-query-programmatically/
+Microsoft MVP Stefano Demiliani has written out this example in great details. Read more on his blog here: https://demiliani.com/2022/01/11/create-a-link-to-an-application-insights-query-programmatically/
+
+# How do I read telemetry data from Azure Application Insights with C#?
+The Azure SDK for .NET has an API for interacting with Azure Application Insights, see https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.applicationinsights?view=azure-dotnet
+
+Specifically, after having authenticated to Azure Application Insights, the method ApplicationInsightsDataClientExtensions.Query can be used to execute KQL queries from C#, see https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.applicationinsights.applicationinsightsdataclientextensions.query?view=azure-dotnet
+
+Use these NuGet packages in your project:
+- Microsoft.Rest.ClientRuntime.Azure.Authentication (for authenticating your app to read data from Azure Application Insights)
+- Microsoft.Azure.ApplicationInsights (for reading data using the Azure Application Insights REST API)
+
+
+Microsoft MVP Tobias Zimmergren has written out an example in great details. Read more on his blog here: 
+https://zimmergren.net/retrieve-logs-from-application-insights-programmatically-with-net-core-c/
 
 
 # How do I send telemetry data to a different endpoint than Azure Application Insights?
-Azure Application Insights support that you can override the standard data ingestion endpoint provided in the connection string that you can copy from the Azure Application Insights portal. This means that you can send telemetry data to your own component to do post-processing such as filtering or enrichment before ingesting data into your data source of choice (an Azure SQL database, a datalake, Azure Log Analytics, Azure Application Insights, or a third-party data store.)
+See the code sample and guidance in [CustomEndpoint](CustomEndpoint/README.md)
 
-You override the ingestion endpoint by using the **IngestionEndpoint** key in the Azure Application Insights connection string
-
-Read more in the documentation here: https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net#connection-string-with-explicit-endpoint-overrides
-
-
-The endpoint protocol specification is described here: https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/EndpointSpecs/ENDPOINT-PROTOCOL.md
-
-
-The ingestion schema for Azure Application Insights is described here: https://github.com/microsoft/ApplicationInsights-dotnet/tree/master/BASE/Schema/PublicSchema
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 

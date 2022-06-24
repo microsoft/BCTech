@@ -1,6 +1,7 @@
 // KQL samples - Errors
 
-// Error dialog shown (raw data)
+// Error dialog shown (raw data) 
+// available from 20.0
 traces
 | where timestamp > ago(60d) // adjust as needed
     and customDimensions.eventId == 'RT0030'
@@ -22,5 +23,61 @@ traces
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
 , failureReason = customDimensions.failureReason
+, message
+, customDimensions
+
+
+// available from 19.1
+// This is all errors logged from the FeatureTelemetry module
+traces
+| where timestamp > ago(7d) // adjust as needed
+| where customDimensions.alCategory == 'FeatureTelemetry'
+| where customDimensions.alSubCategory == 'Error'
+| project 
+  aadTenantId = customDimensions.aadTenantId
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, componentVersion = customDimensions.componentVersion
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, eventId = customDimensions.eventId
+, alCallerAppName = customDimensions.alCallerAppName
+, alCategory = customDimensions.alCategory
+, alCallerAppVersionMajor = customDimensions.alCallerAppVersionMajor
+, alCallerAppVersionMinor = customDimensions.alCallerAppVersionMinor
+, alIsEvaluationCompany = customDimensions.alIsEvaluationCompany
+, alTenantLicenseState = customDimensions.alTenantLicenseState
+, alFeatureName = customDimensions.alFeatureName
+, alSubCategory = customDimensions.alSubCategory
+, alClientType = customDimensions.alClientType
+, alEventName = customDimensions.alEventName
+, alIsAdmin = customDimensions.alIsAdmin
+, alCompany = customDimensions.alCompany
+, alUserRole = customDimensions.alUserRole
+, alErrorCallStack = customDimensions.alErrorCallStack
+, alErrorText = customDimensions.alErrorText
+, message
+
+
+
+// Permission error dialog shown (raw data) 
+// available from 20.1
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'RT0031'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, errorMessage = customDimensions.errorMessage
+, permissionArea = customDimensions.permissionArea
+, permissionType = customDimensions.permissionType
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, component = customDimensions.component
+, componentVersion = customDimensions.componentVersion
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, eventId = customDimensions.eventId
 , message
 , customDimensions

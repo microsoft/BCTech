@@ -11,8 +11,8 @@ traces
 | extend eventId = tostring( customDimensions.eventId )
 | summarize count() by eventId
 | extend table_name = 'traces'
-| join kind = inner (eventIdJson) on $left.eventId == $right.eventId
-| project eventId, table_name, count_, area, message
+| project eventId, table_name, count_
+| join kind = leftouter (eventIdJson) on $left.eventId == $right.eventId
 ;
 let pageview_stats =
 pageViews
@@ -20,11 +20,12 @@ pageViews
 | extend eventId = tostring( customDimensions.eventID )
 | summarize count() by eventId
 | extend table_name = 'pageViews'
-| join kind = inner (eventIdJson) on $left.eventId == $right.eventId
-| project eventId, table_name, count_, area, message
+| project eventId, table_name, count_
+| join kind = leftouter (eventIdJson) on $left.eventId == $right.eventId
 ;
 traces_stats
 | union pageview_stats
 | order by count_ desc
-| join kind = inner (eventIdJson) on $left.eventId == $right.eventId
+| join kind = leftouter (eventIdJson) on $left.eventId == $right.eventId
 | project eventId, table_name, count_, area, message
+| order by count_ desc 

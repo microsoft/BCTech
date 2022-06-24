@@ -1,0 +1,72 @@
+// KQL samples - Performance toolkit
+// Telemetry for the performance toolkit is supported from version 20.3
+// Earlier versions of the toolkit will emit telemetry, but in a beta-version of the schema.
+
+// Performance Toolkit run started.
+traces
+| where timestamp > ago(7d) // adjust to your needs
+| where customDimensions.eventId == 'AL0000DHR'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, clientType = customDimensions.clientType
+, alCode = customDimensions.alCode
+, alRunID = customDimensions.alRunID
+, alSessionCount = customDimensions.alSessionCount
+, alCurrentRunType = customDimensions.alCurrentRunType
+
+
+// Performance Toolkit run finished.
+traces
+| where timestamp > ago(7d) // adjust to your needs
+| where customDimensions.eventId == 'AL0000DHS'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, clientType = customDimensions.clientType
+, alCode = customDimensions.alCode
+, alRunID = customDimensions.alRunID
+, alSessionCount = customDimensions.alSessionCount
+, alDurationInMinutes = customDimensions.alDurationInMinutes
+, alCurrentRunType = customDimensions.alCurrentRunType
+
+
+// Performance Toolkit scenario completed
+traces
+| where timestamp > ago(7d) // adjust to your needs
+| where customDimensions.eventId == 'AL0000DGF'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, clientType = customDimensions.clientType
+, alCode = customDimensions.alCode
+, alSessionCount = customDimensions.alSessionCount
+, alDurationInMs = customDimensions.alDuration // this dimension will likely be renamed in 20.1/20.2
+// no alRunID dimension in 20.0. Hope to get one
+//, alRunID = customDimensions.alRunID
+, alNoOfSqlStatements = customDimensions.alNoOfSqlStatements 
+, alCodeunitName = customDimensions.alCodeunitName 
+, alCodeunitId = customDimensions.alCodeunitId 
+, alSessionNo = customDimensions.alSessionNo 
+, alOperation = customDimensions.alOperation 
+, alStatus = customDimensions.alStatus // Possible values: Error, Success
+, alVersion = customDimensions.alVersion
+, alLineNo = customDimensions.alLineNo 
