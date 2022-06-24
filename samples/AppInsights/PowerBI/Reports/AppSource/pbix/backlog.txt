@@ -20,8 +20,9 @@ Dataset
 Perf report TODO
 ----------------
 
-Change design to new layout
-
+Change design to new layout:
+Done
+    Sessions
 
 Recommendations
     LRQ outside MS code?
