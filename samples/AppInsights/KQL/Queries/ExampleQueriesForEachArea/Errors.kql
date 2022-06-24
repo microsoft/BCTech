@@ -66,7 +66,7 @@ traces
 // available from 20.1
 traces
 | where timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'RT0031'
+| where customDimensions.eventId == 'RT0031'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , errorMessage = customDimensions.errorMessage
@@ -78,6 +78,13 @@ traces
 , componentVersion = customDimensions.componentVersion
 , environmentType = customDimensions.environmentType
 , environmentName = customDimensions.environmentName
-, eventId = customDimensions.eventId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, alObjectType = customDimensions.alObjectType
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alStackTrace = customDimensions.alStackTrace
 , message
 , customDimensions
