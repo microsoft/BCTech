@@ -24,6 +24,7 @@ Change design to new layout
 Done
     Sessions
     OnOpenCompany
+    Pageviews
 
 Recommendations
     LRQ outside MS code?
