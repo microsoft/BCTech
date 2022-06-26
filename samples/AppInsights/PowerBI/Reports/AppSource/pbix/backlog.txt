@@ -25,6 +25,7 @@ Done
     Sessions
     OnOpenCompany
     Pageviews
+    Reports
 
 Recommendations
     LRQ outside MS code?
