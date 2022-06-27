@@ -26,8 +26,9 @@ Done
     OnOpenCompany
     Pageviews
     Reports
-    LRQ
+    Long Running SQL Queries
     Database Lock Timeouts
+    Long Running AL methods
 
 Recommendations
     LRQ outside MS code?
