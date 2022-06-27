@@ -26,6 +26,8 @@ Done
     OnOpenCompany
     Pageviews
     Reports
+    LRQ
+    Database Lock Timeouts
 
 Recommendations
     LRQ outside MS code?
