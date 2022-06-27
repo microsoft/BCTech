@@ -29,6 +29,7 @@ Done
     Long Running SQL Queries
     Database Lock Timeouts
     Long Running AL methods
+    Incoming ws calls
 
 Recommendations
     LRQ outside MS code?
