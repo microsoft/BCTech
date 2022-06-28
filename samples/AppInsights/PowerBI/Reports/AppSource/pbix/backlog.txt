@@ -30,6 +30,7 @@ Done
     Database Lock Timeouts
     Long Running AL methods
     Incoming ws calls
+    Outgoing ws calls
 
 Recommendations
     LRQ outside MS code?
