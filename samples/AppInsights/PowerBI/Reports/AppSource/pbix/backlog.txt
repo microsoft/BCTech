@@ -31,6 +31,7 @@ Done
     Long Running AL methods
     Incoming ws calls
     Outgoing ws calls
+    Job queues
 
 Recommendations
     LRQ outside MS code?
