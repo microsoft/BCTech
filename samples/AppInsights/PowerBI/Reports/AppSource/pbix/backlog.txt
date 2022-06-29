@@ -20,20 +20,6 @@ Dataset
 Perf report TODO
 ----------------
 
-Change design to new layout
-Done
-    Sessions
-    OnOpenCompany
-    Pageviews
-    Reports
-    Long Running SQL Queries
-    Database Lock Timeouts
-    Long Running AL methods
-    Incoming ws calls
-    Outgoing ws calls
-    Job queues
-    Task Scheduler
-
 Recommendations
     LRQ outside MS code?
 
