@@ -136,7 +136,8 @@ page 50101 "CTF Challenges List"
     begin
         ChallengeStartDateTime := CurrentDateTime();
         CTFChallenge.RunChallenge();
-        Message(ForegroundRunTxt, ScenarioName, CurrentDateTime() - ChallengeStartDateTime);
+        if (CTFChallenge.GetCategory() = "CTF Category"::Performance) then 
+            Message(ForegroundRunTxt, ScenarioName, CurrentDateTime() - ChallengeStartDateTime);
     end;
 
     var

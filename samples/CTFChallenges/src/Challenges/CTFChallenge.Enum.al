@@ -30,4 +30,14 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
     {
         Implementation = "CTF Challenge" = "What Goes First";
     }
+
+    value(5; "Why can't I see a contact entry on map?")
+    {
+        Implementation = "CTF Challenge" = VeryyAnnoying;
+    }
+
+    value(6; "Why Can't I Post?")
+    {
+        Implementation = "CTF Challenge" = WhyCantIPost;
+    }
 }

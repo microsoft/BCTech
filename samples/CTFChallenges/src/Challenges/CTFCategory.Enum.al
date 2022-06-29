@@ -14,4 +14,7 @@ enum 50101 "CTF Category"
     value(1; "Performance")
     {
     }
+    value(2; "Debugging")
+    {
+    }
 }
