@@ -65,6 +65,7 @@ Read more here [Share Power BI reports and dashboards with coworkers and others]
 Once installed and configured, how can you use the different reports in the app? In this table, you can find some examples of scenarios, where the app might be of help.
 
 | Persona | Description |
+| ------- | ----------- | 
 | Product Owner | Person responsible for an extension/app. |
 | Project manager | Person responsible for the implementation of a Business Central environment for a customer. |
 | Supporter | Person working with triage, investigation, and mitigation of customer issues. | 
