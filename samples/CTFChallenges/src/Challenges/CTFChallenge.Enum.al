@@ -33,11 +33,16 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
 
     value(5; "Why can't I see a contact entry on map?")
     {
-        Implementation = "CTF Challenge" = VeryyAnnoying;
+        Implementation = "CTF Challenge" = VeryAnnoyingScenario;
     }
 
     value(6; "Why Can't I Post?")
     {
         Implementation = "CTF Challenge" = WhyCantIPost;
+    }
+
+    value(7; "What is going on with the customer list?")
+    {
+        Implementation = "CTF Challenge" = SubstituteReportChallenge;
     }
 }
