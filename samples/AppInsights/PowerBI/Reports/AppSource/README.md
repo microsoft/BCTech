@@ -11,17 +11,17 @@ Remember to set the setting back after installing the beta version of the app.
 
 ![Prereq](../../../images/power-bi-prereq.png)
 
-# Get the report
+# Getting the report
 Use this link to install/update the template app: https://aka.ms/bctelemetryreport 
 
 The report comes with sample data.
 
-# Connect to Azure Application Insights
+# Connecting to Azure Application Insights
 To connect the report to an Azure Application Insights resource, you need one thing: the Application Insights app id (get it from the API Access menu in the Azure Application Insights portal). 
 
 ![Workspace](../../../images/pbi_app_app_id.png)
 
-# Configure the (AAD Tenant id, customer) mapping
+# Configuring the (AAD Tenant id, customer) mapping
 You define the (AAD tenant id, domain name) mapping in the app parameter _AAD tenant mapping_, that you set when you configure the app to read data from your Azure Application Insights resource (you can also change parameter values after configuring the app).
 
 ![Mapping](../../../images/mapping.png)
@@ -43,7 +43,7 @@ A minified json file is just a json file where all newlines have been removed. T
 
 You can also use Powershell to produce the json input. This repository has a script [Get-AADMapping.ps1](./tenant-mapping/Get-AADMapping.ps1) that makes this easy.
 
-# Change parameters after initial configuration
+# Changing parameters after initial configuration
 Once you completed the setup of the app, how can you change parameters such as _Application Insights application id_ or _Lookback period_?
 
 You can change configuration settings by going to the Power BI portal, open the workspace for the installed app, go to settings, and then Parameters.
@@ -60,6 +60,16 @@ Do this:
 2. Provide the url to the person and ask them to open it in a browser. This will make the app appear under _Apps_ in their Power BI portal.
 
 Read more here [Share Power BI reports and dashboards with coworkers and others](https://docs.microsoft.com/en-us/power-bi/collaborate-share/service-share-dashboards)
+
+# Using the app
+Once installed and configured, how can you use the different reports in the app? In this table, you can find some examples of scenarios, where the app might be of help.
+
+| Persona | Scenario | How the Power BI app can help |
+| ------- | ---------| -------------------- |
+| Support | Customer calls and says that "something changed since Friday last week." | Go to the Administration report, find the _All changes_ page and filter to a period in time that overlaps "Friday last week." Depending on what the customer reported that changed (data, UI, business logic, performance, stability, ...), you might get lucky that one of the lifecycle events for environments, extensions, companies, or indexes can explain the root cause of the changed behavior. You can now dig further into the issue with the app, with KQL queries, or simply by reaching out to the code owner. |
+| Project manager | We need a way to track progress on User Acceptance Testing (UAT) efforts | Go to the Usage report. Visit the pages _Page views_, _Reports_, and _Feature Usage_ to see what users are doing in Business Central. Consider sharing the app with the customer. Then they can do the follow-ups internally based on data. |
+| Project manager | We want a smooth go-live for the customer. | Use the Error dashbord in the Error report to drive errors to zero before go-live. Monitor the dashboard in the first weeks after go-live. Consider sharing the app with the customer. Then status meetings and follow-ups can be based on data. |
+| Product Owner | Which features in our app(s)/per-tenant extensions are being used and how often? | Make sure that apps/extensions have enabled telemetry in the app manifest (app.json). Use the AL system module _Feature Telemetry_ to instrument your app with usage telemetry. Consider having separate Power BI apps for apps/extensions and environments. Once you have data in telemetry, then go to the Usage report. Visit the _Feature Usage_ page. You can filter the results down to publisher/app. |
 
 
 
