@@ -64,12 +64,22 @@ Read more here [Share Power BI reports and dashboards with coworkers and others]
 # Using the app
 Once installed and configured, how can you use the different reports in the app? In this table, you can find some examples of scenarios, where the app might be of help.
 
+| Persona | Description |
+| Product Owner | Person responsible for an extension/app. |
+| Project manager | Person responsible for the implementation of a Business Central environment for a customer. |
+| Supporter | Person working with triage, investigation, and mitigation of customer issues. | 
+
 | Persona | Scenario | How the Power BI app can help |
 | ------- | ---------| -------------------- |
-| Support | Customer calls and says that "something changed since Friday last week." | Go to the Administration report, find the _All changes_ page and filter to a period in time that overlaps "Friday last week." Depending on what the customer reported that changed (data, UI, business logic, performance, stability, ...), you might get lucky that one of the lifecycle events for environments, extensions, companies, or indexes can explain the root cause of the changed behavior. You can now dig further into the issue with the app, with KQL queries, or simply by reaching out to the code owner. |
+| Product Owner | Which features in our app(s)/per-tenant extensions are being used and how often? | Make sure that apps/extensions have enabled telemetry in the app manifest (app.json). Use the AL system module _Feature Telemetry_ to instrument your app with usage telemetry. Consider having separate Power BI apps for apps/extensions and environments. Once you have data in telemetry, then go to the Usage report. Visit the _Feature Usage_ page. You can filter the results down to publisher/app. |
 | Project manager | We need a way to track progress on User Acceptance Testing (UAT) efforts | Go to the Usage report. Visit the pages _Page views_, _Reports_, and _Feature Usage_ to see what users are doing in Business Central. Consider sharing the app with the customer. Then they can do the follow-ups internally based on data. |
 | Project manager | We want a smooth go-live for the customer. | Use the Error dashbord in the Error report to drive errors to zero before go-live. Monitor the dashboard in the first weeks after go-live. Consider sharing the app with the customer. Then status meetings and follow-ups can be based on data. |
-| Product Owner | Which features in our app(s)/per-tenant extensions are being used and how often? | Make sure that apps/extensions have enabled telemetry in the app manifest (app.json). Use the AL system module _Feature Telemetry_ to instrument your app with usage telemetry. Consider having separate Power BI apps for apps/extensions and environments. Once you have data in telemetry, then go to the Usage report. Visit the _Feature Usage_ page. You can filter the results down to publisher/app. |
+| Project manager | Only for SaaS: We want to check if the customer will get broken integrations when upgrading to version 20.0/21.0 | Use the _Deprecated features_ page in the Usage report to see if the customer is still using web service keys (basic auth) for integrations. If you see any data here, then work on a mitigation plan with the customer to move integrations to OAuth.|
+| Supporter | Customer calls and says that "something changed since Friday last week." | Go to the Administration report, find the _All changes_ page and filter to a period in time that overlaps "Friday last week." Depending on what the customer reported that changed (data, UI, business logic, performance, stability, ...), you might get lucky that one of the lifecycle events for environments, extensions, companies, or indexes can explain the root cause of the changed behavior. You can now dig further into the issue with the app, with KQL queries, or simply by reaching out to the code owner. |
+| Supporter | Customer complains that some users cannot login. | Go to the Error report, investigate the _Login Errors_ page. |
+| Supporter | Customer complains that users gets lots of errors when using the system. | Go to the Error report, investigate pages _Error Dialogs_, _Permission Errors_, and _Feature Errors_. You can filter pages by Extension Publisher to learn in which code path the error is coming from. |
+| Supporter | Customer experience a lot of locking issues. | Use the _Database Deadlocks_ page in the Error report to examine deadlocks. Use the _Database Lock Timeouts_ page in the Performance report to examine lock timeouts. Use the _Long running SQL queries_ page (filter SQL Statement to "UPDLOCK") to investigate SQL queries that take locks. | 
+
 
 
 
