@@ -66,12 +66,15 @@ Once installed and configured, how can you use the different reports in the app?
 
 | Persona | Description |
 | ------- | ----------- | 
+| Account Manager | Person working with sales to new and existing customers. | 
 | Product Owner | Person responsible for an extension/app. |
 | Project manager | Person responsible for the implementation of a Business Central environment for a customer. |
 | Supporter | Person working with triage, investigation, and mitigation of customer issues. | 
 
 | Persona | Scenario | How the Power BI app can help |
 | ------- | ---------| -------------------- |
+| Account Manager | Prospective customer have concerns that SaaS solutions are a blackbox.| The Power BI app comes with sample data when you install it. If the questions pops up, show them what kind of insights the app offers and that they can get access to the app if they find it useful. Focus on the Usage report unless the customer wants to see some of the more technical reports (Errors, Performance, or Administration). If the customer has a representative from IT, then show them the Administration report. |
+| Account Manager | Plan new activities with existing customer. | Most of the pages in the Usage report can help drive conversations with customer on how to get more value with their Busienss Central investment. E.g. look at the pages _Page views_, _Reports_, and _Feature Usage_ to check if the customer is using the functionality that they set out to when starting the project. Lack of data means lack of usage.  |
 | Product Owner | Which features in our app(s)/per-tenant extensions are being used and how often? | Make sure that apps/extensions have enabled telemetry in the app manifest (app.json). Use the AL system module _Feature Telemetry_ to instrument your app with usage telemetry. Consider having separate Power BI apps for apps/extensions and environments. Once you have data in telemetry, then go to the Usage report. Visit the _Feature Usage_ page. You can filter the results down to publisher/app. |
 | Project manager | We need a way to track progress on User Acceptance Testing (UAT) efforts | Go to the Usage report. Visit the pages _Page views_, _Reports_, and _Feature Usage_ to see what users are doing in Business Central. Consider sharing the app with the customer. Then they can do the follow-ups internally based on data. |
 | Project manager | We want a smooth go-live for the customer. | Use the Error dashbord in the Error report to drive errors to zero before go-live. Monitor the dashboard in the first weeks after go-live. Consider sharing the app with the customer. Then status meetings and follow-ups can be based on data. |
