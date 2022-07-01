@@ -1,6 +1,5 @@
 codeunit 50146 PostingStopper
 {
-
     Access = Internal;
     
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Sales-Post and Send", 'OnBeforePostAndSend', '', false, false)]

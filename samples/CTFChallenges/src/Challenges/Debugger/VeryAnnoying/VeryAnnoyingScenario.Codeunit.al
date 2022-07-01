@@ -21,8 +21,8 @@ codeunit 50142 VeryAnnoyingScenario implements "CTF Challenge"
 
     procedure GetHints(): List of [Text];
     var
-        HintLine1: Label 'Use your ''Hello World'' app to start debugging. Don''t forget to add a dependency to the ''CTF Challenges'' app. And download symbols.';
-        HintLine2: Label 'While debugging declare a variable for the ContactCard page and ''gotodefinition''. Or use an external tool that can perform a ''gotodefinition'', like ''AZ AL Dev Tools''.\';
+        HintLine1: Label 'Use your ''Hello World'' app to start debugging.\Don''t forget to add a dependency to the ''CTF Challenges'' app.\Also do not forget to download symbols.\';
+        HintLine2: Label 'While debugging, declare a variable for the ContactCard page and ''gotodefinition''. Or use an external tool that can perform a ''gotodefinition'', like ''AZ AL Dev Tools''.\';
         HintLine3: Label 'Rely on breakonReadWrite and breakOnError settings.';
         Hints: List of [Text];
     begin

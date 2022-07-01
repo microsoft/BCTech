@@ -16,12 +16,12 @@ codeunit 50143 SubstituteReportChallenge implements "CTF Challenge"
 
     procedure GetHints(): List of [Text];
     var  
-     HintLine1: Label 'a. Use your ''Hello World'' app to start debugging. Don''t forget to add a dependency to the ''CTF Challenges'' app. And download symbols using the snapshot configuration.';      
+     HintLine1: Label 'a. Use your ''Hello World'' app to start debugging.\Don''t forget to add a dependency to the ''CTF Challenges'' app.\Also do not forget to  download symbols using the snapshot configuration. See below.\';      
      HintLine2: Label 'b. Create a ''Snapshot Attach Configuration'' in VSCode (The environment type should be Sandbox)\';
-     HintLine3: Label 'd. Initialize a snapshot debugging session.\';
-     HintLine4: Label 'e. Exercise the challenge scenario. Do it a few times (with loading the ''Customer List Report''). Dis you get an error? If you got an error message that will be a snappoint.\';     
-     HintLine5: Label 'f. Download the snapshot.\';
-     HintLine6: Label 'g. Start debugging the snapshot. The snappoint should reveal itself\';
+     HintLine3: Label 'c. Initialize a snapshot debugging session.\';
+     HintLine4: Label 'd. Exercise the challenge scenario. Do it a few times (with loading the ''Customer List Report''). Did you get an error? If you got an error message that will be a snappoint.\';     
+     HintLine5: Label 'e. Download the snapshot.\';
+     HintLine6: Label 'f. Start debugging the snapshot. The snappoint should reveal itself\';
      Hints: List of [Text];
     begin
         Hints.Add(HintLine1 + HintLine2 + HintLine3 + HintLine4 + HintLine5 + HintLine6);
