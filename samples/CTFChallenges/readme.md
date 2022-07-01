@@ -9,6 +9,8 @@ The extension implements different scenarios with bad-performing AL Code. Some e
 
 You can run these scenarios and use the standard troubleshooting tools to identify the root cause.
 
+The extension also contains a set of capture the flag debugging/snapshot debugging challenges.
+
 
 In addition to getting some hands-on experience with these tools, the examples also make it easy to _demonstrate_ to others how the tools work.
 
