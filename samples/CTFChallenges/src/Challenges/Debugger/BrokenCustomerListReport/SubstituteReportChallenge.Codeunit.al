@@ -9,7 +9,7 @@ codeunit 50143 SubstituteReportChallenge implements "CTF Challenge"
    
     procedure RunChallenge();
     var       
-     ScenarioLabel: Label 'Please search for the ''Customer List Report'' and preview it.\The challenge is to use snapshot debugging to figure out what is going on. Why a broken report is shown.?'; 
+     ScenarioLabel: Label 'Please search for the ''Customer List Report'' and preview it.\The challenge is to use snapshot debugging to figure out what is going on. Why a broken report is shown?'; 
     begin                            
         Message(ScenarioLabel);       
     end;
