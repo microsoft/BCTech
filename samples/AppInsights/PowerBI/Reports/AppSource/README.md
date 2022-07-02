@@ -62,7 +62,7 @@ Do this:
 Read more here [Share Power BI reports and dashboards with coworkers and others](https://docs.microsoft.com/en-us/power-bi/collaborate-share/service-share-dashboards)
 
 # Using the app
-Once installed and configured, how can you use the different reports in the app? In this table, you can find some examples of scenarios, where the app might be of help.
+Once installed and configured, how can you use the different reports in the app? We identified four different personas as described in this table:
 
 | Persona | Description |
 | ------- | ----------- | 
@@ -70,6 +70,9 @@ Once installed and configured, how can you use the different reports in the app?
 | Product Owner | Person responsible for an extension/app. |
 | Project manager | Person responsible for the implementation of a Business Central environment for a customer. |
 | Supporter | Person working with triage, investigation, and mitigation of customer issues. | 
+
+
+For each persona, in the table below you can find examples of scenarios, where the app might be of help.
 
 | Persona | Scenario | How the Power BI app can help |
 | ------- | ---------| -------------------- |
