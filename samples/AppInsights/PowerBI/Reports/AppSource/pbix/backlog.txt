@@ -2,8 +2,6 @@
 App TODO
 -----------------
 
-How to get it to appsource?
-
 Is it possible for the report consumer to define things such as 
 * their definition of working hours (per tenant?) Use optionals parameters
 
@@ -12,8 +10,6 @@ Is there any way to show the individual traces from app insights entries in the 
 Dataset
     Possible to do incremental loading? Probably not with the API approach
     Add telemetry user id where possible (20.0)
-    Add Hour of Day filters on pages where data is aggregated
-
 
 
 ----------------
@@ -61,12 +57,10 @@ by taskId
 
 
 Pages
-    Add std. dev to ws call report
     Add page for Database wait statistics (RT0025 and RT0026)
 
 Dataset
     Add measure for LRQ last period vs. this period
-    Add std. dev to ws call report
     Add measure for Recurring task scheduler/job queue jobs with LRQ
     Add dataset for Database wait statistics (RT0025 and RT0026)   
 
@@ -106,21 +100,12 @@ Dataset
     Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
     Outgoing ws calls: add callstack (if added by the server team)
 
-Add 
-	alErrorCallStack
-	alErrorText
-to email errors
-
 
 ------------
 Usage report
 ------------
 
 Pages
-    Reports - looks weird
-    Dep features - looks weird
-    Page views - looks weird
-    Connectors - looks weird
 
 Dataset
 
@@ -132,7 +117,6 @@ Administration report
 Pages
     Feature uptake 
     Permission set changes
-    Javier: Indexes is empty even when showing up in all changes (cannot reproduce)
 
 Dataset
     Feature uptake 
