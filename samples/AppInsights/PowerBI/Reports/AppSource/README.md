@@ -21,6 +21,9 @@ To connect the report to an Azure Application Insights resource, you need one th
 
 ![Workspace](../../../images/pbi_app_app_id.png)
 
+
+NB! If you get this error "The OAuth authentication method isn't supported for this data source", then please check if the application id is correct. This usually is the root cause for that error.
+
 # Configuring the (AAD Tenant id, customer) mapping
 You define the (AAD tenant id, domain name) mapping in the app parameter _AAD tenant mapping_, that you set when you configure the app to read data from your Azure Application Insights resource (you can also change parameter values after configuring the app).
 
