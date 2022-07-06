@@ -1,9 +1,7 @@
 In this folder, you will find the source code for the PowerBI app report on Dynamics 365 Business Central telemetry in Azure Application Insights. 
 
-Note that the app is still being testing in a beta program. It is fully functional, though.
-
 # Power BI prerequisites
-While the app is not on Appsource, you need to allow it to be installed. 
+If you choose to install a version of the app that is not on appsource, you need to allow it to be installed. 
 
 Go to the PBI admin portal.
 Under Tenant settings, Go to Template App settings. Here you can enable template apps that are not listed on app source.
@@ -12,12 +10,14 @@ Remember to set the setting back after installing the beta version of the app.
 ![Prereq](../../../images/power-bi-prereq.png)
 
 # Getting the report
-Use this link to install/update the template app: https://aka.ms/bctelemetryreport 
+Use this link to install/update the template app from Appsource: https://aka.ms/bctelemetryreport 
 
-The report comes with sample data.
+Use this link to install/update the current development version template app (if you want to test bleeding edge): https://aka.ms/bctelemetryreportbeta 
+
+The app comes with sample data.
 
 # Connecting to Azure Application Insights
-To connect the report to an Azure Application Insights resource, you need one thing: the Application Insights app id (get it from the API Access menu in the Azure Application Insights portal). 
+To connect the app to an Azure Application Insights resource, you need one thing: the Application Insights app id (get it from the API Access menu in the Azure Application Insights portal). 
 
 ![Workspace](../../../images/pbi_app_app_id.png)
 
