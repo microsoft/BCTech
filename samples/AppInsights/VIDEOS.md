@@ -2,7 +2,7 @@
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
 ## How to get data driven in your partner practice with telemetry (60 min)
-Watch this 60 min webinar to learn how to use the Power BI app on telemetry data. Tip: **CTRL+click** to open in a new window.
+Watch this 60 min webinar to learn how to use the Power BI app on telemetry data (get it from [aka.ms/bctelemetryreport](https://aka.ms/bctelemetryreport)). Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=HWmUUOCLVZ8"><img src="https://img.youtube.com/vi/HWmUUOCLVZ8/0.jpg" width="50%"></a>
 <br>
