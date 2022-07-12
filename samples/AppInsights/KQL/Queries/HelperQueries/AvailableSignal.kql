@@ -14,10 +14,10 @@ traces
 
 
 
-// Available signal in your Application Insights data store
 // Statistics on events
+let lookback = 60d; // change if your retention policy is different than the default
 traces
-| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where timestamp > ago(lookback) // change if your retention policy is different than the default
 | extend eventId = tostring( customDimensions.eventId )
 | project eventId 
 , event_decription = case(
@@ -72,4 +72,16 @@ traces
 , eventId startswith "AL0000", 'Other (likely Microsoft AL telemetry)'
 , 'Other (likely custom telemetry)'
 )
+| union (
+pageViews
+| where timestamp > ago(lookback) // change if your retention policy is different than the default
+| extend eventId = tostring( customDimensions.eventID )
+| project eventId 
+, event_decription = case(
+  eventId == 'CL0001', 'Pageviews'
+, eventId == 'CL0002', 'Errors: error dialog vote'
+, 'Other (likely Microsoft client telemetry)'
+)
+)
 | summarize count(), event_decription=any(event_decription) by eventId
+| order by eventId asc // change ordering as you need it
