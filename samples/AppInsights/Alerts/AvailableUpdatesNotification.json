@@ -29,6 +29,15 @@
       "metadata": {
         "description": "Enter the email address(es) for the recipient(s) of the notification. Separate by ; if you enter multiple addresses."
       }
+    },
+    "Notification Frequency in Days": {
+      "defaultValue": 2,
+      "type": "int",
+      "minValue": 1,
+      "maxValue": 6,
+      "metadata": {
+        "description": "Set the frequency in days between 1 and 6 in which you want to receive this notification. This determines the trigger recurrence schedule and query lookback period in days. You will not receive notifications if there were no new available updates since the last run."
+      }
     }
   },
   "variables": {},
@@ -110,86 +119,85 @@
           "triggers": {
             "Recurrence": {
               "recurrence": {
-                "frequency": "Hour",
-                "interval": 48
+                "frequency": "Day",
+                "interval": "[parameters('Notification Frequency in Days')]"
               },
               "evaluatedRecurrence": {
-                "frequency": "Hour",
-                "interval": 48
+                "frequency": "Day",
+                "interval": "[parameters('Notification Frequency in Days')]"
               },
               "type": "Recurrence"
             }
           },
-        "actions": {
+          "actions": {
             "Condition": {
-                "actions": {
-                    "Create_HTML_table": {
-                        "inputs": {
-                            "format": "HTML",
-                            "from": "@body('Run_Analytics_query')?['value']"
-                        },
-                        "runAfter": {},
-                        "type": "Table"
+              "actions": {
+                "Create_HTML_table": {
+                  "inputs": {
+                    "format": "HTML",
+                    "from": "@body('Run_Analytics_query')?['value']"
+                  },
+                  "runAfter": {},
+                  "type": "Table"
+                },
+                "Send_an_email_(V2)": {
+                  "inputs": {
+                    "body": {
+                      "Body": "<p>The following environment updates have been made available to environments included in AppInsights in the past 48 hours. If needed, please follow the Admin Center URL to reschedule the updates to any date between today and the last date of the update period.<br>\n<br>\n@{body('Create_HTML_table')}</p>",
+                      "Subject": "Updates Scheduled in past 2 days",
+                      "To": "[parameters('Email Recipients')]"
                     },
-                    "Send_an_email_(V2)": {
-                        "inputs": {
-                            "body": {
-                                "Body": "<p>The following environment updates have been made available to environments included in AppInsights in the past 48 hours. If needed, please follow the Admin Center URL to reschedule the updates to any date between today and the last date of the update period.<br>\n<br>\n@{body('Create_HTML_table')}</p>",
-                                "Subject": "Updates Scheduled in past 2 days",
-                                "To": "[parameters('Email Recipients')]"
-                            },
-                            "host": {
-                                "connection": {
-                                    "name": "@parameters('$connections')['office365']['connectionId']"
-                                }
-                            },
-                            "method": "post",
-                            "path": "/v2/Mail"
-                        },
-                        "runAfter": {
-                            "Create_HTML_table": [
-                                "Succeeded"
-                            ]
-                        },
-                        "type": "ApiConnection"
-                    }
-                },
-                "expression": {
-                    "and": [
-                        {
-                            "greaterOrEquals": [
-                                "@length(body('Run_Analytics_query')?['value'])",
-                                1
-                            ]
-                        }
-                    ]
-                },
-                "runAfter": {
-                    "Run_Analytics_query": [
-                        "Succeeded"
-                    ]
-                },
-                "type": "If"
-            },
-            "Run_Analytics_query": {
-                "inputs": {
-                    "body": "traces\n| where customDimensions.eventId == 'LC0101'\n| where customDimensions.updateDateSelectedByPartner == false\n//| extend Schedulediff = datetime_diff('day', todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), todatetime(customDimensions.updatePeriodStartDateUtc))\n| extend ScheduledFor = format_datetime(todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), 'yyyy-MM-dd')\n| extend UpdatePeriodEndDate = format_datetime(todatetime(customDimensions.updatePeriodEndDateUtc), 'yyyy-MM-dd')\n| extend AdminCenter = strcat('https://businesscentral.dynamics.com/', customDimensions.aadTenantId, '/admin')\n| project AADTenantId = customDimensions.aadTenantId, EnvironmentName = customDimensions.environmentName, EnvironmentType = customDimensions.environmentType, EnvironmentCountry = customDimensions.countryCode, CurrentVersion = customDimensions.sourceVersion, TargetVersion = customDimensions.destinationVersion, ScheduledFor, UpdatePeriodEndDate, AdminCenter",
                     "host": {
-                        "connection": {
-                            "name": "@parameters('$connections')['applicationinsights']['connectionId']"
-                        }
+                      "connection": {
+                        "name": "@parameters('$connections')['office365']['connectionId']"
+                      }
                     },
                     "method": "post",
-                    "path": "/api/QueryDraft",
-                    "queries": {
-                        "timerange": "Last 48 hours",
-                        "version": "2"
-                    }
+                    "path": "/v2/Mail"
+                  },
+                  "runAfter": {
+                    "Create_HTML_table": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection"
+                }
+              },
+              "expression": {
+                "and": [
+                  {
+                    "greaterOrEquals": [
+                      "@length(body('Run_Analytics_query')?['value'])",
+                      1
+                    ]
+                  }
+                ]
+              },
+              "runAfter": {
+                "Run_Analytics_query": [
+                  "Succeeded"
+                ]
+              },
+              "type": "If"
+            },
+            "Run_Analytics_query": {
+              "inputs": {
+                "body": "[concat('traces\n| where timestamp > ago(', parameters('Notification Frequency in Days'), 'd)\n| where customDimensions.eventId == ''LC0101''\n| where customDimensions.updateDateSelectedByPartner == false\n//| extend Schedulediff = datetime_diff(''day'', todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), todatetime(customDimensions.updatePeriodStartDateUtc))\n| extend ScheduledFor = format_datetime(todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), ''yyyy-MM-dd'')\n| extend UpdatePeriodEndDate = format_datetime(todatetime(customDimensions.updatePeriodEndDateUtc), ''yyyy-MM-dd'')\n| extend AdminCenter = strcat(''https://businesscentral.dynamics.com/'', customDimensions.aadTenantId, ''/admin'')\n| project AADTenantId = customDimensions.aadTenantId, EnvironmentName = customDimensions.environmentName, EnvironmentType = customDimensions.environmentType, EnvironmentCountry = customDimensions.countryCode, CurrentVersion = customDimensions.sourceVersion, TargetVersion = customDimensions.destinationVersion, ScheduledFor, UpdatePeriodEndDate, AdminCenter')]",
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['applicationinsights']['connectionId']"
+                  }
                 },
-                "runAfter": {},
-                "type": "ApiConnection"
+                "method": "post",
+                "path": "/api/QueryDraft",
+                "queries": {
+                  "version": "2"
+                }
+              },
+              "runAfter": {},
+              "type": "ApiConnection"
             }
-        },
+          },
           "outputs": {}
         },
         "parameters": {
@@ -209,10 +217,10 @@
           }
         }
       },
-        "dependsOn":[
-          "[resourceId('Microsoft.Web/connections', parameters('Office 365 Outlook Connection Name'))]",
-          "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]"
-          ]
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('Office 365 Outlook Connection Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]"
+      ]
     }
   ]
 }
