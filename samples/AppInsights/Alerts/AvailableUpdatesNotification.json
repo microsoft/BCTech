@@ -136,7 +136,7 @@
                             "body": {
                                 "Body": "<p>The following environment updates have been made available to environments included in AppInsights in the past 48 hours. If needed, please follow the Admin Center URL to reschedule the updates to any date between today and the last date of the update period.<br>\n<br>\n@{body('Create_HTML_table')}</p>",
                                 "Subject": "Updates Scheduled in past 2 days",
-                                "To": "jobulsin@microsoft.com"
+                                "To": "[parameters('Email Recipients')]"
                             },
                             "host": {
                                 "connection": {
