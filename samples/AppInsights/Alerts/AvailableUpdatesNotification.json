@@ -135,15 +135,62 @@
                 "Create_HTML_table": {
                   "inputs": {
                     "format": "HTML",
+                    "columns": [
+                      {
+                        "header": "AAD#Tenant#ID",
+                        "value": "@item()?['AADTenantID']"
+                      },
+                      {
+                        "header": "Environment#Name",
+                        "value": "@item()?['EnvironmentName']"
+                      },
+                      {
+                        "header": "Environment#Type",
+                        "value": "@item()?['EnvironmentType']"
+                      },
+                      {
+                        "header": "Localization",
+                        "value": "@item()?['EnvironmentCountry']"
+                      },
+                      {
+                        "header": "Current#Version",
+                        "value": "@item()?['CurrentVersion']"
+                      },
+                      {
+                        "header": "Target#Version",
+                        "value": "@item()?['TargetVersion']"
+                      },
+                      {
+                        "header": "Scheduled#For",
+                        "value": "@item()?['ScheduledFor']"
+                      },
+                      {
+                        "header": "Update#Period#End#Date",
+                        "value": "@item()?['UpdatePeriodEndDate']"
+                      },
+                      {
+                        "header": "Admin#Center#URL",
+                        "value": "@item()?['AdminCenter']"
+                      }
+                    ],
                     "from": "@body('Run_Analytics_query')?['value']"
                   },
                   "runAfter": {},
                   "type": "Table"
                 },
+                "HTML_Table_CSS": {
+                  "runAfter": {
+                    "Create_HTML_table": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "Compose",
+                  "inputs": "<style>\nTable {\n  font-family: Arial, Helvetica, sans-serif;\n  background-color: #EEEEEE;\n  border-collapse: collapse;\n  width: 100%;\n}\nTable td, Table th {\n  border: 1px solid #ddd;\n  padding: 3px 3px;\n}\nTable th {\n  font-size: 15px;\n  font-weight: bold;\n  padding-top: 12px;\n  padding-bottom: 12px;\n  text-align: left;\n  background-color: #1C6EA4;\n  color: white;\n}\n</style>"
+                },
                 "Send_an_email_(V2)": {
                   "inputs": {
                     "body": {
-                      "Body": "[concat('<p>The following environment updates have been made available to environments included in AppInsights in the past ', parameters('Notification Frequency in Days'), ' days. If needed, please follow the Admin Center URL to reschedule the updates to any date between today and the last date of the update period.<br>\n<br>\n@{body(''Create_HTML_table'')}</p>')]",
+                      "Body": "[concat('<p>The following environment updates have been made available to environments included in AppInsights in the past ', parameters('Notification Frequency in Days'), ' days. If needed, please follow the Admin Center URL to reschedule the updates to any date between today and the last date of the update period.<br>\n<br>\n@{outputs(''HTML_Table_CSS'')}@{replace(replace(replace(body(''Create_HTML_table''), ''https://'', ''<a href=\"https://''), ''/admin'', ''/admin\">Admin Center</a>''), ''#'', '' '')}</p>')]",
                       "Subject": "[concat('Updates Scheduled in past ', parameters('Notification Frequency in Days'), ' days')]",
                       "To": "[parameters('Email Recipients')]"
                     },
@@ -156,7 +203,7 @@
                     "path": "/v2/Mail"
                   },
                   "runAfter": {
-                    "Create_HTML_table": [
+                    "HTML_Table_CSS": [
                       "Succeeded"
                     ]
                   },
