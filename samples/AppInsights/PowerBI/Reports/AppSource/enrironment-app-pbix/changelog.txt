@@ -1,5 +1,10 @@
+vNext
+* Performance report: added Host on Outgoing Web services page
+* Error report: added Host on Outgoing Web services page
+
 2022-07-15
-* All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment and per-app telemetry
+* All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment 
+  and per-app telemetry
 * All report pages: All time-of-day visuals now show timezone as part of the header
 * Usage report: fixed visual width bug on connections page
 * Performance report: added visual for SQL statements on Long running SQL queries page
