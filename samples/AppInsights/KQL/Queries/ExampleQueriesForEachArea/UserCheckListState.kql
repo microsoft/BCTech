@@ -1,0 +1,15 @@
+// KQL samples - user checklist state
+
+// user checklist state updated 
+// when they click the "Get Started" button on the banner, the state goes from "Not started" to "In progress", 
+// when they completed or skipped all the checklist items, the state goes from "In progress" to "Completed" 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000EIQ'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, appVersion = customDimensions.alCallerAppVersion
+, oldStatus = customDimensions.alOldStatus
+, newStatus = customDimensions.alNewStatus
