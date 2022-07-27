@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "Logic App Name": {
-      "defaultValue": "AvailableUpdatesNotification",
+      "defaultValue": "ActionFailedEnvironmentUpgrades",
       "type": "String",
       "metadata": {
         "description": "Enter the name for the Logic App Resource"
