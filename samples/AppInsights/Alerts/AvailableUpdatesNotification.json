@@ -94,7 +94,7 @@
         },
         "testLinks": [
           {
-            "requestUri": "[concat('https://management.azure.com:443/subscriptions/', subscription().id, '/resourceGroups/AppInsights/providers/Microsoft.Web/connections/', parameters('Office 365 Outlook Connection Name'), '/extensions/proxy/testconnection?api-version=2016-06-01')]",
+            "requestUri": "[concat('https://management.azure.com:443/subscriptions/', resourceGroup().id, '/providers/Microsoft.Web/connections/', parameters('Office 365 Outlook Connection Name'), '/extensions/proxy/testconnection?api-version=2016-06-01')]",
             "method": "get"
           }
         ]
