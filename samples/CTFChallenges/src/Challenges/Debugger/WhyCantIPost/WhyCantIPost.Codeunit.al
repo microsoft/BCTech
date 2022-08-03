@@ -23,9 +23,10 @@ codeunit 50140 WhyCantIPost implements "CTF Challenge"
      HintLine2: Label '\Try finding an entry point. In order to do that you can:\Use the page inspector on the Help and Support Page to find the entry page.';
      HintLine3: Label '\You can ''gotodefinition'' to that page. Use any technique at hand. Find the suspicious action and put a breakpoint there';
      HintLine4: Label '\Or you can use the event recorder while you are running your scenario to record all events and put a breakpoint in the ones that are suspicious.';
+     HintLine5: Label '\Or you can use the ''Page Inspector'' and see what extensions are participating on the list. Create your own Hello World and gotodefinition on these extensions and place breakpoints where suspicious.';
      Hints: List of [Text];
     begin
-        Hints.Add(HintLine1 + HintLine2 + HintLine3 + HintLine4);
+        Hints.Add(HintLine1 + HintLine2 + HintLine3 + HintLine4 + HintLine5);
         exit(Hints);
     end;
 
