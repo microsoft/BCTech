@@ -11,3 +11,77 @@ traces
 ) 
 | distinct signalIdentifier
 | order by signalIdentifier asc
+
+
+
+// Statistics on events
+let lookback = 60d; // change if your retention policy is different than the default
+traces
+| where timestamp > ago(lookback) // change if your retention policy is different than the default
+| extend eventId = tostring( customDimensions.eventId )
+| project eventId 
+, event_decription = case(
+  eventId == 'RT0001', 'Login failed'
+, eventId == 'RT0002', 'Login failed' 
+, eventId == 'RT0003', 'Login step succeeded'
+, eventId == 'RT0004', 'Login step succeeded'
+, eventId == 'RT0005', 'SQL: long running query'
+, eventId == 'RT0006', 'Report generation'
+, eventId == 'RT0007', 'Report cancelled'
+, eventId == 'RT0008', 'Web service request: Incoming'
+, eventId == 'RT0011', 'Operation cancelled'
+, eventId == 'RT0012', 'SQL: lock timeout'
+, eventId == 'RT0013', 'SQL: lock snapshot entry'
+, eventId in ('RT0014', 'RT0015', 'RT0016', 'RT0017'  ), 'Keyvault'
+, eventId == 'RT0018', 'AL: long running AL method'
+, eventId == 'RT0019', 'Web service request: Outgoing'
+, eventId == 'RT0020', 'Web service request: web service key'
+, eventId == 'RT0021', 'Web service request: web service key'
+, eventId in ('RT0023', 'RT0024'), 'Session: Verbosed telemetry enabled/disabled'
+, eventId == 'RT0025', 'SQL: wait statistics snapshot'
+, eventId == 'RT0026', 'SQL: wait statistics snapshot entry'
+, eventId == 'RT0027', 'SQL: locks snapshot'
+, eventId == 'RT0028', 'SQL: deadlock'
+, eventId == 'RT0029', 'Session: stopped'
+, eventId == 'RT0030', 'Errors: error dialog'
+, eventId == 'RT0031', 'Errors: permission error'
+, customDimensions.alCategory == "FeatureTelemetry" and customDimensions.alSubCategory == 'Uptake', 'FeatureTelemetry: Uptake'
+, customDimensions.alCategory == "FeatureTelemetry" and customDimensions.alSubCategory == 'Usage', 'FeatureTelemetry: Usage'
+, customDimensions.alCategory == "FeatureTelemetry" and customDimensions.alSubCategory == 'Error', 'FeatureTelemetry: Error'
+, eventId in ('LC0001', 'LC0002', 'LC0003', 'LC0004', 'LC0005', 'LC0006', 'LC0007', 'LC0008', 'LC0009'  ), 'Lifecycle: company'
+, eventId in ('LC0010', 'LC0011', 'LC0012', 'LC0013', 'LC0014', 'LC0015', 'LC0016', 'LC0017', 'LC0018', 'LC0019', 'LC0020', 'LC0021', 'LC0022', 'LC0023', 'LC0026', 'LC0027', 'RT0010'  ), 'Lifecycle: extension'
+, eventId in ('LC0024', 'LC0025' ), 'Lifecycle: index'
+, eventId in ('LC0028', 'LC0029', 'LC0030', 'LC0031', 'LC0032', 'LC0033', 'LC0034', 'LC0035', 'LC0036', 'LC0037', 'LC0038'  ), 'Lifecycle: appsource validation'
+, eventId in ('LC0040', 'LC0041', 'LC0042', 'LC0043', 'LC0044', 'LC0045' ), 'Lifecycle: Task Scheduler'
+, eventId startswith "LC01", 'Lifecycle: Environment'
+, eventId in ('AL0000E24', 'AL0000E25', 'AL0000E26', 'AL0000HE7', 'AL0000FMG', 'AL0000HAK', 'AL0000FNY', 'AL0000HAI' ), 'Lifecycle: job queue'
+, eventId in ('AL0000D3L', 'AL0000D6H', 'AL0000D6I', 'AL0000D6J' ), 'Retention policy' // not documented?
+, eventId in ('AL0000252', 'AL0000E2C', 'AL0000E2D', 'AL0000E2E', 'AL0000250', 'AL0000E28', 'AL0000E2A', 'AL0000E2B', 'AL0000E2F', 'AL0000251', 'AL0000E29' ), 'Lifecycle: permissions'
+, eventId in ('AL0000EJ9', 'AL0000EJA', 'AL0000G46' ), 'Upgrade'
+, eventId in ('AL0000E3I', 'AL0000E3H', 'AL0000E3F', 'AL0000E3G', 'AL0000E3N', 'AL0000E3P', 'AL0000E3O' ), 'Lifecycle: configuration packages'
+, eventId in ('AL0000CTE', 'AL0000DD3', 'AL0000EMW'  ), 'Field monitoring'
+, eventId in ('AL0000EIT', 'AL0000EIR', 'AL0000EIQ', 'AL0000EIS', 'AL0000E9U', 'AL0000EIU' ), 'Onboarding' // not documented
+, eventId in ('AL0000GKJ', 'AL0000GKK', 'AL0000EMW', 'AL0000GKL', 'AL0000CTP', 'AL0000CTV' ), 'Email'
+, eventId in ( 'AL0000DGF', 'AL0000DHR', 'AL0000DHT', 'AL0000DHS' ), 'BCPT' // not documented
+, eventId in ( 'AL0000F4O', 'AL0000F4P', 'AL0000F4Y', 'AL0000F4Z', 'AL0000F52', 'AL0000F53', 'AL0000F4G', 'AL0000F4I', 'AL0000F4H', 'AL0000F4J', 'AL0000F4K', 'AL0000F4L'), 'Date compression' // not documented
+, eventId in ('AL0000FD5', 'AL0000CST', 'AL0000G7I', 'AL0000CSU', 'AL0000CZ0', 'AL0000CZ1', 'AL0000G7K', 'AL0000G7J', 'AL0000ECX' 
+, 'AL0000GCZ', 'AL0000F56', 'AL0000F54', 'AL0000F57', 'AL0000CUW', 'AL0000GC6', 'AL0000GC6', 'AL0000CUV', 'AL0000ECR', 'AL0000HQ0'
+, 'AL0000HQL', 'AL0000F55', 'AL0000HQ2', 'AL0000HUJ'
+, 'AL0000CQ6', 'AL0000CQ9', 'AL0000CQC', 'AL0000CQ8', 'AL0000CQ7' // IT VAT Fattura
+), 'App telemetry' // not documented
+, eventId startswith "AL0000", 'Other (likely Microsoft AL telemetry)'
+, 'Other (likely custom telemetry)'
+)
+| union (
+pageViews
+| where timestamp > ago(lookback) // change if your retention policy is different than the default
+| extend eventId = tostring( customDimensions.eventID )
+| project eventId 
+, event_decription = case(
+  eventId == 'CL0001', 'Pageviews'
+, eventId == 'CL0002', 'Errors: error dialog vote'
+, 'Other (likely Microsoft client telemetry)'
+)
+)
+| summarize count(), event_decription=any(event_decription) by eventId
+| order by eventId asc // change ordering as you need it

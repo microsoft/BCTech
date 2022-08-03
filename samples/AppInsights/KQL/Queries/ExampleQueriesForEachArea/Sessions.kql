@@ -1,0 +1,37 @@
+// KQL samples - Session lifecycle
+
+
+// successful session creation (raw data)
+// Use event Id RT0004
+// See kql query in Authorization.kql
+
+// failed session creation (raw data)
+// Use event Id RT0001 or RT0002
+// See kql query in Authorization.kql
+
+
+// session stopped (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == "RT0029" 
+| extend aadTenantId = customDimensions.aadTenantId
+, eventId = customDimensions.eventId 
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+// session information
+, cancellationComment = customDimensions.cancellationComment
+, currentSessionID = customDimensions.currentSessionID
+, result = customDimensions.result
+, stoppingSessionIsAdmin = customDimensions.stoppingSessionIsAdmin
+, stoppingSessionID = customDimensions.stoppingSessionID
+// which code was running when the stopsession call came?
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionId = customDimensions.extensionId
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = customDimensions.alStackTrace

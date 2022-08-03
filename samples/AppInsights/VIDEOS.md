@@ -1,6 +1,14 @@
 # Videos about telemetry
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
+## 2022-07-10 Areopa webinar: How to get data driven in your partner practice with telemetry (60 min)
+Watch this 60 min webinar to learn how to use the Power BI app on telemetry data (get it from [aka.ms/bctelemetryreport](https://aka.ms/bctelemetryreport)). Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=HWmUUOCLVZ8"><img src="https://img.youtube.com/vi/HWmUUOCLVZ8/0.jpg" width="50%"></a>
+<br>
+</p>
+
+
 
 ## Want to Learn Business Central telemetry in 30 minutes?
 Haven't got the time to learn Business Central telemetry? Good news: we have recorded a series of short videos on the topic. Watch one every morning for a week and you should be up and running. 
@@ -10,22 +18,6 @@ Haven't got the time to learn Business Central telemetry? Good news: we have rec
 Watch this 4 min video to learn how to connect an environment or an extension to Azure Application Insights. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=f4rxr20QG04"><img src="https://img.youtube.com/vi/f4rxr20QG04/0.jpg" width="50%"></a>
-<br>
-</p>
-
-
-### How can I analyze performance using the Power BI performance report? (8 min)
-Watch this 8 min video to learn how to use the standard Power BI performance report to triage performance issues happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=Kbq6YB8VU-8"><img src="https://img.youtube.com/vi/Kbq6YB8VU-8/0.jpg" width="50%"></a>
-<br>
-</p>
-
-
-### How can I triage errors using the Power BI error report? (6 min)
-Watch this 6 min video to learn how to use the standard Power BI error report to triage errors happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=ByealbDQqIU"><img src="https://img.youtube.com/vi/ByealbDQqIU/0.jpg" width="50%"></a>
 <br>
 </p>
 
@@ -43,12 +35,31 @@ Watch this 8 min video to learn how to troubleshoot issues using the Jupyter Not
 <br>
 </p>
 
+
+
 ### How can I emit telemetry to Azure Application Insights from AL code? (1 min)
 Watch this 1 min video to learn how custom telemetry works. If you develop extensions for Business Central, then this is a must-see. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg" width="50%"></a>
 <br>
 </p>
+
+
+### How can I analyze performance using the Power BI performance report? (8 min)
+Watch this 8 min video to learn how to use the DYI Power BI performance report to triage performance issues happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=Kbq6YB8VU-8"><img src="https://img.youtube.com/vi/Kbq6YB8VU-8/0.jpg" width="50%"></a>
+<br>
+</p>
+
+
+### How can I triage errors using the Power BI error report? (6 min)
+Watch this 6 min video to learn how to use the DYI Power BI error report to triage errors happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=ByealbDQqIU"><img src="https://img.youtube.com/vi/ByealbDQqIU/0.jpg" width="50%"></a>
+<br>
+</p>
+
 
 ## Other videos
 
@@ -88,8 +99,6 @@ Watch this 4 min video to learn how to add Azure Alerts as push notifications on
 <a href="https://www.youtube.com/watch?v=nqqVEISjSGE"><img src="https://img.youtube.com/vi/nqqVEISjSGE/0.jpg" width="50%"></a>
 <br>
 </p>
-
-
 
 
 

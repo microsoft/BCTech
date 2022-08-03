@@ -1,0 +1,273 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "Logic App Name": {
+      "defaultValue": "AvailableUpdatesNotification",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the name for the Logic App Resource"
+      }
+    },
+    "AppInsights API Connection Name": {
+      "defaultValue": "applicationinsights",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the name for the AppInsights API Connection. If you already have an API Connection resource for AppInsights in your subscription you can enter the name of the existing resource to reuse it for this Logic App."
+      }
+    },
+    "Office 365 Outlook Connection Name": {
+      "defaultValue": "office365",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the name for the Office 365 Outlook API Connection. If you already have an API Connection resource for Outlook in your subscription you can enter the name of the existing resource to reuse it for this Logic App."
+      }
+    },
+    "Email Recipients": {
+      "defaultValue": "noreply@microsoft.com",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the email address(es) for the recipient(s) of the notification. Separate by ; if you enter multiple addresses."
+      }
+    },
+    "Notification Frequency in Days": {
+      "defaultValue": 2,
+      "type": "int",
+      "minValue": 1,
+      "maxValue": 6,
+      "metadata": {
+        "description": "Set the frequency in days between 1 and 6 in which you want to receive this notification. This determines the trigger recurrence schedule and query lookback period in days. You will not receive notifications if there were no new available updates since the last run."
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('AppInsights API Connection Name')]",
+      "location": "[resourcegroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "AppInsights",
+        "statuses": [
+          {
+            "status": "Connected"
+          }
+        ],
+        "customParameterValues": {},
+        "api": {
+          "name": "[parameters('AppInsights API Connection Name')]",
+          "displayName": "Azure Application Insights",
+          "description": "Azure Application Insights is an extensible analytics service that helps you understand the performance and usage of your live web application. Connect to your Application Insights resource to run and visualize various Analytics queries.",
+          "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1570/1.0.1570.2764/', parameters('AppInsights API Connection Name'), '/icon.png')]",
+          "brandColor": "#68217A",
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('AppInsights API Connection Name'))]",
+          "type": "Microsoft.Web/locations/managedApis"
+        },
+        "testLinks": []
+      }
+    },
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('Office 365 Outlook Connection Name')]",
+      "location": "[resourcegroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "[parameters('Office 365 Outlook Connection Name')]",
+        "statuses": [
+          {
+            "status": "Connected"
+          }
+        ],
+        "customParameterValues": {},
+        "nonSecretParameterValues": {},
+        "api": {
+          "name": "[parameters('Office 365 Outlook Connection Name')]",
+          "displayName": "Office 365 Outlook",
+          "description": "Microsoft Office 365 is a cloud-based service that is designed to help meet your organization's needs for robust security, reliability, and user productivity.",
+          "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1580/1.0.1580.2838/', parameters('Office 365 Outlook Connection Name'), '/icon.png')]",
+          "brandColor": "#0078D4",
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Office 365 Outlook Connection Name'))]",
+          "type": "Microsoft.Web/locations/managedApis"
+        },
+        "testLinks": [
+          {
+            "requestUri": "[concat('https://management.azure.com:443/subscriptions/', resourceGroup().id, '/providers/Microsoft.Web/connections/', parameters('Office 365 Outlook Connection Name'), '/extensions/proxy/testconnection?api-version=2016-06-01')]",
+            "method": "get"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('Logic App Name')]",
+      "location": "[resourcegroup().location]",
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "recurrence": {
+                "frequency": "Day",
+                "interval": "[parameters('Notification Frequency in Days')]"
+              },
+              "evaluatedRecurrence": {
+                "frequency": "Day",
+                "interval": "[parameters('Notification Frequency in Days')]"
+              },
+              "type": "Recurrence"
+            }
+          },
+          "actions": {
+            "Condition": {
+              "actions": {
+                "Create_HTML_table": {
+                  "inputs": {
+                    "format": "HTML",
+                    "columns": [
+                      {
+                        "header": "AAD#Tenant#ID",
+                        "value": "@item()?['AADTenantID']"
+                      },
+                      {
+                        "header": "Environment#Name",
+                        "value": "@item()?['EnvironmentName']"
+                      },
+                      {
+                        "header": "Environment#Type",
+                        "value": "@item()?['EnvironmentType']"
+                      },
+                      {
+                        "header": "Localization",
+                        "value": "@item()?['EnvironmentCountry']"
+                      },
+                      {
+                        "header": "Current#Version",
+                        "value": "@item()?['CurrentVersion']"
+                      },
+                      {
+                        "header": "Target#Version",
+                        "value": "@item()?['TargetVersion']"
+                      },
+                      {
+                        "header": "Scheduled#For",
+                        "value": "@item()?['ScheduledFor']"
+                      },
+                      {
+                        "header": "Update#Period#End#Date",
+                        "value": "@item()?['UpdatePeriodEndDate']"
+                      },
+                      {
+                        "header": "Admin#Center#URL",
+                        "value": "@item()?['AdminCenter']"
+                      }
+                    ],
+                    "from": "@body('Run_Analytics_query')?['value']"
+                  },
+                  "runAfter": {},
+                  "type": "Table"
+                },
+                "HTML_Table_CSS": {
+                  "runAfter": {
+                    "Create_HTML_table": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "Compose",
+                  "inputs": "<style>\nTable {\n  font-family: Arial, Helvetica, sans-serif;\n  background-color: #EEEEEE;\n  border-collapse: collapse;\n  width: 100%;\n}\nTable td, Table th {\n  border: 1px solid #ddd;\n  padding: 3px 3px;\n}\nTable th {\n  font-size: 15px;\n  font-weight: bold;\n  padding-top: 12px;\n  padding-bottom: 12px;\n  text-align: left;\n  background-color: #1C6EA4;\n  color: white;\n}\n</style>"
+                },
+                "Send_an_email_(V2)": {
+                  "inputs": {
+                    "body": {
+                      "Body": "[concat('<p>The following environment updates have been made available to environments included in AppInsights in the past ', parameters('Notification Frequency in Days'), ' days. If needed, please follow the Admin Center URL to reschedule the updates to any date between today and the last date of the update period.<br>\n<br>\n@{outputs(''HTML_Table_CSS'')}@{replace(replace(replace(body(''Create_HTML_table''), ''https://'', ''<a href=\"https://''), ''/admin'', ''/admin\">Admin Center</a>''), ''#'', '' '')}</p>')]",
+                      "Subject": "[concat('Updates Scheduled in past ', parameters('Notification Frequency in Days'), ' days')]",
+                      "To": "[parameters('Email Recipients')]"
+                    },
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['office365']['connectionId']"
+                      }
+                    },
+                    "method": "post",
+                    "path": "/v2/Mail"
+                  },
+                  "runAfter": {
+                    "HTML_Table_CSS": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection"
+                }
+              },
+              "expression": {
+                "and": [
+                  {
+                    "greaterOrEquals": [
+                      "@length(body('Run_Analytics_query')?['value'])",
+                      1
+                    ]
+                  }
+                ]
+              },
+              "runAfter": {
+                "Run_Analytics_query": [
+                  "Succeeded"
+                ]
+              },
+              "type": "If"
+            },
+            "Run_Analytics_query": {
+              "inputs": {
+                "body": "[concat('traces\n| where timestamp > ago(', parameters('Notification Frequency in Days'), 'd)\n| where customDimensions.eventId == ''LC0101''\n| where customDimensions.updateDateSelectedByPartner == false\n//| extend Schedulediff = datetime_diff(''day'', todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), todatetime(customDimensions.updatePeriodStartDateUtc))\n| extend ScheduledFor = format_datetime(todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), ''yyyy-MM-dd'')\n| extend UpdatePeriodEndDate = format_datetime(todatetime(customDimensions.updatePeriodEndDateUtc), ''yyyy-MM-dd'')\n| extend AdminCenter = strcat(''https://businesscentral.dynamics.com/'', customDimensions.aadTenantId, ''/admin'')\n| project AADTenantId = customDimensions.aadTenantId, EnvironmentName = customDimensions.environmentName, EnvironmentType = customDimensions.environmentType, EnvironmentCountry = customDimensions.countryCode, CurrentVersion = customDimensions.sourceVersion, TargetVersion = customDimensions.destinationVersion, ScheduledFor, UpdatePeriodEndDate, AdminCenter')]",
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['applicationinsights']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/api/QueryDraft",
+                "queries": {
+                  "version": "2"
+                }
+              },
+              "runAfter": {},
+              "type": "ApiConnection"
+            }
+          },
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "applicationinsights": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]",
+                "connectionName": "[parameters('AppInsights API Connection Name')]",
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('AppInsights API Connection Name'))]"
+              },
+              "office365": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('Office 365 Outlook Connection Name'))]",
+                "connectionName": "[parameters('Office 365 Outlook Connection Name')]",
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Office 365 Outlook Connection Name'))]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('Office 365 Outlook Connection Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]"
+      ]
+    }
+  ]
+}

@@ -956,3 +956,75 @@ traces
 , failureReason = customDimensions.failureReason
 , newEnvironmentName = customDimensions.newEnvironmentName
 , totalTime = customDimensions.totalTime
+
+
+//
+// Environment data update events
+//
+// EnvironmentDataUpgradeStarted = "LC0175";
+// EnvironmentDataUpgradeSucceeded = "LC0176";
+// EnvironmentDataUpgradeFailed = "LC0177";
+// EnvironmentDataUpgradeRecoverySucceeded = "LC0178";
+// EnvironmentDataUpgradeRecoveryFailed = "LC0179";
+//
+
+
+// Environment data upgrade operation started
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0175'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+// Environment data upgrade operation completed successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0176'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+
+// Environment data upgrade operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0177'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, totalTime = customDimensions.totalTime
+
+
+// Recovery from a failed data upgrade operation completed successfully
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0178'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, totalTime = customDimensions.totalTime
+
+
+// Recovery from a failed data upgrade operation failed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0179'
+| project timestamp
+, message
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureReason = customDimensions.failureReason
+, totalTime = customDimensions.totalTime
