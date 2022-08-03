@@ -5,7 +5,7 @@ codeunit 50140 WhyCantIPost implements "CTF Challenge"
     procedure RunChallenge();
     var
      SalesHeader: record "Sales Header";      
-     ScenarioLabel: Label 'Try selling an ANTWERP desk to ''The Cannon Group PLC''.\The challenge is to figure out what is going on. What is blocking posting of this sales order?'; 
+     ScenarioLabel: Label 'Try selling an ANTWERP desk to ''The Cannon Group PLC'' using the ''Post and Send'' action.\The challenge is to figure out what is going on. What is blocking posting of this sales order?'; 
     begin                 
         SalesHeader.SetRange("Document Type", "Sales Document Type"::Order);        
         SalesHeader.SetFilter(SalesHeader."Sell-to Customer No.", '10000');
