@@ -62,6 +62,12 @@ Watch this 6 min video to learn how to use the DYI Power BI error report to tria
 
 
 ## Other videos
+### 2022-07-29 Telemetría en Business Central: Como Empezar con la aplicación de Power BI(10 min/ Spanish) by Javier Armesto 
+En menos de 10 minutos Javier Armesto te cuenta como poner en marcha la aplicación de telemetría para Business Central disponible en Appsource para Power BI.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=qe8m0tdZvY0")><img src="https://img.youtube.com/vi/qe8m0tdZvY0/0.jpg" width="50%"></a>
+<br>
+</p>
 
 ### 2022-02-10 I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min) by Microsoft MVP Steve Endow
 Watch Microsoft MVP Steve Endow explore the topic of Business Central telemetry and error handling. Tip: **CTRL+click** to open in a new window.
