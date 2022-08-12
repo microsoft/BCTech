@@ -1,0 +1,204 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "Logic App Name": {
+      "defaultValue": "DeletedEnvironmentNotification",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the name for the Logic App Resource"
+      }
+    },
+    "AppInsights API Connection Name": {
+      "defaultValue": "applicationinsights",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the name for the AppInsights API Connection. If you already have an API Connection resource for AppInsights in your subscription you can enter the name of the existing resource to reuse it for this Logic App."
+      }
+    },
+    "Teams Connection Name": {
+      "defaultValue": "teams",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the name for the Teams API Connection. If you already have an API Connection resource for Outlook in your subscription you can enter the name of the existing resource to reuse it for this Logic App."
+      }
+    },
+    "Notification Recipients": {
+      "defaultValue": "noreply@microsoft.com",
+      "type": "String",
+      "metadata": {
+        "description": "Enter the email address(es) for the recipient(s) of the notification. Separate by ; if you enter multiple addresses."
+      }
+    },
+    "Alert Frequency in Minutes": {
+      "defaultValue": 15,
+      "type": "int",
+      "minValue": 1,
+      "metadata": {
+        "description": "Set the frequency in minutes for which you want to check for deleted environments."
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('AppInsights API Connection Name')]",
+      "location": "[resourcegroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "AppInsights",
+        "statuses": [
+          {
+            "status": "Connected"
+          }
+        ],
+        "customParameterValues": {},
+        "api": {
+          "name": "[parameters('AppInsights API Connection Name')]",
+          "displayName": "Azure Application Insights",
+          "description": "Azure Application Insights is an extensible analytics service that helps you understand the performance and usage of your live web application. Connect to your Application Insights resource to run and visualize various Analytics queries.",
+          "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1570/1.0.1570.2764/', parameters('AppInsights API Connection Name'), '/icon.png')]",
+          "brandColor": "#68217A",
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('AppInsights API Connection Name'))]",
+          "type": "Microsoft.Web/locations/managedApis"
+        },
+        "testLinks": []
+      }
+    },
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('Teams Connection Name')]",
+      "location": "[resourcegroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "[parameters('Teams Connection Name')]",
+        "statuses": [
+          {
+            "status": "Connected"
+          }
+        ],
+        "customParameterValues": {},
+        "nonSecretParameterValues": {},
+        "api": {
+          "name": "[parameters('Teams Connection Name')]",
+          "displayName": "Microsoft Teams",
+          "description": "Microsoft Teams enables you to get all your content, tools and conversations in the Team workspace with Office 365.",
+          "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1588/1.0.1588.2938/', parameters('Teams Connection Name'), '/icon.png')]",
+          "brandColor": "#4B53BC",
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Teams Connection Name'))]",
+          "type": "Microsoft.Web/locations/managedApis"
+        },
+        "testLinks": [
+          {
+            "requestUri": "[concat('https://management.azure.com:443/', resourceGroup().id, '/providers/Microsoft.Web/connections/', parameters('Teams Connection Name'), '/extensions/proxy/beta/me/teamwork?api-version=2016-06-01')]",
+            "method": "get"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('Logic App Name')]",
+      "location": "[resourcegroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('Teams Connection Name'))]"
+      ],
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "recurrence": {
+                "frequency": "Minute",
+                "interval": "[parameters('Alert Frequency in Minutes')]"
+              },
+              "evaluatedRecurrence": {
+                "frequency": "Minute",
+                "interval": "[parameters('Alert Frequency in Minutes')]"
+              },
+              "type": "Recurrence"
+            }
+          },
+          "actions": {
+            "For_each": {
+              "foreach": "@body('Run_Analytics_query')?['value']",
+              "actions": {
+                "Post_message_in_a_chat_or_channel": {
+                  "runAfter": {},
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "body": {
+                      "isAlert": true,
+                      "messageBody": "<p><strong>Environment </strong><strong>@{items('For_each')?['EnvironmentName']}</strong><strong> has been deleted</strong><br>\n<strong><br>\n</strong>AAD Tenant ID: @{items('For_each')?['AADTenantId']}<br>\nEnvironment Name: @{items('For_each')?['EnvironmentName']}<br>\nEnvironment Type: @{items('For_each')?['EnvironmentType']}<br>\nLocalization: @{items('For_each')?['EnvironmentCountry']}<br>\nVersion: @{items('For_each')?['Version']}<br>\n<br>\nOpen the <a href=\"@{items('For_each')?['AdminCenter']}\">Admin Center</a> for this AAD Tenant to restore the environment or to review this operation on the Operations page</p>",
+                      "recipient": "[parameters('Notification Recipients')]"
+                    },
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['teams']['connectionId']"
+                      }
+                    },
+                    "method": "post",
+                    "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Chat with Flow bot')}"
+                  }
+                }
+              },
+              "runAfter": {
+                "Run_Analytics_query": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Foreach"
+            },
+            "Run_Analytics_query": {
+              "runAfter": {},
+              "type": "ApiConnection",
+              "inputs": {
+                "body": "[concat('traces\n| where timestamp > ago(', parameters('Alert Frequency in Minutes'), 'm)\n| where customDimensions.eventId == ''LC0150''\n| extend AdminCenter = strcat(''https://businesscentral.dynamics.com/'', customDimensions.aadTenantId, ''/admin'')\n| project AADTenantId = customDimensions.aadTenantId, EnvironmentName = customDimensions.environmentName, EnvironmentType = customDimensions.environmentType, EnvironmentCountry = customDimensions.countryCode, Version = customDimensions.environmentVersion, AdminCenter, DeletionReason = customDimensions.deletionReason')]",
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['applicationinsights']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/api/QueryDraft",
+                "queries": {
+                  "version": "2"
+                }
+              }
+            }
+          },
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "applicationinsights": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]",
+                "connectionName": "[parameters('AppInsights API Connection Name')]",
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('AppInsights API Connection Name'))]"
+              },
+              "teams": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('Teams Connection Name'))]",
+                "connectionName": "[parameters('Teams Connection Name')]",
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Teams Connection Name'))]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
