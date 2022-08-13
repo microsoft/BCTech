@@ -1,0 +1,42 @@
+// filter out a single event based on event id
+source
+| where Properties.eventId <> "RT0006"
+
+
+
+// filter out multiple events based on event id
+source
+| where Properties.eventId !in ("RT0006", "RT0008")
+
+
+
+// only accept these events based on event id
+source
+| where Properties.eventId in ("RT0006", "RT0008")
+
+
+
+// filter on one event but keep other events going through
+// in this example we only want data for incoming web service calls if they fail
+source
+| where (
+    Properties.eventId == "RT0008" // incoming web service calls 
+    and
+    Properties.category <> 'SOAP' // SOAP telemetry does not emit http status
+    and 
+    httpStatusCode !startswith "2"
+  ) or 
+  Properties.eventId <> "RT0008"
+
+
+
+// sample data for one event but keep other events going through
+// in this example we only want 10% of the data for incoming web service calls 
+// all other events are let through
+source
+| where (
+    Properties.eventId == "RT0008" // incoming web service calls 
+    and 
+    rand(1) < 0.1 // adjust as needed   
+  ) or 
+  Properties.eventId <> "RT0008"
