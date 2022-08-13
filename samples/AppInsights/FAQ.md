@@ -5,12 +5,12 @@ Business Central can send telemetry to one or more **Azure Application Insights*
 The first step thus is for you to create an Application Insights account.
 See [HERE](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-telemetry) for instructions on how to do that.
 
-Once you have created the Application Insights account, make a note of the *instrumentation key*.
+Once you have created the Application Insights account, make a note of the *connection string*.
 
 The next step depends on whether you are an ISV or a VAR:
-* If you are an **ISV**, you must specify the instrumentation key in your app.json file. Once the app is installed in a Business Central environment, telemetry relating to your app will start to flow into your Application Insights account.
+* If you are an **ISV**, you must specify the connection string in your app.json file. Once the app is installed in a Business Central environment, telemetry relating to your app will start to flow into your Application Insights account.
 
-* If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your Application Insights account. You can also set the instrumentation key using the Business Central Administration Center API.
+* If you are a **VAR**, you must enter the connection string in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your Application Insights account. You can also set the connection string using the Business Central Administration Center API.
 
 Please visit the documentation for more details (use CTRL + click to open in a new browser tab/page):
 * [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
