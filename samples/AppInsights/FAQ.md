@@ -32,6 +32,7 @@ In August 2022, the Azure Monitor made a new feature available (in preview) call
 These two blog posts by Business Central community telemetry experts Bert Verbeek and Stefano Demiliani
 * https://www.bertverbeek.nl/blog/2022/08/10/save-cost-on-your-telemetry/
 * https://demiliani.com/2022/08/09/dynamics-365-business-central-filtering-telemetry-signals-with-azure-monitor-data-collection-rules/
+
 go into a lot of details on how this works. When the feature is made generally available, we will add similar guidance to the official Business Central documentation.
 
 To help you get started with setting up Data Collection Rules, we added a number of sample KQL queries that illustrates common filter scenarios:
