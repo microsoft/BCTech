@@ -24,7 +24,7 @@ Azure monitor alerts are billed separately.
 Here is a quote from a partner using telemetry:
 _We have been using telemetry for some months now and have enabled 20+ apps as well as environment data from dev systems and build pipelines. Last month we ingested 800+ traces that corresponded to 2.3GB of data. Eventually we might hit some of those thresholds, but then we can decide if we want to spend money on telemetry (probably will) and how much. With our current setup, we will probably limit ingestion and once that no longer suffices, we will add sampling to the mix._
 
-## How can I reduce cost?
+## How can I control cost?
 See our documentation here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
 
 Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
@@ -32,9 +32,9 @@ Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyInges
 See all helper queries here: [HelperQueries](KQL/Queries/HelperQueries/)
 
 ## Should each customer/app have their own Application Insights resource, rather than one insight for multiple customers?
-Partitioning of Application Insights resources across multiple customers or apps depends on what you use telemetry for. The benefit of having a 1-1 relationship between customers/apps and Application Insights resources is that you can also use the Usage features in the Application Insights portal to monitor how a particular customer is using BC. It also makes it easy to separate the cost of telemetry per customer/app. Downside of a 1-1 relationship between customers/apps and Application Insights resources is that you have more Azure resources to manage, including any cross-customer alerting/monitoring that you might want to setup.
+Partitioning of Application Insights resources across multiple customers or apps depends on what you use telemetry for. The benefit of having a 1-1 relationship between customers/apps and Application Insights resources is that you can also use the Usage features in the Application Insights portal to monitor how a particular customer is using BC and you can setup and share the Power BI app with the customer directly without having to fear that one customer can see data from another customer. It also makes it easy to separate the cost of telemetry per customer/app. Downside of a 1-1 relationship between customers/apps and Application Insights resources is that you have more Azure resources to manage, including any cross-customer alerting/monitoring that you might want to setup.
 
-Also, it is recommended to use per-environment telemetry from per-app telemetry into separate Application Insights resources.
+Also, it is recommended to separate per-environment telemetry from per-app telemetry into separate Application Insights resources.
 
 ## Where can I learn more about Kusto Query Language (KQL) and Azure Data Studio?
 Please visit the [KQL README page](KQL/README.md) for learning resources on KQL and the [Trouble Shooting Guides README page](TroubleShootingGuides/README.md) for learning resources on Azure Data Studio.
