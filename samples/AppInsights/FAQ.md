@@ -17,9 +17,7 @@ Please visit the documentation for more details (use CTRL + click to open in a n
 * [Business Central Administration Center API - How to set the telemetry key](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/administration-center-api#put-appinsights-key)
 
 ## What does it cost?
-Application Insights is billed based on the volume of telemetry data that your application sends. Currently, the first 5 GB of data per month is free. Regarding data retention, every GB of data ingested can be retained at no charge for up to first 90 days.
-
-Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information on pricing.
+See our documentation here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
 
 Azure monitor alerts are billed separately.
 
@@ -27,16 +25,7 @@ Here is a quote from a partner using telemetry:
 _We have been using telemetry for some months now and have enabled 20+ apps as well as environment data from dev systems and build pipelines. Last month we ingested 800+ traces that corresponded to 2.3GB of data. Eventually we might hit some of those thresholds, but then we can decide if we want to spend money on telemetry (probably will) and how much. With our current setup, we will probably limit ingestion and once that no longer suffices, we will add sampling to the mix._
 
 ## How can I reduce cost?
-To reduce ingestion cost, you can
-* reduce data ingestion by sampling to only ingest a percentage of the inbound data (see https://docs.microsoft.com/en-us/azure/azure-monitor/app/sampling#ingestion-sampling)
-* set a daily limit of how much data that can be ingested
-* set alerts on cost thresholds being exceeded to get notified if this happens
-* use a custom endpoint, see [How do I send telemetry data to a different endpoint than Azure Application Insights?](CustomIntegrations/CustomEndpoint/README.md)
-
-To reduce data retention cost, you can
-* purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
-
-![Cost](images/cost.png)
+See our documentation here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
 
 Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
 
