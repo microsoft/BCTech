@@ -78,6 +78,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Dependency cycle discovered in permission sets | 2022 release wave 1 (20.2) | KQL sample ready, (pending link to release note) |
 | Use of read scale-out in web service calls | 2022 release wave 1 (20.x) | (pending link to release note) |
 | Performance Toolkit | 2022 release wave 1 (20.x) | (pending link to docs)) |
+| Azure function integration | 2022 release wave 2 (21.0) | (pending link to docs)) |
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
