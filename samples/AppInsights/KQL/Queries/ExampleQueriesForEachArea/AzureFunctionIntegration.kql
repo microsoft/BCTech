@@ -8,7 +8,8 @@ traces
 | where customDimensions.eventId == 'AL0000I74'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
-, environment = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
 , clientType = customDimensions.alClientType
 , company = customDimensions.alCompany
 , isEvaluationCompany = customDimensions.alIsEvaluationCompany
@@ -25,7 +26,8 @@ traces
 | where customDimensions.eventId == 'AL0000I7P'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
-, environment = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
 , clientType = customDimensions.alClientType
 , company = customDimensions.alCompany
 , isEvaluationCompany = customDimensions.alIsEvaluationCompany
@@ -42,7 +44,8 @@ traces
 | where customDimensions.eventId == 'AL0000I75'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
-, environment = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
 , clientType = customDimensions.alClientType
 , company = customDimensions.alCompany
 , isEvaluationCompany = customDimensions.alIsEvaluationCompany
