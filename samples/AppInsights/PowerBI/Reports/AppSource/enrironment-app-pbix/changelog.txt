@@ -2,6 +2,7 @@ vNext
 * Performance report: added Host on Outgoing Web services page
 * Error report: added Host on Outgoing Web services page
 * Usage report: added per-environment overview visual on Deprecated features page, fixed page filters to show the fields on the page
+* Usage report: connector page now also shows edit in excel and power app/automate setup trafic
 
 2022-07-15
 * All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment 
