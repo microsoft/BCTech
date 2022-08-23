@@ -10,7 +10,7 @@ Remember to set the setting back after installing the beta version of the app.
 ![Prereq](../../../images/power-bi-prereq.png)
 
 # Getting the report
-Use this link to install/update the template app from Appsource: https://aka.ms/bctelemetry-isv-app 
+Use this link to install/update the template app from Appsource: https://aka.ms/bctelemetry-isv-app-beta
 
 The app comes with sample data.
 
