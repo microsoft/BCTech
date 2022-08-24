@@ -43,3 +43,19 @@ traces
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueResult = customDimensions.alJobQueueResult
+
+
+// Job queue entry failed (raw data)
+traces
+| where timestamp > ago(60d) // adjust as needed
+    and customDimensions.eventId == 'AL0000HE7'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alJobQueueId = customDimensions.alJobQueueId 	
+, alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueStatus = customDimensions.alJobQueueStatus
+, alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
+, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 20.5
