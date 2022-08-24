@@ -25,6 +25,8 @@ https://thatnavguy.com/d365-business-central-using-excel-layout-for-reporting/
 2022-06-06, _Customizing Report Layouts in Microsoft Dynamics 365 Business Central_ by Microsoft MVP Kristen Hosman
 https://www.kristenhosman.com/2022/06/report-layouts-in-microsoft-dynamics.html
 
+2022-05-04, _Excel Reports – something new in reporting space_ by Microsoft MVP Krzysztof Bialowas
+https://www.mynavblog.com/2022/05/04/excel-reports-something-new-in-reporting-space/
 
 ## I added new fields to the report dataset. Why are they not showing up in my layout file?
 Excel layouts support that the layoter can remove columns from the Data table in the Data worksheet. This is why new columns added to the dataset do not appear in the layout automagically. The way to fix this is not to scratch your precious layout file, but simply to edit the header in Data table in the Data worksheet and add the new field metadata here. 
