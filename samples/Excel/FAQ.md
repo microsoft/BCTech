@@ -22,6 +22,8 @@ Sure. Here are some links to get you started:
 2022-08-24, _D365 Business Central : Using Excel Layout for Reporting_ by THATNAVGUY
 https://thatnavguy.com/d365-business-central-using-excel-layout-for-reporting/
 
+2022-06-06, _Customizing Report Layouts in Microsoft Dynamics 365 Business Central_ by Microsoft MVP Kristen Hosman
+https://www.kristenhosman.com/2022/06/report-layouts-in-microsoft-dynamics.html
 
 
 ## I added new fields to the report dataset. Why are they not showing up in my layout file?
