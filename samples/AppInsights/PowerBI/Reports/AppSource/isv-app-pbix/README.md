@@ -17,7 +17,7 @@ The app comes with sample data.
 # Connecting to Azure Application Insights
 To connect the app to an Azure Application Insights resource, you need one thing: the Application Insights app id (get it from the API Access menu in the Azure Application Insights portal). 
 
-![Workspace](../../../images/pbi_app_app_id.png)
+![Workspace](../../../../images/pbi_app_app_id.png)
 
 
 NB! If you get this error "The OAuth authentication method isn't supported for this data source", then please check if the application id is correct. This usually is the root cause for that error.
@@ -25,7 +25,7 @@ NB! If you get this error "The OAuth authentication method isn't supported for t
 # Configuring the (AAD Tenant id, customer) mapping
 You define the (AAD tenant id, domain name) mapping in the app parameter _AAD tenant mapping_, that you set when you configure the app to read data from your Azure Application Insights resource (you can also change parameter values after configuring the app).
 
-![Mapping](../../../images/mapping.png)
+![Mapping](../../../../images/mapping.png)
 
 The mapping must be uploaded as a (minified) json file with the following format:
 ```
@@ -49,9 +49,9 @@ Once you completed the setup of the app, how can you change parameters such as _
 
 You can change configuration settings by going to the Power BI portal, open the workspace for the installed app, go to settings, and then Parameters.
 
-![Workspace](../../../images/pbi_app_workspace.png)
+![Workspace](../../../../images/pbi_app_workspace.png)
 
-![Parameters](../../../images/pbi_app_parameters.png)
+![Parameters](../../../../images/pbi_app_parameters.png)
 
 # Sharing the app with coworkers and others
 Once installed, it is possible to share the app with coworkers and others (e.g. customers). 
