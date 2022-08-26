@@ -3,6 +3,8 @@ vNext
 * Error report: added Host on Outgoing Web services page
 * Usage report: added per-environment overview visual on Deprecated features page, fixed page filters to show the fields on the page
 * Usage report: connector page now also shows edit in excel and power app/automate setup trafic
+* Error report: Possible to filter on user telemetry id on pages Error dialogs, Feature errors, and Permisison Errors
+
 
 2022-07-15
 * All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment 
