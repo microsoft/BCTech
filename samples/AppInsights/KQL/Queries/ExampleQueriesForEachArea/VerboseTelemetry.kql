@@ -12,6 +12,11 @@ traces
 , environmentType = customDimensions.environmentType
 , environmentName = customDimensions.environmentName
 , eventId = customDimensions.eventId
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , message
 , customDimensions
 
@@ -29,5 +34,10 @@ traces
 , environmentType = customDimensions.environmentType
 , environmentName = customDimensions.environmentName
 , eventId = customDimensions.eventId
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , message
 , customDimensions

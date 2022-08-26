@@ -13,6 +13,11 @@ traces
 , endpoint = customDimensions.endpoint
 , authenticationStatus = customDimensions.authenticationStatus
 , authenticationType = customDimensions.authenticationType
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // failed authentication (raw data)
 traces
@@ -27,3 +32,8 @@ traces
 , endpoint = customDimensions.endpoint
 , authenticationStatus = customDimensions.authenticationStatus
 , authenticationType = customDimensions.authenticationType
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)

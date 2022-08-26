@@ -23,6 +23,11 @@ traces
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
 , failureReason = customDimensions.failureReason
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , message
 , customDimensions
 
@@ -58,7 +63,11 @@ traces
 , alUserRole = customDimensions.alUserRole
 , alErrorCallStack = customDimensions.alErrorCallStack
 , alErrorText = customDimensions.alErrorText
-, message
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+), message
 
 
 

@@ -22,6 +22,11 @@ traces
 , httpHeaders = customDimensions.httpHeaders       // httpHeaders only available from 16.3
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 // these lines illustrate how to extract data from the httpHeaders dimension
 | extend httpHeadersTmp =  tostring( httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)

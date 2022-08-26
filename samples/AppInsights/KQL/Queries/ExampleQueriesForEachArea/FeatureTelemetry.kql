@@ -26,8 +26,12 @@ traces
  , IsExpectedUpdate = customDimensions.alIsExpectedUpdate
  , CallerCustomDimensions = bag_remove_keys(customDimensions, dynamic(['alCategory', 'aadTenantId', 'environmentType', 'alSubCategory', 'alFeatureName', 'alEventName',
     'alCallerAppName', 'alCallerAppVersionMajor', 'alCallerAppVersionMinor', 'alClientType', 'alCompany', 'alIsEvaluationCompany', 'alTenantLicenseState', 'alIsAdmin', 'alCountryCode', 'alIsExpectedUpdate']))
-| project aadTenantId, Date, Environment, SubCategory, FeatureName, EventName, CallerAppName, CallerAppVersionMajor, CallerAppVersionMinor,
-    ClientType, Company, IsEvaluationCompany, TenantLicenseState, IsAdmin, CountryCode, CallerCustomDimensions
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
+
 
 
 // Errors - logged from FeatureTelemetry.LogError
@@ -54,8 +58,11 @@ traces
  , IsExpectedUpdate = customDimensions.alIsExpectedUpdate
  , CallerCustomDimensions = bag_remove_keys(customDimensions, dynamic(['alCategory', 'aadTenantId', 'environmentType', 'alSubCategory', 'alFeatureName', 'alEventName',
     'alCallerAppName', 'alCallerAppVersionMajor', 'alCallerAppVersionMinor', 'alClientType', 'alCompany', 'alIsEvaluationCompany', 'alTenantLicenseState', 'alIsAdmin', 'alCountryCode', 'alIsExpectedUpdate']))
-| project aadTenantId, Date, Environment, SubCategory, FeatureName, EventName, CallerAppName, CallerAppVersionMajor, CallerAppVersionMinor,
-    ClientType, Company, IsEvaluationCompany, TenantLicenseState, IsAdmin, CountryCode, CallerCustomDimensions
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 
 // Usage - logged from FeatureTelemetry.LogUsage
@@ -82,6 +89,9 @@ traces
  , IsExpectedUpdate = customDimensions.alIsExpectedUpdate
  , CallerCustomDimensions = bag_remove_keys(customDimensions, dynamic(['alCategory', 'aadTenantId', 'environmentType', 'alSubCategory', 'alFeatureName', 'alEventName',
     'alCallerAppName', 'alCallerAppVersionMajor', 'alCallerAppVersionMinor', 'alClientType', 'alCompany', 'alIsEvaluationCompany', 'alTenantLicenseState', 'alIsAdmin', 'alCountryCode', 'alIsExpectedUpdate']))
-| project aadTenantId, Date, Environment, SubCategory, FeatureName, EventName, CallerAppName, CallerAppVersionMajor, CallerAppVersionMinor,
-    ClientType, Company, IsEvaluationCompany, TenantLicenseState, IsAdmin, CountryCode, CallerCustomDimensions
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
