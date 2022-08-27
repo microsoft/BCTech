@@ -7,6 +7,7 @@ vNext
 * Performance report: zoom slicers added to all date visuals
 * Error report: added Host on Outgoing Web services page
 * Error report: Possible to filter on user telemetry id on pages Error dialogs, Feature errors, and Permisison Errors
+* Error report: zoom slicers added to all date visuals
 * Administration report: new page showing field changes (from the sensitive field monitoring feature)
 
 2022-07-15
