@@ -5,7 +5,7 @@ vNext
 * Performance report: added Host on Outgoing Web services page
 * Error report: added Host on Outgoing Web services page
 * Error report: Possible to filter on user telemetry id on pages Error dialogs, Feature errors, and Permisison Errors
-
+* Administration report: new page showing field changes (from the sensitive field monitoring feature)
 
 2022-07-15
 * All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment 
