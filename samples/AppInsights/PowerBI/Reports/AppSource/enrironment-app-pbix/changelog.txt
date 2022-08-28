@@ -9,6 +9,7 @@ vNext
 * Error report: Possible to filter on user telemetry id on pages Error dialogs, Feature errors, and Permisison Errors
 * Error report: zoom slicers added to all date visuals
 * Administration report: new page showing field changes (from the sensitive field monitoring feature)
+* Administration report: new page showing retention policy deletes (from the retention policy feature)
 
 2022-07-15
 * All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment 
