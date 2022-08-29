@@ -11,7 +11,7 @@ let exclude_on_prem_and_docker = true;
 let installed_updated_runtime =
 traces
 | where timestamp > ago(_lookback)
-| where customDimensions.eventId in( 'LC0010', 'LC0022') or customDimensions.eventId startswith "RT"
+| where customDimensions.eventId in( 'LC0010', 'LC0022', 'LC0026') or customDimensions.eventId startswith "RT"
 // on-prem and docker have either 'common' or 'default' as their aadTenantId dimension
 | where iff(exclude_on_prem_and_docker and customDimensions.aadTenantId in ( 'common', 'default' ), false, true)
 | where isnotempty(customDimensions.aadTenantId)
@@ -43,7 +43,7 @@ traces
 let uninstalled =
 traces
 | where timestamp > ago(_lookback)
-| where customDimensions.eventId == 'LC0016'
+| where customDimensions.eventId in ('LC0016', 'LC0027')
 | where isnotempty(customDimensions.aadTenantId)
 | extend ExtensionId = tostring(customDimensions.extensionId)
   , ExtensionVersion = tostring(customDimensions.extensionVersion)
