@@ -25,5 +25,5 @@
     "allowDownloadingSource": false,
     "includeSourceInSymbolFile": false
   },
-  "runtime": "9.0"
+  "runtime": "10.0"
 }
