@@ -42,8 +42,8 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
-, alJobQueueResult = customDimensions.alJobQueueResult
-
+, alJobQueueStatus = customDimensions.alJobQueueResult
+ 
 
 // Job queue entry failed (raw data)
 traces
