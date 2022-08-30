@@ -17,7 +17,7 @@ codeunit 50108 "CTF Challenges Install"
         CTFChallengesSetup: Record "CTF Challenges Setup";
     begin
         if not CTFChallengesSetup.FindFirst() then begin
-            CTFChallengesSetup."External Mode" := false;
+            CTFChallengesSetup."External Mode" := true;
             CTFChallengesSetup.Insert();
         end;
     end;

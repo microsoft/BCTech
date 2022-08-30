@@ -43,6 +43,9 @@ page 50105 "CTF Challenges Setup"
         CTFChallengesSetup: Record "CTF Challenges Setup";
         CTFChallenges: Codeunit "CTF Challenges";
     begin
+
+
+
         if not CTFChallengesSetup.WritePermission() then
             Error(NoPermissionErr);
         HintKeys := CTFChallenges.GetHintKeys();
