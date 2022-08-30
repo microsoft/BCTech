@@ -12,6 +12,7 @@ codeunit 50111 IntroChallenge2 implements "CTF Challenge"
 
     procedure RunChallenge()
     begin
+        Message('Can you guess the flag? No? Maybe you need a hint?');
     end;
 
     procedure GetHints(): List of [Text]
