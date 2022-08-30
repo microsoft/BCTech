@@ -1,0 +1,56 @@
+// KQL samples - Azure Function Integration 
+// Available from version 21.0
+
+
+// Request to Azure function succeeded
+traces
+| where timestamp > ago(5d) // adjust as needed
+| where customDimensions.eventId == 'AL0000I74'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.alClientType
+, company = customDimensions.alCompany
+, isEvaluationCompany = customDimensions.alIsEvaluationCompany
+, tenantLicenseState = customDimensions.alTenantLicenseState
+, isAdmin = customDimensions.alIsAdmin
+, countryCode = customDimensions.alCountryCode
+, requestStatusCode = customDimensions.alStatusCode
+, functionHost = customDimensions.alFunctionHost
+
+
+// Request to Azure function failed
+traces
+| where timestamp > ago(5d) // adjust as needed
+| where customDimensions.eventId == 'AL0000I7P'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.alClientType
+, company = customDimensions.alCompany
+, isEvaluationCompany = customDimensions.alIsEvaluationCompany
+, tenantLicenseState = customDimensions.alTenantLicenseState
+, isAdmin = customDimensions.alIsAdmin
+, countryCode = customDimensions.alCountryCode
+, requestStatusCode = customDimensions.alStatusCode
+, functionHost = customDimensions.alFunctionHost
+
+
+// Authorization to Azure function failed
+traces
+| where timestamp > ago(5d) // adjust as needed
+| where customDimensions.eventId == 'AL0000I75'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, clientType = customDimensions.alClientType
+, company = customDimensions.alCompany
+, isEvaluationCompany = customDimensions.alIsEvaluationCompany
+, tenantLicenseState = customDimensions.alTenantLicenseState
+, isAdmin = customDimensions.alIsAdmin
+, countryCode = customDimensions.alCountryCode
+, errorText = customDimensions.alErrorText
+, functionHost = customDimensions.alFunctionHost

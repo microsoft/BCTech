@@ -1,5 +1,11 @@
 In this folder, you will find samples of Kusto Query Language (KQL) for each type of signal that is sent to Application Insights.
 
+# Do you have Kusto (KQL) queries for data collection rules (DCR)?
+Yes, the *DataCollectionRules* folder have queries that can help you setup data collection rules in Azure Monitor.
+
+# Do you have Kusto (KQL) queries for setting up alerts?
+Yes, the [../../Alerts/AlertingKQLSamples]() folder have queries that can help you setup alerts on telemetry.
+
 # Do you have Kusto (KQL) queries for performance investigations?
 Yes, the *PerformanceTuning* folder have queries that can help you investigate a performance issue.
 

@@ -1,0 +1,21 @@
+// KQL samples - sensitive field monitoring
+
+Docs: https://docs.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
+
+
+You might want to alert on one or more of the following events:
+
+1) Sensitive field monitor feature status has changed to [Yes|No]
+eventId == 'AL0000DD3'
+
+
+2) Sensitive field added to monitor 
+eventId == 'AL0000EMW' 
+
+
+3) Sensitive field value has changed: <field name> in table <table name> (RAW data)
+eventId == 'AL0000CTE'
+
+
+See example KQL queries for all three types of signal here: 
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/ExampleQueriesForEachArea/SensitiveFieldMonitoring.kql

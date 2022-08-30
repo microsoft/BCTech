@@ -10,6 +10,16 @@ Here is an example to get you started:
 ## How do I get alerts via email?
 If you want alerts via email, you can just create a new action group in your Application Insights resource, and in your alerts add an action to send an email.
 
+## How do I get alerts using Microsoft Dynamics Logic apps?
+Here in this repository, you can find templates for three different types of alerts using Microsoft Dynamics Logic apps:
+* Grouped notification for available updates
+* Notification for deleted environment
+* Action each failed environment update
+
+Read more here in docs:
+https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-notifications#application-insights
+
+
 ## How do I get alerts via Microsoft Teams?
 You can also send alerts to a channel in Microsoft Teams. See an example of how to set that up here: https://dailydotnettips.com/sending-your-azure-application-insights-alerts-to-team-sites-using-azure-logic-app/
 

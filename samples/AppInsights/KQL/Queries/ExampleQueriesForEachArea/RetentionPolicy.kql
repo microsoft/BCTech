@@ -10,7 +10,6 @@ traces
 , alCompanyName = customDimensions.alCompanyName
 , alLogEntry = customDimensions.alLogEntry
 
-
 // Records Deleted Using Retention Policy: Deleted <record count> records from Table <Table id>, <Table name>
 traces
 | where timestamp > ago(60d) // change as needed
@@ -21,7 +20,6 @@ traces
 , alManualRun = customDimensions.alManualRun
 , alTableName = customDimensions.alTableName
 , alTableNo = customDimensions.alTableNo
-
 
 // First retention policy enabled on: <company name>
 traces

@@ -21,7 +21,11 @@ traces
 , sqlServerSessionId = customDimensions.sqlServerSessionId
 , snapshotId = customDimensions.snapshotId
 , sessionId = customDimensions.sessionId
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // this query shows how to join lock timeout events (RT0012) with the lock snapshot events (RT0013)
 let Timeouts = 
@@ -38,6 +42,11 @@ traces
 , alObjectIdLockTimeout = customDimensions.alObjectId
 , alStackTraceLockTimeout = customDimensions.alStackTrace
 , sqlTableLockTimeout = customDimensions.sqlTableName
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 ;
 Timeouts
 | join (traces
@@ -74,6 +83,11 @@ let Timeouts = traces
 , alExecutionMethodLockTimeout = customDimensions.alExecutingMethodScope
 , extensionNameLockTimeout = customDimensions.extensionName
 , extensionVersionLockTimeout = customDimensions.extensionVersion
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 ;
 Timeouts
 | join (traces

@@ -43,6 +43,11 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , message, customDimensions
 
 
@@ -78,6 +83,11 @@ traces
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , message, customDimensions
 
 
@@ -109,6 +119,11 @@ traces
 , reportAction = customDimensions.reportAction
 // documentFormat dimension added in version 20.0
 , documentFormat = customDimensions.documentFormat
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , message, customDimensions
 
 
@@ -138,3 +153,8 @@ traces
 , reportAction = customDimensions.reportAction
 // documentFormat dimension added in version 20.0
 , documentFormat = customDimensions.documentFormat
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)

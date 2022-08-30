@@ -5,47 +5,54 @@ Business Central can send telemetry to one or more **Azure Application Insights*
 The first step thus is for you to create an Application Insights account.
 See [HERE](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-telemetry) for instructions on how to do that.
 
-Once you have created the Application Insights account, make a note of the *instrumentation key*.
+Once you have created the Application Insights account, make a note of the *connection string*.
 
 The next step depends on whether you are an ISV or a VAR:
-* If you are an **ISV**, you must specify the instrumentation key in your app.json file. Once the app is installed in a Business Central environment, telemetry relating to your app will start to flow into your Application Insights account.
+* If you are an **ISV**, you must specify the connection string in your app.json file. Once the app is installed in a Business Central environment, telemetry relating to your app will start to flow into your Application Insights account.
 
-* If you are a **VAR**, you must enter the instrumentation key in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your Application Insights account. You can also set the instrumentation key using the Business Central Administration Center API.
+* If you are a **VAR**, you must enter the connection string in the Business Central Admin Center of your customer(s). Once you have done that, telemetry relating to your customers will start to flow into your Application Insights account. You can also set the connection string using the Business Central Administration Center API.
 
 Please visit the documentation for more details (use CTRL + click to open in a new browser tab/page):
 * [Business Central Developer and IT-pro documentation - Monitoring and Analyzing Telemetry](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview)
 * [Business Central Administration Center API - How to set the telemetry key](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/administration-center-api#put-appinsights-key)
 
 ## What does it cost?
-Application Insights is billed based on the volume of telemetry data that your application sends. Currently, the first 5 GB of data per month is free. Regarding data retention, every GB of data ingested can be retained at no charge for up to first 90 days.
-
-Please check the documentation <https://azure.microsoft.com/en-us/pricing/details/monitor/> for up-to-date information on pricing.
+See our documentation here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
 
 Azure monitor alerts are billed separately.
 
 Here is a quote from a partner using telemetry:
 _We have been using telemetry for some months now and have enabled 20+ apps as well as environment data from dev systems and build pipelines. Last month we ingested 800+ traces that corresponded to 2.3GB of data. Eventually we might hit some of those thresholds, but then we can decide if we want to spend money on telemetry (probably will) and how much. With our current setup, we will probably limit ingestion and once that no longer suffices, we will add sampling to the mix._
 
-## How can I reduce cost?
-To reduce ingestion cost, you can
-* reduce data ingestion by sampling to only ingest a percentage of the inbound data (see https://docs.microsoft.com/en-us/azure/azure-monitor/app/sampling#ingestion-sampling)
-* set a daily limit of how much data that can be ingested
-* set alerts on cost thresholds being exceeded to get notified if this happens
-* use a custom endpoint, see [How do I send telemetry data to a different endpoint than Azure Application Insights?](CustomIntegrations/CustomEndpoint/README.md)
+## How can I control cost?
+See our documentation here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
 
-To reduce data retention cost, you can
-* purge data from your Application Insights resource (see _How do I delete data from Application Insights?_ below)
+In August 2022, the Azure Monitor made a new feature available (in preview) called *Data Collection Rules*. This allows you to define rules on what is ingested into your telemetry resource. 
+ 
+These two blog posts by Business Central community telemetry experts Bert Verbeek and Stefano Demiliani
+* https://www.bertverbeek.nl/blog/2022/08/10/save-cost-on-your-telemetry/
+* https://demiliani.com/2022/08/09/dynamics-365-business-central-filtering-telemetry-signals-with-azure-monitor-data-collection-rules/
 
-![Cost](images/cost.png)
+go into a lot of details on how this works. When the feature is made generally available, we will add similar guidance to the official Business Central documentation.
 
-Use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
+To help you get started with setting up Data Collection Rules, we added a number of sample KQL queries that illustrates common filter scenarios:
+* how to filter out one or more events (I don't need these, no need to pay for them)
+* how to only filter part of an event (I only want to see events when this fails or I only want 10% of these events)
+* how to filter on AAD tenant (I am an ISV and I want to start slowly on telemetry, so only enabling it for a few customers)
+* how to filter on environment type (I am an ISV and I only want data from production environments)
+* how to filter on app dimensions (I am a VAR and this app/publisher is too noisy)
+
+See the sample queries here: [DataCollectionRules](KQL/Queries/DataCollectionRules)
+
+
+You can use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
 
 See all helper queries here: [HelperQueries](KQL/Queries/HelperQueries/)
 
 ## Should each customer/app have their own Application Insights resource, rather than one insight for multiple customers?
-Partitioning of Application Insights resources across multiple customers or apps depends on what you use telemetry for. The benefit of having a 1-1 relationship between customers/apps and Application Insights resources is that you can also use the Usage features in the Application Insights portal to monitor how a particular customer is using BC. It also makes it easy to separate the cost of telemetry per customer/app. Downside of a 1-1 relationship between customers/apps and Application Insights resources is that you have more Azure resources to manage, including any cross-customer alerting/monitoring that you might want to setup.
+Partitioning of Application Insights resources across multiple customers or apps depends on what you use telemetry for. The benefit of having a 1-1 relationship between customers/apps and Application Insights resources is that you can also use the Usage features in the Application Insights portal to monitor how a particular customer is using BC and you can setup and share the Power BI app with the customer directly without having to fear that one customer can see data from another customer. It also makes it easy to separate the cost of telemetry per customer/app. Downside of a 1-1 relationship between customers/apps and Application Insights resources is that you have more Azure resources to manage, including any cross-customer alerting/monitoring that you might want to setup.
 
-Also, it is recommended to use per-environment telemetry from per-app telemetry into separate Application Insights resources.
+Also, it is recommended to separate per-environment telemetry from per-app telemetry into separate Application Insights resources.
 
 ## Where can I learn more about Kusto Query Language (KQL) and Azure Data Studio?
 Please visit the [KQL README page](KQL/README.md) for learning resources on KQL and the [Trouble Shooting Guides README page](TroubleShootingGuides/README.md) for learning resources on Azure Data Studio.

@@ -23,6 +23,11 @@ traces
 )
 , alExecutionId = tostring( customDimensions.alExecutionId )
 , alErrorCount = customDimensions.alErrorCount
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 ;
 let completed =
 traces
@@ -58,7 +63,11 @@ traces
 , componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Configuration package exported successfully (raw data)
 traces
@@ -75,7 +84,11 @@ traces
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 , alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Configuration package import started (raw data)
 traces
@@ -91,7 +104,11 @@ traces
 , componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Configuration package imported successfully (raw data)
 traces
@@ -108,7 +125,11 @@ traces
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
 , alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Configuration package apply started (raw data)
 traces
@@ -124,7 +145,11 @@ traces
 , componentVersion = customDimensions.componentVersion
 , alExecutionId = customDimensions.alExecutionId
 , alPackageCode = customDimensions.alPackageCode
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Configuration package applied successfully (raw data)
 traces
@@ -143,7 +168,11 @@ traces
 , alExecutionTimeInMs = customDimensions.alExecutionTimeInMs
 , alErrorCount = customDimensions.alErrorCount	
 , alFieldCount = customDimensions.alFieldCount
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Configuration package deleted successfully (raw data)
 traces
@@ -158,3 +187,8 @@ traces
 , component = customDimensions.component
 , componentVersion = customDimensions.componentVersion
 , alPackageCode = customDimensions.alPackageCode
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)

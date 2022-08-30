@@ -2,7 +2,7 @@
 // https://docs.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
 
 
-// Sensitive field monitor status has changed to [Yes|No]
+// Sensitive field monitor feature status has changed to [Yes|No]
 traces
 | where customDimensions.eventId == 'AL0000DD3'
 | project timestamp, eventId=customDimensions.eventId, message
