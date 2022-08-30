@@ -42,7 +42,9 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
-, alJobQueueStatus = customDimensions.alJobQueueResult
+, alJobQueueStatus = iff( isempty(customDimensions.alJobQueueStatus), customDimensions.alJobQueueResult, customDimensions.alJobQueueStatus )
+// , alJobQueueStatus = customDimensions.alJobQueueResult // prior to 20.0
+// , alJobQueueStatus = customDimensions.alJobQueueStatus // 20.0 or later
  
 
 // Job queue entry failed (raw data)

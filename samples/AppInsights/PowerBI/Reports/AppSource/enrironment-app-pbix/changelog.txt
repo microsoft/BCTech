@@ -1,10 +1,11 @@
 vNext
-* Usage report: added per-environment overview visual on Deprecated features page, fixed page filters to show the fields on the page
+* Usage report: Deprecated features page- added per-environment overview visual, fixed page filters to show the fields on the page
 * Usage report: connector page now also shows edit in excel and power app/automate setup trafic
 * Usage report: new page showing check list usage and state changes
 * Usage report: zoom slicers added to all date visuals
 * Performance report: added Host on Outgoing Web services page
 * Performance report: zoom slicers added to all date visuals
+* Performance report: bug fix - Job queue performance page now loads data also for versions of BC 20.0 or later
 * Error report: added Host on Outgoing Web services page
 * Error report: Possible to filter on user telemetry id on pages Error dialogs, Feature errors, and Permisison Errors
 * Error report: zoom slicers added to all date visuals
