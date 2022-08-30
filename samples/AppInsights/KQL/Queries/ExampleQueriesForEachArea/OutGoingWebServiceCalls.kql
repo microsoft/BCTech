@@ -27,6 +27,11 @@ traces
 , httpHeaders = customDimensions.httpHeaders       
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 // these three lines httpHeadersTmp, httpHeadersJSON, and msUserAgent 
 // illustrate how to extract data from the httpHeaders dimension
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)

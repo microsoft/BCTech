@@ -11,7 +11,11 @@ traces
 , environmentType = customDimensions.environmentType
 , alEmailMessageID = customDimensions.alEmailMessageID
 , alConnector = customDimensions.alConnector
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Failed to send email (raw data)
 traces
@@ -27,3 +31,8 @@ traces
 // alErrorCallStack and alErrorText available from version 19.0
 , alErrorCallStack = customDimensions.alErrorCallStack
 , alErrorText = customDimensions.alErrorText
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)

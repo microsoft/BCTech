@@ -15,7 +15,11 @@ traces
 , guestUser = customDimensions.guestUser
 , userType = customDimensions.userType
 , entitlementSetIds = customDimensions.entitlementSetIds
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // failed authorization prior to openCompany trigger (raw data)
 traces
@@ -30,7 +34,11 @@ traces
 , userType = customDimensions.userType
 , failureReason = customDimensions.failureReason
 , entitlementSetIds = customDimensions.entitlementSetIds
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // successful authorization after the openCompany trigger (raw data)
 traces
@@ -50,7 +58,11 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
 | extend serverExecutionTime = customDimensions.serverExecutionTime
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // failed authorization after the openCompany trigger (raw data)
 traces
@@ -70,7 +82,11 @@ traces
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
 | extend serverExecutionTime = customDimensions.serverExecutionTime
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // client type is not known pre-open company
 // You need to join RT0001 to RT0002/RT0004 if you need both userType and clientType
@@ -89,6 +105,11 @@ and timestamp > ago(1d) // adjust as needed
 , platformVersion
 , userType
 , operation_Id
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 ;
 let authStepTwo =  
 traces

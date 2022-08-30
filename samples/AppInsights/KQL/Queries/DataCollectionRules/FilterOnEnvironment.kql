@@ -1,0 +1,27 @@
+// filter out a single AAD tenant
+source
+| where Properties.aadTenantId <> "64e497e6-a104-44e6-88b3-6afd99f60c59"
+
+
+
+// filter out multiple AAD tenants
+source
+| where Properties.aadTenantId !in ("64e497e6-a104-44e6-88b3-6afd99f60c59", "55057e46-8952-46de-9f48-a947817e6800")
+
+
+
+// only accept data from this AAD tenant
+source
+| where Properties.aadTenantId == "64e497e6-a104-44e6-88b3-6afd99f60c59"
+
+
+
+// only accept data from this environment 
+source
+| where Properties.aadTenantId == "64e497e6-a104-44e6-88b3-6afd99f60c59"
+| where Properties.environmentName == "Write environment name here"
+
+
+// only accept data from production environments
+source
+| where Properties.environmentType == "Production"

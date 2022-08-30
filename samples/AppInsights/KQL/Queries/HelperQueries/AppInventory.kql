@@ -1,0 +1,64 @@
+// App inventory
+
+// In use: Installed or updated or RT max(version) by environment dim
+// Uninstalled: max(version) by environment dim
+
+// Inventory = In use minus Uninstalled
+
+
+let _lookback = 1d;
+let exclude_on_prem_and_docker = true;
+let installed_updated_runtime =
+traces
+| where timestamp > ago(_lookback)
+| where customDimensions.eventId in( 'LC0010', 'LC0022', 'LC0026') or customDimensions.eventId startswith "RT"
+// on-prem and docker have either 'common' or 'default' as their aadTenantId dimension
+| where iff(exclude_on_prem_and_docker and customDimensions.aadTenantId in ( 'common', 'default' ), false, true)
+| where isnotempty(customDimensions.aadTenantId)
+// on-prem and docker have empty environment name dimension
+| where iff( customDimensions.aadTenantId in ( 'common', 'default' ), true, isnotempty( customDimensions.environmentName) )
+| where isnotempty( customDimensions.extensionPublisher)
+| where isnotempty( customDimensions.extensionId)
+| where isnotempty( customDimensions.extensionName)
+| extend ExtensionId = tostring(customDimensions.extensionId)
+  , ExtensionVersion = tostring(customDimensions.extensionVersion)
+  , AADTenantId = customDimensions.aadTenantId
+  , EnvironmentName = customDimensions.environmentName
+| extend ExtensionUniqueId = strcat(toupper(ExtensionId), '_', toupper(ExtensionVersion))
+  , TenantId = strcat(toupper(AADTenantId), '_', toupper(EnvironmentName))
+  , AlExtensionUniqueId = strcat(toupper(customDimensions.extensionName), '_', toupper(customDimensions.extensionPublisher), '_', toupper(customDimensions.extensionVersion))
+| extend InstallId=strcat(TenantId, '_', AlExtensionUniqueId)
+| summarize arg_max(timestamp, *) by InstallId
+| project ExtensionUniqueId
+  , ExtensionPublisher = customDimensions.extensionPublisher
+  , ExtensionId = tostring(customDimensions.extensionId)
+  , ExtensionVersion = tostring(customDimensions.extensionVersion)
+  , ExtensionName = customDimensions.extensionName
+  , EnvironmentType = customDimensions.environmentType
+  , InstallId
+  , TenantId
+  , AADTenantId 
+  , EnvironmentName 
+;
+let uninstalled =
+traces
+| where timestamp > ago(_lookback)
+| where customDimensions.eventId in ('LC0016', 'LC0027')
+| where isnotempty(customDimensions.aadTenantId)
+| extend ExtensionId = tostring(customDimensions.extensionId)
+  , ExtensionVersion = tostring(customDimensions.extensionVersion)
+  , AADTenantId = customDimensions.aadTenantId
+  , EnvironmentName = customDimensions.environmentName
+| extend ExtensionUniqueId = strcat(toupper(ExtensionId), '_', toupper(ExtensionVersion))
+  , TenantId = strcat(toupper(AADTenantId), '_', toupper(EnvironmentName))
+| where isnotempty( ExtensionId )
+| extend AlExtensionUniqueId = strcat(toupper(customDimensions.extensionName), '_', toupper(customDimensions.extensionPublisher), '_', toupper(customDimensions.extensionVersion))
+  , TenantId
+| extend InstallId=strcat(TenantId, '_', AlExtensionUniqueId)
+| summarize arg_max(timestamp, *) by InstallId
+| project InstallId
+;
+installed_updated_runtime
+| join kind=leftouter uninstalled on $left.InstallId == $right.InstallId
+| where isempty( InstallId1 )
+| project-away InstallId1, InstallId

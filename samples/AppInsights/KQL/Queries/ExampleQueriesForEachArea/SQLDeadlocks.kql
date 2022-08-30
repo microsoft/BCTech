@@ -42,3 +42,8 @@ traces
 , sqlStatement has "sp_getapplock", "GET_APP_LOCK"
 , "UNKNOWN"
 )
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)

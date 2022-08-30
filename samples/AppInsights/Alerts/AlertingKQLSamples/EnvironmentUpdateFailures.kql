@@ -1,8 +1,11 @@
 // Use a query like this as a condition in an alert on when new updates are available for environment(s)
 
+let exclude_on_prem_and_docker = true; // adjust as needed
 traces
 | where timestamp > ago(1d)
 | where customDimensions.eventId == 'LC0107' 
+// on-prem and docker have either 'common' or 'default' as their aadTenantId dimension
+| where iff(exclude_on_prem_and_docker and customDimensions.aadTenantId in ( 'common', 'default' ), false, true)
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily

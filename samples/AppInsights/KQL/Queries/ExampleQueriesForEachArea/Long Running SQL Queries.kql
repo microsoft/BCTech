@@ -57,7 +57,11 @@ operationType == "SELECT", countof(selectPart,",") + 1
 , operationType == "SELECT'", countof(selectPart,",") + 1
 , 0
 )
-
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // version that works on 15.0, 15.2, and 15.2 versions
 // note how all the calls to custom dimensions have to use the customDimensions.['<column name>'] syntax

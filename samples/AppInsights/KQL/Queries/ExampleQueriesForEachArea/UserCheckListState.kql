@@ -13,3 +13,4 @@ traces
 , appVersion = customDimensions.alCallerAppVersion
 , oldStatus = customDimensions.alOldStatus
 , newStatus = customDimensions.alNewStatus
+, usertelemetryId = user_Id // userTelemetryId introduced in 20.0 at the same time as this event was introduced
