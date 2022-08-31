@@ -6,6 +6,7 @@ vNext
 * Performance report: added Host on Outgoing Web services page
 * Performance report: zoom slicers added to all date visuals
 * Performance report: bug fix - Job queue performance page now loads data also for versions of BC 20.0 or later
+* Performance report: new page showing performance of updates
 * Error report: added Host on Outgoing Web services page
 * Error report: Possible to filter on user telemetry id on pages Error dialogs, Feature errors, and Permisison Errors
 * Error report: zoom slicers added to all date visuals
