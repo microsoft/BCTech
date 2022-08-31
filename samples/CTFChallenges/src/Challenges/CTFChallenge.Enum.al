@@ -45,4 +45,24 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
     {
         Implementation = "CTF Challenge" = SubstituteReportChallenge;
     }
+
+    value(8; "Intro challenge 1")
+    {
+        Implementation = "CTF Challenge" = IntroChallenge1;
+    }
+
+    value(9; "Intro challenge 2")
+    {
+        Implementation = "CTF Challenge" = IntroChallenge2;
+    }
+
+    value(10; "Blank Space")
+    {
+        Implementation = "CTF Challenge" = "Blank Space";
+    }
+
+    value(11; "Misconfiguration Package")
+    {
+        Implementation = "CTF Challenge" = "Misconfiguration Package";
+    }
 }

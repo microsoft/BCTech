@@ -17,4 +17,10 @@ enum 50101 "CTF Category"
     value(2; "Debugging")
     {
     }
+    value(3; "Introduction")
+    {
+    }
+    value(4; Data)
+    {
+    }
 }

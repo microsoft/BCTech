@@ -40,11 +40,14 @@ page 50105 "CTF Challenges Setup"
 
     trigger OnOpenPage()
     var
-        CTFChallengesSetup: Record "CTF Challenges Setup";
         CTFChallenges: Codeunit "CTF Challenges";
+        PasswordDialogManagement: Codeunit "Password Dialog Management";
+        Password: Text;
     begin
-        if not CTFChallengesSetup.WritePermission() then
-            Error(NoPermissionErr);
+        Password := PasswordDialogManagement.OpenPasswordDialog(true, true);
+        if Password <> 'clue' then
+            Error('You don''t have access to the setup page.');
+
         HintKeys := CTFChallenges.GetHintKeys();
     end;
 
