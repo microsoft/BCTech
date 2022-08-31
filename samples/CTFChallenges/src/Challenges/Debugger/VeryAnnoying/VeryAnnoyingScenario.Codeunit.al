@@ -12,8 +12,7 @@ codeunit 50142 VeryAnnoyingScenario implements "CTF Challenge"
         Contact: Record Contact;
         ScenarioLabel1: Label 'Challenge1: Put a breakpoint on the Show Map action. It can be found on the ''Communication'' group\ \'; 
         ScenarioLabel2: Label 'Challenge2: Try showing on the map a contacts''s address.\Click on the ''Show Map''. Setup what is required, click again. What is blocking it?'; 
-    begin
-        Contact.SetRange(Contact."Territory Code", 'FOREIGN');
+    begin       
         Contact.FindFirst();
         PAGE.Run(Page::"Contact Card", Contact);
         Message(ScenarioLabel1 + ScenarioLabel2);
