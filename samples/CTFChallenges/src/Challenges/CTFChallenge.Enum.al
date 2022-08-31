@@ -55,4 +55,14 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
     {
         Implementation = "CTF Challenge" = IntroChallenge2;
     }
+
+    value(10; "Blank Space")
+    {
+        Implementation = "CTF Challenge" = "Blank Space";
+    }
+
+    value(11; "Misconfiguration Package")
+    {
+        Implementation = "CTF Challenge" = "Misconfiguration Package";
+    }
 }

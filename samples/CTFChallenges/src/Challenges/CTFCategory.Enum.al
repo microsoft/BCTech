@@ -20,4 +20,7 @@ enum 50101 "CTF Category"
     value(3; "Introduction")
     {
     }
+    value(4; Data)
+    {
+    }
 }
