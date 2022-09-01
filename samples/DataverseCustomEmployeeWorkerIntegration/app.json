@@ -1,0 +1,18 @@
+{
+  "id": "90909f58-747d-4c57-8f7e-54b818c09646",
+  "name": "DataverseCustomEmployeeWorkerIntegration",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "Customization of Dataverse integration with BC Employee - Dataverse Worker mapping.",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "runtime": "9.0"
+}
