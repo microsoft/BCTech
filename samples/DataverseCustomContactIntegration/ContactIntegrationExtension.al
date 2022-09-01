@@ -1,14 +1,15 @@
-tableextension 50100 ContactExtension extends Contact
+tableextension 50100 "Contact Extension" extends Contact
 {
     fields
     {
         field(50100; "Industry"; Text[100])
         {
+            Caption = 'Industry';
         }
     }
 }
 
-pageextension 50100 ContactCardExtension extends "Contact Card"
+pageextension 50100 "Contact Card Extension" extends "Contact Card"
 {
     layout
     {
@@ -28,14 +29,14 @@ codeunit 50101 "Contact Extension"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"CDS Setup Defaults", 'OnAfterResetContactContactMapping', '', true, true)]
     local procedure HandleOnAfterResetContactContactMapping(IntegrationTableMappingName: Code[20])
     var
-        CDSContact: Record "CRM Contact";
+        CRMContact: Record "CRM Contact";
         Contact: Record Contact;
         IntegrationFieldMapping: Record "Integration Field Mapping";
     begin
         InsertIntegrationFieldMapping(
             IntegrationTableMappingName,
             Contact.FieldNo("Industry"),
-            CDSContact.FieldNo(cre59_industry),
+            CRMContact.FieldNo(cre59_industry),
             IntegrationFieldMapping.Direction::Bidirectional,
             '', true, false);
     end;

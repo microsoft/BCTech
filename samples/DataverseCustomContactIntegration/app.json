@@ -1,0 +1,18 @@
+{
+  "id": "16d648a7-75ee-4f44-a9f8-7a792f262f4b",
+  "name": "DataverseCustomContactIntegration",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "Customization of Dataverse integration with Industry field for Contacts.",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "runtime": "9.0"
+}
