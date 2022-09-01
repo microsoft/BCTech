@@ -1,22 +1,36 @@
-pageextension 50101 "Employee Synch Extension" extends "Employee Card"
+pageextension 50101 "Employee Card Extension" extends "Employee Card"
 {
     actions
     {
         addlast(navigation)
         {
-            group(ActionGroupCDS)
+            group(ActionGroupDataverse)
             {
-                Caption = 'Common Data Service';
-                Visible = CDSIntegrationEnabled;
+                Caption = 'Dataverse';
+                Visible = DataverseIntegrationEnabled;
 
-                action(CDSSynchronizeNow)
+                action(DataverseGotoWorker)
+                {
+                    Caption = 'Worker';
+                    ApplicationArea = All;
+                    Enabled = DataverseIsCoupledToRecord;
+                    Image = CoupledCustomer;
+                    ToolTip = 'Open the coupled Dataverse worker.';
+
+                    trigger OnAction()
+                    var
+                        CRMIntegrationManagement: Codeunit "CRM Integration Management";
+                    begin
+                        CRMIntegrationManagement.ShowCRMEntityFromRecordID(Rec.RecordId);
+                    end;
+                }
+                action(DataverseSynchronizeNow)
                 {
                     Caption = 'Synchronize';
                     ApplicationArea = All;
-                    Visible = true;
                     Image = Refresh;
-                    Enabled = CDSIsCoupledToRecord;
-                    ToolTip = 'Send or get updated data to or from Common Data Service.';
+                    Enabled = DataverseIsCoupledToRecord;
+                    ToolTip = 'Send or get updated data to or from Dataverse.';
 
                     trigger OnAction()
                     var
@@ -29,7 +43,6 @@ pageextension 50101 "Employee Synch Extension" extends "Employee Card"
                 {
                     Caption = 'Synchronization Log';
                     ApplicationArea = All;
-                    Visible = true;
                     Image = Log;
                     ToolTip = 'View integration synchronization jobs for the employee table.';
 
@@ -44,15 +57,14 @@ pageextension 50101 "Employee Synch Extension" extends "Employee Card"
                 {
                     Caption = 'Coupling';
                     Image = LinkAccount;
-                    ToolTip = 'Create, change, or delete a coupling between the Business Central record and a Common Data Service record.';
+                    ToolTip = 'Create, change, or delete a coupling between the Business Central record and a Dataverse record.';
 
-                    action(ManageCDSCoupling)
+                    action(ManageDataverseCoupling)
                     {
                         Caption = 'Set Up Coupling';
                         ApplicationArea = All;
-                        Visible = true;
                         Image = LinkAccount;
-                        ToolTip = 'Create or modify the coupling to a Common Data Service worker.';
+                        ToolTip = 'Create or modify the coupling to a Dataverse worker.';
 
                         trigger OnAction()
                         var
@@ -61,14 +73,13 @@ pageextension 50101 "Employee Synch Extension" extends "Employee Card"
                             CRMIntegrationManagement.DefineCoupling(Rec.RecordId);
                         end;
                     }
-                    action(DeleteCDSCoupling)
+                    action(DeleteDataverseCoupling)
                     {
                         Caption = 'Delete Coupling';
                         ApplicationArea = All;
-                        Visible = true;
                         Image = UnLinkAccount;
-                        Enabled = CDSIsCoupledToRecord;
-                        ToolTip = 'Delete the coupling to a Common Data Service worker.';
+                        Enabled = DataverseIsCoupledToRecord;
+                        ToolTip = 'Delete the coupling to a Dataverse worker.';
 
                         trigger OnAction()
                         var
@@ -84,18 +95,18 @@ pageextension 50101 "Employee Synch Extension" extends "Employee Card"
 
     trigger OnOpenPage()
     begin
-        CDSIntegrationEnabled := CRMIntegrationManagement.IsCDSIntegrationEnabled();
+        DataverseIntegrationEnabled := CRMIntegrationManagement.IsCDSIntegrationEnabled();
     end;
 
     trigger OnAfterGetCurrRecord()
     begin
-        if CDSIntegrationEnabled then
-            CDSIsCoupledToRecord := CRMCouplingManagement.IsRecordCoupledToCRM(Rec.RecordId);
+        if DataverseIntegrationEnabled then
+            DataverseIsCoupledToRecord := CRMCouplingManagement.IsRecordCoupledToCRM(Rec.RecordId);
     end;
 
     var
         CRMIntegrationManagement: Codeunit "CRM Integration Management";
         CRMCouplingManagement: Codeunit "CRM Coupling Management";
-        CDSIntegrationEnabled: Boolean;
-        CDSIsCoupledToRecord: Boolean;
+        DataverseIntegrationEnabled: Boolean;
+        DataverseIsCoupledToRecord: Boolean;
 }

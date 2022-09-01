@@ -1,11 +1,11 @@
-page 50100 "CDS Worker List"
+page 50100 "Dataverse Worker List"
 {
-    ApplicationArea = Basic, Suite, Assembly, Service;
-    Caption = 'CDS Worker';
+    ApplicationArea = All;
+    Caption = 'Dataverse Worker';
     Editable = false;
     PageType = List;
     RefreshOnActivate = true;
-    SourceTable = "CDS cdm_worker";
+    SourceTable = "Dataverse cdm_worker";
     UsageCategory = Lists;
 
     layout
@@ -28,11 +28,6 @@ page 50100 "CDS Worker List"
                 {
                     ApplicationArea = All;
                     Caption = 'Birth Date';
-                }
-                field("Gender"; Rec.cdm_Gender)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Gender';
                 }
                 field("Phone"; Rec.cdm_PrimaryTelephone)
                 {
@@ -67,36 +62,36 @@ page 50100 "CDS Worker List"
     {
         area(processing)
         {
-            action(CreateFromCDS)
+            action(CreateFromDataverse)
             {
                 ApplicationArea = All;
                 Caption = 'Create in Business Central';
                 Promoted = true;
                 PromotedCategory = Process;
-                ToolTip = 'Generate the entity from the coupled Common Data Service worker.';
+                ToolTip = 'Generate the entity from the coupled Dataverse worker.';
 
                 trigger OnAction()
                 var
-                    CDSWorker: Record "CDS cdm_worker";
+                    DataverseWorker: Record "Dataverse cdm_worker";
                     CRMIntegrationManagement: Codeunit "CRM Integration Management";
                 begin
-                    CurrPage.SetSelectionFilter(CDSWorker);
-                    CRMIntegrationManagement.CreateNewRecordsFromCRM(CDSWorker);
+                    CurrPage.SetSelectionFilter(DataverseWorker);
+                    CRMIntegrationManagement.CreateNewRecordsFromCRM(DataverseWorker);
                 end;
             }
         }
     }
 
     var
-        CurrentlyCoupledCDSWorker: Record "CDS cdm_worker";
+        CurrentlyCoupledDataverseWorker: Record "Dataverse cdm_worker";
 
     trigger OnInit()
     begin
         Codeunit.Run(Codeunit::"CRM Integration Management");
     end;
 
-    procedure SetCurrentlyCoupledCDSWorker(CDSWorker: Record "CDS cdm_worker")
+    procedure SetCurrentlyCoupledDataverseWorker(DataverseWorker: Record "Dataverse cdm_worker")
     begin
-        CurrentlyCoupledCDSWorker := CDSWorker;
+        CurrentlyCoupledDataverseWorker := DataverseWorker;
     end;
 }

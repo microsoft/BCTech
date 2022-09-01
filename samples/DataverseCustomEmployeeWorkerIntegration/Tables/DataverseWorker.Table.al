@@ -1,4 +1,4 @@
-﻿table 50101 "CDS cdm_worker"
+﻿table 50101 "Dataverse cdm_worker"
 {
     ExternalName = 'cdm_worker';
     TableType = CDS;
@@ -266,7 +266,7 @@
             ExternalType = 'Lookup';
             Description = 'The manager of the worker';
             Caption = 'Manager';
-            TableRelation = "CDS cdm_worker".cdm_workerId;
+            TableRelation = "Dataverse cdm_worker".cdm_workerId;
         }
         field(51; cdm_MiddleName; Text[100])
         {
@@ -440,7 +440,7 @@
         field(78; cdm_ManagerWorkerIdName; Text[128])
         {
             FieldClass = FlowField;
-            CalcFormula = lookup ("CDS cdm_worker".cdm_WorkerNumber where(cdm_workerId = field(cdm_ManagerWorkerId)));
+            CalcFormula = lookup("Dataverse cdm_worker".cdm_WorkerNumber where(cdm_workerId = field(cdm_ManagerWorkerId)));
             ExternalName = 'cdm_managerworkeridname';
             ExternalType = 'String';
             ExternalAccess = Read;
