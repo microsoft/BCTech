@@ -1,15 +1,15 @@
-# Introduction to CDS Custom Employee Worker Integration
+# Introduction to Dataverse Custom Employee Worker Integration
 
-This extension describes setting up an integration between an employee in Microsoft Dynamics 365 Business Central and a worker in Common Data Service.
+This extension describes setting up an integration between an employee in Microsoft Dynamics 365 Business Central and a worker in Dataverse.
 
-The CDS Custom Employee Worker Integration extension includes the following capabilities:
+The Dataverse Custom Employee Worker Integration extension includes the following capabilities:
 
-* Creating an integration table object in Business Central for mapping a Common Data Service entity to a Business Central record type
-* Using a Common Data Service integration table as the data source for a page in Business Central that displays data from Common Data Service entity records
-* Extending a page in Business Central for coupling and synchronizing entity records in Common Data Service with table records in Business Central
-* Using events to create an integration table and a field mapping between a table in Business Central table and an integration table for Common Data Service
+* Creating an integration table object in Business Central for mapping a Dataverse table to a Business Central record type
+* Using a Dataverse integration table as the data source for a page in Business Central that displays data from Dataverse entity records
+* Extending a page in Business Central for coupling and synchronizing entity records in Dataverse with table records in Business Central
+* Using events to create an integration table and a field mapping between a table in Business Central table and an integration table for Dataverse
 
-To use the extension, follow the guidance at [Customizing an Integration with Common Data Service](https://docs.microsoft.com/dynamics365/business-central/dev-itpro/administration/administration-custom-cds-integration).  
+To use the extension, follow the guidance at [Customizing an Integration with Microsoft Dataverse](https://docs.microsoft.com/dynamics365/business-central/dev-itpro/administration/administration-custom-cds-integration).  
 
 ## Disclaimer
 
