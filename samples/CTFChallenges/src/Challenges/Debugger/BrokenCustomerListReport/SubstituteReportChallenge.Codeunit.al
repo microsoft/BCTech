@@ -17,7 +17,7 @@ codeunit 50143 SubstituteReportChallenge implements "CTF Challenge"
     procedure GetHints(): List of [Text];
     var
         HintLine1: Label 'a. Create a ''Hello World '' app  and an ''Snapshot Attach Configuration'' in VSCode (The environment type should be Sandbox)\';
-        HintLine2: Label 'b. Be sure you do not have any breakpoints defined in your demo app.\';
+        HintLine2: Label 'b. Be sure you do not have any breakpoints defined in your demo app if you have not found an entry point and are relying on the AL exception to reveal the solution.\';
         HintLine3: Label 'c. This is important for capturing AL exceptions originating from event subscriptions.\';
         HintLine4: Label 'd. Initialize a snapshot debugging session.\';
         HintLine5: Label 'e. Exercise the challenge scenario. Do it at least two times (with loading the ''Customer List Report''). Did you get an error? If you got an error message that will be a snappoint.\';
