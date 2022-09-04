@@ -21,7 +21,7 @@ codeunit 50140 WhyCantIPost implements "CTF Challenge"
     var
         HintLine1: Label ' Use the event recorder why trying to invoke  the action OnCodeOnBeforePostSalesHeader';
         HintLine2: Label '\Create an extension that extends the "Sales Order List" card ';
-        HintLine3: Label '\Try putting a breakpoint on the call for teh event and F11 and F11';
+        HintLine3: Label '\Try putting a breakpoint on the call for the event and F11 until you reach the result.';
         Hints: List of [Text];
     begin
         Hints.Add(HintLine1 + HintLine2 + HintLine3);
