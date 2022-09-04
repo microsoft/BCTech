@@ -1,9 +1,15 @@
 vNext
 * Error report: added per-environment visuals on all pages
 * Error report: fixed per-date visual on SQL Deadlocks page
+* Error report: fixed wrong publisher on by-publisher visual on Report Errors page
+* Usage report: fixed visual width on web service key page
+* Usage report: new visual on connector page: usage by connector
+* Usage report: new visual on integrations page: integrations by publisher / extension
+* Usage report: adjusted visuals sizes and canvas size on Clients page
 * Usage report: fixed visual width on web service key page
 
-2022-09-xx
+
+2022-09-04
 * Usage report: Deprecated features page- added per-environment overview visual, fixed page filters to show the fields on the page
 * Usage report: connector page now also shows edit in excel and power app/automate setup trafic
 * Usage report: new page showing check list usage and state changes
