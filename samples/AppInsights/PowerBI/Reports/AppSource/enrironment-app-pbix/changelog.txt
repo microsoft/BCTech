@@ -7,7 +7,7 @@ vNext
 * Usage report: new visual on integrations page: integrations by publisher / extension
 * Usage report: adjusted visuals sizes and canvas size on Clients page
 * Usage report: fixed visual width on web service key page
-
+* Performance report: added environment-information on OnCompanyOpen page
 
 2022-09-04
 * Usage report: Deprecated features page- added per-environment overview visual, fixed page filters to show the fields on the page
