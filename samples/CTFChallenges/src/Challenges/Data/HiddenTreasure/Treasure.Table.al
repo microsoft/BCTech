@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
 
-table 50105 Treasure
+table 50106 Treasure
 {
     Access = Internal;
     DataClassification = SystemMetadata;

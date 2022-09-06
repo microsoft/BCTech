@@ -6,7 +6,7 @@
 /// <summary>
 /// A data CTF challenge.
 /// </summary>
-codeunit 50114 "Hidden Treasure" implements "CTF Challenge"
+codeunit 50116 "Hidden Treasure" implements "CTF Challenge"
 {
     Access = Internal;
 
