@@ -41,7 +41,7 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
         Implementation = "CTF Challenge" = WhyCantIPost;
     }
 
-    value(7; "What is going on with the customer sales list?")
+    value(7; "What is going on with the customer list?")
     {
         Implementation = "CTF Challenge" = SubstituteReportChallenge;
     }

@@ -10,8 +10,8 @@ codeunit 50142 VeryAnnoyingScenario implements "CTF Challenge"
     procedure RunChallenge();
     var
         Contact: Record Contact;
-        ScenarioLabel1: Label 'Challenge: Try showing on the map a contacts''s address.\Click on the ''Show Map'' action. Setup what is required, by opening the ''Online Map Setup'' page. Then click again on the ''Show Map'' action. What is blocking it?';
-        ScenarioLabel2: Label 'You can rerun this action on the Contact card page by clicking on the CTF Challenge action found on the Process group';
+        ScenarioLabel1: Label 'Challenge: Try showing on the map a contacts''s address. \Click on the ''Show Map'' action. Setup what is required, by opening the ''Online Map Setup'' page. \Then click again on the ''Show Map'' action. What is blocking it?';
+        ScenarioLabel2: Label 'You can rerun this action on the Contact card page by clicking on the ''CTF Challenge'' action found on the Process group';
     begin
         Contact.FindFirst();
         PAGE.Run(Page::"Contact Card", Contact);
