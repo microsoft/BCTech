@@ -3,12 +3,26 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
 
-permissionsetextension 50100 "CTF Challenges" extends "System App - Basic"
+table 50105 Treasure
 {
+    Access = Internal;
+    DataClassification = SystemMetadata;
 
-    Permissions = tabledata Cereal = RIMD,
-                  tabledata Milk = RIMD,
-                  tabledata "Quick Item Flag_6e5b1753" = RIMD,
-                  tabledata "CTF Challenges Setup" = RIMD,
-                  tabledata Treasure = RI;
+    fields
+    {
+        field(1; ID; Guid)
+        {
+        }
+        field(4; Value; Text[250])
+        {
+        }
+    }
+
+    keys
+    {
+        key(PK; ID)
+        {
+            Clustered = true;
+        }
+    }
 }
