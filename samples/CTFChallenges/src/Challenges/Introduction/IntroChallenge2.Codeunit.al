@@ -12,6 +12,9 @@ codeunit 50111 IntroChallenge2 implements "CTF Challenge"
 
     procedure RunChallenge()
     begin
+        // This has nothing to do with this intro, but we want the user to say "ok to make HTTP requests" now, rather than in the challenge where it's going to be used (because it will give the solution away)
+        UnblockHttpCalls();
+
         Message('Can you guess the flag? No? Maybe you need a hint?');
     end;
 
@@ -22,6 +25,15 @@ codeunit 50111 IntroChallenge2 implements "CTF Challenge"
         Hints.Add('This is a hint. It normally doesn''t give you answer straight away, but we will make an exception: the flag is Flag_f0147182');
         exit(Hints);
     end;
+
+    procedure UnblockHttpCalls()
+    var
+        httpClient: HttpClient;
+        response: HttpResponseMessage;
+    begin
+        httpClient.Get('https://www.microsoft.com', response);
+    end;
+
 
     procedure GetCategory(): Enum "CTF Category"
     begin

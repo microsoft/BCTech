@@ -65,4 +65,9 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
     {
         Implementation = "CTF Challenge" = "Misconfiguration Package";
     }
+
+    value(12; "Quiet Widow")
+    {
+        Implementation = "CTF Challenge" = "Quiet Widow";
+    }
 }
