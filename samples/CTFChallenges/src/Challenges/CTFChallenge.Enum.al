@@ -70,4 +70,9 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
     {
         Implementation = "CTF Challenge" = "Quiet Widow";
     }
+
+    value(13; "Alien Dancer")
+    {
+        Implementation = "CTF Challenge" = "Alien Dancer";
+    }
 }

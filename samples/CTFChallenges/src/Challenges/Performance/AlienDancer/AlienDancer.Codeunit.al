@@ -6,23 +6,29 @@
 /// <summary>
 /// A performance CTF challenge.
 /// </summary>
-codeunit 50109 "Quiet Widow" implements "CTF Challenge"
+codeunit 50114 "Alien Dancer" implements "CTF Challenge"
 {
     Access = Internal;
 
     procedure RunChallenge()
     var
-        httpClient: HttpClient;
-        response: HttpResponseMessage;
+        iterator: Integer;
+        alienDancer: Record AlienDancer;
     begin
-        httpClient.Get('https://slowhttpcall.azurewebsites.net/api/Flag_9e8af1e3', response);
+        for iterator := 1 to 1000 do begin
+            alienDancer.Reset();
+            alienDancer.Id := 0;
+            alienDancer.Name_Flag_7f1d141a := 'thename';
+            alienDancer.Insert();
+            Commit();
+        end;
     end;
 
     procedure GetHints(): List of [Text]
     var
         Hints: List of [Text];
     begin
-        Hints.Add('What does telemetry say?');
+        Hints.Add('Telemetry will give the answer, but maybe the session isn''t logging detailed telemetry at the moment?');
         exit(Hints);
     end;
 
