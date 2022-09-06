@@ -1,18 +1,18 @@
 codeunit 50142 VeryAnnoyingScenario implements "CTF Challenge"
 {
-    trigger OnRun()    
-    var        
-        OnlineMapSetup: Record  "Online Map Setup";
+    trigger OnRun()
+    var
+        OnlineMapSetup: Record "Online Map Setup";
     begin
-       OnlineMApSetup.DeleteAll();     
+        OnlineMApSetup.DeleteAll();
     end;
 
     procedure RunChallenge();
     var
         Contact: Record Contact;
-        ScenarioLabel1: Label 'Challenge1: Put a breakpoint on the Show Map action. It can be found on the ''Communication'' group\ \'; 
-        ScenarioLabel2: Label 'Challenge2: Try showing on the map a contacts''s address.\Click on the ''Show Map''. Setup what is required, click again. What is blocking it?'; 
-    begin       
+        ScenarioLabel1: Label 'Challenge: Try showing on the map a contacts''s address.\Click on the ''Show Map'' action. Setup what is required, by opening the ''Online Map Setup'' page. Then click again on the ''Show Map'' action. What is blocking it?';
+        ScenarioLabel2: Label 'You can rerun this action on the Contact card page by clicking on the CTF Challenge action found on the Process group';
+    begin
         Contact.FindFirst();
         PAGE.Run(Page::"Contact Card", Contact);
         Message(ScenarioLabel1 + ScenarioLabel2);
@@ -20,19 +20,19 @@ codeunit 50142 VeryAnnoyingScenario implements "CTF Challenge"
 
     procedure GetHints(): List of [Text];
     var
-        HintLine1: Label 'Use your ''Hello World'' app to start debugging.\Don''t forget to add a dependency to the ''CTF Challenges'' app.\Also do not forget to download symbols.\';
-        HintLine2: Label 'While debugging, declare a variable for the ContactCard page and ''gotodefinition''. Or use an external tool that can perform a ''gotodefinition'', like ''AZ AL Dev Tools''.\';
+        HintLine1: Label 'Create a page extension on the "Online Map Setup" page.';
+        HintLine2: Label 'Set this page as a startup page in the launch.json.';
         HintLine3: Label 'Rely on breakonReadWrite and breakOnError settings.';
-        HintLine4: Label '\Or you can use the ''Page Inspector'' and see what extensions are participating on the ''Online Map Setup'' page. Use your own Hello World and gotodefinition on these extensions and place breakpoints where suspicious.';
+        HintLine4: Label 'Start debugging your app and just be patient.';
 
         Hints: List of [Text];
     begin
-        Hints.Add(HintLine1 + HintLine2  + HintLine3 + HintLine4);
+        Hints.Add(HintLine1 + HintLine2 + HintLine3 + HintLine4);
         exit(Hints);
     end;
 
     procedure GetCategory(): enum "CTF Category";
     begin
-         exit(Enum::"CTF Category"::Debugging);
+        exit(Enum::"CTF Category"::Debugging);
     end;
 }

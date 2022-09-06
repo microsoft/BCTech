@@ -1,17 +1,17 @@
 codeunit 50140 WhyCantIPost implements "CTF Challenge"
 {
     Access = Internal;
-    
+
     procedure RunChallenge();
     var
-     SalesHeader: record "Sales Header";      
-     ScenarioLabel: Label 'Try selling an ANTWERP desk to ''The Cannon Group PLC'' using the ''Post and Send'' action.\The challenge is to figure out what is going on. What is blocking posting of this sales order?'; 
-    begin                 
-        SalesHeader.SetRange("Document Type", "Sales Document Type"::Order);        
+        SalesHeader: record "Sales Header";
+        ScenarioLabel: Label 'Try selling an ANTWERP desk to ''The Cannon Group PLC'' using the ''Post and Send'' action.\The challenge is to figure out what is going on. What is blocking posting of this sales order?';
+    begin
+        SalesHeader.SetRange("Document Type", "Sales Document Type"::Order);
         SalesHeader.SetFilter(SalesHeader."Sell-to Customer No.", '10000');
 
-        SalesHeader.SetCurrentKey(SalesHeader."Amount Including VAT");   
-        SalesHeader.SetAscending(SalesHeader."Amount Including VAT", false);  
+        SalesHeader.SetCurrentKey(SalesHeader."Amount Including VAT");
+        SalesHeader.SetAscending(SalesHeader."Amount Including VAT", false);
 
         Page.Run(Page::"Sales Order List", SalesHeader);
         Message(ScenarioLabel);
@@ -19,14 +19,12 @@ codeunit 50140 WhyCantIPost implements "CTF Challenge"
 
     procedure GetHints(): List of [Text];
     var
-     HintLine1: Label 'Use your ''Hello World'' app to start debugging.\Don''t forget to add a dependency to the ''CTF Challenges'' app.\Also do not forget to download symbols.\';
-     HintLine2: Label '\Try finding an entry point. In order to do that you can:\Use the page inspector on the Help and Support Page to find the entry page.';
-     HintLine3: Label '\You can ''gotodefinition'' to that page. Use any technique at hand. Find the suspicious action and put a breakpoint there';
-     HintLine4: Label '\Or you can use the event recorder while you are running your scenario to record all events and put a breakpoint in the ones that are suspicious.';
-     HintLine5: Label '\Or you can use the ''Page Inspector'' and see what extensions are participating on the list. Create your own Hello World and gotodefinition on these extensions and place breakpoints where suspicious.';
-     Hints: List of [Text];
+        HintLine1: Label ' Use the event recorder why trying to invoke  the action OnCodeOnBeforePostSalesHeader';
+        HintLine2: Label '\Create an extension that extends the "Sales Order List" card ';
+        HintLine3: Label '\Try putting a breakpoint on the call for the event and F11 until you reach the result.';
+        Hints: List of [Text];
     begin
-        Hints.Add(HintLine1 + HintLine2 + HintLine3 + HintLine4 + HintLine5);
+        Hints.Add(HintLine1 + HintLine2 + HintLine3);
         exit(Hints);
     end;
 
