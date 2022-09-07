@@ -86,12 +86,12 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
         Implementation = "CTF Challenge" = "Alien Dancer";
     }
 
-    value(14; "Why does my job queue entry fail?")
+    value(16; "Why does my job queue entry fail?")
     {
         Implementation = "CTF Challenge" = JobQueueChallengeImpl;
     }
 
-    value(15; "Challenging Action")
+    value(17; "Challenging Action")
     {
         Implementation = "CTF Challenge" = ChallengingActionOnItems;
     }
