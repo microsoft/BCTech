@@ -19,7 +19,7 @@ codeunit 50140 WhyCantIPost implements "CTF Challenge"
 
     procedure GetHints(): List of [Text];
     var
-        HintLine1: Label ' Use the event recorder why trying to invoke  the action OnCodeOnBeforePostSalesHeader';
+        HintLine1: Label 'Use the event recorder while trying to execute the action ''Post and Send''. Any suspicious event (OnCodeOnBeforePostSalesHeader)?';
         HintLine2: Label '\Create an extension that extends the "Sales Order List" card ';
         HintLine3: Label '\Try putting a breakpoint on the call for the event and F11 until you reach the result.';
         Hints: List of [Text];

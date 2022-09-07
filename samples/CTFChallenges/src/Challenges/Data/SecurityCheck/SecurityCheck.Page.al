@@ -1,4 +1,4 @@
-page 50106 "Flag Display"
+page 50107 "Security Check"
 {
     PageType = StandardDialog;
     ApplicationArea = All;
@@ -12,21 +12,19 @@ page 50106 "Flag Display"
             {
                 ShowCaption = false;
 
-                field(TheFlagIs; TheFlagIs)
+                field(UserSecId; UserSecId)
                 {
                     ApplicationArea = All;
                     ShowCaption = false;
 
                     trigger OnValidate()
                     begin
-                        if TheFlagIs = 'The flag is:' then
-                            TheFlagIsCorrect := 'The flag is: Flag_d27d3329'
-                        else
-                            TheFlagIsCorrect := TheFlagIs;
+                        if UserSecId = UserSecurityId() then
+                            OutputText := 'Your identity is confirmed! Your flag: Flag_f4054824'
                     end;
                 }
 
-                field(TheFlagIsCorrect; TheFlagIsCorrect)
+                field(Flag; OutputText)
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -37,15 +35,12 @@ page 50106 "Flag Display"
     }
 
     trigger OnOpenPage()
-    var
-        TypeHelper: Codeunit "Type Helper";
     begin
-        TheFlagIs := 'The flag' + TypeHelper.LFSeparator() + 'is:';
-        TheFlagIsCorrect := 'The flag is:';
+        OutputText := 'We need to verify your identity before presenting the flag. Please enter your security ID.';
     end;
 
 
     var
-        TheFlagIs: Text;
-        TheFlagIsCorrect: Text;
+        UserSecId: Text;
+        OutputText: Text;
 }

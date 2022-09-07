@@ -41,7 +41,7 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
         Implementation = "CTF Challenge" = WhyCantIPost;
     }
 
-    value(7; "What is going on with the customer sales list?")
+    value(7; "What is going on with the customer list?")
     {
         Implementation = "CTF Challenge" = SubstituteReportChallenge;
     }
@@ -66,12 +66,22 @@ enum 50100 "CTF Challenge" implements "CTF Challenge"
         Implementation = "CTF Challenge" = "Misconfiguration Package";
     }
 
-    value(12; "Quiet Widow")
+    value(12; "Security Check")
+    {
+        Implementation = "CTF Challenge" = "Security Check";
+    }
+
+    value(13; "Hidden Treasure")
+    {
+        Implementation = "CTF Challenge" = "Hidden Treasure";
+    }
+
+    value(14; "Quiet Widow")
     {
         Implementation = "CTF Challenge" = "Quiet Widow";
     }
 
-    value(13; "Alien Dancer")
+    value(15; "Alien Dancer")
     {
         Implementation = "CTF Challenge" = "Alien Dancer";
     }

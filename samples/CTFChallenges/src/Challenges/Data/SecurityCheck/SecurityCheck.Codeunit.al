@@ -6,21 +6,21 @@
 /// <summary>
 /// A data CTF challenge.
 /// </summary>
-codeunit 50112 "Blank Space" implements "CTF Challenge"
+codeunit 50115 "Security Check" implements "CTF Challenge"
 {
     Access = Internal;
 
     procedure RunChallenge()
     begin
-        Page.RunModal(Page::"Flag Display");
+        Page.RunModal(Page::"Security Check");
     end;
 
     procedure GetHints(): List of [Text]
     var
         Hints: List of [Text];
     begin
-        Hints.Add('The flag will reveal itself when the editable field is validated to be correct.');
-        Hints.Add('The editable field has whitespace characters at the end.');
+        Hints.Add('User security ID is a field on the User record.');
+        Hints.Add('The hidden fields on pages can be seen using the page inspector.');
         exit(Hints);
     end;
 

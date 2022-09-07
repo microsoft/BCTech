@@ -86,7 +86,7 @@ page 50100 "CTF Challenges"
                         trigger OnValidate()
                         begin
                             CurrPage."CTF Challenges List".Page.SetFilter(FilterChallenge);
-                            CurrPage."CTF Challenges List".Page.Update();
+                            CurrPage."CTF Challenges List".Page.Update(false);
                         end;
                     }
 
