@@ -54,6 +54,12 @@ Partitioning of Application Insights resources across multiple customers or apps
 
 Also, it is recommended to separate per-environment telemetry from per-app telemetry into separate Application Insights resources.
 
+## I want to learn about telemetry. Where are the blogs?
+Please visit the [Video page](VIDEOS.md) for learning resources published as videos if you love to learn things this way.
+
+Please visit the [Blogs page](BLOGS.md) for learning resources published as blogs if blogs is your thing.
+
+
 ## Where can I learn more about Kusto Query Language (KQL) and Azure Data Studio?
 Please visit the [KQL README page](KQL/README.md) for learning resources on KQL and the [Trouble Shooting Guides README page](TroubleShootingGuides/README.md) for learning resources on Azure Data Studio.
 
