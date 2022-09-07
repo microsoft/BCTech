@@ -23,4 +23,7 @@ enum 50101 "CTF Category"
     value(4; Data)
     {
     }
+    value(5; "Permissions")
+    {
+    }
 }
