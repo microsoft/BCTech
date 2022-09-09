@@ -1,5 +1,6 @@
 Ideas
 * Usage: Feature uptake page
+* Usage: Add user telemetry id to page view pages and allow filters on this
 * Administration: Permission set changes
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
