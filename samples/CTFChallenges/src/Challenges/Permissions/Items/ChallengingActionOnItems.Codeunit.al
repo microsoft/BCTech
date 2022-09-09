@@ -7,7 +7,7 @@ codeunit 50144 ChallengingActionOnItems implements "CTF Challenge"
 
     end;
 
-    [InherentPermissions(PermissionObjectType::TableData, Database::TableToRead, 'I')]
+    [InherentPermissions(PermissionObjectType::TableData, Database::TableToRead, 'RI')]
     procedure RunChallenge();
     var
         ScenarioLabel: Label 'Please go to the ''Items'' page, find a ''Challenging Action'' and invoke it. What is wrong here?';
@@ -21,9 +21,6 @@ codeunit 50144 ChallengingActionOnItems implements "CTF Challenge"
 
         if not Confirm(AreYouReadyQst) then
             exit;
-
-        // TableToRead.ID := TableToRead;
-        // Treasure.Insert();
     end;
 
     local procedure IsInitialized(): Boolean
@@ -37,24 +34,24 @@ codeunit 50144 ChallengingActionOnItems implements "CTF Challenge"
     var
         TableToRead: Record TableToRead;
         Iterator: Integer;
+
+        TenantPermissionSet: Record "Tenant Permission Set";
     begin
         for Iterator := 1 to 200 do begin
             TableToRead.ID := CreateGuid();
             TableToRead.Value := 'SomeData';
             TableToRead.Insert();
         end;
-
-        // Treasure.ID := TableToRead;
-        // Treasure.Value := 'Flag_5b9237c0';
-        // Treasure.Insert();
     end;
 
     procedure GetHints(): List of [Text];
     var
-        HintLine1: Label 'Check the telemetry.';
+        HintLine1: Label 'Check the Business Central telemetry from challenging_action_query_data_demo.csv. Pay attention to what permission set operations have been recently performed on the tenant.';
+        HintLine2: Label 'Has any of the permission sets been removed from the user?';
         Hints: List of [Text];
     begin
         Hints.Add(HintLine1);
+        Hints.Add(HintLine2);
         exit(Hints);
     end;
 
