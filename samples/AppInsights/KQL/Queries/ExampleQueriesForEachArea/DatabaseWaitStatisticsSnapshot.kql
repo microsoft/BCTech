@@ -42,9 +42,9 @@ traces
 
 
 // first draft of calculating wait stats across all snapshots
-AppInsightsTraces
-| where appInsightsEventId == 'RT0026'
-| project TIMESTAMP
+traces
+| where customDimensions.eventId == 'RT0026'
+| project timestamp
 , snapshotId = tostring( customDimensions.snapshotId )
 , databaseWaitStatisticsCategory = tostring( customDimensions.databaseWaitStatisticsCategory )
 , databaseWaitTimeInMs = tolong( customDimensions.databaseWaitTimeInMs )
@@ -71,13 +71,13 @@ AppInsightsTraces
 , tran_log_io=sum(['Tran Log IO'])
 , transaction=sum(Transaction)
 , worker_thread=sum(['Worker Thread']) 
-, TIMESTAMP=take_any(TIMESTAMP), aadTenantId=take_any(aadTenantId), environmentName=take_any(environmentName), environmentType=take_any(environmentType), databaseStartedDuration=take_any(databaseStartedDuration) by snapshotId
-| order by aadTenantId, environmentName, TIMESTAMP asc, snapshotId
+, timestamp=take_any(timestamp), aadTenantId=take_any(aadTenantId), environmentName=take_any(environmentName), environmentType=take_any(environmentType), databaseStartedDuration=take_any(databaseStartedDuration) by snapshotId
+| order by aadTenantId, environmentName, timestamp asc, snapshotId
 | extend prev_database_started = prev(databaseStartedDuration)
-, prev_timestamp=prev(TIMESTAMP)
+, prev_timestamp=prev(timestamp)
 , prev_aadTenantId = prev(aadTenantId)
 , prev_environmentName = prev(environmentName)
-| extend lookback_in_sec = datetime_diff('second', TIMESTAMP, prev_timestamp)
+| extend lookback_in_sec = datetime_diff('second', timestamp, prev_timestamp)
 , database_restarted=databaseStartedDuration < prev_database_started
 , same_environment = aadTenantId == prev_aadTenantId and environmentName == prev_environmentName
 | extend 
