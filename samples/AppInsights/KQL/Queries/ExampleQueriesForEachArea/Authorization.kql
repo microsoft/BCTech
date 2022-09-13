@@ -4,6 +4,7 @@
 // move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
 
 // successful authorization prior to openCompany trigger (raw data)
+// this is not emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Authorization Succeeded (Pre Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
@@ -22,6 +23,7 @@ traces
 )
 
 // failed authorization prior to openCompany trigger (raw data)
+// this is not emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Authorization Failed (Pre Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
@@ -41,6 +43,7 @@ traces
 )
 
 // successful authorization after the openCompany trigger (raw data)
+// this is emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Authorization Succeeded (Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
@@ -65,6 +68,7 @@ traces
 )
 
 // failed authorization after the openCompany trigger (raw data)
+// this is emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Authorization Failed (Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
