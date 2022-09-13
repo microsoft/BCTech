@@ -39,3 +39,122 @@ traces
 , snapshotId = customDimensions.snapshotId 
 , message
 , customDimensions
+
+
+// first draft of calculating wait stats across all snapshots
+traces
+| where customDimensions.eventId == 'RT0026'
+| project timestamp
+, snapshotId = tostring( customDimensions.snapshotId )
+, databaseWaitStatisticsCategory = tostring( customDimensions.databaseWaitStatisticsCategory )
+, databaseWaitTimeInMs = tolong( customDimensions.databaseWaitTimeInMs )
+, databaseStartedDuration = tolong(customDimensions.databaseStartedDuration)
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentType = tostring( customDimensions.environmentType )
+, environmentName = tostring( customDimensions.environmentName )
+| evaluate pivot(databaseWaitStatisticsCategory, sum(databaseWaitTimeInMs)  )
+| summarize cpu=sum(CPU)
+, buffer_io=sum(['Buffer IO'])
+, buffer_latch=sum(['Buffer Latch'])
+, compilation=sum(Compilation)
+, idle=sum(Idle)
+, latch=sum(Latch)
+, lock=sum(Lock)
+, memory=sum(Memory)
+, network_io=sum(['Network IO'])
+, other=sum(Other)
+, other_disk_io=sum(['Other Disk IO'])
+, parallelism=sum(Parallelism)
+, preemptive=sum(Preemptive)
+, service_broker=sum(['Service Broker'])
+, sql_clr=sum(['SQL CLR'])
+, tran_log_io=sum(['Tran Log IO'])
+, transaction=sum(Transaction)
+, worker_thread=sum(['Worker Thread']) 
+, timestamp=take_any(timestamp), aadTenantId=take_any(aadTenantId), environmentName=take_any(environmentName), environmentType=take_any(environmentType), databaseStartedDuration=take_any(databaseStartedDuration) by snapshotId
+| order by aadTenantId, environmentName, timestamp asc, snapshotId
+| extend prev_database_started = prev(databaseStartedDuration)
+, prev_timestamp=prev(timestamp)
+, prev_aadTenantId = prev(aadTenantId)
+, prev_environmentName = prev(environmentName)
+| extend lookback_in_sec = datetime_diff('second', timestamp, prev_timestamp)
+, database_restarted=databaseStartedDuration < prev_database_started
+, same_environment = aadTenantId == prev_aadTenantId and environmentName == prev_environmentName
+| extend 
+  prev_cpu = prev(cpu)
+, prev_buffer_io = prev(buffer_io)
+, prev_buffer_latch = prev(buffer_latch)
+, prev_compilation = prev(compilation)
+, prev_idle = prev(idle)
+, prev_latch = prev(latch)
+, prev_lock = prev(lock)
+, prev_memory = prev(memory)
+, prev_network_io = prev(network_io)
+, prev_other = prev(other)
+, prev_other_disk_io = prev(other_disk_io)
+, prev_parallelism = prev(parallelism)
+, prev_preemptive = prev(preemptive)
+, prev_service_broker = prev(service_broker)
+, prev_sql_clr = prev(sql_clr)
+, prev_tran_log_io = prev(tran_log_io)
+, prev_transaction = prev(transaction)
+, prev_worker_thread = prev(worker_thread)
+| extend 
+  duration_cpu_in_sec = (cpu - prev_cpu)/1000
+, duration_buffer_io_in_sec = (buffer_io - prev_buffer_io)/1000
+, duration_buffer_latch_in_sec = (buffer_latch - prev_buffer_latch)/1000
+, duration_compilation_in_sec = (compilation - prev_compilation)/1000
+, duration_idle_in_sec = (idle - prev_idle)/1000
+, duration_latch_in_sec = (latch - prev_latch)/1000
+, duration_lock_in_sec = (lock - prev_lock)/1000
+, duration_memory_in_sec = (memory - prev_memory)/1000
+, duration_network_io_in_sec = (network_io - prev_network_io)/1000
+, duration_other_in_sec = (other - prev_other)/1000
+, duration_other_disk_io_in_sec = (other_disk_io - prev_other_disk_io)/1000
+, duration_parallelism_in_sec = (parallelism - prev_parallelism)/1000
+, duration_preemptive_in_sec = (preemptive - prev_preemptive)/1000
+, duration_service_broker_in_sec = (service_broker - prev_service_broker)/1000
+, duration_sql_clr_in_sec = (sql_clr - prev_sql_clr)/1000
+, duration_tran_log_io_in_sec = (tran_log_io - prev_tran_log_io)/1000
+, duration_transaction_in_sec = (transaction - prev_transaction)/1000
+, duration_worker_thread_in_sec = (worker_thread - prev_worker_thread)/1000
+| where database_restarted == 0
+| where same_environment == 1
+| project-away snapshotId, database_restarted, same_environment, databaseStartedDuration, prev_database_started, prev_timestamp, prev_aadTenantId, prev_environmentName
+, cpu
+, buffer_io
+, buffer_latch
+, compilation
+, idle
+, latch
+, lock
+, memory
+, network_io
+, other
+, other_disk_io
+, parallelism
+, preemptive
+, service_broker
+, sql_clr
+, tran_log_io
+, transaction
+, worker_thread
+, prev_cpu
+, prev_buffer_io
+, prev_buffer_latch
+, prev_compilation
+, prev_idle
+, prev_latch
+, prev_lock
+, prev_memory
+, prev_network_io
+, prev_other
+, prev_other_disk_io
+, prev_parallelism
+, prev_preemptive
+, prev_service_broker
+, prev_sql_clr
+, prev_tran_log_io
+, prev_transaction
+, prev_worker_thread
+| order by duration_buffer_latch_in_sec desc

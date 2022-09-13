@@ -1,13 +1,31 @@
-vNext
-* Error report: added per-environment visuals on all pages
-* Error report: fixed per-date visual on SQL Deadlocks page
-* Error report: fixed wrong publisher on by-publisher visual on Report Errors page
+Ideas
+* Usage: Feature uptake page
+* Usage: Add user telemetry id to page view pages and allow filters on this
+* Administration: Permission set changes
+* Performance: Recurring job queue jobs with long running SQL/AL/locks
+* Performance: Database wait statistics page
+* Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
+* Errors: Add recurring failing task scheduler/job queue jobs to recommendations
+* With extra parameters, add links to Application Insights portal (click here to analyze further)
+
+
+vNext (implemented, coming in the next release)
+
+2022-09-09
 * Usage report: fixed visual width on web service key page
 * Usage report: new visual on connector page: usage by connector
 * Usage report: new visual on integrations page: integrations by publisher / extension
 * Usage report: adjusted visuals sizes and canvas size on Clients page
-* Usage report: fixed visual width on web service key page
+* Usage report: environment slicers now sync between all pages
+* Error report: added per-environment visuals on all pages
+* Error report: fixed per-date visual on SQL Deadlocks page
+* Error report: fixed wrong publisher on by-publisher visual on Report Errors page
+* Error report: environment slicers now sync between all pages
 * Performance report: added environment-information on OnCompanyOpen page
+* Performance report: fixed bug in dataset for job queue performance
+* Performance report: environment slicers now sync between all pages
+* Administration report: environment slicers now sync between all pages
+
 
 2022-09-04
 * Usage report: Deprecated features page- added per-environment overview visual, fixed page filters to show the fields on the page

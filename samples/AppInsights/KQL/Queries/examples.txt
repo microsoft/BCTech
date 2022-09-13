@@ -1,0 +1,37 @@
+case 
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/HelperQueries/partnerCodePredicate.kql
+
+inner join
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/ExampleQueriesForEachArea/Authorization.kql
+
+summarize + top 10
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/HelperQueries/ComponentUpdates.kql
+
+let expressions
+joins
+iff
+isempty
+project-away
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/HelperQueries/AppInventory.kql
+
+union
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/HelperQueries/MonthlyIngestion.kql
+
+operation_Id
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/HelperQueries/Timeline.kql
+
+datatable
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/HelperQueries/aadTenantMapping.kql
+
+Json parse
+contains
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/HelperQueries/EditInExcel.kql
+
+RegExp
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/PerformanceTuning/NumberSeriesThatCauseLockTimeouts.kql
+
+parse
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/PerformanceTuning/ManyJoins.kql
+
+pivot
+https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/ExampleQueriesForEachArea/DatabaseWaitStatisticsSnapshot.kql

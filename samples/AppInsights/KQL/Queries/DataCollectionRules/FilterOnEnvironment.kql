@@ -25,3 +25,8 @@ source
 // only accept data from production environments
 source
 | where Properties.environmentType == "Production"
+
+
+// filter out data from on-premises environment
+source
+| where Properties.aadTenantId !in ("common", "default")

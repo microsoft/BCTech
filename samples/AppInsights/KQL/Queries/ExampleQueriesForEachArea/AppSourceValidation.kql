@@ -36,6 +36,96 @@ traces
 | order by timestamp asc
 
 
+// this query calculates validation request results
+let validation_request_started =
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0028' 
+| project start_timestamp = timestamp
+, requestId = tostring( customDimensions.validationRequestId )
+, countryRegions = customDimensions.countryRegions
+, versions = customDimensions.versions 
+, extensions = customDimensions.extensions
+, customDimensions
+;
+let finished_successfully = 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0029' 
+| project requestId_success = tostring( customDimensions.validationRequestId )
+;
+let finished_with_failures = 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0035' 
+| project requestId_failure = tostring( customDimensions.validationRequestId )
+, failureReason = customDimensions.failureReason
+;
+validation_request_started
+| join kind=leftouter finished_successfully on $left.requestId == $right.requestId_success
+| join kind=leftouter finished_with_failures on $left.requestId == $right.requestId_failure
+, result = case(
+  isnotempty( requestId_success ), 'Success'
+, isnotempty( requestId_failure ), 'Failure'
+, customDimensions.do_not_exist
+)
+| project-away requestId_failure, requestId_success
+
+
+
+// this query calculates (Version, country-region) validation results
+let validation_request_started =
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0030' 
+| project start_timestamp = timestamp
+, requestId = tostring( customDimensions.validationRequestId )
+, countryRegion = tostring( customDimensions.countryRegion )
+, version = tostring( customDimensions.version )
+, extensions = customDimensions.extensions
+, allExtensions = customDimensions.allExtensions
+, baselineExtensions = customDimensions.baselineExtensions
+, customDimensions
+;
+let finished_successfully = 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0031' 
+| project countryRegion_success = tostring( customDimensions.countryRegion )
+, version_success = tostring( customDimensions.version )
+, requestId_success = tostring( customDimensions.validationRequestId )
+;
+let finished_with_failures = 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0036' 
+| project countryRegion_failure = tostring( customDimensions.countryRegion )
+, version_failure = tostring( customDimensions.version )
+, requestId_failure = tostring( customDimensions.validationRequestId )
+, failureReason = customDimensions.failureReason
+;
+validation_request_started
+| join kind=leftouter finished_successfully on $left.requestId == $right.requestId_success and $left.countryRegion == $right.countryRegion_success and $left.version == $right.version_success
+| join kind=leftouter finished_with_failures on $left.requestId == $right.requestId_failure and $left.countryRegion == $right.countryRegion_failure and $left.version == $right.version_failure
+| extend end_timestamp = case(
+  isnotempty( requestId_success ), timestamp_success
+, isnotempty( requestId_failure ), timestamp_failure
+, customDimensions.do_not_exist
+)
+, result = case(
+  isnotempty( requestId_success ), 'Success'
+, isnotempty( requestId_failure ), 'Failure'
+, customDimensions.do_not_exist
+)
+| project-away requestId_failure, requestId_success, countryRegion_success, version_success, countryRegion_failure, version_failure
+
+
+
+
+//
+// raw event queries start here
+//
+
 // AppSource submission validation request started
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -177,3 +267,29 @@ traces
 , message, timestamp, customDimensions
 
 
+
+
+
+
+// Extension validations 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0033' 
+| project timestamp
+, requestId = customDimensions.validationRequestId
+, result = 'Success'
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensionName = customDimensions.extensionName
+| union
+(
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0033' 
+| project timestamp
+, result = 'Failure'
+, requestId = customDimensions.validationRequestId
+, countryRegion = customDimensions.countryRegion
+, version = customDimensions.version
+, extensionName = customDimensions.extensionName
+)

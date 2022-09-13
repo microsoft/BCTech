@@ -115,8 +115,7 @@ Administration report
 ---------------------
 
 Pages
-    Feature uptake 
-    Permission set changes
+
 
 Dataset
     Feature uptake 
