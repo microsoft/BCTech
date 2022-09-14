@@ -1,0 +1,30 @@
+{
+  "id": "ff410389-c6a8-4a44-ae8f-69fe2e41e1ae",
+  "name": "CTF Challenges",
+  "publisher": "Microsoft 'BCTech' GitHub repo",
+  "version": "1.0.0.0",
+  "brief": "CTF challenges for troubleshooting in Business Central.",
+  "description": "A test extension that includes capture-the-flag-style challenges for troubleshooting in Business Central.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.2",
+  "target": "Cloud"
+}
