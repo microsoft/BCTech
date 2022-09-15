@@ -10,6 +10,7 @@ Ideas
 
 
 vNext (implemented, coming in the next release)
+* Usage report: fixed links on the 'About the report' page
 
 2022-09-09
 * Usage report: fixed visual width on web service key page
