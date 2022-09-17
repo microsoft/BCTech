@@ -46,13 +46,11 @@ traces
 | where customDimensions.eventId in ( "RT0020" , "RT0021" )
 | where operation_Id != 'N/A'
 | project timestamp, operation_Id
-, eventId = customDimensions.eventId 
 ;
 let ws_calls = 
 traces
 | where customDimensions.eventId == 'RT0008'
-| project timestamp, operation_Id
-, eventId = customDimensions.eventId 
+| project operation_Id
 , httpHeaders = customDimensions.httpHeaders
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
@@ -69,5 +67,4 @@ traces
 ;
 auth_calls
 | join kind=leftouter ws_calls on $left.operation_Id == $right.operation_Id
-| where isnotempty( eventId1 )
-| project-away timestamp1, operation_Id1, eventId, eventId1
+| where isnotempty( aadTenantId )
