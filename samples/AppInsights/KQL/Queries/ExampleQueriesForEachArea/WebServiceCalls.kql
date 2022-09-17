@@ -1,15 +1,13 @@
 // KQL samples - Incoming Web Service Calls
 
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
 
 // Incoming Web Service Requests (RAW data)
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
 | where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used 
      or customDimensions.eventId == "RT0008" // starting from version 16.1, the eventId is used to identity signal types
-| extend eventId = customDimensions.eventId 
-, aadID = customDimensions.aadTenantId
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
