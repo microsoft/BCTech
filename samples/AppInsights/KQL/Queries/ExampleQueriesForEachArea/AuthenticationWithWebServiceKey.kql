@@ -1,4 +1,4 @@
-// KQL samples - Authentication using web service key
+// KQL samples - Authentication using web service key/basic authentication
 
 // successful authentication (raw data)
 traces
@@ -37,3 +37,37 @@ traces
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
+
+
+// successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers, ...
+// use this to find who is calling using basic authentication
+let auth_calls =
+traces
+| where customDimensions.eventId in ( "RT0020" , "RT0021" )
+| where operation_Id != 'N/A'
+| project timestamp, operation_Id
+, eventId = customDimensions.eventId 
+;
+let ws_calls = 
+traces
+| where customDimensions.eventId == 'RT0008'
+| project timestamp, operation_Id
+, eventId = customDimensions.eventId 
+, httpHeaders = customDimensions.httpHeaders
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, category = customDimensions.category
+, endpoint = customDimensions.endpoint
+, httpStatusCode = customDimensions.httpStatusCode 
+| extend httpHeadersTmp =  tostring( httpHeaders)
+| extend httpHeadersJSON = parse_json(httpHeadersTmp)
+;
+auth_calls
+| join kind=leftouter ws_calls on $left.operation_Id == $right.operation_Id
+| where isnotempty( eventId1 )
+| project-away timestamp1, operation_Id1, eventId, eventId1
