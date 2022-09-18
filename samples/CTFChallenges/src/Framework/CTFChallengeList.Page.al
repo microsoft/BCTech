@@ -124,9 +124,9 @@ page 50101 "CTF Challenges List"
                     Style := 'Standard';
                 end;
             else begin
-                    Indentation := 2;
-                    Style := 'StandardAccent';
-                end;
+                Indentation := 2;
+                Style := 'StandardAccent';
+            end;
         end;
     end;
 
@@ -136,7 +136,7 @@ page 50101 "CTF Challenges List"
     begin
         ChallengeStartDateTime := CurrentDateTime();
         CTFChallenge.RunChallenge();
-        if (CTFChallenge.GetCategory() = "CTF Category"::Performance) then 
+        if (CTFChallenge.GetCategory() = "CTF Category"::Performance) then
             Message(ForegroundRunTxt, ScenarioName, CurrentDateTime() - ChallengeStartDateTime);
     end;
 
