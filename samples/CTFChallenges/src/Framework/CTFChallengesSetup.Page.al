@@ -23,7 +23,7 @@ page 50105 "CTF Challenges Setup"
                 {
                     ApplicationArea = All;
                     Caption = 'Enable competition mode';
-                    ToolTip = 'In this mode, the challenges, flags, and hints are managed on e.g. the ctfd.io website. Import the CTFD-portal-setup.zip file to get things set up quickly.';
+                    ToolTip = 'In this mode, the challenges, flags, and hints are managed on e.g. the ctfd.io website. See the CTFD-portal-setup readme file for more information.';
                 }
 
                 field("Hint keys"; HintKeys)

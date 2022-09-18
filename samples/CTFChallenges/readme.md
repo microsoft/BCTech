@@ -30,7 +30,7 @@ you have another website - e.g. ctfd.io - where you manage the challenges. Each 
 a flag that you must find, the number of points you get when solving the challenge by finding the flags, and
 optionally a number of hints.
 
-The "CTFD-portal-setup.zip" file is an export from a ctfd.io site. You can import this file into your own ctfd site 
+The "CTFD-portal-setup" files are exported from a ctfd.io website. You can import this file into your own ctfd website
 in order to get things set up quickly.
 
 Also, if you want to run in this mode:
