@@ -1,0 +1,37 @@
+id,name,description,connection_info,next_id,max_attempts,value,category,type,state,requirements
+1,Mellow Spectator,,,2,0,10,Performance,standard,visible,
+2,Feisty Wings,,,,0,10,Performance,standard,visible,
+3,Long Thunder,,,,0,10,Performance,standard,visible,
+4,Silver Gambit,,,,0,10,Performance,standard,visible,
+5,Why can't I see a contact entry on map?,,,,0,10,Debugging,standard,visible,
+7,Why Can't I Post?,	,,,0,10,Debugging,standard,visible,
+8,What is going on with the customer list?,,,,0,10,Debugging,standard,visible,
+9,Intro challenge 1,,,,0,5,Introduction,standard,visible,
+10,Intro challenge 2,,,,0,5,Introduction,standard,visible,
+11,Quiet Widow,,,,0,10,Performance,standard,visible,
+12,Alien Dancer,,,,0,10,Performance,standard,visible,
+14,Blank Space,,,,0,10,Data,standard,visible,
+15,Misconfiguration Package,,,,0,10,Data,standard,visible,
+16,Security Check,,,,0,10,Data,standard,visible,
+17,Hidden Treasure,,,,0,10,Data,standard,visible,
+18,Challenging Action,"User2 claims that last week the 'Challenging Action' stopped working due to some permission error.
+
+Figure out what has happened.
+
+The flag value has the format FLAG_xxxxxxxx
+
+To get started: As User2, in Business Central client, go to page CTF Challenges, paste in the challenge name to get instructions.",,,0,10,Permissions,standard,visible,
+19,Why does my job queue entry fail?,"User2 claims that his job queue job used to work, but some time last week, it stopped working.
+
+Figure out what has happened.
+
+The flag value has the format FLAG_xxxxxxxx
+
+To get started: As User2, in Business Central client, go to page CTF Challenges, paste in the challenge name to get instructions.",,,0,10,Permissions,standard,visible,
+20,What is the eventId 1?,"In AppInsights: What is the eventId (in customDimensions) of 'User defined permission set removed from user' ?
+
+The flag is the value of the eventId",,,0,5,Permissions,standard,visible,
+21,What is the eventId 2?,"  - In AppInsights: What is the eventId (in customDimensions) when Open Company succeeds for a user ?
+
+The flag value is the value of the eventId
+",,,0,5,Permissions,standard,visible,
