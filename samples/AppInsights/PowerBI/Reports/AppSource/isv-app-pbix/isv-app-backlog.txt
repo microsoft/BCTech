@@ -1,4 +1,21 @@
-Ideas before go-live on app source
+------------------
+vNext
+------------------
+* fixed bug in datamodel for app source validation
+
+
+
+------------------
+2022-09-07 release
+------------------
+Initial version published to app source for public preview.
+
+
+
+
+-----
+Ideas 
+-----
 -	Is it possible to add list of objects in a format like the AAD tenant mapping? So we can see objects especially pages and reports never used?
 Need to know the scenario better here
 
@@ -28,4 +45,3 @@ All pages
 Administration
 * Updates funnel page 
 * app source validation
-
