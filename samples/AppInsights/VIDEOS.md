@@ -1,14 +1,6 @@
 # Videos about telemetry
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
-## 2022-07-10 Areopa webinar: How to get data driven in your partner practice with telemetry (60 min)
-Watch this 60 min webinar to learn how to use the Power BI app on telemetry data (get it from [aka.ms/bctelemetryreport](https://aka.ms/bctelemetryreport)). Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=HWmUUOCLVZ8"><img src="https://img.youtube.com/vi/HWmUUOCLVZ8/0.jpg" width="50%"></a>
-<br>
-</p>
-
-
 
 ## Want to Learn Business Central telemetry in 30 minutes?
 Haven't got the time to learn Business Central telemetry? Good news: we have recorded a series of short videos on the topic. Watch one every morning for a week and you should be up and running. 
@@ -77,6 +69,14 @@ En menos de 10 minutos Javier Armesto te cuenta como poner en marcha la aplicaci
 <br>
 </p>
 The channel has multiple videos on the topic, see https://www.youtube.com/playlist?list=PLDifOaeKLfDbTjRVmOrvT76NBNgB0rvWM
+
+
+## 2022-07-10 Areopa webinar: How to get data driven in your partner practice with telemetry (60 min)
+Watch this 60 min webinar to learn how to use the Power BI app on telemetry data (get it from [aka.ms/bctelemetryreport](https://aka.ms/bctelemetryreport)). Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=HWmUUOCLVZ8"><img src="https://img.youtube.com/vi/HWmUUOCLVZ8/0.jpg" width="50%"></a>
+<br>
+</p>
 
 
 ### 2022-02-10 I Need Coffee: Episode 87 - Application Insights and Error Handling (48 min) by Microsoft MVP Steve Endow
