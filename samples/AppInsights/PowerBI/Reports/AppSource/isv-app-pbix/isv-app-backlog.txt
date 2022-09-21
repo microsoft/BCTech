@@ -1,8 +1,13 @@
 ------------------
 vNext
 ------------------
-* fixed bug in datamodel for app source validation
+* app source validation page now filters as expected
 
+
+------------------
+2022-09-21 release
+------------------
+* fixed bug in datamodel for app source validation
 
 
 ------------------
