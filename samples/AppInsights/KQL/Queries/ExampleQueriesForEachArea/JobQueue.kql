@@ -60,4 +60,49 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
-, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 20.5
+, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added soon
+, taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
+
+
+// join job queue telemetry with task scheduler telemetry to learn more about the root cause of the error
+let job_queue_errors = 
+traces
+| where timestamp >= ago(30d) // adjust as needed
+| where customDimensions.eventId == 'AL0000HE7'
+| where isnotempty(customDimensions.aadTenantId) // filter away signal from Docker sandboxes
+| extend 
+  AadTenantId = tostring( customDimensions.aadTenantId )
+, EnvironmentName = tostring( customDimensions.environmentName )
+, EnvironmentType = tostring( customDimensions.environmentType )
+, ObjectId = toint(customDimensions.alJobQueueObjectId)
+| extend TenantId = strcat( toupper(AadTenantId), toupper(EnvironmentName) )
+| project timestamp
+, AadTenantId, EnvironmentName, EnvironmentType, TenantId
+, PlatformVersion = tostring( customDimensions.componentVersion )
+, ObjectId
+, ObjectType = customDimensions.alJobQueueObjectType
+, CodeOwnershipKey = case(
+      ObjectId between (50000 .. 99999), 'ENVIRONMENT'
+    , ObjectId between (1000000 .. 69999999), 'ISV_ONPREM'
+    , ObjectId between (70000000 .. 74999999), 'ISV_ONLINE'
+    , 'MICROSOFT'
+)
+, TaskId = tostring( customDimensions.alJobQueueScheduledTaskId )
+;
+let task_scheduler_errors = 
+traces
+| where timestamp >= ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0045'
+| project TaskId = tostring( customDimensions.taskId )
+, exception = customDimensions.failureReason
+, retryMessage = tostring( customDimensions.retryMessage )
+| extend exceptionIsRetriable = case (
+    retryMessage has 'Exception is not retriable', false
+  , retryMessage has 'Exception is retriable', true
+  , false
+)
+| project-away retryMessage 
+;
+job_queue_errors
+| join kind=leftouter task_scheduler_errors on $left.TaskId == $right.TaskId
+| project-away TaskId, TaskId1
