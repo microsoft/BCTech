@@ -1,0 +1,11 @@
+// Use a query like this as a condition in an alert on appsource admission failures
+
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0035' 
+| project requestId = customDimensions.validationRequestId
+, countryRegions = customDimensions.countryRegions
+, versions = customDimensions.versions 
+, extensions = customDimensions.extensions
+, failureReason = customDimensions.failureReason
+, message, timestamp
