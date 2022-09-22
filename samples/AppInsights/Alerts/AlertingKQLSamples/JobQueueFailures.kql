@@ -1,16 +1,43 @@
 // Use a query like this as a condition in an alert on job queue failures
 
+let job_queue_errors = 
 traces
-| where timestamp > ago(1d) // adjust as needed
-| where customDimensions.eventId == 'AL0000E26'
+| where timestamp >= ago(30d) // adjust as needed
+| where customDimensions.eventId == 'AL0000HE7'
+| where isnotempty(customDimensions.aadTenantId) // filter away signal from Docker sandboxes
+| extend 
+  AadTenantId = tostring( customDimensions.aadTenantId )
+, EnvironmentName = tostring( customDimensions.environmentName )
+, EnvironmentType = tostring( customDimensions.environmentType )
+, ObjectId = toint(customDimensions.alJobQueueObjectId)
+| extend TenantId = strcat( toupper(AadTenantId), toupper(EnvironmentName) )
 | project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
-, alJobQueueId = customDimensions.alJobQueueId 	
-, alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
-, alJobQueueObjectType = customDimensions.alJobQueueObjectType
-, alJobQueueStatus = customDimensions.alJobQueueStatus
-, alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
-, alJobQueueResult = customDimensions.alJobQueueResult
-| where alJobQueueResult !in( '', 'Success' )
+, AadTenantId, EnvironmentName, EnvironmentType, TenantId
+, PlatformVersion = tostring( customDimensions.componentVersion )
+, ObjectId
+, ObjectType = customDimensions.alJobQueueObjectType
+, CodeOwnershipKey = case(
+      ObjectId between (50000 .. 99999), 'ENVIRONMENT'
+    , ObjectId between (1000000 .. 69999999), 'ISV_ONPREM'
+    , ObjectId between (70000000 .. 74999999), 'ISV_ONLINE'
+    , 'MICROSOFT'
+)
+, TaskId = tostring( customDimensions.alJobQueueScheduledTaskId )
+;
+let task_scheduler_errors = 
+traces
+| where timestamp >= ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0045'
+| project TaskId = tostring( customDimensions.taskId )
+, exception = customDimensions.failureReason
+, retryMessage = tostring( customDimensions.retryMessage )
+| extend exceptionIsRetriable = case (
+    retryMessage has 'Exception is not retriable', false
+  , retryMessage has 'Exception is retriable', true
+  , false
+)
+| project-away retryMessage 
+;
+job_queue_errors
+| join kind=leftouter task_scheduler_errors on $left.TaskId == $right.TaskId
+| project-away TaskId, TaskId1
