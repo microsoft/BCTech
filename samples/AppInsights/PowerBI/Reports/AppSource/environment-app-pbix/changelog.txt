@@ -1,0 +1,62 @@
+Ideas
+* Usage: Feature uptake page
+* Usage: Add user telemetry id to page view pages and allow filters on this
+* Administration: Permission set changes
+* Performance: Recurring job queue jobs with long running SQL/AL/locks
+* Performance: Database wait statistics page
+* Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
+* Errors: Add recurring failing task scheduler/job queue jobs to recommendations
+* With extra parameters, add links to Application Insights portal (click here to analyze further)
+* Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
+
+
+vNext (implemented, coming in the next release)
+* Usage report: fixed links on the 'About the report' page
+* Usage report: added browser version visual to the 'Client' page
+* Usage report: added object and http return code/header visuals to the 'Deprecated Features' page
+* Error report: added exception and extra visuals to the Job Queue Error page
+
+2022-09-09
+* Usage report: fixed visual width on web service key page
+* Usage report: new visual on connector page: usage by connector
+* Usage report: new visual on integrations page: integrations by publisher / extension
+* Usage report: adjusted visuals sizes and canvas size on Clients page
+* Usage report: environment slicers now sync between all pages
+* Error report: added per-environment visuals on all pages
+* Error report: fixed per-date visual on SQL Deadlocks page
+* Error report: fixed wrong publisher on by-publisher visual on Report Errors page
+* Error report: environment slicers now sync between all pages
+* Performance report: added environment-information on OnCompanyOpen page
+* Performance report: fixed bug in dataset for job queue performance
+* Performance report: environment slicers now sync between all pages
+* Administration report: environment slicers now sync between all pages
+
+
+2022-09-04
+* Usage report: Deprecated features page- added per-environment overview visual, fixed page filters to show the fields on the page
+* Usage report: connector page now also shows edit in excel and power app/automate setup trafic
+* Usage report: new page showing check list usage and state changes
+* Usage report: zoom slicers added to all date visuals
+* Performance report: added Host on Outgoing Web services page
+* Performance report: zoom slicers added to all date visuals
+* Performance report: bug fix - Job queue performance page now loads data also for versions of BC 20.0 or later
+* Performance report: new page showing performance of updates
+* Performance report: bug fix - Fixed bug in SQLDeadlocks relation to Date dim
+* Error report: added Host on Outgoing Web services page
+* Error report: Possible to filter on user telemetry id on pages Error dialogs, Feature errors, and Permisison Errors
+* Error report: zoom slicers added to all date visuals
+* Administration report: new page showing field changes (from the sensitive field monitoring feature)
+* Administration report: new page showing retention policy deletes (from the retention policy feature)
+* Administration report: new page showing telemetry event statistics
+
+
+2022-07-15
+* All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment 
+  and per-app telemetry
+* All report pages: All time-of-day visuals now show timezone as part of the header
+* Usage report: fixed visual width bug on connections page
+* Performance report: added visual for SQL statements on Long running SQL queries page
+
+
+2022-07-04
+Initial release of the app on appsource

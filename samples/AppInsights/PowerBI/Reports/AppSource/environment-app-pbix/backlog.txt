@@ -1,0 +1,155 @@
+-----------------
+App TODO
+-----------------
+
+Is it possible for the report consumer to define things such as 
+* their definition of working hours (per tenant?) Use optionals parameters
+
+Is there any way to show the individual traces from app insights entries in the report, or open app insight with a prefilled kusto query? I don’t think they are part of the dataset, but looking at them would often be the next step when analyzing how to deal with a problem. 
+
+Dataset
+    Possible to do incremental loading? Probably not with the API approach
+    Add telemetry user id where possible (20.0)
+
+
+----------------
+Perf report TODO
+----------------
+
+Recommendations
+    LRQ outside MS code?
+
+// Recurring task scheduler jobs with LRQ
+let tasks =
+AppInsightsTraces
+| where TIMESTAMP > ago(1d)
+| where appInsightsEventId == 'LC0043'
+//| where customDimensions.result == 'Success'
+//| where customDimensions.aadTenantId == '5cde4a4c-7ce0-4b0f-a111-687b1a4065b6'
+| project session_Id
+, task_start = datetime_add('millisecond', -toint(totimespan(customDimensions.totalTime))/10000, TIMESTAMP) 
+, task_end = TIMESTAMP 
+, task_duration_sec = toint(totimespan(customDimensions.totalTime))/10000000
+, aadTenantId = customDimensions.aadTenantId
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, taskId = tostring(customDimensions.taskId)
+;
+let lrq =
+AppInsightsTraces
+| where TIMESTAMP > ago(1d)
+| where appInsightsEventId == 'RT0005'
+//| where customDimensions.aadTenantId == '5cde4a4c-7ce0-4b0f-a111-687b1a4065b6'
+| project session_Id
+, sqlTimestamp = TIMESTAMP
+, sqlStatement = tostring(customDimensions.sqlStatement)
+, sqlExecutionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+;
+tasks
+| join kind=inner lrq on $left.session_Id == $right.session_Id
+| where sqlTimestamp between (task_start .. task_end)
+| summarize num_lrq=count(), sql_time_spent_sec = sum(sqlExecutionTimeInMS)/1000
+, task_time_spent_sec = sum(task_duration_sec)
+by taskId
+| take 5
+
+
+Pages
+    Add page for Database wait statistics (RT0025 and RT0026)
+
+Dataset
+    Add measure for LRQ last period vs. this period
+    Add measure for Recurring task scheduler/job queue jobs with LRQ
+    Add dataset for Database wait statistics (RT0025 and RT0026)   
+
+AppInsightsTraces
+| where TIMESTAMP > ago(7d)
+| where appInsightsEventId == 'RT0026'
+| where customDimensions.aadTenantId == '8c3016f2-75fe-4c82-9e72-a42258633c65'
+| project TIMESTAMP
+, snapshotId = customDimensions.snapshotId
+, databaseWaitStatisticsCategory = tostring( customDimensions.databaseWaitStatisticsCategory )
+, databaseSignalWaitTimeInMs=customDimensions.databaseSignalWaitTimeInMs
+, customDimensions
+| order by customDimensions.aadTenantId asc
+, databaseWaitStatisticsCategory asc, TIMESTAMP asc
+| project-away snapshotId
+| extend prev_snapshot_time=prev(TIMESTAMP), prev_snapshot_cust=prev(customDimensions)
+| extend lookback_minutes= datetime_diff('Minute',TIMESTAMP, prev_snapshot_time)
+| extend prev_databaseSignalWaitTimeInMs = prev_snapshot_cust.databaseSignalWaitTimeInMs
+, prev_databaseWaitStatisticsCategory = customDimensions.databaseWaitStatisticsCategory 
+| where databaseWaitStatisticsCategory == prev_databaseWaitStatisticsCategory
+| where isnotempty( prev_snapshot_cust )
+| project-away customDimensions, prev_snapshot_cust
+
+
+
+-----------------
+Error report TODO
+-----------------
+
+Recommendations
+    Recurring failing task scheduler/job queue jobs 
+
+Pages    
+    Outgoing ws calls: add callstack (if added by the server team) 
+
+Dataset
+    Pending bug in NST: Add measure for Recurring failing task scheduler/job queue jobs
+    Outgoing ws calls: add callstack (if added by the server team)
+
+
+------------
+Usage report
+------------
+
+Pages
+
+Dataset
+
+
+---------------------
+Administration report
+---------------------
+
+Pages
+
+
+Dataset
+    Feature uptake 
+    Permission changes
+
+
+------------
+Partner asks
+------------
+Filter Business Hours (8 to 18) and After Hours (18 to 8)
+Drill through from Long Running SQL Queries/AL methods to Timeline.kql with timestamp +- 5 min
+
+
+----
+DONE
+----
+DONE: In the Open Company section. Combine the two graph Avg execution and count into one graph.
+DONE: In my view it would be nice that (at least) the Tenant ID, Environment Type and Environment Name is synced between the pages. 
+Possible with a "Filter page" at the front, where the global fileters would be set - I think it make the use of the report much easier.
+DONE: Also, for your backlog, it would be nice to see some of the metrics - e.g. avg. page view time across tenants. Like a chart, where the value is the avg. page view, the x-axis is time (date by hour) and each tenant has its own value. So I can compare "user perception" of performance across all tenants.
+DONE: The recommendations are a good idea, but I got a list of reports "not using Read Scale-out", turns out most of them were our posting reports. So not helpful. 
+DONE: Long Running SQL Queries with many joins (Recommendations)
+DONE: Error dialogs (RT0030)
+DONE: Task Scheduler events 
+DONE: Maybe adding the JobQueue also. Because that can also impact the performance. So how many they have started.
+DONE: On "Report" I would like some averages, the Sum* values are not useful. 
+DONE: The "Outbound calls" page does not update "Count by http code" and "Average exe time" when changing Tenant ID, Environment Type or Name
+DONE: Some statistics are misleading. Like Min and Avg for Long Running AL. As it only looks at the small subset of runs that are very slow Min is the fastest of the slowest and Avg is the average of those that are very slow.  The Max makes sense and some performance buckets might make sense.
+DONE: Adding LC0024 - Analyzing Table Index Trace Telemetry. So you can see what is happing if someones adds some keys that you aren't aware of or removed some key. So your performance is getting slower.
+DONE: Maybe also that you can filter on company name in reports page?
+
+TODO: Database wait statistics (RT0025 and RT0026)
+
+
+Not possible: 
+Speaking of the Tenant ID - a mapping between ID and domain name would be really nice. I don't know if it is available, I have thought about creating a file with the mapping for my own reports.
+Current limitation in client telemetry: On "Page views" all environments show as type Prod, even sandboxes.
