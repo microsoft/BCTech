@@ -1,33 +1,8 @@
 # Get alerts when something happens
 If something happens in your environment or for one of your customers that you need to take action on, it is better that the system sends you an alert. Azure Application Insights makes it easy to define such alerts.
 
-## How do I create alerts in Azure Application Insights?
-Here is an example to get you started:
- 1. Open the Azure portal and locate your Application Insights resource
- 2. Click "Alerts" in the navigation pane on the left
- 3. Use one of the KQL samples from this section in the condition for a custom log search 
-
-## How do I get alerts via email?
-If you want alerts via email, you can just create a new action group in your Application Insights resource, and in your alerts add an action to send an email.
-
-## How do I get alerts using Microsoft Dynamics Logic apps?
-Here in this repository, you can find templates for three different types of alerts using Microsoft Dynamics Logic apps:
-* Grouped notification for available updates
-* Notification for deleted environment
-* Action each failed environment update
-
 Read more here in docs:
-https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/tenant-admin-center-notifications#application-insights
-
-
-## How do I get alerts via Microsoft Teams?
-You can also send alerts to a channel in Microsoft Teams. See an example of how to set that up here: https://dailydotnettips.com/sending-your-azure-application-insights-alerts-to-team-sites-using-azure-logic-app/
-
-## How do I get alerts on my phone?
-This video shows how you can get alerts as push notifications on your phone: https://www.youtube.com/watch?v=nqqVEISjSGE
-
-## Want to learn more about Azure Monitor alerts?
-Please read more in the documentation for Azure Application Insights: https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-unified-log
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#setting-up-alerts-on-telemetry-events
 
 
 
