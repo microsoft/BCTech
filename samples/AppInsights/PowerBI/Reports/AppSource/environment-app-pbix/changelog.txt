@@ -6,17 +6,23 @@ Ideas
 * Performance: Database wait statistics page
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Errors: Add recurring failing task scheduler/job queue jobs to recommendations
+* Errors: Add AL stacktrace to failed job queue page
 * With extra parameters, add links to Application Insights portal (click here to analyze further)
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 
 
 vNext (implemented, coming in the next release)
+* TODO
+
+
+2022-09-23
 * Usage report: fixed links on the 'About the report' page
 * Usage report: split Sessions by User and Client Type visual into two: Sessions by User and Sessions by Client Type on the 'Sessions' page
 * Usage report: added browser version visual to the 'Client' page
 * Usage report: added Feature usage by Publisher and Extension Version to the 'Feature Usage' page
 * Usage report: added object and http return code/header visuals to the 'Deprecated Features' page
 * Error report: added exception and extra visuals to the Job Queue Error page
+
 
 2022-09-09
 * Usage report: fixed visual width on web service key page
