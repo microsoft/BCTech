@@ -1,0 +1,13 @@
+// Use a query like this as a condition in an alert on stopped job queues
+
+traces
+| where timestamp > ago(1d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E26' // job queue finished
+| where customDimensions.aadTenantId == '<insert aad tenant id here>'
+| where customDimensions.environmentName == '<insert environment name here>'
+| project timestamp
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+| count
+
+// check if count == 0 for the given environment
