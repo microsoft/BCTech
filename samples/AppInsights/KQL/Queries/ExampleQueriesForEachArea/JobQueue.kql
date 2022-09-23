@@ -60,7 +60,7 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
-, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added soon
+, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 20.5
 , taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
@@ -88,6 +88,7 @@ traces
     , 'MICROSOFT'
 )
 , TaskId = tostring( customDimensions.alJobQueueScheduledTaskId )
+, ALStacktrace = customDimensions.alJobQueueStacktrace
 ;
 let task_scheduler_errors = 
 traces
