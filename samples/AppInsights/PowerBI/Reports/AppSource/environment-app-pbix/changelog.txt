@@ -14,6 +14,7 @@ vNext (implemented, coming in the next release)
 * Usage report: fixed links on the 'About the report' page
 * Usage report: split Sessions by User and Client Type visual into two: Sessions by User and Sessions by Client Type on the 'Sessions' page
 * Usage report: added browser version visual to the 'Client' page
+* Usage report: added Feature usage by Publisher and Extension Version to the 'Feature Usage' page
 * Usage report: added object and http return code/header visuals to the 'Deprecated Features' page
 * Error report: added exception and extra visuals to the Job Queue Error page
 
