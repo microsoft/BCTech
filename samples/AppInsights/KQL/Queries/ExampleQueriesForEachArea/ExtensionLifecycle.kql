@@ -11,11 +11,11 @@
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0020' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionCompilationDependencyList = customDimensions.extensionCompilationDependencyList
@@ -38,11 +38,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0021' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionCompilationDependencyList = customDimensions.extensionCompilationDependencyList
@@ -66,11 +66,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0014' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -94,11 +94,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0015' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -123,11 +123,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0018' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -150,11 +150,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0019' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -181,11 +181,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0012' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -209,11 +209,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0013' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -238,11 +238,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0010' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -265,11 +265,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0011' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -293,11 +293,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0022' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -320,11 +320,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0023' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -348,11 +348,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0016' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
@@ -376,11 +376,11 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0017' 
-| extend aadID = tostring( customDimensions.aadTenantId )
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
 | project 
   timestamp
 , eventId = customDimensions.eventId
-, aadID
+, aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , extensionName = customDimensions.extensionName
