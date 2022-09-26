@@ -21,6 +21,7 @@ traces
 , eventId = customDimensions.eventId
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , failureReason = customDimensions.failureReason
 , usertelemetryId = case(
