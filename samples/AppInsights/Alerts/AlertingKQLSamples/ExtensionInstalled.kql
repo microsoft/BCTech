@@ -1,0 +1,16 @@
+// Use a query like this as a condition in an alert that your extension/app was installed somewhere
+
+traces
+| where timestamp > ago(1d) // adjust as needed
+| where customDimensions.eventId == 'LC0010' 
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+| project timestamp
+, aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
