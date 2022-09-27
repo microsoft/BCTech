@@ -1,7 +1,13 @@
 ------------------
 vNext
 ------------------
+
+
+------------------
+2022-09-27 release
+------------------
 * app source validation page now filters as expected
+* demo data now shows failed app source validations
 
 
 ------------------
