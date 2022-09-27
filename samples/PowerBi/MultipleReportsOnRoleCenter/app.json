@@ -1,0 +1,32 @@
+{
+  "id": "fb70e707-f07f-480f-8d1e-f9239d02861f",
+  "name": "Multiple Power BI Reports Sample",
+  "publisher": "aka_ms_bctech",
+  "version": "0.9.9.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 59022,
+      "to": 59022
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "9.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
