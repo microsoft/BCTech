@@ -1,8 +1,14 @@
 ------------------
 vNext
 ------------------
-* docker container usage
-* AL-Go for GitHub usage
+
+
+------------------
+2022-09-28 release
+------------------
+* fixed (yet another) bug in datamodel for app source validation
+* Administration report: new page for BCContainerHelper container usage (draft version)
+* Administration report: new page for AL-Go for GitHub usage (draft version)
 
 ------------------
 2022-09-27 release
