@@ -1,7 +1,11 @@
 ------------------
 vNext
 ------------------
-
+* Administration, Extension lifecycle page: fixed 'unknown message' for LC0010
+* Administration, Extension lifecycle page: Added per-environment visual
+* Administration, Upgrade flow page: Added per-app visual
+* Administration, About the report page: Fixed wrong text and links
+* Administration, app source validation page: added failure reason visual
 
 ------------------
 2022-09-28 release
