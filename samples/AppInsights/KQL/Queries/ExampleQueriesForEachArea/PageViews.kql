@@ -30,3 +30,10 @@ pageViews
 , pageMode = customDimensions.pageMode
 , pageType = customDimensions.pageType
 , refUri = customDimensions.refUri
+// all of this data is not stored in customDimensions
+, location = client_CountryOrRegion
+, durationInMs = duration
+, clientBrowser = client_Browser
+, browserName = iff(browserName=='Edg', 'Edge', browserName)
+, browserVersion = browserVersion
+, clientOS = client_OS
