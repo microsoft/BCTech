@@ -6,6 +6,8 @@ vNext
 * Administration, Upgrade flow page: Added per-app visual
 * Administration, About the report page: Fixed wrong text and links
 * Administration, app source validation page: added failure reason visual
+* BC Telemetry App (Issue #145): changing order of top page filters to Publisher / App Name / App Id / Version (on Administration report)
+
 
 ------------------
 2022-09-28 release
