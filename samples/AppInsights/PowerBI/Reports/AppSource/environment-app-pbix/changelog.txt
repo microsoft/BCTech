@@ -12,7 +12,7 @@ Ideas
 
 
 vNext (implemented, coming in the next release)
-* TODO
+* Usage report: filters out pages with id=-1 by default on the 'Page views' page
 
 
 2022-09-23
