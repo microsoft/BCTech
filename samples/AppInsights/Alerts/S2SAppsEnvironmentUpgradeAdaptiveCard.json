@@ -2,31 +2,31 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "logicapp_name": {
+        "LogicApp Name": {
             "defaultValue": "BCAdminCenterTestS2SEnvironmentUpgradeAdaptiveCard",
             "type": "String"
         },
-        "connections_applicationinsights_externalid": {
+        "Connections ApplicationInsights ExternalId": {
             "defaultValue": "",
             "type": "String"
         },
-        "connections_teams_externalid": {
+        "Connections Teams ExternalId": {
             "defaultValue": "",
             "type": "String"
         },
-        "teams_groupid": {
+        "Teams GroupId": {
             "defaultValue": "",
             "type": "String"
         },
-        "teams_channelid": {
+        "Teams ChannelId": {
             "defaultValue": "",
             "type": "String"
         },
-        "s2s_appid": {
+        "S2S AppId": {
             "defaultValue": "",
             "type": "String"
         },
-        "s2s_appsecret": {
+        "S2S App Secret": {
             "defaultValue": "",
             "type": "SecureString"
         }
@@ -36,7 +36,7 @@
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
-            "name": "[parameters('logicapp_name')]",
+            "name": "[parameters('LogicApp Name')]",
             "location": "westeurope",
             "identity": {
                 "type": "SystemAssigned"
@@ -52,19 +52,19 @@
                             "type": "Object"
                         },
                         "S2SAppId": {
-                            "defaultValue": "[parameters('s2s_appid')]",
+                            "defaultValue": "[parameters('S2S AppId')]",
                             "type": "String"
                         },
                         "S2SAppSecret": {
-                            "defaultValue": "[parameters('s2s_appsecret')]",
+                            "defaultValue": "[parameters('S2S App Secret')]",
                             "type": "SecureString"
                         },
                         "TeamsChannelId": {
-                            "defaultValue": "[parameters('teams_channelid')]",
+                            "defaultValue": "[parameters('Teams ChannelId')]",
                             "type": "String"
                         },
                         "TeamsGroupId": {
-                            "defaultValue": "[parameters('teams_groupid')]",
+                            "defaultValue": "[parameters('Teams GroupId')]",
                             "type": "String"
                         }
                     },
@@ -215,7 +215,7 @@
                             "runAfter": {},
                             "type": "ApiConnection",
                             "inputs": {
-                                "body": "traces\n| where timestamp between (ago(5h)..ago(0m))\n| where customDimensions.eventId == 'LC0101'\n| where customDimensions.updateDateSelectedByPartner == false\n| where customDimensions.aadTenantId == '1633d4a2-6d53-4254-868f-b8d70eefed7a'\n//| extend Schedulediff = datetime_diff('day', todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), todatetime(customDimensions.updatePeriodStartDateUtc))\n| extend ScheduledFor = format_datetime(todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), 'yyyy-MM-dd')\n| extend UpdatePeriodEndDate = format_datetime(todatetime(customDimensions.updatePeriodEndDateUtc), 'yyyy-MM-dd')\n| extend AdminCenter = strcat('https://businesscentral.dynamics-servicestie.com/', customDimensions.aadTenantId, '/admin?deploymentId=s537')\n| project AADTenantId = customDimensions.aadTenantId, EnvironmentName = customDimensions.environmentName, EnvironmentType = customDimensions.environmentType, EnvironmentCountry = customDimensions.countryCode, CurrentVersion = customDimensions.sourceVersion, TargetVersion = customDimensions.destinationVersion, ScheduledFor, UpdatePeriodEndDate, AdminCenter",
+                                "body": "traces\n| where timestamp between (ago(24h)..ago(0m))\n| where customDimensions.eventId == 'LC0101'\n| where customDimensions.updateDateSelectedByPartner == false\n| where customDimensions.aadTenantId == '1633d4a2-6d53-4254-868f-b8d70eefed7a'\n//| extend Schedulediff = datetime_diff('day', todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), todatetime(customDimensions.updatePeriodStartDateUtc))\n| extend ScheduledFor = format_datetime(todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), 'yyyy-MM-dd')\n| extend UpdatePeriodEndDate = format_datetime(todatetime(customDimensions.updatePeriodEndDateUtc), 'yyyy-MM-dd')\n| extend AdminCenter = strcat('https://businesscentral.dynamics-servicestie.com/', customDimensions.aadTenantId, '/admin?deploymentId=s537')\n| project AADTenantId = customDimensions.aadTenantId, EnvironmentName = customDimensions.environmentName, EnvironmentType = customDimensions.environmentType, EnvironmentCountry = customDimensions.countryCode, CurrentVersion = customDimensions.sourceVersion, TargetVersion = customDimensions.destinationVersion, ScheduledFor, UpdatePeriodEndDate, AdminCenter",
                                 "host": {
                                     "connection": {
                                         "name": "@parameters('$connections')['applicationinsights']['connectionId']"
@@ -235,12 +235,12 @@
                     "$connections": {
                         "value": {
                             "applicationinsights": {
-                                "connectionId": "[parameters('connections_applicationinsights_externalid')]",
+                                "connectionId": "[parameters('Connections ApplicationInsights ExternalId')]",
                                 "connectionName": "applicationinsights",
                                 "id": "/subscriptions/d4d7149b-eb93-49c1-87bc-3174f40b6ea1/providers/Microsoft.Web/locations/westeurope/managedApis/applicationinsights"
                             },
                             "teams_1": {
-                                "connectionId": "[parameters('connections_teams_externalid')]",
+                                "connectionId": "[parameters('Connections Teams ExternalId')]",
                                 "connectionName": "teams-1",
                                 "id": "/subscriptions/d4d7149b-eb93-49c1-87bc-3174f40b6ea1/providers/Microsoft.Web/locations/westeurope/managedApis/teams"
                             }
