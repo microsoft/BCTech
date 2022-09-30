@@ -1,0 +1,15 @@
+// KQL samples - Client type -> Session type mapping
+
+
+// Join to this lookup table to translate Client type to Session type (UI, WS, or background)
+datatable (clientType:string, sessionType:string)[
+'ChildSession', 'Background',
+'Background', 'Background',
+'WebServiceClient', 'Web Service',
+'WebClient', 'UI',
+'Tablet', 'UI',
+'Phone', 'UI',
+'ManagementClient', 'Web Service',
+'Teams', 'UI',
+'ClientService', 'Web Service',
+]

@@ -4,12 +4,13 @@
 // move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
 
 // successful authorization prior to openCompany trigger (raw data)
+// in this phase of the login process, we check entitlements (license)
 // this is not emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Authorization Succeeded (Pre Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
      or customDimensions.eventId == "RT0003" // starting from version 16.1, the eventId is used to identity signal types
-| extend aadTenantId = customDimensions.aadTenantId
+| project aadTenantId = customDimensions.aadTenantId
 , eventId = customDimensions.eventId 
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
@@ -23,12 +24,13 @@ traces
 )
 
 // failed authorization prior to openCompany trigger (raw data)
+// in this phase of the login process, we check entitlements (license)
 // this is not emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Authorization Failed (Pre Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
      or customDimensions.eventId == "RT0001" // starting from version 16.1, the eventId is used to identity signal types
-| extend aadTenantId = customDimensions.aadTenantId
+| project aadTenantId = customDimensions.aadTenantId
 , eventId = customDimensions.eventId 
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
@@ -52,7 +54,7 @@ traces
 , eventId = customDimensions.eventId 
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, clientType = customDimensions.clientType
+, clientType = customDimensions.clientType // use the helper query ClientTypeToSessionTypeMapping.kql to map to session type (UI, WS, or background)
 , companyName = customDimensions.companyName
 , result = customDimensions.result
 // server timings are available from 16.0
@@ -77,7 +79,7 @@ traces
 , eventId = customDimensions.eventId 
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, clientType = customDimensions.clientType
+, clientType = customDimensions.clientType // use the helper query ClientTypeToSessionTypeMapping.kql to map to session type (UI, WS, or background)
 , companyName = customDimensions.companyName
 , failureReason = customDimensions.failureReason
 // server timings are available from 16.0
