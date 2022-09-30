@@ -12,8 +12,12 @@ Ideas
 
 
 vNext (implemented, coming in the next release)
-* Usage report: filters out pages with id=-1 by default on the 'Page views' page
-
+* Usage report: on the 'Page views' page, filter out pages with id=-1 by default 
+* Error report: GitHub issue #148 Fixed wrong web service key error count on the error dashboard. 
+* Error report: GitHub issue #148 Fixed wrong web service login error count on the error dashboard. 
+* Error report: Added two new tiles on the error dashboard: background session login failures and license errors
+* Error report: on basic auth error page, added http details visual
+* Error report: on login errors page, added info about session type (UI, WS, or background)
 
 2022-09-23
 * Usage report: fixed links on the 'About the report' page
