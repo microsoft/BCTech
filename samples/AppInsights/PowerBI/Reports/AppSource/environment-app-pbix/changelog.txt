@@ -18,6 +18,7 @@ vNext (implemented, coming in the next release)
 * Error report: Added two new tiles on the error dashboard: background session login failures and license errors
 * Error report: on basic auth error page, added http details visual
 * Error report: on login errors page, added info about session type (UI, WS, or background)
+* Dataset: fixed min/max in Dates dimension (some day-of-week visuals showed empty weekday)
 
 2022-09-23
 * Usage report: fixed links on the 'About the report' page
