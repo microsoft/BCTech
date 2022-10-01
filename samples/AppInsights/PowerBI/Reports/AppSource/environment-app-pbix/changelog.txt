@@ -9,9 +9,11 @@ Ideas
 * Errors: Add AL stacktrace to failed job queue page
 * With extra parameters, add links to Application Insights portal (click here to analyze further)
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
+* Dataset: include list for event ids as a parameter
 
 
-vNext (implemented, coming in the next release)
+vNext (implemented, coming in the next release, probably available in the beta app)
+Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage report: on the 'Page views' page, filter out pages with id=-1 by default 
 * Error report: GitHub issue #148 Fixed wrong web service key error count on the error dashboard. 
 * Error report: GitHub issue #148 Fixed wrong web service login error count on the error dashboard. 
