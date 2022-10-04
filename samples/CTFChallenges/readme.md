@@ -34,7 +34,7 @@ The "CTFD-portal-setup" files are exported from a ctfd.io website. You can impor
 in order to get things set up quickly.
 
 Also, if you want to run in this mode:
-- Enable "External mode" by default by changing CTFChallengesSetup."External Mode" to tru in the CTFChallengesInstall.CodeUnit.al file.
+- Enable "External mode" by default by changing CTFChallengesSetup."External Mode" to true in the CTFChallengesInstall.CodeUnit.al file.
 - See the hint codes on the CTF Challenges Setup page. The password to the setup page is "clue".
 
 
