@@ -14,6 +14,7 @@ Ideas
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+* Usage report: New page 'Application areas', shows usage by main application area in the base app
 * Usage report: on the 'Page views' page, filter out pages with id=-1 by default 
 * Error report: GitHub issue #148 Fixed wrong web service key error count on the error dashboard. 
 * Error report: GitHub issue #148 Fixed wrong web service login error count on the error dashboard. 
