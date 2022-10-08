@@ -1,4 +1,4 @@
-// use this code snippet if you want to parse the bottom of an AL call stack
+// use this code snippet if you want to parse the bottom of an AL stack trace
 
 | extend alStackTrace = customDimensions.alStackTrace // change if the dimension holding the callstack is different
 | extend lastline = extract("(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z", 1, tostring(alStackTrace))
