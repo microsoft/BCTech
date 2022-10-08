@@ -1,0 +1,19 @@
+// Spot database regressions and log a bug 
+// use the md5 hashs to see if you have already logged a bug on this
+
+traces
+| where timestamp > ago(1d) // change as needed
+| where customDimensions.eventId == 'RT0005' 
+| where customDimensions.alObjectId > 0 // filter out internal server calls
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, companyName = tostring( customDimensions.companyName )
+, sqlStatement = tostring(customDimensions.sqlStatement)
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+, alStackTrace = tostring( customDimensions.alStackTrace )
+, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+// get more details from the sample query "Long Running SQL Queries.kql" in the KQL section
+| extend sqlStatementHash = hash_md5(sqlStatement)
+, stacktraceHash = hash_md5(alStackTrace)
