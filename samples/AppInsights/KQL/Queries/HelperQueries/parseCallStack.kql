@@ -1,0 +1,15 @@
+// use this code snippet if you want to parse the bottom of an AL call stack
+
+| extend alStackTrace = customDimensions.alStackTrace // change if the dimension holding the callstack is different
+| extend lastline = extract("(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z", 1, tostring(alStackTrace))
+| extend lastObjectName = extract("\\\"?([^\\\"]+)\\\"?\\([a-zA-Z]+ \\d+\\)", 1, lastline )
+| extend lastObjectType = extract("\\(([a-zA-Z]+) \\d+\\)", 1, lastline )
+| extend lastObjectId = extract("\\([a-zA-Z]+ (\\d+)\\)", 1, lastline )
+| extend lastLineNumber = extract(" line (\\d+)", 1, lastline )
+| extend lastExtensionName = extract(" - (.+) by", 1, lastline )
+| extend lastPublisher = extract(".+ by (.+)", 1, lastline )
+| extend lastWhatWasCalled = case(
+  isnotempty( lastLineNumber), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) line", 1, lastline ),
+  isnotempty( lastExtensionName), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)", 1, lastline ),
+  extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+)", 1, lastline )
+)
