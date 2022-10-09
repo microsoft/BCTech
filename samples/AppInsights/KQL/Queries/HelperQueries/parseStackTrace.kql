@@ -6,10 +6,31 @@
 | extend lastObjectType = extract("\\(([a-zA-Z]+) \\d+\\)", 1, lastline )
 | extend lastObjectId = extract("\\([a-zA-Z]+ (\\d+)\\)", 1, lastline )
 | extend lastLineNumber = extract(" line (\\d+)", 1, lastline )
-| extend lastExtensionName = extract(" - (.+) by", 1, lastline )
+| extend lastExtensionName = case (
+  isnotempty( lastLineNumber), extract('line \\d+ - (.+) by', 1, lastline ),
+  extract(' - (.+) by', 1, lastline )
+)
 | extend lastPublisher = extract(".+ by (.+)", 1, lastline )
 | extend lastWhatWasCalled = case(
   isnotempty( lastLineNumber), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) line", 1, lastline ),
   isnotempty( lastExtensionName), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)", 1, lastline ),
   extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+)", 1, lastline )
+)
+
+
+// this version is more Power BI/Query friendly (using ' instead of " and quoting the rest of the "s)
+| extend lastline = extract('(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z', 1, tostring(StackTrace))
+| extend lastObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, lastline )
+| extend lastObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, lastline )
+| extend lastObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, lastline )
+| extend lastLineNumber = extract(' line (\\d+)', 1, lastline )
+| extend lastExtensionName = case (
+  isnotempty( lastLineNumber), extract('line \\d+ - (.+) by', 1, lastline ),
+  extract(' - (.+) by', 1, lastline )
+)
+| extend lastPublisher = extract('.+ by (.+)', 1, lastline )
+| extend lastWhatWasCalled = case(
+  isnotempty( lastLineNumber), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) line', 1, lastline ),
+  isnotempty( lastExtensionName), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)', 1, lastline ),
+  extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+)', 1, lastline )
 )
