@@ -25,6 +25,8 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: added support for defining an include list of environments
 * Performance: on Database lock timeouts page, added environment visual, fixed alignment on other visuals
 * Performance: on Sessions page, added environment visual, added session type to per-client visual
+* Performance: on pages "Database lock timeouts", "Long running SQL", and "Long running AL", added visual with info on bottom line of the stack trace
+
 
 2022-09-23
 * Usage report: fixed links on the 'About the report' page
