@@ -18,6 +18,7 @@ traces
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace
+// use the KQL snippet parseStackTrace to get bottom of the stack trace details
 , clientType = customDimensions.clientType
 , executionTime = customDimensions.executionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 

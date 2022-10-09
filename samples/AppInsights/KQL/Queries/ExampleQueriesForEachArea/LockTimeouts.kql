@@ -1,10 +1,9 @@
 // lock timeouts (raw data)
 traces 
-| where 1==1 
-    and customDimensions.eventId == 'RT0012'
-    and timestamp > ago(2d) // adjust to your needs
-| extend
-  componentVersion = customDimensions.componentVersion
+| where timestamp > ago(2d) // adjust to your needs
+| where customDimensions.eventId == 'RT0012'
+| project timestamp
+, componentVersion = customDimensions.componentVersion
 , environmentType = customDimensions.environmentType
 , environmentName = customDimensions.environmentName
 , aadTenantId = customDimensions.aadTenantId
@@ -17,6 +16,7 @@ traces
 , extensionName = customDimensions.extensionName
 , extensionId = customDimensions.extensionId
 , alStackTrace = customDimensions.alStackTrace
+// use the KQL snippet parseStackTrace to get bottom of the stack trace details
 , sqlStatement = customDimensions.sqlStatement
 , sqlServerSessionId = customDimensions.sqlServerSessionId
 , snapshotId = customDimensions.snapshotId
