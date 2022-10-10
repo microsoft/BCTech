@@ -1,0 +1,339 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Logic App Name": {
+            "defaultValue": "EnvironmentUpdateAdaptiveCard",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the name for the Logic App Resource"
+            }
+        },
+        "AppInsights API Connection Name": {
+            "defaultValue": "applicationinsights",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the name for the AppInsights API Connection. If you already have an API Connection resource for AppInsights in your subscription you can enter the name of the existing resource to reuse it for this Logic App."
+            }
+        },
+        "Teams Connection Name": {
+            "defaultValue": "teams",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the name for the Teams API Connection. If you already have an API Connection resource for Teams in your subscription you can enter the name of the existing resource to reuse it for this Logic App."
+            }
+        },
+        "Teams Group ID": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the Teams Group ID to be used for sending adaptive cards."
+            }
+        },
+        "Teams Channel ID": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the Teams Channel ID to be used for sending adaptive cards."
+            }
+        },
+        "Alert Frequency in Minutes": {
+            "defaultValue": 15,
+            "type": "int",
+            "minValue": 10,
+            "metadata": {
+                "description": "Set the frequency in minutes for which you want to check for available environment updates. The value should not be lower than 10 minutes to ensure smooth operation."
+            }
+        },
+        "S2S AppId": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the Application (Client) ID for your S2S AAD app to be used for Admin Center API."
+            }
+        },
+        "S2S App Secret": {
+            "defaultValue": "",
+            "type": "SecureString",
+            "metadata": {
+                "description": "Enter the credentials secret for your S2S AAD app to be used for Admin Center API."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('AppInsights API Connection Name')]",
+            "location": "[resourcegroup().location]",
+            "kind": "V1",
+            "properties": {
+                "displayName": "AppInsights",
+                "statuses": [
+                    {
+                        "status": "Connected"
+                    }
+                ],
+                "customParameterValues": {},
+                "api": {
+                    "name": "[parameters('AppInsights API Connection Name')]",
+                    "displayName": "Azure Application Insights",
+                    "description": "Azure Application Insights is an extensible analytics service that helps you understand the performance and usage of your live web application. Connect to your Application Insights resource to run and visualize various Analytics queries.",
+                    "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1570/1.0.1570.2764/', parameters('AppInsights API Connection Name'), '/icon.png')]",
+                    "brandColor": "#68217A",
+                    "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('AppInsights API Connection Name'))]",
+                    "type": "Microsoft.Web/locations/managedApis"
+                },
+                "testLinks": []
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('Teams Connection Name')]",
+            "location": "[resourcegroup().location]",
+            "kind": "V1",
+            "properties": {
+                "displayName": "[parameters('Teams Connection Name')]",
+                "statuses": [
+                    {
+                        "status": "Connected"
+                    }
+                ],
+                "customParameterValues": {},
+                "nonSecretParameterValues": {},
+                "api": {
+                    "name": "[parameters('Teams Connection Name')]",
+                    "displayName": "Microsoft Teams",
+                    "description": "Microsoft Teams enables you to get all your content, tools and conversations in the Team workspace with Office 365.",
+                    "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1588/1.0.1588.2938/', parameters('Teams Connection Name'), '/icon.png')]",
+                    "brandColor": "#4B53BC",
+                    "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Teams Connection Name'))]",
+                    "type": "Microsoft.Web/locations/managedApis"
+                },
+                "testLinks": [
+                    {
+                        "requestUri": "[concat('https://management.azure.com:443/', resourceGroup().id, '/providers/Microsoft.Web/connections/', parameters('Teams Connection Name'), '/extensions/proxy/beta/me/teamwork?api-version=2016-06-01')]",
+                        "method": "get"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('Logic App Name')]",
+            "location": "[resourcegroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]",
+                "[resourceId('Microsoft.Web/connections', parameters('Teams Connection Name'))]"
+            ],
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+                        "S2SAppId": {
+                            "defaultValue": "[parameters('S2S AppId')]",
+                            "type": "String"
+                        },
+                        "S2SAppSecret": {
+                            "defaultValue": "[parameters('S2S App Secret')]",
+                            "type": "SecureString"
+                        },
+                        "TeamsChannelId": {
+                            "defaultValue": "[parameters('Teams Channel ID')]",
+                            "type": "String"
+                        },
+                        "TeamsGroupId": {
+                            "defaultValue": "[parameters('Teams Group ID')]",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": "[parameters('Alert Frequency in Minutes')]"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Minute",
+                                "interval": "[parameters('Alert Frequency in Minutes')]"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "For_each_environment_post_adaptive_card_in_Teams_channel": {
+                            "foreach": "@body('Run_Analytics_query_-_get_all_environments_with_available_update')?['value']",
+                            "actions": {
+                                "Parse_JSON": {
+                                    "runAfter": {
+                                        "Post_adaptive_card_and_wait_for_a_response": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Post_adaptive_card_and_wait_for_a_response')",
+                                        "schema": {
+                                            "properties": {
+                                                "data": {
+                                                    "properties": {
+                                                        "dueDate": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "submitActionId": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Post_adaptive_card_and_wait_for_a_response": {
+                                    "runAfter": {},
+                                    "type": "ApiConnectionWebhook",
+                                    "inputs": {
+                                        "body": {
+                                            "body": {
+                                                "messageBody": "{\n    \"type\": \"AdaptiveCard\",\n    \"version\": \"1.4\",\n    \"hideOriginalBody\": true,\n    \"body\": [\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Update to @{take(items('For_each_environment_post_adaptive_card_in_Teams_channel')?['TargetVersion'], 4)} Scheduled for Environment @{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['EnvironmentName']}\",\n            \"size\": \"Large\"\n        },\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Reschedule below or review in the Admin Center\"\n        },\n        {\n            \"type\": \"FactSet\",\n            \"facts\": [\n                {\n                    \"title\": \"AAD Tenant ID\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['AADTenantId']}\"\n                },\n                {\n                    \"title\": \"Environment Name\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['EnvironmentName']}\"\n                },\n                {\n                    \"title\": \"Environment Type\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['EnvironmentType']}\"\n                },\n                {\n                    \"title\": \"Localization\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['EnvironmentCountry']}\"\n                },\n                {\n                    \"title\": \"Current Version\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['CurrentVersion']}\"\n                },\n                {\n                    \"title\": \"Target Version\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['TargetVersion']}\"\n                },\n                {\n                    \"title\": \"Scheduled For\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['ScheduledFor']}\"\n                },\n                {\n                    \"title\": \"Update Period End Date\",\n                    \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['UpdatePeriodEndDate']}\"\n                }\n            ]\n        }\n    ],\n    \"actions\": [\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Run Now\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Environment update will be scheduled immediately.\"\n                    },\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Do you want to continue?\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmRunNow\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Reschedule\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"Input.Date\",\n                        \"label\": \"Select date to reschedule this update\",\n                        \"id\": \"dueDate\",\n                        \"value\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['ScheduledFor']}\",\n                        \"min\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n                        \"max\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['UpdatePeriodEndDate']}\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmReschedule\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"id\": \"Ignore\",\n            \"type\": \"Action.Submit\",\n            \"title\": \"Ignore\"\n        },\n        {\n            \"type\": \"Action.OpenUrl\",\n            \"title\": \"Open Admin Center\",\n            \"url\": \"@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['AdminCenter']}\"\n        }\n    ],\n    \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\"\n}",
+                                                "recipient": {
+                                                    "channelId": "@parameters('TeamsChannelId')",
+                                                    "groupId": "@parameters('TeamsGroupId')"
+                                                },
+                                                "updateMessage": "Thanks for your response!"
+                                            },
+                                            "notificationUrl": "@{listCallbackUrl()}"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['teams']['connectionId']"
+                                            }
+                                        },
+                                        "path": "/v1.0/teams/conversation/gatherinput/poster/Flow bot/location/@{encodeURIComponent('Channel')}/$subscriptions"
+                                    }
+                                },
+                                "Switch": {
+                                    "runAfter": {
+                                        "Parse_JSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "cases": {
+                                        "Ignore": {
+                                            "case": "Ignore",
+                                            "actions": {}
+                                        },
+                                        "Reschedule": {
+                                            "case": "ConfirmReschedule",
+                                            "actions": {
+                                                "HTTP_-_schedule_upgrade_for_selected_date_using_BC_TAC_API": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "authentication": {
+                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
+                                                            "clientId": "@parameters('S2SAppId')",
+                                                            "secret": "@parameters('S2SAppSecret')",
+                                                            "tenant": "@items('For_each_environment_post_adaptive_card_in_Teams_channel')?['AADTenantId']",
+                                                            "type": "ActiveDirectoryOAuth"
+                                                        },
+                                                        "body": {
+                                                            "ignoreUpgradeWindow": false,
+                                                            "runOn": "@{body('Parse_JSON')?['data']?['dueDate']}"
+                                                        },
+                                                        "method": "PUT",
+                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['EnvironmentName']}/upgrade"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "Run_Now": {
+                                            "case": "ConfirmRunNow",
+                                            "actions": {
+                                                "HTTP_-_schedule_upgrade_immediately_using_BC_TAC_API": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "authentication": {
+                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
+                                                            "clientId": "@parameters('S2SAppId')",
+                                                            "secret": "@parameters('S2SAppSecret')",
+                                                            "tenant": "@items('For_each_environment_post_adaptive_card_in_Teams_channel')?['AADTenantId']",
+                                                            "type": "ActiveDirectoryOAuth"
+                                                        },
+                                                        "body": {
+                                                            "ignoreUpgradeWindow": true,
+                                                            "runOn": "@{utcNow()}"
+                                                        },
+                                                        "method": "PUT",
+                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{items('For_each_environment_post_adaptive_card_in_Teams_channel')?['EnvironmentName']}/upgrade"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "default": {
+                                        "actions": {}
+                                    },
+                                    "expression": "@body('Parse_JSON')?['submitActionId']",
+                                    "type": "Switch"
+                                }
+                            },
+                            "runAfter": {
+                                "Run_Analytics_query_-_get_all_environments_with_available_update": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Run_Analytics_query_-_get_all_environments_with_available_update": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "[concat('traces\n| where timestamp between (ago(', parameters('Alert Frequency in Minutes'), 'm+5m)..ago(5m))\n| where customDimensions.eventId == ''LC0101''\n| where customDimensions.updateDateSelectedByPartner == false\n//| extend Schedulediff = datetime_diff(''day'', todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), todatetime(customDimensions.updatePeriodStartDateUtc))\n| extend ScheduledFor = format_datetime(todatetime(customDimensions.registeredForUpdateOnOrAfterDateUtc), ''yyyy-MM-dd'')\n| extend UpdatePeriodEndDate = format_datetime(todatetime(customDimensions.updatePeriodEndDateUtc), ''yyyy-MM-dd'')\n| extend AdminCenter = strcat(''https://businesscentral.dynamics.com/'', customDimensions.aadTenantId, ''/admin'')\n| project AADTenantId = customDimensions.aadTenantId, EnvironmentName = customDimensions.environmentName, EnvironmentType = customDimensions.environmentType, EnvironmentCountry = customDimensions.countryCode, CurrentVersion = customDimensions.sourceVersion, TargetVersion = customDimensions.destinationVersion, ScheduledFor, UpdatePeriodEndDate, AdminCenter')]",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['applicationinsights']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/api/QueryDraft",
+                                "queries": {
+                                    "version": "2"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "applicationinsights": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('AppInsights API Connection Name'))]",
+                                "connectionName": "[parameters('AppInsights API Connection Name')]",
+                                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('AppInsights API Connection Name'))]"
+                            },
+                            "teams": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('Teams Connection Name'))]",
+                                "connectionName": "[parameters('Teams Connection Name')]",
+                                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Teams Connection Name'))]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
