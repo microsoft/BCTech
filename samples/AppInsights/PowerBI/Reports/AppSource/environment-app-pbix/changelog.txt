@@ -17,6 +17,8 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration report: Added hierarchy and message details for events on telemetry event statistics page
 * Usage report: fixed bug on Connector page (showed also non-connector data)
+* Usage report: fixed bug on Integrations page (number of calls was wrong)
+
 
 
 2022-10-10
