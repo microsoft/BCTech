@@ -16,10 +16,10 @@ Ideas
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
-* Administration report: Added hierarchy and message details for events on telemetry event statistics page
+* Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
 * Usage report: fixed bug on Connector page (showed also non-connector data)
 * Usage report: fixed bug on Integrations page (number of calls was wrong)
-* Performance report: Added number of columns in SQL statements on Long Running SQL page
+* Performance report: Added number of columns and if query take locks to SQL statements visual on Long Running SQL page
 
 
 2022-10-10
