@@ -3,8 +3,6 @@
 // Important: if you query telemetry from an environment on version 15.0-15.2 
 // Then please see below for a sample query. The schema changed starting in 15.3 
 
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
 
 // Long running SQL queries (RAW data)
 traces
@@ -12,7 +10,12 @@ traces
 | where operation_Name == 'Long Running Operation (SQL Query)' // do note that in a later version of the schema, this field will not be used 
      or customDimensions.eventId == 'RT0005' // starting from version 16.1, the eventId is used to identity signal types
 | where customDimensions.alObjectId > 0 // filter out internal server calls
-| extend eventId = customDimensions.eventId 
+| project timestamp
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 , aadTenantId = customDimensions.aadTenantId
 , sqlStatement = tostring(customDimensions.sqlStatement)
 , environmentName = customDimensions.environmentName
@@ -58,11 +61,7 @@ operationType == "SELECT", countof(selectPart,",") + 1
 , operationType == "SELECT'", countof(selectPart,",") + 1
 , 0
 )
-, usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
-, 'N/A'
-)
+, takeLocks = sqlStatement has 'UPDLOCK'
 
 // version that works on 15.0, 15.2, and 15.2 versions
 // note how all the calls to custom dimensions have to use the customDimensions.['<column name>'] syntax
@@ -114,3 +113,4 @@ operationType == "SELECT", countof(selectPart,",") + 1
 , operationType == "SELECT'", countof(selectPart,",") + 1
 , 0
 )
+, takeLocks = sqlStatement has 'UPDLOCK'

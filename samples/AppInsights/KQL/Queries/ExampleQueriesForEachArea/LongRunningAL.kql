@@ -6,9 +6,9 @@
 // Long running AL (RAW data)
 traces
 | where timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'RT0018' 
-    and customDimensions.alObjectId > 0 // filter out internal server calls
-| extend eventId = customDimensions.eventId 
+| where customDimensions.eventId == 'RT0018' 
+| where customDimensions.alObjectId > 0 // filter out internal server calls
+| project eventId = customDimensions.eventId 
 , aadID = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
