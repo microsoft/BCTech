@@ -11,6 +11,7 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) or WITH(UPDLOCK) 
+* Add feature telemetry to telemetry events datasource + page
 
 
 vNext (implemented, coming in the next release, probably available in the beta app)
@@ -18,7 +19,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration report: Added hierarchy and message details for events on telemetry event statistics page
 * Usage report: fixed bug on Connector page (showed also non-connector data)
 * Usage report: fixed bug on Integrations page (number of calls was wrong)
-
+* Performance report: Added number of columns in SQL statements on Long Running SQL page
 
 
 2022-10-10
