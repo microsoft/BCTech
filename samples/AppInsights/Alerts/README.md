@@ -4,7 +4,7 @@ If something happens in your environment or for one of your customers that you n
 Read more here in docs:
 https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#setting-up-alerts-on-telemetry-events
 
-# Alerting condition KQL 
+# Alerting condition KQL samples
 
 When defining an alert based on telemetry, you need to define two things:
 1. A Kusto (KQL) query that defines the alerting condition. 
