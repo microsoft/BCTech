@@ -1,6 +1,6 @@
 Ideas
 * Usage: Feature uptake page
-* Usage: Add user telemetry id to page view pages and allow filters on this
+* Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
 * Administration: Permission set changes
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
@@ -11,12 +11,12 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) or WITH(UPDLOCK) 
-* Add feature telemetry to telemetry events datasource + page
 
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
+* Usage report: Added per-environment visual on Locations page
 * Usage report: fixed bug on Connector page (showed also non-connector data)
 * Usage report: fixed bug on Integrations page (number of calls was wrong)
 * Performance report: Added number of columns and if query take locks to SQL statements visual on Long Running SQL page
