@@ -210,8 +210,7 @@ traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'LC0013' 
 | extend aadTenantId = tostring( customDimensions.aadTenantId )
-| project 
-  timestamp
+| project timestamp
 , eventId = customDimensions.eventId
 , aadTenantId
 , environmentName = customDimensions.environmentName
@@ -240,18 +239,24 @@ traces
 | where timestamp > ago(5d) 
 | where customDimensions.eventId == 'LC0056'
 | project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, componentVersion = customDimensions.componentVersion
-, component = customDimensions.component
+, eventId = customDimensions.eventId
+, aadTenantId = customDimensions.aadTenantId 
+, environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, extensionPublisher = customDimensions.extensionPublisher
-, extensionVersion = customDimensions.extensionVersion
 , extensionName = customDimensions.extensionName
 , extensionId = customDimensions.extensionId
-, extensionScope = customDimensions.extensionScope
 , extensionPublishedAs = customDimensions.extensionPublishedAs
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionVersion = customDimensions.extensionVersion
 , extensionSynchronizationMode = customDimensions.extensionSynchronizationMode
-, eventId = customDimensions.eventId
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, totalTime = customDimensions.totalTime
+, totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, sqlExecutes = customDimensions.sqlExecutes
+, sqlRowsRead = customDimensions.sqlRowsRead
+, result = customDimensions.result
 , failureReason = customDimensions.failureReason
 , message
 
