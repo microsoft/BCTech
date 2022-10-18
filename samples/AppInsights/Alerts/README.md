@@ -6,6 +6,13 @@ https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/adminis
 
 # Alerting condition KQL 
 
+When defining an alert based on telemetry, you need to define two things:
+1. A Kusto (KQL) query that defines the alerting condition. 
+2. How often you want to run the alerting query. 
+
+This part of the samples repo contains examples of KQL queries that you can use for alerting conditions.
+
+
 | Condition | Description | KQL sample code |
 | --------- | ------------| --------------- | 
 | Keyvault lookup failures | As an ISV, you should not store secrets in the app code but use secure storage such as Azure Keyvault. If lookups of secrets fail, your app might not work for the customers that have installed it. | [./AlertingKQLSamples/AppKeyvaultFailures.kql](AppKeyvaultFailures.kql) |
