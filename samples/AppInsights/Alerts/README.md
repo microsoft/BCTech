@@ -15,8 +15,8 @@ This part of the samples repo contains examples of KQL queries that you can use 
 
 | Condition | Description | KQL sample code |
 | --------- | ------------| --------------- | 
-| Keyvault lookup failures | As an ISV, you should not store secrets in the app code but use secure storage such as Azure Keyvault. If lookups of secrets fail, your app might not work for the customers that have installed it. | [./AlertingKQLSamples/AppKeyvaultFailures.kql](AppKeyvaultFailures.kql) |
-| Appsource validation failures | As an ISV, you can submit an app to be validated against specific countries/regions and versions of Business Central. Setup notifications if a validation fails. | [./AlertingKQLSamples/AppsourceAdmissionFailures.kql](AppsourceAdmissionFailures.kql) |
+| Keyvault lookup failures | As an ISV, you should not store secrets in the app code but use secure storage such as Azure Keyvault. If lookups of secrets fail, your app might not work for the customers that have installed it. | [AppKeyvaultFailures.kql](./AlertingKQLSamples/AppKeyvaultFailures.kql) |
+| Appsource validation failures | As an ISV, you can submit an app to be validated against specific countries/regions and versions of Business Central. Setup notifications if a validation fails. | [AppsourceAdmissionFailures.kql](./AlertingKQLSamples/AppsourceAdmissionFailures.kql) |
 
 
 
