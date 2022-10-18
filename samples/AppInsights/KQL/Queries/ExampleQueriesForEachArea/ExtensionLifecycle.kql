@@ -233,7 +233,7 @@ traces
 , message
 
 
-// Extension already synced (raw data)
+// Extension is already synchronized (raw data)
 // This signal was added in 21.1
 traces
 | where timestamp > ago(5d) 
