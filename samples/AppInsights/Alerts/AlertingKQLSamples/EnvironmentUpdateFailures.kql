@@ -1,4 +1,4 @@
-// Use a query like this as a condition in an alert on when new updates are available for environment(s)
+// Use a query like this as a condition in an alert on when new an environment failed to update
 
 let exclude_on_prem_and_docker = true; // adjust as needed
 traces
