@@ -1,36 +1,67 @@
-// use this code snippet if you want to parse the bottom of an AL stack trace
+// use this code snippet if you want to parse the top and the bottom of an AL stack trace
 
 | extend alStackTrace = customDimensions.alStackTrace // change if the dimension holding the callstack is different
-| extend lastline = extract("(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z", 1, tostring(alStackTrace))
-| extend lastObjectName = extract("\\\"?([^\\\"]+)\\\"?\\([a-zA-Z]+ \\d+\\)", 1, lastline )
-| extend lastObjectType = extract("\\(([a-zA-Z]+) \\d+\\)", 1, lastline )
-| extend lastObjectId = extract("\\([a-zA-Z]+ (\\d+)\\)", 1, lastline )
-| extend lastLineNumber = extract(" line (\\d+)", 1, lastline )
-| extend lastExtensionName = case (
-  isnotempty( lastLineNumber), extract('line \\d+ - (.+) by', 1, lastline ),
-  extract(' - (.+) by', 1, lastline )
+| extend topOfStackline = extract('AL CallStack: (.+)', 1, tostring(alStackTrace))
+| extend topOfStackObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, topOfStackline)
+| extend topOfStackObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, topOfStackline )
+| extend topOfStackObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, topOfStackline)
+| extend topOfStackLineNumber = extract(' line (\\d+)', 1, topOfStackline )
+| extend topOfStackExtensionName = case (
+  isnotempty( topOfStackLineNumber), extract('line \\d+ - (.+) by', 1, topOfStackline ),
+  extract(' - (.+) by', 1, topOfStackline )
 )
-| extend lastPublisher = extract(".+ by (.+)", 1, lastline )
-| extend lastWhatWasCalled = case(
-  isnotempty( lastLineNumber), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) line", 1, lastline ),
-  isnotempty( lastExtensionName), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)", 1, lastline ),
-  extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+)", 1, lastline )
+| extend topOfStackPublisher = extract('.+ by (.+)', 1, topOfStackline )
+| extend topOfStackWhatWasCalled = case(
+  isnotempty( topOfStackLineNumber), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) line', 1, topOfStackline  ),
+  isnotempty( topOfStackExtensionName), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)', 1, topOfStackline ),
+  extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+)', 1, topOfStackline  )
 )
+| extend bottomOfStackline = extract("(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z", 1, tostring(alStackTrace))
+| extend bottomOfStackObjectName = extract("\\\"?([^\\\"]+)\\\"?\\([a-zA-Z]+ \\d+\\)", 1, bottomOfStackline )
+| extend bottomOfStackObjectType = extract("\\(([a-zA-Z]+) \\d+\\)", 1, bottomOfStackline )
+| extend bottomOfStackObjectId = extract("\\([a-zA-Z]+ (\\d+)\\)", 1, bottomOfStackline )
+| extend bottomOfStackLineNumber = extract(" line (\\d+)", 1, bottomOfStackline )
+| extend bottomOfStackExtensionName = case (
+  isnotempty( bottomOfStackLineNumber), extract('line \\d+ - (.+) by', 1, bottomOfStackline ),
+  extract(' - (.+) by', 1, bottomOfStackline )
+)
+| extend bottomOfStackPublisher = extract(".+ by (.+)", 1, bottomOfStackline )
+| extend bottomOfStackWhatWasCalled = case(
+  isnotempty( bottomOfStackLineNumber), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) line", 1, bottomOfStackline ),
+  isnotempty( bottomOfStackExtensionName), extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)", 1, bottomOfStackline ),
+  extract("\\\"?[^\\\"]+\\\"?\\([a-zA-Z]+ \\d+\\).(.+)", 1, bottomOfStackline )
+)
+
 
 
 // this version is more Power BI/Query friendly (using ' instead of " and quoting the rest of the "s)
-| extend lastline = extract('(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z', 1, tostring(StackTrace))
-| extend lastObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, lastline )
-| extend lastObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, lastline )
-| extend lastObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, lastline )
-| extend lastLineNumber = extract(' line (\\d+)', 1, lastline )
-| extend lastExtensionName = case (
-  isnotempty( lastLineNumber), extract('line \\d+ - (.+) by', 1, lastline ),
-  extract(' - (.+) by', 1, lastline )
+| extend topOfStackline = extract('AL CallStack: (.+)', 1, tostring(alStackTrace))
+| extend topOfStackObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, topOfStackline)
+| extend topOfStackObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, topOfStackline )
+| extend topOfStackObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, topOfStackline)
+| extend topOfStackLineNumber = extract(' line (\\d+)', 1, topOfStackline )
+| extend topOfStackExtensionName = case (
+  isnotempty( topOfStackLineNumber), extract('line \\d+ - (.+) by', 1, topOfStackline ),
+  extract(' - (.+) by', 1, topOfStackline )
 )
-| extend lastPublisher = extract('.+ by (.+)', 1, lastline )
-| extend lastWhatWasCalled = case(
-  isnotempty( lastLineNumber), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) line', 1, lastline ),
-  isnotempty( lastExtensionName), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)', 1, lastline ),
-  extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+)', 1, lastline )
+| extend topOfStackPublisher = extract('.+ by (.+)', 1, topOfStackline )
+| extend topOfStackWhatWasCalled = case(
+  isnotempty( topOfStackLineNumber), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) line', 1, topOfStackline  ),
+  isnotempty( topOfStackExtensionName), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)', 1, topOfStackline ),
+  extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+)', 1, topOfStackline  )
+)
+| extend bottomOfStackline = extract('(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z', 1, tostring(alStackTrace))
+| extend bottomOfStackObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, bottomOfStackline )
+| extend bottomOfStackObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, bottomOfStackline )
+| extend bottomOfStackObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, bottomOfStackline )
+| extend bottomOfStackLineNumber = extract(' line (\\d+)', 1, bottomOfStackline )
+| extend bottomOfStackExtensionName = case (
+  isnotempty( bottomOfStackLineNumber), extract('line \\d+ - (.+) by', 1, bottomOfStackline ),
+  extract(' - (.+) by', 1, bottomOfStackline )
+)
+| extend bottomOfStackPublisher = extract('.+ by (.+)', 1, bottomOfStackline )
+| extend bottomOfStackWhatWasCalled = case(
+  isnotempty( bottomOfStackLineNumber), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) line', 1, bottomOfStackline ),
+  isnotempty( bottomOfStackExtensionName), extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+) -(.+) by (.+)', 1, bottomOfStackline ),
+  extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+)', 1, bottomOfStackline )
 )
