@@ -7,6 +7,7 @@ vNext
 * Administration, About the report page: Fixed wrong text and links
 * Administration, app source validation page: added failure reason visual
 * BC Telemetry App (Issue #145): changing order of top page filters to Publisher / App Name / App Id / Version (on Administration report)
+* Performance: on pages 'Long running SQL', and 'Long running AL' added visual with info on top line of the stack trace
 
 
 ------------------
