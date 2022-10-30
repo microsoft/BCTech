@@ -8,7 +8,8 @@ vNext
 * Administration, app source validation page: added failure reason visual
 * BC Telemetry App (Issue #145): changing order of top page filters to Publisher / App Name / App Id / Version (on Administration report)
 * Performance: on pages 'Long running SQL', and 'Long running AL' added visual with info on top line of the stack trace
-
+* Performance: on page 'Long running SQL', added 'Take locks column'
+* Dataset: AAD tenant mapping more stable against json syntax errors
 
 ------------------
 2022-09-28 release
