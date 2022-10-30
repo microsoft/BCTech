@@ -16,6 +16,7 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
+* Administration report: New page 'Configuration' to show how the app has been configured.
 * Usage report: Added per-environment and page-views per date visuals on Locations page.
 * Usage report: fixed bug on Connector page (showed also non-connector data). Also minor adjustments to visuals.
 * Usage report: fixed bug on Integrations page (number of calls was wrong)
