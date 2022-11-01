@@ -22,6 +22,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage report: fixed bug on Integrations page (number of calls was wrong)
 * Performance report: Added number of columns and if query take locks to SQL statements visual on Long Running SQL page
 * Performance: on pages 'Database lock timeouts', 'Long running SQL', and 'Long running AL' added visual with info on top line of the stack trace
+* Performance: on pages 'Outgoing ws', 'Incoming ws', 'Long running SQL', and 'Long running AL' changed sums to show data in seconds and adjusted avg to show ms with no decimals.
 * Dataset: AAD tenant mapping more stable against json syntax errors
 
 2022-10-10
