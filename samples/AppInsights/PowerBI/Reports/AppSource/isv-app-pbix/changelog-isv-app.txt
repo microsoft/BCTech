@@ -10,7 +10,9 @@ vNext
 * Performance: on pages 'Long running SQL', and 'Long running AL' added visual with info on top line of the stack trace
 * Performance: on page 'Long running SQL', added 'Take locks column'
 * Performance: on page 'Updates', added SQL row to SQL statement ratio
+* Performance: on pages 'Outgoing ws', 'Incoming ws', 'Long running SQL', and 'Long running AL' changed sums to show data in seconds and adjusted avg to show ms with no decimals.
 * Dataset: AAD tenant mapping more stable against json syntax errors
+
 
 ------------------
 2022-09-28 release
