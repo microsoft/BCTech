@@ -1,5 +1,17 @@
+TODO before GA
+* Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
+* Performance report: Added number of columns to SQL statements visual on Long Running SQL page
+
+
 ------------------
-vNext
+vNext (implemented, coming in the next release, probably available in the beta app)
+Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
+------------------
+* what next?
+
+
+------------------
+2022-11-07 release
 ------------------
 * Administration, Extension lifecycle page: fixed 'unknown message' for LC0010
 * Administration, Extension lifecycle page: Added per-environment visual
@@ -9,7 +21,7 @@ vNext
 * Administration report: New page 'Configuration' to show how the app has been configured.
 * BC Telemetry App (Issue #145): changing order of top page filters to Publisher / App Name / App Id / Version (on Administration report)
 * Performance: on pages 'Long running SQL', and 'Long running AL' added visual with info on top line of the stack trace
-* Performance: on page 'Long running SQL', added 'Take locks column'
+* Performance: on page 'Long running SQL', added 'Take locks' column
 * Performance: on page 'Updates', added SQL row to SQL statement ratio
 * Performance: on pages 'Outgoing ws', 'Incoming ws', 'Long running SQL', and 'Long running AL' changed sums to show data in seconds and adjusted avg to show ms with no decimals.
 * Dataset: AAD tenant mapping more stable against json syntax errors
