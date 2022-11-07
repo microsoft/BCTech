@@ -15,6 +15,10 @@ Ideas
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+* what next?
+
+
+2022-11-07
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
 * Administration report: New page 'Configuration' to show how the app has been configured.
 * Usage report: Added per-environment and page-views per date visuals on Locations page.
@@ -24,6 +28,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: on pages 'Database lock timeouts', 'Long running SQL', and 'Long running AL' added visual with info on top line of the stack trace
 * Performance: on pages 'Outgoing ws', 'Incoming ws', 'Long running SQL', and 'Long running AL' changed sums to show data in seconds and adjusted avg to show ms with no decimals.
 * Dataset: AAD tenant mapping more stable against json syntax errors
+
 
 2022-10-10
 * Usage report: New page 'Application areas', shows usage by main application area in the base app
