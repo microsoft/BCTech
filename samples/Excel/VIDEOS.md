@@ -3,14 +3,21 @@ Want some easy to digest introductions to Excel layouts in Business Central? Her
 
 
 ## Customizable & Reusable Excel Layouts for D365 Business Central (49 min)
-Watch this 49 min webinar from TruNorth Dynamics to learn how to use Excel layouts with Business Central. Tip: **CTRL+click** to open in a new window.
+Watch this 49 min webinar from TruNorth Dynamics to learn how to use Excel layouts with Business Central. In the video, they take an in-depth look at this new feature in Business Central: Customizable & Reusable Excel Layouts.
+- Create an excel layout from scratch
+- Upload to the Custom Reports
+- Open the report request page
+- Run your custom Excel Report
+
+Some report layout examples they create are for the reports _Vendor Purchase List_, _Customer Detail Trial Balance_, and _Customer Sales List_.
+Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=GIUkPzeFAbo"><img src="https://img.youtube.com/vi/GIUkPzeFAbo/0.jpg" width="50%"></a>
 <br>
 </p>
 
 ## Customizing Report Layouts in Microsoft Dynamics 365 Business Central (8 min)
-Watch this 8 min video from Microsoft MVP Kristen Hoffman to learn how to create an Excel layout on the Aged Accounts Receivable report in Business Central. Tip: **CTRL+click** to open in a new window.
+Watch this 8 min video from Microsoft MVP Kristen Hoffman to learn how to create an Excel layout on the _Aged Accounts Receivable_ report in Business Central. Tip: **CTRL+click** to open in a new window.
 <p align="center">
 <a href="https://www.youtube.com/watch?v=l2c39WslLVM"><img src="https://img.youtube.com/vi/l2c39WslLVM/0.jpg" width="50%"></a>
 <br>
