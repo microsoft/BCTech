@@ -30,12 +30,12 @@
                 "description": "Enter the Teams Channel ID to be used for sending adaptive cards."
             }
         },
-        "Alert Frequency in Minutes": {
-            "defaultValue": 150,
+        "Alert Frequency in Days": {
+            "defaultValue": 1,
             "type": "int",
-            "minValue": 10,
+            "minValue": 1,
             "metadata": {
-                "description": "Set the frequency in minutes for which you want to check for available environment updates. The value should not be lower than 10 minutes to ensure smooth operation."
+                "description": "Set the frequency in days for which you want to check for available environment app updates. The value should not be lower than 1 days to ensure smooth operation."
             }
         },
 		"AAD TenantId": {
@@ -142,12 +142,12 @@
                     "triggers": {
                         "Recurrence": {
                             "recurrence": {
-                                "frequency": "Minute",
-                                "interval": 150
+                                "frequency": "Day",
+                                "interval": "[parameters('Alert Frequency in Days')]"
                             },
                             "evaluatedRecurrence": {
-                                "frequency": "Minute",
-                                "interval": 150
+                                "frequency": "Day",
+                                "interval": "[parameters('Alert Frequency in Days')]"
                             },
                             "type": "Recurrence"
                         }
