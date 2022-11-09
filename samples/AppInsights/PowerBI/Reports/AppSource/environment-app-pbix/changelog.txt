@@ -15,7 +15,7 @@ Ideas
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
-* what next?
+* Performance: on page 'Long running SQL', added visual with info on aad tenants impacted
 
 
 2022-11-07
