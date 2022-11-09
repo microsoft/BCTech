@@ -2,6 +2,8 @@
 
 | extend alStackTrace = customDimensions.alStackTrace // change if the dimension holding the callstack is different
 | extend topOfStackline = extract('AL CallStack: (.+)', 1, tostring(alStackTrace))
+// stack trace format for error dialogs and lock timeouts are special, so use this regular expression for those
+//| extend topOfStackline = extract('(.+)\\n', 1, tostring(StackTrace)) 
 | extend topOfStackObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, topOfStackline)
 | extend topOfStackObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, topOfStackline )
 | extend topOfStackObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, topOfStackline)
@@ -36,6 +38,8 @@
 
 // this version is more Power BI/Query friendly (using ' instead of " and quoting the rest of the "s)
 | extend topOfStackline = extract('AL CallStack: (.+)', 1, tostring(alStackTrace))
+// stack trace format for lock timeouts are special, so use this regular expression for those
+//| extend topOfStackline = extract('(.+)\\n', 1, tostring(StackTrace)) 
 | extend topOfStackObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, topOfStackline)
 | extend topOfStackObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, topOfStackline )
 | extend topOfStackObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, topOfStackline)
