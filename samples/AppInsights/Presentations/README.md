@@ -1,10 +1,10 @@
 # What Power Point presentations are available?
 To make it easier to adopt telemetry for Business Central, we added a number of Power Point presentations that you can use for various situations.
 
-| Your role is... | You want to... | Use this deck |
+| Your role is... | You want to... | Use this deck (click and then download) |
 | --------------- | ---------------| ------------- |
-| in sales | Base follow-up meetings with customers on data to provide more value | [Follow up customer meeting.pptx]("./decks/Follow up customer meeting.pptx")  |
-| all over the business | Introduce telemetry to the organization | [AppInsights telemetry for Business Central partners.pptx]("./decks/AppInsights telemetry for Business Central partners.pptx") |
+| in sales | Base follow-up meetings with customers on data to provide more value | [Follow up customer meeting.pptx](<./decks/Follow up customer meeting.pptx>)  |
+| all over the business | Introduce telemetry to the organization | [AppInsights telemetry for Business Central partners.pptx](<./decks/AppInsights telemetry for Business Central partners.pptx>) |
 | strategic | Learn how we use telemetry (we have just enabled it) | [Using telemetry to improve your partner practices and processes.pptx](<./decks/Using telemetry to improve your partner practices and processes.pptx>) |
 
 
