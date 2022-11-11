@@ -20,8 +20,7 @@ This part of the samples repo contains examples of KQL queries that you can use 
 | Database performance | Performance | ISV/VAR | Spot if you have seen a give long running query before by getting a md5 hash on the SQL query and the AL stack trace | RT0005 | [LongRunningQueriesForBugskql.kql](./AlertingKQLSamples/LongRunningQueriesForBugskql.kql) |
 | Extensions(s) failed to install  | Errors | VAR/ISV | Alert if one or more extensions fail to install. | LC0011 | [ExtensionInstallFailures.kql](./AlertingKQLSamples/ExtensionInstallFailures.kql) |
 | Extensions(s) failed to upgrade  | Errors | VAR/ISV | Alert if one or more extensions fail to upgrade. | RT0010 | [ExtensionUpgradeFailures.kql](./AlertingKQLSamples/ExtensionUpgradeFailures.kql) |
-| Extensions(s) installed  | Lifecycle | VAR/ISV | Alert if one or more extensions was installed. | LC0010 | 
-[ExtensionInstalled.kql](./AlertingKQLSamples/ExtensionInstalled.kql) |
+| Extensions(s) installed  | Lifecycle | VAR/ISV | Alert if one or more extensions was installed. | LC0010 | [ExtensionInstalled.kql](./AlertingKQLSamples/ExtensionInstalled.kql) |
 | Extensions(s) uninstalled  | Lifecycle | VAR/ISV | Alert if one or more extensions was uninstalled. | LC0016 | [ExtensionUninstalled.kql](./AlertingKQLSamples/ExtensionUninstalled.kql) |
 | Environment update(s) available | Updates | VAR | Alert when new updates are available for environment(s). | LC0100 | [EnvironmentUpdateAvailable.kql](./AlertingKQLSamples/EnvironmentUpdateAvailable.kql) |
 | Environment(s) failed to update  | Errors | VAR | Alert if environment(s) fail to update. | LC0107 | [EnvironmentUpdateFailures.kql](./AlertingKQLSamples/EnvironmentUpdateFailures.kql) |
