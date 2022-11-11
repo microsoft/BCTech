@@ -12,11 +12,12 @@ Ideas
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
 
+* Application areas: add tenant visual
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: on page 'Long running SQL', added visual with info on aad tenants impacted
-
+* Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
 
 2022-11-07
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
