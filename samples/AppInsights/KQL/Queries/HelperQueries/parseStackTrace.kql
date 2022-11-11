@@ -2,8 +2,10 @@
 
 | extend alStackTrace = customDimensions.alStackTrace // change if the dimension holding the callstack is different
 | extend topOfStackline = extract('AL CallStack: (.+)', 1, tostring(alStackTrace))
-// stack trace format for error dialogs and lock timeouts are special, so use this regular expression for those
+// stack trace format for lock timeouts are special, so use this regular expression for those
 //| extend topOfStackline = extract('(.+)\\n', 1, tostring(StackTrace)) 
+// stack trace format for error dialogs are special, so use this regular expression for those
+//| extend topOfStackline = extract('(([^\\\\]+)(\\\\){1})', 1, tostring(StackTrace)) 
 | extend topOfStackObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, topOfStackline)
 | extend topOfStackObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, topOfStackline )
 | extend topOfStackObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, topOfStackline)
@@ -55,6 +57,8 @@
   extract('\\\""?[^\\\""]+\\\""?\\([a-zA-Z]+ \\d+\\).(.+)', 1, topOfStackline  )
 )
 | extend bottomOfStackline = extract('(.+\\([a-zA-Z]+ \\d+\\)\\..+)\\n?\\z', 1, tostring(alStackTrace))
+// stack trace format for error dialogs are special, so use this regular expression for those
+//| extend bottomOfStackline = extract('([^\\\\]+)(\\\\)\\z', 1, tostring(StackTrace))
 | extend bottomOfStackObjectName = extract('\\\""?([^\\\""]+)\\\""?\\([a-zA-Z]+ \\d+\\)', 1, bottomOfStackline )
 | extend bottomOfStackObjectType = extract('\\(([a-zA-Z]+) \\d+\\)', 1, bottomOfStackline )
 | extend bottomOfStackObjectId = extract('\\([a-zA-Z]+ (\\d+)\\)', 1, bottomOfStackline )
