@@ -2,13 +2,13 @@ TODO
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
 * Performance report: Added number of columns to SQL statements visual on Long Running SQL page
 
-* Configuration: change order of parameter visuals
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
+* Administration: on Configuration page, changed order of parameter visuals
 
 
 ------------------
