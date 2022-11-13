@@ -9,6 +9,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
 * Administration: on Configuration page, changed order of parameter visuals, added EnvironmentDim visual
+* Administration: on Inventory page, added domain to 'Apps by environment' visual (GitHub issue #146)
 * All four reports: turned on ability to download underlaying data from all visuals
 
 
