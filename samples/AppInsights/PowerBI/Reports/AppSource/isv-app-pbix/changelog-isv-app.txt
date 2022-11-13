@@ -8,7 +8,8 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
-* Administration: on Configuration page, changed order of parameter visuals
+* Administration: on Configuration page, changed order of parameter visuals, added EnvironmentDim visual
+* All four reports: turned on ability to download underlaying data from all visuals
 
 
 ------------------
