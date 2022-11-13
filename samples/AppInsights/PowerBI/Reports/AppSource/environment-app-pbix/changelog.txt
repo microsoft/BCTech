@@ -12,7 +12,6 @@ Ideas
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
 
-* Application areas: add tenant visual
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
@@ -20,6 +19,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: on page 'Long running SQL', added visual with info on aad tenants impacted
 * Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
 * Administration: on Configuration page, changed order of parameter visuals, added EnvironmentDim visual
+* All four reports: turned on ability to download underlaying data from all visuals
 
 
 2022-11-07
