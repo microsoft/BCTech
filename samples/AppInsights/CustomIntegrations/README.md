@@ -3,7 +3,7 @@ In this folder, you will find information that illustrate how you can integrate 
 # How do I create a link (URL) that opens a KQL query in the Azure Application Insights portal?
 It is possible to programatically create links that will run and show results of a KQL query in Azure Application Insights portal.
 
-To do this, first you need to encode the KQL query text: Take the raw query text, zip it, and Base64 encode it.
+To do this, first you need to encode the KQL query text: Take the raw query text, zip it, Base64 encode it, and then url encode it.
 
 Next, go to the Azure Application Insights portal where data resides and note the following GUIDs and names:
 - AAD tenant id

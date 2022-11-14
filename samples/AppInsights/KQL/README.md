@@ -19,13 +19,16 @@ Here are some resources for you to get started on Kusto Query Language (KQL). Us
 
 # Which tools can I use (KQL editors and clients)?
 You can write and execute KQL in various tools. E.g.
-* [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
 * [Azure Data Explorer](https://dataexplorer.azure.com). Here is [How to connect to Application Insights in Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
 * In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
 * In a Jupyter notebook hosted in Visual Studio Code (with the Python and Jupyter Notebooks extensions installed)
 * Application Insights portal (Under *Logs* in the *Monitoring* menu)
 * PowerShell (using the REST api). See an example here: [Powershell samples](../Powershell)
+* [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
 
+Note that for Kusto Explorer, you can   
+* either use the cluster URL `https://ade.applicationinsights.io/subscriptions/<subscription-id>/resourcegroups/<resource-group-name>/providers/microsoft.insights/components/<ai-app-name>` (where <ai-app-name> is the name of the resource), or 
+* just specify `https://ade.applicationinsights.io/subscriptions/<subscription-id>` to see all databases in the subscription.
 
 # What signal is available in which version?
 Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:

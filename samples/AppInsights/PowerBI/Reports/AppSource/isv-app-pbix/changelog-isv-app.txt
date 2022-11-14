@@ -1,4 +1,4 @@
-TODO before GA
+TODO
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
 * Performance report: Added number of columns to SQL statements visual on Long Running SQL page
 
@@ -7,7 +7,10 @@ TODO before GA
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-* what next?
+* Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
+* Administration: on Configuration page, changed order of parameter visuals, added EnvironmentDim visual
+* Administration: on Inventory page, added domain to 'Apps by environment' visual (GitHub issue #146)
+* All four reports: turned on ability to download underlaying data from all visuals
 
 
 ------------------
