@@ -16,6 +16,7 @@ On this page, we explain a few simple steps that will get you up and running qui
      - Click "New registration"
      - Give a name such as "App for managing Business Central environments"
      - Select "Accounts in any organizational directory (Any Azure AD directory - Multitenant)"
+        - If you only want to manage your own environments, you can also choose "Accounts in this organizational directory only"
      - Add a redirect URI: "Public client/native" and "http://localhost"
      - Click "Register"
  3. Create the AAD application's service principal:
@@ -33,31 +34,45 @@ On this page, we explain a few simple steps that will get you up and running qui
      - Click "Add permissions"
 
 
-**At this point**, the AAD application has been registered in your (the partner's) AAD tenant, and you should know these two values:
+At this point, the AAD application has been registered, and you should know these two values:
   
     $aadAppId = "<a guid>"
-    $aadAppRedirectUri = "nativeBusinessCentralClient://auth"
+    $aadAppRedirectUri = "http://localhost"
+
 
 
 
 ## Specifically for Delegated Admins
 
-This section only applies to partners who have a reseller relationship with customers, also known as Delegated Admins.
+This section only applies to partners who have a GDAP (Granular Delegated Admin Privileges) relationship with customers, also known as delegated admins.
 
-As a delegated admin, you want to manage your customers' Business Central environments. From an authentication perspective, this is significantly different from managing your own Business Central environments.
+As a delegated admin, you want to manage your customers' Business Central environments. From an authentication perspective, this is significantly different from managing your own Business Central environments, because in order to call Business Central APIs for a customer, you need to authenticate *in the customer's AAD tenant*, not in your own AAD tenant. This process requires an administrator of the customer's AAD tenant to give consent to your AAD application.
 
-In order to call Business Central APIs for a customer, you need to authenticate **in the customer's AAD tenant**, not in your own AAD tenant. This process normally requires an administrator of the customer's AAD tenant to give consent to your AAD application, however, this step can be avoided for delegated admins by adding your AAD application into the Admin Agents group in your own AAD tenant. This technique is described in more detail here: https://docs.microsoft.com/graph/auth-cloudsolutionprovider.
+An administrator of the customer's AAD tenant needs go to this URL to give consent to your (the partner's) AAD app having permissions in the customer's tenant: **https://login.microsoftonline.com/{customer-tenant-id}/adminconsent?client_id={partner-aad-app-id}**
 
-In short, you need to execute the following PowerShell commands (remember to set the $aadAppId variable):
+If you (partner) are an admin in the customer's AAD tenant, you can also perform this consent.
 
-    Install-Module AzureAD
-    Connect-AzureAD
-    $adminAgentsGroup = Get-AzureADGroup -Filter "displayName eq 'AdminAgents'"
-    $servicePrincipal = Get-AzureADServicePrincipal -Filter "appId eq '$aadAppId'"
-    Add-AzureADGroupMember -ObjectId $adminAgentsGroup.ObjectId -RefObjectId $servicePrincipal.ObjectId
+Note that after the consent has completed, the browser may get redirected to http://localhost/something and show an error message because that page doesn't exist. This is because it automatically redirects to one of the registered redirect URIs. It doesn't mean the consent process failed.
 
-Now it's all set up, and you should be able to use your AAD application (in your AAD tenant) to call
-into your customers' Business Central environments (in their AAD tenants).
+
+
+
+<!--
+    Legacy, not sure if this works with GDAP, need to follow up
+
+    , however, this step can be avoided for delegated admins by adding your AAD application into a security group that is tied to the GDAP relationship. This technique is described in more detail here: https://docs.microsoft.com/graph/auth-cloudsolutionprovider.
+
+    In short, you need to execute the following PowerShell commands (remember to set the $aadAppId variable):
+
+        Install-Module AzureAD
+        Connect-AzureAD
+        $securityGroup = Get-AzureADGroup -Filter "displayName eq '<NameOfSecurityGroupThatIsTiedToGDAPRelationship>'"
+        $servicePrincipal = Get-AzureADServicePrincipal -Filter "appId eq '$aadAppId'"
+        Add-AzureADGroupMember -ObjectId $securityGroup.ObjectId -RefObjectId $servicePrincipal.ObjectId
+
+    Now it's all set up, and you should be able to use your AAD application (in your AAD tenant) to call
+    into your customers' Business Central environments (in their AAD tenants).
+ -->
 
 
 
