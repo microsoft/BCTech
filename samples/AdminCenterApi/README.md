@@ -10,9 +10,9 @@ There is also an explanation of [Authenticating to the Business Central Admin Ce
 
 
 
-## Specifically for Delegated Admins
+## Specifically for Delegated Admins (GDAP)
 
-If you are a partner who has a reseller relationship to one or more customers, also known as a delegated admin, you can also use the APIs to manage your *customers'* Business Central environments.
+If you are a partner and have a GDAP (Granular Delegated Admin Privileges) relationship to one or more customers, you can also use the APIs to manage your *customers'* Business Central environments.
 
 There is a dedicated section that covers [how to call Partner Center APIs](PowerShell/PartnerCenter.ps1), which e.g. can be used to list all your customers.
 

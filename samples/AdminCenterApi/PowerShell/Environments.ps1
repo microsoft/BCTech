@@ -65,7 +65,7 @@ $response = Invoke-WebRequest `
 
 # Set AppInsights key
 $environmentName = "MyProd"
-$newAppInsightsKey = "00000000-1111-2222-3333-444444444444"
+$newAppInsightsKey = "InstrumentationKey=11111111-2222-3333-4444-555555555555;IngestionEndpoint=https://northeurope-2.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/"
 $response = Invoke-WebRequest `
     -Method Post `
     -Uri    "https://api.businesscentral.dynamics.com/admin/v2.11/applications/businesscentral/environments/$environmentName/settings/appinsightskey" `
