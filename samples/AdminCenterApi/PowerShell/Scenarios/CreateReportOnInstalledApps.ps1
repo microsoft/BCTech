@@ -15,7 +15,7 @@ Connect-PartnerCenter
 
 Add-Type -Path "C:\Program Files\WindowsPowerShell\Modules\AzureAD\2.0.2.76\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
 $aadAppId = "a19cb26a-2e4c-408b-82e1-6311742ecc50"
-$aadAppRedirectUri = "nativeBusinessCentralClient://auth"
+$aadAppRedirectUri = "http://localhost"
 
 $outputFilePath = "c:\temp\AppReport.csv"
 

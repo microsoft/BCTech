@@ -13,9 +13,9 @@ namespace CSharp
             //   Note 2: You can also skip passing in options altogether if you want to log into your own Business Central admin center, i.e., not a delegated admin scenario
             var interactiveBrowserCredentialOptions = new InteractiveBrowserCredentialOptions
             {
-                ClientId = "a19cb26a-2e4c-408b-82e1-6311742ecc50",  // partner's AAD app id
+                ClientId = "0999645b-84e4-4980-bd52-e3e6cccf15b3",  // partner's AAD app id
                 RedirectUri = new Uri("http://localhost"),          // partner's AAD app redirect URI
-                TenantId = "62eebfa1-8379-45eb-afc4-ad28abdeabfe",  // customer's tenant id
+                TenantId = "f5b6b245-5dd2-4bf5-94d4-35ef04d73c6d",  // customer's tenant id
             };
             var tokenCredential = new InteractiveBrowserCredential(interactiveBrowserCredentialOptions);
 
