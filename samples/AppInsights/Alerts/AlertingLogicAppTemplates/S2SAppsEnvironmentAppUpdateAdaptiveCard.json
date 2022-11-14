@@ -1,0 +1,413 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+     "parameters": {
+        "Logic App Name": {
+            "defaultValue": "EnvironmentAppUpdateAdaptiveCard",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the name for the Logic App Resource"
+            }
+        },
+        "Teams Connection Name": {
+            "defaultValue": "teams",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the name for the Teams API Connection. If you already have an API Connection resource for Teams in your subscription you can enter the name of the existing resource to reuse it for this Logic App."
+            }
+        },
+        "Teams Group ID": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the Teams Group ID to be used for sending adaptive cards."
+            }
+        },
+        "Teams Channel ID": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the Teams Channel ID to be used for sending adaptive cards."
+            }
+        },
+        "Alert Frequency in Days": {
+            "defaultValue": 1,
+            "type": "int",
+            "minValue": 1,
+            "metadata": {
+                "description": "Set the frequency in days for which you want to check for available environment app updates. The value should not be lower than 1 days to ensure smooth operation."
+            }
+        },
+		"AAD TenantId": {
+            "defaultValue": "60561274-7e85-49cc-9380-8fecc9199e81",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the AAD tenant ID to be managed with S2S in Admin Center API."
+            }
+        },
+     	"Environment Name": {
+            "defaultValue": "LogicApps",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the environment name to be managed by S2S AAD app in Admin Center API."
+            }
+        },
+        "S2S AppId": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Enter the Application (Client) ID for your S2S AAD app to be used for Admin Center API."
+            }
+        },
+        "S2S App Secret": {
+            "defaultValue": "",
+            "type": "SecureString",
+            "metadata": {
+                "description": "Enter the credentials secret for your S2S AAD app to be used for Admin Center API."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('Teams Connection Name')]",
+            "location": "[resourcegroup().location]",
+            "kind": "V1",
+            "properties": {
+                "displayName": "[parameters('Teams Connection Name')]",
+                "statuses": [
+                    {
+                        "status": "Connected"
+                    }
+                ],
+                "customParameterValues": {},
+                "nonSecretParameterValues": {},
+                "api": {
+                    "name": "[parameters('Teams Connection Name')]",
+                    "displayName": "Microsoft Teams",
+                    "description": "Microsoft Teams enables you to get all your content, tools and conversations in the Team workspace with Office 365.",
+                    "iconUri": "[concat('https://connectoricons-prod.azureedge.net/releases/v1.0.1608/1.0.1608.3079/', parameters('Teams Connection Name'), '/icon.png')]",
+                    "brandColor": "#4B53BC",
+                    "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Teams Connection Name'))]",
+                    "type": "Microsoft.Web/locations/managedApis"
+                },
+                "testLinks": []
+            }
+        },
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('Logic App Name')]",
+            "location": "[resourcegroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('Teams Connection Name'))]"
+            ],
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+                        "AADTenantId": {
+                            "defaultValue": "[parameters('AAD TenantId')]",
+                            "type": "String"
+                        },
+                        "EnvironmentName": {
+                            "defaultValue": "[parameters('Environment Name')]",
+                            "type": "String"
+                        },
+                        "S2SAppId": {
+                            "defaultValue": "[parameters('S2S AppId')]",
+                            "type": "String"
+                        },
+                        "S2SAppSecret": {
+                            "defaultValue": "[parameters('S2S App Secret')]",
+                            "type": "String"
+                        },
+                        "TeamsChannelId": {
+                            "defaultValue": "[parameters('Teams Channel ID')]",
+                            "type": "String"
+                        },
+                        "TeamsGroupId": {
+                            "defaultValue": "[parameters('Teams Group ID')]",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": "[parameters('Alert Frequency in Days')]"
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Day",
+                                "interval": "[parameters('Alert Frequency in Days')]"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "For_each_App_available_update": {
+                            "foreach": "@body('Parse_JSON_result')['value']",
+                            "actions": {
+                                "Check_response_action": {
+                                    "runAfter": {
+                                        "Parse_JSON_response": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "cases": {
+                                        "Ignore": {
+                                            "case": "Ignore",
+                                            "actions": {}
+                                        },
+                                        "Schedule_App_update_for": {
+                                            "case": "ConfirmSchedule",
+                                            "actions": {
+                                                "Delay_until_selected_datetime": {
+                                                    "runAfter": {},
+                                                    "type": "Wait",
+                                                    "inputs": {
+                                                        "until": {
+                                                            "timestamp": "@parseDateTime(concat(body('Parse_JSON_response')?['data']?['dueDate'], 'T', body('Parse_JSON_response')?['data']?['dueTime'], ':00Z'), 'UTC', 'yyyy-MM-ddTHH:mm:ssZ')"
+                                                        }
+                                                    }
+                                                },
+                                                "HTTP_-_Update_app": {
+                                                    "runAfter": {
+                                                        "Delay_until_selected_datetime": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "authentication": {
+                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
+                                                            "clientId": "@parameters('S2SAppId')",
+                                                            "secret": "@parameters('S2SAppSecret')",
+                                                            "tenant": "@parameters('AADTenantId')",
+                                                            "type": "ActiveDirectoryOAuth"
+                                                        },
+                                                        "body": {
+                                                            "AllowPreviewVersion": true,
+                                                            "InstallOrUpdateNeededDependencies": true,
+                                                            "TargetVersion": "@{items('For_each_App_available_update')?['version']}",
+                                                            "UseEnvironmentUpdateWindow": false
+                                                        },
+                                                        "method": "POST",
+                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/@{items('For_each_App_available_update')?['appId']}/update"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "Update_Now": {
+                                            "case": "ConfirmRunNow",
+                                            "actions": {
+                                                "HTTP_-_Update_App_now": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "authentication": {
+                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
+                                                            "clientId": "@parameters('S2SAppId')",
+                                                            "secret": "@parameters('S2SAppSecret')",
+                                                            "tenant": "@parameters('AADTenantId')",
+                                                            "type": "ActiveDirectoryOAuth"
+                                                        },
+                                                        "body": {
+                                                            "AllowPreviewVersion": true,
+                                                            "InstallOrUpdateNeededDependencies": true,
+                                                            "TargetVersion": "@{items('For_each_App_available_update')?['version']}",
+                                                            "UseEnvironmentUpdateWindow": false
+                                                        },
+                                                        "method": "POST",
+                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/@{items('For_each_App_available_update')?['appId']}/update"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "default": {
+                                        "actions": {}
+                                    },
+                                    "expression": "@body('Parse_JSON_response')?['submitActionId']",
+                                    "type": "Switch"
+                                },
+                                "Parse_JSON_response": {
+                                    "runAfter": {
+                                        "Post_adaptive_card_and_wait_for_a_response": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ParseJson",
+                                    "inputs": {
+                                        "content": "@body('Post_adaptive_card_and_wait_for_a_response')",
+                                        "schema": {
+                                            "properties": {
+                                                "data": {
+                                                    "properties": {
+                                                        "dueDate": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "submitActionId": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "Post_adaptive_card_and_wait_for_a_response": {
+                                    "runAfter": {},
+                                    "type": "ApiConnectionWebhook",
+                                    "inputs": {
+                                        "body": {
+                                            "body": {
+                                                "messageBody": "{\n    \"type\": \"AdaptiveCard\",\n    \"version\": \"1.4\",\n    \"hideOriginalBody\": true,\n    \"body\": [\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Environment:  @{parameters('EnvironmentName')}.\",\n            \"size\": \"Large\"\n        },\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Update to @{take(items('For_each_App_available_update')?['version'], 100)} is available for @{take(items('For_each_App_available_update')?['name'], 100)}.\",\n            \"size\": \"Medium\"\n        },\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Update now, schedule or review in the Admin Center\"\n        },\n        {\n            \"type\": \"FactSet\",\n            \"facts\": [\n                {\n                    \"title\": \"App Name\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['name'], 100)}\"\n                },\n                {\n                    \"title\": \"App ID\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['appId'], 100)}\"\n                },\n                {\n                    \"title\": \"Publisher\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['publisher'], 100)}\"\n                },\n                {\n                    \"title\": \"New Version\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['version'], 100)}\"\n                }\n            ]\n        }\n    ],\n    \"actions\": [\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Update Now\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Environment app update will be scheduled immediately.\"\n                    },\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Do you want to continue?\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmRunNow\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Schedule\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"Input.Date\",\n                        \"label\": \"Select date to schedule this update\",\n                        \"id\": \"dueDate\",\n                        \"value\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n                        \"min\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n                        \"max\": \"@{formatDateTime(addDays(utcnow(),+10,'dd-MMMM-yyyy'), 'yyyy-MM-dd')}\"\n                    },\n                    {\n                        \"type\": \"Input.Time\",\n                        \"label\": \"Select time to schedule this update (UTC)\",\n                        \"id\": \"dueTime\",\n                        \"value\": \"@{formatDateTime(utcNow(), 'HH:mm')}\",\n                        \"min\": \"00:00\",\n                        \"max\": \"23:59\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmSchedule\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"id\": \"Ignore\",\n            \"type\": \"Action.Submit\",\n            \"title\": \"Ignore\"\n        },\n        {\n            \"type\": \"Action.OpenUrl\",\n            \"title\": \"Open Admin Center\",\n            \"url\": \"@{concat('https://businesscentral.dynamics.com/', parameters('AADTenantId'), '/admin')}\"\n        }\n    ],\n    \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\"\n}",
+                                                "recipient": {
+                                                    "channelId": "@parameters('TeamsChannelId')",
+                                                    "groupId": "@parameters('TeamsGroupId')"
+                                                },
+                                                "updateMessage": "Thanks for your response!"
+                                            },
+                                            "notificationUrl": "@{listCallbackUrl()}"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['teams']['connectionId']"
+                                            }
+                                        },
+                                        "path": "/v1.0/teams/conversation/gatherinput/poster/Flow bot/location/@{encodeURIComponent('Channel')}/$subscriptions"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Parse_JSON_result": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "HTTP_-_Get_App_available_updates_for_environment": {
+                            "runAfter": {},
+                            "type": "Http",
+                            "inputs": {
+                                "authentication": {
+                                    "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
+                                    "clientId": "@parameters('S2SAppId')",
+                                    "secret": "@parameters('S2SAppSecret')",
+                                    "tenant": "@parameters('AADTenantId')",
+                                    "type": "ActiveDirectoryOAuth"
+                                },
+                                "method": "GET",
+                                "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/availableUpdates"
+                            }
+                        },
+                        "Parse_JSON_result": {
+                            "runAfter": {
+                                "HTTP_-_Get_App_available_updates_for_environment": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@body('HTTP_-_Get_App_available_updates_for_environment')",
+                                "schema": {
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "properties": {
+                                        "value": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "appId": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "publisher": {
+                                                            "type": "string"
+                                                        },
+                                                        "requirements": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "appId": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "name": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "publisher": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "type": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "version": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "appId",
+                                                                        "name",
+                                                                        "publisher",
+                                                                        "version",
+                                                                        "type"
+                                                                    ],
+                                                                    "type": "object"
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        },
+                                                        "version": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "appId",
+                                                        "name",
+                                                        "publisher",
+                                                        "version",
+                                                        "requirements"
+                                                    ],
+                                                    "type": "object"
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    },
+                                    "required": [
+                                        "value"
+                                    ],
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "teams": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('Teams Connection Name'))]",
+                                "connectionName": "[parameters('Teams Connection Name')]",
+                                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourcegroup().location, '/managedApis/', parameters('Teams Connection Name'))]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
