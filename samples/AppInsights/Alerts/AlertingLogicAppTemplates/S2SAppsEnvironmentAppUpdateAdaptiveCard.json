@@ -153,10 +153,93 @@
                         }
                     },
                     "actions": {
-                        "For_each": {
-                            "foreach": "@body('Parse_JSON')['value']",
+                        "For_each_App_available_update": {
+                            "foreach": "@body('Parse_JSON_result')['value']",
                             "actions": {
-                                "Parse_JSON_2": {
+                                "Check_response_action": {
+                                    "runAfter": {
+                                        "Parse_JSON_response": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "cases": {
+                                        "Ignore": {
+                                            "case": "Ignore",
+                                            "actions": {}
+                                        },
+                                        "Schedule_App_update_for": {
+                                            "case": "ConfirmSchedule",
+                                            "actions": {
+                                                "Delay_until_selected_datetime": {
+                                                    "runAfter": {},
+                                                    "type": "Wait",
+                                                    "inputs": {
+                                                        "until": {
+                                                            "timestamp": "@parseDateTime(concat(body('Parse_JSON_response')?['data']?['dueDate'], 'T', body('Parse_JSON_response')?['data']?['dueTime'], ':00Z'), 'UTC', 'yyyy-MM-ddTHH:mm:ssZ')"
+                                                        }
+                                                    }
+                                                },
+                                                "HTTP_-_Update_app": {
+                                                    "runAfter": {
+                                                        "Delay_until_selected_datetime": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "authentication": {
+                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
+                                                            "clientId": "@parameters('S2SAppId')",
+                                                            "secret": "@parameters('S2SAppSecret')",
+                                                            "tenant": "@parameters('AADTenantId')",
+                                                            "type": "ActiveDirectoryOAuth"
+                                                        },
+                                                        "body": {
+                                                            "AllowPreviewVersion": true,
+                                                            "InstallOrUpdateNeededDependencies": true,
+                                                            "TargetVersion": "@{items('For_each_App_available_update')?['version']}",
+                                                            "UseEnvironmentUpdateWindow": false
+                                                        },
+                                                        "method": "POST",
+                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/@{items('For_each_App_available_update')?['appId']}/update"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "Update_Now": {
+                                            "case": "ConfirmRunNow",
+                                            "actions": {
+                                                "HTTP_-_Update_App_now": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "authentication": {
+                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
+                                                            "clientId": "@parameters('S2SAppId')",
+                                                            "secret": "@parameters('S2SAppSecret')",
+                                                            "tenant": "@parameters('AADTenantId')",
+                                                            "type": "ActiveDirectoryOAuth"
+                                                        },
+                                                        "body": {
+                                                            "AllowPreviewVersion": true,
+                                                            "InstallOrUpdateNeededDependencies": true,
+                                                            "TargetVersion": "@{items('For_each_App_available_update')?['version']}",
+                                                            "UseEnvironmentUpdateWindow": false
+                                                        },
+                                                        "method": "POST",
+                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/@{items('For_each_App_available_update')?['appId']}/update"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "default": {
+                                        "actions": {}
+                                    },
+                                    "expression": "@body('Parse_JSON_response')?['submitActionId']",
+                                    "type": "Switch"
+                                },
+                                "Parse_JSON_response": {
                                     "runAfter": {
                                         "Post_adaptive_card_and_wait_for_a_response": [
                                             "Succeeded"
@@ -189,7 +272,7 @@
                                     "inputs": {
                                         "body": {
                                             "body": {
-                                                "messageBody": "{\n    \"type\": \"AdaptiveCard\",\n    \"version\": \"1.4\",\n    \"hideOriginalBody\": true,\n    \"body\": [\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Environment:  @{parameters('EnvironmentName')}.\",\n            \"size\": \"Large\"\n        },\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Update to @{take(items('For_each')?['version'], 100)} is available for @{take(items('For_each')?['name'], 100)}.\",\n            \"size\": \"Medium\"\n        },\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Update now, schedule or review in the Admin Center\"\n        },\n        {\n            \"type\": \"FactSet\",\n            \"facts\": [\n                {\n                    \"title\": \"App Name\",\n                    \"value\": \"@{take(items('For_each')?['name'], 100)}\"\n                },\n                {\n                    \"title\": \"App ID\",\n                    \"value\": \"@{take(items('For_each')?['appId'], 100)}\"\n                },\n                {\n                    \"title\": \"Publisher\",\n                    \"value\": \"@{take(items('For_each')?['publisher'], 100)}\"\n                },\n                {\n                    \"title\": \"New Version\",\n                    \"value\": \"@{take(items('For_each')?['version'], 100)}\"\n                }\n            ]\n        }\n    ],\n    \"actions\": [\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Update Now\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Environment app update will be scheduled immediately.\"\n                    },\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Do you want to continue?\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmRunNow\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Schedule\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"Input.Date\",\n                        \"label\": \"Select date to schedule this update\",\n                        \"id\": \"dueDate\",\n                        \"value\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n                        \"min\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n                        \"max\": \"@{formatDateTime(addDays(utcnow(),+10,'dd-MMMM-yyyy'), 'yyyy-MM-dd')}\"\n                    },\n                    {\n                        \"type\": \"Input.Time\",\n                        \"label\": \"Select time to schedule this update (UTC)\",\n                        \"id\": \"dueTime\",\n                        \"value\": \"@{formatDateTime(utcNow(), 'HH:mm')}\",\n                        \"min\": \"00:00\",\n                        \"max\": \"23:59\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmSchedule\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"id\": \"Ignore\",\n            \"type\": \"Action.Submit\",\n            \"title\": \"Ignore\"\n        },\n        {\n            \"type\": \"Action.OpenUrl\",\n            \"title\": \"Open Admin Center\",\n            \"url\": \"@{concat('https://businesscentral.dynamics.com/', parameters('AADTenantId'), '/admin')}\"\n        }\n    ],\n    \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\"\n}",
+                                                "messageBody": "{\n    \"type\": \"AdaptiveCard\",\n    \"version\": \"1.4\",\n    \"hideOriginalBody\": true,\n    \"body\": [\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Environment:  @{parameters('EnvironmentName')}.\",\n            \"size\": \"Large\"\n        },\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Update to @{take(items('For_each_App_available_update')?['version'], 100)} is available for @{take(items('For_each_App_available_update')?['name'], 100)}.\",\n            \"size\": \"Medium\"\n        },\n        {\n            \"type\": \"TextBlock\",\n            \"text\": \"Update now, schedule or review in the Admin Center\"\n        },\n        {\n            \"type\": \"FactSet\",\n            \"facts\": [\n                {\n                    \"title\": \"App Name\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['name'], 100)}\"\n                },\n                {\n                    \"title\": \"App ID\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['appId'], 100)}\"\n                },\n                {\n                    \"title\": \"Publisher\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['publisher'], 100)}\"\n                },\n                {\n                    \"title\": \"New Version\",\n                    \"value\": \"@{take(items('For_each_App_available_update')?['version'], 100)}\"\n                }\n            ]\n        }\n    ],\n    \"actions\": [\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Update Now\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Environment app update will be scheduled immediately.\"\n                    },\n                    {\n                        \"type\": \"TextBlock\",\n                        \"text\": \"Do you want to continue?\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmRunNow\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"type\": \"Action.ShowCard\",\n            \"title\": \"Schedule\",\n            \"card\": {\n                \"type\": \"AdaptiveCard\",\n                \"version\": \"1.4\",\n                \"body\": [\n                    {\n                        \"type\": \"Input.Date\",\n                        \"label\": \"Select date to schedule this update\",\n                        \"id\": \"dueDate\",\n                        \"value\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n                        \"min\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n                        \"max\": \"@{formatDateTime(addDays(utcnow(),+10,'dd-MMMM-yyyy'), 'yyyy-MM-dd')}\"\n                    },\n                    {\n                        \"type\": \"Input.Time\",\n                        \"label\": \"Select time to schedule this update (UTC)\",\n                        \"id\": \"dueTime\",\n                        \"value\": \"@{formatDateTime(utcNow(), 'HH:mm')}\",\n                        \"min\": \"00:00\",\n                        \"max\": \"23:59\"\n                    }\n                ],\n                \"actions\": [\n                    {\n                        \"id\": \"ConfirmSchedule\",\n                        \"type\": \"Action.Submit\",\n                        \"title\": \"Confirm\"\n                    }\n                ]\n            }\n        },\n        {\n            \"id\": \"Ignore\",\n            \"type\": \"Action.Submit\",\n            \"title\": \"Ignore\"\n        },\n        {\n            \"type\": \"Action.OpenUrl\",\n            \"title\": \"Open Admin Center\",\n            \"url\": \"@{concat('https://businesscentral.dynamics.com/', parameters('AADTenantId'), '/admin')}\"\n        }\n    ],\n    \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\"\n}",
                                                 "recipient": {
                                                     "channelId": "@parameters('TeamsChannelId')",
                                                     "groupId": "@parameters('TeamsGroupId')"
@@ -205,99 +288,16 @@
                                         },
                                         "path": "/v1.0/teams/conversation/gatherinput/poster/Flow bot/location/@{encodeURIComponent('Channel')}/$subscriptions"
                                     }
-                                },
-                                "Switch": {
-                                    "runAfter": {
-                                        "Parse_JSON_2": [
-                                            "Succeeded"
-                                        ]
-                                    },
-                                    "cases": {
-                                        "Case": {
-                                            "case": "Ignore",
-                                            "actions": {}
-                                        },
-                                        "Case_2": {
-                                            "case": "ConfirmRunNow",
-                                            "actions": {
-                                                "HTTP_2": {
-                                                    "runAfter": {},
-                                                    "type": "Http",
-                                                    "inputs": {
-                                                        "authentication": {
-                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
-                                                            "clientId": "@parameters('S2SAppId')",
-                                                            "secret": "@parameters('S2SAppSecret')",
-                                                            "tenant": "@parameters('AADTenantId')",
-                                                            "type": "ActiveDirectoryOAuth"
-                                                        },
-                                                        "body": {
-                                                            "AllowPreviewVersion": true,
-                                                            "InstallOrUpdateNeededDependencies": true,
-                                                            "TargetVersion": "@{take(items('For_each')?['version'], 100)}",
-                                                            "UseEnvironmentUpdateWindow": false
-                                                        },
-                                                        "method": "POST",
-                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/@{take(items('For_each')?['appId'], 100)}/update"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "Case_3": {
-                                            "case": "ConfirmSchedule",
-                                            "actions": {
-                                                "Delay_until": {
-                                                    "runAfter": {},
-                                                    "type": "Wait",
-                                                    "inputs": {
-                                                        "until": {
-                                                            "timestamp": "@parseDateTime(concat(body('Parse_JSON_2')?['data']?['dueDate'], 'T', body('Parse_JSON_2')?['data']?['dueTime'], ':00Z'), 'UTC', 'yyyy-MM-ddTHH:mm:ssZ')"
-                                                        }
-                                                    }
-                                                },
-                                                "HTTP_3": {
-                                                    "runAfter": {
-                                                        "Delay_until": [
-                                                            "Succeeded"
-                                                        ]
-                                                    },
-                                                    "type": "Http",
-                                                    "inputs": {
-                                                        "authentication": {
-                                                            "audience": "996def3d-b36c-4153-8607-a6fd3c01b89f",
-                                                            "clientId": "@parameters('S2SAppId')",
-                                                            "secret": "@parameters('S2SAppSecret')",
-                                                            "tenant": "@parameters('AADTenantId')",
-                                                            "type": "ActiveDirectoryOAuth"
-                                                        },
-                                                        "body": {
-                                                            "AllowPreviewVersion": true,
-                                                            "InstallOrUpdateNeededDependencies": true,
-                                                            "TargetVersion": "@{take(items('For_each')?['version'], 100)}",
-                                                            "UseEnvironmentUpdateWindow": false
-                                                        },
-                                                        "method": "POST",
-                                                        "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/@{take(items('For_each')?['appId'], 100)}/update"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "default": {
-                                        "actions": {}
-                                    },
-                                    "expression": "@body('Parse_JSON_2')?['submitActionId']",
-                                    "type": "Switch"
                                 }
                             },
                             "runAfter": {
-                                "Parse_JSON": [
+                                "Parse_JSON_result": [
                                     "Succeeded"
                                 ]
                             },
                             "type": "Foreach"
                         },
-                        "HTTP": {
+                        "HTTP_-_Get_App_available_updates_for_environment": {
                             "runAfter": {},
                             "type": "Http",
                             "inputs": {
@@ -312,15 +312,15 @@
                                 "uri": "https://api.businesscentral.dynamics.com/admin/v2.15/applications/BusinessCentral/environments/@{parameters('EnvironmentName')}/apps/availableUpdates"
                             }
                         },
-                        "Parse_JSON": {
+                        "Parse_JSON_result": {
                             "runAfter": {
-                                "HTTP": [
+                                "HTTP_-_Get_App_available_updates_for_environment": [
                                     "Succeeded"
                                 ]
                             },
                             "type": "ParseJson",
                             "inputs": {
-                                "content": "@body('HTTP')",
+                                "content": "@body('HTTP_-_Get_App_available_updates_for_environment')",
                                 "schema": {
                                     "$schema": "http://json-schema.org/draft-04/schema#",
                                     "properties": {
