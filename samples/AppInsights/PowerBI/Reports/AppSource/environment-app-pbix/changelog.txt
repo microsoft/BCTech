@@ -18,8 +18,10 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage: On page 'Application area', Added new visual 'Application area usage by Environments'
 * Performance: on page 'Long running SQL', added visual with info on aad tenants impacted
 * Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
+* Errors: on page 'Job Queue Errors', added visual with detailed info (including job id and task id) for further troubleshooting
 * Administration: on Configuration page, changed order of parameter visuals, added EnvironmentDim visual
 * All four reports: turned on ability to download underlaying data from all visuals
+* All four reports: turned on to analyze further with KQL on all pages (currently only enabled on a few pages in the Performance report)
 
 
 2022-11-07
