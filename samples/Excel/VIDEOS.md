@@ -23,6 +23,13 @@ Watch this 8 min video from Microsoft MVP Kristen Hosman to learn how to create 
 <br>
 </p>
 
+## Diseña tus reports de Business Central en Excel (in Spanish) (7:30 min)
+Watch this 7 min video from Microsoft Trainer Roberto Corella on how to create an Excel layout: En este video tutorial aprenderás a crearte un informe personalizado en Excel de cualquiera de los reports existentes en Business Central y adaptarlo a tu gusto.  Posteriormente lo puedes importar fácilmente para generarlo cuando lo necesites o ponerlo como layout por defecto, para que siempre se descargue en excel con ese formato. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=wfk_1Curxog"><img src="https://img.youtube.com/vi/wfk_1Curxog/0.jpg" width="50%"></a>
+<br>
+</p>
+
 
 
 # Disclaimer
