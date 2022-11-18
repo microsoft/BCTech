@@ -18,6 +18,8 @@ Note that you can use all of these features on the report once it has been gener
 ## There must be blog posts on this from the community. Where are they?
 Sure. Here are some links to get you started:
 
+2022-11-18, _HOW DO I: CREATE AN EXCEL LAYOUT REPORT?_ by Steven Renders
+https://thinkaboutit.be/2022/11/how-do-i-create-an-excel-layout-report/
 
 2022-08-24, _D365 Business Central : Using Excel Layout for Reporting_ by THATNAVGUY
 https://thatnavguy.com/d365-business-central-using-excel-layout-for-reporting/
