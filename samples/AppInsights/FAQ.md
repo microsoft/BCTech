@@ -25,25 +25,15 @@ Here is a quote from a partner using telemetry:
 _We have been using telemetry for some months now and have enabled 20+ apps as well as environment data from dev systems and build pipelines. Last month we ingested 800+ traces that corresponded to 2.3GB of data. Eventually we might hit some of those thresholds, but then we can decide if we want to spend money on telemetry (probably will) and how much. With our current setup, we will probably limit ingestion and once that no longer suffices, we will add sampling to the mix._
 
 ## How can I control cost?
-See our documentation here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
+See our documentation here: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-control-cost
 
-In August 2022, the Azure Monitor made a new feature available (in preview) called *Data Collection Rules*. This allows you to define rules on what is ingested into your telemetry resource. 
+In August 2022, the Azure Monitor made a new feature available called *Data Collection Rules*. This allows you to define rules on what is ingested into your telemetry resource. 
  
 These two blog posts by Business Central community telemetry experts Bert Verbeek and Stefano Demiliani
 * https://www.bertverbeek.nl/blog/2022/08/10/save-cost-on-your-telemetry/
 * https://demiliani.com/2022/08/09/dynamics-365-business-central-filtering-telemetry-signals-with-azure-monitor-data-collection-rules/
 
 go into a lot of details on how this works. When the feature is made generally available, we will add similar guidance to the official Business Central documentation.
-
-To help you get started with setting up Data Collection Rules, we added a number of sample KQL queries that illustrates common filter scenarios:
-* how to filter out one or more events (I don't need these, no need to pay for them)
-* how to only filter part of an event (I only want to see events when this fails or I only want 10% of these events)
-* how to filter on AAD tenant (I am an ISV and I want to start slowly on telemetry, so only enabling it for a few customers)
-* how to filter on environment type (I am an ISV and I only want data from production environments)
-* how to filter on app dimensions (I am a VAR and this app/publisher is too noisy)
-
-See the sample queries here: [DataCollectionRules](KQL/Queries/DataCollectionRules)
-
 
 You can use this KQL query [MonthlyIngestion.kql](KQL/Queries/HelperQueries/MonthlyIngestion.kql) to see the data distribution of different event ids in your telemetry database.
 

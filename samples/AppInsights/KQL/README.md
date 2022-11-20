@@ -1,34 +1,16 @@
 In this folder, you will find samples of Kusto Query Language (KQL) for each type of signal that is sent to Application Insights.
 
 # Where can I use Kusto Queries?
-You can use Kusto queries as the data source in a number of places. E.g.
-* the Logs part of Application Insights in the Azure portal
-* PowerBI reports
-* Azure Monitor Alerts
-* Azure Dashboards
-* Jupyter Notebooks (with the Kqlmagic extension)
+Read more here in docs:
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-analyze-with-kql
 
 # Where can I learn more about KQL?
-Here are some resources for you to get started on Kusto Query Language (KQL). Use CTRL+click to open them in a new browser tab/window.
-* [Kusto Query Language Overview](https://docs.microsoft.com/en-us/azure/kusto/query/)
-* [Kusto Query Language Tutorial](https://docs.microsoft.com/en-us/azure/kusto/query/tutorial)
-* [I know SQL. How do I do that in KQL?](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
-* [Kusto Query Language (KQL) from Scratch (Pluralsight course, requires subscription)](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch)
-* [Microsoft Azure Data Explorer - Advanced KQL (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-explorer-advanced-query-capabilities/table-of-contents)
-* [How can I query multiple Application Insights resources from the same Kusto query? (blog post by Microsoft MVP Stefano Demiliani)](https://demiliani.com/2022/03/01/querying-telemetries-from-multiple-application-insights-instances/)
+Read more here in docs:
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-analyze-with-kql
 
 # Which tools can I use (KQL editors and clients)?
-You can write and execute KQL in various tools. E.g.
-* [Azure Data Explorer](https://dataexplorer.azure.com). Here is [How to connect to Application Insights in Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
-* In a Jupyter notebook hosted in [Azure Data Studio](https://github.com/microsoft/BCTech/tree/master/samples/AppInsights/TroubleShootingGuides#what-is-azure-data-studio)
-* In a Jupyter notebook hosted in Visual Studio Code (with the Python and Jupyter Notebooks extensions installed)
-* Application Insights portal (Under *Logs* in the *Monitoring* menu)
-* PowerShell (using the REST api). See an example here: [Powershell samples](../Powershell)
-* [Kusto Explorer (desktop application)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer). Here is [How to connect to Application Insights in Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/query-monitor-data)
-
-Note that for Kusto Explorer, you can   
-* either use the cluster URL `https://ade.applicationinsights.io/subscriptions/<subscription-id>/resourcegroups/<resource-group-name>/providers/microsoft.insights/components/<ai-app-name>` (where <ai-app-name> is the name of the resource), or 
-* just specify `https://ade.applicationinsights.io/subscriptions/<subscription-id>` to see all databases in the subscription.
+Read more here in docs:
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-analyze-with-kql
 
 # What signal is available in which version?
 Signal is added incrementally to Business Central. In this table you can see in which version or update a class of signal was added/modified:
