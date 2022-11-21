@@ -10,12 +10,12 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
-
 * Performance: BCLE page
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage: On page 'Application area', Added new visual 'Application area usage by Environments'
+* Usage: On pages 'Page views', 'Reports', and 'Feature Usage', Added new visuals 'X by Publisher' and 'X by Extension Version'
 * Performance: on page 'Long running SQL', added visual with info on aad tenants impacted
 * Performance: New page added: Performance events
 * Performance: New page added: Environment updates
