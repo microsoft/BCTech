@@ -2,10 +2,9 @@
 
 // httpHeaders and httpStatusCode only available from 16.3
 traces
-| where 1==1
-//and timestamp  > ago(14d)
-and customDimensions.eventId == 'RT0008'
-and customDimensions.category == 'ODataV4'
+| where timestamp  > ago(14d) // adjust as needed
+| where customDimensions.eventId == 'RT0008'
+| where customDimensions.category == 'ODataV4'
 // httpHeaders and httpStatusCode only available from 16.3
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
@@ -16,14 +15,14 @@ and customDimensions.category == 'ODataV4'
     msUserAgent has 'BusinessCentralLinkUnfurlingTeamsBot' or
     msUserAgent has 'TeamsIntegrationService'
 | extend httpStatusCode = customDimensions.httpStatusCode
-, aadID = customDimensions.aadTenantId
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , endpoint = customDimensions.endpoint
-, isMsConnector
+, IsMsConnector
 , connector = case( 
 // ms-dyn-useragent=AzureConnector/1.0 Flow/1.0 DynamicsSmbSaas/1.0.0.0
 msUserAgent matches regex 'AzureConnector/(.)+Flow', 'Power Automate'
@@ -40,4 +39,4 @@ msUserAgent matches regex 'AzureConnector/(.)+Flow', 'Power Automate'
 , msUserAgent has 'AzureConnector', 'Unknown Azure connector'
 , 'Unknown connector' 
 )
-| project timestamp, msUserAgent, httpStatusCode, aadID, environmentName, environmentType, isMsConnector, connector, endpoint, alObjectId, alObjectName, message
+| project timestamp, msUserAgent, httpStatusCode, aadTenantId, environmentName, environmentType, IsMsConnector, connector, endpoint, alObjectId, alObjectName, message
