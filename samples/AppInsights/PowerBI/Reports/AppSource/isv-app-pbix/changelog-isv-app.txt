@@ -16,7 +16,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance report: Added ability to do version-to-version comparisons on 'Updates' page
 * All four reports: turned on ability to download underlaying data from all visuals
 * All four reports: turned on to analyze further with KQL on all pages
-Done: Administration, Performance
+Done: Administration, Performance, Errors
 
 
 ------------------
