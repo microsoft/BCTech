@@ -1,6 +1,6 @@
 TODO
-* Performance: BCLE page
-* Performance report: Added number of columns to SQL statements visual on Long Running SQL page
+* Performance: BCPT page (pending release of BCPT signal)
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
@@ -12,7 +12,11 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Administration: on Inventory page, added domain to 'Apps by environment' visual (GitHub issue #146)
 * Administration: on AppsourceValidations page, added date filter and 'requests by date' visual (GitHub issue #162)
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
+* Performance report: Added 'number of columns' and 'Take locks' fields to SQL statements visual on Long Running SQL page
+* Performance report: Added ability to do version-to-version comparisons on 'Updates' page
 * All four reports: turned on ability to download underlaying data from all visuals
+* All four reports: turned on to analyze further with KQL on all pages
+Done: Administration, Performance
 
 
 ------------------
