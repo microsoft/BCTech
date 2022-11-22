@@ -7,6 +7,7 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Usage: On pages 'Page views', 'Reports', and 'Feature Usage', Added new visuals 'X by Publisher' and 'X by Extension Version'
+* Usage: On pages 'Clients', 'Locations', 'Reports', 'Feature Usage', 'Integrations', 'Keyvault' added new visuals 'X by app'
 * Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace
 * Administration: on Configuration page, changed order of parameter visuals, added EnvironmentDim visual
 * Administration: on Inventory page, added domain to 'Apps by environment' visual (GitHub issue #146)
@@ -16,7 +17,6 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance report: Added ability to do version-to-version comparisons on 'Updates' page
 * All four reports: turned on ability to download underlaying data from all visuals
 * All four reports: turned on to analyze further with KQL on all pages
-Done: Administration, Performance, Errors
 
 
 ------------------
