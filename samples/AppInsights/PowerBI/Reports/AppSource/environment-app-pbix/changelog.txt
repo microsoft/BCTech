@@ -1,16 +1,17 @@
 Ideas
-* Usage: Feature uptake page
+* Errors: Add AL stacktrace to failed job queue page (when available - pending app team bugfix)
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
+* Usage: Feature uptake page
 * Administration: Permission set changes
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Errors: Add recurring failing task scheduler/job queue jobs to recommendations
-* Errors: Add AL stacktrace to failed job queue page (when available - pending app team)
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
 * Performance: BCLE page
+* Performance: on page 'Reports', tuned data load. Also added per-app visual and added sum time. Enhanced description with better tuning advice.
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
@@ -23,8 +24,8 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: on page 'Job Queue Errors', added visual with detailed info (including job id and task id) for further troubleshooting
 * Administration: on Configuration page, changed order of parameter visuals, added EnvironmentDim visual
 * All four reports: turned on ability to download underlaying data from all visuals
-* All four reports: turned on to analyze further with KQL on all pages (currently only enabled on a few pages in the Performance report)
-
+* All four reports: turned on to analyze further with KQL on all pages
+* Dataset: tuned all KQL queries. Impact is up to 5x faster refresh time.
 
 2022-11-07
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
