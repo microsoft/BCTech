@@ -6,6 +6,7 @@ To make it easier to adopt telemetry for Business Central, we added a number of 
 | in sales | Base follow-up meetings with customers on data to provide more value | [Follow up customer meeting.pptx](<./decks/Follow up customer meeting.pptx>)  |
 | all over the business | Introduce telemetry to the organization | [AppInsights telemetry for Business Central partners.pptx](<./decks/AppInsights telemetry for Business Central partners.pptx>) |
 | strategic | Learn how we use telemetry (we have just enabled it) | [Using telemetry to improve your partner practices and processes.pptx](<./decks/Using telemetry to improve your partner practices and processes.pptx>) |
+| as a trainer | Help partners/collegues get more data-driven with telemetry | [Hands-On Lab About Telemetry](<./decks/Hands-On Lab About Telemetry.pptx>) |
 
 
 # Disclaimer
