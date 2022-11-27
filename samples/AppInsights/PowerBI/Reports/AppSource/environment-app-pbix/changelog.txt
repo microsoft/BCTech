@@ -49,6 +49,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Error report: on login errors page, added info about session type (UI, WS, or background)
 * Dataset: fixed min/max in Dates dimension (some day-of-week visuals showed empty weekday)
 * Dataset: added support for defining an include list of environments
+           Format is {"include":[{"AAD tenant id":"<aad tenant id 1>","Name":"<environment name 1>"}, {"AAD tenant id":"<aad tenant id 2>","Name":"<environment name 2>"}]}
 * Performance: on Database lock timeouts page, added environment visual, fixed alignment on other visuals
 * Performance: on Sessions page, added environment visual, added session type to per-client visual
 * Performance: on pages "Database lock timeouts", "Long running SQL", and "Long running AL", added visual with info on bottom line of the stack trace
