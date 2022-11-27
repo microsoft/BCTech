@@ -107,6 +107,7 @@ Timeouts
 , alSessionIdHoldingLock = customDimensions.sessionId
 , extensionNameHoldingLock = customDimensions.extensionName
 , extensionVersionHoldingLock = customDimensions.extensionVersion
+, clientTypeHoldingLock = customDimensions.clientType
 )
 on$left.snapshotId == $right.snapshotId
 | order by snapshotId
