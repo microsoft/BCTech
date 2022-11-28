@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net472</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentFTP" Version="42.0.2" />
+		<PackageReference Include="Json.Net" Version="1.0.33" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\BCAgentCommon\BCAgentCommon.csproj" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<FilesToDeploy Include="$(TargetDir)\*.dll" />
+			<FilesToDeploy Include="$(TargetDir)\*.pdb" />
+			<FilesToDeploy Include="$(TargetDir)\*.config" />
+		</ItemGroup>
+		<Message Text="Deploying plugin ..." />
+		<Copy SourceFiles="@(FilesToDeploy)" DestinationFolder="$(MSBuildProjectDirectory)\..\..\BCAgent\$(OutDir)\Plugins" SkipUnchangedFiles="true" />
+	</Target>
+</Project>
+

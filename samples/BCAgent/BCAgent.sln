@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29306.81
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCAgentRequestDispatcher", "BCAgentRequestDispatcher\BCAgentRequestDispatcher.csproj", "{62A90F43-D989-45BD-84E0-5359B9BEEFEF}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystemPlugin", "Plugins\FileSystemPlugin\FileSystemPlugin.csproj", "{0DC3CFCD-8419-4392-AFE4-8245103BD67F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCAgentService", "BCAgentService\BCAgentService.csproj", "{947BFC68-FE11-4ED6-86A4-482B7FDD8A1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTPPlugin", "Plugins\FTPPlugin\FTPPlugin.csproj", "{F1BD47A5-67E4-4D6D-B576-7A1E659CEC32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{947BFC68-FE11-4ED6-86A4-482B7FDD8A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{947BFC68-FE11-4ED6-86A4-482B7FDD8A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{947BFC68-FE11-4ED6-86A4-482B7FDD8A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1BD47A5-67E4-4D6D-B576-7A1E659CEC32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BD47A5-67E4-4D6D-B576-7A1E659CEC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1BD47A5-67E4-4D6D-B576-7A1E659CEC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1BD47A5-67E4-4D6D-B576-7A1E659CEC32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{D36E7F07-C0AE-4289-842F-889BB986C876} = {2F5D5C85-935B-4A0C-ADCD-56D736C0A807}
 		{5024FE34-27A9-4597-A5A8-F53FECAFE6AB} = {2F5D5C85-935B-4A0C-ADCD-56D736C0A807}
 		{0DC3CFCD-8419-4392-AFE4-8245103BD67F} = {2F5D5C85-935B-4A0C-ADCD-56D736C0A807}
+		{F1BD47A5-67E4-4D6D-B576-7A1E659CEC32} = {2F5D5C85-935B-4A0C-ADCD-56D736C0A807}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF18E50B-B96E-41B3-B63D-578DC36A27D6}

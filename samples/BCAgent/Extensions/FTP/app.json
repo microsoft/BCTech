@@ -1,10 +1,10 @@
 {
-  "id": "35bf425f-02c0-4185-99c2-f0c7f7351a51",
-  "name": "FileSystem",
-  "publisher": "BCTech",
-  "version": "1.0.0.0",
-  "brief": "Access to local file system throught the BC Agent",
-  "description": "",
+  "id": "103a8d64-4ff0-4708-8625-b56ed7ec2698",
+  "name": "BC FTP",
+  "publisher": "Dave Sinclair",
+  "version": "20.0.25525.0",
+  "brief": "",
+  "description": "FTP using BCAgent",
   "privacyStatement": "",
   "EULA": "",
   "help": "",
@@ -15,14 +15,14 @@
       "id": "71850005-df68-4f02-9458-818be2af3b41",
       "name": "AzureServiceBusLibrary",
       "publisher": "BCTech",
-      "version": "1.0.0.0"
+      "version": "1.0.0.0"     
     }
   ],
   "screenshots": [],
-  "application": "20.0.0.0",
   "platform": "20.0.0.0",
+  "application": "20.0.0.0",
+  "runtime": "8.0",
   "resourceExposurePolicy": {
     "allowDebugging": true
-  },
-  "runtime": "8.0"
+  }
 }
