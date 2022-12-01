@@ -6,6 +6,11 @@ TODO
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* todo
+
+------------------
+2022-12-01 release
+------------------
 * Usage: On pages 'Page views', 'Reports', and 'Feature Usage', Added new visuals 'X by Publisher' and 'X by Extension Version'
 * Usage: On pages 'Clients', 'Locations', 'Reports', 'Feature Usage', 'Integrations', 'Keyvault' added new visuals 'X by app'
 * Errors: on page 'Error dialogs', added visuals with info on top/bottom line of the stack trace

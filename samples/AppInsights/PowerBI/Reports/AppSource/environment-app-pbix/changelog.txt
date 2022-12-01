@@ -10,11 +10,18 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
-* Performance: BCLE page
+* Performance: BCPT page
 * Performance: on page 'Reports', tuned data load. Also added per-app visual and added sum time. Enhanced description with better tuning advice.
+
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+* Performance: On page 'Environment updates', added Date/time and fixed broken analyze in KQL visual
+* Performance: On page 'Long Running SQL queries', fixed broken analyze in KQL visual
+* Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using "set notruncation;" in all KQL queries to remove 500k row limits
+
+
+2022-12-01
 * Usage: On page 'Application area', Added new visual 'Application area usage by Environments'
 * Usage: On pages 'Page views', 'Reports', and 'Feature Usage', Added new visuals 'X by Publisher' and 'X by Extension Version'
 * Performance: on page 'Long running SQL', added visual with info on aad tenants impacted
@@ -26,6 +33,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * All four reports: turned on ability to download underlaying data from all visuals
 * All four reports: turned on to analyze further with KQL on all pages
 * Dataset: tuned all KQL queries. Impact is up to 5x faster refresh time.
+
 
 2022-11-07
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
