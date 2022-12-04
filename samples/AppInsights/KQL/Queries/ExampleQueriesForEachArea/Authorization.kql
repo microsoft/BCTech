@@ -4,12 +4,12 @@
 // move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
 
 // successful authorization prior to openCompany trigger (raw data)
-// in this phase of the login process, we check entitlements (license)
+// in this phase of the login process, we check customDimensions.entitlementSetIds (license)
 // this is not emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Authorization Succeeded (Pre Open Company)"  // do note that in a later version of the schema, this field will not be used (a new field in custom dimensions will be used)
-     or customDimensions.eventId == "RT0003" // starting from version 16.1, the eventId is used to identity signal types
+     or customDimensions.eventId has "RT0003" and customDimensions.eventId == "RT0003" // starting from version 16.1, the eventId is used to identity signal types
 | project aadTenantId = customDimensions.aadTenantId
 , eventId = customDimensions.eventId 
 , environmentName = customDimensions.environmentName
@@ -22,9 +22,21 @@ traces
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
+// see https://learn.microsoft.com/en-us/azure/active-directory/enterprise-users/licensing-service-plan-reference
+, userLicenseType = case(
+    customDimensions.entitlementSetIds has 'd397d6c6-9664-4502-b71c-66f39c400ca4', 'DYN365_BUSCENTRAL_ENVIRONMENT'
+  , customDimensions.entitlementSetIds has '920656a2-7dd8-4c83-97b6-a356414dbd36', 'DYN365_FINANCIALS_BUSINESS'
+  , customDimensions.entitlementSetIds has '170991d7-b98e-41c5-83d4-db2052e1795f', 'DYN365_FINANCIALS_ACCOUNTANT'
+  , customDimensions.entitlementSetIds has '3f2afeed-6fb5-4bf9-998f-f2912133aead', 'PROJECT_MADEIRA_PREVIEW_IW'
+  , customDimensions.entitlementSetIds has '8e9002c0-a1d8-4465-b952-817d2948e6e2', 'DYN365_BUSCENTRAL_PREMIUM'
+  , customDimensions.entitlementSetIds has 'd9a6391b-8970-4976-bd94-5f205007c8d8', 'DYN365_FINANCIALS_TEAM_MEMBERS'
+  , customDimensions.entitlementSetIds has 'API.ReadWrite.All', 'API'
+  , 'UNKNOWN'
+)
+
 
 // failed authorization prior to openCompany trigger (raw data)
-// in this phase of the login process, we check entitlements (license)
+// in this phase of the login process, we check customDimensions.entitlementSetIds (license)
 // this is not emitted for on-premises environments
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -37,7 +49,7 @@ traces
 , guestUser = customDimensions.guestUser
 , userType = customDimensions.userType
 , failureReason = customDimensions.failureReason
-, entitlementSetIds = customDimensions.entitlementSetIds
+, customDimensions.entitlementSetIdsetIds = customDimensions.customDimensions.entitlementSetIdsetIds
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
@@ -100,6 +112,7 @@ let authStepOne =
 traces
 | where 1==1 
 and timestamp > ago(1d) // adjust as needed
+| where customDimensions has 'RT0001' or customDimensions has 'RT0003' // performance optimization
 | where customDimensions.eventId in ('RT0001', 'RT0003')
 | extend aadTenantId = tostring( customDimensions.aadTenantId)
 , environmentName = tostring( customDimensions.environmentName)
@@ -121,6 +134,7 @@ let authStepTwo =
 traces
 | where 1==1 
 and timestamp > ago(1d) // adjust as needed
+| where customDimensions has 'RT0002' or customDimensions has 'RT0004' // performance optimization
 | where customDimensions.eventId in ('RT0002', 'RT0004')
 | extend clientType = tostring(customDimensions.clientType)
 | project timestamp
