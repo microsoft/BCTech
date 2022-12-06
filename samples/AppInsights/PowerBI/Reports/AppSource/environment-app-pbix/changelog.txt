@@ -10,7 +10,7 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
-* Performance: BCPT page
+
 * Performance: on page 'Reports', tuned data load. Also added per-app visual and added sum time. Enhanced description with better tuning advice.
 * Usage: add license type on sessions page
 
@@ -19,6 +19,7 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page 'Environment updates', added Date/time and fixed broken analyze in KQL visual
 * Performance: On page 'Long Running SQL queries', fixed broken analyze in KQL visual
+* Performance: new page showing Performance Toolkit (BCPT) data.
 * Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
 
 
