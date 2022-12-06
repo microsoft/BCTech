@@ -63,7 +63,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Dependency cycle discovered in permission sets | 2022 release wave 1 (20.2) | KQL sample ready, (pending link to release note) |
 | Client page views (for on-premises) | 2022 release wave 2 (21.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 | Azure function integration | 2022 release wave 2 (21.0) | (pending link to docs) |
-| Performance Toolkit | 2022 release wave 2 (21.x) | (pending link to docs)) |
+| Performance Toolkit | 2022 release wave 2 (21.3) | KQL sample ready, pending link to docs |
 
 
 # Disclaimer
