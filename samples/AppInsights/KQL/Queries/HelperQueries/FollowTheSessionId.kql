@@ -1,0 +1,7 @@
+// use this query to follow along what happens in a single session. Can be useful when troubleshooting.
+traces
+| where timestamp >= datetime(2021-01-08 10:00:18.0587533) // adjust as needed
+| where timestamp <= datetime(2021-01-08 16:29:18.0587533) // adjust as needed
+| where operation_Id == '<insert session id here>'
+| project timestamp, message
+| order by timestamp asc
