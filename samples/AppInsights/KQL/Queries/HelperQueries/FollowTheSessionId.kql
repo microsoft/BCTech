@@ -3,5 +3,9 @@ traces
 | where timestamp >= datetime(2021-01-08 10:00:18.0587533) // adjust as needed
 | where timestamp <= datetime(2021-01-08 16:29:18.0587533) // adjust as needed
 | where operation_Id == '<insert session id here>'
-| project timestamp, message
+| extend eventId = customDimensions.eventId 
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+| project timestamp, eventId, operation_Id, message, alObjectId, alObjectName, alObjectType, customDimensions
 | order by timestamp asc
