@@ -17,7 +17,7 @@ Ideas
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
-* Errors: Job Queue errors - added link to Page 673 "Job Queue Entry Card" in Business Central (Online) with filter on ID
+* Errors: Job Queue errors - added link to Page 673 'Job Queue Entry Card' in Business Central (Online) with filter on ID
 * Performance: On page 'Environment updates', added Date/time and fixed broken analyze in KQL visual
 * Performance: On page 'Long Running SQL queries', fixed broken analyze in KQL visual
 * Performance: new page showing Performance Toolkit (BCPT) data.
