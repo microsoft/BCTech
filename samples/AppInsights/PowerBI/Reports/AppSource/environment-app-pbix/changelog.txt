@@ -10,7 +10,6 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
-* Errors: Job Queue errors - add link to Page 673 "Job Queue Entry Card" in Business Central (Online) with filter on ID
 
 * Performance: on page 'Reports', tuned data load. Also added per-app visual and added sum time. Enhanced description with better tuning advice.
 * Usage: add license type on sessions page
@@ -18,11 +17,12 @@ Ideas
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+* Errors: Job Queue errors - added link to Page 673 "Job Queue Entry Card" in Business Central (Online) with filter on ID
 * Performance: On page 'Environment updates', added Date/time and fixed broken analyze in KQL visual
 * Performance: On page 'Long Running SQL queries', fixed broken analyze in KQL visual
 * Performance: new page showing Performance Toolkit (BCPT) data.
 * Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
-
+* Dataset: Tuned data load for queries PageViewPerformance
 
 2022-12-01
 * Usage: On page 'Application area', Added new visual 'Application area usage by Environments'
