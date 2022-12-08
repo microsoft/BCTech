@@ -10,6 +10,7 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
+* Errors: Job Queue errors - add link to Page 673 "Job Queue Entry Card" in Business Central (Online) with filter on ID
 
 * Performance: on page 'Reports', tuned data load. Also added per-app visual and added sum time. Enhanced description with better tuning advice.
 * Usage: add license type on sessions page
