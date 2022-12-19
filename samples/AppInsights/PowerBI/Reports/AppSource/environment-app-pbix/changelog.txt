@@ -22,7 +22,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page 'Long Running SQL queries', fixed broken analyze in KQL visual
 * Performance: new page showing Performance Toolkit (BCPT) data.
 * Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
-* Dataset: Tuned data load for queries PageViewPerformance, FeatureUsage, AuthenticationWithWebServiceKey, FeatureErrors
+* Dataset: Tuned data load for queries PageViewPerformance, FeatureUsage, AuthenticationWithWebServiceKey, FeatureErrors, IncomingWebServiceErrors
 
 2022-12-01
 * Usage: On page 'Application area', Added new visual 'Application area usage by Environments'
