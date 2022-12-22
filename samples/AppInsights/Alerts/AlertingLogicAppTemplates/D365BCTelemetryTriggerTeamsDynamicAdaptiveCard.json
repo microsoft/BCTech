@@ -1,0 +1,288 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_D365BCTelemetryTriggerTeamsAdaptiveCard_name": {
+            "defaultValue": "D365BCTelemetryTriggerTeamsAdaptiveCard",
+            "type": "String"
+        },
+        "connections_azuremonitorlogs_externalid": {
+            "defaultValue": "/subscriptions/SUBSCRIPTIONID/resourceGroups/YOURRESOURCEGROUP/providers/Microsoft.Web/connections/azuremonitorlogs",
+            "type": "String"
+        },
+        "connections_teams_externalid": {
+            "defaultValue": "/subscriptions/SUBSCRIPTIONID/resourceGroups/YOURRESOURCEGROUP/providers/Microsoft.Web/connections/teams",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_D365BCTelemetryTriggerTeamsAdaptiveCard_name')]",
+            "location": "westeurope",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": 1
+                            },
+                            "evaluatedRecurrence": {
+                                "frequency": "Day",
+                                "interval": 1
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Append_column_header_to_Object_ID_JSON": {
+                            "runAfter": {
+                                "Append_column_header_to_Object_Type_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "AppendToArrayVariable",
+                            "inputs": {
+                                "name": "Object ID JSON",
+                                "value": {
+                                    "text": "Object ID",
+                                    "type": "TextBlock",
+                                    "weight": "bolder"
+                                }
+                            }
+                        },
+                        "Append_column_header_to_Object_Type_JSON": {
+                            "runAfter": {
+                                "Initialize_Object_ID_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "AppendToArrayVariable",
+                            "inputs": {
+                                "name": "Object Type JSON",
+                                "value": {
+                                    "text": "Object Type",
+                                    "type": "TextBlock",
+                                    "weight": "bolder"
+                                }
+                            }
+                        },
+                        "Check_failed_job_queue_tasks": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "let job_queue_errors = \ntraces\n| where  timestamp > ago(1d)\n| where customDimensions.eventId == 'AL0000HE7'\n| where isnotempty(customDimensions.aadTenantId) // filter away signal from Docker sandboxes\n| extend \n  AadTenantId = tostring( customDimensions.aadTenantId )\n, EnvironmentName = tostring( customDimensions.environmentName )\n, EnvironmentType = tostring( customDimensions.environmentType )\n, ObjectId = toint(customDimensions.alJobQueueObjectId)\n| extend TenantId = strcat( toupper(AadTenantId), toupper(EnvironmentName) )\n| project timestamp\n, AadTenantId, EnvironmentName, EnvironmentType, TenantId\n, PlatformVersion = tostring( customDimensions.componentVersion )\n, ObjectId\n, ObjectType = customDimensions.alJobQueueObjectType\n, CodeOwnershipKey = case(\n      ObjectId between (50000 .. 99999), 'ENVIRONMENT'\n    , ObjectId between (1000000 .. 69999999), 'ISV_ONPREM'\n    , ObjectId between (70000000 .. 74999999), 'ISV_ONLINE'\n    , 'MICROSOFT'\n)\n, TaskId = tostring( customDimensions.alJobQueueScheduledTaskId )\n;\nlet task_scheduler_errors = \ntraces\n| where timestamp >= ago(30d) // adjust as needed\n| where customDimensions.eventId == 'LC0045'\n| project TaskId = tostring( customDimensions.taskId )\n, exception = customDimensions.failureReason\n, retryMessage = tostring( customDimensions.retryMessage )\n| extend exceptionIsRetriable = case (\n    retryMessage has 'Exception is not retriable', false\n  , retryMessage has 'Exception is retriable', true\n  , false\n)\n| project-away retryMessage \n;\njob_queue_errors\n| join kind=leftouter task_scheduler_errors on $left.TaskId == $right.TaskId\n| project-away TaskId, TaskId1\n| where CodeOwnershipKey <> 'MICROSOFT'",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuremonitorlogs']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/queryData",
+                                "queries": {
+                                    "resourcegroups": "APPLICATIONINSIGHTSRESOURCEGROUP",
+                                    "resourcename": "APPLICATIONINSIGHTSINSTANCENAME",
+                                    "resourcetype": "Application Insights",
+                                    "subscriptions": "SUBSCRIPTIONID",
+                                    "timerange": "Set in query"
+                                }
+                            }
+                        },
+                        "Compose_Adaptive_Card_JSON": {
+                            "runAfter": {
+                                "For_each_record_returned_by_the_KQL_query": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Compose",
+                            "inputs": {
+                                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                "actions": [],
+                                "body": [
+                                    {
+                                        "items": [
+                                            {
+                                                "size": "Medium",
+                                                "text": "D365BC JOB QUEUE ALERTS",
+                                                "type": "TextBlock",
+                                                "weight": "Bolder"
+                                            }
+                                        ],
+                                        "type": "Container"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "text": "These are the daily job queue tasks failed:",
+                                                "type": "TextBlock",
+                                                "wrap": true
+                                            }
+                                        ],
+                                        "type": "Container"
+                                    },
+                                    {
+                                        "columns": [
+                                            {
+                                                "items": "@variables('Object Type JSON')",
+                                                "type": "Column",
+                                                "width": "200px"
+                                            },
+                                            {
+                                                "items": "@variables('Object ID JSON')",
+                                                "type": "Column",
+                                                "width": "stretch"
+                                            }
+                                        ],
+                                        "type": "ColumnSet"
+                                    }
+                                ],
+                                "type": "AdaptiveCard",
+                                "version": "1.3"
+                            }
+                        },
+                        "For_each_record_returned_by_the_KQL_query": {
+                            "foreach": "@body('Check_failed_job_queue_tasks')?['value']",
+                            "actions": {
+                                "Append_to_Object_ID_JSON": {
+                                    "runAfter": {
+                                        "Append_to_Object_Type_JSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "AppendToArrayVariable",
+                                    "inputs": {
+                                        "name": "Object ID JSON",
+                                        "value": "@outputs('Compose_Object_ID_JSON')"
+                                    }
+                                },
+                                "Append_to_Object_Type_JSON": {
+                                    "runAfter": {
+                                        "Compose_Object_ID_JSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "AppendToArrayVariable",
+                                    "inputs": {
+                                        "name": "Object Type JSON",
+                                        "value": "@outputs('Compose_Object_Type_JSON')"
+                                    }
+                                },
+                                "Compose_Object_ID_JSON": {
+                                    "runAfter": {
+                                        "Compose_Object_Type_JSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Compose",
+                                    "inputs": {
+                                        "text": "@{items('For_each_record_returned_by_the_KQL_query')?['ObjectId']}",
+                                        "type": "TextBlock"
+                                    }
+                                },
+                                "Compose_Object_Type_JSON": {
+                                    "runAfter": {},
+                                    "type": "Compose",
+                                    "inputs": {
+                                        "text": "@{items('For_each_record_returned_by_the_KQL_query')?['ObjectType']}",
+                                        "type": "TextBlock"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Append_column_header_to_Object_ID_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Initialize_Object_ID_JSON": {
+                            "runAfter": {
+                                "Initialize_Object_Type_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Object ID JSON",
+                                        "type": "array"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_Object_Type_JSON": {
+                            "runAfter": {
+                                "Check_failed_job_queue_tasks": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "Object Type JSON",
+                                        "type": "array"
+                                    }
+                                ]
+                            }
+                        },
+                        "Post_adaptive_card_in_a_chat_or_channel": {
+                            "runAfter": {
+                                "Compose_Adaptive_Card_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "messageBody": "@{outputs('Compose_Adaptive_Card_JSON')}",
+                                    "recipient": {
+                                        "channelId": "CHANNEL_ID",
+                                        "groupId": "TEAMS_GROUP_ID"
+                                    }
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['teams']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/v1.0/teams/conversation/adaptivecard/poster/Flow bot/location/@{encodeURIComponent('Channel')}"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azuremonitorlogs": {
+                                "connectionId": "[parameters('connections_azuremonitorlogs_externalid')]",
+                                "connectionName": "azuremonitorlogs",
+                                "id": "/subscriptions/SUBSCRIPTIONID/providers/Microsoft.Web/locations/westeurope/managedApis/azuremonitorlogs"
+                            },
+                            "teams": {
+                                "connectionId": "[parameters('connections_teams_externalid')]",
+                                "connectionName": "teams",
+                                "id": "/subscriptions/SUBSCRIPTIONID/providers/Microsoft.Web/locations/westeurope/managedApis/teams"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
