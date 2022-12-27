@@ -1,5 +1,4 @@
 TODO
-* Performance: BCPT page (pending release of BCPT signal)
 
 
 ------------------
@@ -7,7 +6,7 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Performance: On page 'Long Running SQL queries', tuned data load, fixed broken analyze in KQL visual, added per-app/per-object visuals, added explanation for SQL queries
-
+* Performance: new page showing Performance Toolkit (BCPT) data.
 
 ------------------
 2022-12-01 release
