@@ -1,5 +1,4 @@
 TODO
-* Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
 * Errors: On all pages, add visuals to show count last day, last week, older
 * Performance: On page 'Pageviews', added per-app/per-object visuals
 
@@ -12,6 +11,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance: new page showing Performance Toolkit (BCPT) data.
 * Performance: On page 'Outgoing webservice calls', tuned data load, added min/max measures on execution time, changed ws by http code visual to show data by response type.
 * Dataset: Tuned data load for queries IncomingWebServicePerformance, IncomingWebServiceErrors, PageViewPerformance, FeatureUsage, FeatureErrors.
+* Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
 
 
 ------------------
