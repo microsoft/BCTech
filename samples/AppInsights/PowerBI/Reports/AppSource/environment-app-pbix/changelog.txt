@@ -13,6 +13,8 @@ Ideas
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
 * Email errors: add top/bottom of stack trace
 * Usage: add license type on sessions page
+* Errors: On all pages, add visuals to show count last day, last week, older
+* Performance: On page 'Pageviews', added per-app/per-object visuals
 
 
 vNext (implemented, coming in the next release, probably available in the beta app)
@@ -24,7 +26,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page 'Outgoing webservice calls', tuned data load, added min/max measures on execution time, changed ws by http code visual to show data by response type.
 * Performance: on page 'Reports', tuned data load. Also added per-app/per-object visuals and added sum time. Enhanced description with better tuning advice.
 * Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
-* Dataset: Tuned data load for queries PageViewPerformance, IncomingWebServicePerformance, FeatureUsage, AuthenticationWithWebServiceKey, FeatureErrors, IncomingWebServiceErrors
+* Dataset: Tuned data load for queries PageViewPerformance, IncomingWebServicePerformance, FeatureUsage, AuthenticationWithWebServiceKey, FeatureErrors, IncomingWebServiceErrors, ExtensionLifeCycle
 
 
 2022-12-01
