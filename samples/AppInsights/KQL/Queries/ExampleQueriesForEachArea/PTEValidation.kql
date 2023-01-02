@@ -1,0 +1,65 @@
+// KQL samples - Per-tenant extension validation events
+
+// Available in environment telemetry from version 21.x
+
+
+
+        /// <summary>
+        /// The event reported when the validation of a PTE submission has started.
+        /// </summary>
+        public const string LC0200_PTEValidationStarted = "LC0200";
+
+        /// <summary>
+        /// The event reported when a diagnostic is reported for a PTE submission itself. e.g. duplicate object Id
+        /// </summary>
+        public const string LC0201_PTESubmissionDiagnosticReported = "LC0201";
+
+        /// <summary>
+        /// The event reported when the validation of a PTE submission has completed successfully.
+        /// </summary>
+        public const string LC0202_PTESubmissionValidationCompletedSuccessfully = "LC0202";
+
+        /// <summary>
+        /// The event reported when the validation of a PTE submission has completed with errors.
+        /// </summary>
+        public const string LC0203_PTESubmissionValidationCompletedWithFailure = "LC0203";
+
+
+        #endregion
+
+        #region PTE submission tasks signals
+
+        /// <summary>
+        /// The event reported when the validation of the main PTE has started.
+        /// </summary>
+        public const string LC0204_MainPTEValidationStarted = "LC0204";
+
+        /// <summary>
+        /// The event reported when the validation of the main PTE has completed successfully.
+        /// </summary>
+        public const string LC0205_MainPTEValidationCompletedSuccessfully = "LC0205";
+
+        /// <summary>
+        /// The event reported when the validation of the main PTE has completed with errors.
+        /// </summary>
+        public const string LC0206_MainPTEValidationCompletedWithFailure = "LC0206";
+
+        /// <summary>
+        /// The event reported when the validation of a dependent PTE has started.
+        /// </summary>
+        public const string LC0207_DependentPTEValidationStarted = "LC0207";
+
+        /// <summary>
+        /// The event reported when the validation of a dependent PTE has completed successfully.
+        /// </summary>
+        public const string LC0208_DependentPTEValidationCompletedSuccessfully = "LC0208";
+
+        /// <summary>
+        /// The event reported when the validation of a dependant PTE has completed with errors.
+        /// </summary>
+        public const string LC0209_DependentPTEValidationCompletedWithFailure = "LC0209";
+
+        /// <summary>
+        /// The event reported when a diagnostic is reported during the validation of an extension in an AppSource submission.
+        /// </summary>
+        public const string LC0210_DiagnosticReported = "LC0210";
