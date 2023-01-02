@@ -1,16 +1,22 @@
 TODO
 * Errors: On all pages, add visuals to show count last day, last week, older
 * Performance: On page 'Pageviews', added per-app/per-object visuals
+* Dataset: on all queries, link to AppDim. Add global filters
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-* Performance: on page 'Reports', tuned data load. Also added per-app/per-object visuals and added sum time. Enhanced description with better tuning advice.
+* Usage: On page 'Integrations', fixed filters
+* Performance: New page showing Performance Toolkit (BCPT) data.
+* Performance: On page 'Incoming webservice calls', tuned data load, fixed filters
 * Performance: On page 'Long Running SQL queries', tuned data load, fixed broken analyze in KQL visual, added per-app/per-object visuals, added explanation for SQL queries
-* Performance: new page showing Performance Toolkit (BCPT) data.
 * Performance: On page 'Outgoing webservice calls', tuned data load, added min/max measures on execution time, changed ws by http code visual to show data by response type.
-* Dataset: Tuned data load for queries IncomingWebServicePerformance, IncomingWebServiceErrors, PageViewPerformance, FeatureUsage, FeatureErrors.
+* Performance: On page 'Reports', tuned data load. Also added per-app/per-object visuals and added sum time. Enhanced description with better tuning advice. Fixed filters
+* Administration: On page 'Extension lifecycle', tuned data load, added visual for events by version. Also changed 'App Lifecycle Events by App' visual to a matrix
+* Administration: On page 'ContainerHelper', fixed empty events
+* Administration: On page 'Al-Go', fixed empty events, fixed filters
+* Dataset: Tuned data load for queries IncomingWebServiceErrors, PageViewPerformance, FeatureUsage, FeatureErrors, ExtensionLifecycle.
 * Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
 
 
