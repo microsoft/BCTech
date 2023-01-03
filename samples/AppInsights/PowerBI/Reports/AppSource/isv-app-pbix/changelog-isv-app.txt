@@ -1,11 +1,29 @@
-TODO
+Ideas
 * Errors: On all pages, add visuals to show count last day, last week, older
 * Performance: On page 'Pageviews', added per-app/per-object visuals
 * Dataset: on all queries, link to AppDim. Add global filters
+* Dataset: collapse app name and id in appDim hierarchy
+* Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
+* Performance: use combined app name and id on X by app visuals (pageviews, reports, incoming ws, outgoing ws, Updates)
+* Administration: App inventory query needs a rework 
+* Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+
+
+The little things
+* Usage: integrations page - consider showing by host and then by endpoint (check parity with VAR app)
+* Errors: extension lifecycle page, make error details visual full width
+* Errors: on incoming/outgoing ws errors pages, get parity with corresponding perf pages and align with VAR app
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
+------------------
+* TBA
+
+
+------------------
+2023-01-03 release
 ------------------
 * Usage: On page 'Integrations', fixed filters
 * Performance: New page showing Performance Toolkit (BCPT) data.
@@ -18,6 +36,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Administration: On page 'Al-Go', fixed empty events, fixed filters
 * Dataset: Tuned data load for queries IncomingWebServiceErrors, PageViewPerformance, FeatureUsage, FeatureErrors, ExtensionLifecycle.
 * Dataset: Tuned data refresh to allow for 30 min data loads per query. Also using 'set notruncation;' in all KQL queries to remove 500k row limits
+* Dataset: Fixed bug 'AppInventory.kql does not show on-prem multitenant instances' (Issue #169)
 
 
 ------------------
