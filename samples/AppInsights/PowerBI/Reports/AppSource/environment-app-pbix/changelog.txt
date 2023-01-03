@@ -11,14 +11,30 @@ Ideas
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
-* Email errors: add top/bottom of stack trace
 * Usage: add license type on sessions page
 * Errors: On all pages, add visuals to show count last day, last week, older
+
+
+All the small things
 * Performance: On page 'Pageviews', added per-app/per-object visuals
+* Page views - add per environment visual
+* Reports - add per environment visual
+* Feature Usage - add per environment visual
+* Deprecated features - show different icon/text if nothing is shown
+* Errors: On page 'login errors' page, add link to TSG on docs
+* Errors: On page 'error dialogs' page, change AL call stack visual width
+* Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
+* Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
+* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack 
+* Errors: About the report: missing link to error message votes KQL sample url
 
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+* TBA
+
+
+2023-01-03
 * Errors: Job Queue errors - added link to Page 673 'Job Queue Entry Card' in Business Central (Online) with filter on ID
 * Performance: On page 'Environment updates', added Date/time and fixed broken analyze in KQL visual
 * Performance: On page 'Long Running SQL queries', tuned data load, fixed broken analyze in KQL visual, added per-app/per-object visuals, added explanation for SQL queries
