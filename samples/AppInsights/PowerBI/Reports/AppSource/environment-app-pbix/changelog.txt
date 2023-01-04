@@ -12,8 +12,6 @@ Ideas
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
 * Usage: add license type on sessions page
-* Errors: On all pages, add visuals to show count last day, last week, older
-
 
 All the small things
 * Performance: On page 'Pageviews', added per-app/per-object visuals
@@ -31,7 +29,7 @@ All the small things
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
-* TBA
+* Errors: On all pages, add visuals to show count last day, last week, older
 
 
 2023-01-03
