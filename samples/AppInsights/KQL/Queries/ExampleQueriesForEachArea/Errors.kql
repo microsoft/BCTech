@@ -33,6 +33,29 @@ traces
 , customDimensions
 
 
+// Error Message Votes
+// Available from version 20.0
+traces
+| where timestamp >= ago(7d) // adjust as needed. 
+| where customDimensions has 'CL0002'
+| where customDimensions.eventId == 'CL0002'
+| where customDimensions.userFeedback in ('Yes', 'No')
+| extend AadTenantId = tostring( customDimensions.aadTenantId )
+, EnvironmentName = tostring( customDimensions.environmentName )
+| project timestamp
+, AadTenantId, EnvironmentName
+, ClientType = tostring( customDimensions.clientType )
+, ErrorMessage = tostring( customDimensions.errorMessage )
+, ExtensionId = tostring( customDimensions.appId )
+, ExtensionName = tostring( customDimensions.appName )
+, ExtensionVersion = tostring( customDimensions.appVersion )
+, ExtensionPublisher = tostring( customDimensions.appPublisher )
+, StackTrace = customDimensions.alStackTrace
+, HostType = customDimensions.hostType
+, UserFeedback = customDimensions.userFeedback
+, UserLocale = customDimensions.userLocale
+
+
 // available from 19.1
 // This is all errors logged from the FeatureTelemetry module
 traces

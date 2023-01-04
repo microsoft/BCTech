@@ -54,7 +54,8 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Database deadlocks | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-deadlocks-trace |
 | Database wait statistics | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-wait-statistics-trace |
 | Verbose telemetry enabled | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-action-enabling-detailed-telemetry-logged-telemetry |
-| General error dialogs | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-method-trace |
+| General error dialogs | 2022 release wave 1 (20.0) |  https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-method-trace |
+| Error message votes | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-message-voting-trace |
 | Report action and document type in reporting | 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
 | Environment lifecycle and configuration changes| 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-environment-lifecycle-trace |
 | User checklist lifecycle | 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-user-checklist-trace |
