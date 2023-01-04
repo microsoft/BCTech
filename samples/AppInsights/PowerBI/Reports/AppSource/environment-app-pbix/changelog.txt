@@ -24,12 +24,12 @@ All the small things
 * Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack 
-* Errors: About the report: missing link to error message votes KQL sample url
 
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On all pages, add visuals to show count last day, last week, older
+* Errors: About the report, missing link to error message votes KQL sample url
 
 
 2023-01-03
