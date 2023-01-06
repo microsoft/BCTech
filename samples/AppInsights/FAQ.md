@@ -108,8 +108,7 @@ A: This is not built into the App - however, the telemetry is added to Applicati
 flows that send email on e.g. a signal of a given type.
 
 
-## How can we make a demo of the telemetry? Is that only available in an BC365 saas? Or can we install and test the telemetry 
-inside a docker container?
+## How can we make a demo of the telemetry? Is that only available in an BC365 saas? Or can we install and test the telemetry  inside a docker container?
 
 A: You can set the Application Insights Connection String for an on-premise server (a server setting). See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-enable-application-insights#for-on-premises-environments-single-tenant-mode
 
