@@ -101,6 +101,70 @@ If you have data present in Application Insights, please check the setting in th
 ![Time range selector in Azure Dashboard](images/dashboard.png)
 
 
+# Q&A from Office Hours 2022-10-04
+Q: Could I have alerts by email or teams when I receive an error?
+A: This is not built into the App - however, the telemetry is added to Application Insights - and there you can set up 
+flows that send email on e.g. a signal of a given type.
+
+
+Q: How can we make a demo of the telemetry? Is that only available in an BC365 saas? Or can we install and test the telemetry 
+inside a docker container?
+A: You can set the Application Insights Connection String for an on-premise server (a server setting). See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-enable-application-insights#for-on-premises-environments-single-tenant-mode
+
+
+Q: These options for ISV are only for AppSource or it is possible to use them as PTE extension?
+A: The ISV app works for both appsource apps and PTEs.
+
+
+Q: Can you filter on environment type, that is SaaS vs OnPrem?"
+A: Yes. On-prem will have common/default as aad tenant id(Can you filter on environment type, that is SaaS vs OnPrem?
+
+
+Q: Is there a best practice how to exclude the events coming from the own development of the ISV solution to distinguish it from events coming from the real users/customers?
+A: Yes, this is documented here: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-overview#ingest
+or here https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/FAQ.md#how-can-i-control-cost
+
+
+Q: What kind of powerbi license is needed to use these apps?
+A: Power bi pro (costs 10 USD per month per user)
+
+
+Q: Could you please send the link to download the power bi for ISV?
+A: This is the install link for the ISV app: aka.ms/bctelemetry-isv-app
+This is the install link for the VAR app: aka.ms/bctelemetryreport
+
+
+Q: We use Telemetry for all many customers. Request: can we have Tenant ID (or better still Name from the mapping) and Environment Name appearing on every table please so we can filter on multiple customers/environments at once
+A: Yes. This is already done in many of the pages (except in the performance report). More will be transformed to show this.
+
+
+Q: We have many Product Apps with different Application Insights. Can we use just one dashboard?
+A: No. The Power BI app cannot read data from multiple Application Insights resources.
+
+
+Q: How often is the data updated in the Power BI Dashboards?  
+A: Default is daily. You can change this in the dataset settings. See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-power-bi-app#configure-an-app-after-initial-setup
+
+
+Q: If a customer contacts support because they have had an error, how quickly will it be to view/validate on the dashboard?"
+A: Default refresh of data in the dashboard is daily. You can change this in the dataset settings. See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-power-bi-app#configure-an-app-after-initial-setup
+
+
+Q: The ability to export the ""underlying data"" is disabled? Will we be able to do this in the future?
+A: This was fixed in the December 2022 update.
+
+
+Q: Does activating telemetry affect the performance of Business Central?
+A: Nothing that users will notice.
+
+
+Q: Is there some kind of estimater to give an indication on much it cost to collect and store all this data?
+A: At aka.ms/bctelemetry there are descriptions of how you can control costs. So far we have not had partners reporting significant costs - the lowest SKU will normally be sufficient
+
+
+Q: Can you remind where to go to set the Tenant mapping? I had the app installed for already?
+A: See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-power-bi-app#configure-an-app-after-initial-setup
+
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
 
