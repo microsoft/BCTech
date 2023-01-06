@@ -18,7 +18,6 @@ All the small things
 * Page views - add per environment visual
 * Reports - add per environment visual
 * Feature Usage - add per environment visual
-* Deprecated features - show different icon/text if nothing is shown
 * Errors: On page 'login errors' page, add link to TSG on docs
 * Errors: On page 'error dialogs' page, change AL call stack visual width
 * Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
@@ -28,7 +27,9 @@ All the small things
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+* Usage: On page 'Deprecated features' - show different icon/text if nothing is shown
 * Errors: On all pages, add visuals to show count last day, last week, older
+* Errors: On page 'login errors' page, add link to TSG on docs
 * Errors: About the report, missing link to error message votes KQL sample url
 
 
