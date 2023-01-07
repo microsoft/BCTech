@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIQueryGenerator", "APIQueryGenerator\APIQueryGenerator.csproj", "{70430942-F4CF-4AC5-AF1C-68404C4453B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayloadGenerator", "PayloadGenerator\PayloadGenerator.csproj", "{1085EFE5-8480-4085-858A-5A7074446982}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70430942-F4CF-4AC5-AF1C-68404C4453B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70430942-F4CF-4AC5-AF1C-68404C4453B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70430942-F4CF-4AC5-AF1C-68404C4453B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70430942-F4CF-4AC5-AF1C-68404C4453B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1085EFE5-8480-4085-858A-5A7074446982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1085EFE5-8480-4085-858A-5A7074446982}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1085EFE5-8480-4085-858A-5A7074446982}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1085EFE5-8480-4085-858A-5A7074446982}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E51C70E-3F40-42CA-B5A9-80D45C3CA019}
+	EndGlobalSection
+EndGlobal

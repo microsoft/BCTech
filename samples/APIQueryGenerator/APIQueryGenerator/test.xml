@@ -1,0 +1,15 @@
+<APIQueries APIPublisher="pub" APIGroup="grp" APIVersion="1.0">
+  <query TableName="Customer" id="50000" name="Customer_APIQuery" filename="Customer_APIQuery" Caption="API query for table Customer" Locked="True" EntityName="Customer" EntitySetName="Customer" DataItemName="Customer_APIQuery">
+    <query FieldName="cfield1" Caption="API query for field cfield1" Locked="True" DataItemFieldName="cfield1_APIQueryField" />
+    <query FieldName="cfield2" Caption="API query for field cfield2" Locked="True" DataItemFieldName="cfield2_APIQueryField" />
+    <query FieldName="cfield3" Caption="API query for field cfield3" Locked="True" DataItemFieldName="cfield3_APIQueryField" />
+  </query>
+  <query TableName="Vendor" id="50001" name="Vendor_APIQuery" filename="Vendor_APIQuery" Caption="API query for table Vendor" Locked="True" EntityName="Vendor" EntitySetName="Vendor" DataItemName="Vendor_APIQuery">
+    <query FieldName="vfield1" Caption="API query for field vfield1" Locked="True" DataItemFieldName="vfield1_APIQueryField" />
+    <query FieldName="vfield2" Caption="API query for field vfield2" Locked="True" DataItemFieldName="vfield2_APIQueryField" />
+    <query FieldName="vfield3" Caption="API query for field vfield3" Locked="True" DataItemFieldName="vfield3_APIQueryField" />
+  </query>
+  <query TableName="test1" id="50002" name="test1_APIQuery" filename="test1_APIQuery" Caption="API query for table test1" Locked="True" EntityName="test1" EntitySetName="test1" DataItemName="test1_APIQuery" />
+  <query TableName="test2" id="50003" name="test2_APIQuery" filename="test2_APIQuery" Caption="API query for table test2" Locked="True" EntityName="test2" EntitySetName="test2" DataItemName="test2_APIQuery" />
+  <query TableName="test3" id="50004" name="test3_APIQuery" filename="test3_APIQuery" Caption="API query for table test3" Locked="True" EntityName="test3" EntitySetName="test3" DataItemName="test3_APIQuery" />
+</APIQueries>
