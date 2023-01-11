@@ -11,6 +11,7 @@ Ideas
 
 The little things
 * Usage: integrations page - consider showing by host and then by endpoint (check parity with VAR app)
+* Usage: 'Feature uptake' page, add domain to Environment information visual
 * Errors: extension lifecycle page, make error details visual full width
 * Errors: on incoming/outgoing ws errors pages, get parity with corresponding perf pages and align with VAR app
 
@@ -19,8 +20,14 @@ The little things
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-* TBA
+* Dataset: fixed issue with JSON parsing in appsource validation data
 
+
+AppsourceSubmissionRequestExtensions
+OLE DB or ODBC error: [DataFormat.Error] We found an invalid array in the JSON input..
+
+ReportPerformance
+Column 'MajorVersion' in table 'ReportPerformance' cannot be found or may not be used in this expression. OLE DB or ODBC error: Exception from HRESULT: 0x80040E4E.
 
 ------------------
 2023-01-03 release
