@@ -1,0 +1,34 @@
+//KQL queries for detectin anomalies in telemetry ingestion.
+//These queries must be executed at the workspace level.
+//More info: https://demiliani.com/2023/01/18/telemetry-with-azure-application-insights-prevent-anomalies-on-data-ingestion/
+
+//Telemetry signals are injected in the last hour. If result is 0, there are problems on ingestion
+Usage
+| where TimeGenerated > now(-60min)
+| count
+
+
+//The next queries helps on detecting spikes on telemetry ingestion:
+
+//Average volume (Mb) of the ingested telemetry in the last 7 days (excluded last 3 hours)
+Usage
+| where TimeGenerated > startofday(ago(7d)) and TimeGenerated < now(-3hour)
+| summarize AverageQuantity = avg(Quantity)
+
+//Average volume of the ingested telemetry in the last 3 hours
+Usage
+| where TimeGenerated > now(-3hour)
+| summarize AverageQuantityLastPeriod = avg(Quantity)
+
+//Injected telemetry quantity (Mb) in the last 12 hours, splitted by hours
+Usage
+| where TimeGenerated > now(-12hour)
+| summarize QuantityPerHour = sum(Quantity) by bin(TimeGenerated, 1h)
+
+//Billable data volume by type over the previous month:
+Usage 
+| where TimeGenerated > ago(32d)
+| where StartTime >= startofday(ago(31d)) and EndTime < startofday(now())
+| where IsBillable == true
+| summarize BillableDataGB = sum(Quantity) / 1000. by bin(StartTime, 1d), DataType 
+| render columnchart
