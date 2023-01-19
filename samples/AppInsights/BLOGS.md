@@ -12,6 +12,9 @@ https://ricardomoinhos.com/giving-permissions-to-external-user-to-access-telemet
 Posted on Monday August 29th, 2022 by Ricardo Paiva Moinhos
 https://ricardomoinhos.com/exploring-telemetry-in-excel-and-using-a-template-file/
 
+## Business Central telemetry - Using telemetry
+https://www.bertverbeek.nl/blog/tag/telemetry/
+
 
 
 # Disclaimer
