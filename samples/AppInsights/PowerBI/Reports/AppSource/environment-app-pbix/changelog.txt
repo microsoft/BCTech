@@ -2,6 +2,8 @@ Ideas
 * Errors: Add AL stacktrace to failed job queue page (when available - pending app team bugfix)
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
 * Usage: Feature uptake page
+* Usage: add role dimension to page views (when available in client telemetry)
+* Usage: log search terms (opt-in) (when available in client telemetry)
 * Administration: Permission set changes
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
@@ -22,15 +24,16 @@ All the small things
 * Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack 
+* SQL explanation: mention "are you missing a SetCurrentKey?"
 
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage: On page 'Deprecated features' - show different icon/text if no data is available
-* Errors: On all pages, add visuals to show count last day, last week, older
+* Errors: On all pages, added visuals to show count last day, last week, older
 * Errors: On page 'login errors' page, add link to TSG on docs, show different text if no data is available
 * Errors: About the report, missing link to error message votes KQL sample url
-
+* Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
 
 2023-01-03
 * Errors: Job Queue errors - added link to Page 673 'Job Queue Entry Card' in Business Central (Online) with filter on ID
