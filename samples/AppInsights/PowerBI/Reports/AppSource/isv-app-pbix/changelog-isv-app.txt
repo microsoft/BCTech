@@ -14,20 +14,20 @@ The little things
 * Usage: 'Feature uptake' page, add domain to Environment information visual
 * Errors: extension lifecycle page, make error details visual full width
 * Errors: on incoming/outgoing ws errors pages, get parity with corresponding perf pages and align with VAR app
-
+* SQL explanation: mention "are you missing a SetCurrentKey?"
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Errors: On all pages, added visuals to show count last day, last week, older
 * Dataset: fixed issue with JSON parsing in appsource validation data
+* Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
 
-
-AppsourceSubmissionRequestExtensions
-OLE DB or ODBC error: [DataFormat.Error] We found an invalid array in the JSON input..
 
 ReportPerformance
 Column 'MajorVersion' in table 'ReportPerformance' cannot be found or may not be used in this expression. OLE DB or ODBC error: Exception from HRESULT: 0x80040E4E.
+
 
 ------------------
 2023-01-03 release
