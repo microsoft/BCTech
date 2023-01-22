@@ -29,11 +29,12 @@ FeatureTelemetry.<LogUsage|LogError|LogUptake>(...)
 ## Guidelines
 
 ### Logging uptake
-- If a feature logs uptake, then there should be calls to register all the following states: `Discovered`, `Set up`, `Used`.
+- If a feature logs uptake, then there should be calls to register all the following states: `Discovered`, `Set up`, `Used`, `Undiscovered`.
 - The current convention for registering uptake states is the following.
     - State `Discovered` should be registered when pages related to the given feature are opened (or otherwise when a user _intentionally_ seeks information about a feature)
     - State `Set up` should be registered when the user performed a set up for the feature (usually right after a record in a table related to the feature is added or updated)
     - State `Used` should be registered when a user _attempts_ to use the feature (note the difference with `LogUsage`, which should be called only if the feature is used _successfully_)
+    - State `Undiscovered` is optional. When a feature is unregistered you can use this option (or when a user disable it when it has been enable. Example is usage of Retention Policies)
 - If `LogUptake` is called from within a try function, the parameter `PerformWriteTransactionsInASeparateSession` should be set to `true`.
 
 
