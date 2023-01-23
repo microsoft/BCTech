@@ -1,5 +1,4 @@
 Ideas
-* Errors: On all pages, add visuals to show count last day, last week, older
 * Performance: On page 'Pageviews', added per-app/per-object visuals
 * Dataset: on all queries, link to AppDim. Add global filters
 * Dataset: collapse app name and id in appDim hierarchy
@@ -10,7 +9,6 @@ Ideas
 
 
 The little things
-* Usage: integrations page - consider showing by host and then by endpoint (check parity with VAR app)
 * Usage: 'Feature uptake' page, add domain to Environment information visual
 * Errors: extension lifecycle page, make error details visual full width
 * Errors: on incoming/outgoing ws errors pages, get parity with corresponding perf pages and align with VAR app
@@ -20,6 +18,7 @@ The little things
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Usage: integrations page, added visual to show outgoing calls by host
 * Errors: On all pages, added visuals to show count last day, last week, older
 * Dataset: fixed issue with JSON parsing in appsource validation data
 * Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
