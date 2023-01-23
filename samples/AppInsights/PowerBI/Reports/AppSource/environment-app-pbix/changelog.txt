@@ -30,10 +30,14 @@ All the small things
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage: On page 'Deprecated features' - show different icon/text if no data is available
+* Usage: On page 'Clients', changed 'Browser statistics' visual to a matrix
+* Usage: integrations page, added visual to show outgoing calls by host
 * Errors: On all pages, added visuals to show count last day, last week, older
 * Errors: On page 'login errors' page, add link to TSG on docs, show different text if no data is available
 * Errors: About the report, missing link to error message votes KQL sample url
 * Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
+
+
 
 2023-01-03
 * Errors: Job Queue errors - added link to Page 673 'Job Queue Entry Card' in Business Central (Online) with filter on ID
