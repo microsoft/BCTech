@@ -20,6 +20,8 @@ traces
 , httpHeaders = customDimensions.httpHeaders       // httpHeaders only available from 16.3
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+, requestQueueTime = customDimensions.requestQueueTime // This dimension was introduced in Business Central 2023 release wave 1, version 22.0.
+, requestTotalTime = ( toreal(totimespan(customDimensions.totalTime))+toreal(totimespan(customDimensions.requestQueueTime)) )/10000 
 // these lines illustrate how to extract data from the httpHeaders dimension
 | extend httpHeadersTmp =  tostring( httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
