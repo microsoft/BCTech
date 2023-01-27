@@ -60,7 +60,7 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
-, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 20.5
+, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 21.3
 , taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
