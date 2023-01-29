@@ -43,7 +43,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: About the report, missing link to error message votes KQL sample url
 * Dataset: Tuned data load for PageViewPerformance. Partitioned load into 24 hour partitions. Moved client info (screen size, language, locale, ..) into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
 * Dataset: Tuned data load for ReportPerformance. Moved payload info (layout, report format/action, ..) into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
-
+* Dataset: Fixed missing values in http method dimension
 
 
 2023-01-03
