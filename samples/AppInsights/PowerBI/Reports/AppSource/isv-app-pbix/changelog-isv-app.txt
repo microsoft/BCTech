@@ -8,7 +8,6 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 
 The little things
-* Usage: 'Feature uptake' page, add domain to Environment information visual
 * Errors: extension lifecycle page, make error details visual full width
 * Errors: on incoming/outgoing ws errors pages, get parity with corresponding perf pages and align with VAR app
 * SQL explanation: mention "are you missing a SetCurrentKey?"
@@ -18,6 +17,7 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Usage: integrations page, added visual to show outgoing calls by host
+* Usage: 'Feature uptake' page, add domain to Environment information visual
 * Errors: On all pages, added visuals to show count last day, last week, older
 * Dataset: fixed issue with JSON parsing in appsource validation data
 * Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
