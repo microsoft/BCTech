@@ -7,7 +7,6 @@ Ideas
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 
-
 The little things
 * Usage: 'Feature uptake' page, add domain to Environment information visual
 * Errors: extension lifecycle page, make error details visual full width
@@ -22,11 +21,9 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Errors: On all pages, added visuals to show count last day, last week, older
 * Dataset: fixed issue with JSON parsing in appsource validation data
 * Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
-
-
-ReportPerformance
-Column 'MajorVersion' in table 'ReportPerformance' cannot be found or may not be used in this expression. OLE DB or ODBC error: Exception from HRESULT: 0x80040E4E.
-
+* Dataset: Fixed missing values in http method dimension
+* Dataset: Tuned data load for ReportPerformance. Moved client type into its own dimension. This will allow the app to load more pageview data (for bigger telemetry databases
+* Dataset: Tuned data load for query PageViewPerformance: Moved page and app info to their own dimensions. Switched to using TenantHash for environment dim reference
 
 ------------------
 2023-01-03 release
