@@ -55,6 +55,13 @@ Watch this 6 min video to learn how to use the DYI Power BI error report to tria
 
 ## Other videos
 
+### 2022-12-20 BC Power Platform Zaragoza - Telemetría en Business Central desde cero (66 min in Spanish) by Roberto Corella, Javier Armesto and Miguel Llorca
+<p align="center">
+<a href="https://www.youtube.com/watch?v=c4QctY7SFwE")><img src="https://img.youtube.com/vi/c4QctY7SFwE/0.jpg" width="50%"></a>
+<br>
+</p>
+
+
 ### 2022-09-16 BC TechDays 2022 - Telemetry for Business Central from basics to advanced usage (95 min) by Krzysztof Bialowas and Kennie Pontoppidan
 <p align="center">
 <a href="https://www.youtube.com/watch?v=6TGsPTPtBEY")><img src="https://img.youtube.com/vi/6TGsPTPtBEY/0.jpg" width="50%"></a>
