@@ -1,7 +1,5 @@
 Ideas
-* Performance: On page 'Pageviews', added per-app/per-object visuals
 * Dataset: on all queries, link to AppDim. Add global filters
-* Dataset: collapse app name and id in appDim hierarchy
 * Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
 * Performance: use combined app name and id on X by app visuals (pageviews, reports, incoming ws, outgoing ws, Updates)
 * Administration: App inventory query needs a rework 
@@ -19,6 +17,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Usage: integrations page, added visual to show outgoing calls by host
 * Usage: 'Feature uptake' page, add domain to Environment information visual
 * Errors: On all pages, added visuals to show count last day, last week, older
+* Performance: On page 'Pageviews', added per-app/per-object visuals
 * Dataset: fixed issue with JSON parsing in appsource validation data
 * Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
 * Dataset: Fixed missing values in http method dimension
