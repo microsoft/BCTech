@@ -23,7 +23,8 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Dataset: Moved client info (screen size, language, locale, ..) out of pageviewperformance and into its own table. This will allow the app to load more pageview data (for bigger telemetry databases).
 * Dataset: Fixed missing values in http method dimension
 * Dataset: Tuned data load for ReportPerformance. Moved client type into its own dimension. This will allow the app to load more pageview data (for bigger telemetry databases
-* Dataset: Tuned data load for query PageViewPerformance: Moved page and app info to their own dimensions. Switched to using TenantHash for environment dim reference
+* Dataset: Tuned data load for query PageViewPerformance: Moved page, app info, and client type to their own dimensions. Switched to using TenantHash for environment dim reference
+
 
 ------------------
 2023-01-03 release
