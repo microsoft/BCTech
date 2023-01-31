@@ -38,12 +38,14 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage: On page 'Deprecated features' - show different icon/text if no data is available
 * Usage: On page 'Clients', changed 'Browser statistics' visual to a matrix
 * Usage: integrations page, added visual to show outgoing calls by host
+* Performance: On page 'Long running SQL queries', improvements to explanation
 * Errors: On all pages, added visuals to show count last day, last week, older
 * Errors: On page 'login errors' page, add link to TSG on docs, show different text if no data is available
 * Errors: About the report, missing link to error message votes KQL sample url
 * Dataset: Tuned data load for PageViewPerformance. Partitioned load into 24 hour partitions. Moved client info (screen size, language, locale, ..) and client type into their own tables. This will allow the app to load more pageview data (for bigger telemetry databases).
 * Dataset: Tuned data load for ReportPerformance. Moved payload info (layout, report format/action, ..) and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: Fixed missing values in http method dimension
+
 
 
 2023-01-03
