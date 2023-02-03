@@ -72,12 +72,13 @@ traces
 | where isnotempty(customDimensions.aadTenantId) // filter away signal from Docker sandboxes
 | extend 
   AadTenantId = tostring( customDimensions.aadTenantId )
+, CompanyName = tostring( customDimensions.companyName )  
 , EnvironmentName = tostring( customDimensions.environmentName )
 , EnvironmentType = tostring( customDimensions.environmentType )
 , ObjectId = toint(customDimensions.alJobQueueObjectId)
 | extend TenantId = strcat( toupper(AadTenantId), toupper(EnvironmentName) )
 | project timestamp
-, AadTenantId, EnvironmentName, EnvironmentType, TenantId
+, AadTenantId, EnvironmentName, CompanyName, EnvironmentType, TenantId
 , PlatformVersion = tostring( customDimensions.componentVersion )
 , ObjectId
 , ObjectType = customDimensions.alJobQueueObjectType
