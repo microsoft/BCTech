@@ -35,6 +35,10 @@ TODO: Tune for large datasets
 
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+* Dataset: On table SQLDeadlocks, Added user telemetry id and URL to the User card in BC. Tuned data load and moved object info, extension info, sql details, stacktrace, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+
+
+2023-02-01
 * Usage: On page 'Deprecated features' - show different icon/text if no data is available
 * Usage: On page 'Clients', changed 'Browser statistics' visual to a matrix
 * Usage: integrations page, added visual to show outgoing calls by host
@@ -45,7 +49,6 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: Tuned data load for PageViewPerformance. Partitioned load into 24 hour partitions. Moved client info (screen size, language, locale, ..) and client type into their own tables. This will allow the app to load more pageview data (for bigger telemetry databases).
 * Dataset: Tuned data load for ReportPerformance. Moved payload info (layout, report format/action, ..) and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: Fixed missing values in http method dimension
-
 
 
 2023-01-03
