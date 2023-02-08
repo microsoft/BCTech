@@ -3,14 +3,12 @@
 // Task created (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0040' // for performance 
 | where customDimensions.eventId == 'LC0040'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , codeunitObjectId = customDimensions.codeunitObjectId
 , companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, eventId = customDimensions.eventId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
@@ -20,21 +18,17 @@ traces
 , notBefore = customDimensions.notBefore
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
-, message
-, customDimensions
 
 
 // Task ready (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0041' // for performance 
 | where customDimensions.eventId == 'LC0041'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , codeunitObjectId = customDimensions.codeunitObjectId
 , companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, eventId = customDimensions.eventId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
@@ -44,21 +38,17 @@ traces
 , notBefore = customDimensions.notBefore
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
-, message
-, customDimensions
 
 
 // Task removed (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0042' // for performance 
 | where customDimensions.eventId == 'LC0042'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , codeunitObjectId = customDimensions.codeunitObjectId
 , companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, eventId = customDimensions.eventId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
@@ -68,22 +58,18 @@ traces
 , notBefore = customDimensions.notBefore
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
-, message
-, customDimensions
 
 
 // Task completed (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0043' // for performance 
 | where customDimensions.eventId == 'LC0043'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , attemptNumber = customDimensions.attemptNumber
 , codeunitObjectId = customDimensions.codeunitObjectId
 , companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, eventId = customDimensions.eventId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
@@ -97,13 +83,12 @@ traces
 , totalTime = customDimensions.totalTime
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
-, message
-, customDimensions
 
 
 // Task cancelled (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0044' // for performance 
 | where customDimensions.eventId == 'LC0044'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
@@ -112,9 +97,6 @@ traces
 , cancelReason = customDimensions.cancelReason
 , codeunitObjectId = customDimensions.codeunitObjectId
 , companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, eventId = customDimensions.eventId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
@@ -128,22 +110,18 @@ traces
 , totalTime = customDimensions.totalTime
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
-, message
-, customDimensions
 
 
 // Task failed (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0045' // for performance 
 | where customDimensions.eventId == 'LC0045'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , attemptNumber = customDimensions.attemptNumber
 , codeunitObjectId = customDimensions.codeunitObjectId
 , companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, eventId = customDimensions.eventId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
@@ -158,5 +136,25 @@ traces
 , totalTime = customDimensions.totalTime
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
-, message
-, customDimensions
+
+
+// Task timeout changed because it was exceeding the max timeout value
+// Signal introduced in 22.0
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0057' // for performance 
+| where customDimensions.eventId == 'LC0057'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+
