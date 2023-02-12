@@ -26,6 +26,17 @@ For Business Central online, the only supported option for reading data is using
 There exists a code sample that you may use to be more productive with APIs: API generator. 
 For more information, see https://github.com/microsoft/BCTech/tree/master/samples/APIQueryGenerator
 
+# Throughput of data reads with APIs
+Measurements have shown that it is not unusual to be able to read 2 MB/sec per API call. This means that it is possible to transfer up to 120 MB/min or 720 MB/hour for pipelines running sequentially. 
+
+In Business Central online, the current parallelism for API calls is 5. This means that you can read up to 3.5 GB/hour if no other processes call web services on Business Central. For an ETL setup that update the staging area nightly with yesterdays changes, this should fit most maintenance windows (unless the environment has several GB of new/updated data per day).
+
+Even if the ETL setup reads the historical dataset before switching to incremental loads, with a 2 MB/sec throughput, it will take up to 6 days to load a 100 GB database and this operation is something you only do once. 
+
+# Stability of ETL pipelines
+No matter which tool you choose, you must make your data pipelines robust towards timeouts and design them so that they are re-runnable. All Business Central tables have system fields _SystemRowversion_ and _SystemLastModifiedOn_ (read more about system fields here: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-table-system-fields). If your ETL setup track which watermark (either a date or a rowversion) that was read last time, then data pipelines can utilize this to read changes since the watermark.
+
+
 # Extract, transform, and load (ETL) tools
 You can use your ETL tool of choice to read and tranform data. 
 
