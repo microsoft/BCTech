@@ -99,8 +99,8 @@ traces
 // Feature management state changes
 // Available from 22.0
 traces
-| where timestamp > ago(5d)
-| where customDimensions.eventId == "0000JT3"
+| where timestamp > ago(7d) // change as needed
+| where customDimensions.eventId == "AL0000JT3"
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , Environment = customDimensions.environmentType
