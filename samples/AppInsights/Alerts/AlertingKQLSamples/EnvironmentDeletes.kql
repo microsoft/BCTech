@@ -1,0 +1,23 @@
+// Use a query like this as a condition in an alert on when environments deletes are scheduled, soft deleted, or hard deleted
+
+let exclude_on_prem_and_docker = true; // adjust as needed
+
+traces
+| where timestamp > ago(1d)
+| where customDimensions.eventId in ( 'LC0148', 'LC0150', 'LC0181', 'LC0184' )
+// on-prem and docker have either 'common' or 'default' as their aadTenantId dimension
+| where iff(exclude_on_prem_and_docker and customDimensions.aadTenantId in ( 'common', 'default' ), false, true)
+| extend eventId=tostring(customDimensions.eventId)
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, Event = case(
+    eventId == 'LC0148', 'Scheduled for deletion (permanently)'
+  , eventId == 'LC0150', 'Hard deleted (permanently)'
+  , eventId == 'LC0181', 'Soft deleted (marked for deletion)'
+  , eventId == 'LC0184', 'Recovered (un-deleted)'            
+  , 'Unknown event'
+)

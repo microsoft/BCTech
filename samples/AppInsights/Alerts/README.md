@@ -24,6 +24,7 @@ This part of the samples repo contains examples of KQL queries that you can use 
 | Extensions(s) uninstalled  | Lifecycle | ISV/VAR | Alert if one or more extensions was uninstalled. | LC0016 | [ExtensionUninstalled.kql](./AlertingKQLSamples/ExtensionUninstalled.kql) |
 | Environment update(s) available | Updates | VAR | Alert when new updates are available for environment(s). | LC0100 | [EnvironmentUpdateAvailable.kql](./AlertingKQLSamples/EnvironmentUpdateAvailable.kql) |
 | Environment(s) failed to update  | Errors | VAR | Alert if environment(s) fail to update. | LC0107 | [EnvironmentUpdateFailures.kql](./AlertingKQLSamples/EnvironmentUpdateFailures.kql) |
+| Environment(s) deleted  | Lifecycle | VAR | Alert if environment(s) environments deletes are scheduled, soft deleted, or hard deleted. | LC0148, LC0150, LC0181, and LC0184 | [EnvironmentDeletes.kql](./AlertingKQLSamples/EnvironmentDeletes.kql) |
 | Error dialogs | Errors | VAR | Alert when users get error dialogs. | RT0030 | [Errors.kql](../KQL/Queries/ExampleQueriesForEachArea/Errors.kql) |
 | Permission errors | Errors | VAR | Setup notifications if users get permission errors. | RT0031 | [Permissions.kql](../KQL/Queries/ExampleQueriesForEachArea/Permissions.kql) |
 | Job Queue errors | Errors | VAR | Get alerted on job queue entries fail. | AL0000E26 | [JobQueueFailures.kql](./AlertingKQLSamples/JobQueueFailures.kql) |
