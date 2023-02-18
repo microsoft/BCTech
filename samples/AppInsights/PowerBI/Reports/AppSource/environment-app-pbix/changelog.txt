@@ -16,7 +16,6 @@ Ideas
 * Usage: add license type on sessions page
 
 All the small things
-* Performance: On page 'Pageviews', added per-app/per-object visuals
 * Page views - add per environment visual
 * Reports - add per environment visual
 * Feature Usage - add per environment visual
@@ -26,19 +25,49 @@ All the small things
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack 
 * SQL explanation: mention "are you missing a SetCurrentKey?"
 
-TODO: Tune for large datasets
-* Long Running AL Methods
-* Incoming webservices
-* Report perf 
-* LRQ
+Add to Task scheduler table
+// Task timeout changed because it was exceeding the max timeout value
+// Signal introduced in 22.0
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0057' // for performance 
+| where customDimensions.eventId == 'LC0057'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, codeunitObjectId = customDimensions.codeunitObjectId
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+, formatId = customDimensions.formatId
+, isReady = customDimensions.isReady
+, languageId = customDimensions.languageId
+, notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
 
-
+------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+------------------
+* Performance: On page 'Pageviews', added per-app/per-object visuals
 * Dataset: On table SQLDeadlocks, Added user telemetry id and URL to the User card in BC. Tuned data load and moved object info, extension info, sql details, stacktrace, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: On table LockTimeouts, sqlHasDim
+* Dataset: On table LongRunningSQLQueries, tuned data load (introduced hash partitions) and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: On table LongRunningAL, tuned data load (introduced hash partitions) and moved object, extension, stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: On table IncomingWebServicePerformance, tuned data load (introduced hash partitions) and moved connector type, and category into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: On table ReportPerformance, tuned data load (introduced hash partitions) and moved connector type, and category into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Error report: On page 'Environment lifecycle Errors', added support for failed soft delete and recovery (un-delete) operations
+* Administration report: On page 'Environment lifecycle', added support for soft delete and recovery (un-delete) operations
 
+Maybe in March release
+* Database deadlocks page: need to fix URL (hide) for user telemetry id
+* Introduce new (advanced) parameter: partitions
+* MAU/WAU/DAU report
 
-2023-02-01
+------------------
+2023-02-01 release
+------------------
 * Usage: On page 'Deprecated features' - show different icon/text if no data is available
 * Usage: On page 'Clients', changed 'Browser statistics' visual to a matrix
 * Usage: integrations page, added visual to show outgoing calls by host
@@ -51,7 +80,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: Fixed missing values in http method dimension
 
 
-2023-01-03
+------------------
+2023-01-03 release
+------------------
 * Errors: Job Queue errors - added link to Page 673 'Job Queue Entry Card' in Business Central (Online) with filter on ID
 * Performance: On page 'Environment updates', added Date/time and fixed broken analyze in KQL visual
 * Performance: On page 'Long Running SQL queries', tuned data load, fixed broken analyze in KQL visual, added per-app/per-object visuals, added explanation for SQL queries
@@ -62,7 +93,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: Tuned data load for queries PageViewPerformance, IncomingWebServicePerformance, FeatureUsage, AuthenticationWithWebServiceKey, FeatureErrors, IncomingWebServiceErrors, ExtensionLifeCycle
 
 
-2022-12-01
+------------------
+2022-12-01 release
+------------------
 * Usage: On page 'Application area', Added new visual 'Application area usage by Environments'
 * Usage: On pages 'Page views', 'Reports', and 'Feature Usage', Added new visuals 'X by Publisher' and 'X by Extension Version'
 * Performance: on page 'Long running SQL', added visual with info on aad tenants impacted
@@ -76,7 +109,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: tuned all KQL queries. Impact is up to 5x faster refresh time.
 
 
-2022-11-07
+------------------
+2022-11-07 release
+------------------
 * Administration report: Added hierarchy, message details, and feature telemetry dimension for events on telemetry event statistics page
 * Administration report: New page 'Configuration' to show how the app has been configured.
 * Usage report: Added per-environment and page-views per date visuals on Locations page.
@@ -88,7 +123,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: AAD tenant mapping more stable against json syntax errors
 
 
-2022-10-10
+------------------
+2022-10-10 release
+------------------
 * Usage report: New page 'Application areas', shows usage by main application area in the base app
 * Usage report: on the 'Page views' page, filter out pages with id=-1 by default 
 * Error report: GitHub issue #148 Fixed wrong web service key error count on the error dashboard. 
@@ -104,7 +141,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: on pages "Database lock timeouts", "Long running SQL", and "Long running AL", added visual with info on bottom line of the stack trace
 
 
-2022-09-23
+------------------
+2022-09-23 release
+------------------
 * Usage report: fixed links on the 'About the report' page
 * Usage report: split Sessions by User and Client Type visual into two: Sessions by User and Sessions by Client Type on the 'Sessions' page
 * Usage report: added browser version visual to the 'Client' page
@@ -113,7 +152,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Error report: added exception and extra visuals to the Job Queue Error page
 
 
-2022-09-09
+------------------
+2022-09-09 release
+------------------
 * Usage report: fixed visual width on web service key page
 * Usage report: new visual on connector page: usage by connector
 * Usage report: new visual on integrations page: integrations by publisher / extension
@@ -129,7 +170,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration report: environment slicers now sync between all pages
 
 
-2022-09-04
+------------------
+2022-09-04 release
+------------------
 * Usage report: Deprecated features page- added per-environment overview visual, fixed page filters to show the fields on the page
 * Usage report: connector page now also shows edit in excel and power app/automate setup trafic
 * Usage report: new page showing check list usage and state changes
@@ -147,7 +190,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration report: new page showing telemetry event statistics
 
 
-2022-07-15
+------------------
+2022-07-15 release
+------------------
 * All report pages: Environment dimension and visuals on top: fixed bug when telemetry resource hold both per-environment 
   and per-app telemetry
 * All report pages: All time-of-day visuals now show timezone as part of the header
@@ -155,5 +200,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance report: added visual for SQL statements on Long running SQL queries page
 
 
-2022-07-04
+------------------
+2022-07-04 release
+------------------
 Initial release of the app on appsource
