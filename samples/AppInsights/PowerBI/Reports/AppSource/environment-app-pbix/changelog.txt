@@ -14,56 +14,35 @@ Ideas
 * Dataset: include list for event ids as a parameter
 * LRQ: Add a filter on WITH(READUNCOMMITTED) 
 * Usage: add license type on sessions page
-
-All the small things
-* Page views - add per environment visual
-* Reports - add per environment visual
-* Feature Usage - add per environment visual
-* Errors: On page 'error dialogs' page, change AL call stack visual width
 * Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack 
-* SQL explanation: mention "are you missing a SetCurrentKey?"
+* Database deadlocks page: need to fix URL (hide) for user telemetry id
+* Introduce new (advanced) parameter: partitions and maybe binsize
+* MAU/WAU/DAU report
 
-Add to Task scheduler table
-// Task timeout changed because it was exceeding the max timeout value
-// Signal introduced in 22.0
-traces
-| where timestamp > ago(60d) // adjust as needed
-| where customDimensions has 'LC0057' // for performance 
-| where customDimensions.eventId == 'LC0057'
-| project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
-, failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
-, formatId = customDimensions.formatId
-, isReady = customDimensions.isReady
-, languageId = customDimensions.languageId
-, notBefore = customDimensions.notBefore
-, taskId = customDimensions.taskId
-, timeout = customDimensions.timeout
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-* Performance: On page 'Pageviews', added per-app/per-object visuals
 * Dataset: On table SQLDeadlocks, Added user telemetry id and URL to the User card in BC. Tuned data load and moved object info, extension info, sql details, stacktrace, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
-* Dataset: On table LockTimeouts, sqlHasDim
-* Dataset: On table LongRunningSQLQueries, tuned data load (introduced hash partitions) and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: On table LockTimeouts, introduced sqlHashDim
+* Dataset: On table LongRunningSQLQueries, tuned data load (introduced hash partitions) and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases). Added 'are you missing a SetCurrentKey?' to SQL explanation
 * Dataset: On table LongRunningAL, tuned data load (introduced hash partitions) and moved object, extension, stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On table IncomingWebServicePerformance, tuned data load (introduced hash partitions) and moved connector type, and category into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On table ReportPerformance, tuned data load (introduced hash partitions) and moved connector type, and category into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: On tables EnvironmentLifecycle, EnvironmentLifecycleErrors, ExtensionLifecycle, ExtensionLifecycleErrors, IndexLifecycle, CompanyLifecycle, FieldChanges, RententionPolicyDeletes: tuned queries to run faster (introduced TenantHash)
+* Dataset: On table TaskSchedulerErrors, added support for new signal 'Task timeout changed because it was exceeding the max timeout value'. Also tuned query (introduced TenantHash)
+* Dataset: On table TaskSchedulerPerformance, tuned query (introduced TenantHash, moved to 1h bins).
+* Usage report: On pages 'Page views' 'Reports', 'Feature Usage', 'Checklist usage', 'Integrations', 'Connectors', and 'Deprecated features' added per environment visual
+* Performance report: On page 'Pageviews', added per-app/per-object visuals
+* Performance report: On page 'Outgoing webservice calls', added client type. Also added per-app/per-object visuals.
 * Error report: On page 'Environment lifecycle Errors', added support for failed soft delete and recovery (un-delete) operations
+* Error report: On page 'Job Queue Errors', added AL stacktrace (introduced in telemetry in version 21.3)
+* Performance report: On page 'Outgoing webservice errors', added client type. Also added per-app/per-object visuals.
 * Administration report: On page 'Environment lifecycle', added support for soft delete and recovery (un-delete) operations
 
-Maybe in March release
-* Database deadlocks page: need to fix URL (hide) for user telemetry id
-* Introduce new (advanced) parameter: partitions
-* MAU/WAU/DAU report
 
 ------------------
 2023-02-01 release
