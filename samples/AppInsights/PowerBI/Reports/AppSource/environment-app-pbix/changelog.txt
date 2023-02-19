@@ -1,9 +1,9 @@
 Ideas
 * Errors: Add AL stacktrace to failed job queue page (when available - pending app team bugfix)
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
-* Usage: Feature uptake page
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
+* Usage: Feature uptake page
 * Administration: Permission set changes
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
@@ -16,10 +16,12 @@ Ideas
 * Usage: add license type on sessions page
 * Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
-* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack 
+* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
+* Errors: On page 'job queue errors' page, add visuals for top/bottom of AL call stack  
 * Database deadlocks page: need to fix URL (hide) for user telemetry id
 * Introduce new (advanced) parameter: partitions and maybe binsize
-* MAU/WAU/DAU report
+* Administration: Feature management page (for 22.0)
+
 
 
 ------------------
@@ -36,6 +38,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: On table TaskSchedulerErrors, added support for new signal 'Task timeout changed because it was exceeding the max timeout value'. Also tuned query (introduced TenantHash)
 * Dataset: On table TaskSchedulerPerformance, tuned query (introduced TenantHash, moved to 1h bins).
 * Usage report: On pages 'Page views' 'Reports', 'Feature Usage', 'Checklist usage', 'Integrations', 'Connectors', and 'Deprecated features' added per environment visual
+* Usage report: new page 'MAU/WAU/DAU' showing Monthly/Weekly/Daily users based on the user_Id column in Application Insights
 * Performance report: On page 'Pageviews', added per-app/per-object visuals
 * Performance report: On page 'Outgoing webservice calls', added client type. Also added per-app/per-object visuals.
 * Error report: On page 'Environment lifecycle Errors', added support for failed soft delete and recovery (un-delete) operations
@@ -43,6 +46,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance report: On page 'Outgoing webservice errors', added client type. Also added per-app/per-object visuals.
 * Administration report: On page 'Environment lifecycle', added support for soft delete and recovery (un-delete) operations
 
+&page=595&filter='Change Log Entry'.'Date and Time' IS '2/13/2023 1:20:02.843 PM' AND 'Change Log Entry'.'Table No.' IS '2000000120' AND 'Change Log Entry'.'Field No.' IS '1'
 
 ------------------
 2023-02-01 release
