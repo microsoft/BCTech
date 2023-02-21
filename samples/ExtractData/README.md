@@ -38,20 +38,24 @@ No matter which tool you choose, you must make your data pipelines robust toward
 
 
 # Extract, transform, and load (ETL) tools
-You can use your ETL tool of choice to read and tranform data. 
+You can use your ETL tool of choice to read and tranform data. Below, you can read about some popular options.
 
+## SQL Server Integration Services (SSIS)
 For Business Central on-premises, one popular tool of choice is SQL Server Integration Services (SSIS) that is shipped with SQL Server. It is possible to auto-generate SSIS packages from a metadata store using script tasks or a tool such as BIML (see https://www.varigence.com/biml for more information). For more information about SQL Server Integration Services (SSIS), see
 https://learn.microsoft.com/en-us/sql/integration-services/sql-server-integration-services?view=sql-server-ver16
 
-
+## Azure Data Factory
 For Business Central online, you can use a tool such as Azure Data Factory to read and transform data. Azure Data Factory is a managed cloud service that is built for complex hybrid extract-transform-load (ETL), extract-load-transform (ELT), and data integration projects. For more information about Azure Data Factory, see https://learn.microsoft.com/en-us/azure/data-factory/introduction
 
+You can use the Azure Data Factory OData connector with service principal authentication to extract data from Business Central. For more information, see
+* https://learn.microsoft.com/azure/data-factory/connector-odata?tabs=data-factory
+* https://learn.microsoft.com/answers/questions/751705/how-to-connect-business-central-to-azure-data-fact
 
+## Power BI dataflows
 It is also possible to use Power BI dataflows for your extract pipelines. With Power BI dataflows, you can connect to Business Central APIs and utilize incremental refresh to only load data that was changed since last refresh (see https://learn.microsoft.com/en-us/power-query/dataflows/incremental-refresh for more information). For more information about Power BI dataflows, see https://learn.microsoft.com/en-us/power-bi/transform-model/dataflows/dataflows-introduction-self-service
 
-
+## bc2adls code sample (unsupported)
 Another (unsupported) option is to use the _bc2adls_ code sample to transfer data from the Business Central server (NST) directly to a Azure Data Lake Storage (ADLS) data lake. For more information about bc2adls, see https://github.com/microsoft/bc2adls
-
 
 
 
