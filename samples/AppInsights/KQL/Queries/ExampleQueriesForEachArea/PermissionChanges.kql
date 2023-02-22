@@ -121,9 +121,9 @@ traces
 
 // Permission set removed from user group (raw data)
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000E2F'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000E2F'
+| where customDimensions.eventId == 'AL0000E2F'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
@@ -135,3 +135,26 @@ traces
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
+
+
+// Permission set changed by an extension
+// introduced in 22.0
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0058'
+| where customDimensions.eventId == 'AL0000E2F'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// which app changed permission sets?
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
+// which permission set extension object was used
+, permissionSetExtensionObjectId = customDimensions.permissionSetExtensionObjectId
+, permissionSetExtensionObjectName = customDimensions.permissionSetExtensionObjectName
+// which permission set was changed
+, permissionSetId = customDimensions.permissionSetId
+, permissionSetName = customDimensions.permissionSetName
