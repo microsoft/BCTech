@@ -1,0 +1,43 @@
+let _lookback = 1d // change as needed
+
+// Feature management state changes
+// Available from 22.0
+let feature_management_state_changes = 
+traces
+| where timestamp > ago(_lookback) 
+| where customDimensions has "AL0000JT3"
+| where customDimensions.eventId == "AL0000JT3"
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, whatChanged = 'Feature'
+, operation = customDimensions.alStatus // enabled/disabled
+, onWhat = customDimensions.alFeatureDescription // which feature
+, usertelemetryId = user_Id // who did it
+;
+
+let retention_policy_deletes = 
+traces
+| where timestamp >= ago(_lookback) 
+| where customDimensions has 'AL0000D6H'
+| where customDimensions.eventId == 'AL0000D6H'
+| extend RecordsDeleted = toint(customDimensions.alRecordsDeleted)
+, TableNumber = customDimensions.alTableNo
+, TableName = customDimensions.alTableName
+| where RecordsDeleted > 0
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, whatChanged = 'Data'
+, operation = 'Data deleted'
+, onWhat = TableName // which table
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+) // who did it
+;
+
+
+union feature_management_state_changes, retention_policy_deletes
