@@ -1,10 +1,12 @@
 // KQL samples - Feature Telemetry
-// Available from version 19.1
-
+// Available from version 19.1 and 22.0 (see details below)
 
 // Uptake - logged from FeatureTelemetry.LogUptake
+// Available from version 19.1
 traces
 | where timestamp > ago(5d)
+| where customDimensions has "FeatureTelemetry"
+| where customDimensions has 'Uptake'
 | where customDimensions.alCategory == "FeatureTelemetry"
 | where customDimensions.alSubCategory == 'Uptake'
 | extend Category = customDimensions.alCategory
@@ -35,8 +37,11 @@ traces
 
 
 // Errors - logged from FeatureTelemetry.LogError
+// Available from version 19.1
 traces
 | where timestamp > ago(5d)
+| where customDimensions has "FeatureTelemetry"
+| where customDimensions has == 'Error'
 | where customDimensions.alCategory == "FeatureTelemetry"
 | where customDimensions.alSubCategory == 'Error'
 | extend Category = customDimensions.alCategory
@@ -66,8 +71,11 @@ traces
 
 
 // Usage - logged from FeatureTelemetry.LogUsage
+// Available from version 19.1
 traces
 | where timestamp > ago(5d)
+| where customDimensions has "FeatureTelemetry"
+| where customDimensions has 'Usage'
 | where customDimensions.alCategory == "FeatureTelemetry"
 | where customDimensions.alSubCategory == 'Usage'
 | extend Category = customDimensions.alCategory
@@ -100,60 +108,12 @@ traces
 // Available from 22.0
 traces
 | where timestamp > ago(7d) // change as needed
+| where customDimensions has "AL0000JT3"
 | where customDimensions.eventId == "AL0000JT3"
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , Environment = customDimensions.environmentType
-, FeatureId = customDimensions.FeatureId
-, FeatureDescription = customDimensions.FeatureDescription // which feature
-, Status = customDimensions.Status // enabled/disabled
+, FeatureId = customDimensions.alFeatureId
+, FeatureDescription = customDimensions.alFeatureDescription // which feature
+, Status = customDimensions.alStatus // enabled/disabled
 , usertelemetryId = user_Id // who did it
-
-
-
-// delete after testing the signal
-    [EventSubscriber(ObjectType::Page, Page::"Feature Management", 'OnOpenPageEvent', '', false, false)]
-    local procedure LogFeatureTeletryOnBeforeModifyFeatureKey(var Rec: Record "Feature Key")
-    var
-        FeatureTelemetry: Codeunit "Feature Telemetry";
-    begin
-        FeatureTelemetry.LogUptake('0000JT0', FeatureManagementTok, Enum::"Feature Uptake Status"::Discovered);
-    end;
-
-    [EventSubscriber(ObjectType::Table, Database::"Feature Key", 'OnBeforeModifyEvent', '', false, false)]
-    local procedure LogFeatureTelemetryOnBeforeModifyFeatureKey(RunTrigger: Boolean; var Rec: Record "Feature Key"; var xRec: Record "Feature Key")
-    var
-        FeatureTelemetry: Codeunit "Feature Telemetry";
-    begin
-        if xRec.Enabled = Rec.Enabled then
-            exit;
-
-        FeatureTelemetry.LogUptake('0000JT1', FeatureManagementTok, Enum::"Feature Uptake Status"::"Set up");
-        FeatureTelemetry.LogUptake('0000JT2', FeatureManagementTok, Enum::"Feature Uptake Status"::Used, GetFeatureManagementTelemetryDimensions(Rec));
-    end;
-
-    [EventSubscriber(ObjectType::Table, Database::"Feature Key", 'OnAfterModifyEvent', '', false, false)]
-    local procedure LogFeatureTelemetryOnAftereModifyFeatureKey(RunTrigger: Boolean; var Rec: Record "Feature Key"; var xRec: Record "Feature Key")
-    var
-        FeatureTelemetry: Codeunit "Feature Telemetry";
-    begin
-        if xRec.Enabled = Rec.Enabled then
-            exit;
-
-        FeatureTelemetry.LogUsage('0000JT3', FeatureManagementTok, 'Feature switch has been flipped', GetFeatureManagementTelemetryDimensions(Rec));
-    end;
-
-    local procedure GetFeatureManagementTelemetryDimensions(FeatureKey: Record "Feature Key"): Dictionary of [Text, Text]
-    var
-        CustomDimensions: Dictionary of [Text, Text];
-    begin
-        CustomDimensions.Add('FeatureId', FeatureKey.ID);
-        CustomDimensions.Add('FeatureDescription', FeatureKey.Description);
-
-        if FeatureKey.Enabled = FeatureKey.Enabled::"All Users" then
-            CustomDimensions.Add('Status', 'Enabled')
-        else
-            CustomDimensions.Add('Status', 'Disabled');
-
-        exit(CustomDimensions);
-    end;
