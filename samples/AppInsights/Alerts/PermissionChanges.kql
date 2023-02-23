@@ -1,0 +1,28 @@
+// TODO: permission changes by users
+
+let _lookback = ago(1d) // change as needed
+;
+// Permission set changes due to an app/extension
+// Available from 22.0
+let permission_set_changes_from_apps = 
+traces
+| where timestamp > _lookback 
+| where customDimensions has 'LC0058'
+| where customDimensions.eventId == 'LC0058'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// which app changed permission sets?
+, extensionName = customDimensions.extensionName
+, extensionId = customDimensions.extensionId
+, extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
+// which permission set extension object was used
+, permissionSetExtensionObjectId = customDimensions.permissionSetExtensionObjectId
+, permissionSetExtensionObjectName = customDimensions.permissionSetExtensionObjectName
+// which permission set was changed
+, permissionSetId = customDimensions.permissionSetId
+, permissionSetName = customDimensions.permissionSetName
+;
+permission_set_changes_from_apps

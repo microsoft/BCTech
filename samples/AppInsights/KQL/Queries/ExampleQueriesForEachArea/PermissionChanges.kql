@@ -142,7 +142,7 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0058'
-| where customDimensions.eventId == 'AL0000E2F'
+| where customDimensions.eventId == 'LC0058'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
