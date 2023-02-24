@@ -171,8 +171,8 @@ let feature_management_state_changes =
 // Available from 22.0
 traces
 | where timestamp > _lookback 
-| where customDimensions has "AL0000JT3"
-| where customDimensions.eventId == "AL0000JT3"
+| where customDimensions has 'AL0000JT3'
+| where customDimensions.eventId == 'AL0000JT3'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
