@@ -1,21 +1,27 @@
 Ideas
 * Dataset: on all queries, link to AppDim. Add global filters
-* Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
+* Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+* Dataset and all pages: obsolete AppIdDim and move to AppDim
 
 All the little things
-* Errors: extension lifecycle page, make error details visual full width
-* Errors: on incoming/outgoing ws errors pages, get parity with corresponding perf pages and align with VAR app
-* SQL explanation: mention "are you missing a SetCurrentKey?"
-* Performance: use combined app name and id on X by app visuals (pageviews, reports, incoming ws, outgoing ws, Updates)
+* Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: On table LongRunningSQLQueries, tuned data load and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
-
+* Dataset: On tables ExtensionLifeCycleErrors, ExtensionUpdatePerformanceQuery, IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery, tuned data load and moved tenant and extension info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Usage report: On pages 'Page views' 'Reports', 'Feature Usage', 'Feature Uptake', and 'Integrations' added per environment visual
+* Performance report: used combined app name and id on X by app visuals (pageviews, reports, incoming ws, outgoing ws, Updates)
+* Performance report: On page 'Pageviews', added per-app/per-object visuals
+* Performance report: On page 'Outgoing webservice calls', added client type. 
+* Performance report: On page 'Long RunningSQLQueries' in Explanation, mention "are you missing a SetCurrentKey?"
+* Errors: extension lifecycle page, make error details visual full width
+* Errors: on incoming/outgoing ws errors pages, added per-app/per-object visuals
 
 
 ------------------
