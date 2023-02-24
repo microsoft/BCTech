@@ -1,0 +1,34 @@
+// Query to calculate DAU (Daily Active Users), WAU (Weekly Active Users), MAU (Monthly Active Users)
+// Calculations are based on the user_id column
+// Note that for environment telemetry in environments running version 20.0 or higher, 
+// this is used by Business Central to write the user telemetry id.
+// For users where the tenant admin has turned user telemetry id off, the column will just have a zero guid as value. 
+// This means that the calculated DAU/WAU/MAU number is lower that actual usage.
+
+let dau_mau = 
+traces
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+| where timestamp > ago(90d)
+| evaluate activity_engagement(user_Id, timestamp, ago(40d), now(), 1d, 28d, aadTenantId, environmentName)
+| project-rename dau=dcount_activities_inner, mau=dcount_activities_outer
+| project-away activity_ratio
+| extend timestamp_truncated = startofday(timestamp)
+;
+let dau_wau = 
+traces
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+| where timestamp > ago(90d)
+| evaluate activity_engagement(user_Id, timestamp, ago(40d), now(), 1d, 7d, aadTenantId, environmentName)
+| project-rename dau=dcount_activities_inner, wau=dcount_activities_outer
+| project-away activity_ratio
+| extend timestamp_truncated = startofday(timestamp)
+;
+dau_mau
+| join kind=inner dau_wau 
+on $left.aadTenantId == $right.aadTenantId 
+and $left.environmentName == $right.environmentName
+and $left.timestamp_truncated == $right.timestamp_truncated
+| project-away aadTenantId1, environmentName1, timestamp_truncated1, timestamp, timestamp1, dau1
+| project-rename timestamp=timestamp_truncated
