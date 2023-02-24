@@ -1,10 +1,174 @@
-// TODO: extension lifecycle, extension lifecycle, company lifecycle, index lifecycle, field changes
+// This query shows changes to environments: 
+// * environment lifecycle events
+//     updated
+//     started
+//     stopped
+//     copied
+//     point-in-time restored
+//     moved to different AAD tenant
+//     database exported
+//     configuration changed
+//     marked for deletion
+//     deleted permanently
+//     renamed
+//     app hotfix applied
+//     recovered (un-deleted)
+// * feature changes 
+//     enabled
+//     disabled
+// * extension lifecycle events
+//     compilation succeeded
+//     compilation failed
+//     synch succeeded
+//     synch failed
+//     publish succeeded
+//     publish failed
+//     install succeeded
+//     install failed
+//     un-install succeeded
+//     un-install failed
+//     un-publish succeeded
+//     un-publish failed
+//     update failed (upgrade code)
+//     update succeeded
+//     update failed (other)
+// * company changes
+//     created
+//     copied
+//     deleted
+// * index changes
+//     added
+//     removed
+// * data deletes (rention policy)
+// * data changes (sensitive field monitoring)
 
-let _lookback = ago(1d) // change as needed
+let _lookback = ago(7d) // change as needed
 ;
+let environment_lifecycle_events = 
+traces
+| where timestamp > _lookback 
+| where customDimensions has 'Dynamics 365 Business Central Control Plane'
+| where customDimensions.eventId in ( 'LC0106', 'LC0114', 'LC0117', 'LC0120', 'LC0126', 'LC0134', 'LC0141', 'LC0142', 'LC0146', 'LC0150', 'LC0153', 'LC0159', 'LC0181' )
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, whatChanged = 'Environment'
+, operation = case(
+    customDimensions.eventId == 'LC0106', 'Updated'
+  , customDimensions.eventId == 'LC0114', 'Started'
+  , customDimensions.eventId == 'LC0117', 'Stopped'
+  , customDimensions.eventId == 'LC0120', 'Copied'
+  , customDimensions.eventId == 'LC0126', 'Point-in-time restored' 
+  , customDimensions.eventId == 'LC0134', 'Moved to different AAD tenant' 
+  , customDimensions.eventId == 'LC0141', 'Database exported' 
+  , customDimensions.eventId == 'LC0142', 'Configuration key updated' 
+  , customDimensions.eventId == 'LC0146', 'Update window modified'         
+  , customDimensions.eventId == 'LC0150', 'Deleted (permanently)'
+  , customDimensions.eventId == 'LC0153', 'Renamed'
+  , customDimensions.eventId == 'LC0159', 'App hotfix applied'
+  , customDimensions.eventId == 'LC0181', 'Deleted (marked for deletion)'
+  , customDimensions.eventId == 'LC0184', 'Recovered (un-deleted)'            
+  , 'Unknown event'
+)
+, onWhat = tostring( customDimensions.environmentName ) // which environment
+;
+let extension_lifecycle_events = 
+traces
+| where timestamp > _lookback 
+| where customDimensions has 'RT0010'
+     or customDimensions has 'LC0010'
+     or customDimensions has 'LC0011'
+     or customDimensions has 'LC0012'
+     or customDimensions has 'LC0013'
+     or customDimensions has 'LC0014'
+     or customDimensions has 'LC0015'
+     or customDimensions has 'LC0016'
+     or customDimensions has 'LC0017'
+     or customDimensions has 'LC0018'
+     or customDimensions has 'LC0019'
+     or customDimensions has 'LC0020'
+     or customDimensions has 'LC0021'
+     or customDimensions has 'LC0022'
+     or customDimensions has 'LC0023'
+| where customDimensions.eventId in ('RT0010', 'LC0010', 'LC0011', 'LC0012', 'LC0013', 'LC0014', 'LC0015', 'LC0016', 'LC0017', 'LC0018', 'LC0019', 'LC0020', 'LC0021', 'LC0022', 'LC0023')    
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, whatChanged = 'Extension'
+, operation = case(
+    customDimensions.eventId=='RT0010', 'Update failed (upgrade code)'
+  , customDimensions.eventId=='LC0010', 'Install succeeded'
+  , customDimensions.eventId=='LC0011', 'Install failed'
+  , customDimensions.eventId=='LC0010', 'Install succeeded'
+  , customDimensions.eventId=='LC0012', 'Synch succeeded'
+  , customDimensions.eventId=='LC0013', 'Synch failed'           
+  , customDimensions.eventId=='LC0014', 'Publish succeeded'
+  , customDimensions.eventId=='LC0015', 'Publish failed'
+  , customDimensions.eventId=='LC0016', 'Un-install succeeded'
+  , customDimensions.eventId=='LC0017', 'Un-install failed'
+  , customDimensions.eventId=='LC0018', 'Un-publish succeeded'
+  , customDimensions.eventId=='LC0019', 'Un-publish failed'
+  , customDimensions.eventId=='LC0020', 'Compilation succeeded'
+  , customDimensions.eventId=='LC0021', 'Compilation failed'
+  , customDimensions.eventId=='LC0022', 'Update succeeded'
+  , customDimensions.eventId=='LC0023', 'Update failed (other)'
+  , 'Unknown message'
+)
+, onWhat = tostring( customDimensions.extensionName ) // which extension
+;
+let index_lifecycle_events = 
+traces
+| where timestamp > _lookback 
+| where customDimensions has 'LC0024' 
+     or customDimensions has 'LC0025'
+| where customDimensions.eventId in ('LC0024', 'LC0025')
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, whatChanged = 'Index'
+, operation = case(
+    customDimensions.eventId == 'LC0024', 'Added'
+  , customDimensions.eventId == 'LC0025', 'Removed'
+  , 'Unknown message'
+)
+, onWhat = tostring( customDimensions.alObjectName ) // which table
+;
+let company_lifecycle_events = 
+traces
+| where timestamp > _lookback 
+| where customDimensions has 'LC0001' 
+     or customDimensions has 'LC0004' 
+     or customDimensions has 'LC0007'
+| where customDimensions.eventId in ('LC0001', 'LC0004', 'LC0007')
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, whatChanged = 'Company'
+, operation = case(
+    customDimensions.eventId == 'LC0001', 'Company created'
+  , customDimensions.eventId == 'LC0004', 'Company copied'
+  , customDimensions.eventId == 'LC0007', 'Company deleted'    
+  ,                    'Unknown message'
+)
+, onWhat = case(
+    customDimensions.eventId == 'LC0001', tostring( customDimensions.companyName )
+  , customDimensions.eventId == 'LC0004', tostring( customDimensions.companyNameSource )
+  , customDimensions.eventId == 'LC0007', tostring( customDimensions.companyName )
+  ,                    'Unknown message'
+) // which company
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+) // who did it
+;
+let feature_management_state_changes = 
 // Feature management state changes
 // Available from 22.0
-let feature_management_state_changes = 
 traces
 | where timestamp > _lookback 
 | where customDimensions has "AL0000JT3"
@@ -27,7 +191,8 @@ traces
 , TableNumber = customDimensions.alTableNo
 , TableName = tostring( customDimensions.alTableName )
 | where RecordsDeleted > 0
-| project aadTenantId = customDimensions.aadTenantId
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , whatChanged = 'Data'
@@ -39,5 +204,30 @@ traces
 , 'N/A'
 ) // who did it
 ;
-feature_management_state_changes
+let field_changes = 
+traces
+| where timestamp > _lookback 
+| where customDimensions has 'AL0000CTE'
+| where customDimensions.eventId == 'AL0000CTE'
+| extend TableName = iff( isempty(customDimensions.alTableCaption), customDimensions.altableCaption, customDimensions.alTableCaption )
+, FieldName = iff( isempty(customDimensions.alFieldCaption), customDimensions.alfieldCaption, customDimensions.alFieldCaption )
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, whatChanged = 'Data'
+, operation = 'Data changed'
+, onWhat = strcat( TableName, '.', FieldName ) // which table.field
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+) // who did it
+;
+environment_lifecycle_events
+| union extension_lifecycle_events
+| union index_lifecycle_events
+| union company_lifecycle_events
+| union feature_management_state_changes
 | union retention_policy_deletes
+| union field_changes
