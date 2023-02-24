@@ -2,9 +2,9 @@
 
 let _lookback = ago(1d) // change as needed
 ;
+let permission_set_changes_from_apps = 
 // Permission set changes due to an app/extension
 // Available from 22.0
-let permission_set_changes_from_apps = 
 traces
 | where timestamp > _lookback 
 | where customDimensions has 'LC0058'
@@ -13,6 +13,7 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, operation = 'Permission set changed due to an app/extension'
 // which app changed permission sets?
 , extensionName = customDimensions.extensionName
 , extensionId = customDimensions.extensionId
@@ -25,4 +26,24 @@ traces
 , permissionSetId = customDimensions.permissionSetId
 , permissionSetName = customDimensions.permissionSetName
 ;
+let permission_set_added_by_user = 
+traces
+| where timestamp > _lookback 
+| where customDimensions has 'AL0000E2A'
+| where customDimensions.eventId == 'AL0000E2A'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, operation = 'Permission set added by a user'
+// which permission set was changed
+, permissionSetId = customDimensions.alPermissionSetId
+// who did it
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
+;
 permission_set_changes_from_apps
+| union permission_set_added_by_user
