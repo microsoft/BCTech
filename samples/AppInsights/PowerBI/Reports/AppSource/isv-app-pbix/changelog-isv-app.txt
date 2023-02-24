@@ -13,6 +13,12 @@ All the little things
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+TBA
+
+
+------------------
+2023-02-01 release (to be released on 2023-03-01, testing completed)
+------------------
 * Dataset: On table LongRunningSQLQueries, tuned data load and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On tables ExtensionLifeCycleErrors, ExtensionUpdatePerformanceQuery, IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery, tuned data load and moved tenant and extension info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Usage report: On pages 'Page views' 'Reports', 'Feature Usage', 'Feature Uptake', and 'Integrations' added per environment visual
