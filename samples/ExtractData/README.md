@@ -54,6 +54,9 @@ You can use the Azure Data Factory OData connector with service principal authen
 ## Power BI dataflows
 It is also possible to use Power BI dataflows for your extract pipelines. With Power BI dataflows, you can connect to Business Central APIs and utilize incremental refresh to only load data that was changed since last refresh (see https://learn.microsoft.com/en-us/power-query/dataflows/incremental-refresh for more information). For more information about Power BI dataflows, see https://learn.microsoft.com/en-us/power-bi/transform-model/dataflows/dataflows-introduction-self-service
 
+Microsoft MVP Steven Renders has written a very nice blog post on how to use Power BI dataflows with Business Central:
+https://thinkaboutit.be/2023/02/how-do-i-create-a-power-bi-dataflow-with-business-central-data/
+
 ## bc2adls code sample (unsupported)
 Another (unsupported) option is to use the _bc2adls_ code sample to transfer data from the Business Central server (NST) directly to a Azure Data Lake Storage (ADLS) data lake. For more information about bc2adls, see https://github.com/microsoft/bc2adls
 
