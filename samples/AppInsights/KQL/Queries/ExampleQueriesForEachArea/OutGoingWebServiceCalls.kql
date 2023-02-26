@@ -6,9 +6,10 @@
 // Outgoing Web Service Requests from AL HttpClient (RAW data)
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
-    and customDimensions.eventId == 'RT0019'
+| where customDimensions has 'RT0019'
+| where customDimensions.eventId == 'RT0019'
 | project eventId = customDimensions.eventId 
-, aadID = customDimensions.aadTenantId
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -18,7 +19,7 @@ traces
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace // This dimension was introduced in Business Central 2023 release wave 1, version 22.0.
-, clientType = customDimensions.clientType // This dimension was introduced in Business Central 2023 release wave 1, version 22.0.
+, clientType = customDimensions.clientType // This dimension was introduced in Business Central 2022 release wave 2, version 21.4.
 , endpoint = customDimensions.endpoint
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
@@ -39,5 +40,3 @@ traces
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
-
-
