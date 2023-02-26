@@ -11,8 +11,9 @@ traces
 | where customDimensions.alSubCategory == 'Uptake'
 | extend Category = customDimensions.alCategory
 | extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
- , aadTenantId = customDimensions.aadTenantId
- , Environment = customDimensions.environmentType
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
  , SubCategory = customDimensions.alSubCategory
  , FeatureName = customDimensions.alFeatureName
  , EventName = customDimensions.alEventName
@@ -46,8 +47,9 @@ traces
 | where customDimensions.alSubCategory == 'Error'
 | extend Category = customDimensions.alCategory
 | extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
- , aadTenantId = customDimensions.aadTenantId
- , Environment = customDimensions.environmentType
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
  , SubCategory = customDimensions.alSubCategory
  , FeatureName = customDimensions.alFeatureName
  , EventName = customDimensions.alEventName
@@ -80,9 +82,9 @@ traces
 | where customDimensions.alSubCategory == 'Usage'
 | extend Category = customDimensions.alCategory
 | extend Date = format_datetime(timestamp, 'yyyy-MM-dd')
- , aadTenantId = customDimensions.aadTenantId
- , Environment = customDimensions.environmentType
- , SubCategory = customDimensions.alSubCategory
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType , SubCategory = customDimensions.alSubCategory
  , FeatureName = customDimensions.alFeatureName
  , EventName = customDimensions.alEventName
  , CallerAppName = customDimensions.alCallerAppName
@@ -112,7 +114,8 @@ traces
 | where customDimensions.eventId == "AL0000JT3"
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
-, Environment = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
 , FeatureId = customDimensions.alFeatureId
 , FeatureDescription = customDimensions.alFeatureDescription // which feature
 , Status = customDimensions.alStatus // enabled/disabled
