@@ -18,6 +18,7 @@ TBA
 
 ------------------
 2023-02-01 release (to be released on 2023-03-01, testing completed)
+Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: On table LongRunningSQLQueries, tuned data load and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On tables ExtensionLifeCycleErrors, ExtensionUpdatePerformanceQuery, IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery, tuned data load and moved tenant and extension info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).

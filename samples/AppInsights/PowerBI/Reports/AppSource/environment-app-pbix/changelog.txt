@@ -21,11 +21,20 @@ Ideas
 * Database deadlocks page: need to fix URL (hide) for user telemetry id
 * Introduce new (advanced) parameter: partitions and maybe binsize
 * Administration: Feature management page (for 22.0)
-
+* Administration: Permission changes page (for 22.0)
+* sensitive fields monitoring, add link to change log entries &page=595&filter='Change Log Entry'.'Date and Time' IS '2/13/2023 1:20:02.843 PM' AND 'Change Log Entry'.'Table No.' IS '2000000120' AND 'Change Log Entry'.'Field No.' IS '1'
+* optimize IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery (copy patterns from ISV app)
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
+Install beta app from: https://aka.ms/bctelemetryreportbeta
+------------------
+TBA
+
+
+------------------
+2023-02-01 release (to be released on 2023-03-01, final testing being done)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: On table SQLDeadlocks, Added user telemetry id and URL to the User card in BC. Tuned data load and moved object info, extension info, sql details, stacktrace, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
@@ -41,12 +50,11 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage report: new page 'MAU/WAU/DAU' showing Monthly/Weekly/Daily users based on the user_Id column in Application Insights
 * Performance report: On page 'Pageviews', added per-app/per-object visuals
 * Performance report: On page 'Outgoing webservice calls', added client type. Also added per-app/per-object visuals.
+* Error report: On page 'SQL deadlocks', added user telemetry id visual
 * Error report: On page 'Environment lifecycle Errors', added support for failed soft delete and recovery (un-delete) operations
 * Error report: On page 'Job Queue Errors', added AL stacktrace (introduced in telemetry in version 21.3)
-* Performance report: On page 'Outgoing webservice errors', added client type. Also added per-app/per-object visuals.
 * Administration report: On page 'Environment lifecycle', added support for soft delete and recovery (un-delete) operations
 
-&page=595&filter='Change Log Entry'.'Date and Time' IS '2/13/2023 1:20:02.843 PM' AND 'Change Log Entry'.'Table No.' IS '2000000120' AND 'Change Log Entry'.'Field No.' IS '1'
 
 ------------------
 2023-02-01 release
