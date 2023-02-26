@@ -4,6 +4,7 @@
 // available from 20.1
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0031' // for faster performance 
 | where customDimensions.eventId == 'RT0031'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
@@ -30,13 +31,13 @@ traces
 , 'N/A'
 )
 , message
-, customDimensions
 
 
 // Dependency cycle discovered in permission sets (raw data) 
 // available from 20.2
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0032' // for faster performance 
 | where customDimensions.eventId == 'RT0032'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
@@ -57,4 +58,20 @@ traces
 , 'N/A'
 )
 , message
-, customDimensions
+
+
+// Permission set changed by an extension (raw data) 
+// available from 22.0?
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0033' // for faster performance 
+| where customDimensions.eventId == 'RT0033'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+// TODO: extension and permission set dimensions TBD
+, usertelemetryId = user_Id
+, message
