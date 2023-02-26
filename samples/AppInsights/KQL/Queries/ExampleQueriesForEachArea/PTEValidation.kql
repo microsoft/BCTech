@@ -2,6 +2,19 @@
 
 // Available in environment telemetry from version 21.x
 
+// PTE submission validation request started: request <request id>
+traces 
+| where customDimensions has "LC0200"
+| where customDimensions.eventId == "LC0200"
+| where timestamp > ago(30d) // adjust as needed
+| project timestamp
+, environmentId = customDimensions.environmentId // remove and add aadTenantId
+, environmentName = customDimensions.environmentName
+, dependentExtensions = customDimensions.dependentExtensions
+, submissionOperationId = customDimensions.submissionOperationId // I suggest you rename to validationRequestId to align with naming used in appsource validation signal 
+, mainExtension = customDimensions.mainExtension // I suggest you split this into four dimensions: extensionId, extensionPublisher, extensionName, and extensionVersion
+
+
 
 
         /// <summary>
