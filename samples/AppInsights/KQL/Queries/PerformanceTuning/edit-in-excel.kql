@@ -5,8 +5,10 @@
 // not do UI things when running the page as a web service
 traces
 | where timestamp > ago(14d)
+| where customDimensions has 'RT0008' // KQL perf optimization 
+| where customDimensions has 'ODataV4' // KQL perf optimization 
 | where customDimensions.eventId == 'RT0008'
-    and customDimensions.category == 'ODataV4'
+| where customDimensions.category == 'ODataV4'
 | extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | where httpHeadersJSON.['ms-dyn-useragent'] contains "DynamicsOfficeApp"
