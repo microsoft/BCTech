@@ -33,7 +33,7 @@ TBA: update application areas with 22.0 new app features
 
 
 ------------------
-2023-02-01 release (to be released on 2023-03-01, final testing being done)
+2023-02-01 release (to be released on 2023-03-01, testing completed)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: On table SQLDeadlocks, Added user telemetry id and URL to the User card in BC. Tuned data load and moved object info, extension info, sql details, stacktrace, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
