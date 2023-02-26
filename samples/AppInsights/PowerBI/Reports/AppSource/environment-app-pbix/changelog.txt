@@ -53,7 +53,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Error report: On page 'Environment lifecycle Errors', added support for failed soft delete and recovery (un-delete) operations
 * Error report: On page 'Job Queue Errors', added AL stacktrace (introduced in telemetry in version 21.3)
 * Administration report: On page 'Environment lifecycle', added support for soft delete and recovery (un-delete) operations
-* Administration report: On page 'Sensitive fields monitoring', added link to change log entries 
+* Administration report: On page 'Sensitive fields monitoring', added link to change log entries. Also added visuals to see changes by company/table/field, by table/field/company, by time of day and by day of the week, 
 
 
 ------------------
