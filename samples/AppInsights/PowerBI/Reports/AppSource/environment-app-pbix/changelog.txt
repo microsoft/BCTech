@@ -1,27 +1,21 @@
-Ideas
-* Errors: Add AL stacktrace to failed job queue page (when available - pending app team bugfix)
+Pending teams
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
+* Job Queue errors/performance: add dimension alJobQueueObjectName (when available - pending app team bugfix)
+* Administration: Permission set changes (pending app team on adding permission set name)
+* Database deadlocks page: need to fix URL (hide) for user telemetry id
+
+Ideas
 * Usage: Feature uptake page
-* Administration: Permission set changes
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
-* Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Errors: Add recurring failing task scheduler/job queue jobs to recommendations
 * Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Dataset: include list for event ids as a parameter
-* LRQ: Add a filter on WITH(READUNCOMMITTED) 
 * Usage: add license type on sessions page
-* Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
-* Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
-* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
-* Errors: On page 'job queue errors' page, add visuals for top/bottom of AL call stack  
-* Database deadlocks page: need to fix URL (hide) for user telemetry id
 * Introduce new (advanced) parameter: partitions and maybe binsize
-* Administration: Feature management page (for 22.0)
-* Administration: Permission changes page (for 22.0)
 * optimize IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery (copy patterns from ISV app)
 
 
@@ -29,7 +23,22 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-TBA: update application areas with 22.0 new app features
+* Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
+* Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
+* Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
+* Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
+
+
+None of this is in the beta app yet
+* update application areas with 22.0 new app features
+* Administration: Feature management page (for 22.0)
+* Administration: Permission changes page (for 22.0)
+* Performance report: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0)
+* Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
+* Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
+* Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
+* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
+* Errors: On page 'job queue errors' page, add visuals for top/bottom of AL call stack  
 
 
 ------------------
