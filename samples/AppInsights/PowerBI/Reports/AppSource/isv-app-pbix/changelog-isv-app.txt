@@ -1,22 +1,23 @@
 Ideas
 * Dataset: on all queries, link to AppDim. Add global filters, obsolete AppIdDim
-* Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
-
-All the little things
-* Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
-
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-None of this is in the beta app yet
-* Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
-* Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
+* Dataset: On table LongRunningAL, tuned data load and moved stacktrace, client type, object info, app info and sql info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: On table OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
+* Performance report: On page 'Long Running AL', added per-environment visual and aligned per-app/per-object visuals to new design
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
+* Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
+
+TODO (not in the beta app yet)
+* Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
+* Performance: add new page to show impact on app code in session performance
+* Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
 
 
 ------------------
