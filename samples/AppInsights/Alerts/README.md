@@ -34,6 +34,7 @@ This part of the samples repo contains examples of KQL queries that you can use 
 | Sensitive field monitoring | Security/Auditing | VAR | Alert if sensitive fields are added/removed to the monitoring list and if their values change. | AL0000DD3, AL0000EMW, AL0000CTE | [SensitiveFieldMonitoring.kql](./AlertingKQLSamples/SensitiveFieldMonitoring.kql) |
 | Login errors | Errors | VAR | Alert if sessions fail to get created. | RT0001, RT0002 | [LoginFailures.kql](./AlertingKQLSamples/LoginFailures.kql) |
 | Login performance | Performance | VAR | Alert if sessions take long to create. | RT0004 | [LoginPerformance.kql](./AlertingKQLSamples/LoginPerformance.kql) |
+| Login performance | Performance | VAR/ISV | Alert on calls to external service in the login events _OnCompanyOpen_ and _OnCompanyOpenCompleted_ . | RT0004 | [OutgoingWebserviceCallsFromLoginEvents.kql](./AlertingKQLSamples/OutgoingWebserviceCallsFromLoginEvents.kql) |
 
 
 # Disclaimer
