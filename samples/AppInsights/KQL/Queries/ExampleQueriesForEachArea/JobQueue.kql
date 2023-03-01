@@ -1,5 +1,10 @@
 // KQL samples - Job Queue
 
+TODO: test before April 2023 release
+, alJobQueueObjectName = customDimensions.JobQueueObjectName // added in 22.0
+, alJobQueueObjectDescription = customDimensions.JobQueueObjectDescription // added in 22.0
+
+
 // Job queue entry enqueued (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
