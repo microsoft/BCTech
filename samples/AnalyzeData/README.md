@@ -1,7 +1,7 @@
 # What is Business Central Data Analysis?
 In the 2023 release wave 1 of Business Central, we are introducing a new powerful feature that allows you to analyze data on lists directly in the Business Central.
 
-Read more about Data Analysis here: release plan entry TBA
+Read more about Data Analysis here: https://learn.microsoft.com/en-us/dynamics365/release-plan/2023wave1/smb/dynamics365-business-central/analyze-group-pivot-data-list-pages-using-multiple-tabs
 
 # How can I use Data Analysis?
 Data Analysis is meant for quick fact checking and ad-hoc analysis when you don't want to run a report, if a report for your specific needs does exist, or if you want to quickly iterate to get a good overview on part of your business.
