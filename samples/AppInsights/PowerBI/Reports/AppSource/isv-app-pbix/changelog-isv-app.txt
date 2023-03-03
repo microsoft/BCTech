@@ -3,6 +3,7 @@ Ideas
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 
+
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
@@ -13,6 +14,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
+* Errors: new page 'Feature Telemetry app errors', showing events AL0000G7J and AL0000G7K that indicate that extensions use the Feature Telemetry module wrong
 
 TODO (not in the beta app yet)
 * Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)

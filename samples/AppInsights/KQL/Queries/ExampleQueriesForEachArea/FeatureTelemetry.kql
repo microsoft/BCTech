@@ -1,6 +1,12 @@
 // KQL samples - Feature Telemetry
 // Available from version 19.1 and 22.0 (see details below)
 
+// Feature telemetry docs
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-system-application-overview
+// https://github.com/microsoft/ALAppExtensions/tree/main/Modules/System/Telemetry
+// https://learn.microsoft.com/en-us/dynamics365/business-central/application/reference/system%20application/codeunit/system_application_codeunit_feature_telemetry
+
+
 // Uptake - logged from FeatureTelemetry.LogUptake
 // Available from version 19.1
 traces
