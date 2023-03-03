@@ -117,10 +117,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, appVersion = customDimensions.alCallerAppVersion
+, appId = customDimensions.alCallerAppId
 , appPublisher = customDimensions.alCallerPublisher
 , appName = customDimensions.alCallerAppName
-
+, appVersion = customDimensions.alCallerAppVersion
 
 
 // Feature Telemetry app error
@@ -134,9 +134,10 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, appVersion = customDimensions.alCallerAppVersion
+, appId = customDimensions.alCallerAppId
 , appPublisher = customDimensions.alCallerPublisher
 , appName = customDimensions.alCallerAppName
+, appVersion = customDimensions.alCallerAppVersion
 
 
 
