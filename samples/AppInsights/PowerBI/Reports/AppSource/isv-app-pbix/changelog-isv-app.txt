@@ -13,8 +13,9 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance report: On page 'Long Running AL', added per-environment visual and aligned per-app/per-object visuals to new design
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
-* Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
 * Errors: new page 'Feature Telemetry app errors', showing events AL0000G7J and AL0000G7K that indicate that extensions use the Feature Telemetry module wrong
+* Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
+* Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 
 TODO (not in the beta app yet)
 * Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
