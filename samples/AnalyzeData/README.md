@@ -23,6 +23,15 @@ In the following table, you'll find examples of usage scenarios for each main ar
 | Inventory (track inventory movements) | Get an overview of how goods in your inventory move between locations | Open the _Item Ledger Entries_ list and switch on Analyze. Go to the Columns menu and remove all columns (click the box next to the _Search_ field). Drag the field _Location Code_ to the _Row Groups_ area. Then drag the field _Quantity_ to the _Values_ area. Finally, pick any other fields that you want in the analysis, and enable them in the Columns area. In this example, we enable _Posting Date_, _Item No._, and  _Entry No._ | [Item Ledger Entries](https://businesscentral.dynamics.com/?page=38) | _Location Code_, _Quantity_, _Posting Date_, _Item No._, and  _Entry No._ |  |
 
 
+# What Power Point presentations are available?
+To make it easier to adopt Data Analysis for Business Central, we added a number of Power Point presentations that you can use for various situations.
+
+| Your role is... | You want to... | Use this deck (click and then download) |
+| --------------- | ---------------| ------------- |
+| analyze data all over the business | Present a few killer-scenarios to your colleagues | [Analysis scenarios.pptx](<./decks/Analysis scenarios.pptx>) |
+| as a trainer | Help partners/customers/colleagues get started with Data Analysis (maybe do a lunch session or present at a conference) | [Analyze Data on list pages.pptx](<./decks/Analyze Data on list pages.pptx>) |
+
+
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
 
