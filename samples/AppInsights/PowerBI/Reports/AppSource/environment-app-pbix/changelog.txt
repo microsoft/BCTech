@@ -27,7 +27,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
-
+* Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 
 None of this is in the beta app yet
 * update application areas with 22.0 new app features
@@ -39,6 +39,7 @@ None of this is in the beta app yet
 * Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
 * Errors: On page 'job queue errors' page, add visuals for top/bottom of AL call stack  
+
 
 
 ------------------
