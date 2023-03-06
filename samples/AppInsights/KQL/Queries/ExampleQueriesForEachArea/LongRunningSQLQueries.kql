@@ -62,7 +62,7 @@ operationType == "SELECT", countof(selectPart,",") + 1
 , 0
 )
 , takeLocks = sqlStatement has 'UPDLOCK'
-, searchQuery = SqlStatement has 'LIKE' and SqlStatement has 'COLLATE'
+, searchQuery = sqlStatement has 'LIKE' and sqlStatement has 'COLLATE'
 
 
 // version that works on 15.0, 15.2, and 15.2 versions
@@ -116,11 +116,11 @@ operationType == "SELECT", countof(selectPart,",") + 1
 , 0
 )
 , takeLocks = sqlStatement has 'UPDLOCK'
-, searchQuery = SqlStatement has 'LIKE' and SqlStatement has 'COLLATE'
+, searchQuery = sqlstatement has 'LIKE' and sqlstatement has 'COLLATE'
 , isolationLevel = case(
-    SqlStatement has 'WITH(UPDLOCK)', 'UPDLOCK'
-  , SqlStatement has 'WITH(READUNCOMMITTED)', 'ReadUncommitted'
-  , SqlStatement has 'WITH(READCOMMITTED)', 'ReadCommitted' // available from 22.0
-  , SqlStatement has 'WITH(REPEATABLEREAD)', 'RepeatableRead' // not sure about this yet
+    sqlstatement has 'WITH(UPDLOCK)', 'UPDLOCK'
+  , sqlstatement has 'WITH(READUNCOMMITTED)', 'ReadUncommitted'
+  , sqlstatement has 'WITH(READCOMMITTED)', 'ReadCommitted' // available from 22.0
+  , sqlstatement has 'WITH(REPEATABLEREAD)', 'RepeatableRead' // not sure about this yet
   , 'Default'
 )
