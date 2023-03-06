@@ -18,7 +18,8 @@ traces
 , componentVersion = customDimensions.componentVersion
 , environmentType = customDimensions.environmentType
 , environmentName = customDimensions.environmentName
-, errorMessageInEnglish = customDimensions.alEnglishLanguageDiagnosticsMessage // This dimension was introduced in Business Central 2023 release wave 1, version 22.0.
+, errorMessageInUsersLanguage = customDimensions.alErrorMessage
+, errorMessageInEnglish = customDimensions.alEnglishLanguageDiagnosticsMessage // This dimension was introduced in Business Central 2023 release wave 1, version 21.4.
 , eventId = customDimensions.eventId
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
