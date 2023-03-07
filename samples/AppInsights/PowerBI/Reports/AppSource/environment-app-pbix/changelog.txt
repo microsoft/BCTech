@@ -17,7 +17,7 @@ Ideas
 * Usage: add license type on sessions page
 * Introduce new (advanced) parameter: partitions and maybe binsize
 * optimize IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery (copy patterns from ISV app)
-
+* cross tenant comparisons of performance and errors
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
@@ -29,11 +29,12 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
+* Administration: New page 'Feature management' added (for 22.0)
+* Administration: New page 'Permission changes' added (for 22.0)
+
 
 None of this is in the beta app yet
 * update application areas with 22.0 new app features
-* Administration: Feature management page (for 22.0)
-* Administration: Permission changes page (for 22.0)
 * Performance report: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0)
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
