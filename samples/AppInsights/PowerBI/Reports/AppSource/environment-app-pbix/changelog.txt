@@ -24,10 +24,11 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
+* Usage: new page 'Client actions'
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
+* Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
-* Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 
 None of this is in the beta app yet
 * update application areas with 22.0 new app features
