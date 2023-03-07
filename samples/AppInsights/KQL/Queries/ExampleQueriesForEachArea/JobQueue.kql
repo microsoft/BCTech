@@ -1,6 +1,7 @@
 // KQL samples - Job Queue
 
 TODO: test before April 2023 release
+
 , alJobQueueObjectName = customDimensions.JobQueueObjectName // added in 22.0
 , alJobQueueObjectDescription = customDimensions.JobQueueObjectDescription // added in 22.0
 
@@ -16,7 +17,9 @@ traces
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueIsRecurring = customDimensions.alJobQueueIsRecurring 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 
 
@@ -30,7 +33,9 @@ traces
 , environmentType = customDimensions.environmentType
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 
 
@@ -44,7 +49,9 @@ traces
 , environmentType = customDimensions.environmentType
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStatus = iff( isempty(customDimensions.alJobQueueStatus), customDimensions.alJobQueueResult, customDimensions.alJobQueueStatus )
@@ -62,8 +69,9 @@ traces
 , environmentType = customDimensions.environmentType
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
-, alJobQueueStatus = customDimensions.alJobQueueStatus
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 21.3
 , taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
@@ -87,6 +95,8 @@ traces
 , PlatformVersion = tostring( customDimensions.componentVersion )
 , ObjectId
 , ObjectType = customDimensions.alJobQueueObjectType
+, ObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
+, ObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
 , CodeOwnershipKey = case(
       ObjectId between (50000 .. 99999), 'ENVIRONMENT'
     , ObjectId between (1000000 .. 69999999), 'ISV_ONPREM'
