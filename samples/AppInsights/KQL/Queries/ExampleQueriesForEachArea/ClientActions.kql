@@ -13,4 +13,10 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , message = customDimensions.message
-, action 
+, action = customDimensions.action
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, appId = customDimensions.appId
+, appName = customDimensions.appName
+, appPublisher = customDimensions.appPublisher
+, appVersion = customDimensions.appVersion
