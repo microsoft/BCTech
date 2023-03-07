@@ -1,7 +1,7 @@
 // KQL samples - Client actions
 
 // Client actions (RAW data)
-// Introduced in 22.0 (actions AnalysisModeEnabled, AnalysisModeDisabled)
+// Introduced in 22.0 (actions UI.AnalysisMode.Disabled, UI.AnalysisMode.Enabled)
 traces
 | where timestamp > ago(7d)
 | where customDimensions has 'CL0003'
@@ -13,7 +13,7 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , message = customDimensions.message
-, action = customDimensions.action
+, clientAction = customDimensions.clientAction
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , appId = customDimensions.appId
