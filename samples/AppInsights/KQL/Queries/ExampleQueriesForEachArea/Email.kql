@@ -2,9 +2,9 @@
 
 // Email sent successfully (raw data)
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000CTV'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000CTV' // performance
+| where customDimensions.eventId == 'AL0000CTV'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
@@ -17,11 +17,12 @@ traces
 , 'N/A'
 )
 
+
 // Failed to send email (raw data)
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000CTP'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000CTP' // performance
+| where customDimensions.eventId == 'AL0000CTP'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
@@ -36,3 +37,51 @@ traces
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
+
+
+// Authenticated to SMTP server
+// Docs pending
+// Introduced in version x.y
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000GKK' // performance
+| where customDimensions.eventId == 'AL0000GKK'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, clientType = customDimensions.clientType
+, alAuthenticated = customDimensions.alAuthenticated 
+
+
+// Connected to SMTP server.
+// Docs pending
+// Introduced in version x.y
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000GKJ' // performance
+| where customDimensions.eventId == 'AL0000GKJ'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, clientType = customDimensions.clientType
+, alConnected = customDimensions.alConnected
+
+
+// Email sent
+// Docs pending
+// Introduced in version x.y
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000GKL' // performance
+| where customDimensions.eventId == 'AL0000GKL'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, clientType = customDimensions.clientType
+, alSent = customDimensions.alSent
