@@ -98,8 +98,9 @@ traces
 , alJobQueueRescheduledNewTask = customDimensions.alJobQueueRescheduledNewTask
 
 
-// Running job queue once
-// Introduced in version x.y
+// Emitted when the "Run once (Foreground)" action is clicked in Job Queue Entries/Card pages
+// Used to see which JQs were run in the foreground specifically through the JQ pages
+// Introduced in v19.0
 // pending docs
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -110,14 +111,17 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
+// NB! dimension names will be changed in 22.x
 , alIsRecurring = customDimensions.alIsRecurring
 , alId = customDimensions.alId
 , alStatus = customDimensions.alStatus
 , alEarliestStartDateTime = customDimensions.alEarliestStartDateTime
 
 
-// job queue entry is in an error state permanently. It will not re-run.
-// Introduced in version x.y
+
+// Emitted when the JQ fails for the very last time before being set in `Error` state.
+// This is used for partners to know how many JQs are running into the final failed state and require manual intervention (restarting etc)
+// introduced in v21.5 
 // pending docs
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -128,7 +132,15 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-// need sample data to add dimensions
+, alJobQueueId = customDimensions.alJobQueueId 	
+, alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
+, alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
+, alJobQueueStatus = customDimensions.alJobQueueStatus
+, alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
+, alJobQueueStacktrace = customDimensions.alJobQueueStacktrace
+, taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
 // join job queue telemetry with task scheduler telemetry to learn more about the root cause of the error
