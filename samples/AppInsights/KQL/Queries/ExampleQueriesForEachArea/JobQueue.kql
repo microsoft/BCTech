@@ -116,6 +116,21 @@ traces
 , alEarliestStartDateTime = customDimensions.alEarliestStartDateTime
 
 
+// job queue entry is in an error state permanently. It will not re-run.
+// Introduced in version x.y
+// pending docs
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000JRG' // for performance
+| where customDimensions.eventId == 'AL0000JRG'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// need sample data to add dimensions
+
+
 // join job queue telemetry with task scheduler telemetry to learn more about the root cause of the error
 let job_queue_errors = 
 traces
