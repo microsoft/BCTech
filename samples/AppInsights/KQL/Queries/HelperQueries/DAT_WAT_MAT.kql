@@ -1,0 +1,41 @@
+// Query to calculate DAT (Daily Active Tenants), WAT (Weekly Active Tenants), MAT (Monthly Active Tenants) for apps/extensions
+// Calculations are based on the aadTenantId dimension 
+
+let dat_mat = 
+traces
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, extensionName = tostring( customDimensions.extensionName )
+, extensionId = tostring( customDimensions.extensionId )
+, extensionPublisher = tostring( customDimensions.extensionPublisher )
+, extensionVersion = tostring( customDimensions.extensionVersion )
+| where timestamp > ago(90d)
+| evaluate activity_engagement(aadTenantId, timestamp, ago(40d), now(), 1d, 28d, extensionId, extensionName, extensionPublisher, extensionVersion)
+| project-rename dau=dcount_activities_inner, mau=dcount_activities_outer
+| project-away activity_ratio
+| extend timestamp_truncated = startofday(timestamp)
+;
+let dat_wat = 
+traces
+| extend aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, extensionName = tostring( customDimensions.extensionName )
+, extensionId = tostring( customDimensions.extensionId )
+, extensionPublisher = tostring( customDimensions.extensionPublisher )
+, extensionVersion = tostring( customDimensions.extensionVersion )
+| where timestamp > ago(90d)
+| evaluate activity_engagement(aadTenantId, timestamp, ago(40d), now(), 1d, 7d, extensionId, extensionName, extensionPublisher, extensionVersion)
+| project-rename dau=dcount_activities_inner, wau=dcount_activities_outer
+| project-away activity_ratio
+| extend timestamp_truncated = startofday(timestamp)
+;
+dat_mat
+| join kind=inner dat_wat
+on $left.extensionId == $right.extensionId
+and $left.extensionName == $right.extensionName
+and $left.extensionVersion == $right.extensionVersion
+and $left.extensionPublisher == $right.extensionPublisher
+and $left.timestamp_truncated == $right.timestamp_truncated
+| project-away extensionId1, extensionName1, extensionPublisher1, extensionVersion1, timestamp_truncated1, timestamp, timestamp1, dau1
+| project-rename timestamp=timestamp_truncated
+| order by extensionPublisher, extensionId, extensionName, extensionVersion, timestamp asc
