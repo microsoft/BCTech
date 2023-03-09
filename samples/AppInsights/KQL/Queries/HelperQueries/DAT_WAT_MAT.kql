@@ -15,7 +15,7 @@ traces
 | where isnotempty( extensionVersion )
 | where timestamp > ago(90d)
 | evaluate activity_engagement(aadTenantId, timestamp, ago(40d), now(), 1d, 28d, extensionId, extensionName, extensionPublisher, extensionVersion)
-| project-rename dau=dcount_activities_inner, mau=dcount_activities_outer
+| project-rename dat=dcount_activities_inner, mat=dcount_activities_outer
 | project-away activity_ratio
 | extend timestamp_truncated = startofday(timestamp)
 ;
@@ -33,7 +33,7 @@ traces
 | where isnotempty( extensionVersion )
 | where timestamp > ago(90d)
 | evaluate activity_engagement(aadTenantId, timestamp, ago(40d), now(), 1d, 7d, extensionId, extensionName, extensionPublisher, extensionVersion)
-| project-rename dau=dcount_activities_inner, wau=dcount_activities_outer
+| project-rename dat=dcount_activities_inner, wat=dcount_activities_outer
 | project-away activity_ratio
 | extend timestamp_truncated = startofday(timestamp)
 ;
@@ -44,6 +44,6 @@ and $left.extensionName == $right.extensionName
 and $left.extensionVersion == $right.extensionVersion
 and $left.extensionPublisher == $right.extensionPublisher
 and $left.timestamp_truncated == $right.timestamp_truncated
-| project-away extensionId1, extensionName1, extensionPublisher1, extensionVersion1, timestamp_truncated1, timestamp, timestamp1, dau1
+| project-away extensionId1, extensionName1, extensionPublisher1, extensionVersion1, timestamp_truncated1, timestamp, timestamp1, dat1
 | project-rename timestamp=timestamp_truncated
 | order by extensionPublisher, extensionId, extensionName, extensionVersion, timestamp asc
