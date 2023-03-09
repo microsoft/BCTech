@@ -5,10 +5,14 @@ let dat_mat =
 traces
 | extend aadTenantId = tostring( customDimensions.aadTenantId )
 , environmentName = tostring( customDimensions.environmentName )
-, extensionName = tostring( customDimensions.extensionName )
 , extensionId = tostring( customDimensions.extensionId )
+, extensionName = tostring( customDimensions.extensionName )
 , extensionPublisher = tostring( customDimensions.extensionPublisher )
 , extensionVersion = tostring( customDimensions.extensionVersion )
+| where isnotempty( extensionId )
+| where isnotempty( extensionName )
+| where isnotempty( extensionPublisher )
+| where isnotempty( extensionVersion )
 | where timestamp > ago(90d)
 | evaluate activity_engagement(aadTenantId, timestamp, ago(40d), now(), 1d, 28d, extensionId, extensionName, extensionPublisher, extensionVersion)
 | project-rename dau=dcount_activities_inner, mau=dcount_activities_outer
@@ -23,6 +27,10 @@ traces
 , extensionId = tostring( customDimensions.extensionId )
 , extensionPublisher = tostring( customDimensions.extensionPublisher )
 , extensionVersion = tostring( customDimensions.extensionVersion )
+| where isnotempty( extensionId )
+| where isnotempty( extensionName )
+| where isnotempty( extensionPublisher )
+| where isnotempty( extensionVersion )
 | where timestamp > ago(90d)
 | evaluate activity_engagement(aadTenantId, timestamp, ago(40d), now(), 1d, 7d, extensionId, extensionName, extensionPublisher, extensionVersion)
 | project-rename dau=dcount_activities_inner, wau=dcount_activities_outer
