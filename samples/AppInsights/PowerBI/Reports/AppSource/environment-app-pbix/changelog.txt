@@ -29,6 +29,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
+* Performance: cleared/fixed environment filters on all pages
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
 
