@@ -12,6 +12,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Dataset: On table OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
 * Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
 * Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
+* Performance: new page 'Session creation' that shows impact on session performance by your apps
 * Performance report: On page 'Long Running AL', added per-environment visual and aligned per-app/per-object visuals to new design
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
@@ -21,7 +22,6 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 
 TODO (not in the beta app yet)
 * Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
-* Performance: add new page to show impact on app code in session performance
 
 
 
