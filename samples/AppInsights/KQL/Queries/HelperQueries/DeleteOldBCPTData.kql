@@ -1,0 +1,6 @@
+// Use this query to find data from BCPT that is from before the supported schema version (came in 21.3)
+
+traces
+| where customDimensions.eventId in ( 'AL0000DHR', 'AL0000DHS', 'AL0000DGF' )
+| where isempty( customDimensions.alRunID )
+
