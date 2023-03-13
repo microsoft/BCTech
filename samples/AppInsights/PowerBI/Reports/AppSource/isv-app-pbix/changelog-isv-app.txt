@@ -22,14 +22,11 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Errors: new page 'Feature Telemetry app errors', showing events AL0000G7J and AL0000G7K that indicate that extensions use the Feature Telemetry module wrong
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
-
-TODO (not in the beta app yet)
-* Errors: On page Keyvault errors, used combined app name and id on X by app visual
+* Errors: On page Keyvault errors, added errors by app visual
 
 
 ------------------
-2023-02-01 release (to be released on 2023-03-01, testing completed)
-Install beta app from: https://aka.ms/bctelemetryreportbeta
+2023-03-01 release
 ------------------
 * Dataset: On table LongRunningSQLQueries, tuned data load and moved stacktrace and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On tables ExtensionLifeCycleErrors, ExtensionUpdatePerformanceQuery, IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery, tuned data load and moved tenant and extension info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
