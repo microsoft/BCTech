@@ -2,6 +2,7 @@ Ideas
 * Dataset: on all queries, link to AppDim. Add global filters, obsolete AppIdDim
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+* Usage: Add app id to Feature usage, Feature uptake (need change in telemetry module)  
 
 
 ------------------
@@ -10,8 +11,10 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: On table LongRunningAL, tuned data load and moved stacktrace, client type, object info, app info and sql info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On table OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
+* Dataset: On tables KeyVaultErrors and KeyVaultUsage, moved app info and tenant info into their own dimensions.
 * Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
 * Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
+* Usage: On page Keyvault usage, used combined app name and id on X by app visual
 * Performance: new page 'Session creation' that shows impact on session performance by your apps
 * Performance report: On page 'Long Running AL', added per-environment visual and aligned per-app/per-object visuals to new design
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
@@ -21,8 +24,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 
 TODO (not in the beta app yet)
-* Usage: use combined app name and id on X by app visuals (clients, locations, pageviews, reports, ...)
-
+* Errors: On page Keyvault errors, used combined app name and id on X by app visual
 
 
 ------------------
