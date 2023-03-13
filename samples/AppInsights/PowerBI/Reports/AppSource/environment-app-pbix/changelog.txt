@@ -25,7 +25,8 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
 * Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
-* Usage: new page 'Client actions'
+* Usage: new page (for 22.0) 'Client actions'
+* Usage: new page (for 22.1) 'Onboarding'
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
