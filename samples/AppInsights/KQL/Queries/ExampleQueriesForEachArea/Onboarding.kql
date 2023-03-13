@@ -1,0 +1,44 @@
+// KQL samples - Onboarding
+
+// Onboarding Started 
+// Introduced in version 22.0
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions has 'AL0000EIW'
+| where customDimensions.eventId == 'AL0000EIW'
+| project aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, alUserRole = customDimensions.alUserRole
+, alIsAdmin = customDimensions.alIsAdmin
+, alCallerAppVersion = customDimensions.alCallerAppVersion
+, alCallerPublisher = customDimensions.alCallerPublisher
+, alCallerAppName = customDimensions.alCallerAppName
+, alIsEvaluationCompany = customDimensions.alIsEvaluationCompany
+, alTenantLicenseState = customDimensions.alTenantLicenseState
+, alCountryCode = customDimensions.alCountryCode
+, usertelemetryId = user_Id
+
+
+// Onboarding Completed for criteria: {criteria}
+// Introduced in version 22.0
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions has 'AL0000EIW'
+| where customDimensions.eventId == 'AL0000EIW'
+| project aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, alUserRole = customDimensions.alUserRole
+, alIsAdmin = customDimensions.alIsAdmin
+, alCallerAppVersion = customDimensions.alCallerAppVersion
+, alCallerPublisher = customDimensions.alCallerPublisher
+, alCallerAppName = customDimensions.alCallerAppName
+, alIsEvaluationCompany = customDimensions.alIsEvaluationCompany
+, alTenantLicenseState = customDimensions.alTenantLicenseState
+, alCountryCode = customDimensions.alCountryCode
+// missing dimension: criteria
+, usertelemetryId = user_Id
+
