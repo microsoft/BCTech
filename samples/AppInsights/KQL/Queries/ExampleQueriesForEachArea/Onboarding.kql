@@ -21,7 +21,7 @@ traces
 , usertelemetryId = user_Id
 
 
-// Onboarding Completed for criteria: {criteria}
+// Onboarding completed for criteria: {criteria}
 // Introduced in version 22.0
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
@@ -39,6 +39,15 @@ traces
 , alIsEvaluationCompany = customDimensions.alIsEvaluationCompany
 , alTenantLicenseState = customDimensions.alTenantLicenseState
 , alCountryCode = customDimensions.alCountryCode
-// missing dimension: criteria
+// missing dimension: alCriteria
 , usertelemetryId = user_Id
+
+
+// Onboarding Completed 
+// Introduced in version 22.x ?
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions has 'TODO'
+| where customDimensions.eventId == 'TODO'
+// onboardingTimeInHours ?
 
