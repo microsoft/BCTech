@@ -25,8 +25,8 @@ traces
 // Introduced in version 22.0
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
-| where customDimensions has 'AL0000EIW'
-| where customDimensions.eventId == 'AL0000EIW'
+| where customDimensions has 'AL0000EIV'
+| where customDimensions.eventId == 'AL0000EIV'
 | project aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
