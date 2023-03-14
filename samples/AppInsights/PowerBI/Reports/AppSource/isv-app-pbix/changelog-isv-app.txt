@@ -1,9 +1,14 @@
+Pending teams
+* Usage: Add app id to Feature usage, Feature uptake (pending change in telemetry module)  
+
 Ideas
 * Dataset: on all queries, link to AppDim. Add global filters, obsolete AppIdDim
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
-* Usage: Add app id to Feature usage, Feature uptake (pending change in telemetry module)  
 * Usage: new page (for 22.1) 'Onboarding' (pending ISV telemetry test of onboarding telemetry)
+* Errors: uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
+* Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
