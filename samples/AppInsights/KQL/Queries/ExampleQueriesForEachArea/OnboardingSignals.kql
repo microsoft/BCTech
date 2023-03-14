@@ -1,0 +1,41 @@
+// KQL samples - Onboarding Signals
+
+traces
+| where tag == 'AL0000EIV' or tag == 'AL0000EIW'                     // tags for onboarding signals
+| where environmentType == 'Production'                          // Production only
+| extend customDimensions = parse_json(customDimensions)         // might not needed in AppInsights
+| where customDimensions['IsEvaluationCompany'] == 'No'          // no need for Evaluation Comapy
+| extend                                                         // parse the data into formats we want
+    event_date = format_datetime(TIMESTAMP, 'yyyy-MM-dd'),
+    app_version =  strcat(customDimensions['CallerAppVersionMajor'], '.', customDimensions['CallerAppVersionMinor']),
+    company_name = tostring(customDimensions['Company']),
+    onboarding_criteria = iif(tag == '0000EIW', 'N/A', trim_start(' ', tostring(split(message, 'Onboarding Completed for criteria:', 1)[0]))),
+    signal_type = iff(tag == '0000EIW', 'Onboarding Started', 'Onboarding Signal')
+| where strcmp(app_version, '21.5') >= 0                          // app version needs to be 21.5 or above
+| project event_date, company_name, navTenantId, signal_type, onboarding_criteria
+| extend tenant_company = strcat(navTenantId, '__', company_name) // uniquely identify a comapny in a tenant
+| summarize 
+    OnboardingStart=maxif(event_date, onboarding_criteria == 'N/A'),
+    PurchaseInvoiceOnboarded=minif(event_date, onboarding_criteria == '0, Purchase Invoice'),
+    SalesInvoiceOnboarded=minif(event_date, onboarding_criteria == '1, Sales Invoice'),
+    VendorPaymentOnboarded=minif(event_date, onboarding_criteria == '2, Vendor Payments'),
+    CustomerPaymentOnboarded=minif(event_date, onboarding_criteria == '3, Customer Payments')
+by tenant_company                                                 // group by the unique tenant_company
+| where                                                           // OnboardingStart can't be empty and at least one of the onboarding signal is emitted
+    isnotempty(OnboardingStart) and
+    (isnotempty(SalesInvoiceOnboarded) or isnotempty(PurchaseInvoiceOnboarded) or isnotempty(VendorPaymentOnboarded) or isnotempty(CustomerPaymentOnboarded))
+| extend                                                           // transform the string into datetime
+    onboarding_start_date = todatetime(OnboardingStart),
+    purchase_invoice_onboard_date = todatetime(PurchaseInvoiceOnboarded),
+    sales_invoice_onboard_date = todatetime(SalesInvoiceOnboarded),
+    vendor_payment_onboard_date = todatetime(VendorPaymentOnboarded),
+    customer_payment_onboard_date = todatetime(CustomerPaymentOnboarded)
+| extend                                                           // calculate the days
+    purcahse_invoice = datetime_diff('day', onboarding_start_date, purchase_invoice_onboard_date),
+    sales_invoice = datetime_diff('day', onboarding_start_date, sales_invoice_onboard_date),
+    vendor_payment = datetime_diff('day', onboarding_start_date, vendor_payment_onboard_date),
+    customer_payment = datetime_diff('day', onboarding_start_date, customer_payment_onboard_date)
+| project tenant_company, purcahse_invoice, sales_invoice, vendor_payment, customer_payment,
+    first_party_onboarding_completed =
+    iff(isnotnull(purcahse_invoice) and isnotnull(sales_invoice) and isnotnull(vendor_payment) and isnotnull(customer_payment), 
+        max_of(sales_invoice, purcahse_invoice, vendor_payment, customer_payment), 99999)
