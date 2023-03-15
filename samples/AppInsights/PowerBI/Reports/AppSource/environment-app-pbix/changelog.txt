@@ -33,6 +33,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: on table JobQueueErrors and ErrorDialogs, moved stacktrace to the stacktrace dimension
 * Dataset: On Locktimeouts table, move stacktrace to stacktrace dimension
 * Dataset: on table ErrorDialogs, moved environment info, extension info, object info and client type to their own dimensions
+* Dataset: On CompanyLifecycle table, added new Company Initialized event (available in 22.0)
 * Usage: new page (for 22.0) 'Client actions'
 * Usage: new page (for 22.1) 'Onboarding'
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
@@ -47,13 +48,11 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
 
-
 None of this is in the beta app yet
 * update application areas with 22.0 new app features
 * Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
-
 
 
 ------------------
