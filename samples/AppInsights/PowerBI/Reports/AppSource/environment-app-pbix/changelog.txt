@@ -30,17 +30,18 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
 * Dataset: on ConfigurationPackages, tuned data load and moved tenant info, operation type, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
-* Dataset: on table JobQueueErrors and ErrorDialogs, moved stacktrace to the stacktrace dimension
-* Dataset: On Locktimeouts table, move stacktrace to stacktrace dimension
-* Dataset: on table ErrorDialogs, moved environment info, extension info, object info and client type to their own dimensions
+* Dataset: on tables JobQueueErrors and Locktimeouts moved stacktrace to the stacktrace dimension
+* Dataset: on table PermissionErrors, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
+* Dataset: on table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
 * Dataset: On CompanyLifecycle table, added new Company Initialized event (available in 22.0)
 * Usage: new page (for 22.0) 'Client actions'
 * Usage: new page (for 22.1) 'Onboarding'
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
+* Errors: On page 'Permission errors' page, add visuals for top/bottom of AL call stack, added filter to check if an error happened in a Job Queue entry run and filter to check if an error happened in OnCompanyOpen. 
 * Errors: On page 'job queue errors' page, add visuals for top/bottom of AL call stack, added visuals for top/bottom of stacktrace
 * Errors: On page 'Configuration Packages Errors', added indicator if no errors are shown. Fixed filters.
-* Performance: On 'Lock timeouts' page, added filter to check if an operation happened in a Job Queue entry run, filter to check if lock timeout happened in OnCompanyOpen, and filter to check if lock timeout happened in a number series.
+* Performance: On 'Lock timeouts' page, added filter to check if an operation happened in a Job Queue entry run and filter to check if lock timeout happened in OnCompanyOpen, and filter to check if lock timeout happened in a number series.
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
 * Performance: add visuals to slow logins page on outgoing ws call or lock timeouts happening in the OnCompanyOpen trigger
 * Performance: cleared/fixed environment filters on all pages
@@ -48,9 +49,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
 
+
 None of this is in the beta app yet
 * update application areas with 22.0 new app features
-* Errors: On page 'permission errors' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
 
