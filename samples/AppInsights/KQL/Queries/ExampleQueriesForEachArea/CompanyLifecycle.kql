@@ -3,7 +3,7 @@
 // See this section in the performance tuning guide
 // https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#be-cautious-with-the-copy-company-operation
 
-// create company signal
+// create company
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0001'
@@ -16,7 +16,7 @@ traces
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
-, result = customDimensions.result
+, result = customDimensions.result // Success, Failure, Canceled
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , usertelemetryId = case(
@@ -43,7 +43,7 @@ traces
 , usertelemetryId = user_Id
 
 
-// copy company signal
+// copy company
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0002'
@@ -57,7 +57,7 @@ traces
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
-, result = customDimensions.result
+, result = customDimensions.result // Success, Failure, Canceled
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , usertelemetryId = case(
@@ -67,7 +67,7 @@ traces
 )
 
 
-// delete company signal (raw data)
+// delete company
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0003'
@@ -80,7 +80,7 @@ traces
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
-, result = customDimensions.result
+, result = customDimensions.result // Success, Failure, Canceled
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , usertelemetryId = case(
