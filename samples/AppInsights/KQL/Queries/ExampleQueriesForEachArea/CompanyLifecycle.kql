@@ -1,19 +1,14 @@
-// KQL samples - Company lifecycle events (create/copy/delete)
-
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+// KQL samples - Company lifecycle events (create/initialize/copy/delete)
 
 // See this section in the performance tuning guide
 // https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#be-cautious-with-the-copy-company-operation
 
-// create company signal (raw data)
+// create company signal
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0001'
 | where customDimensions.eventId == 'LC0001' // starting from version 16.1, the eventId is used to identity signal types
-| extend aadID = tostring( customDimensions.aadTenantId )
-| project 
-  eventId = customDimensions.eventId
-, aadID
+| project aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -28,17 +23,32 @@ traces
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
-), message, customDimensions
+)
 
 
-// copy company signal (raw data)
+// initialize company
+// Introduced in version 22.0
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000EIW'
+| where customDimensions.eventId == 'AL0000EIW'
+| project aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, isEvaluationCompany = customDimensions.alIsEvaluationCompany
+, tenantLicenseState = customDimensions.alTenantLicenseState
+, userRole = customDimensions.alUserRole
+, userIsAdmin = customDimensions.alIsAdmin
+, usertelemetryId = user_Id
+
+
+// copy company signal
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0002'
 | where customDimensions.eventId == 'LC0002' // starting from version 16.1, the eventId is used to identity signal types
-| extend aadID = tostring( customDimensions.aadTenantId )
-| project 
-  eventId = customDimensions.eventId
-, aadID
+| project aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyNameSource = customDimensions.companyNameSource
@@ -54,17 +64,15 @@ traces
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
-), message, customDimensions
+)
 
 
 // delete company signal (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'LC0003'
 | where customDimensions.eventId == 'LC0003' // starting from version 16.1, the eventId is used to identity signal types
-| extend aadID = tostring( customDimensions.aadTenantId )
-| project 
-  eventId = customDimensions.eventId
-, aadID
+| project aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -79,4 +87,4 @@ traces
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
-), message, customDimensions
+)
