@@ -16,6 +16,8 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
 , alJobQueueStatus = customDimensions.alJobQueueStatus
+, alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 
 
 // Job queue entry started (raw data)
@@ -33,6 +35,8 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
 , alJobQueueStatus = customDimensions.alJobQueueStatus
+, alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 
 
 // Job queue entry finished (raw data)
@@ -54,6 +58,8 @@ traces
 , alJobQueueStatus = iff( isempty(customDimensions.alJobQueueStatus), customDimensions.alJobQueueResult, customDimensions.alJobQueueStatus )
 // , alJobQueueStatus = customDimensions.alJobQueueResult // prior to 20.0
 // , alJobQueueStatus = customDimensions.alJobQueueStatus // 20.0 or later
+, alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
  
 
 // Job queue entry failed (raw data)
@@ -73,6 +79,8 @@ traces
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 21.3
+, alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 , taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
@@ -96,6 +104,8 @@ traces
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId
 , alJobQueueRescheduledNewTask = customDimensions.alJobQueueRescheduledNewTask
+, alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 
 
 // Emitted when the "Run once (Foreground)" action is clicked in Job Queue Entries/Card pages
@@ -140,6 +150,8 @@ traces
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStacktrace = customDimensions.alJobQueueStacktrace
+, alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 , taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
