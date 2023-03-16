@@ -2,9 +2,10 @@ Pending teams
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
+* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending app team changes to email telemetry)
 * Job Queue errors/performance: add dimension alJobQueueObjectName (when available - pending app team bugfix)
 * Administration: Permission set changes (pending app team on adding permission set name)
-* Database deadlocks page: need to fix URL (hide) for user telemetry id
+* Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 
 Ideas
 * Usage: Feature uptake page
@@ -18,7 +19,6 @@ Ideas
 * Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Dataset: include list for event ids as a parameter
 * Dataset: Introduce new (advanced) parameter: partitions and maybe binsize
-* Dataset: optimize IncomingWebServiceErrorsQuery, OutgoingWebServiceErrorsQuery (copy patterns from ISV app)
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: cross tenant comparisons of performance (is this normal?)
 * Performance: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0/22.1)
@@ -30,6 +30,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
 * Dataset: on ConfigurationPackages, tuned data load and moved tenant info, operation type, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
+* Dataset: On table ErrorMessageVotes, moved stacktrace, tenant infom and client type into their own dimensions.
 * Dataset: on tables JobQueueErrors and Locktimeouts moved stacktrace to the stacktrace dimension
 * Dataset: on table PermissionErrors, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
 * Dataset: on table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
@@ -38,6 +39,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Usage: new page (for 22.1) 'Onboarding'
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
+* Errors: On page 'error messages' page, added visuals for top/bottom of AL call stack 
 * Errors: On page 'Permission errors' page, add visuals for top/bottom of AL call stack, added filter to check if an error happened in a Job Queue entry run and filter to check if an error happened in OnCompanyOpen. 
 * Errors: On page 'job queue errors' page, add visuals for top/bottom of AL call stack, added visuals for top/bottom of stacktrace
 * Errors: On page 'Configuration Packages Errors', added indicator if no errors are shown. Fixed filters.
@@ -49,11 +51,8 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
 
-
 None of this is in the beta app yet
 * update application areas with 22.0 new app features
-* Errors: On page 'error messages' page, add visuals for top/bottom of AL call stack 
-* Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack
 
 
 ------------------
