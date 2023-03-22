@@ -8,35 +8,35 @@ Pending teams
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 
 Ideas
+* Dataset: include list for event ids as a parameter
+* Dataset: Introduce new (advanced) parameter: partitions and maybe binsize
 * Usage: Feature uptake page
 * Usage: add license type on sessions page
-* Performance: Recurring job queue jobs with long running SQL/AL/locks
-* Performance: Database wait statistics page
-* Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Errors: Add recurring failing task scheduler/job queue jobs to recommendations
 * Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Errors: cross tenant comparisons of errors (is this normal?)
 * Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
-* Dataset: include list for event ids as a parameter
-* Dataset: Introduce new (advanced) parameter: partitions and maybe binsize
-* Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: cross tenant comparisons of performance (is this normal?)
 * Performance: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0/22.1)
+* Performance: Recurring job queue jobs with long running SQL/AL/locks
+* Performance: Database wait statistics page
+* Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
+* Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+* Usage: New page (for 22.1) 'Onboarding'
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-* Dataset: on OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
-* Dataset: on ConfigurationPackages, tuned data load and moved tenant info, operation type, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
-* Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
+* Dataset: On OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
+* Dataset: On ConfigurationPackages, tuned data load and moved tenant info, operation type, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: Fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
 * Dataset: On table ErrorMessageVotes, moved stacktrace, tenant infom and client type into their own dimensions.
-* Dataset: on tables JobQueueErrors and Locktimeouts moved stacktrace to the stacktrace dimension
-* Dataset: on table PermissionErrors, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
-* Dataset: on table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
+* Dataset: On tables JobQueueErrors and Locktimeouts moved stacktrace to the stacktrace dimension
+* Dataset: On table PermissionErrors, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
+* Dataset: On table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
 * Dataset: On CompanyLifecycle table, added new Company Initialized event (available in 22.0)
-* Usage: new page (for 22.0) 'Client actions'
-* Usage: new page (for 22.1) 'Onboarding'
+* Usage: New page (for 22.0) 'Client actions'
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
 * Errors: On page 'error messages' page, added visuals for top/bottom of AL call stack 
@@ -45,15 +45,14 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page 'Configuration Packages Errors', added indicator if no errors are shown. Fixed filters.
 * Performance: On 'Lock timeouts' page, added filter to check if an operation happened in a Job Queue entry run and filter to check if lock timeout happened in OnCompanyOpen, and filter to check if lock timeout happened in a number series.
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
-* Performance: add visuals to slow logins page on outgoing ws call or lock timeouts happening in the OnCompanyOpen trigger
-* Performance: cleared/fixed environment filters on all pages
+* Performance: On the slow logins page, added visuals on outgoing ws call and on lock timeouts happening in the OnCompanyOpen trigger
+* Performance: Cleared/fixed environment filters on all pages
 * Performance: On page 'Configuration Packages', added min/max measures to the statistics visual. Fixed filters.
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
 
 None of this is in the beta app yet
 * update application areas with 22.0 new app features
-
 
 ------------------
 2023-03-01 release 
