@@ -1,0 +1,116 @@
+// KQL samples - Cloud Migration
+// Introduced in 22.x?
+
+// all signal related to Cloud Migration
+traces
+| where customDimensions.alCategory == 'CloudMigration'
+
+
+// Companion table repair scheduled
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000FXC'
+| where customDimensions.eventId == 'AL0000FXC'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+// Companion Table repair started
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000FJ1'
+| where customDimensions.eventId == 'AL0000FJ1'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+// Companion table repair completed successfully
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000FJ4'
+| where customDimensions.eventId == 'AL0000FJ4'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+// No data
+// AL0000EV4
+
+
+// No data
+// AL0000EV5
+
+
+// No data
+// AL0000FXD
+
+
+// No data
+// AL0000K0I
+
+
+// Cloud migration has been disabled from company CRONUS US Migrate.
+// Cloud migration disabled for company: CRONUS US Migrate
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000IGC'
+| where customDimensions.eventId == 'AL0000IGC'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+// Replication run started
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000K0J'
+| where customDimensions.eventId == 'AL0000K0J'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alReplicationType = customDimensions.alReplicationType // what are possible values?
+
+
+// Cloud Migration data upgrade scheduled
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000K0K'
+| where customDimensions.eventId == 'AL0000K0K'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+
+
+// Replication run completed
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000K0H'
+| where customDimensions.eventId == 'AL0000K0H'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alReplicationType = customDimensions.alReplicationType // what are possible values?
