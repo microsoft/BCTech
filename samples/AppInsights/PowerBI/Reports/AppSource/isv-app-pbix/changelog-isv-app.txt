@@ -30,12 +30,6 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
 * Errors: On page Keyvault errors, added errors by app visual
 
-TODO
-OK: Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
-OK: Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
-* Performance: On the slow logins page, added visuals on outgoing ws call and on lock timeouts happening in the OnCompanyOpen trigger
-
-
 
 ------------------
 2023-03-01 release
