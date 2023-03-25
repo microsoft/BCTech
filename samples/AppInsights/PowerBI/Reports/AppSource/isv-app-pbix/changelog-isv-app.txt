@@ -14,6 +14,7 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Dataset: On table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
 * Dataset: On table LongRunningAL, tuned data load and moved stacktrace, client type, object info, app info and sql info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On table OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
 * Dataset: On tables KeyVaultErrors and KeyVaultUsage, moved app info and tenant info into their own dimensions.
@@ -26,8 +27,14 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance: add visual to slow logins page on outgoing ws call happening in the OnCompanyOpen trigger
 * Errors: new page 'Feature Telemetry app errors', showing events AL0000G7J and AL0000G7K that indicate that extensions use the Feature Telemetry module wrong
 * Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
-* Errors: On page 'Error dialogs', also show error message in English (available from 21.4)
+* Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
 * Errors: On page Keyvault errors, added errors by app visual
+
+TODO
+OK: Errors: On page OutgoingWebServiceErrors, added AL stacktrace visual and top/bottom of the stacktrace
+OK: Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
+* Performance: On the slow logins page, added visuals on outgoing ws call and on lock timeouts happening in the OnCompanyOpen trigger
+
 
 
 ------------------
