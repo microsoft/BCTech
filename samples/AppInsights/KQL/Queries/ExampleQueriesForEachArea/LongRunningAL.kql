@@ -22,6 +22,7 @@ traces
 , clientType = customDimensions.clientType
 , executionTime = customDimensions.executionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+, suspendedTime = customDimensions.suspendedTime // will come on 22.x
 , extensionId = customDimensions.extensionId
 , extensionInfo = customDimensions.extensionInfo
 , extensionName = customDimensions.extensionName
