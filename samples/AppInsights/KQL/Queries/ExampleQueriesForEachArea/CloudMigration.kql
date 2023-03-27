@@ -1,5 +1,5 @@
 // KQL samples - Cloud Migration
-// Introduced in 22.x?
+// Introduced in 22.1
 
 // all signal related to Cloud Migration
 traces
@@ -45,24 +45,7 @@ traces
 , environmentType = customDimensions.environmentType
 
 
-// No data
-// AL0000EV4
-
-
-// No data
-// AL0000EV5
-
-
-// No data
-// AL0000FXD
-
-
-// No data
-// AL0000K0I
-
-
-// Cloud migration has been disabled from company CRONUS US Migrate.
-// Cloud migration disabled for company: CRONUS US Migrate
+// Cloud migration disabled
 traces
 | where timestamp > ago(7d)
 | where customDimensions has 'AL0000IGC'
@@ -86,7 +69,21 @@ traces
 , companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, alReplicationType = customDimensions.alReplicationType // what are possible values?
+, alReplicationType = customDimensions.alReplicationType // possible values are Normal, Diagnostic, Full, Azure Data Lake
+
+
+// Replication run completed with failed tables
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000K0I'
+| where customDimensions.eventId == 'AL0000K0I'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alReplicationType = customDimensions.alReplicationType // possible values are Normal, Diagnostic, Full, Azure Data Lake
 
 
 // Cloud Migration data upgrade scheduled
@@ -113,4 +110,4 @@ traces
 , companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, alReplicationType = customDimensions.alReplicationType // what are possible values?
+, alReplicationType = customDimensions.alReplicationType // possible values are Normal, Diagnostic, Full, Azure Data Lake

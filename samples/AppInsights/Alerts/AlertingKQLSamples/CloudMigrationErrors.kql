@@ -1,0 +1,15 @@
+// KQL alerting samples - Cloud Migration Errors
+// Introduced in 22.1
+
+// Replication run completed with failed tables
+traces
+| where timestamp > ago(7d)
+| where customDimensions has 'AL0000K0I'
+| where customDimensions.eventId == 'AL0000K0J'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, clientType = customDimensions.clientType
+, companyName = customDimensions.companyName
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, alReplicationType = customDimensions.alReplicationType // possible values are Normal, Diagnostic, Full, Azure Data Lake
