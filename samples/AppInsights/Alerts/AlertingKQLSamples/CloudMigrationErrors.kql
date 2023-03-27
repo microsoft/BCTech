@@ -5,7 +5,7 @@
 traces
 | where timestamp > ago(7d)
 | where customDimensions has 'AL0000K0I'
-| where customDimensions.eventId == 'AL0000K0J'
+| where customDimensions.eventId == 'AL0000K0I'
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , clientType = customDimensions.clientType
