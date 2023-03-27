@@ -8,6 +8,7 @@ Ideas
 * Usage: new page (for 22.1) 'Onboarding' (pending ISV telemetry test of onboarding telemetry)
 * Errors: uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
+* Add header tooltips (where appropriate)
 
 
 ------------------
@@ -17,7 +18,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Dataset: On table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
 * Dataset: On table LongRunningAL, tuned data load and moved stacktrace, client type, object info, app info and sql info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
 * Dataset: On table OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
-* Dataset: On tables KeyVaultErrors and KeyVaultUsage, moved app info and tenant info into their own dimensions.
+* Dataset: On tables KeyVaultErrors and KeyVaultUsage, moved app info into its own dimensions. Also removed filters on tenant info as this does exist in the signal. 
 * Dataset: fixing bug in data loading if telemetry has BCPT data prior to 21.3 (BCTech GitHub Issue #188).
 * Usage report: new page 'MAT/WAT/DAT' showing Monthly/Weekly/Daily tenants.
 * Usage: On page Keyvault usage, used combined app name and id on X by app visual
