@@ -268,7 +268,7 @@
                                             "channelId": "[parameters('Teams Channel ID')]",
                                             "groupId": "[parameters('Teams Group ID')]"
                                         },
-                                        "updateMessage": "Thanks for your response!"
+                                        "updateMessage": "Your message was sent!"
                                     },
                                     "notificationUrl": "@{listCallbackUrl()}"
                                 },
