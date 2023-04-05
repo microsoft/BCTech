@@ -15,15 +15,23 @@ Ideas
 * Errors: Add recurring failing task scheduler/job queue jobs to recommendations
 * Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Errors: cross tenant comparisons of errors (is this normal?)
-* Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
+* Errors: on 'Feature Errors' page, add top/bottom stacktrace visuals
+* Errors: on 'Database deadlocks' page, add top/bottom stacktrace visuals
+* Errors: On page 'Incoming Webservice Errors', add per-app/per-object visuals.
+* Errors: On page 'Connector Errors', add per-app/per-object visuals.
+* Errors: On page 'Report Errors', add per-app/per-object visuals.
 * Performance: cross tenant comparisons of performance (is this normal?)
-* Performance: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0/22.1)
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+* update application areas with 22.0 new app features
+* Performance: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0/22.1)
+* Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Usage: New page (for 22.1) 'Onboarding'
-* Administration: New page (22.x) 'Cloud Migration'
+* Administration: New page (22.1) 'Cloud Migration'
+* Add header tooltips (where appropriate)
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
@@ -42,7 +50,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page 'Error dialogs', also show error message in English (available from 21.4), added per-app/per-object visuals.
 * Errors: On page 'Error Messages' page, added visuals for top/bottom of AL call stack 
 * Errors: On page 'Permission Errors' page, add visuals for top/bottom of AL call stack, added filter to check if an error happened in a Job Queue entry run and filter to check if an error happened in OnCompanyOpen. 
-* Errors: On page 'Job Queue Errors' page, add visuals for top/bottom of AL call stack, added visuals for top/bottom of stacktrace
+* Errors: On page 'Job Queue Errors' page, added visuals for top/bottom of AL call stack, added visuals for top/bottom of stacktrace
 * Errors: On page 'Configuration Packages Errors', added indicator if no errors are shown. Fixed filters.
 * Performance: On 'Lock timeouts' page, added filter to check if an operation happened in a Job Queue entry run and filter to check if lock timeout happened in OnCompanyOpen, and filter to check if lock timeout happened in a number series.
 * Performance: On page OutgoingWebServicePerformance, added AL stacktrace visual and top/bottom of the stacktrace
@@ -52,8 +60,50 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
 
-None of this is in the beta app yet
-* update application areas with 22.0 new app features
+Fix before April release goes live
+* data sources: docs link for client actions
+* data sources: feature errors
+* data sources: app update perf
+* data sources: env update perf
+* data sources: permission changes
+* data sources: Feature Management
+* Outgoing ws errors: fix broken filter
+* Performance: remove filter on OnCompanyOpen page
+* Performance: missing filters on LRAL page
+* Performance: missing filters on app updates page
+* Performance: missing filters on env updates page
+* Performance: missing filters on bcpt page
+* Performance: change extension visual on app updates page
+* Administration: fix global filters (remove the ones that are only for Inventory)
+* Administration: update planning, hide locked filters
+* Administration: Feature Management, make who did what when larger (user telemetry id is hidden)
+* Administration: company changes, add filter on user id
+* Administration: retention policy, rename filters
+* Administration: About the report: expand learn more visual 
+
+Data in telemetry: empty area
+AL0000E9U	1
+AL0000GKL	1
+AL0000GY2	1
+AL0000GY3	1
+AL0000FMG	2
+AL0000GY0	2
+AL0000GY1	2
+AL0000HQ2	2
+AL0000GKJ	3
+AL0000GKK	3
+AL0000EIR	10
+AL0000EIT	10
+LC0057	11
+AL0000G7K	12
+AL0000HUJ	15
+AL0000JRG	32
+LC0058	468
+CL0003	696
+AL0000I49	830
+RT0009	1595
+AL0000FD5	4886
+
 
 ------------------
 2023-03-01 release 
