@@ -7,6 +7,7 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Usage: new page (for 22.1) 'Onboarding' (pending ISV telemetry test of onboarding telemetry)
 * Errors: uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
+* Errors, report errors, fix extension/object visual (split in two)?
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
 
@@ -14,6 +15,20 @@ Ideas
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
+------------------
+* Usage: Keyvault, visuals look weird
+* Errors: Keyvault errors, visuals look weird
+* Errors: Refactor Report errors datamodel to appdim, objectdim, ...
+
+Data in telemetry: empty area
+// Feature Telemetry app error
+// An app from publisher <publisher> is sending telemetry, but there is no registered telemetry logger for this publisher.
+| where customDimensions has 'AL0000G7K'
+LC0056
+
+
+------------------
+2023-04-05 release
 ------------------
 * Dataset: On table ErrorDialogs, moved environment info, extension info, object info, stacktrace, and client type to their own dimensions
 * Dataset: On table LongRunningAL, tuned data load and moved stacktrace, client type, object info, app info and sql info into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
