@@ -24,17 +24,41 @@ Ideas
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
+* Performance: change extension visual on app updates page
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
+* Administration: company changes, add filter on user id
 * update application areas with 22.0 new app features
 * Performance: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0/22.1)
 * Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Usage: New page (for 22.1) 'Onboarding'
 * Administration: New page (22.1) 'Cloud Migration'
 * Add header tooltips (where appropriate)
+* Data in telemetry: missing area for these events
+    AL0000E9U	
+    AL0000GKL	
+    AL0000GY2	
+    AL0000GY3	
+    AL0000FMG	
+    AL0000GY0	
+    AL0000GY1	
+    AL0000HQ2	
+    AL0000GKJ	
+    AL0000GKK	
+    AL0000EIR	
+    AL0000EIT	
+    AL0000HUJ	
+    AL0000FD5	
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
+Install beta app from: https://aka.ms/bctelemetryreportbeta
+------------------
+TBA
+
+
+------------------
+vNext (implemented, coming in April release, available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: On OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
@@ -59,50 +83,6 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page 'Configuration Packages', added min/max measures to the statistics visual. Fixed filters.
 * Administration: New page 'Feature management' added (for 22.0)
 * Administration: New page 'Permission changes' added (for 22.0)
-
-Fix before April release goes live
-* data sources: docs link for client actions
-* data sources: feature errors
-* data sources: app update perf
-* data sources: env update perf
-* data sources: permission changes
-* data sources: Feature Management
-* Outgoing ws errors: fix broken filter
-* Performance: remove filter on OnCompanyOpen page
-* Performance: missing filters on LRAL page
-* Performance: missing filters on app updates page
-* Performance: missing filters on env updates page
-* Performance: missing filters on bcpt page
-* Performance: change extension visual on app updates page
-* Administration: fix global filters (remove the ones that are only for Inventory)
-* Administration: update planning, hide locked filters
-* Administration: Feature Management, make who did what when larger (user telemetry id is hidden)
-* Administration: company changes, add filter on user id
-* Administration: retention policy, rename filters
-* Administration: About the report: expand learn more visual 
-
-Data in telemetry: empty area
-AL0000E9U	1
-AL0000GKL	1
-AL0000GY2	1
-AL0000GY3	1
-AL0000FMG	2
-AL0000GY0	2
-AL0000GY1	2
-AL0000HQ2	2
-AL0000GKJ	3
-AL0000GKK	3
-AL0000EIR	10
-AL0000EIT	10
-LC0057	11
-AL0000G7K	12
-AL0000HUJ	15
-AL0000JRG	32
-LC0058	468
-CL0003	696
-AL0000I49	830
-RT0009	1595
-AL0000FD5	4886
 
 
 ------------------
