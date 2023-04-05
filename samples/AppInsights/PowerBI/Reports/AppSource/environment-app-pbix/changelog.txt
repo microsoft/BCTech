@@ -58,8 +58,7 @@ TBA
 
 
 ------------------
-vNext (implemented, coming in April release, available in the beta app)
-Install beta app from: https://aka.ms/bctelemetryreportbeta
+2023-04-05 release
 ------------------
 * Dataset: On OutgoingWebServiceErrorsQuery, OutgoingWebServicePerformanceQuery, optimized data load and introduced AL stacktrace
 * Dataset: On ConfigurationPackages, tuned data load and moved tenant info, operation type, and client type into their own dimensions. This will allow the app to load more reporting data (for bigger telemetry databases).
