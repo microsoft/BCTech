@@ -1,7 +1,20 @@
+Welcome to the release notes for the usage app on Business Central app telemetry.
+
+Below, you can see 
+1) ideas for upcoming releases, 
+2) the current state of vNext (the next version to be released), and 
+3) release notes for all released version of the app since the initial release on appsource back in April 2022.
+
+
+-------------
 Pending teams
+-------------
 * Usage: Add app id to Feature usage, Feature uptake (pending change in telemetry module)  
 
+
+-----
 Ideas
+-----
 * Dataset: on all queries, link to AppDim. Add global filters, obsolete AppIdDim
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset

@@ -1,4 +1,14 @@
+Welcome to the release notes for the usage app on Business Central environment telemetry.
+
+Below, you can see 
+1) ideas for upcoming releases, 
+2) the current state of vNext (the next version to be released), and 
+3) release notes for all released version of the app since the initial release on appsource back in April 2022.
+
+
+-------------
 Pending teams
+-------------
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
@@ -7,7 +17,9 @@ Pending teams
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 
+-----
 Ideas
+-----
 * Dataset: include list for event ids as a parameter
 * Dataset: Introduce new (advanced) parameter: partitions and maybe binsize
 * Usage: Feature uptake page
