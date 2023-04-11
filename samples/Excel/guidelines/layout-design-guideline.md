@@ -1,5 +1,13 @@
 # Guidelines for designing Excel layouts
 
+## Worksheet naming and location
+Locate worksheets in the order you think will be most useful for users so that they do not have to scroll when using the report. 
+
+Good worksheet names help users quickly get an overview of the information they can obtain by navigating to the worksheet. 
+
+An Excel worksheet can be up to 31 characters long.
+For more information, see https://stackoverflow.com/questions/3681868/is-there-a-limit-on-an-excel-worksheets-name-length
+
 ## One or multiple worksheets
 In contrast to a report designed for print or pdf, an Excel report typically consists of multiple worksheets, each of which is designed for a different purpose. Some common types of worksheets are
 1. Overview dashboard
@@ -14,7 +22,7 @@ There is no technical limit to the number of worksheets in a report, but users p
 Excel has visuals such as charts and maps, sparklines, and slicers, that can be used for creating dashboards known from Business Intelligence products such as Power BI. You can use these to create dashboard worksheets that lets a user interact with the data and get visually appealing graphs showing trends or top 10 numbers.
 
 ### Pivot table worksheet
-Use a pivot table worksheet to give users a way to interact with the dataset. Typically there is only the need of one pivot worksheet in the report (unless you want to offer multiple pre-baked analysis).
+Use a pivot table worksheet to give users a way to interact with the dataset. Typically there is only the need of one pivot worksheet in the report (unless you want to offer multiple pre-baked analysis). If you add multiple pre-baked pivot table worksheets, consider naming them _X by Y_, such as _Customers by Item_ or _Sales by Region_. 
 
 ### Table worksheet
 A table worksheet can be used to display a specific view on the dataset, maybe only showing a subset of the columns and maybe even with some added computed columns. 
