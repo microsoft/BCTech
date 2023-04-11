@@ -30,6 +30,7 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Dataset: fixed data load bug in AppIdDim (query did not respect time filter)
 * Usage: Keyvault, visuals look weird
 * Errors: Keyvault errors, visuals look weird
 * Errors: Refactor Report errors datamodel to appdim, objectdim, ...
