@@ -4,9 +4,13 @@ Business Central 2022 release wave 1 (version 20) introduced the feature _Excel 
 # What resources can I find in aka.ms/bcexcelsamples?
 This repo contains instructions for how you can use different Excel and Power Query features in Excel layouts. The repo also have guidance on things you might want to do in a Excel report once it has been generated.
 
+# FAQ
 Please visit the [FAQ page](FAQ.md) for any questions on how to get started.
 
-## Customer Sales List layout
+# Design guidelines
+Please visit the [Design guidelines](./guidelines/README.md) for guidance on how to design good datasets and layouts.
+
+# Example layout (Customer Sales List)
 The Customer Sales List layout showcase a number of techniques that you might want to explore for your own layouts
 1. The two worksheets _Sales by Customer_ and _Customer Sales by Location_ show how you can use combine a pivot table with slicers and charts to create simple, yet effective interactive reports. Note that you can edit header texts in the pivot table. The _Customer Sales by Location_ sheet show an important learning: add fixed size visuals (the slicers and charts) above dynamic size visuals (the pivot table) so that the report stil work with different data distributions. 
 2. The worksheet _Customer Mailing List_ showcase how you can use table formulas in Excel to create calculated columns. See the [FAQ page](FAQ.md) for more information on table formulas in Excel.
