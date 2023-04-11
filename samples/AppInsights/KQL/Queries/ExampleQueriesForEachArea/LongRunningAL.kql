@@ -1,15 +1,12 @@
 // KQL samples - Long Running AL
 
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
-
-// Long running AL (RAW data)
+// Long running AL methods
 traces
 | where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0018' // performance optimization
 | where customDimensions.eventId == 'RT0018' 
 | where customDimensions.alObjectId > 0 // filter out internal server calls
-| project eventId = customDimensions.eventId 
-, aadID = customDimensions.aadTenantId
+| project aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -17,15 +14,14 @@ traces
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
-, alStackTrace = customDimensions.alStackTrace
-// use the KQL snippet parseStackTrace to get bottom of the stack trace details
+, alStackTrace = customDimensions.alStackTrace // use the KQL snippet parseStackTrace to get top/bottom of the stack trace details
 , clientType = customDimensions.clientType
 , exclusiveTime = customDimensions.exclusiveTime // This dimension was introduced in Business Central 2023 release wave 1, version 22.1. Backported to version 21.6
 , exclusiveTimeInMS = toreal(totimespan(customDimensions.exclusiveTime))/10000 //the datatype for exclusiveTime is timespan 
 , executionTime = customDimensions.executionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
 , extensionId = customDimensions.extensionId
-, extensionInfo = customDimensions.extensionInfo
+, extensionInfo = customDimensions.extensionInfo // parse this json structure to find out if other extensions is involved
 , extensionName = customDimensions.extensionName
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
@@ -38,4 +34,3 @@ traces
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
-
