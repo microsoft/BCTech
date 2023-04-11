@@ -41,6 +41,7 @@ Ideas
 * Administration: company changes, add filter on user id
 * update application areas with 22.0 new app features
 * Performance: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0/22.1)
+* Performance: On page 'Long Running AL', use new dimension exclusiveTime (in 21.x/22.x)
 * Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Usage: New page (for 22.1) 'Onboarding'
 * Administration: New page (22.1) 'Cloud Migration'

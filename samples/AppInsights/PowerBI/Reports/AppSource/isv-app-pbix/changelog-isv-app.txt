@@ -22,6 +22,7 @@ Ideas
 * Errors: uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Errors, report errors, fix extension/object visual (split in two)?
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
+* Performance: On page 'Long Running AL', use new dimension exclusiveTime (in 21.x/22.x)
 * Add header tooltips (where appropriate)
 
 
