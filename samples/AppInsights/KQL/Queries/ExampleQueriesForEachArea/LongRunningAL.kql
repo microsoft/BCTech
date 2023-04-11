@@ -21,6 +21,7 @@ traces
 // use the KQL snippet parseStackTrace to get bottom of the stack trace details
 , clientType = customDimensions.clientType
 , exclusiveTime = customDimensions.exclusiveTime // This dimension was introduced in Business Central 2023 release wave 1, version 22.1. Backported to version 21.6
+, exclusiveTimeInMS = toreal(totimespan(customDimensions.exclusiveTime))/10000 //the datatype for exclusiveTime is timespan 
 , executionTime = customDimensions.executionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
 , extensionId = customDimensions.extensionId
