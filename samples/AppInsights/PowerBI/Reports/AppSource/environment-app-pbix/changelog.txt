@@ -37,6 +37,7 @@ Ideas
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Performance: change extension visual on app updates page
+* Performance: On page 'Reports', add renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Administration: company changes, add filter on user id
 * update application areas with 22.0 new app features

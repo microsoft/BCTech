@@ -9,12 +9,11 @@ traces
 | where operation_Name == "Success report generation" // do note that in a later version of the schema, this field will not be used 
      or customDimensions.eventId == 'RT0006' // introduced in version 16.1
 | where customDimensions.result == "Success"
-| extend aadID = customDimensions.aadTenantId
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-| project timestamp
-, eventId = customDimensions.eventId 
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
@@ -23,22 +22,23 @@ traces
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace
-, numberOfRows = customDimensions.numberOfRows
-, result = customDimensions.result
-// reportingEngine dimension was added in version 17.3
-, reportingEngine = customDimensions.reportingEngine
-, serverExecutionTime = customDimensions.serverExecutionTime
-, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
-// sqlDatabaseAccessIntent dimension added in version 19.1
-, sqlDatabaseAccessIntent = customDimensions.sqlDatabaseAccessIntent 
-// reportAction dimension added in version 20.0
-, reportAction = customDimensions.reportAction
 // documentFormat dimension added in version 20.0
 , documentFormat = customDimensions.documentFormat
 // layout dimensions added in version 20.0
 , LayoutAppId = customDimensions.layoutAppId
 , LayoutName = customDimensions.layoutName
 , LayoutType = customDimensions.layoutType
+, numberOfRows = customDimensions.numberOfRows
+, renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
+// reportAction dimension added in version 20.0
+, reportAction = customDimensions.reportAction
+// reportingEngine dimension was added in version 17.3
+, reportingEngine = customDimensions.reportingEngine
+, result = customDimensions.result
+, serverExecutionTime = customDimensions.serverExecutionTime
+, serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+// sqlDatabaseAccessIntent dimension added in version 19.1
+, sqlDatabaseAccessIntent = customDimensions.sqlDatabaseAccessIntent 
 , sqlExecutes = customDimensions.sqlExecutes 
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
@@ -57,12 +57,12 @@ traces
 | where operation_Name == "Failed report generation" // do note that in a later version of the schema, this field will not be used 
   or customDimensions.eventId == 'RT0006' // introduced in version 16.1
 | where customDimensions.result <> "Success"
-| extend aadID = customDimensions.aadTenantId
+| extend aadID 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-| project timestamp
-, eventId = customDimensions.eventId
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionVersion = customDimensions.extensionVersion
@@ -83,6 +83,7 @@ traces
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
+, renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
@@ -96,7 +97,8 @@ traces
 | where timestamp > ago(60d) // adjust as needed
 | where operation_Name == "Cancellation report generation" // do note that in a later version of the schema, this field will not be used   
      or customDimensions.eventId == "RT0007" // introduced in version 16.1
-| extend aadID = customDimensions.aadTenantId
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
@@ -131,7 +133,8 @@ traces
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'RT0011'
-| extend aadTenantId = tostring( customDimensions.aadTenantId )
+| project timestamp
+, aadTenantId = tostring( customDimensions.aadTenantId )
 , environmentName = customDimensions.environmentName
 , environmentType = tostring( customDimensions.environmentType )
 , companyName = customDimensions.companyName
