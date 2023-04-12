@@ -68,7 +68,24 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-TBA
+* Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
+
+
+DatasetTimeInMS = ReportPerformance[ExecutionTimeInMS] - ReportPerformance[RenderingTimeInMS] 
+Filler = " "
+
+Report Avg dataset time (sec) = AVERAGE( ReportPerformance[DatasetTimeInMS] ) / 1000 
+Report Avg rendering time (sec) = AVERAGE( ReportPerformance[RenderingTimeInMS] ) / 1000 
+
+Report Max dataset time (sec) = MAX( ReportPerformance[DatasetTimeInMS] ) / 1000 
+Report Max rendering time (sec) = MAX( ReportPerformance[RenderingTimeInMS] ) / 1000 
+
+Report Sum dataset time (min) = Sum( ReportPerformance[DatasetTimeInMS] ) / 1000 / 60
+Report Sum rendering time (min) = Sum( ReportPerformance[RenderingTimeInMS] ) / 1000 / 60
+
+Filters
+Time (ms) dataset
+
 
 
 ------------------

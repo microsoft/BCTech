@@ -23,7 +23,6 @@ Ideas
 * Errors, report errors, fix extension/object visual (split in two)?
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (in 21.x/22.x)
-* Performance: On page 'Reports', add renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 * Add header tooltips (where appropriate)
 
 
@@ -35,12 +34,14 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Usage: Keyvault, visuals look weird
 * Errors: Keyvault errors, visuals look weird
 * Errors: Refactor Report errors datamodel to appdim, objectdim, ...
+* Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
 
 Data in telemetry: empty area
 // Feature Telemetry app error
 // An app from publisher <publisher> is sending telemetry, but there is no registered telemetry logger for this publisher.
 | where customDimensions has 'AL0000G7K'
 LC0056
+
 
 
 ------------------
