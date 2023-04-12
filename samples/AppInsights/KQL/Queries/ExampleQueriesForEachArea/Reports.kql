@@ -29,7 +29,6 @@ traces
 , LayoutName = customDimensions.layoutName
 , LayoutType = customDimensions.layoutType
 , numberOfRows = customDimensions.numberOfRows
-, renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 // reportAction dimension added in version 20.0
 , reportAction = customDimensions.reportAction
 // reportingEngine dimension was added in version 17.3
@@ -48,8 +47,7 @@ traces
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
-, message, customDimensions
-
+| extend renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 
 // failed report execution (raw data)
 traces
@@ -83,13 +81,12 @@ traces
 , serverExecutionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
 , totalTime = customDimensions.totalTime
 , totalTimeInMS = toreal(totimespan(customDimensions.totalTime))/10000 //the datatype for executionTime is timespan 
-, renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
-, message, customDimensions
+| extend renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 
 
 // cancelled report execution (raw data)
@@ -126,7 +123,6 @@ traces
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
-, message, customDimensions
 
 
 // cancelled report execution, where COMMIT occurred (raw data)
