@@ -36,13 +36,11 @@ Ideas
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
-* Performance: change extension visual on app updates page
-* Performance: On page 'Reports', add renderTimeInMS = totalTimeInMS - serverExecutionTimeInMS
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Administration: company changes, add filter on user id
 * update application areas with 22.0 new app features
-* Performance: On page 'Long Running SQL', add a filter on isolationLevel (in 22.0/22.1)
-* Performance: On page 'Long Running AL', use new dimension exclusiveTime (in 21.x/22.x)
+* Performance: (in 22.0/22.1) On page 'Long Running SQL', add a filter on isolationLevel 
+* Performance: (in 21.x/22.x) On page 'Long Running AL', use new dimension exclusiveTime 
 * Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Usage: New page (for 22.1) 'Onboarding'
 * Administration: New page (22.1) 'Cloud Migration'
@@ -68,24 +66,9 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+* Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
+* Performance: change extension visual on app updates page
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
-
-
-DatasetTimeInMS = ReportPerformance[ExecutionTimeInMS] - ReportPerformance[RenderingTimeInMS] 
-Filler = " "
-
-Report Avg dataset time (sec) = AVERAGE( ReportPerformance[DatasetTimeInMS] ) / 1000 
-Report Avg rendering time (sec) = AVERAGE( ReportPerformance[RenderingTimeInMS] ) / 1000 
-
-Report Max dataset time (sec) = MAX( ReportPerformance[DatasetTimeInMS] ) / 1000 
-Report Max rendering time (sec) = MAX( ReportPerformance[RenderingTimeInMS] ) / 1000 
-
-Report Sum dataset time (min) = Sum( ReportPerformance[DatasetTimeInMS] ) / 1000 / 60
-Report Sum rendering time (min) = Sum( ReportPerformance[RenderingTimeInMS] ) / 1000 / 60
-
-Filters
-Time (ms) dataset
-
 
 
 ------------------
