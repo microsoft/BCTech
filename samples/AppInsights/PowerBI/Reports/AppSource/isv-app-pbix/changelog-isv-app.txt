@@ -32,8 +32,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Dataset: on report errors query, moved tenant, object, app, and client type info to their own dimensions
 * Usage: Keyvault, visuals look weird
 * Errors: Keyvault errors, visuals look weird
-* Errors: Refactor Report errors datamodel to appdim, objectdim, ...
-* Errors, report errors, split the extension/object visual in two
+* Errors, on page report errors page, split the extension/object visual in two
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
 
 TODO 
