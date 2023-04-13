@@ -18,9 +18,7 @@ Ideas
 * Dataset: on all queries, link to AppDim. Add global filters, obsolete AppIdDim
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
-* Usage: new page (for 22.1) 'Onboarding' (pending ISV telemetry test of onboarding telemetry)
-* Errors: uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
-* Errors, report errors, fix extension/object visual (split in two)?
+* Errors: (for 22.1) uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (in 21.x/22.x)
 * Add header tooltips (where appropriate)
@@ -31,17 +29,20 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: fixed data load bug in queries AppIdDim and EnvironmentDim (queries did not respect time filter)
+* Dataset: on report errors query, moved tenant, object, app, and client type info to their own dimensions
 * Usage: Keyvault, visuals look weird
 * Errors: Keyvault errors, visuals look weird
 * Errors: Refactor Report errors datamodel to appdim, objectdim, ...
+* Errors, report errors, split the extension/object visual in two
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
+
+TODO 
 
 Data in telemetry: empty area
 // Feature Telemetry app error
 // An app from publisher <publisher> is sending telemetry, but there is no registered telemetry logger for this publisher.
 | where customDimensions has 'AL0000G7K'
 LC0056
-
 
 
 ------------------
