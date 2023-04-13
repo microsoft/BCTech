@@ -67,7 +67,8 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
-* Performance: change extension visual on app updates page
+* Dataset: On BCPTRuns, fixed duplicate key error
+* Performance: On page app updates, changed visuals to use a matrix
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
 
 
