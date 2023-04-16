@@ -17,6 +17,7 @@ Pending teams
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 
+
 -----
 Ideas
 -----
@@ -29,9 +30,6 @@ Ideas
 * Errors: cross tenant comparisons of errors (is this normal?)
 * Errors: on 'Feature Errors' page, add top/bottom stacktrace visuals
 * Errors: on 'Database deadlocks' page, add top/bottom stacktrace visuals
-* Errors: On page 'Incoming Webservice Errors', add per-app/per-object visuals.
-* Errors: On page 'Connector Errors', add per-app/per-object visuals.
-* Errors: On page 'Report Errors', add per-app/per-object visuals.
 * Performance: cross tenant comparisons of performance (is this normal?)
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
@@ -67,10 +65,20 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
+* Dataset: On IncomingWebserviceErrors, tuned data load and moved tenant info, extension info, category, connector info, and object info into their own dimensions.
 * Dataset: On BCPTRuns, fixed duplicate key error
+* Errors: On page 'Incoming Webservice Errors', add per-app/per-object visuals.
 * Performance: On page app updates, changed visuals to use a matrix
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
 
+
+TODO
+& ExtensionHashQuerySnippet 
+& ObjectHashQuerySnippet 
+& TenantHashQuerySnippet
+
+* Errors: On page 'Connector Errors', add per-app/per-object visuals.
+* Errors: On page 'Report Errors', add per-app/per-object visuals.
 
 ------------------
 2023-04-05 release
