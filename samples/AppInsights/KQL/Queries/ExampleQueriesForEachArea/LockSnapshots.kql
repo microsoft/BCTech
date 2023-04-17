@@ -1,0 +1,26 @@
+// lock snapshots (raw data)
+traces 
+| where timestamp > ago(2d) // adjust to your needs
+| where customDimensions has 'RT0013'
+| where customDimensions.eventId == 'RT0013'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentType = customDimensions.environmentType
+, environmentName = customDimensions.environmentName
+, companyName = customDimensions.companyName
+, snapshotId = customDimensions.snapshotId
+, clientTypeHoldingLock = customDimensions.clientType
+, alObjectTypeHoldingLock = customDimensions.alObjectType
+, alObjectIdHoldingLock = customDimensions.alObjectId
+, alObjectNameHoldingLock = customDimensions.alObjectName
+, alStackTraceHoldingLock = customDimensions.alStackTrace
+, extensionNameHoldingLock = customDimensions.extensionName
+, extensionIdHoldingLock = customDimensions.extensionId
+, extensionVersionHoldingLock = customDimensions.extensionVersion
+, extensionPublisherHoldingLock = customDimensions.extensionPublisher
+, sqlTableLocked = customDimensions.sqlTableName
+, sqlLockResourceType = customDimensions.sqlLockResourceType
+, sqlLockRequestMode = customDimensions.sqlLockRequestMode
+, sqlLockRequestStatus = customDimensions.sqlLockRequestStatus
+, sqlServerSessionId = customDimensions.sqlServerSessionId
+, alSessionIdHoldingLock = customDimensions.sessionId
