@@ -29,7 +29,6 @@ Ideas
 * Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Errors: cross tenant comparisons of errors (is this normal?)
 * Errors: on 'Feature Errors' page, add top/bottom stacktrace visuals
-* Errors: on 'Database deadlocks' page, add top/bottom stacktrace visuals
 * Performance: cross tenant comparisons of performance (is this normal?)
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
@@ -66,15 +65,15 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
 * Dataset: On IncomingWebserviceErrors, tuned data load and moved tenant info, extension info, category, connector info, and object info into their own dimensions.
-* Dataset: On reportErrors, tuned data load and moved tenant info, extension info, client info, and object info into their own dimensions.
+* Dataset: On ReportErrors, tuned data load and moved tenant info, extension info, client info, and object info into their own dimensions.
 * Dataset: On BCPTRuns, fixed duplicate key error
 * Errors: On page 'Incoming Webservice Errors', added per-app/per-object visuals.
 * Errors: On page 'Connector Errors', added per-app/per-object visuals.
+* Errors: On page 'Report Errors', add per-app/per-object visuals.
+* Errors: on 'Database deadlocks' page, add top/bottom stacktrace visuals
 * Performance: On page app updates, changed visuals to use a matrix
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
 
-TODO
-* Errors: On page 'Report Errors', add per-app/per-object visuals.
 
 ------------------
 2023-04-05 release
