@@ -34,7 +34,6 @@ Ideas
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
-* Administration: company changes, add filter on user id
 * update application areas with 22.0 new app features
 * Performance: (in 22.0/22.1) On page 'Long Running SQL', add a filter on isolationLevel 
 * Performance: (in 21.x/22.x) On page 'Long Running AL', use new dimension exclusiveTime 
@@ -67,6 +66,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: On IncomingWebserviceErrors, tuned data load and moved tenant info, extension info, category, connector info, and object info into their own dimensions.
 * Dataset: On ReportErrors, tuned data load and moved tenant info, extension info, client info, and object info into their own dimensions.
 * Dataset: On BCPTRuns, fixed duplicate key error
+* Errors: fixed AL stacktrace visuals that did not filter
 * Errors: On page 'Incoming Webservice Errors', added per-app/per-object visuals.
 * Errors: On page 'Connector Errors', added per-app/per-object visuals.
 * Errors: On page 'Report Errors', add per-app/per-object visuals.
@@ -74,6 +74,8 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page app updates, changed visuals to use a matrix
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
 
+TODO
+* Administration: company changes, add filter on user id
 
 ------------------
 2023-04-05 release
