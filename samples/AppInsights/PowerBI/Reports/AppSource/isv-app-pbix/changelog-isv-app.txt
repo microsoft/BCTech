@@ -28,22 +28,25 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+TBA
+
+
+------------------
+2023-05-01 release (planned to be released on May 1, already available in the beta app)
+Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
+------------------
 * Dataset: fixed data load bug in queries AppIdDim and EnvironmentDim (queries did not respect time filter)
-* Dataset: on report errors query, moved tenant, object, app, and client type info to their own dimensions
+* Dataset: On IncomingWebserviceErrors, moved category and connector info into their own dimensions.
+* Dataset: On IncomingWebservicePerformance, moved category and connector info into their own dimensions.
+* Dataset: on Report errors query, moved tenant, object, app, and client type info to their own dimensions
 * Dataset: On BCPTRuns, fixed duplicate key error
 * Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
-* Usage: Keyvault, visuals look weird
-* Errors: Keyvault errors, visuals look weird
-* Errors, on page report errors page, split the extension/object visual in two
-* Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
-* Performance: change extension visual on app updates page
-
-
-Data in telemetry: empty area
-// Feature Telemetry app error
-// An app from publisher <publisher> is sending telemetry, but there is no registered telemetry logger for this publisher.
-| where customDimensions has 'AL0000G7K'
-LC0056
+* Usage: Keyvault, visuals looked weird, not anymore
+* Errors: On page Keyvault errors, visuals looked weird, not anymore
+* Errors: On page Report errors page, split the extension/object visual in two
+* Errors: On page Error Dialogs, fixed AL stacktrace visuals that did not filter
+* Performance: On page Reports, added visual to show time to generate dataset and render the report.
+* Performance: On App updates page, changed extension visual and changed statistics visual to use a matrix
 
 
 ------------------
