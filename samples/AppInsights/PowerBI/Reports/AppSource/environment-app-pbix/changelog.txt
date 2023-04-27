@@ -62,6 +62,11 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+TBA
+
+------------------
+2023-05-01 release (planned)
+------------------
 * Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
 * Dataset: On IncomingWebserviceErrors, tuned data load and moved tenant info, extension info, category, connector info, and object info into their own dimensions.
 * Dataset: On ReportErrors, tuned data load and moved tenant info, extension info, client info, and object info into their own dimensions.
