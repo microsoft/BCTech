@@ -48,14 +48,6 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance: On page Reports, added visual to show time to generate dataset and render the report.
 * Performance: On App updates page, changed extension visual and changed statistics visual to use a matrix
 
-TODO before release:
-OK: Error dashboard - broken KPI
-OK: Error dialogs: check AL stacktrace
-OK: Feature Telemetry Errors - date visual look weird
-
-
-
-
 
 ------------------
 2023-04-05 release
