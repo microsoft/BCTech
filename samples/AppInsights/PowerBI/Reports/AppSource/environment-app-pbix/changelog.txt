@@ -73,9 +73,8 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: on 'Database deadlocks' page, add top/bottom stacktrace visuals
 * Performance: On page app updates, changed visuals to use a matrix
 * Performance: On page 'Reports', added visual to show time to generate dataset and render the report.
+* Administration: On page 'Company changes', added user id
 
-TODO
-* Administration: company changes, add filter on user id
 
 ------------------
 2023-04-05 release
