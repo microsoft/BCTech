@@ -66,8 +66,7 @@ TBA
 
 
 ------------------
-2023-05-01 release (planned to be released on May 1, already available in the beta app)
-Install beta app from: https://aka.ms/bctelemetryreportbeta
+2023-05-01 release
 ------------------
 * Dataset: On ExtensionUpdatePerformance, tuned data load and moved tenant info + extension info into their own dimensions.
 * Dataset: On IncomingWebserviceErrors, tuned data load and moved tenant info, extension info, category, connector info, and object info into their own dimensions.

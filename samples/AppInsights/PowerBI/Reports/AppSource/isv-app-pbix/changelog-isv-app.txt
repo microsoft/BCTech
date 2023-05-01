@@ -32,8 +32,7 @@ TBA
 
 
 ------------------
-2023-05-01 release (planned to be released on May 1, already available in the beta app)
-Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
+2023-05-03 release
 ------------------
 * Dataset: fixed data load bug in queries AppIdDim and EnvironmentDim (queries did not respect time filter)
 * Dataset: On IncomingWebserviceErrors, moved category and connector info into their own dimensions.
@@ -177,12 +176,6 @@ Initial version published to app source for public preview.
 -----
 Ideas 
 -----
--	Is it possible to add list of objects in a format like the AAD tenant mapping? So we can see objects especially pages and reports never used?
-Need to know the scenario better here
-
--	In the extension lifecycle please filter out the “already synced” ;)
-This is being fixed now by the compiler team.
-
 -	In some pages you print stack traces or error message. This is fine, but can we add the operationId, so the developers can use it in KQL for further analysis.
 Good idea, also valuable for the VAR app
 
@@ -190,18 +183,3 @@ Good idea, also valuable for the VAR app
 Good idea, also valuable for the VAR app
 
 -	Is it possible to visualize performance degradation over days or weeks?
-
--	Is it possible to group error message, like permission related error messages?
-
--	For performance and error analysis it would be nice the see if the process was initiated by the Job Queue. This could be done by object ids 450 or 451 in the call stack. Filtering on the background client type is not sufficient.
-Good idea, also valuable for the VAR app
-
-DONE: For webservice calls (especially the outgoing ones) add a filter for OnPrem, because this is nothing we can influence as an ISV.
-
-
-All pages
-* app filter slicer
-
-Administration
-* Updates funnel page 
-* app source validation
