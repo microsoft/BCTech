@@ -37,7 +37,6 @@ Ideas
 * update application areas with 22.0 new app features
 * Performance: (in 22.0/22.1) On page 'Long Running SQL', add a filter on isolationLevel 
 * Performance: (in 21.x/22.x) On page 'Long Running AL', use new dimension exclusiveTime 
-* Errors: 22.0/22.1 uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Usage: New page (for 22.1) 'Onboarding'
 * Administration: New page (22.1) 'Cloud Migration'
 * Add header tooltips (where appropriate)
@@ -62,7 +61,12 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-TBA
+* Errors: On page IncomingWebserviceErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
+
+
+TODO
+* Errors: On page ConnectorErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
+
 
 
 ------------------
