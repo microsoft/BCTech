@@ -27,7 +27,7 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-* Errors: On page IncomingWebserviceErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
+* Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
 
 
 ------------------
