@@ -18,7 +18,6 @@ Ideas
 * Dataset: on all queries, link to AppDim. Add global filters, obsolete AppIdDim
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
-* Errors: (for 22.1) uptake new OData dimensions in RT0008 | where customDimensions has 'diagnosticsMessage' or customDimensions has 'failureReason'
 * Performance: (for 21.x/22.x) On page 'Long Running AL', use new dimension exclusiveTime 
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
@@ -28,7 +27,7 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-TBA
+* Errors: On page IncomingWebserviceErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
 
 
 ------------------
