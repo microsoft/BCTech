@@ -1,8 +1,5 @@
 // KQL samples - Report execution
 
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
-
 // successful report execution (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
