@@ -12,6 +12,7 @@ Pending teams
 * Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
+* Usage: New page (for 22.1) 'Onboarding'
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending app team changes to email telemetry)
 * Job Queue errors/performance: add dimension alJobQueueObjectName (when available - pending app team bugfix)
 * Administration: Permission set changes (pending app team on adding permission set name)
@@ -36,25 +37,9 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * update application areas with 22.0 new app features
 * Performance: (in 22.0/22.1) On page 'Long Running SQL', add a filter on isolationLevel 
-* Performance: (in 21.x/22.x) On page 'Long Running AL', use new dimension exclusiveTime 
-* Usage: New page (for 22.1) 'Onboarding'
 * Administration: New page (22.1) 'Cloud Migration'
+* Administration: New page on PTE validations signal
 * Add header tooltips (where appropriate)
-* Data in telemetry: missing area for these events
-    AL0000E9U	
-    AL0000GKL	
-    AL0000GY2	
-    AL0000GY3	
-    AL0000FMG	
-    AL0000GY0	
-    AL0000GY1	
-    AL0000HQ2	
-    AL0000GKJ	
-    AL0000GKK	
-    AL0000EIR	
-    AL0000EIT	
-    AL0000HUJ	
-    AL0000FD5	
 
 
 ------------------
@@ -64,6 +49,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
 * Errors: On page ConnectorErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
+* Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
 
 
 ------------------
