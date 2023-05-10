@@ -52,8 +52,12 @@ traces
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
-, alAuthenticated = customDimensions.alAuthenticated 
-
+, alAuthenticated = customDimensions.alAuthenticated // localized (maybe not so useful)
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Connected to SMTP server.
 // Docs pending
@@ -68,8 +72,12 @@ traces
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
-, alConnected = customDimensions.alConnected
-
+, alConnected = customDimensions.alConnected // localized (maybe not so useful)
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
 
 // Email sent
 // Docs pending
@@ -84,4 +92,9 @@ traces
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
-, alSent = customDimensions.alSent
+, alSent = customDimensions.alSent // localized (maybe not so useful)
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 20.0
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+, 'N/A'
+)
