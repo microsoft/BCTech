@@ -28,9 +28,8 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
-
-TODO
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
+
 
 ------------------
 2023-05-03 release
