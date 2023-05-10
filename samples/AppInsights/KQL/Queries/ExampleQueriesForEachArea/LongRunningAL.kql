@@ -16,10 +16,12 @@ traces
 , alObjectType = customDimensions.alObjectType
 , alStackTrace = customDimensions.alStackTrace // use the KQL snippet parseStackTrace to get top/bottom of the stack trace details
 , clientType = customDimensions.clientType
+// exclusiveTime is the execution time of the operation, without the time where AL execution was suspended due to client callback
 , exclusiveTime = customDimensions.exclusiveTime // This dimension was introduced in Business Central 2023 release wave 1, version 22.1. Backported to version 21.6
 , exclusiveTimeInMS = toreal(totimespan(customDimensions.exclusiveTime))/10000 //the datatype for exclusiveTime is timespan 
-, executionTime = customDimensions.executionTime
-, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+// exclusiveTime is the total time of the operation, including wait time due to client callback
+, totalTime = customDimensions.executionTime
+, totalTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
 , extensionId = customDimensions.extensionId
 , extensionInfo = customDimensions.extensionInfo // parse this json structure to find out if other extensions is involved
 , extensionName = customDimensions.extensionName
