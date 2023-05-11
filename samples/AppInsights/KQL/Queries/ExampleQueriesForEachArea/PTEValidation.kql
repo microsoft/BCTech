@@ -4,7 +4,7 @@
 
 // PTE submission validation request started: request <request id>
 traces 
-| where customDimensions has "LC0200"
+| where customDimensions has "LC0220"
 | where customDimensions.eventId == "LC0200"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
@@ -16,63 +16,43 @@ traces
 
 
 
+        /// <summary>
+        /// The event reported when the validation of an environment has started.
+        /// </summary>
+        public const string LC0220_EnvironmentValidationStarted = "LC0220";
 
         /// <summary>
-        /// The event reported when the validation of a PTE submission has started.
+        /// The event reported when a diagnostic is reported for an environment validation itself. e.g. duplicate object Id
         /// </summary>
-        public const string LC0200_PTEValidationStarted = "LC0200";
+        public const string LC0221_EnvironmentValidationDiagnosticReported = "LC0221";
 
         /// <summary>
-        /// The event reported when a diagnostic is reported for a PTE submission itself. e.g. duplicate object Id
+        /// The event reported when the validation of an environment has completed successfully.
         /// </summary>
-        public const string LC0201_PTESubmissionDiagnosticReported = "LC0201";
+        public const string LC0222_EnvironmentValidationCompletedSuccessfully = "LC0222";
 
         /// <summary>
-        /// The event reported when the validation of a PTE submission has completed successfully.
+        /// The event reported when the validation of an environment has completed with errors.
         /// </summary>
-        public const string LC0202_PTESubmissionValidationCompletedSuccessfully = "LC0202";
+        public const string LC0223_EnvironmentValidationCompletedWithFailure = "LC0223";
+
 
         /// <summary>
-        /// The event reported when the validation of a PTE submission has completed with errors.
+        /// The event reported when the validation of an extension started.
         /// </summary>
-        public const string LC0203_PTESubmissionValidationCompletedWithFailure = "LC0203";
-
-
-        #endregion
-
-        #region PTE submission tasks signals
+        public const string LC0224_EnvironemntExtensionValidationStarted = "LC0224";
 
         /// <summary>
-        /// The event reported when the validation of the main PTE has started.
+        /// The event reported when the validation of an extension has completed successfully.
         /// </summary>
-        public const string LC0204_MainPTEValidationStarted = "LC0204";
+        public const string LC0225_EnvironemntExtensionValidationCompletedSuccessfully = "LC0225";
 
         /// <summary>
-        /// The event reported when the validation of the main PTE has completed successfully.
+        /// The event reported when the validation of an extension has completed with errors.
         /// </summary>
-        public const string LC0205_MainPTEValidationCompletedSuccessfully = "LC0205";
+        public const string LC0226_EnvironemntExtensionValidationCompletedWithFailure = "LC0226";
 
         /// <summary>
-        /// The event reported when the validation of the main PTE has completed with errors.
+        /// The event reported when a diagnostic is reported during the validation of an extension in an environment validation.
         /// </summary>
-        public const string LC0206_MainPTEValidationCompletedWithFailure = "LC0206";
-
-        /// <summary>
-        /// The event reported when the validation of a dependent PTE has started.
-        /// </summary>
-        public const string LC0207_DependentPTEValidationStarted = "LC0207";
-
-        /// <summary>
-        /// The event reported when the validation of a dependent PTE has completed successfully.
-        /// </summary>
-        public const string LC0208_DependentPTEValidationCompletedSuccessfully = "LC0208";
-
-        /// <summary>
-        /// The event reported when the validation of a dependant PTE has completed with errors.
-        /// </summary>
-        public const string LC0209_DependentPTEValidationCompletedWithFailure = "LC0209";
-
-        /// <summary>
-        /// The event reported when a diagnostic is reported during the validation of an extension in an AppSource submission.
-        /// </summary>
-        public const string LC0210_DiagnosticReported = "LC0210";
+        public const string LC0227_EnvironemntDiagnosticReported = "LC0227";
