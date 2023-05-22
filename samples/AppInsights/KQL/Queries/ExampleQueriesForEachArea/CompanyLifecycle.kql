@@ -1,7 +1,7 @@
 // KQL samples - Company lifecycle events (create/initialize/copy/delete)
 
 // See this section in the performance tuning guide
-// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#be-cautious-with-the-copy-company-operation
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#be-cautious-with-the-copy-company-operation
 
 // create company
 traces

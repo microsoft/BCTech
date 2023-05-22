@@ -119,5 +119,5 @@ page 50100 "CTF Challenges"
         CTFChallengesBanner: Text;
         CTFExternalChallengesBanner: Text;
         FilterChallenge: Text;
-        PerfToolsUrlTxt: Label 'https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-work-perf-problem#which-tools-are-good-when';
+        PerfToolsUrlTxt: Label 'https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-work-perf-problem#which-tools-are-good-when';
 }

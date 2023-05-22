@@ -3,7 +3,7 @@
 # see their subscriptions, etc.
 
 
-Install-Module PartnerCenter  # only needs to be done once, see documentation at https://docs.microsoft.com/powershell/module/partnercenter
+Install-Module PartnerCenter  # only needs to be done once, see documentation at https://learn.microsoft.com/powershell/module/partnercenter
 
 
 # Authenticate to Partner Center

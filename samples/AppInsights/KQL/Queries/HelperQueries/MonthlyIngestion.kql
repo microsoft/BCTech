@@ -1,5 +1,5 @@
 //Telemetry Event IDs in Application Insights
-///https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-event-ids
+///https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-event-ids
 
 // 30 day overview of signal types in your Application Insights data store
 let lookback = 30d 

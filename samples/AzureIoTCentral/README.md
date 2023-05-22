@@ -276,7 +276,7 @@ We need to set things up for our cookie jar project as follows:
 4. Use the access token in the logic app to call a custom API in Business Central.
 
 ### Register the app
-1. Register Business Central as an app in Azure portal under **App Registrations** to be able to request OAuth tokens. For more information, see [Getting Started Developing Connect Apps for Dynamics 365 Business Central](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-develop-connect-apps). Follow the steps for Azure Active Directory (AAD) based authentication.
+1. Register Business Central as an app in Azure portal under **App Registrations** to be able to request OAuth tokens. For more information, see [Getting Started Developing Connect Apps for Dynamics 365 Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-develop-connect-apps). Follow the steps for Azure Active Directory (AAD) based authentication.
 2. The following table shows the properties to fill in.
 
     |Property  |Value  |
@@ -621,7 +621,7 @@ To set things up, we’ll need to add some data.
     |Then Response     |Create Purchase Order from IoT Workflow Setup<br>**Note:** This response will create a purchase order and send it for approval.         |
 
 6. Turn on the **Enabled** toggle.
-7. If we don't already have an approval workflow for purchase orders, we would need to create one. For more information, see [Walkthrough: Setting Up and Using a Purchase Approval Workflow](https://docs.microsoft.com/en-us/dynamics365/business-central/walkthrough-setting-up-and-using-a-purchase-approval-workflow). 
+7. If we don't already have an approval workflow for purchase orders, we would need to create one. For more information, see [Walkthrough: Setting Up and Using a Purchase Approval Workflow](https://learn.microsoft.com/en-us/dynamics365/business-central/walkthrough-setting-up-and-using-a-purchase-approval-workflow). 
 
 We still need to add some more setup data. The workflow response above will add some of it for us. We need to get our device to trigger the rule to see if it triggers the logic app and calls the custom API. If that works, all we need to do is open the **IoT Device Workflow Setup** page and fill in the **Vendor No.** and an **Item No.** fields. To run the test again, we need to reset the Pending Refill flag in Azure IoT Central.
 

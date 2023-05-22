@@ -6,7 +6,7 @@
 
 // See tips on how to develop efficient reports in the performance tuning guide aka.ms/bcperformance
 // 
-// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#writing-efficient-reports
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#writing-efficient-reports
 
 traces
 | where timestamp > ago(7d) // adjust as needed

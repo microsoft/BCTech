@@ -28,7 +28,7 @@ https://ade.applicationinsights.io/subscriptions/ **Subscription ID** /resourceg
 
 9.	Lastly, click on the “Connect” button.  The Database name should be that same as your AppInsights Resource.  Leave the Data Source Name” as BCAppInsights.  This will be used by all the queries and if it is changed, then all the queries will need to be updated.
 Limitations: The current version of the queries fails if the KQL queries do not return any rows. This could be due to data not being available within a selected time frame.  Try extending the query time frame to increase the chances of finding data to report on.  Another issue might be related to when the AppInsights key was updated on the tenants.  It does take a little time to have the data collected for your AppInsights key.
-For more information about Azure Data Explorer you can go here What is Azure Data Explorer? | Microsoft Docs.
+For more information about Azure Data Explorer you can go here [What is Azure Data Explorer?](https://learn.microsoft.com/en-us/azure/data-explorer/data-explorer-overview)
 
   
 Disclaimer

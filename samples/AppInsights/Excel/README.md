@@ -9,7 +9,7 @@ If you have a nice KQL query that you want to use in Excel, then do as follows
 # I do not have the "Export to Excel" option. What can I do?
 If your Application Insights portal does not have the option *Export to Excel* yet, then you can still make a refreshable report in Excel. You just need to create the PowerQuery query manually.
 
-Read more here about how to do that: https://docs.microsoft.com/en-us/azure/azure-monitor/logs/log-excel
+Read more here about how to do that: https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-excel
 
 
 # Disclaimer

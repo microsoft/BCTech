@@ -80,7 +80,7 @@ codeunit 50141 AzureServiceBusQueue
     // This operation receives a message from a queue or subscription, 
     // and removes the message from that queue or subscription in one atomic operation.
     //
-    // Documentation: https://docs.microsoft.com/en-us/rest/api/servicebus/receive-and-delete-message-destructive-read
+    // Documentation: https://learn.microsoft.com/en-us/rest/api/servicebus/receive-and-delete-message-destructive-read
     // 
     procedure ReceiveAndDeleteMessage(var Message: Text): Boolean;
     var
@@ -114,7 +114,7 @@ codeunit 50141 AzureServiceBusQueue
     // unlock it for other receivers, an Unlock Message command should be issued, otherwise the 
     // lock duration period can expire.
     //
-    // Documentation: https://docs.microsoft.com/en-us/rest/api/servicebus/peek-lock-message-non-destructive-read
+    // Documentation: https://learn.microsoft.com/en-us/rest/api/servicebus/peek-lock-message-non-destructive-read
     // 
     procedure PeekLockMessage(var Message: Text; var LockToken: Text): Boolean;
     var
@@ -142,7 +142,7 @@ codeunit 50141 AzureServiceBusQueue
     // Send Message 
     // Send a message to a Service Bus queue or topic.
     // 
-    // Documentation: https://docs.microsoft.com/en-us/rest/api/servicebus/send-message-batch
+    // Documentation: https://learn.microsoft.com/en-us/rest/api/servicebus/send-message-batch
     // 
     procedure SendMessage(message: Text): Boolean;
     var
@@ -174,7 +174,7 @@ codeunit 50141 AzureServiceBusQueue
     // queue or subscription. This operation should only be called after successfully processing 
     // a previously locked message, in order to maintain At-Least-Once delivery assurances.
     //
-    // Documentation: https://docs.microsoft.com/en-us/rest/api/servicebus/delete-message
+    // Documentation: https://learn.microsoft.com/en-us/rest/api/servicebus/delete-message
     // 
     procedure DeleteMessage(LockToken: Text): Boolean;
     begin
@@ -187,7 +187,7 @@ codeunit 50141 AzureServiceBusQueue
     // operation deletes the lock object, causing the message to be unlocked. Before the operation 
     // is called, a receiver must first lock the message.
     // 
-    // Documentation: https://docs.microsoft.com/en-us/rest/api/servicebus/unlock-message
+    // Documentation: https://learn.microsoft.com/en-us/rest/api/servicebus/unlock-message
     // 
     procedure UnlockMessage(LockToken: Text): Boolean;
     begin

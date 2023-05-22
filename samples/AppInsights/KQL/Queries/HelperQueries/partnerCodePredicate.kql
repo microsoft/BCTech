@@ -1,5 +1,5 @@
 // use this code snippet if your KQL query needs to distinguish between code owners based on object id ranges
-// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-object-ranges
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-object-ranges
 
 | extend alObjectId = toint(customDimensions.alObjectId)
 | extend codeOwnership = case(

@@ -17,52 +17,52 @@ Signal is added incrementally to Business Central. In this table you can see in 
 
 |Signal | Emitted from version, update | Documentation (use CTRL+click to open in a new tab) |
 | ------ | ------ | ------ |
-| Long running operation (SQL query) | 2019 release wave 2 (15.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-long-running-sql-query-trace |
-| Authorization | 2019 release wave 2 (15.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
-| Web Service Request | 2020 release wave 1 (16.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
-| Report Execution | 2020 release wave 1 (16.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace | 
-| Open Company timing | 2020 release wave 1 (16.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
-| Company lifecycle (create/copy/delete) | 2020 release wave 1 (16.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace |
-| Upgrade errors due to exceptions in upgrade code | 2020 release wave 1 (16.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
-| Database lock timeouts | 2020 release wave 1 (16.2, later backported to 16.0 and 16.1 in SaaS) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-locks-trace |
-| Extension lifecycle | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
-| Client page views | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
-| HTTP status and HTTP headers added to Web Service Request signal | 2020 release wave 1 (16.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
-| AL HttpClient signal (outgoing web service calls) | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-outgoing-trace |
-| App Key Vault Secret Acquisitions | 2020 release wave 2 (17.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-key-vault-trace  |
-| Long Running AL execution | 2020 release wave 2 (17.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-al-method-trace |
-| Extension lifecycle for app telemetry | 2020 release wave 2 (17.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
-| Sensitive Field Monitoring | 2020 release wave 2 (17.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
-| Retention Policy | 2020 release wave 2 (17.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-retention-policy-trace |
-| Job Queue | 2020 release wave 2 (17.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-job-queue-lifecycle-trace |
-| Permissions | 2020 release wave 2 (17.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-permission-changes-trace |
-| Configuration Package | 2020 release wave 2 (17.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-configuration-package-trace |
-| Email | 2020 release wave 2 (17.2) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-email-trace |
+| Long running operation (SQL query) | 2019 release wave 2 (15.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-long-running-sql-query-trace |
+| Authorization | 2019 release wave 2 (15.2) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
+| Web Service Request | 2020 release wave 1 (16.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
+| Report Execution | 2020 release wave 1 (16.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace | 
+| Open Company timing | 2020 release wave 1 (16.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-authorization-trace |
+| Company lifecycle (create/copy/delete) | 2020 release wave 1 (16.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-company-lifecycle-trace |
+| Upgrade errors due to exceptions in upgrade code | 2020 release wave 1 (16.2) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
+| Database lock timeouts | 2020 release wave 1 (16.2, later backported to 16.0 and 16.1 in SaaS) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-locks-trace |
+| Extension lifecycle | 2020 release wave 1 (16.3) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Client page views | 2020 release wave 1 (16.3) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
+| HTTP status and HTTP headers added to Web Service Request signal | 2020 release wave 1 (16.3) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
+| AL HttpClient signal (outgoing web service calls) | 2020 release wave 2 (17.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-outgoing-trace |
+| App Key Vault Secret Acquisitions | 2020 release wave 2 (17.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-key-vault-trace  |
+| Long Running AL execution | 2020 release wave 2 (17.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-al-method-trace |
+| Extension lifecycle for app telemetry | 2020 release wave 2 (17.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Sensitive Field Monitoring | 2020 release wave 2 (17.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
+| Retention Policy | 2020 release wave 2 (17.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-retention-policy-trace |
+| Job Queue | 2020 release wave 2 (17.2) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-job-queue-lifecycle-trace |
+| Permissions | 2020 release wave 2 (17.2) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-permission-changes-trace |
+| Configuration Package | 2020 release wave 2 (17.2) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-configuration-package-trace |
+| Email | 2020 release wave 2 (17.2) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-email-trace |
 | Posting | 2020 release wave 2 (17.2) | pending link to docs, sample KQL code updated |
-| Web Service Key Authentication | 2020 release wave 2 (17.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-access-key-trace |
-| Reporting engine in reporting signal | 2020 release wave 2 (17.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
-| HTTP authorization | 2020 release wave 2 (17.3) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
-| Client page views (for ISVs) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
-| Index/Key lifecycle | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-table-index-trace#enabled |
-| Sensitive Field Monitoring (field added/removed) | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
-| Upgrade tag signal | 2021 release wave 1 (18.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
-| Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
-| Appsource validation | 2021 release wave 1 (18.4) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-appsource-submission-validation-trace |
-| Use of read scale-out in reporting | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
-| Feature Telemetry | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-feature-telemetry |
-| Task Scheduler Telemetry | 2021 release wave 2 (19.1) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-task-scheduler-trace |
+| Web Service Key Authentication | 2020 release wave 2 (17.3) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-access-key-trace |
+| Reporting engine in reporting signal | 2020 release wave 2 (17.3) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
+| HTTP authorization | 2020 release wave 2 (17.3) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-webservices-trace |
+| Client page views (for ISVs) | 2021 release wave 1 (18.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
+| Index/Key lifecycle | 2021 release wave 1 (18.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-table-index-trace#enabled |
+| Sensitive Field Monitoring (field added/removed) | 2021 release wave 1 (18.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-field-monitoring-trace |
+| Upgrade tag signal | 2021 release wave 1 (18.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-update-trace |
+| Extension lifecycle (dependent extensions) | 2021 release wave 1 (18.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-extension-lifecycle-trace |
+| Appsource validation | 2021 release wave 1 (18.4) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-appsource-submission-validation-trace |
+| Use of read scale-out in reporting | 2021 release wave 2 (19.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
+| Feature Telemetry | 2021 release wave 2 (19.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-feature-telemetry |
+| Task Scheduler Telemetry | 2021 release wave 2 (19.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-task-scheduler-trace |
 | Database deadlocks | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-deadlocks-trace |
 | Database wait statistics | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-database-wait-statistics-trace |
-| Verbose telemetry enabled | 2022 release wave 1 (20.0) | KQL sample ready, https://docs.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-action-enabling-detailed-telemetry-logged-telemetry |
+| Verbose telemetry enabled | 2022 release wave 1 (20.0) | KQL sample ready, https://learn.microsoft.com/en-us/dynamics365-release-plan/2022wave1/smb/dynamics365-business-central/telemetry-action-enabling-detailed-telemetry-logged-telemetry |
 | General error dialogs | 2022 release wave 1 (20.0) |  https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-method-trace |
 | Error message votes | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-error-message-voting-trace |
-| Report action and document type in reporting | 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
-| Environment lifecycle and configuration changes| 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-environment-lifecycle-trace |
-| User checklist lifecycle | 2022 release wave 1 (20.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-user-checklist-trace |
+| Report action and document type in reporting | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace |
+| Environment lifecycle and configuration changes| 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-environment-lifecycle-trace |
+| User checklist lifecycle | 2022 release wave 1 (20.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-user-checklist-trace |
 | Permission error dialogs | 2022 release wave 1 (20.1) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-permission-error-trace |
 | Session stops | 2022 release wave 1 (20.0) | (pending link to release note) |
 | Dependency cycle discovered in permission sets | 2022 release wave 1 (20.2) | KQL sample ready, (pending link to release note) |
-| Client page views (for on-premises) | 2022 release wave 2 (21.0) | https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
+| Client page views (for on-premises) | 2022 release wave 2 (21.0) | https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-page-view-trace |
 | Azure function integration | 2022 release wave 2 (21.0) | (pending link to docs) |
 | Performance Toolkit | 2022 release wave 2 (21.3) | KQL sample ready, pending link to docs |
 

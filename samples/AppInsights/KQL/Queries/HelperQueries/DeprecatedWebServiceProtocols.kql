@@ -1,7 +1,7 @@
 // KQL samples - Deprecated Web Service Protocols
 
 // Endpoints exposed from Business Central using Odata v3 has been deprecated and the feature will removed in Business Central 2021 release wave 1
-// See https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-w1#odata-v3
+// See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-w1#odata-v3
 
 // Usage of Odata v3 endpoints in the last 30 days
 traces
@@ -33,7 +33,7 @@ traces
 
 
 // Endpoints exposed from Business Central using basic authentication has been deprecated and the feature will removed in Business Central 2022 release wave 1
-// See https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-platform
+// See https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/upgrade/deprecated-features-platform
 
 // list of end points that use basic authentication in the last 30 days
 traces

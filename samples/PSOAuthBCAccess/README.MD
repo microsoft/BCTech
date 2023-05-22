@@ -11,7 +11,7 @@ Prerequisites:
 
 Installed `MSAL.PS` Powershell module.
 
-In order to access **Business Central Automation API**, it is required to **[Setup Azure AD application in Business Central](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication#task-2-set-up-the-azure-ad-application-in-)** .
+In order to access **Business Central Automation API**, it is required to **[Setup Azure AD application in Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication#task-2-set-up-the-azure-ad-application-in-)** .
 
 **Azure AD Application** registration:
 

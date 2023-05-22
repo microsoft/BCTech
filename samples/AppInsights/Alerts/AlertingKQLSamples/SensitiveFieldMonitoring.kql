@@ -1,6 +1,6 @@
 // KQL samples - sensitive field monitoring
 
-Docs: https://docs.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
+Docs: https://learn.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
 
 
 You might want to alert on one or more of the following events:
