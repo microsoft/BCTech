@@ -8,7 +8,7 @@ The Custom API extension includes the following capabilities:
 * Creating two API pages
 * Creating a subpage link between two API pages for expand scenarios
 
-To use the extension, follow the guidance at [Developing a Custom API](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-develop-custom-api).  
+To use the extension, follow the guidance at [Developing a Custom API](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-develop-custom-api).  
 
 ## Disclaimer
 

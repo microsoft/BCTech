@@ -20,7 +20,7 @@ It is totally up to you. Maybe you do not need all details years back in time, b
 - Create a new pipeline and add a Copy Data activity
 -  -->
 
-Read more in the documentation here: https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-data-explorer?tabs=data-factory
+Read more in the documentation here: https://learn.microsoft.com/en-us/azure/data-factory/connector-azure-data-explorer?tabs=data-factory
 
 See also this blog post by Bert Verbeek: https://www.bertverbeek.nl/blog/2022/02/10/two-ways-of-exporting-bc-telemetry/
 
@@ -45,7 +45,7 @@ If you use CSV files as the file format in the data lake, it is important to fol
 # How do I use data in the datalake in Power BI? 
 Once you have data in the datalake, you can setup Power BI dataflows to consume it easily in Power BI.
 
-Read more here: https://docs.microsoft.com/en-us/power-bi/transform-model/dataflows/dataflows-introduction-self-service
+Read more here: https://learn.microsoft.com/en-us/power-bi/transform-model/dataflows/dataflows-introduction-self-service
 
 # Must I use Azure Data Factory and Azure Datalake gen2?
 No, you can use any tool you like to read data from Azure Application Insights and any data store to store the results. 

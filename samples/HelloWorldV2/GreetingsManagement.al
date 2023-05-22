@@ -40,7 +40,7 @@ codeunit 50110 GreetingsManagement
     end;
 
     // Translate Text to TargetLanguage.
-    // API Documentation: https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate
+    // API Documentation: https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate
     local procedure Translate(TargetLanguage: Text; Text: Text): Text;
     var
         JArray: JsonArray;

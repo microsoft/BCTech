@@ -62,7 +62,7 @@ Do this:
 1. Share the Power BI workspace with the person. This will make the app appear under _Workspaces_ in their Power BI portal.
 2. Provide the url to the person and ask them to open it in a browser. This will make the app appear under _Apps_ in their Power BI portal.
 
-Read more here [Share Power BI reports and dashboards with coworkers and others](https://docs.microsoft.com/en-us/power-bi/collaborate-share/service-share-dashboards)
+Read more here [Share Power BI reports and dashboards with coworkers and others](https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-share-dashboards)
 
 # Using the app
 Once installed and configured, how can you use the different reports in the app? We identified four different personas as described in this table:

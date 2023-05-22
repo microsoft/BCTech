@@ -1,7 +1,7 @@
 // Kusto query that can show you lock timeouts caused by number series (that could be changed to the non-blocking version)
 
 // Read more in the performance tuning guide (aka.ms/bcperformance)
-// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#use-number-series-that-allow-gaps
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-application#use-number-series-that-allow-gaps
 
 traces
 | where timestamp > ago(1d) // adjust as needed

@@ -21,9 +21,9 @@ https://portal.azure.com/#@<AAD tenant id>/blade/Microsoft_Azure_Monitoring_Logs
 Microsoft MVP Stefano Demiliani has written out this example in great details. Read more on his blog here: https://demiliani.com/2022/01/11/create-a-link-to-an-application-insights-query-programmatically/
 
 # How do I read telemetry data from Azure Application Insights with C#?
-The Azure SDK for .NET has an API for interacting with Azure Application Insights, see https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.applicationinsights?view=azure-dotnet
+The Azure SDK for .NET has an API for interacting with Azure Application Insights, see https://learn.microsoft.com/en-us/dotnet/api/microsoft.azure.applicationinsights?view=azure-dotnet
 
-Specifically, after having authenticated to Azure Application Insights, the method ApplicationInsightsDataClientExtensions.Query can be used to execute KQL queries from C#, see https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.applicationinsights.applicationinsightsdataclientextensions.query?view=azure-dotnet
+Specifically, after having authenticated to Azure Application Insights, the method ApplicationInsightsDataClientExtensions.Query can be used to execute KQL queries from C#, see https://learn.microsoft.com/en-us/dotnet/api/microsoft.azure.applicationinsights.applicationinsightsdataclientextensions.query?view=azure-dotnet
 
 Use these NuGet packages in your project:
 - Microsoft.Rest.ClientRuntime.Azure.Authentication (for authenticating your app to read data from Azure Application Insights)

@@ -60,7 +60,7 @@ Note that after the consent has completed, the browser may get redirected to htt
 <!--
     Legacy, not sure if this works with GDAP, need to follow up
 
-    , however, this step can be avoided for delegated admins by adding your AAD application into a security group that is tied to the GDAP relationship. This technique is described in more detail here: https://docs.microsoft.com/graph/auth-cloudsolutionprovider.
+    , however, this step can be avoided for delegated admins by adding your AAD application into a security group that is tied to the GDAP relationship. This technique is described in more detail here: https://learn.microsoft.com/graph/auth-cloudsolutionprovider.
 
     In short, you need to execute the following PowerShell commands (remember to set the $aadAppId variable):
 

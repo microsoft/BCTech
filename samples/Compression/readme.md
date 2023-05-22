@@ -1,7 +1,7 @@
 
 # Data compression in SQL
 Data compression at the database level has been avialable in SQL for a while.
-As of Business Central April 2019, the use of SQL Server data compression is a supported configuration. You can find documentation about this feature [here](https://docs.microsoft.com/en-us/business-applications-release-notes/april19/dynamics365-business-central/sql-compression )
+As of Business Central April 2019, the use of SQL Server data compression is a supported configuration. You can find documentation about this feature [here](https://learn.microsoft.com/en-us/business-applications-release-notes/april19/dynamics365-business-central/sql-compression )
 
 When enabling compression, you trade storage with compute and you would of course expect that there is price to pay on performance. While this is generally true, it largely depends on how the database is used and as it turned out, for Business Central, the cost of enabling compression is practically negligeable for most scenarios making SQL compression a great way to save storage.
 

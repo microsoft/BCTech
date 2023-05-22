@@ -5,7 +5,7 @@ To query telemetry from Power Automate, do as follows
 1) Go the Azure Application Insights portal, go to the *API Access* menu, and copy the application id and generate an API key 
 2) In Power Automate, search for the Application Insights connector and use the API key for authorization.
 
-See also https://docs.microsoft.com/en-us/connectors/applicationinsights/
+See also https://learn.microsoft.com/en-us/connectors/applicationinsights/
 
 # How do I find Power Automate templates to query telemetry in Azure Application Insights?
 The Azure Application Insights connector for Power Automate have templates available for you to get started. 

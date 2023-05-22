@@ -49,7 +49,7 @@ Then generate an API key
 
 You can now use the Application ID and API key to connect to and read from the Application Insights resource from the notebook. 
 
-See more here: https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-kqlmagic#kqlmagic-with-application-insights
+See more here: https://learn.microsoft.com/en-us/sql/azure-data-studio/notebooks-kqlmagic#kqlmagic-with-application-insights
 
 
 # Running Jupyter notebooks using GitHub Codespaces
@@ -97,9 +97,9 @@ Here are some resources for you to get started on Azure Data Studio. Use CTRL+cl
 * [Exploring Data in Microsoft Azure Using Kusto Query Language and Azure Data Explorer (Pluralsight course, requires subscription)](https://app.pluralsight.com/library/courses/microsoft-azure-data-exploring/table-of-contents)
 
 ## How do I install and configure Azure Data Studio?
-1. First, you need to download and install Azure Data Studio. See how to here: https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio
-2. Now create a new notebook (needed for steps 3+4 below) and choose the Python3 kernel, see https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-tutorial-python-kernel#create-a-notebook
-3. Install a Python kernel for Azure Data Studio (let Azure Data Studio do it for you or reuse an existing Python installation). See how to here: https://docs.microsoft.com/en-us/sql/azure-data-studio/notebooks-tutorial-python-kernel#change-the-python-kernel
+1. First, you need to download and install Azure Data Studio. See how to here: https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio
+2. Now create a new notebook (needed for steps 3+4 below) and choose the Python3 kernel, see https://learn.microsoft.com/en-us/sql/azure-data-studio/notebooks-tutorial-python-kernel#create-a-notebook
+3. Install a Python kernel for Azure Data Studio (let Azure Data Studio do it for you or reuse an existing Python installation). See how to here: https://learn.microsoft.com/en-us/sql/azure-data-studio/notebooks-tutorial-python-kernel#change-the-python-kernel
 
 ## How do I install and set up Kqlmagic?
 To install and set up Kqlmagic, open a python notebook. Click the "Manage Packages" icon on the right of the notebook:

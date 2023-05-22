@@ -153,7 +153,7 @@ Back to the beginning
 Before we dive into using the REST APIs of some advanced Azure services,
 let's start by getting our feet wet with something simpler -- Microsoft
 Translator Text API
-(<https://docs.microsoft.com/en-us/azure/cognitive-services/translator/>
+(<https://learn.microsoft.com/en-us/azure/cognitive-services/translator/>
 ). Microsoft Translator Text API is a cloud-based machine translation
 service. It can be accessed through a simple REST API.
 
@@ -181,13 +181,13 @@ to translate. It will return the translated text. It uses the
 the translation. The "to" language is specified as a query-parameter,
 the SubcriptionKey is in the Request headers and the Text to translate
 as JSON is in the body (see documentation
-(<https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate>
+(<https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate>
 ) for more details).
 
 
     // Translate Text to TargetLanguage.
     // API Documentation: 
-    // https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate
+    // https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate
     procedure Translate(TargetLanguage: Text; Text: Text): Text;
     var
         JArray: JsonArray;

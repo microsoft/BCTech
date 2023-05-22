@@ -9,7 +9,7 @@ The Dataverse Custom Employee Worker Integration extension includes the followin
 * Extending a page in Business Central for coupling and synchronizing entity records in Dataverse with table records in Business Central
 * Using events to create an integration table and a field mapping between a table in Business Central table and an integration table for Dataverse
 
-To use the extension, follow the guidance at [Customizing an Integration with Microsoft Dataverse](https://docs.microsoft.com/dynamics365/business-central/dev-itpro/administration/administration-custom-cds-integration).  
+To use the extension, follow the guidance at [Customizing an Integration with Microsoft Dataverse](https://learn.microsoft.com/dynamics365/business-central/dev-itpro/administration/administration-custom-cds-integration).  
 
 ## Disclaimer
 

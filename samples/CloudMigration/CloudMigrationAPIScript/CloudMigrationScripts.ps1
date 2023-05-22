@@ -1,5 +1,5 @@
 ﻿# Example test script for using Cloud Migration APIs E2E
-# API documentation is here: https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/cloudmigrationapi/cloud-migration-api-overview?branch=cloud-migration-api
+# API documentation is here: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/cloudmigrationapi/cloud-migration-api-overview?branch=cloud-migration-api
 # Run the "Install-Module -Name MSAL.PS" command on the first run, unless you have installed MSAL.PS. This function is used to obtain the token
 Import-Module "MSAL.PS"
 $statusTextHelperPath = Join-Path (Split-Path -Path ($MyInvocation.MyCommand.Path) -Parent) "CloudMigrationStatusText.psm1"

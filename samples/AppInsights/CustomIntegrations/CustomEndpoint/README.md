@@ -6,7 +6,7 @@ Azure Application Insights support that you can override the standard data inges
 
 You override the ingestion endpoint by using the **IngestionEndpoint** key in the Azure Application Insights connection string
 
-Read more in the documentation here: https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net#connection-string-with-explicit-endpoint-overrides
+Read more in the documentation here: https://learn.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net#connection-string-with-explicit-endpoint-overrides
 
 
 The endpoint protocol specification is described here: https://github.com/MohanGsk/ApplicationInsights-Home/blob/master/EndpointSpecs/ENDPOINT-PROTOCOL.md
