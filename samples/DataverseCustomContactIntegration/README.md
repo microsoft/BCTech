@@ -4,7 +4,7 @@ This extension describes customizing integration between a contact in Microsoft 
 
 The CDS Custom Contact Integration extension includes extending an existing integration between entities in Common Data Service and Business Central, creating a table extension for an existing integration table object, and using events to add custom integration field mappings for existing integration table mappings.
 
-To use the extension, follow the guidance at [Creating a table extension for an integration table](https://docs.microsoft.com/dynamics365/business-central/dev-itpro/administration/administration-custom-cds-integration#create-a-table-extension-for-an-integration-table-in-).  
+To use the extension, follow the guidance at [Creating a table extension for an integration table](https://learn.microsoft.com/dynamics365/business-central/dev-itpro/administration/administration-custom-cds-integration#create-a-table-extension-for-an-integration-table-in-).  
 
 ## Disclaimer
 

@@ -2,7 +2,7 @@
 or "How to connect to local resources from the cloud."
 
 Business Central Local Agent is a sample/prototype framework for accessing local resources from the cloud. The framework uses a Hybrid Connection from 
-[Azure Service Bus Relay](https://docs.microsoft.com/en-us/azure/service-bus-relay/) to allow Business Central online to connect to a local resource. The local resource can be attached hardware, drives, network, or anything accessible from .NET code. 
+[Azure Service Bus Relay](https://learn.microsoft.com/en-us/azure/service-bus-relay/) to allow Business Central online to connect to a local resource. The local resource can be attached hardware, drives, network, or anything accessible from .NET code. 
 
 
 ## Framework
@@ -89,7 +89,7 @@ The are a few prerequisites to run the samples:
 
 
 ### 1. Create a Hybrid Connection in Azure Portal
-Follow the steps in the documentation below to create a Relay namespace and a Hybrid Connection, see [Get started with Relay Hybrid Connections HTTP requests in .NET](https://docs.microsoft.com/en-us/azure/service-bus-relay/relay-hybrid-connections-http-requests-dotnet-get-started).
+Follow the steps in the documentation below to create a Relay namespace and a Hybrid Connection, see [Get started with Relay Hybrid Connections HTTP requests in .NET](https://learn.microsoft.com/en-us/azure/service-bus-relay/relay-hybrid-connections-http-requests-dotnet-get-started).
 
 I prefer to create a separate Resource Group for samples or maybe even for individual samples. It makes it easier to keep track of related resources that should be deleted/cleaned up together.
 

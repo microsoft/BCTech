@@ -1,5 +1,5 @@
 // KQL samples - sensitive field monitoring
-// https://docs.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
+// https://learn.microsoft.com/en-us/dynamics365/business-central/across-log-changes#monitoring-sensitive-fields
 
 
 // Sensitive field monitor feature status has changed to [Yes|No]

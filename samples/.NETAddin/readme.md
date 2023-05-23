@@ -95,7 +95,7 @@ Word document and downloads it to the client.
 
 For creating Word Document, there is a great free open-source .NET
 library called [Open XML
-SDK](https://docs.microsoft.com/en-us/office/open-xml/getting-started).
+SDK](https://learn.microsoft.com/en-us/office/open-xml/getting-started).
 
 At the starting point, the AL extension uses a server-side .NET add-in,
 let’s call it Word Document Manager, which performs the Word document
@@ -280,7 +280,7 @@ extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vsc
 and the [C\# for VS Code
 extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp).
 If you want to run and debug Azure Functions locally, [this
-article](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp)
+article](https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp)
 explains the details of how to go about it.
 
 The .NET add-in is a regular Visual Studio project. To build, it
@@ -306,7 +306,7 @@ Azure](https://azure.microsoft.com/en-us/services/app-service/web/)
 Azure](https://azure.microsoft.com/en-us/services/cloud-services/)
 
 [Develop Azure Functions by using Visual Studio Code \| Microsoft
-Docs](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp)
+Docs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp)
 
 [Postman \| The Collaboration Platform for API
 Development](https://www.postman.com/)

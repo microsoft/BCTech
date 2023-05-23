@@ -6,7 +6,7 @@ The code samples in this directory illustrates how this might be achieved by cal
 
 ** NB! Do be aware that the calls from the AL HTTPClient object are blocking as seen from AL execution. This means that AL execution will halt until the HTTPClient completes. The built-in platform support for telemetry does not have this limitation **
 
-If your environment is running on version 17.0 or higher, consider using the [LogMessage](https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-instrument-application-for-telemetry-app-insights) method to implement custom telemetry.
+If your environment is running on version 17.0 or higher, consider using the [LogMessage](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-instrument-application-for-telemetry-app-insights) method to implement custom telemetry.
 
 
 # Disclaimer

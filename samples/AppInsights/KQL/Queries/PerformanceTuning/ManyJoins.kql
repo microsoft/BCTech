@@ -4,7 +4,7 @@
 
 // This KQL query looks for long runnning SQL queries where there are more than 2 joins
 // This section in the performance tuning guide discusses table extensions and their impact on performance
-// https://docs.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#table-extension-impact-on-performance
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#table-extension-impact-on-performance
 // Note that joins can also come from a query object
 
 traces

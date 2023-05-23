@@ -10,7 +10,7 @@ codeunit 50138 SharedAccessTokenGenerator
     // 
     // SharedAccessToken Generator for ServiceBus
     //
-    // Documentation: https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-sas
+    // Documentation: https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-sas
     // 
     [NonDebuggable]
     procedure GetSasToken(ResourceUri: Text; SharedKeyName: Text; SharedKeyValue: Text): Text;

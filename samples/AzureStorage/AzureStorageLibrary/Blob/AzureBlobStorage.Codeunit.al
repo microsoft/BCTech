@@ -8,7 +8,7 @@ codeunit 50171 AzureBlobStorage
     // 
     // Azure Blob Storage REST Api
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
     //
     var
         AccountName: Text;
@@ -49,7 +49,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/list-containers2
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2
     // 
     procedure ListContainers(var containers: XmlDocument);
     var
@@ -69,7 +69,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/list-containers2
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/list-containers2
     // 
     procedure ListContainers(var Containers: record AzureBlobStorageContainer temporary)
     var
@@ -114,7 +114,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/create-container
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/create-container
     // 
     procedure CreateContainer(ResourcePath: Text);
     var
@@ -130,7 +130,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/delete-container
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/delete-container
     // 
     procedure DeleteContainer(ResourcePath: Text): Boolean;
     var
@@ -146,7 +146,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/list-blobs
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/list-blobs
     // 
     procedure ListBlobs(ResourcePath: Text; Prefix: Text; var blobs: XmlDocument);
     var
@@ -228,7 +228,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/get-blob
     // 
     procedure GetBlob(ResourcePath: Text; var blob: InStream): Boolean;
     var
@@ -240,7 +240,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/get-blob
     // 
     procedure GetBlob(ResourcePath: Text; var blob: Text): Boolean;
     var
@@ -252,7 +252,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/get-blob
     // 
     local procedure GetBlob(ResourcePath: Text; var response: HttpResponseMessage)
     var
@@ -268,7 +268,7 @@ codeunit 50171 AzureBlobStorage
 
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/delete-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/delete-blob
     // 
     procedure DeleteBlob(ResourcePath: Text)
     var
@@ -309,7 +309,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/put-blob
     // 
     procedure PutBlob(ResourcePath: Text; blob: InStream; ContentType: Text)
     var
@@ -327,7 +327,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/put-blob
     // 
     procedure PutBlob(ResourcePath: Text; blob: codeunit "Temp Blob"; ContentType: Text)
     var
@@ -340,14 +340,14 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/put-blob
     // 
     procedure PutBlob(ResourcePath: Text; blob: Text)
     begin
         PutBlob(ResourcePath, blob, 'text/plain; charset=utf-8')
     end;
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/put-blob
     // 
     procedure PutBlob(ResourcePath: Text; blob: Text; ContentType: Text)
     var
@@ -358,7 +358,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/put-blob
     // 
     local procedure PutBlob(ResourcePath: Text; ContentLength: Integer; ContentType: Text; var request: HttpRequestMessage)
     var
@@ -380,7 +380,7 @@ codeunit 50171 AzureBlobStorage
     end;
 
     //
-    // Api Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob
+    // Api Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob
     // 
     procedure CopyBlob(SourcePath: Text; DestinationPath: Text)
     var
@@ -493,7 +493,7 @@ codeunit 50171 AzureBlobStorage
     //
     // Shared Access Key Generation
     //
-    // Documentation: https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
+    // Documentation: https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
     //
     // Some digested documentation here: https://www.red-gate.com/simple-talk/cloud/platform-as-a-service/azure-blob-storage-part-5-blob-storage-rest-api/
     //
