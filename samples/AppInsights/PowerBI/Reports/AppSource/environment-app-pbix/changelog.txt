@@ -50,7 +50,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page ConnectorErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
-* Performance: On pages 'Sessions', 'Pageviews', 'Reports', 'Long running SQL queries', 'Database Lock Timeouts' and 'Long running AL methods' added overview section with AI visuals and top 10 avg. 
+* Performance: On pages 'Sessions', 'Pageviews', 'Reports', 'Long running SQL queries', 'Database Lock Timeouts', 'Long running AL methods' and 'Incoming web service calls' added overview section with AI visuals and top 10 avg. 
 * Administration: New page (22.1) 'Cloud Migration'
 
 
