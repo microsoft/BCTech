@@ -1,7 +1,6 @@
 # Videos about telemetry
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
-
 ## Want to Learn Business Central telemetry in 30 minutes?
 Haven't got the time to learn Business Central telemetry? Good news: we have recorded a series of short videos on the topic. Watch one every morning for a week and you should be up and running. 
 
@@ -54,6 +53,13 @@ Watch this 6 min video to learn how to use the DYI Power BI error report to tria
 
 
 ## Other videos
+
+### 2023-03-20 Get Low Friction Go Lives and Optimize Your Investments with Telemetry Data (39 min) by Kennie Nybo Pontoppidan
+<p align="center">
+<a href="https://www.youtube.com/watch?v=c4QctY7SFwE"><img src="https://img.youtube.com/vi/c4QctY7SFwE/0.jpg" width="50%"></a>
+<br>
+</p>
+
 
 ### 2022-12-20 BC Power Platform Zaragoza - Telemetría en Business Central desde cero (66 min in Spanish) by Roberto Corella, Javier Armesto and Miguel Llorca
 <p align="center">
