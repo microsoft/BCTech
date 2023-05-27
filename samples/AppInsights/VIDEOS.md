@@ -56,7 +56,7 @@ Watch this 6 min video to learn how to use the DYI Power BI error report to tria
 
 ### 2023-03-20 Get Low Friction Go Lives and Optimize Your Investments with Telemetry Data (39 min) by Kennie Nybo Pontoppidan
 <p align="center">
-<a href="https://www.youtube.com/watch?v=c4QctY7SFwE"><img src="https://img.youtube.com/vi/c4QctY7SFwE/0.jpg" width="50%"></a>
+<a href="https://www.youtube.com/watch?v=Ka7MWV3OyII"><img src="https://img.youtube.com/vi/Ka7MWV3OyII/0.jpg" width="50%"></a>
 <br>
 </p>
 
