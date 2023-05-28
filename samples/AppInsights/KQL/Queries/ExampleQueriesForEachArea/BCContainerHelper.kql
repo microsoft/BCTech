@@ -1,0 +1,18 @@
+// KQL samples - BCContainerHelper events
+
+// events from BCContainerHelper
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId startswith 'DO'
+| where customDimensions.eventId !in (
+// these are all AL-GO events, so filtering them away
+  'DO0071', 'DO0072', 'DO0073', 'DO0074', 'DO0077', 'DO0078', 'DO0079'
+, 'DO0080', 'DO0081', 'DO0082', 'DO0084', 'DO0085'
+, 'DO0091', 'DO0093', 'DO0094', 'DO0097', 'DO0098', 'DO0099'
+, 'DO0100', 'DO0101', 'DO0103', 'DO0104'
+)
+| extend eventId=tostring(customDimensions.eventId)
+| project timestamp
+, EventId = tostring(customDimensions.eventId)
+, message
+, customDimensions

@@ -1,0 +1,42 @@
+// KQL samples - DevOps events
+
+// Catalog of events from AL-GO for GitHub
+// you can join to this table if you want to translate eventIds to commands and command types
+datatable(EventId:string, Command:string, CommandType:string) [
+  'DO0071', 'CheckForUpdates', 'Action'
+, 'DO0072', 'CreateApp', 'Action'
+, 'DO0073', 'CreateDevelopmentEnvironment', 'Action'
+, 'DO0074', 'CreateReleaseNotes', 'Action'
+, 'DO0077', 'PipelineCleanup', 'Action'
+, 'DO0078', 'ReadSecrets', 'Action'
+, 'DO0079', 'ReadSettings', 'Action'
+, 'DO0080', 'RunPipeline', 'Action'
+, 'DO0081', 'Deliver', 'Action'
+, 'DO0082', 'AnalyzeTests', 'Action'
+, 'DO0091', 'CiCd', 'Action'
+, 'DO0093', 'CreateOnlineDevelopmentEnvironment', 'Workflow'
+, 'DO0094', 'CreateRelease', 'Workflow'
+, 'DO0097', 'PublishToEnvironment', 'Workflow'
+, 'DO0098', 'UpdateGitHubGoSystemFiles', 'Workflow'
+, 'DO0099', 'NextMajor', 'Action'
+, 'DO0100', 'NextMinor', 'Workflow'
+, 'DO0101', 'Current', 'Workflow'
+, 'DO0103', 'PublishToAppSource', 'Workflow'
+]
+| extend EventName = strcat( 'AL-GO ', case (
+    CommandType == 'Action', 'action'
+  , CommandType == 'Workflow', 'workflow'
+  , 'Unknown type' 
+), ': ', Command)
+;
+
+
+// DevOps events from AL-GO for GitHub
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId in (
+'DO0071', 'DO0072', 'DO0073', 'DO0074', 'DO0077', 'DO0078', 'DO0079', 'DO0082', 'DO0080', 'DO0081', 'DO0091', 'DO0093', 'DO0094', 'DO0097', 'DO0098', 'DO0099', 'DO0100', 'DO0101', 'DO0103'
+)
+| project timestamp
+, eventId = tostring(customDimensions.eventId)
+, message
