@@ -14,7 +14,7 @@ Pending teams
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Usage: New page (for 22.1) 'Onboarding'
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending app team changes to email telemetry)
-* Job Queue errors/performance: add dimension alJobQueueObjectName (when available - pending app team bugfix)
+* Job Queue errors/performance: add dimension alJobQueueObjectName and alJobQueueDescription (when available - pending app team bugfix)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 
@@ -37,7 +37,6 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * update application areas with 22.0 new app features
 * Performance: (in 22.0/22.1) On page 'Long Running SQL', add a filter on isolationLevel 
-* Administration: New page (22.1) 'Cloud Migration'
 * Administration: New page on PTE validations signal
 * Add header tooltips (where appropriate)
 
@@ -50,7 +49,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page ConnectorErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
-* Performance: On pages 'Sessions', 'Pageviews', 'Reports', 'Long running SQL queries', 'Database Lock Timeouts', 'Long running AL methods' and 'Incoming web service calls' added overview section with AI visuals and top 10 avg. 
+* Performance: On pages 'Sessions', 'Pageviews', 'Reports', 'Long running SQL queries', 'Database Lock Timeouts', 'Long running AL methods', 'Incoming web service calls' and 'Outgoing web service calls' added overview section with AI visuals and top 10 avg. 
 * Administration: New page (22.1) 'Cloud Migration'
 
 
