@@ -4,11 +4,11 @@ To make it easier to adopt telemetry for Business Central, we added a number of 
 | Your role is... | You want to... | Use this deck (click and then download) |
 | --------------- | ---------------| ------------- |
 | in sales | Base follow-up meetings with customers on data to provide more value. Use the deck as a playbook. | [Follow up customer meeting.pptx](<./decks/Follow up customer meeting.pptx>)  |
-| all over the business | Introduce telemetry to your organization | [AppInsights telemetry for Business Central partners.pptx](<./decks/AppInsights telemetry for Business Central partners.pptx>) |
-| strategic | Learn how we use telemetry (we have just enabled it) all over your partner practice. This deck is built around the Telemetry Maturity Model. | [Using telemetry to improve your partner practices and processes.pptx](<./decks/Using telemetry to improve your partner practices and processes.pptx>) |
-| as a trainer | Help partners/collegues get more data-driven with telemetry | [Hands-On Lab About Telemetry](<./decks/Hands-On Lab About Telemetry.pptx>) |
 | a implementation project manager | Get more data-driven before/during/after go-live. | [Data driven go-lives](<./decks/Data driven go-lives.pptx>) |
-
+| strategic | Learn how we use telemetry (we have just enabled it) all over your partner practice. This deck is built around the Telemetry Maturity Model. | [Using telemetry to improve your partner practices and processes.pptx](<./decks/Using telemetry to improve your partner practices and processes.pptx>) |
+| all over the business | Introduce telemetry to your organization | [AppInsights telemetry for Business Central partners.pptx](<./decks/AppInsights telemetry for Business Central partners.pptx>) |
+| as a trainer | Help partners/collegues get more data-driven with telemetry | [Hands-On Lab About Telemetry](<./decks/Hands-On Lab About Telemetry.pptx>) |
+| as a trainer/presenter | Include telemetry slides in your feature presentations (either for product features, but also for troubleshooting, performance, administration, ... )| [Telemetry Power BI app scenarios](<./decks/telemetry-app-scenarios.pptx>) |
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
