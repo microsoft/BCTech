@@ -30,6 +30,8 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 
+TODO
+* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 
 ------------------
 2023-05-03 release
