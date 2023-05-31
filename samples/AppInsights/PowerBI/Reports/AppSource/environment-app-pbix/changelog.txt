@@ -36,7 +36,6 @@ Ideas
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * update application areas with 22.0 new app features
-* Performance: (in 22.0/22.1) On page 'Long Running SQL', add a filter on isolationLevel 
 * Administration: New page on PTE validations signal
 * Add header tooltips (where appropriate)
 
@@ -50,6 +49,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
 * Performance: On pages 'Sessions', 'Pageviews', 'Reports', 'Long running SQL queries', 'Database Lock Timeouts', 'Long running AL methods', 'Incoming web service calls' and 'Outgoing web service calls' added overview section with AI visuals and top 10 avg. 
+* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 * Administration: New page (22.1) 'Cloud Migration'
 
 
