@@ -37,6 +37,6 @@ traces
 )
 // these three lines httpHeadersTmp, httpHeadersJSON, and msUserAgent 
 // illustrate how to extract data from the httpHeaders dimension
-| extend httpHeadersTmp =  tostring( customDimensions.httpHeaders)
+| extend httpHeadersTmp =  tostring( httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
-| extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
+| extend Authorization = tostring( httpHeadersJSON.['Authorization'] )
