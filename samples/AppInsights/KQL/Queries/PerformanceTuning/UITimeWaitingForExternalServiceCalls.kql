@@ -1,0 +1,17 @@
+// Kusto query that can show you how much users wait for outgoing web service calls to finish
+
+// Read more here: https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/performance/performance-developer#outgoing-web-service-calls-block-al-execution
+
+traces
+| where customDimensions has 'RT0019'
+| where customDimensions.clientType == 'WebClient'
+| project executionTimeInMs = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
+| summarize count() // how many calls
+, sum(executionTimeInMs) // sum of delays for UI sessions
+, avg(executionTimeInMs) // average waiting time by this app
+, max(executionTimeInMs) // average waiting time by this app
+by 
+// which app is calling out from the UI
+  extensionId = tostring( customDimensions.extensionId )
+, extensionName = tostring( customDimensions.extensionName )
+, extensionVersion = tostring( customDimensions.extensionVersion )
