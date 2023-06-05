@@ -26,14 +26,32 @@ traces
 , connector = case( 
 // ms-dyn-useragent=AzureConnector/1.0 Flow/1.0 DynamicsSmbSaas/1.0.0.0
 msUserAgent matches regex 'AzureConnector/(.)+Flow', 'Power Automate'
-// ['PowerBIConnector/1.0 PowerBI/1.0 Dynamics365BusinessCentral/1.1.5']
+//
+// ms-dyn-useragent="PowerBIConnector/1.0 " & Host & "/1.0 Dynamics365BusinessCentral/2.0.7"
+// where Host in ["PowerBIDesktop", "PowerQueryOnline", "Gateway", "PowerBI", "UnknownHost"]
+, msUserAgent matches regex 'PowerBIConnector/'
+  and msUserAgent matches regex 'PowerBIDesktop', 'Power BI (Desktop)'
+, msUserAgent matches regex 'PowerBIConnector/'
+  and msUserAgent matches regex 'PowerQueryOnline', 'PowerQuery Online'
+, msUserAgent matches regex 'PowerBIConnector/'
+  and msUserAgent matches regex 'Gateway', 'Power BI (Gateway)'
+, msUserAgent matches regex 'PowerBIConnector/'
+  and msUserAgent matches regex 'PowerBI', 'Power BI (Online)'
+, msUserAgent matches regex 'PowerBIConnector/'
+  and msUserAgent matches regex 'UnknownHost', 'Power BI (UnknownHost)'
+//
+// ms-dyn-useragent=['PowerBIConnector/1.0 PowerBI/1.0 Dynamics365BusinessCentral/1.1.5']
 , msUserAgent matches regex 'PowerBIConnector/', 'Power BI'
+//
 // ms-dyn-useragent=AzureConnector/1.0 PowerApps/3.20092.39 DynamicsSmbSaas/1.0.0.0
 , msUserAgent matches regex 'AzureConnector/(.)+PowerApps', 'PowerApps'
+//
 // ms-dyn-useragent=AzureConnector/1.0 LogicApps/3.20092.39 DynamicsSmbSaas/1.0.0.0
 , msUserAgent matches regex 'AzureConnector/(.)+LogicApps', 'LogicApps'
+//
 // ms-dyn-useragent=BusinessCentralLinkUnfurlingTeamsBot
 , msUserAgent has 'BusinessCentralLinkUnfurlingTeamsBot', 'Microsoft Teams'
+//
 // ms-dyn-useragent=TeamsIntegrationService
 , msUserAgent has 'TeamsIntegrationService', 'Microsoft Teams'
 , msUserAgent has 'AzureConnector', 'Unknown Azure connector'
