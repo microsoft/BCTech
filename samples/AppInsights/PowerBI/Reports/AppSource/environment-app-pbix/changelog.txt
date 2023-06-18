@@ -17,6 +17,14 @@ Pending teams
 * Job Queue errors/performance: add dimension alJobQueueObjectName and alJobQueueDescription (when available - pending app team bugfix)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
+* New API error signal (coming in 22.x in June 2023)
+        public const string APIMetadataInvalidEntity = "RT0033";
+        public const string APIMetadataInvalidControl = "RT0034";
+        public const string APIMetadataInvalidWebServiceRecord = "RT0035";
+        public const string APIMetadataInvalidMetaField = "RT0036";
+        public const string APIMetadataInvalidPage = "RT0037";
+        public const string APIMetadataConflictingNavigationProperties = "RT0038";
+        public const string APIMetadataInvalidWebServiceMetadata = "RT0039";
 
 
 -----
@@ -38,17 +46,19 @@ Ideas
 * update application areas with 22.0 new app features
 * Administration: New page on PTE validations signal
 * Add header tooltips (where appropriate)
-
+* Update Connector predicate
+* Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+* Dataset: On JobQueuePerformance, tuned data load and moved tenant info into its own dimension.
 * Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
 * Errors: On page ConnectorErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
-* Performance: On pages 'Sessions', 'Pageviews', 'Reports', 'Long running SQL queries', 'Database Lock Timeouts', 'Long running AL methods', 'Incoming web service calls' and 'Outgoing web service calls' added overview section with AI visuals and top 10 avg. 
+* Performance: On all pages, added overview section with AI visuals and top 10 avg. 
 * Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 * Administration: New page (22.1) 'Cloud Migration'
 
