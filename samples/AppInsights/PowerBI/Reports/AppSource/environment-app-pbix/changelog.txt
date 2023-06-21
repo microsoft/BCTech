@@ -26,6 +26,15 @@ Pending teams
         public const string APIMetadataConflictingNavigationProperties = "RT0038";
         public const string APIMetadataInvalidWebServiceMetadata = "RT0039";
 
+, 'RT0033'
+, 'RT0034'
+, 'RT0035'
+, 'RT0036'
+, 'RT0037'
+, 'RT0038'
+, 'RT0039'
+, 'RT0040'
+
 
 -----
 Ideas
@@ -53,12 +62,18 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+TBA
+
+
+------------------
+2023-06-22 release
+------------------
 * Dataset: On JobQueuePerformance, tuned data load and moved tenant info into its own dimension.
 * Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
 * Errors: On page ConnectorErrors, added new visual to show new OData error dimensions 'Failure Reason' and 'Diagnostic Message'
+* Performance: On all pages, added overview section with AI visuals and top 10 avg. 
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
-* Performance: On all pages, added overview section with AI visuals and top 10 avg. 
 * Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 * Administration: New page (22.1) 'Cloud Migration'
 
