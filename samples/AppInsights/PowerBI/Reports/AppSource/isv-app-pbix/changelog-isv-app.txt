@@ -10,6 +10,7 @@ Below, you can see
 Pending teams
 -------------
 * Usage: Add app id to Feature usage, Feature uptake (pending change in telemetry module)  
+* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 
 
 -----
@@ -20,18 +21,26 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
+* Update Connector predicate
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+TBA
+
+
+------------------
+2023-06-22 release
+------------------
+* Dataset: Tuned data load for ReportPerformance. Moved payload info (layout, report format/action, ..) into its own dimension. This will allow the app to load more reporting data (for bigger telemetry databases).
+* Dataset: New "Tenant / Environment / Type" hierarchy on Environment dimension
 * Errors: On page IncomingWebserviceErrors, added two new visuals. First one shows the new OData error dimensions 'Failure Reason' and 'Diagnostic Message'. The second one shows the User Agent set by the caller.
+* Performance: On all pages, added overview section with AI visuals and top 10 avg. 
 * Performance: On page 'Long Running AL', use new dimension exclusiveTime (this dimension was introduced in 21.6/22.0)
 * Performance: On page 'Incoming Web Service performance', added calculations on queue time (introduced in telemetry in v22)
 
-TODO
-* Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 
 ------------------
 2023-05-03 release
