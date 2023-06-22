@@ -62,7 +62,7 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-TBA
+* Dataset: New "Tenant / Environment / Type" hierarchy on Environment dimension
 
 
 ------------------
