@@ -1,5 +1,19 @@
 // KQL samples - Job Queue
 
+| where customDimensions has 'alJobQueueObjectDescription' 
+| distinct eventId= tostring(customDimensions.eventId)
+, extensionVersion=tostring( substring(customDimensions.extensionVersion,0,4) )
+
+eventId	extensionVersion
+AL0000E25	22.2
+AL0000E24	22.2
+AL0000E26	22.2
+AL0000HE7	22.2
+AL0000JRG	22.2
+AL0000FMG	22.2
+AL0000I49	22.2
+
+
 // Job queue entry enqueued (raw data)
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -14,7 +28,7 @@ traces
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
 , alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
-, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
 , alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
@@ -52,7 +66,7 @@ traces
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
 , alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
-, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStatus = iff( isempty(customDimensions.alJobQueueStatus), customDimensions.alJobQueueResult, customDimensions.alJobQueueStatus )
@@ -75,7 +89,7 @@ traces
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
 , alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
-, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 21.3
@@ -110,23 +124,34 @@ traces
 
 // Emitted when the "Run once (Foreground)" action is clicked in Job Queue Entries/Card pages
 // Used to see which JQs were run in the foreground specifically through the JQ pages
-// Introduced in v19.0
+// Introduced in v22.2
 // pending docs
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'AL0000FMG' // for performance
 | where customDimensions.eventId == 'AL0000FMG'
+// the AL0000FMG events are available from 22.2. In earlier versions, the event was not quite ready
+| where customDimensions.extensionVersion !startswith "19."   and 
+        customDimensions.extensionVersion !startswith "20."   and
+        customDimensions.extensionVersion !startswith "21."   and
+        customDimensions.extensionVersion !startswith "22.0." and 
+        customDimensions.extensionVersion !startswith "22.1."
 | project timestamp
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-// NB! dimension names will be changed in 22.x
-, alIsRecurring = customDimensions.alIsRecurring
-, alId = customDimensions.alId
-, alStatus = customDimensions.alStatus
-, alEarliestStartDateTime = customDimensions.alEarliestStartDateTime
-
+, alJobQueueEarliestStartDateTime = customDimensions.alJobQueueEarliestStartDateTime
+, alJobQueueId = customDimensions.alJobQueueId
+, alJobQueueIsRecurring = customDimensions.alJobQueueIsRecurring
+, alJobQueueMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun
+, alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription
+, alJobQueueObjectId = customDimensions.alJobQueueObjectId
+, alJobQueueObjectName = customDimensions.alJobQueueObjectName
+, alJobQueueObjectType = customDimensions.alJobQueueObjectType
+, alJobQueueScheduledTaskId = customDimensions.alJobQueueScheduledTaskId
+, alJobQueueStatus = customDimensions.alJobQueueStatus
 
 
 // Emitted when the JQ fails for the very last time before being set in `Error` state.
@@ -146,7 +171,7 @@ traces
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
 , alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
-, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
+, alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStacktrace = customDimensions.alJobQueueStacktrace
@@ -175,7 +200,7 @@ traces
 , ObjectId
 , ObjectType = customDimensions.alJobQueueObjectType
 , ObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
-, ObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
+, ObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
 , CodeOwnershipKey = case(
       ObjectId between (50000 .. 99999), 'ENVIRONMENT'
     , ObjectId between (1000000 .. 69999999), 'ISV_ONPREM'
