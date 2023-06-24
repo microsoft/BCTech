@@ -14,7 +14,6 @@ Pending teams
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Usage: New page (for 22.1) 'Onboarding'
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending app team changes to email telemetry)
-* Job Queue errors/performance: add dimension alJobQueueObjectName and alJobQueueDescription (when available - pending app team bugfix)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 * New API error signal (coming in 22.x in June 2023)
@@ -63,6 +62,8 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: New "Tenant / Environment / Type" hierarchy on Environment dimension
+* Errors: On page JobQueueErrors, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters. Introduced hierachy on object name/id/type/description. Changed exceptions visual to use a matrix visual.
+* Performance: On page JobQueuePerformance, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters
 
 
 ------------------
