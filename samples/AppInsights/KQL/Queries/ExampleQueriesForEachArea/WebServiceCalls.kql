@@ -32,3 +32,51 @@ traces
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
 | extend httpAuthorization = tostring( httpHeadersJSON.['Authorization'] ) // Authorization header (truncated) available from 17.3
+
+
+
+// Web service metadata error: The record with name <record name> was skipped.
+// available from 22.2
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions.eventId == "RT0035" 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, webServiceRecordName = customDimensions.webServiceRecordName
+, webServiceRecordId = customDimensions.webServiceRecordId
+
+
+// Web service metadata error: Table field name error, the page contaning the field with caption <caption> was skipped.
+// available from 22.2
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions.eventId == "RT0036" 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, metadataStack = customDimensions.metadataStack
+, metaFieldId = customDimensions.metaFieldId
+
+
+// Web service metadata warning: Multiple options while generation navigation property for tablerelation.
+// available from 22.2
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions.eventId == "RT0038" 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, otherNavigationProperties = customDimensions.otherNavigationProperties
+, pickedNavigationPropertyType = customDimensions.pickedNavigationPropertyType
+
+
+
+// Coming in 22.2 (June 2023)
+     //    public const string APIMetadataInvalidEntity = "RT0033";
+     //    public const string APIMetadataInvalidControl = "RT0034";
+     //    public const string APIMetadataInvalidPage = "RT0037";
+     //    public const string APIMetadataInvalidWebServiceMetadata = "RT0039";
