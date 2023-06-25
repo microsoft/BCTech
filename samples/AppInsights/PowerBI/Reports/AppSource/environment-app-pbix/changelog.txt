@@ -9,7 +9,7 @@ Below, you can see
 -------------
 Pending teams
 -------------
-* Usage: Add user telemetry id to page view pages and allow filters on this (when available in client telemetry)
+* Usage: Add user telemetry id to pageview pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Usage: New page (for 22.1) 'Onboarding'
@@ -64,6 +64,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: New "Tenant / Environment / Type" hierarchy on Environment dimension
 * Errors: On page JobQueueErrors, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters. Introduced hierachy on object name/id/type/description. Changed exceptions visual to use a matrix visual.
 * Performance: On page JobQueuePerformance, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters
+* Dataset: New web service metadata error signal (RT0035, RT0036, and RT0038)
 
 
 ------------------
