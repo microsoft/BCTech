@@ -18,6 +18,11 @@ rad.json
 
 samples/AdminCenterApi/PowerShell/lib
 
+# Power BI apps on telemetry data: ignore Dataset.pbix files as we only add the template files Dataset.pbit (without data) to GitHub
+samples/AppInsights/PowerBI/Reports/AppSource/environment-app-pbix/Dataset.pbix
+samples/AppInsights/PowerBI/Reports/AppSource/isv-app-pbix/Dataset.pbix
+
+
 # User-specific files
 *.suo
 *.user
