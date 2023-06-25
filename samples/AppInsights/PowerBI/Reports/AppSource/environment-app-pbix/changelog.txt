@@ -12,27 +12,24 @@ Pending teams
 * Usage: Add user telemetry id to pageview pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
-* Usage: New page (for 22.1) 'Onboarding'
 * Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending app team changes to email telemetry)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
+* Onboarding signal: need to change format of date dimensions to compute durations. Also, will this be emitted for ISVs?
 * New API error signal (coming in 22.x in June 2023)
         public const string APIMetadataInvalidEntity = "RT0033";
         public const string APIMetadataInvalidControl = "RT0034";
-        public const string APIMetadataInvalidWebServiceRecord = "RT0035";
-        public const string APIMetadataInvalidMetaField = "RT0036";
+DONE:   public const string APIMetadataInvalidWebServiceRecord = "RT0035";
+DONE:   public const string APIMetadataInvalidMetaField = "RT0036";
         public const string APIMetadataInvalidPage = "RT0037";
-        public const string APIMetadataConflictingNavigationProperties = "RT0038";
+DONE:   public const string APIMetadataConflictingNavigationProperties = "RT0038";
         public const string APIMetadataInvalidWebServiceMetadata = "RT0039";
-
 , 'RT0033'
 , 'RT0034'
-, 'RT0035'
-, 'RT0036'
 , 'RT0037'
-, 'RT0038'
 , 'RT0039'
 , 'RT0040'
+* Usage: New page (for 22.1) 'Onboarding' (KQL sample ready - need to change format of date dimensions)
 
 
 -----
@@ -65,6 +62,9 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page JobQueueErrors, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters. Introduced hierachy on object name/id/type/description. Changed exceptions visual to use a matrix visual.
 * Performance: On page JobQueuePerformance, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters
 * Dataset: New web service metadata error signal (RT0035, RT0036, and RT0038)
+
+WIP
+* Usage: New page (for 22.1) 'Onboarding' (KQL sample ready - need to change format of date dimensions)
 
 
 ------------------
