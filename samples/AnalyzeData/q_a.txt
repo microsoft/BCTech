@@ -1,0 +1,21 @@
+Is there a way to develop/collpase all groups in one click ?
+
+Can users run the Analysis on large tables? For example if they want to run some pivots on Customer Ledger Entries or Item Ledger
+
+Can we use all fields of the table to analyze or just the fields that are visible on the page?
+
+Can we drill-down into flow fields?
+
+Will we have a graph for the next release?
+
+Would it be possible to share a tab to other users ?
+
+Will you enable these views to be bookmarked on role centre?
+
+Will export to excel be added in the future to dump these out as pivot tables ?
+
+Will it ship to Production environments with BC22 (or does being in public preview until october 2023 mean it ships with BC23)? 
+
+Can Data analysis be also applied on PTE pages? 
+
+What are limitations (we know about 100000 lines but what else)?
