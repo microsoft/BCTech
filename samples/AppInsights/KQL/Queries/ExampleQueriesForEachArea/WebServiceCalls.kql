@@ -35,6 +35,9 @@ traces
 
 
 
+// Events RT0035-RT0039 are emitted when web service metadata is not right. 
+// Use them to troubleshoot web service endpoints with errors.
+
 // Web service metadata error: The record with name <record name> was skipped.
 // available from 22.2
 traces
@@ -46,7 +49,6 @@ traces
 , environmentType = customDimensions.environmentType
 , webServiceRecordName = customDimensions.webServiceRecordName
 , webServiceRecordId = customDimensions.webServiceRecordId
-
 
 // Web service metadata error: Table field name error, the page contaning the field with caption <caption> was skipped.
 // available from 22.2
