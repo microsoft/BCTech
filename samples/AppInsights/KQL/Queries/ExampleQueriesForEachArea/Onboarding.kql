@@ -1,8 +1,27 @@
 // KQL samples - Onboarding
 
 
-// Onboarding completed for criteria: {criteria}
-// Introduced in version 22.0
+// Onboarding Signal Started: <Criteria>
+// Introduced in version 22.2
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions has 'AL0000EIW'
+| where customDimensions.eventId == 'AL0000EIW'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+, alUserRole = customDimensions.alUserRole
+, alRegisterExtensionId = customDimensions.alRegisterExtensionId
+, alStartDate = customDimensions.alStartDate
+, alCriteriaId = customDimensions.alCriteriaId
+, alCriteriaName = customDimensions.alCriteriaName
+, usertelemetryId = user_Id
+
+
+// Onboarding Signal Completed: <criteria>
+// Introduced in version 22.2
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
 | where customDimensions has 'AL0000EIV'
@@ -11,23 +30,9 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-, alUserRole = customDimensions.alUserRole
-, alIsAdmin = customDimensions.alIsAdmin
-, alCallerAppVersion = customDimensions.alCallerAppVersion
-, alCallerPublisher = customDimensions.alCallerPublisher
-, alCallerAppName = customDimensions.alCallerAppName
-, alIsEvaluationCompany = customDimensions.alIsEvaluationCompany
-, alTenantLicenseState = customDimensions.alTenantLicenseState
-, alCountryCode = customDimensions.alCountryCode
-// missing dimension: alCriteria
+, alStartDate = customDimensions.alStartDate
+, alRegisterExtensionId = customDimensions.alRegisterExtensionId
+, alCriteriaId = customDimensions.alCriteriaId
+, alCompleteDate = customDimensions.alCompleteDate
+, alCriteriaName = customDimensions.alCriteriaName
 , usertelemetryId = user_Id
-
-
-// Onboarding Completed 
-// Introduced in version 22.x ?
-traces
-| where timestamp > ago(60d) // change if your retention policy is different than the default
-| where customDimensions has 'TODO'
-| where customDimensions.eventId == 'TODO'
-// onboardingTimeInHours ?
-
