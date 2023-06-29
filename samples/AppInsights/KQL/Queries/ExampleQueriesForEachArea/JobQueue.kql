@@ -23,6 +23,7 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueIsRecurring = customDimensions.alJobQueueIsRecurring 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
@@ -31,7 +32,7 @@ traces
 , alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
-, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 
 
 // Job queue entry started (raw data)
@@ -43,6 +44,7 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
 , alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
@@ -50,7 +52,7 @@ traces
 , alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.0 
 , alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
-, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 
 
 // Job queue entry finished (raw data)
@@ -62,18 +64,18 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
 , alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
 , alJobQueueObjectType = customDimensions.alJobQueueObjectType
 , alJobQueueObjectDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
-, alJobQueueStatus = customDimensions.alJobQueueStatus
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStatus = iff( isempty(customDimensions.alJobQueueStatus), customDimensions.alJobQueueResult, customDimensions.alJobQueueStatus )
 // , alJobQueueStatus = customDimensions.alJobQueueResult // prior to 20.0
 // , alJobQueueStatus = customDimensions.alJobQueueStatus // 20.0 or later
 , alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
-, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
  
 
 // Job queue entry failed (raw data)
@@ -85,6 +87,7 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
 , alJobQueueId = customDimensions.alJobQueueId 	
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId 	
 , alJobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
@@ -94,7 +97,7 @@ traces
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStacktrace = customDimensions.alJobQueueStacktrace // stack trace added in 21.3
 , alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
-, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 , taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
@@ -109,6 +112,7 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
 , alJobQueueCompanyName = customDimensions.alJobQueueCompanyName
 , alJobQueueEarliestStartDateTime = customDimensions.alJobQueueEarliestStartDateTime
 , alJobQueueIsRecurring = customDimensions.alJobQueueIsRecurring
@@ -119,7 +123,7 @@ traces
 , alJobQueueObjectId = customDimensions.alJobQueueObjectId
 , alJobQueueRescheduledNewTask = customDimensions.alJobQueueRescheduledNewTask
 , alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
-, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 
 
 // Emitted when the "Run once (Foreground)" action is clicked in Job Queue Entries/Card pages
@@ -176,7 +180,7 @@ traces
 , alJobQueueExecutionTimeInMs = customDimensions.alJobQueueExecutionTimeInMs
 , alJobQueueStacktrace = customDimensions.alJobQueueStacktrace
 , alJobQueueNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
-, alJobQueueMaxNumberOfAttemptsToRun.customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
+, alJobQueueMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
 , taskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
