@@ -18,7 +18,7 @@ traces
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
-, alStackTrace = customDimensions.alStackTrace // This dimension was introduced in Business Central 2022 release wave 1, version 20.1.
+, alStackTrace = customDimensions.alStackTrace // This dimension was introduced in Business Central 2022 release wave 2, version 21.3.
 , clientType = customDimensions.clientType // This dimension was introduced in Business Central 2022 release wave 2, version 21.4.
 , endpoint = customDimensions.endpoint
 , extensionId = customDimensions.extensionId
