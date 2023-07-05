@@ -60,8 +60,11 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: New web service metadata error signal (RT0035, RT0036, and RT0038)
 * Usage: New page (for 22.2) 'Onboarding'
 * Errors: On page JobQueueErrors, added dimensions alJobQueueObjectName and alJobQueueDescription to visuals and filters. Introduced a hierarchy on object name/id/type/description. Changed exceptions visual to use a matrix visual.
-* Performance: On page JobQueuePerformance, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters
+* Performance: On page JobQueuePerformance, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters. Introduced a hierarchy on object name/id/type/description.
 * Performance: On page Long Running AL, added visual on new dimensions sqlExecutes and sqlRowsRead and to filters
+
+TODO
+Usage: New page (for 22.2) 'Onboarding' - Fix broken measures
 
 
 ------------------
