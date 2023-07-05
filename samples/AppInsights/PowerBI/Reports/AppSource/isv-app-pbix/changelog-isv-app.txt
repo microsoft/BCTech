@@ -28,7 +28,9 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-TBA
+
+TODO
+* Performance: On page Long Running AL, added visual on new dimensions sqlExecutes and sqlRowsRead and to filters
 
 
 ------------------
