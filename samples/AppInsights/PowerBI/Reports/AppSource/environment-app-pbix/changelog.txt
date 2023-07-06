@@ -52,9 +52,16 @@ Ideas
 * Update Connector predicate
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 
+
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+------------------
+TBA
+
+
+------------------
+2023-07-06 release
 ------------------
 * Dataset: New "Tenant / Environment / Type" hierarchy on Environment dimension
 * Dataset: New web service metadata error signal (RT0035, RT0036, and RT0038)
@@ -62,9 +69,6 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: On page JobQueueErrors, added dimensions alJobQueueObjectName and alJobQueueDescription to visuals and filters. Introduced a hierarchy on object name/id/type/description. Changed exceptions visual to use a matrix visual.
 * Performance: On page JobQueuePerformance, added dimension alJobQueueObjectName and alJobQueueDescription to visuals and filters. Introduced a hierarchy on object name/id/type/description.
 * Performance: On page Long Running AL, added visual on new dimensions sqlExecutes and sqlRowsRead and to filters
-
-TODO
-Usage: New page (for 22.2) 'Onboarding' - Fix broken measures
 
 
 ------------------
