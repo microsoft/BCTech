@@ -21,7 +21,6 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
-* Update Connector predicate
 
 
 ------------------
@@ -29,6 +28,7 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 TBA
+* Update Connector predicate
 
 
 ------------------
