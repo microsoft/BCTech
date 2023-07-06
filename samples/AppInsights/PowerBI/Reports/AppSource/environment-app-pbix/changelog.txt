@@ -14,21 +14,8 @@ Pending teams
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
-* New API error signal (coming in 22.x in June 2023)
-        public const string APIMetadataInvalidEntity = "RT0033";
-        public const string APIMetadataInvalidControl = "RT0034";
-DONE:   public const string APIMetadataInvalidWebServiceRecord = "RT0035";
-DONE:   public const string APIMetadataInvalidMetaField = "RT0036";
-        public const string APIMetadataInvalidPage = "RT0037";
-DONE:   public const string APIMetadataConflictingNavigationProperties = "RT0038";
-        public const string APIMetadataInvalidWebServiceMetadata = "RT0039";
-, 'RT0033'
-, 'RT0034'
-, 'RT0037'
-, 'RT0039'
-, 'RT0040'
-* 22.3 - Usage: New page (for 22.1) 'Onboarding' (KQL sample ready - need to change format of date dimensions)
-* 22.3 - Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending email telemetry bug 463776)
+* Administration: New page on PTE validations signal (pending compiler team)
+
 
 -----
 Ideas
@@ -47,9 +34,7 @@ Ideas
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * update application areas with 22.0 new app features
-* Administration: New page on PTE validations signal
 * Add header tooltips (where appropriate)
-* Update Connector predicate
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 
 
@@ -57,7 +42,12 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+* Errors: New page 'Webservice metadata errors' (for data coming in 22.2)
+
 TBA
+* 22.3 - Usage: On page 'Onboarding' (need to change format of date dimensions)
+* 22.3 - Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending email telemetry bug 463776)
+* Update Connector predicate
 
 
 ------------------
