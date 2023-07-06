@@ -35,8 +35,37 @@ traces
 
 
 
-// Events RT0035-RT0039 are emitted when web service metadata is not right. 
+// Events RT0033-RT0039 are emitted when web service metadata is not right. 
 // Use them to troubleshoot web service endpoints with errors.
+
+// Web service metadata error: Name for subpage of parent page '{parentPageName}' is missing. Subpage is skipped.
+// available from 22.2
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions.eventId == "RT0033" 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, metadataStack = customDimensions.metadataStack
+, parentPageId = customDimensions.parentPageId
+, parentPageName = customDimensions.parentPageName
+, subPageEntityId = customDimensions.subPageEntityId
+
+
+// Web service metadata error: Control element with id {metadataObjectName} has a missing name. The page with the control was skipped.
+// available from 22.2
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions.eventId == "RT0034" 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, metadataStack = customDimensions.metadataStack
+, metadataObjectId = customDimensions.metadataObjectId
+, metadataObjectName = customDimensions.metadataObjectName
+
 
 // Web service metadata error: The record with name <record name> was skipped.
 // available from 22.2
@@ -47,8 +76,11 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, webServiceRecordName = customDimensions.webServiceRecordName
+, metadataStack = customDimensions.metadataStack
 , webServiceRecordId = customDimensions.webServiceRecordId
+, webServiceRecordName = customDimensions.webServiceRecordName
+
+
 
 // Web service metadata error: Table field name error, the page contaning the field with caption <caption> was skipped.
 // available from 22.2
@@ -61,6 +93,7 @@ traces
 , environmentType = customDimensions.environmentType
 , metadataStack = customDimensions.metadataStack
 , metaFieldId = customDimensions.metaFieldId
+, metaFieldCaption = customDimensions.metaFieldCaption
 
 
 // Web service metadata warning: Multiple options while generation navigation property for tablerelation.
@@ -72,13 +105,20 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, metadataStack = customDimensions.metadataStack
 , otherNavigationProperties = customDimensions.otherNavigationProperties
 , pickedNavigationPropertyType = customDimensions.pickedNavigationPropertyType
 
 
-
-// Coming in 22.2 (June 2023)
-     //    public const string APIMetadataInvalidEntity = "RT0033";
-     //    public const string APIMetadataInvalidControl = "RT0034";
-     //    public const string APIMetadataInvalidPage = "RT0037";
-     //    public const string APIMetadataInvalidWebServiceMetadata = "RT0039";
+// Web service metadata error: The record with name '{entityName}' was skipped.
+// available from 22.2
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions.eventId == "RT0039" 
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, metadataStack = customDimensions.metadataStack
+, errorDetails = customDimensions.errorDetails
+, entityName = customDimensions.entityName
