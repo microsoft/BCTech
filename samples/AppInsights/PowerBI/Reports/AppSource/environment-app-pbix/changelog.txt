@@ -42,12 +42,12 @@ Ideas
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+* Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
 * Errors: New page 'Webservice metadata errors' (for data coming in 22.2)
 
 TBA
 * 22.3 - Usage: On page 'Onboarding' (need to change format of date dimensions)
 * 22.3 - Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending email telemetry bug 463776)
-* Update Connector predicate
 
 
 ------------------
