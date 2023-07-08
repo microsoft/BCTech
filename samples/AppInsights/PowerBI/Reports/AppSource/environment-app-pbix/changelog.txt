@@ -12,6 +12,7 @@ Pending teams
 * Usage: Add user telemetry id to pageview pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
+* Usage: add license type on sessions page (pending bug fix from server team)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 * Administration: New page on PTE validations signal (pending compiler team)
@@ -20,11 +21,7 @@ Pending teams
 -----
 Ideas
 -----
-* Dataset: include list for event ids as a parameter
-* Dataset: Introduce new (advanced) parameter: partitions and maybe binsize
 * Usage: Feature uptake page
-* Usage: add license type on sessions page
-* Errors: Add recurring failing task scheduler/job queue jobs to recommendations
 * Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Errors: cross tenant comparisons of errors (is this normal?)
 * Errors: on 'Feature Errors' page, add top/bottom stacktrace visuals
@@ -44,6 +41,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
 * Errors: New page 'Webservice metadata errors' (for data coming in 22.2)
+* Errors: On page 'Job Queue Errors', improved guidance section, added cues to spot recurring failing job queue jobs and jobs that fail with non-retriable exceptions
 
 TBA
 * 22.3 - Usage: On page 'Onboarding' (need to change format of date dimensions)
