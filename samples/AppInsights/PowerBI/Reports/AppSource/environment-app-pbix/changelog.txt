@@ -32,7 +32,7 @@ Ideas
 * update application areas with 22.0 new app features
 * Add header tooltips (where appropriate)
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
-
+* refactor http codes to their own dimension
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
