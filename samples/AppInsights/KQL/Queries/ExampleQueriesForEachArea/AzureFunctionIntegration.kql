@@ -11,7 +11,7 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , clientType = customDimensions.alClientType
-, company = customDimensions.alCompany
+, companyName = customDimensions.companyName
 , isEvaluationCompany = customDimensions.alIsEvaluationCompany
 , tenantLicenseState = customDimensions.alTenantLicenseState
 , isAdmin = customDimensions.alIsAdmin
@@ -29,7 +29,7 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , clientType = customDimensions.alClientType
-, company = customDimensions.alCompany
+, companyName = customDimensions.companyName
 , isEvaluationCompany = customDimensions.alIsEvaluationCompany
 , tenantLicenseState = customDimensions.alTenantLicenseState
 , isAdmin = customDimensions.alIsAdmin
@@ -47,7 +47,7 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , clientType = customDimensions.alClientType
-, company = customDimensions.alCompany
+, companyName = customDimensions.companyName
 , isEvaluationCompany = customDimensions.alIsEvaluationCompany
 , tenantLicenseState = customDimensions.alTenantLicenseState
 , isAdmin = customDimensions.alIsAdmin
