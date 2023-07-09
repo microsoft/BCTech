@@ -39,9 +39,12 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
+* Dataset: Introduced URL dimension
 * Administration: 'Data in telemetry' page, updated with BCPT and cloud migration events
+* Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
 * Errors: New page 'Webservice metadata errors' (for data coming in 22.2)
 * Errors: On page 'Job Queue Errors', improved guidance section, added cues to spot recurring failing job queue jobs and jobs that fail with non-retriable exceptions
+* Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
 
 TBA
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet

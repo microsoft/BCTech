@@ -29,6 +29,102 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
 
+TBA
+* Dataset: Introduced URL dimension
+* Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
+* Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
+
+UrlDimQuery
+let
+includeString = Table.FirstValue(IncludeAsString),
+whereClauseTenant = if includeString = null then "" else ("| where TenantId in (" & includeString & ")"),
+whereClause = whereClauseTenant ,
+
+query="// UrlDimQuery
+traces
+| where timestamp >= ago(" & #"Lookback period" & "d)
+| where customDimensions has 'RT0019'
+| where customDimensions.eventId == 'RT0019'
+| where isnotempty(customDimensions.aadTenantId) // filter away signal from Docker sandboxes
+| extend TenantId = strcat( toupper(customDimensions.aadTenantId), toupper(customDimensions.environmentName) )" & whereClause & "
+| project url_json = parse_url( tostring(customDimensions.endpoint) )
+| extend Host = tostring(url_json.Host)
+, Path = tostring(url_json.Path)
+, Scheme = tostring(url_json.Scheme)
+| project-away url_json
+| distinct UrlHash = hash_md5( 
+strcat(
+  Scheme
+, Host
+, Path
+)
+)
+, Scheme
+, Host
+, Path"
+
+in
+    query
+
+
+EndpointQuerySnippet
+let
+    Source = "
+//
+| extend url_json = parse_url( tostring(customDimensions.endpoint) )
+| extend Host = tostring(url_json.Host)
+, Path = tostring(url_json.Path)
+, Scheme = tostring(url_json.Scheme)
+| project-away url_json
+| extend UrlHash = hash_md5( strcat(
+  Scheme = Scheme
+, Host = Host 
+, Path = Path 
+)
+)"
+
+in
+    Source
+
+
+
+OutgoingWebServiceCallPerformanceQuery/Errors
+... & whereClause
+& EndpointQuerySnippet 
+& "
+| summarize Count=count()
+...
+& "
+, UrlHash
+// loaded in UrlDim 
+// uncomment for manual analysis
+// , Host
+// , Path
+// , Scheme
+
+
+Remove host step
+
+Fix relations
+
+Fix 
+Integrations (ws calls in/out) = 
+
+var incoming = SELECTCOLUMNS(IncomingWebServiceCallPerformance, "timestamp", [timestamp], "Direction", "Incoming", "IsConnector", [IsConnector]
+, "Endpoint", [Endpoint], "Host", ""
+, "ExtensionHash", [ExtensionHash], "TenantHash", [TenantHash], "Count", [Count])
+
+var outgoing = SELECTCOLUMNS(OutgoingWebServiceCallPerformance, "timestamp", [timestamp], "Direction", "Outgoing", "IsConnector", FALSE()
+, "Endpoint", RELATED(UrlDim[Url]), "Host", RELATED(UrlDim[Host])
+, "ExtensionHash", [ExtensionHash], "TenantHash", [TenantHash], "Count", [Count])
+
+RETURN UNION(incoming, outgoing)
+
+
+Fix visuals
+Add filters
+
+
 
 ------------------
 2023-07-06 release
