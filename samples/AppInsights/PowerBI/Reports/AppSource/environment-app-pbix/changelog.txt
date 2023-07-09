@@ -29,7 +29,6 @@ Ideas
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
-* Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * update application areas with 22.0 new app features
 * Add header tooltips (where appropriate)
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
@@ -40,10 +39,12 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
+* Administration: 'Data in telemetry' page, updated with BCPT and cloud migration events
 * Errors: New page 'Webservice metadata errors' (for data coming in 22.2)
 * Errors: On page 'Job Queue Errors', improved guidance section, added cues to spot recurring failing job queue jobs and jobs that fail with non-retriable exceptions
 
 TBA
+* Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * 22.3 - Usage: On page 'Onboarding' (need to change format of date dimensions)
 * 22.3 - Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending email telemetry bug 463776)
 
