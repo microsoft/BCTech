@@ -28,8 +28,6 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
-
-TBA
 * Dataset: Introduced URL dimension
 * Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
 * Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
