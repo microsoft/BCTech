@@ -58,3 +58,5 @@ msUserAgent matches regex 'AzureConnector/(.)+Flow', 'Power Automate'
 , 'Unknown connector' 
 )
 | project timestamp, msUserAgent, httpStatusCode, aadTenantId, environmentName, environmentType, IsMsConnector, connector, endpoint, alObjectId, alObjectName, message
+
+
