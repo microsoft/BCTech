@@ -21,16 +21,126 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
-* refactor http codes to their own dimension
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
-* Dataset: Introduced URL dimension
+* Dataset: Introduced new dimensions for Urls and HTTP status codes
 * Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
-* Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
+* Performance: On page 'Incoming web service call performance', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
+* Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
+
+TBA
+* Errors: On page 'Incoming web service call errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
+* Errors: On all pages, added a nice banner in green if no errors are present.
+IncomingWSErrors
+OutgoingWSErrors
+ErrorDialogs
+ErrorMessageVotes?
+ExtensionLifecycleErrors
+FeatureErrors
+ReportErrors
+
+
+
+
+IncomingWSErrors - data to show = COUNTROWS( FILTER(IncomingWebServiceErrors, NOT(IncomingWebServiceErrors[IsMsConnector])) ) > 0
+
+IncomingWSErrors - banner color = IF('IncomingWebServiceErrors'[IncomingWSErrors - data to show],
+"#1C00ff00", // transparent
+"#2e8b57"    // green
+)
+
+IncomingWSErrors - banner text = IF(IncomingWebServiceErrors[IncomingWSErrors - data to show],
+"",
+"No data available to show here, so visuals are empty (this is great, no errors from incoming web services (not counting connector calls!)"
+)
+
+
+OutgoingWSErrors - data to show = COUNTROWS( OutgoingWebServiceErrors ) > 0
+
+OutgoingWSErrors - banner color = IF('OutgoingWebServiceErrors'[OutgoingWSErrors - data to show],
+"#1C00ff00", // transparent
+"#2e8b57"    // green
+)
+
+OutgoingWSErrors - banner text = IF(OutgoingWebServiceErrors[OutgoingWSErrors - data to show],
+"",
+"No data available to show here, so visuals are empty (this is great, no errors from outgoing web services!)"
+)
+
+
+ErrorDialogs - data to show = COUNTROWS( ErrorDialogs ) > 0
+
+ErrorDialogs - banner color = IF('ErrorDialogs'[ErrorDialogs - data to show],
+"#1C00ff00", // transparent
+"#2e8b57"    // green
+)
+
+ErrorDialogs - banner text = IF(ErrorDialogs[ErrorDialogs - data to show],
+"",
+"No data available to show here, so visuals are empty (this is great, no error dialogs shown to users!)"
+)
+
+
+ErrorMessageVotes - data to show = COUNTROWS( ErrorMessageVotes ) > 0
+
+ErrorMessageVotes - banner color = IF('ErrorMessageVotes'[ErrorMessageVotes - data to show],
+"#1C00ff00", // transparent
+"#2e8b57"    // green
+)
+
+ErrorMessageVotes - banner text = IF(ErrorMessageVotes[ErrorMessageVotes - data to show],
+"",
+"No data available to show here, so visuals are empty (this is great, no votes on error dialogs from users!)"
+)
+
+
+
+ExtensionLifecycleErrors - data to show = COUNTROWS( ExtensionLifecycleErrors ) > 0
+
+ExtensionLifecycleErrors - banner color = IF('ExtensionLifecycleErrors'[ExtensionLifecycleErrors - data to show],
+"#1C00ff00", // transparent
+"#2e8b57"    // green
+)
+
+ExtensionLifecycleErrors - banner text = IF(ExtensionLifecycleErrors[ExtensionLifecycleErrors - data to show],
+"",
+"No data available to show here, so visuals are empty (this is great, no errors on extension lifecycle events (install/update/delete) !)"
+)
+
+
+FeatureErrors - data to show = COUNTROWS( FeatureErrors ) > 0
+
+FeatureErrors - banner color = IF('FeatureErrors'[FeatureErrors - data to show],
+"#1C00ff00", // transparent
+"#2e8b57"    // green
+)
+
+FeatureErrors - banner text = IF(FeatureErrors[FeatureErrors - data to show],
+"",
+"No data available to show here, so visuals are empty (this is great, no errors on features (that emit feature telemetry)!)"
+)
+
+
+ReportErrors - data to show = COUNTROWS( ReportErrors ) > 0
+
+ReportErrors - banner color = IF('ReportErrors'[ReportErrors - data to show],
+"#1C00ff00", // transparent
+"#2e8b57"    // green
+)
+
+ReportErrors - banner text = IF(ReportErrors[ReportErrors - data to show],
+"",
+"No data available to show here, so visuals are empty (this is great, no errors on reports!)"
+)
+
+
+
+
 
 
 ------------------
