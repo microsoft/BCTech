@@ -41,6 +41,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
 * Dataset: Introduced new dimensions for Urls and HTTP status codes
 * Administration: 'Data in telemetry' page, updated with BCPT and cloud migration events
+* Errors: On all pages, added a nice banner in green if no errors are present.
 * Errors: On page 'Connector errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 * Errors: On page 'Incoming web service call errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. Also now ships a nice banner in green if no errors are present.
 * Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
@@ -49,15 +50,8 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
 * Performance: On page 'Incoming web service call performance', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 
-NB! remember to change query for Incoming web service call errors
 
 TBA
-* Errors: On all pages, added a nice banner in green if no errors are present.
-Pending
-Authentication (web service key) errors
-Email Errors
-
-
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * 22.3 - Usage: On page 'Onboarding' (need to change format of date dimensions)
 * 22.3 - Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending email telemetry bug 463776)
