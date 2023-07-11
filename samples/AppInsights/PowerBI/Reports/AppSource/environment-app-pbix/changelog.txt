@@ -32,6 +32,7 @@ Ideas
 * update application areas with 22.0 new app features
 * Add header tooltips (where appropriate)
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
+* Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 
 
 ------------------
@@ -50,9 +51,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
 * Performance: On page 'Incoming web service call performance', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 
-
 TBA
-* Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * 22.3 - Usage: On page 'Onboarding' (need to change format of date dimensions)
 * 22.3 - Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending email telemetry bug 463776)
 
