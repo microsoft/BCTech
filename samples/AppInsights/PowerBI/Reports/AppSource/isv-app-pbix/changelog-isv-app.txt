@@ -9,7 +9,6 @@ Below, you can see
 -------------
 Pending teams
 -------------
-* Usage: Add app id to Feature usage, Feature uptake (pending change in telemetry module)  
 * Performance: (in 22.0/22.1) On page 'Database lock timeouts', added isolationLevel to SQL visual
 
 
@@ -21,6 +20,12 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
+* (pending test data) Errors: on page FeatureErrors, data can now be filtered with the global page filters, refactor to use callstack dimension and add top/bottom parsing visuals (pending test data)
+* (pending 4 tasks below) Usage: Add global page filters on AppDim. Remove page specific filters.
+* Usage: make 'Page views' page filter on AppDim
+* Usage: make 'Locations' page filter on AppDim
+* Usage: make 'Clients' page filter on AppDim
+* Usage: make 'MAT/WAT/DAT' page filter on AppDim
 
 
 ------------------
@@ -29,11 +34,15 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
 * Dataset: Introduced new dimensions for Urls and HTTP status codes
+* Usage: On page 'Feature Usage', data can now be filtered with the global page filters on the top of the page
 * Errors: On all pages, added a nice banner in green if no errors are present.
 * Errors: On page 'Incoming web service call errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 * Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
 * Performance: On page 'Incoming web service call performance', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 * Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
+
+
+NB! change data connection before going live
 
 
 ------------------
