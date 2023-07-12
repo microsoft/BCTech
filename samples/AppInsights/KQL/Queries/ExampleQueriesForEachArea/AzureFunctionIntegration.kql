@@ -16,6 +16,10 @@ traces
 , tenantLicenseState = customDimensions.alTenantLicenseState
 , isAdmin = customDimensions.alIsAdmin
 , countryCode = customDimensions.alCountryCode
+, appId = customDimensions.alCallerAppId
+, appPublisher = customDimensions.alCallerPublisher
+, appName = customDimensions.alCallerAppName
+, appVersion = customDimensions.alCallerAppVersion
 , requestStatusCode = customDimensions.alStatusCode
 , functionHost = customDimensions.alFunctionHost
 
@@ -34,6 +38,10 @@ traces
 , tenantLicenseState = customDimensions.alTenantLicenseState
 , isAdmin = customDimensions.alIsAdmin
 , countryCode = customDimensions.alCountryCode
+, appId = customDimensions.alCallerAppId
+, appPublisher = customDimensions.alCallerPublisher
+, appName = customDimensions.alCallerAppName
+, appVersion = customDimensions.alCallerAppVersion
 , requestStatusCode = customDimensions.alStatusCode
 , functionHost = customDimensions.alFunctionHost
 
@@ -52,5 +60,9 @@ traces
 , tenantLicenseState = customDimensions.alTenantLicenseState
 , isAdmin = customDimensions.alIsAdmin
 , countryCode = customDimensions.alCountryCode
+, appId = customDimensions.alCallerAppId
+, appPublisher = customDimensions.alCallerPublisher
+, appName = customDimensions.alCallerAppName
+, appVersion = customDimensions.alCallerAppVersion
 , errorText = customDimensions.alErrorText
 , functionHost = customDimensions.alFunctionHost
