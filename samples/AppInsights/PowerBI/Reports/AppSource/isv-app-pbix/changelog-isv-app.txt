@@ -26,6 +26,7 @@ Ideas
 * Usage: make 'Locations' page filter on AppDim
 * Usage: make 'Clients' page filter on AppDim
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
+* Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 
 
 ------------------

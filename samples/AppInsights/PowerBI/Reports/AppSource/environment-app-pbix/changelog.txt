@@ -34,6 +34,7 @@ Ideas
 * Add header tooltips (where appropriate)
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
+* Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 
 
 ------------------
@@ -43,14 +44,14 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
 * Dataset: Introduced new dimensions for Urls and HTTP status codes, added apps from AL telemetry to AppDim
 * Usage: On page 'Feature Usage', data can now be filtered with filters from the AppDim dimension
-* Usage: On page 'Feature Errors', data can now be filtered with filters from the AppDim dimension
 * Errors: On all pages, added a nice banner in green if no errors are present.
 * Errors: New page showing Azure Function failures
+* Errors: New page 'Webservice metadata errors' (for data coming in 22.2)
 * Errors: On page 'Connector errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 * Errors: On page 'Incoming web service call errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. Also now ships a nice banner in green if no errors are present.
 * Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
-* Errors: New page 'Webservice metadata errors' (for data coming in 22.2)
 * Errors: On page 'Job Queue Errors', improved guidance section, added cues to spot recurring failing job queue jobs and jobs that fail with non-retriable exceptions
+* Errors: On page 'Feature Errors', data can now be filtered with filters from the AppDim dimension
 * Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
 * Performance: On page 'Incoming web service call performance', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 * Administration: 'Data in telemetry' page, updated with BCPT and cloud migration events
