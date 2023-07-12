@@ -33,16 +33,14 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
-* Dataset: Introduced new dimensions for Urls and HTTP status codes
+* Dataset: Introduced new dimensions for Urls and HTTP status codes, added apps from AL telemetry to AppDim 
 * Usage: On page 'Feature Usage', data can now be filtered with the global page filters on the top of the page
 * Errors: On all pages, added a nice banner in green if no errors are present.
 * Errors: On page 'Incoming web service call errors', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 * Errors: On page 'Outgoing web service call errors', added filters on host and url, now using UrlDimension (so slightly faster data loading), changed 'errors by error type' visual to matrix
+* Errors: On page 'Feature Errors', data can now be filtered with filters from the AppDim dimension
 * Performance: On page 'Incoming web service call performance', added filters on HTTP status type and HTTP status error, added new visuals to show call (HTTP) status statistics and details. 
 * Performance: On page 'Outgoing web service call performance', added filters on host and url, now using UrlDimension (so slightly faster data loading), added new visuals to show call (HTTP) status statistics and details. 
-
-
-NB! change data connection before going live
 
 
 ------------------
