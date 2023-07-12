@@ -56,7 +56,6 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration: 'Data in telemetry' page, updated with BCPT and cloud migration events
 
 TBA
-
 * 22.3 - Usage: On page 'Onboarding' (need to change format of date dimensions)
 * 22.3 - Errors: On page 'email errors' page, add visuals for top/bottom of AL call stack (pending email telemetry bug 463776)
 
