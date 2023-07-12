@@ -1,31 +1,29 @@
 // KQL samples - Page Views (client usage)
 
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
-
 // Page views (RAW data)
 pageViews
-| where timestamp > ago(7d)
-| extend
-  aadTenantId = customDimensions.aadTenantId
+| where timestamp > ago(7d) // adjust as needed
+| parse kind=regex client_Browser with browserName:string ' ' browserVersion:string
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
+, appId = customDimensions.appId
+, appName = customDimensions.appName
+, appPublisher = customDimensions.appPublisher
+, appVersion = customDimensions.appVersion
 , clientType = customDimensions.clientType
 , companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, deprecatedKeys = customDimensions.deprecatedKeys
 , designerLevel = customDimensions.designerLevel
 , deviceLocale = customDimensions.deviceLocale
 , deviceScreenResolution = customDimensions.deviceScreenResolution
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, eventId = customDimensions.eventID // note that this is different from other signal
+, eventId = iff(isempty(customDimensions.eventId), customDimensions.eventID, customDimensions.eventId) // eventID is deprecated. Use eventId instead
 , expandedFastTabs = customDimensions.expandedFastTabs
 , factboxExpanded = customDimensions.factboxExpanded
 , hostType = customDimensions.hostType
-, message = customDimensions.message
 , pageIsModal = customDimensions.pageIsModal
 , pageMode = customDimensions.pageMode
 , pageType = customDimensions.pageType
