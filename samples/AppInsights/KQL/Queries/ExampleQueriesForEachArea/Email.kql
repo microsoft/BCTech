@@ -41,7 +41,7 @@ traces
 
 // Authenticated to SMTP server
 // Docs pending
-// Introduced in version x.y
+// Introduced in version 22.3
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'AL0000GKK' // performance
@@ -52,16 +52,13 @@ traces
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
-, alAuthenticated = customDimensions.alAuthenticated // localized (maybe not so useful)
-, usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
-, 'N/A'
-)
+, authenticated = customDimensions.alAuthenticated 
+, usertelemetryId = user_Id // user telemetry id was introduced in the platform in version 20.0
+
 
 // Connected to SMTP server.
 // Docs pending
-// Introduced in version x.y
+// Introduced in version 22.3
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'AL0000GKJ' // performance
@@ -72,12 +69,9 @@ traces
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
-, alConnected = customDimensions.alConnected // localized (maybe not so useful)
-, usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
-, 'N/A'
-)
+, alConnected = customDimensions.alConnected 
+, usertelemetryId = user_Id // user telemetry id was introduced in the platform in version 20.0
+  
 
 // Email sent
 // Docs pending
