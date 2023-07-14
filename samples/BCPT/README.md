@@ -10,7 +10,6 @@ To get you started quickly, open source scenario code is available here: https:/
 
 Did you know that it is possible to run BCPT scenario runs in AL-Go for GitHub? See https://github.com/microsoft/AL-Go/blob/main/RELEASENOTES.md#new-workflow-create-new-performance-test-app:~:text=New%20workflow%3A%20Create%20new%20Performance%20Test%20App
 
-
 # How can I use the Performance Toolkit?
 Once installed and configured, how can you use the tool? We identified four different personas as described in this table:
 
@@ -38,15 +37,21 @@ In the following table, you'll find examples of scenarios for each persona where
 | Supporter | Analyze performance issues due to locking or deadlocks | Similar to the developer scenario for concurrency testing. If you are lucky, scenario codeunits are already available on GitHub. |
 
 
+# How can I analyze BCPT data?
+If you have enabled environment telemetry, then you get signal about Performance Toolkit runs and scenarios. See more here: 
+https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-performance-toolkit-trace
+
+The telemetry data emitted from the Performance Toolkit can be analyzed using the Power BI Performance report:
+![Performance Toolkit report in PBI](images/bcpt-pbi-report.png)
+
+You can also analyze this data directly with KQL, see sample code here: https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/ExampleQueriesForEachArea/PerformanceToolkit.kql
+
 
 
 # What Power Point presentations are available?
 To make it easier to adopt BCPT, we added a number of Power Point presentations that you can use for various situations.
 
-| Your role is... | You want to... | Use this deck (click and then download) |
-| --------------- | ---------------| ------------- |
-| as a trainer | Help partners/customers/colleagues get started with Performance Analysis (maybe do a lunch session or present at a conference) | [Troubleshooting performance in Business Central Online.pptx](<./presentations/decks/2023-directions-NA-Troubleshooting performance in Business Central Online.pptx>) |
-
+For more information, see [Powerpoint presentations](./presentations/README.md)
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
