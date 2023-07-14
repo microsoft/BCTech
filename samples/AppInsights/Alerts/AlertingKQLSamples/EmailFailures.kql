@@ -1,0 +1,22 @@
+// Use a query like this as a condition in an alert on when emails are not sent.
+
+traces
+| where timestamp > ago(1d) // adjust as needed
+| where  customDimensions.eventId == 'AL0000CTP'
+     or (customDimensions.eventId == 'AL0000GKK' and customDimensions.alAuthenticated == 'No')
+     or (customDimensions.eventId == 'AL0000GKJ' and customDimensions.alConnected == 'No')
+     or (customDimensions.eventId == 'AL0000GKL' and customDimensions.alSent == 'No')
+| extend EventId = customDimensions.eventId     
+| summarize count() by
+  aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, environmentType = tostring( customDimensions.environmentType )
+, companyName = tostring( customDimensions.companyName )
+, clientType = tostring( customDimensions.clientType )
+, ErrorType = case (
+  EventId == 'AL0000CTP', 'Other'
+, EventId == 'AL0000GKK', 'SMTP authentication'
+, EventId == 'AL0000GKJ', 'SMTP connection'
+, EventId == 'AL0000GKL', 'SMTP email'
+, 'Unknown'
+)

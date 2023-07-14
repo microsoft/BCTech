@@ -40,7 +40,6 @@ traces
 
 
 // Authenticated to SMTP server
-// Docs pending
 // Introduced in version 22.3
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -57,7 +56,6 @@ traces
 
 
 // Connected to SMTP server.
-// Docs pending
 // Introduced in version 22.3
 traces
 | where timestamp > ago(60d) // adjust as needed
@@ -74,8 +72,7 @@ traces
   
 
 // Email sent
-// Docs pending
-// Introduced in version x.y
+// Introduced in version 22.3
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'AL0000GKL' // performance
@@ -87,8 +84,4 @@ traces
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
 , alSent = customDimensions.alSent // localized (maybe not so useful)
-, usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
-, 'N/A'
-)
+, usertelemetryId = user_Id // user telemetry id was introduced in the platform in version 20.0
