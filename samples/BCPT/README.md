@@ -40,7 +40,7 @@ To make it easier to adopt BCPT, we added a number of Power Point presentations 
 
 | Your role is... | You want to... | Use this deck (click and then download) |
 | --------------- | ---------------| ------------- |
-| as a trainer | Help partners/customers/colleagues get started with Performance Analysis (maybe do a lunch session or present at a conference) | [Troubleshooting performance in Business Central Online.pptx](<./presentations/decks/2023-directions-NA-Troubleshooting performance in Business Central Online>) |
+| as a trainer | Help partners/customers/colleagues get started with Performance Analysis (maybe do a lunch session or present at a conference) | [Troubleshooting performance in Business Central Online.pptx](<./presentations/decks/2023-directions-NA-Troubleshooting performance in Business Central Online.pptx>) |
 
 
 # Disclaimer
