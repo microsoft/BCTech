@@ -19,7 +19,7 @@ Once installed and configured, how can you use the tool? We identified four diff
 | Developer | Person who writes AL code. |
 | Operations manager | Person responsible for running Business Central environments for customers. |
 
-
+<br>
 In the following table, you'll find examples of scenarios for each persona where the app might be of help.
 
 | Persona | Scenario | How the Performance Toolkit can help |
