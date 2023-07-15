@@ -12,10 +12,13 @@ Yes, it is possible to run BCPT scenario runs in AL-Go for GitHub. See https://g
 ## Do you have sample code for scenarios?
 Yes, to get you started quickly, open source scenario code is available here: https://github.com/microsoft/ALAppExtensions/tree/main/Other/Tests/BCPT-SampleTests
 
-## How can I analyze BCPT data?
-If you have enabled environment telemetry, then you get signal about Performance Toolkit runs and scenarios. See more here: 
-https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-performance-toolkit-trace
+## What does it cost?
+The Performance Toolkit is free to download and use.
 
+## Can I get telemetry for BCPT runs?
+Yes, if you have enabled telemetry on your test environment, you get telemetry when BCPT runs start/complete and when scenarios complete (including measurements). See more at [Analyzing Performance Toolkit Telemetry](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-performance-toolkit-trace)
+
+## How can I analyze BCPT data?
 The telemetry data emitted from the Performance Toolkit can be analyzed using the Power BI Performance report:
 ![Performance Toolkit report in PBI](images/bcpt-pbi-report.png)
 
@@ -26,6 +29,10 @@ To make it easier to adopt BCPT, we added a number of Power Point presentations 
 
 For more information, see [Powerpoint presentations](./presentations/README.md)
 
+## I want to learn about BCPT. Where are the blogs?
+Please visit the [BCPT video page](VIDEOS.md) for learning resources published as videos if you love to learn things this way.
+
+Please visit the [BCPT blogs page](BLOGS.md) for learning resources published as blogs if blogs is your thing.
 
 
 # Disclaimer

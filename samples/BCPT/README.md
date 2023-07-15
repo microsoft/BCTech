@@ -1,15 +1,6 @@
 # What is the Business Central Performance Toolkit (BCPT)?
 In short, the Business Central Performance Toolkit lets you simulate concurrent usage of realistic scenarios with many users. 
 
-Read more about BCPT here: [The Performance Toolkit Extension](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-performance-toolkit)
-
-Get the Performance Toolkit AL extension from Appsource here: 
-https://appsource.microsoft.com/en-GB/product/dynamics-365-business-central/PUBID.microsoftdynsmb%7CAID.75f1590f-55c5-4501-ae63-bada5534e852%7CPAPPID.75f1590f-55c5-4501-ae63-bada5534e852?tab=Overview
-
-To get you started quickly, open source scenario code is available here: https://github.com/microsoft/ALAppExtensions/tree/main/Other/Tests/BCPT-SampleTests
-
-Did you know that it is possible to run BCPT scenario runs in AL-Go for GitHub? See https://github.com/microsoft/AL-Go/blob/main/RELEASENOTES.md#new-workflow-create-new-performance-test-app:~:text=New%20workflow%3A%20Create%20new%20Performance%20Test%20App
-
 # How can I use the Performance Toolkit?
 Once installed and configured, how can you use the tool? We identified four different personas as described in this table:
 
@@ -47,11 +38,26 @@ The telemetry data emitted from the Performance Toolkit can be analyzed using th
 You can also analyze this data directly with KQL, see sample code here: https://github.com/microsoft/BCTech/blob/master/samples/AppInsights/KQL/Queries/ExampleQueriesForEachArea/PerformanceToolkit.kql
 
 
-
 # What Power Point presentations are available?
 To make it easier to adopt BCPT, we added a number of Power Point presentations that you can use for various situations.
 
 For more information, see [Powerpoint presentations](./presentations/README.md)
+
+
+# Performance Toolkit (BCPT) FAQ (Frequently Asked Questions)
+We have assembled an FAQ on all things you might want to ask about the Performance Toolkit. See more here: [Performance Toolkit FAQ](FAQ.md)
+
+
+# I want to learn more about the Performance Toolkit
+Read more about BCPT here: [The Performance Toolkit Extension](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-performance-toolkit)
+
+Get the Performance Toolkit AL extension from Appsource here: 
+https://appsource.microsoft.com/en-GB/product/dynamics-365-business-central/PUBID.microsoftdynsmb%7CAID.75f1590f-55c5-4501-ae63-bada5534e852%7CPAPPID.75f1590f-55c5-4501-ae63-bada5534e852?tab=Overview
+
+To get you started quickly, open source scenario code is available here: https://github.com/microsoft/ALAppExtensions/tree/main/Other/Tests/BCPT-SampleTests
+
+Did you know that it is possible to run BCPT scenario runs in AL-Go for GitHub? See https://github.com/microsoft/AL-Go/blob/main/RELEASENOTES.md#new-workflow-create-new-performance-test-app:~:text=New%20workflow%3A%20Create%20new%20Performance%20Test%20App
+
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
