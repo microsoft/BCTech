@@ -67,6 +67,7 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Performance Toolkit | 2022 release wave 2 (21.3) | KQL sample ready, pending link to docs |
 
 
+# Business Central Telemetry Timeline
 ```mermaid
 timeline
     title History of Business Central Telemetry by Area
