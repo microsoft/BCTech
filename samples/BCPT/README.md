@@ -75,6 +75,20 @@ The performance toolkit has a number of terms and their definitions that might m
 
 ```mermaid
 erDiagram
+    "Test suite" {
+        string code
+        string description
+        string tag
+
+    }
+    "Test scenario" {
+        string "scenario name"
+    }
+    "Test scenario result" {
+        string "scenario name"
+        int "number of SQL statements"
+        int "duration (in milliseconds)"
+    }
     "Test suite" ||--o{ "Test codenit" : includes
     "Test codenit" ||--o{ "Test scenario" : contains
     "Test suite" ||--o{ "Test suite run" : "can be run "
