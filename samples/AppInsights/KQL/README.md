@@ -67,6 +67,53 @@ Signal is added incrementally to Business Central. In this table you can see in 
 | Performance Toolkit | 2022 release wave 2 (21.3) | KQL sample ready, pending link to docs |
 
 
+```mermaid
+timeline
+    title History of Business Central Telemetry by Area
+    2019 release wave 2 (v15) : Long running operation (SQL query)
+    : Authorization
+    2020 release wave 1 (v16) : Web Service Request (incoming)
+    : Report Execution
+    : Company lifecycle
+    : Upgrade errors
+    : Database lock timeouts
+    : Extension lifecycle
+    : Client page views
+    2020 release wave 2 (v17): Web Service Request (outgoing)
+    : App Key Vault
+    : Long Running AL
+    : Sensitive Field Monitoring
+    : Retention Policy
+    : Job Queue
+    : Permission changes
+    : Configuration Packages
+    : Email
+    : Web Service Key Authentication
+    2021 release wave 1 (v18): Index/Key lifecycle
+    : Upgrade tags
+    : Appsource validation
+    2021 release wave 2 (v19): Feature Telemetry
+    : Task Scheduler
+    2022 release wave 1 (v20): Database deadlocks
+    : Database wait statistics
+    : Verbose telemetry usage
+    : Error dialogs
+    : Error message votes
+    : Environment lifecycle and configuration changes
+    : User checklist lifecycle
+    : Permission error dialogs
+    : Session stops
+    2022 release wave 2 (v21): Azure function integration
+    : Performance Toolkit
+    : Profile Configuration Lifecycle
+    2023 release wave 1 (v22): Data analysis enabled
+    : Feature Management
+    : Cloud migration
+    : Onboarding
+    : Web service publish failures
+```
+
+
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
 
