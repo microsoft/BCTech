@@ -73,6 +73,15 @@ The performance toolkit has a number of terms and their definitions that might m
 | Test suite baseline (run) | A test suite baseline is simply a scenario run that you choose to be the one you want to compare other runs with. | 
 
 
+```mermaid
+erDiagram
+    "Test suite" ||--o{ "Test codenit" : includes
+    "Test codenit" ||--o{ "Test scenario" : contains
+    "Test suite" ||--o{ "Test suite run" : "can be run "
+    "Test suite run" ||--o{ "Test scenario result" : "results in"
+    "Test scenario result" ||--o{ "Test scenario" : measure
+```
+
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
