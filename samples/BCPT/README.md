@@ -58,6 +58,21 @@ To get you started quickly, open source scenario code is available here: https:/
 
 Did you know that it is possible to run BCPT scenario runs in AL-Go for GitHub? See https://github.com/microsoft/AL-Go/blob/main/RELEASENOTES.md#new-workflow-create-new-performance-test-app:~:text=New%20workflow%3A%20Create%20new%20Performance%20Test%20App
 
+# Performance Toolkit Terms and definitions
+
+The performance toolkit has a number of terms and their definitions that might make it easier for your to understand how everything fits together. 
+
+| Term | Definition | 
+| ---- | -----------| 
+| Test suite | A suite is a configuration of which test codeunits to run and, if applicable, with what parameters. Also how many concurrent sessions you want to simulate for each test, and the duration of the scenario. | 
+| Test suite tag | You can change the _tag_ for a test suite before running it. If you do this, you can compare test results between tags for different configurations of the environment or suite. For example, you might want to compare the performance of your scenarios with/without a given extension, or compare the performance of your scenarios across two versions of an extension, or or compare the performance of your scenarios with different values of test codeunit parameters (e.g. to see how performance changes with number of lines: 1, 10, 100, 1000). | 
+| Test codeunit | Test codeunits are the containers of test scenarios. | 
+| Test codeunit parameter | Test codeunits can use parameters. This is useful when you want to be able to change certain behavior of your tests. For example, you might want to change the number of sales lines you add to a sales order. | 
+| Test scenario | Within a test codeunit, developers can define _test scenarios_ using the StartScenario/EndScenario functions. The text used in these scenarios are logged to telemetry and the test log together with the context of how the test codeunit was running.| 
+| Test suite run | Each time you run a test suite, results are logged with a version number. You can use these version number to compare results for different configurations of the environment or suite. For example, you might want to compare the performance of your scenarios with/without a given extension, or compare the performance of your scenarios across two versions of an extension, or or compare the performance of your scenarios with different values of test codeunit parameters (e.g. to see how performance changes with number of lines: 1, 10, 100, 1000). |
+| Test suite baseline (run) | A test suite baseline is simply a scenario run that you choose to be the one you want to compare other runs with. | 
+
+
 
 # Disclaimer
 Microsoft Corporation (“Microsoft”) grants you a nonexclusive, perpetual, royalty-free right to use and modify the software code provided by us for the purposes of illustration  ("Sample Code") and to reproduce and distribute the object code form of the Sample Code, provided that you agree: (i) to not use our name, logo, or trademarks to market your software product in which the Sample Code is embedded; (ii) to include a valid copyright notice on your software product in which the Sample Code is embedded; and (iii) to indemnify, hold harmless, and defend us and our suppliers from and against any claims or lawsuits, whether in an action of contract, tort or otherwise, including attorneys’ fees, that arise or result from the use or distribution of the Sample Code or the use or other dealings in the Sample Code. Unless applicable law gives you more rights, Microsoft reserves all other rights not expressly granted herein, whether by implication, estoppel or otherwise. 
