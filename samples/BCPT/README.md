@@ -82,12 +82,12 @@ erDiagram
 
     }
     "Test scenario" {
-        string "scenario name"
+        string scenario_name
     }
     "Test scenario result" {
-        string "scenario name"
-        int "number of SQL statements"
-        int "duration (in milliseconds)"
+        string scenario_name
+        int number_of_SQL_statements
+        int duration_in_milliseconds
     }
     "Test suite" ||--o{ "Test codenit" : includes
     "Test codenit" ||--o{ "Test scenario" : contains
