@@ -262,7 +262,17 @@ traces
 , message
 
 
-
+// Diagnostic reported on AppSource submission validation request: {validationRequestId}
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'LC0038' 
+| project timestamp 
+, requestId = customDimensions.validationRequestId
+, diagnosticCode = customDimensions.diagnosticCode
+, diagnosticMessage = customDimensions.diagnosticMessage
+, diagnosticSeverity = customDimensions.diagnosticSeverity
+, containsHotfix = customDimensions.containsHotfix
+, message
 
 
 
