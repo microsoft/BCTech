@@ -6,9 +6,9 @@ traces
 | where customDimensions has 'AL0000CTV' // performance
 | where customDimensions.eventId == 'AL0000CTV'
 | project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, environmentType = tostring( customDimensions.environmentType )
 , alEmailMessageID = customDimensions.alEmailMessageID
 , alConnector = customDimensions.alConnector
 , usertelemetryId = case(
@@ -24,9 +24,9 @@ traces
 | where customDimensions has 'AL0000CTP' // performance
 | where customDimensions.eventId == 'AL0000CTP'
 | project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, environmentType = tostring( customDimensions.environmentType )
 , alEmailMessageID = customDimensions.alEmailMessageID
 , alConnector = customDimensions.alConnector
 // alErrorCallStack and alErrorText available from version 19.0
@@ -46,9 +46,9 @@ traces
 | where customDimensions has 'AL0000GKK' // performance
 | where customDimensions.eventId == 'AL0000GKK'
 | project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, environmentType = tostring( customDimensions.environmentType )
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
 , authenticated = customDimensions.alAuthenticated 
@@ -62,9 +62,9 @@ traces
 | where customDimensions has 'AL0000GKJ' // performance
 | where customDimensions.eventId == 'AL0000GKJ'
 | project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, environmentType = tostring( customDimensions.environmentType )
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
 , alConnected = customDimensions.alConnected 
@@ -78,9 +78,9 @@ traces
 | where customDimensions has 'AL0000GKL' // performance
 | where customDimensions.eventId == 'AL0000GKL'
 | project timestamp
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
+, aadTenantId = tostring( customDimensions.aadTenantId )
+, environmentName = tostring( customDimensions.environmentName )
+, environmentType = tostring( customDimensions.environmentType )
 , companyName = customDimensions.companyName
 , clientType = customDimensions.clientType
 , alSent = customDimensions.alSent // localized (maybe not so useful)
