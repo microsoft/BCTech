@@ -36,7 +36,7 @@ Ideas
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * Add app version to environment dimension
-
+* Timezone values are wrong (all positive)
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
