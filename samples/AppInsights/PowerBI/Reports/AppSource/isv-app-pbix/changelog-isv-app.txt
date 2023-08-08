@@ -27,11 +27,25 @@ Ideas
 * Usage: make 'Clients' page filter on AppDim
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
+* Add app version to environment dimension
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
+------------------
+Errors: 
+incoming ws calls - fix 'all errors' visual
+About this report - missing ext lc errors 
+Feature errors - missing filter on app
+
+Performance
+incoming ws calls - fix title on status details by http status code
+
+
+
+------------------
+2023-08-06 release
 ------------------
 * Dataset: Updated connector dimension and predicates with new values for 'Power BI (Desktop)', 'PowerQuery Online', 'Power BI (Gateway)', 'Power BI (Online)', 'Power BI (UnknownHost)'
 * Dataset: Introduced new dimensions for Urls and HTTP status codes, added apps from AL telemetry to AppDim 
