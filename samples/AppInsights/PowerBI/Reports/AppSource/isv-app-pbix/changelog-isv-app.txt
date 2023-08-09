@@ -29,6 +29,10 @@ Ideas
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * Add app version to environment dimension
 * Timezone values are wrong (all positive)
+Outgoing WS Errors page:
+| where isnotempty( customDimensions.objectId )
+should be
+| where isnotempty( customDimensions.alObjectId )
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
