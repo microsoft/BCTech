@@ -36,11 +36,6 @@ Ideas
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * Add app version to environment dimension
-* Timezone values are wrong (all positive)
-Outgoing WS Errors page:
-| where isnotempty( customDimensions.objectId )
-should be
-| where isnotempty( customDimensions.alObjectId )
 
 
 ------------------
@@ -49,6 +44,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Usage: On page 'Feature Usage', data can now be filtered with filters from the AppDim dimension
 * Usage: On page 'Onboarding' (need to change format of date dimensions)
+* Bug fixed: Timezone values are wrong (all positive)
 
 
 ------------------

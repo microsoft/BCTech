@@ -28,24 +28,15 @@ Ideas
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * Add app version to environment dimension
-* Timezone values are wrong (all positive)
-Outgoing WS Errors page:
-| where isnotempty( customDimensions.objectId )
-should be
-| where isnotempty( customDimensions.alObjectId )
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-Errors: 
-incoming ws calls - fix 'all errors' visual
-About this report - missing ext lc errors 
-Feature errors - missing filter on app
-
-Performance
-incoming ws calls - fix title on status details by http status code
-
+* Bug fixed: Timezone values are wrong (all positive)
+* Bug fixed: Error report, incoming ws calls - fix 'all errors' visual when no data is present
+* Bug fixed: Performance report, incoming ws calls - fix title length on status details by http status code, changed visual headers to use lower case
 
 
 ------------------
