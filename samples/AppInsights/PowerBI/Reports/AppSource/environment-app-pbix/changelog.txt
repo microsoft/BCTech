@@ -41,13 +41,10 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Bug fixed: Timezone values are wrong (all positive)
+* On all four reports (Usage, Errors, Performance, and Administration): Added global filters on environment version (full and short)
 * Usage: On page 'Feature Usage', data can now be filtered with filters from the AppDim dimension
 * Usage: On page 'Onboarding' (need to change format of date dimensions)
 * Errors: on page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
-
-
-TODO
-* Add major platform version to environment dimension
 
 
 ------------------
