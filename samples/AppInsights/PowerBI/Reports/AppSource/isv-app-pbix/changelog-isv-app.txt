@@ -20,7 +20,6 @@ Ideas
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
 * Add header tooltips (where appropriate)
-* (pending test data) Errors: on page FeatureErrors, data can now be filtered with the global page filters, refactor to use callstack dimension and add top/bottom parsing visuals (pending test data)
 * (pending 4 tasks below) Usage: Add global page filters on AppDim. Remove page specific filters.
 * Usage: make 'Page views' page filter on AppDim
 * Usage: make 'Locations' page filter on AppDim
@@ -37,6 +36,8 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Bug fixed: Timezone values are wrong (all positive)
 * Bug fixed: Error report, incoming ws calls - fix 'all errors' visual when no data is present
 * Bug fixed: Performance report, incoming ws calls - fix title length on status details by http status code, changed visual headers to use lower case
+* Errors: added global page filters on app, app publisher, app id, and app version
+* Errors: on page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
 
 
 ------------------
