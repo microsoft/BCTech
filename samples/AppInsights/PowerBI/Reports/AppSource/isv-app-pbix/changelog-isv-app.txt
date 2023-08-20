@@ -38,6 +38,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Dataset: Added platform version and major version to environment dimension
 * Errors: added global page filters on app, app publisher, app id, and app version
 * Errors: on page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
+* Administration: on page Inventory, added platform version and major version to environment visual and page filters.
 
 
 ------------------
