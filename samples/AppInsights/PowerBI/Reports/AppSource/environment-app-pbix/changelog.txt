@@ -25,7 +25,6 @@ Ideas
 * Usage: Feature uptake page
 * Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Errors: cross tenant comparisons of errors (is this normal?)
-* (pending test data) Errors: on page FeatureErrors, data can now be filtered on AppDim, refactor to use callstack dimension and add top/bottom parsing visuals (pending test data)
 * Performance: cross tenant comparisons of performance (is this normal?)
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
@@ -35,16 +34,20 @@ Ideas
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
-* Add app version to environment dimension
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+* Bug fixed: Timezone values are wrong (all positive)
 * Usage: On page 'Feature Usage', data can now be filtered with filters from the AppDim dimension
 * Usage: On page 'Onboarding' (need to change format of date dimensions)
-* Bug fixed: Timezone values are wrong (all positive)
+* Errors: on page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
+
+
+TODO
+* Add major platform version to environment dimension
 
 
 ------------------
