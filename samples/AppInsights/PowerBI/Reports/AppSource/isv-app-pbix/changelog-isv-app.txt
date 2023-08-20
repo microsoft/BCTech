@@ -26,7 +26,6 @@ Ideas
 * Usage: make 'Clients' page filter on AppDim
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
-* Add app version to environment dimension
 
 
 ------------------
@@ -36,6 +35,7 @@ Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 * Bug fixed: Timezone values are wrong (all positive)
 * Bug fixed: Error report, incoming ws calls - fix 'all errors' visual when no data is present
 * Bug fixed: Performance report, incoming ws calls - fix title length on status details by http status code, changed visual headers to use lower case
+* Dataset: Added platform version and major version to environment dimension
 * Errors: added global page filters on app, app publisher, app id, and app version
 * Errors: on page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
 
