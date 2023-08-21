@@ -1,5 +1,38 @@
-// Use a query like this as a condition in an alert on job queue failures
+// Job queue entry {Job Queue Id} errored after {attempt number} attempts
+// This KQL code can help you get started troubleshooting job queue errors where the entry has been stopped because it failed  for the last time before being set in `Error` state. 
+// As an administrator, you want to know about job queue entries that are going into the final failed state and require manual intervention (restarting etc).
 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000JRG'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// jobQueueApp* dimensions contains the information about the app where the jobQueueObject* is located
+, jobQueueAppId = customDimensions.alCallerAppId
+, jobQueueAppName = customDimensions.alCallerAppName
+, jobQueueAppPublisher = customDimensions.alCallerPublisher
+, jobQueueAppVersion = customDimensions.alCallerAppVersion
+// jobQueueObject* dimensions contains the information about the object containing the code being run
+, jobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, jobQueueObjectName = customDimensions.alJobQueueObjectName // added in 22.0 
+, jobQueueObjectType = customDimensions.alJobQueueObjectType
+// jobQueueExecution dimensions contain information about the job queue entry definition
+, jobQueueEntryId = customDimensions.alJobQueueId 	
+, jobQueueEntryIsRecurring = customDimensions.alJobQueueIsRecurring
+, jobQueueEntryDescription = customDimensions.alJobQueueObjectDescription // added in 22.2
+, jobQueueEntryMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun // added in 21.5
+// jobQueueExecution dimensions contain information about the attempted run of the job queue entry
+, jobQueueExecutionNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, jobQueueExecutionStatus = customDimensions.alJobQueueStatus
+, jobQueueExecutionStacktrace = customDimensions.alJobQueueStacktrace
+, jobQueueExecutionTaskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
+
+
+
+// Use a query like this as a condition in an alert on job queue failures
 let job_queue_errors = 
 traces
 | where timestamp >= ago(30d) // adjust as needed

@@ -34,6 +34,7 @@ This part of the samples repo contains examples of KQL queries that you can use 
 | Feature Management changes | Change management | VAR | Alert when an administrator changes a switch on the Feature Management page for an environment. | AL0000JT3 | [FeatureTelemetry.kql](../KQL/Queries/ExampleQueriesForEachArea/FeatureTelemetry.kql) |
 | Permission errors | Errors | VAR | Setup notifications if users get permission errors. | RT0031 | [Permissions.kql](../KQL/Queries/ExampleQueriesForEachArea/Permissions.kql) |
 | Job Queue errors | Errors | VAR | Get alerted on job queue entries fail. | AL0000E26 | [JobQueueFailures.kql](./AlertingKQLSamples/JobQueueFailures.kql) |
+| Job Queue errors | Errors | VAR | Get alerted on job queue entries fail and are stopped. | AL0000JRG | [JobQueueFailures.kql](./AlertingKQLSamples/JobQueueFailures.kql) |
 | Job Queue errors | Errors | VAR | Get alerted if no job queue entries have been started in a given time period. | AL0000E26 | [NoJobQueueRuns.kql](./AlertingKQLSamples/NoJobQueueRuns.kql) |
 | Sensitive field monitoring | Security/Auditing | VAR | Alert if sensitive fields are added/removed to the monitoring list and if their values change. | AL0000DD3, AL0000EMW, AL0000CTE | [SensitiveFieldMonitoring.kql](./AlertingKQLSamples/SensitiveFieldMonitoring.kql) |
 | Login errors | Errors | VAR | Alert if sessions fail to get created. | RT0001, RT0002 | [LoginFailures.kql](./AlertingKQLSamples/LoginFailures.kql) |
