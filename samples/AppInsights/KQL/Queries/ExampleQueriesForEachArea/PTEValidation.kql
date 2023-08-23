@@ -20,7 +20,7 @@
 
 // PTE validation started: request <operation id>
 traces 
-| where customDimensions has "LC0220"
+| where customDimensions has "LC0200"
 | where customDimensions.eventId == "LC0200"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
