@@ -27,6 +27,19 @@ In the following table, you'll find examples of scenarios for each persona where
 | Project manager | Test how multiple apps work together under pressure | Similar to the go-live scenario, but here you need to make sure that apps are installed in the environment. | 
 | Supporter | Analyze performance issues due to locking or deadlocks | Similar to the developer scenario for concurrency testing. If you are lucky, scenario codeunits are already available on GitHub. |
 
+## How can I answer the question "Can Business Central handle a specific load for prospect customer"?
+
+As a partner, you sometimes get questions like "Can Business Central handle this many transactions per day?" when discussing a new ERP implementation project with a prospective customer. BCPT can help you answer part of that question by simulating the load the customer is intending. The following outlines a way to achieve this (note that all of these step can be automated):
+1. Deploy a sandbox environment
+2. Deploy an Azure Application Insights resource
+3. Enable telemetry on the environment
+4. Optionally, install extensions/apps that will be needed for the implementation
+5. Define the scenarios and currency needed (with the customer)
+6. Setup BCPT to run scenarios (there are already many scenarios available out-of-the-box)
+7. Install and configure the Power BI app on telemetry
+8. Use the Usage, Errors, and Performance reports in the app to get insights into how Business Central is handling the load.
+
+
 
 # How can I analyze BCPT data?
 If you have enabled environment telemetry, then you get signal about Performance Toolkit runs and scenarios. See more here: 
@@ -79,7 +92,6 @@ erDiagram
         string code
         string description
         string tag
-
     }
     "Test scenario" {
         string scenario_name
