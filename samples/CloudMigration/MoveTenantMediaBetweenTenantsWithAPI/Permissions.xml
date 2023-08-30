@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PermissionSets>
+  <PermissionSet RoleID="ExportPageMetadata" RoleName="ExportPageMetadata Permissions">
+    <Permission>
+      <ObjectType>Codeunit</ObjectType>
+      <ObjectID>50001</ObjectID>
+      <ReadPermission>Yes</ReadPermission>
+      <InsertPermission>Yes</InsertPermission>
+      <ModifyPermission>Yes</ModifyPermission>
+      <DeletePermission>Yes</DeletePermission>
+      <ExecutePermission>Yes</ExecutePermission>
+      <SecurityFilter />
+    </Permission>
+    <Permission>
+      <ObjectType>Report</ObjectType>
+      <ObjectID>50671</ObjectID>
+      <ReadPermission>Yes</ReadPermission>
+      <InsertPermission>Yes</InsertPermission>
+      <ModifyPermission>Yes</ModifyPermission>
+      <DeletePermission>Yes</DeletePermission>
+      <ExecutePermission>Yes</ExecutePermission>
+      <SecurityFilter />
+    </Permission>    
+    <Permission>
+      <ObjectType>Page</ObjectType>
+      <ObjectID>50671</ObjectID>
+      <ReadPermission>Yes</ReadPermission>
+      <InsertPermission>Yes</InsertPermission>
+      <ModifyPermission>Yes</ModifyPermission>
+      <DeletePermission>Yes</DeletePermission>
+      <ExecutePermission>Yes</ExecutePermission>
+      <SecurityFilter />
+    </Permission>   
+  </PermissionSet>
+</PermissionSets>
