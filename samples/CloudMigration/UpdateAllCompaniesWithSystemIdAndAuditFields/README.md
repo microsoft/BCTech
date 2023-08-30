@@ -1,0 +1,2 @@
+# Update all companies with SystemID and audit fields
+This SQL scipt can be used for the OnPrem upgrade from version 14. It will optmize the sync step to run faster. It is usefull if there are many companies in the database.
