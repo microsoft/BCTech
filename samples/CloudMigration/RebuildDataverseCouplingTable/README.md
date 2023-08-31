@@ -1,3 +1,5 @@
 # Rebuild Dataverse Couplings extension
 
-Use this extension to rebuild the Dataverse connectors after cloud migration. Integration records are not accessible from the regular code. If you migrated from the version where you used Datavarse integration based on Integration Records, you must release this extension to rebuild the couplings.
+To install the extension, rename the file extension from .apprename to .app and upload it to the affected Business Central environment by following https://learn.microsoft.com/en-us/dynamics365/business-central/ui-extensions-install-uninstall#upload-a-per-tenant-extension-pte
+
+The extension installation method will rebuild the coupling table in each company of this environment.
