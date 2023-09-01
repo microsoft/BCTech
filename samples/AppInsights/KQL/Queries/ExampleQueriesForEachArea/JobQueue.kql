@@ -266,8 +266,6 @@ traces
 
 
 
-
-
 // join job queue telemetry with task scheduler telemetry to learn more about the root cause of the error
 let job_queue_errors = 
 traces

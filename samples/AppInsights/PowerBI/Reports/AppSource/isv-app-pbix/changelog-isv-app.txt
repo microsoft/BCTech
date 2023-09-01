@@ -33,8 +33,8 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Bug fixed: Timezone values are wrong (all positive)
-* Bug fixed: Error report, incoming ws calls - fix 'all errors' visual when no data is present
-* Bug fixed: Performance report, incoming ws calls - fix title length on status details by http status code, changed visual headers to use lower case
+* Bug fixed: Error report, incoming ws calls - fixed 'all errors' visual when no data is present
+* Bug fixed: Performance report, incoming ws calls - fixed title length on status details by http status code, changed visual headers to use lower case
 * Dataset: Added platform version and major version to environment dimension
 * Errors: added global page filters on app, app publisher, app id, and app version
 * Errors: on page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
