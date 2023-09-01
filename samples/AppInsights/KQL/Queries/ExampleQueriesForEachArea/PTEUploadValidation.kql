@@ -33,10 +33,14 @@ traces
 | where customDimensions.eventId == "LC0200"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-, environmentId = customDimensions.environmentId // rename to aadTenantId
+// need to rename to aadTenantId
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, validationVersion = customDimensions.validationVersion // need this dimension
 , dependentExtensions = customDimensions.dependentExtensions
 , submissionOperationId = customDimensions.submissionOperationId 
 , mainExtensionId = customDimensions.mainExtensionId // add this
@@ -52,10 +56,14 @@ traces
 | where customDimensions.eventId == "LC0204"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-, environmentId = customDimensions.environmentId // rename to aadTenantId
+// need to rename to aadTenantId
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, validationVersion = customDimensions.validationVersion // need this dimension
 , submissionOperationId = customDimensions.submissionOperationId 
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
@@ -70,10 +78,14 @@ traces
 | where customDimensions.eventId == "LC0205"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-, environmentId = customDimensions.environmentId // rename to aadTenantId
+// need to rename to aadTenantId
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, validationVersion = customDimensions.validationVersion // need this dimension
 , submissionOperationId = customDimensions.submissionOperationId 
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
@@ -88,10 +100,14 @@ traces
 | where customDimensions.eventId == "LC0210"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-, environmentId = customDimensions.environmentId // rename to aadTenantId
+// need to rename to aadTenantId
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, validationVersion = customDimensions.validationVersion // need this dimension
 , submissionOperationId = customDimensions.submissionOperationId 
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
@@ -111,10 +127,14 @@ traces
 | where customDimensions.eventId == "LC0206"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-, environmentId = customDimensions.environmentId // rename to aadTenantId
+// need to rename to aadTenantId
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, validationVersion = customDimensions.validationVersion // need this dimension
 , submissionOperationId = customDimensions.submissionOperationId 
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
@@ -130,10 +150,14 @@ traces
 | where customDimensions.eventId == "LC0202"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-, environmentId = customDimensions.environmentId // rename to aadTenantId
+// need to rename to aadTenantId
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, validationVersion = customDimensions.validationVersion // need this dimension
 , dependentExtensions = customDimensions.dependentExtensions
 , submissionOperationId = customDimensions.submissionOperationId 
 , mainExtensionId = customDimensions.mainExtensionId // add this
@@ -149,10 +173,14 @@ traces
 | where customDimensions.eventId == "LC0203"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-, environmentId = customDimensions.environmentId // rename to aadTenantId
+// need to rename to aadTenantId
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, validationVersion = customDimensions.validationVersion // need this dimension
 , dependentExtensions = customDimensions.dependentExtensions
 , submissionOperationId = customDimensions.submissionOperationId 
 , mainExtensionId = customDimensions.mainExtensionId // add this
@@ -162,29 +190,3 @@ traces
 , mainExtension = customDimensions.mainExtension 
 , failureReason = customDimensions.failureReason
 
-
-
-
-
-customDimensions_eventId	message	customDimensions
-LC0200	PTE submission validation request started: request 33d78c87-5331-4941-90ed-7388b0360762	
-LC0204	Extension validation started: extension ALProject102 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f483e)	{"eventId":"LC0204","environmentName":"Production","telemetrySchemaVersion":"0.1","extensionId":"17fb3820-ae2b-43a2-a821-6f041c2f483e","extensionPublisher":"Default publisher","extensionVersion":"1.0.0.0","extensionName":"ALProject102","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Information","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f483e\",\r\n  \"Name\": \"ALProject102\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"33d78c87-5331-4941-90ed-7388b0360762"}
-LC0205	Extension validation completed successfully: extension ALProject102 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f483e)	{"eventId":"LC0205","environmentName":"Production","telemetrySchemaVersion":"0.1","extensionId":"17fb3820-ae2b-43a2-a821-6f041c2f483e","extensionPublisher":"Default publisher","extensionVersion":"1.0.0.0","extensionName":"ALProject102","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Information","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f483e\",\r\n  \"Name\": \"ALProject102\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"33d78c87-5331-4941-90ed-7388b0360762"}
-LC0202	PTE submission validation request completed successfully: request 33d78c87-5331-4941-90ed-7388b0360762	{"eventId":"LC0202","environmentName":"Production","telemetrySchemaVersion":"0.1","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Information","dependentExtensions":"[]","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f483e\",\r\n  \"Name\": \"ALProject102\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"33d78c87-5331-4941-90ed-7388b0360762"}
-
-
-
-
-customDimensions_eventId	message	customDimensions
-LC0200	PTE submission validation request started: request f0797f99-0222-4197-b41a-a4d59849bc74	{"eventId":"LC0200","environmentName":"Production","telemetrySchemaVersion":"0.1","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Information","dependentExtensions":"[]","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f482e\",\r\n  \"Name\": \"ALProject101\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"f0797f99-0222-4197-b41a-a4d59849bc74"}
-LC0204	Extension validation started: extension ALProject101 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f482e)	{"eventId":"LC0204","environmentName":"Production","telemetrySchemaVersion":"0.1","extensionId":"17fb3820-ae2b-43a2-a821-6f041c2f482e","extensionPublisher":"Default publisher","extensionVersion":"1.0.0.0","extensionName":"ALProject101","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Information","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f482e\",\r\n  \"Name\": \"ALProject101\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"f0797f99-0222-4197-b41a-a4d59849bc74"}
-LC0210	Validation diagnostic reported: extension ALProject101 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f482e)	{"eventId":"LC0210","environmentName":"Production","telemetrySchemaVersion":"0.1","extensionId":"17fb3820-ae2b-43a2-a821-6f041c2f482e","extensionPublisher":"Default publisher","extensionVersion":"1.0.0.0","extensionName":"ALProject101","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Error","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f482e\",\r\n  \"Name\": \"ALProject101\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"f0797f99-0222-4197-b41a-a4d59849bc74","diagnosticSourceLocation":"(64,13)","diagnosticMessage":"Table 50100 'MyTable' is missing a matching permission set.","diagnosticSourcePath":"HelloWorld.al","diagnosticCode":"PTE0004","diagnosticSeverity":"Error"}
-LC0206	Extension validation completed with failures: extension ALProject101 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f482e)	{"eventId":"LC0206","environmentName":"Production","telemetrySchemaVersion":"0.1","extensionId":"17fb3820-ae2b-43a2-a821-6f041c2f482e","extensionPublisher":"Default publisher","extensionVersion":"1.0.0.0","extensionName":"ALProject101","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Error","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f482e\",\r\n  \"Name\": \"ALProject101\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"f0797f99-0222-4197-b41a-a4d59849bc74","failureReason":"One or more error diagnostics were reported. For more information about the diagnostics, see traces with eventId LC0210."}
-LC0203	PTE submission validation request completed with failures: request f0797f99-0222-4197-b41a-a4d59849bc74	{"eventId":"LC0203","environmentName":"Production","telemetrySchemaVersion":"0.1","environmentId":"1633d4a2-6d53-4254-868f-b8d70eefed7a","severity":"Error","dependentExtensions":"[]","mainExtension":"{\r\n  \"Id\": \"17fb3820-ae2b-43a2-a821-6f041c2f482e\",\r\n  \"Name\": \"ALProject101\",\r\n  \"Publisher\": \"Default publisher\",\r\n  \"Version\": \"1.0.0.0\"\r\n}","submissionOperationId":"f0797f99-0222-4197-b41a-a4d59849bc74","failureReason":"One or more extension validation tasks have failed."}
-
-
-  tostring( customDimensions.diagnosticSourceLocation )
-, tostring( customDimensions.diagnosticMessage )
-, tostring( customDimensions.diagnosticSourcePath )
-, tostring( customDimensions.diagnosticCode )
-, tostring( customDimensions.diagnosticSeverity )

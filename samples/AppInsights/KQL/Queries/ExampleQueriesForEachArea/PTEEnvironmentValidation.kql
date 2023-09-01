@@ -31,6 +31,9 @@ traces
 | where customDimensions.eventId == "LC0220"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, targetVersion = customDimensions.targetVersion
 
 
 // Environment Extension validation started (LC0224)
@@ -39,6 +42,13 @@ traces
 | where customDimensions.eventId == "LC0224"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, targetVersion = customDimensions.targetVersion
 
 
 // Extension validation completed successfully (LC0225)
@@ -47,6 +57,13 @@ traces
 | where customDimensions.eventId == "LC0225"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, targetVersion = customDimensions.targetVersion
 
 
 // Extension validation completed with failures (LC0226)
@@ -55,6 +72,7 @@ traces
 | where customDimensions.eventId == "LC0226"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// need sample to see dimensions
 
 
 // Environment validation request completed successfully (LC0222)
@@ -63,6 +81,9 @@ traces
 | where customDimensions.eventId == "LC0222"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, targetVersion = customDimensions.targetVersion
 
 
 // Extension Validation diagnostic reported (LC0210)
@@ -71,14 +92,33 @@ traces
 | where customDimensions.eventId == "LC0210"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+, aadTenantId = case(
+  isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
+  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, 'Unknown'
+)
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType // need this dimension
+, submissionOperationId = customDimensions.submissionOperationId 
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, mainExtension = customDimensions.mainExtension 
+, diagnosticSourceLocation = customDimensions.diagnosticSourceLocation
+, diagnosticMessage = customDimensions.diagnosticMessage
+, diagnosticSourcePath = customDimensions.diagnosticSourcePath
+, diagnosticCode = customDimensions.diagnosticCode
+, diagnosticSeverity = customDimensions.diagnosticSeverity
 
 
-// Environnement diagnostic reported (LC0227)
+// Environment diagnostic reported (LC0227)
 traces 
 | where customDimensions has "LC0227"
 | where customDimensions.eventId == "LC0227"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// need sample to see dimensions
 
 
 // Environment validation completed with failures (LC0223)
@@ -87,3 +127,7 @@ traces
 | where customDimensions.eventId == "LC0223"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, failureReason = customDimensions.failureReason
+, targetVersion = customDimensions.targetVersion

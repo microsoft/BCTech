@@ -1,0 +1,59 @@
+// KQL samples - Per-tenant extension (PTE) validation events when testing compatibility with next major version of Business Central
+
+// Available in environment (only online) telemetry from September 2023
+
+// Non-compatible 3rd party apps (PTEs) block upgrades to next major.
+// In the Business Central service, we proactively validate all environments regularly against the next release.
+// If an environment is not ready then we send an email to the administrator.
+// With this telemetry, partners can monitor environments for the customers 
+// and setup alerts so that they know up front which customers will need help.
+
+
+// Validation flow is as follows
+// Environment validation started (LC0220). 
+// For each extension (main + dependent extensions)
+//         Extension validation started (LC0204)
+//         Either 
+//                 Extension validation completed successfully (LC0225)
+//         or
+//                 Extension Validation diagnostic reported (LC0210)
+//                 Extension validation completed with failures (LC0226)
+// Either 
+//         Environment validation completed successfully (LC0222)
+// or
+//         Environment validation completed with failures (LC0223)
+//         Environnement diagnostic reported (LC0227)
+
+
+// When alerting on this, use events LC0223, LC0026, or LC0027
+
+
+
+// Extension validation completed with failures (LC0226)
+traces 
+| where customDimensions has "LC0226"
+| where customDimensions.eventId == "LC0226"
+| where timestamp > ago(30d) // adjust as needed
+| project timestamp
+// need sample to see dimensions
+
+
+// Environment diagnostic reported (LC0227)
+traces 
+| where customDimensions has "LC0227"
+| where customDimensions.eventId == "LC0227"
+| where timestamp > ago(30d) // adjust as needed
+| project timestamp
+// need sample to see dimensions
+
+
+// Environment validation completed with failures (LC0223)
+traces 
+| where customDimensions has "LC0223"
+| where customDimensions.eventId == "LC0223"
+| where timestamp > ago(30d) // adjust as needed
+| project timestamp
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, failureReason = customDimensions.failureReason
+, targetVersion = customDimensions.targetVersion
