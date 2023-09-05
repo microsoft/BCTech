@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.Dynamics.BusinessCentral.Agent.Common</AssemblyName>
     <RootNamespace>Microsoft.Dynamics.BusinessCentral.Agent.Common</RootNamespace>
   </PropertyGroup>
