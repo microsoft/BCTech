@@ -71,8 +71,9 @@ traces
 | where customDimensions has "LC0226"
 | where customDimensions.eventId == "LC0226"
 | where timestamp > ago(30d) // adjust as needed
+| take 1
 | project timestamp
-// need sample to see dimensions
+, customDimensions // need sample of dimension names, not the actual data
 
 
 // Environment validation request completed successfully (LC0222)
@@ -117,8 +118,9 @@ traces
 | where customDimensions has "LC0227"
 | where customDimensions.eventId == "LC0227"
 | where timestamp > ago(30d) // adjust as needed
+| take 1
 | project timestamp
-// need sample to see dimensions
+, customDimensions // need sample of dimension names, not the actual data
 
 
 // Environment validation completed with failures (LC0223)
