@@ -34,19 +34,38 @@ Ideas
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
+* what are these events?
+AL0000E9U
+RT0040
+RT0041
+RT0042
+RT0045
+RT0047
+AL0000LA1
+AL0000EIO
+AL0000KZV
+AL0000LA2
+AL0000LA3
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+TBA
+
+
+------------------
+2023-09-08 release
+------------------
 * Bug fixed: Timezone values are wrong (all positive)
+* Bug fixed: example data for parameter Environment include list had syntax error
+* Bug fixed: login errors showed wrong number. Needed to remove userType and guestUser dimensions from failures in OnCompanyOpen.
 * On all four reports (Usage, Errors, Performance, and Administration): Added global filters on environment version (full and short)
 * Usage: On page 'Feature Usage', data can now be filtered with filters from the AppDim dimension
 * Usage: On page 'Onboarding' (need to change format of date dimensions)
 * Errors: On page FeatureErrors, refactored model to use callstack dimension. Switched to using TenantHash for environment dim reference. Added top/bottom parsing visuals for the AL stack trace. 
-
-Check if jq errors contain AL0000JRG
+* Errors: On page Job queue errors, we now show if the job queue entry has been stopped (event AL0000JRG)
 
 
 ------------------
