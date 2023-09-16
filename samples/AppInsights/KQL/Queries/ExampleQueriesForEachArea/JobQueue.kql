@@ -11,7 +11,7 @@
 // | Job queue entry rescheduled on login | AL0000I49 |
 // | Job queue entry run once by a user | AL0000FMG |
 // | Job queue entry failed for the last time and is set to stopped | AL0000JRG |
-
+// | Job queue entry cancelled | AL0000KZV |
 
 // Job queue entry enqueued
 traces
@@ -263,6 +263,35 @@ traces
 , jobQueueExecutionStacktrace = customDimensions.alJobQueueStacktrace
 , jobQueueExecutionTaskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
+
+// Job queue entry cancelled 
+// introduced in v23.0 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000KZV' // for performance
+| where customDimensions.eventId == 'AL0000KZV'
+| project timestamp
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// jobQueueApp* dimensions contains the information about the app where the jobQueueObject* is located
+, jobQueueAppId = customDimensions.alCallerAppId
+, jobQueueAppName = customDimensions.alCallerAppName
+, jobQueueAppPublisher = customDimensions.alCallerPublisher
+, jobQueueAppVersion = customDimensions.alCallerAppVersion
+// jobQueueObject* dimensions contains the information about the object containing the code being run
+, jobQueueObjectId = customDimensions.alJobQueueObjectId 	
+, jobQueueObjectName = customDimensions.alJobQueueObjectName 
+, jobQueueObjectType = customDimensions.alJobQueueObjectType
+// jobQueueExecution dimensions contain information about the job queue entry definition
+, jobQueueEntryId = customDimensions.alJobQueueId 	
+, jobQueueEntryIsRecurring = customDimensions.alJobQueueIsRecurring
+, jobQueueEntryDescription = customDimensions.alJobQueueObjectDescription 
+, jobQueueEntryMaxNumberOfAttemptsToRun = customDimensions.alJobQueueMaxNumberOfAttemptsToRun 
+// jobQueueExecution dimensions contain information about the attempted run of the job queue entry
+, jobQueueExecutionNumberOfAttemptsToRun = customDimensions.alJobQueueNumberOfAttemptsToRun // added in 21.5
+, jobQueueExecutionTaskId = customDimensions.alJobQueueScheduledTaskId // you can join to task scheduler telemetry on the taskId
 
 
 
