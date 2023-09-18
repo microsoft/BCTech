@@ -21,6 +21,9 @@ Sure. Here are some links to get you started:
 2023-09-18, _Business Central Excel Layouts_ by Microsoft MVP Josh Anglesea
 https://joshanglesea.wordpress.com/2023/09/18/business-central-excel-layouts/
 
+2023-07-28, _BC Excels at Reporting_ by Tonya Bricco-Meske
+https://bcdevnotebook.com/2023/07/28/bc-excels-at-reporting/
+
 2022-11-18, _HOW DO I: CREATE AN EXCEL LAYOUT REPORT?_ by Microsoft MVP Steven Renders
 https://thinkaboutit.be/2022/11/how-do-i-create-an-excel-layout-report/
 
