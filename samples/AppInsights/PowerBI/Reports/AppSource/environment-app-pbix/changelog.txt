@@ -36,23 +36,31 @@ Ideas
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * what are these events?
 AL0000E9U
-RT0040
-RT0041
 RT0042
-RT0045
 RT0047
 AL0000LA1
 AL0000EIO
-AL0000KZV
 AL0000LA2
 AL0000LA3
+
+
+
+RT0040
+Business event subscription created
+
+RT0041
+Business event subscription deleted.
+
+RT0045
+Business event triggered successfully.
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-TBA
+* Administration: new page 'Job Queue'. Shows all events on job queue, including the new event AL0000KZV, Job queue entry task cancelled
+
 
 
 ------------------
