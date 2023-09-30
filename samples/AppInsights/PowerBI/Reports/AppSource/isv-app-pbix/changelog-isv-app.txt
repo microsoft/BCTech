@@ -26,11 +26,24 @@ Ideas
 * Usage: make 'Clients' page filter on AppDim
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
+* Usage: on most pages add visual that shows usage over Last 7 Days, Last 30 Days, From 31 Days - 60 Days ago, From 61 Days - 91 Days ago
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
+------------------
+* Dataset: added new mapping of tenant->partner
+* All pages: Renamed global filter AAD tenant ID to (Microsoft) Entra Id. Also added global filter on Partner
+* Errors: on all pages, added an X by environment visual
+* Errors: on all pages, added link to documentation and troubleshooting guide
+* Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
+* Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions
+* Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
+
+
+------------------
+2023-09-08 release
 ------------------
 * Bug fixed: Timezone values are wrong (all positive)
 * Bug fixed: Error report, incoming ws calls - fixed 'all errors' visual when no data is present
