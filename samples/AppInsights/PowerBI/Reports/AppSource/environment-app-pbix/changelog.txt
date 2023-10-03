@@ -57,13 +57,13 @@ Business event triggered successfully.
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+* Bug fixed: On Job queue errors page, url now works (was missing a ?)
 * Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
 TODO
 administration
 usage
 performance
 
-* Administration: new page 'Job Queue'. Shows all events on job queue, including the new event AL0000KZV, Job queue entry task cancelled
 * All pages: AAD renamed to Entra
 TODO
 errors
@@ -71,14 +71,17 @@ administration
 usage
 performance
 
-To show data in the fields Domain and Partner, add data in the tenant-domain and/or tenant-partner mapping parameters (when configuring the Power BI dataset).
-
 TODO
 * Administration: on page 'Environment lifecycle', added events LC0156
 * Errors: on all pages, added links to documentation and troubleshooting guide
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
 * Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions
 
+
+------------------
+2023-10-01 release
+------------------
+* Administration: new page 'Job Queue'. Shows all events on job queue, including the new event AL0000KZV, Job queue entry task cancelled
 
 
 ------------------
