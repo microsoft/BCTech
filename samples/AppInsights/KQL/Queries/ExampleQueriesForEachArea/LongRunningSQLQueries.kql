@@ -25,7 +25,6 @@ traces
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
-
 // which user 
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
