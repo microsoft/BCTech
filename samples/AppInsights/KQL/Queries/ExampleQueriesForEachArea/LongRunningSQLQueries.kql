@@ -11,28 +11,35 @@ traces
      or customDimensions.eventId == 'RT0005' // starting from version 16.1, the eventId is used to identity signal types
 | where customDimensions.alObjectId > 0 // filter out internal server calls
 | project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// in which extension/app
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
+// in which object
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+
+// which user 
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
 , 'N/A'
 )
-, aadTenantId = customDimensions.aadTenantId
-, sqlStatement = tostring(customDimensions.sqlStatement)
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
-, companyName = customDimensions.companyName
-, extensionId = customDimensions.extensionId
-, extensionPublisher = customDimensions.extensionPublisher
-, extensionName = customDimensions.extensionName
-, extensionVersion = customDimensions.extensionVersion
-, alObjectId = customDimensions.alObjectId
-, alObjectName = customDimensions.alObjectName
-, alObjectType = customDimensions.alObjectType
-, alStackTrace = customDimensions.alStackTrace
-// use the KQL snippet parseStackTrace to get bottom of the stack trace details
 , clientType = customDimensions.clientType
-, executionTime = customDimensions.executionTime
-, executionTimeInMS = toreal(totimespan(customDimensions.executionTime))/10000 //the datatype for executionTime is timespan 
+// performance data
+, executionTime = customDimensions.serverExecutionTime
+, executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan 
+// what happened
+, alStackTrace = customDimensions.alStackTrace // use the KQL snippet parseStackTrace to get bottom of the stack trace details
+, sqlStatement = tostring(customDimensions.sqlStatement)
+//
 // this part of the query derives various insights from the SQL statement
 | extend operationType = case(
   sqlStatement startswith "UPDATE", "UPDATE"
