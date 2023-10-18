@@ -59,23 +59,21 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Bug fixed: On Job queue errors page, url now works (was missing a ?)
 * Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
-TODO
-administration
-usage
-performance
-
 * All pages: AAD renamed to Entra
-TODO
-errors
-administration
-usage
-performance
+* Administration: on page 'Environment lifecycle', added events LC0156
+
 
 TODO
-* Administration: on page 'Environment lifecycle', added events LC0156
 * Errors: on all pages, added links to documentation and troubleshooting guide
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
 * Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions
+
+Possible bugs
+The "Last 7 days" and "Since Yesterday" values in "Outgoing Web Service Errors" are not calculated correctly. I filtered the dashboard to show only the last 4 days (and I know that 69 of these errors are from today) so it should show all 104 in the last 7 days and 69 in since yesterday)
+Seems like this issue has more pages, at least
+* Feature errors
+* Outgoing WS errors
+
 
 
 ------------------
