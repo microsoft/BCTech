@@ -62,12 +62,24 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * All pages: AAD renamed to Entra
 * Administration: on page 'Environment lifecycle', added events LC0156
 * Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions.
-
-
-
-TODO
-* Errors: on all pages, added links to documentation and troubleshooting guide
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
+
+ACTIVE
+* Errors: on all pages, added links to documentation and troubleshooting guide
+Login errors
+Permission Errors
+Environment lifecycle errors
+Company lifecycle errors
+Email errors
+Authentication (web service key) errors
+Webservice metadata errors
+Connector errors
+Azure function errors
+Job Queue errors
+Task Scheduler errors
+Configuration package errors
+Database deadlocks
+
 
 Possible bugs
 The "Last 7 days" and "Since Yesterday" values in "Outgoing Web Service Errors" are not calculated correctly. I filtered the dashboard to show only the last 4 days (and I know that 69 of these errors are from today) so it should show all 104 in the last 7 days and 69 in since yesterday)
