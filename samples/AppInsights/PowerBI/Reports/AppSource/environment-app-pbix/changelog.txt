@@ -63,22 +63,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration: on page 'Environment lifecycle', added events LC0156
 * Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions.
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
-
-ACTIVE
 * Errors: on all pages, added links to documentation and troubleshooting guide
-Login errors
-Permission Errors
-Environment lifecycle errors
-Company lifecycle errors
-Email errors
-Authentication (web service key) errors
-Webservice metadata errors
-Connector errors
-Azure function errors
-Job Queue errors
-Task Scheduler errors
-Configuration package errors
-Database deadlocks
 
 
 Possible bugs
