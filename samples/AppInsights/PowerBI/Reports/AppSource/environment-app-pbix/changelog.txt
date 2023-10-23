@@ -30,7 +30,6 @@ Ideas
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * update application areas with 22.0 new app features
-* Add header tooltips (where appropriate)
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
@@ -65,7 +64,11 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions.
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
 * Errors: on all pages, added links to documentation and troubleshooting guide
+* Administration: new page 'Change log lifecycle'. Shows all lifecycle events (add/remove/change) for fields in the changelog feature.
 
+
+TODO
+* links from user telemetry ids where possible
 
 
 Possible bugs
