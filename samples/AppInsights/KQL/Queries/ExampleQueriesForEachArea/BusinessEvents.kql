@@ -1,0 +1,64 @@
+// KQL samples - Business Events
+
+// The following events are emitted by the business events subsystem
+// | Event | Event id | 
+// | ----- | -------- | 
+// | Business event subscription created | RT0040 | 
+// | Business event subscription deleted | RT0041 | 
+// | Business event triggered successfully | RT0045 | 
+// | Business event notification failed to be sent after multiple retries | RT0047 |
+
+
+// Business event subscription created
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0040' // for performance
+| where customDimensions.eventId == 'RT0040'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// subscription details
+, SubscriptionId = customDimensions.SubscriptionId
+
+
+// Business event subscription deleted
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0041' // for performance
+| where customDimensions.eventId == 'RT0041'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// subscription details
+, SubscriptionId = customDimensions.SubscriptionId
+
+
+
+// Business event triggered successfully
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0045' // for performance
+| where customDimensions.eventId == 'RT0045'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// need more dimensions
+
+
+// Business event notification failed to be sent after multiple retries
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'RT0047' // for performance
+| where customDimensions.eventId == 'RT0047'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, subscriptionId = customDimensions.subscriptionId
