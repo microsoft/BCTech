@@ -1,26 +1,74 @@
-// KQL samples - Page Views (client usage)
+// KQL samples - Page Views (client usage) for pages and queries
 
-// Page views (RAW data)
+
+// Page views (normal pages)
 pageViews
 | where timestamp > ago(7d) // adjust as needed
 | parse kind=regex client_Browser with browserName:string ' ' browserVersion:string
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, alObjectId = customDimensions.alObjectId
-, alObjectName = customDimensions.alObjectName
-, alObjectType = customDimensions.alObjectType
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// in which extension/app
 , appId = customDimensions.appId
 , appName = customDimensions.appName
 , appPublisher = customDimensions.appPublisher
 , appVersion = customDimensions.appVersion
+// in which object
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+// which client (browser, tablet, phone, ...)
 , clientType = customDimensions.clientType
-, companyName = customDimensions.companyName
-, designerLevel = customDimensions.designerLevel
+// device info
 , deviceLocale = customDimensions.deviceLocale
 , deviceScreenResolution = customDimensions.deviceScreenResolution
+// page details
+, designerLevel = customDimensions.designerLevel
+, expandedFastTabs = customDimensions.expandedFastTabs
+, factboxExpanded = customDimensions.factboxExpanded
+, hostType = customDimensions.hostType
+, pageIsModal = customDimensions.pageIsModal
+, pageMode = customDimensions.pageMode
+, pageType = customDimensions.pageType
+, refUri = customDimensions.refUri
+// all of this data is not stored in customDimensions
+, location = client_CountryOrRegion
+, durationInMs = duration
+, clientBrowser = client_Browser
+, browserName = iff(browserName=='Edg', 'Edge', browserName)
+, browserVersion = browserVersion
+, clientOS = client_OS
+
+
+// Page views (for queries)
+pageViews
+| where customDimensions.pageDataSourceType == 'Query'
+| project timestamp
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, eventId = iff(isempty(customDimensions.eventId), customDimensions.eventID, customDimensions.eventId) // eventID is deprecated. Use eventId instead
+, companyName = customDimensions.companyName
+// in which extension/app
+, appId = customDimensions.appId
+, appName = customDimensions.appName
+, appPublisher = customDimensions.appPublisher
+, appVersion = customDimensions.appVersion
+// in which object
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = 'Query'
+// which client (browser, tablet, phone, ...)
+, clientType = customDimensions.clientType
+// device info
+, deviceLocale = customDimensions.deviceLocale
+, deviceScreenResolution = customDimensions.deviceScreenResolution
+// page details
+, designerLevel = customDimensions.designerLevel
 , expandedFastTabs = customDimensions.expandedFastTabs
 , factboxExpanded = customDimensions.factboxExpanded
 , hostType = customDimensions.hostType
