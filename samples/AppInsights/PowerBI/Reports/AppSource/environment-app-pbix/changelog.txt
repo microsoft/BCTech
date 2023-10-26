@@ -63,7 +63,7 @@ Seems like this issue has more pages, at least
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-* Bug fixed: On Job queue errors page, url now works (was missing a ?)
+* Bug fixed: On Job queue errors page, url now works (was missing a "?")
 * Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
 * Bug fixed: MAU query timed out. New query is now partitioned to load data in 5 parallel streams.
 * All pages: AAD renamed to Entra
