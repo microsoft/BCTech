@@ -9,13 +9,13 @@ Below, you can see
 -------------
 Pending teams
 -------------
+* Database deadlocks page: need to fix URL (hide) for user telemetry id (unblocked in 23.1/23.2)
 * Usage: Add user telemetry id to pageview pages and allow filters on this (when available in client telemetry)
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Usage: add license type on sessions page (pending bug fix from server team)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Administration: New page 'Change log configuration' changes (pending app team)
-* Database deadlocks page: need to fix URL (hide) for user telemetry id (pending app team)
 * Administration: New page on PTE validations signal (pending compiler team)
 
 
@@ -51,6 +51,13 @@ Business event subscription deleted.
 RT0045
 Business event triggered successfully.
 
+Possible bug
+The "Last 7 days" and "Since Yesterday" values in "Outgoing Web Service Errors" are not calculated correctly. I filtered the dashboard to show only the last 4 days (and I know that 69 of these errors are from today) so it should show all 104 in the last 7 days and 69 in since yesterday)
+Seems like this issue has more pages, at least
+* Feature errors
+* Outgoing WS errors
+
+
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
@@ -60,24 +67,13 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
 * Bug fixed: MAU query timed out. New query is now partitioned to load data in 5 parallel streams.
 * All pages: AAD renamed to Entra
-* Administration: on page 'Environment lifecycle', added events LC0156
+* Usage: new page 'Queries'. Shows all usage of data analysis on queries.
+* Usage: on page Reports, it is now possible to filter on usage of the Financial reporting (aka account schedules) feature
 * Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions.
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
 * Errors: on all pages, added links to documentation and troubleshooting guide
 * Administration: new page 'Change log lifecycle'. Shows all lifecycle events (add/remove/change) for fields in the changelog feature.
-* Usage: new page 'Queries'. Shows all usage of data analysis on queries.
-* Usage: on page Reports, it is now possible to filter on usage of the Financial reporting (aka account schedules) feature
-
-TODO
-* links from user telemetry ids where possible
-
-
-Possible bugs
-The "Last 7 days" and "Since Yesterday" values in "Outgoing Web Service Errors" are not calculated correctly. I filtered the dashboard to show only the last 4 days (and I know that 69 of these errors are from today) so it should show all 104 in the last 7 days and 69 in since yesterday)
-Seems like this issue has more pages, at least
-* Feature errors
-* Outgoing WS errors
-
+* Administration: on page 'Environment lifecycle', added events LC0156
 
 
 ------------------
