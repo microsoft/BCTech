@@ -65,6 +65,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
 * Errors: on all pages, added links to documentation and troubleshooting guide
 * Administration: new page 'Change log lifecycle'. Shows all lifecycle events (add/remove/change) for fields in the changelog feature.
+* Usage: new page 'Queries'. Shows all usage of data analysis on queries.
 * Usage: on page Reports, it is now possible to filter on usage of the Financial reporting (aka account schedules) feature
 
 TODO
