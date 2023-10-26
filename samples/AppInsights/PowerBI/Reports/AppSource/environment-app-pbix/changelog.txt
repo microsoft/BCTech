@@ -22,6 +22,7 @@ Pending teams
 -----
 Ideas
 -----
+* Administration: Retention policy changes page
 * Usage: Feature uptake page
 * Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Errors: cross tenant comparisons of errors (is this normal?)

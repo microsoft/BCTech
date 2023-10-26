@@ -19,7 +19,6 @@ Ideas
 * Administration: App inventory query needs a rework 
 * Administration: Data in telemetry page, stats by app visual has data where app is empty, probably needs fixing in the dataset
 * Performance: add filters on select performance pages to determine if an operation happened in a Job Queue entry run
-* Add header tooltips (where appropriate)
 * (pending 4 tasks below) Usage: Add global page filters on AppDim. Remove page specific filters.
 * Usage: make 'Page views' page filter on AppDim
 * Usage: make 'Locations' page filter on AppDim
@@ -27,13 +26,14 @@ Ideas
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * Usage: on most pages add visual that shows usage over Last 7 Days, Last 30 Days, From 31 Days - 60 Days ago, From 61 Days - 91 Days ago
+* Usage: new page 'Queries'. Shows all usage of data analysis on queries.
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-TBA
+* Usage: new page 'Queries'. Shows all usage of data analysis on queries.
 
 
 ------------------
