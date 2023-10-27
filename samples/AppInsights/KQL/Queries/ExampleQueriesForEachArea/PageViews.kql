@@ -35,18 +35,18 @@ pageViews
 , pageType = customDimensions.pageType
 , refUri = customDimensions.refUri
 // all of this data is not stored in customDimensions
-, location = client_CountryOrRegion
-, durationInMs = duration
-, clientBrowser = client_Browser
 , browserName = iff(browserName=='Edg', 'Edge', browserName)
 , browserVersion = browserVersion
+, clientBrowser = client_Browser
 , clientOS = client_OS
+, durationInMs = duration
+, location = client_CountryOrRegion
 
 
 // Page views (for queries)
 pageViews
+| where timestamp > ago(7d) // adjust as needed
 | where customDimensions.pageDataSourceType == 'Query'
-| project timestamp
 | project timestamp
 // in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
@@ -77,9 +77,9 @@ pageViews
 , pageType = customDimensions.pageType
 , refUri = customDimensions.refUri
 // all of this data is not stored in customDimensions
-, location = client_CountryOrRegion
-, durationInMs = duration
-, clientBrowser = client_Browser
 , browserName = iff(browserName=='Edg', 'Edge', browserName)
 , browserVersion = browserVersion
+, clientBrowser = client_Browser
 , clientOS = client_OS
+, durationInMs = duration
+, location = client_CountryOrRegion
