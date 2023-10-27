@@ -9,8 +9,8 @@
 // and setup alerts so that they know up front which customers will need help.
 
 
-// Validation flow is as follows
-// Environment validation started (LC0220). 
+// Validation flow is as follows:
+// First, environment validation started (LC0220). 
 // For each extension (main + dependent extensions)
 //         Extension validation started (LC0204)
 //         Either 
@@ -18,118 +18,180 @@
 //         or
 //                 Extension Validation diagnostic reported (LC0210)
 //                 Extension validation completed with failures (LC0226)
-// Either 
+// Finally, 
+// either 
 //         Environment validation completed successfully (LC0222)
 // or
 //         Environment validation completed with failures (LC0223)
-//         Environnement diagnostic reported (LC0227)
+//         Environment diagnostic reported (LC0227)
+
 
 
 // Environment validation started (LC0220)
+// Message
+// Environment validation started: environment <environment name> target build version <target version>
 traces 
 | where customDimensions has "LC0220"
 | where customDimensions.eventId == "LC0220"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// which environment is being validated
 , aadTenantId = customDimensions.environmentTenantAAD
 , environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// validation info
 , targetVersion = customDimensions.targetVersion
 
 
 // Environment Extension validation started (LC0224)
+// Message
+// Extension validation started: extension <extensionName> version <extensionVersion> by <extensionPublisher> (<extensionVersion>)
 traces 
 | where customDimensions has "LC0224"
 | where customDimensions.eventId == "LC0224"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// which environment is being validated
 , aadTenantId = customDimensions.environmentTenantAAD
 , environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// which extension/app is being validated
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
+// validation info
 , targetVersion = customDimensions.targetVersion
 
 
 // Extension validation completed successfully (LC0225)
+// Message
+// Extension validation completed successfully: extension <extensionName> version <extensionVersion> by <extensionPublisher> (<extensionVersion>)
 traces 
 | where customDimensions has "LC0225"
 | where customDimensions.eventId == "LC0225"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// which environment is being validated
 , aadTenantId = customDimensions.environmentTenantAAD
 , environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// which extension/app is being validated
 , extensionId = customDimensions.extensionId
 , extensionName = customDimensions.extensionName
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
+// validation info
 , targetVersion = customDimensions.targetVersion
 
 
 // Extension validation completed with failures (LC0226)
+// Message
+// Extension validation completed with failures: extension DemoPTE version 1.0.0.5 by Publisher (57eecae0-4d41-4eb7-8ca3-dd35db1226ee)
 traces 
 | where customDimensions has "LC0226"
 | where customDimensions.eventId == "LC0226"
 | where timestamp > ago(30d) // adjust as needed
-| take 1
 | project timestamp
-, customDimensions // need sample of dimension names, not the actual data
+// which environment is being validated
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// which extension/app is being validated
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+// validation info
+, targetVersion = customDimensions.targetVersion
+, failureReason = customDimensions.failureReason
 
 
 // Environment validation request completed successfully (LC0222)
+// Message
+// Environment validation request completed successfully for environment <environment name> and target build version 23.1.13417.0
 traces 
 | where customDimensions has "LC0222"
 | where customDimensions.eventId == "LC0222"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// which environment is being validated
 , aadTenantId = customDimensions.environmentTenantAAD
 , environmentName = customDimensions.environmentName
+// validation info
 , targetVersion = customDimensions.targetVersion
 
 
 // Extension Validation diagnostic reported (LC0210)
+// Message
+// Validation diagnostic reported: extension DependingOnDemoPTE version 1.0.0.0 by Default publisher (5215885b-0719-48ae-9280-dea7693fb54d)
 traces 
 | where customDimensions has "LC0210"
 | where customDimensions.eventId == "LC0210"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// which environment is being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
   isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType // need this dimension
-, submissionOperationId = customDimensions.submissionOperationId 
+, environmentType = customDimensions.environmentType 
+// which extension/app is being validated
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , extensionName = customDimensions.extensionName
 , mainExtension = customDimensions.mainExtension 
+// validation info
 , diagnosticSourceLocation = customDimensions.diagnosticSourceLocation
 , diagnosticMessage = customDimensions.diagnosticMessage
 , diagnosticSourcePath = customDimensions.diagnosticSourcePath
 , diagnosticCode = customDimensions.diagnosticCode
 , diagnosticSeverity = customDimensions.diagnosticSeverity
+, submissionOperationId = customDimensions.submissionOperationId
 
 
 // Environment diagnostic reported (LC0227)
+// Message
+// Validation diagnostic reported: extension DemoPTE version 1.0.0.5 by Publisher (57eecae0-4d41-4eb7-8ca3-dd35db1226ee)
 traces 
 | where customDimensions has "LC0227"
 | where customDimensions.eventId == "LC0227"
 | where timestamp > ago(30d) // adjust as needed
-| take 1
 | project timestamp
-, customDimensions // need sample of dimension names, not the actual data
+// which environment is being validated
+, aadTenantId = customDimensions.environmentTenantAAD
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType // need this dimension
+// which extension/app is being validated
+, extensionId = customDimensions.extensionId
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionVersion = customDimensions.extensionVersion
+, extensionName = customDimensions.extensionName
+, mainExtension = customDimensions.mainExtension 
+// validation info
+, targetVersion = customDimensions.targetVersion
+, diagnosticSeverity = customDimensions.diagnosticSeverity
+, diagnosticMessage = customDimensions.diagnosticMessage
+, diagnosticSourcePath = customDimensions.diagnosticSourcePath
+, diagnosticSourceLocation = customDimensions.diagnosticSourceLocation
+, diagnosticCode = customDimensions.diagnosticCode
 
 
 // Environment validation completed with failures (LC0223)
+// Message
+// Environment validation request completed with failures for environment <environment name> and target build version 23.1.13383.0
 traces 
 | where customDimensions has "LC0223"
 | where customDimensions.eventId == "LC0223"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
+// which environment is being validated
 , aadTenantId = customDimensions.environmentTenantAAD
 , environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType 
+// validation info
 , failureReason = customDimensions.failureReason
 , targetVersion = customDimensions.targetVersion
