@@ -166,11 +166,13 @@ traces
 | where customDimensions.eventId == 'LC0107' 
 | project timestamp
 , message
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// information about the update
 , sourceVersion = customDimensions.sourceVersion
 , destinationVersion = customDimensions.destinationVersion
 , updatePeriodStartDateUtc = customDimensions.updatePeriodStartDateUtc
@@ -181,10 +183,10 @@ traces
 , ignoreUpdateWindow = customDimensions.ignoreUpdateWindow
 , initiatedFrom = customDimensions.initiatedFrom
 , totalTime = customDimensions.totalTime
+// what happened
 , failureReason = customDimensions.failureReason
 , failureCode = customDimensions.failureCode
 , recovered = customDimensions.recovered
-
 
 
 //
@@ -232,19 +234,23 @@ traces
 , environmentType = customDimensions.environmentType
 , totalTime = customDimensions.totalTime
 
+
 // Environment restart operation failed
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0112' 
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , totalTime = customDimensions.totalTime
 , failureReason = customDimensions.failureReason
+
 
 // Environment start operation initiated
 traces
@@ -271,19 +277,23 @@ traces
 , environmentType = customDimensions.environmentType
 , totalTime = customDimensions.totalTime
 
+
 // Environment start operation failed
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0115'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , totalTime = customDimensions.totalTime
 , failureReason = customDimensions.failureReason
+
 
 // Environment stop operation initiated
 traces
@@ -310,17 +320,20 @@ traces
 , environmentType = customDimensions.environmentType
 , totalTime = customDimensions.totalTime
 
+
 // Environment stop operation failed
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0118'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , totalTime = customDimensions.totalTime
 , failureReason = customDimensions.failureReason
 
@@ -367,22 +380,27 @@ traces
 , environmentType = customDimensions.environmentType
 , totalTime = customDimensions.totalTime
 
+
 // Environment copy operation failed on source
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0121'
 | project timestamp
 , message
+// source environment
 , aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
+// destination environment
 , destinationEnvironmentName = customDimensions.destinationEnvironmentName
 , destinationEnvironmentType = customDimensions.destinationEnvironmentType
 , destinationEnvironmentVersion = customDimensions.destinationEnvironmentVersion
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
+// what happened
 , totalTime = customDimensions.totalTime
 , failureReason = customDimensions.failureReason
+
 
 // Environment copy operation started on destination
 traces
@@ -398,6 +416,7 @@ traces
 , sourceEnvironmentName = customDimensions.sourceEnvironmentName
 , sourceEnvironmentType = customDimensions.sourceEnvironmentType
 , sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
+
 
 // Environment copied successfully to destination
 traces
@@ -415,6 +434,7 @@ traces
 , sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
 , totalTime = customDimensions.totalTime
 
+
 // Environment copy operation failed on destination
 traces
 | where timestamp > ago(30d) // adjust as needed
@@ -424,13 +444,17 @@ traces
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
-, environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType
+// source environment
 , sourceEnvironmentName = customDimensions.sourceEnvironmentName
 , sourceEnvironmentType = customDimensions.sourceEnvironmentType
 , sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
+// destination environment
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// what happened
 , totalTime = customDimensions.totalTime
 , failureReason = customDimensions.failureReason
+
 
 //
 // Environment copy events
@@ -476,12 +500,14 @@ traces
 , pointInTimeUtc = customDimensions.pointInTimeUtc
 , totalTime = customDimensions.totalTime
 
+
 // Environment PIT restore operation failed on source
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0127'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
@@ -490,9 +516,12 @@ traces
 , destinationEnvironmentVersion = customDimensions.destinationEnvironmentVersion
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, failureReason = customDimensions.failureReason
+// operation details
 , pointInTimeUtc = customDimensions.pointInTimeUtc
+// what happened
+, failureReason = customDimensions.failureReason
 , totalTime = customDimensions.totalTime
+
 
 // Environment PIT restore operation started on destination
 traces
@@ -527,22 +556,26 @@ traces
 , sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
 , totalTime = customDimensions.totalTime
 
+
 // Environment PIT restore operation failed on destination
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0130'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, failureReason = customDimensions.failureReason
-, pointInTimeUtc = customDimensions.pointInTimeUtc
 , sourceEnvironmentName = customDimensions.sourceEnvironmentName
 , sourceEnvironmentType = customDimensions.sourceEnvironmentType
 , sourceEnvironmentVersion = customDimensions.sourceEnvironmentVersion
+// operation details
+, pointInTimeUtc = customDimensions.pointInTimeUtc
+// what happened
+, failureReason = customDimensions.failureReason
 , totalTime = customDimensions.totalTime
 
 
@@ -573,12 +606,14 @@ traces
 , destinationEnvironmentName = customDimensions.destinationEnvironmentName
 , registeredForMoveDateUtc = customDimensions.registeredForMoveDateUtc
 
+
 // Environment move to different AAD tenant operation scheduling failed
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0132'
 | project timestamp
 , message
+// in which tenants did it happen
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
@@ -588,8 +623,10 @@ traces
 , sourceEnvironmentName = customDimensions.sourceEnvironmentName
 , destinationEnvironmentName = customDimensions.destinationEnvironmentName
 , registeredForMoveDateUtc = customDimensions.registeredForMoveDateUtc
+// what happened
 , totalTime = customDimensions.totalTime
 , failureReason = customDimensions.failureReason
+
 
 // Environment move to different AAD tenant started
 traces
@@ -622,12 +659,14 @@ traces
 , destinationEnvironmentName = customDimensions.destinationEnvironmentName
 , totalTime = customDimensions.totalTime
 
+
 // Environment move to different AAD tenant failed
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0135'
 | project timestamp
 , message
+// in which tenants did it happen
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
@@ -636,6 +675,7 @@ traces
 , destinationAadTenantId = customDimensions.destinationAadTenantId
 , sourceEnvironmentName = customDimensions.sourceEnvironmentName
 , destinationEnvironmentName = customDimensions.destinationEnvironmentName
+// what happened
 , totalTime = customDimensions.totalTime
 , failureReason = customDimensions.failureReason
 
@@ -676,17 +716,20 @@ traces
 , sessionId = customDimensions.sessionId
 , totalTime = customDimensions.totalTime
 
+
 // Environment session cancellation from TAC failed
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0138'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , failureReason = customDimensions.failureReason
 , sessionId = customDimensions.sessionId
 
@@ -727,19 +770,22 @@ traces
 , environmentType = customDimensions.environmentType
 , totalTime = customDimensions.totalTime
 
+
 // Environment database export operation failed
 traces
 | where timestamp > ago(30d) // adjust as needed
-| where customDimensions.eventId == ''
+| where customDimensions.eventId == 'LC0141'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
-, blobUrl = customDimensions.blobUrl
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , failureReason = customDimensions.failureReason
+, blobUrl = customDimensions.blobUrl
 , totalTime = customDimensions.totalTime
 
 
@@ -779,12 +825,14 @@ traces
 | where customDimensions.eventId == 'LC0143'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentConfigurationKey = customDimensions.environmentConfigurationKey
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , failureReason = customDimensions.failureReason
 , oldValue = customDimensions.oldValue
 , newValue = customDimensions.newValue
@@ -805,21 +853,25 @@ traces
 , environmentType = customDimensions.environmentType
 , oldValue = customDimensions.oldValue
 
+
 // Environment configuration key failed to be deleted
 traces
 | where timestamp > ago(30d) // adjust as needed
 | where customDimensions.eventId == 'LC0145'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentConfigurationKey = customDimensions.environmentConfigurationKey
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , failureReason = customDimensions.failureReason
 , oldValue = customDimensions.oldValue
 , totalTime = customDimensions.totalTime
+
 
 // Environment update window was modified
 traces
@@ -918,12 +970,14 @@ traces
 | where customDimensions.eventId == 'LC0151'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , deletionReason = customDimensions.deletionReason
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , failureReason = customDimensions.failureReason
 , totalTime = customDimensions.totalTime
 
@@ -970,14 +1024,77 @@ traces
 | where customDimensions.eventId == 'LC0154'
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, failureReason = customDimensions.failureReason
 , newEnvironmentName = customDimensions.newEnvironmentName
+// what happened
+, failureReason = customDimensions.failureReason
 , totalTime = customDimensions.totalTime
+
+
+//
+// Environment app hotfix scheduling by App Management API
+// 
+// Environment app hotfix scheduling by App Management API failed to be scheduled: LC0156
+// Environment app hotfix scheduling by App Management API failed to be installed: LC0160
+//
+
+// Environment app hotfix scheduling by App Management API failed to be scheduled
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0156' 
+| project timestamp
+, message
+// in which environment did it happen
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, environmentVersion = customDimensions.environmentVersion
+// which extension/app
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+// when should the operation run
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+// what happened
+, failureReason = customDimensions.failureReason
+
+
+// Environment app hotfix scheduling by App Management API failed to be installed
+traces
+| where timestamp > ago(30d) // adjust as needed
+| where customDimensions.eventId == 'LC0160' 
+| project timestamp
+, message
+// in which environment did it happen
+, aadTenantId = customDimensions.aadTenantId
+, applicationFamily = customDimensions.applicationFamily
+, countryCode = customDimensions.countryCode
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, environmentVersion = customDimensions.environmentVersion
+// which extension/app
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionPublisher = customDimensions.extensionPublisher
+, extensionScope = customDimensions.extensionScope
+, extensionDestinationVersion = customDimensions.extensionDestinationVersion
+, extensionSourceVersion = customDimensions.extensionSourceVersion
+// when should the operation run
+, runAfterDateUtc = customDimensions.runAfterDateUtc
+, useEnvironmentUpdateWindow = customDimensions.useEnvironmentUpdateWindow
+// what happened
+, failureReason = customDimensions.failureReason
 
 
 //
@@ -1100,12 +1217,14 @@ traces
 | where customDimensions.eventId == 'LC0182' // Introduced in March 2023
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , deletionReason = customDimensions.deletionReason
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , failureReason = customDimensions.failureReason
 , totalTime = customDimensions.totalTime
 
@@ -1158,12 +1277,14 @@ traces
 | where customDimensions.eventId == 'LC0185' // Introduced in March 2023
 | project timestamp
 , message
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , applicationFamily = customDimensions.applicationFamily
 , countryCode = customDimensions.countryCode
 , deletionReason = customDimensions.deletionReason
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+// what happened
 , failureReason = customDimensions.failureReason
 , totalTime = customDimensions.totalTime
 
