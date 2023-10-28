@@ -16,7 +16,6 @@ Pending teams
 * Usage: add license type on sessions page (pending bug fix from server team)
 * Administration: Permission set changes (pending app team on adding permission set name)
 * Administration: New page 'Change log configuration' changes (pending app team)
-* Administration: New page on PTE validations signal (pending compiler team)
 
 
 -----
@@ -75,7 +74,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Errors: on all pages, added links to documentation and troubleshooting guide
 * Administration: new page 'Change log lifecycle'. Shows all lifecycle events (add/remove/change) for fields in the changelog feature.
 * Administration: on page 'Environment lifecycle', added events LC0156
-
+* Administration: New page on PTE validations signal. 
 
 ------------------
 2023-10-01 release
