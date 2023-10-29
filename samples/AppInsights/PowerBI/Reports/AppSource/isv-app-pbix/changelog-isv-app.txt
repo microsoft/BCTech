@@ -25,8 +25,6 @@ Ideas
 * Usage: make 'Clients' page filter on AppDim
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
-* Usage: on most pages add visual that shows usage over Last 7 Days, Last 30 Days, From 31 Days - 60 Days ago, From 61 Days - 91 Days ago
-* Usage: new page 'Queries'. Shows all usage of data analysis on queries.
 
 
 ------------------
@@ -34,7 +32,7 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Usage: new page 'Queries'. Shows all usage of data analysis on queries.
-
+* Usage: on most pages, added visual that shows usage over Last 7 Days, Last 30 Days, From 31 Days - 60 Days ago, From 61 Days - 91 Days ago
 
 ------------------
 2023-10-02 release
