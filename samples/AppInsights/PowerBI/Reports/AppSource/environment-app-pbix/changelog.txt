@@ -69,6 +69,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * All pages: AAD renamed to Entra
 * Usage: new page 'Queries'. Shows all usage of data analysis on queries.
 * Usage: on page Reports, it is now possible to filter on usage of the Financial reporting (aka account schedules) feature
+* Errors: new page 'Environment extension validation diagnostics'. Shows all diagnostics for extensions that needs to be fixed before upgrading to the next version of Business Central.
 * Errors: on page Report Errors, added new visual on what the user did. Also fixed bug where report errors only showed cancelled reports, not exceptions.
 * Errors: on page outgoing web service errors, added HTTP details to HTTP status visual. Also added new HTTP filter possibilities.
 * Errors: on all pages, added links to documentation and troubleshooting guide
