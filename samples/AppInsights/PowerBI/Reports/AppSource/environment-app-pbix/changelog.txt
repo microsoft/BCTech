@@ -15,13 +15,11 @@ Pending teams
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Usage: add license type on sessions page (pending bug fix from server team)
 * Administration: Permission set changes (pending app team on adding permission set name)
-* Administration: New page 'Change log configuration' changes (pending app team)
 
 
 -----
 Ideas
 -----
-* Administration: Retention policy changes page
 * Usage: Feature uptake page
 * Errors: Show successful/failed authentication calls joined to web service telemetry to extract endpoint, http headers
 * Errors: cross tenant comparisons of errors (is this normal?)
@@ -33,23 +31,7 @@ Ideas
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
-* what are these events?
-AL0000E9U
-RT0042
-RT0047
-AL0000LA1
-AL0000EIO
-AL0000LA2
-AL0000LA3
-
-RT0040
-Business event subscription created
-
-RT0041
-Business event subscription deleted.
-
-RT0045
-Business event triggered successfully.
+* Business event telemetry
 
 Possible bug
 The "Last 7 days" and "Since Yesterday" values in "Outgoing Web Service Errors" are not calculated correctly. I filtered the dashboard to show only the last 4 days (and I know that 69 of these errors are from today) so it should show all 104 in the last 7 days and 69 in since yesterday)
@@ -62,6 +44,12 @@ Seems like this issue has more pages, at least
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
+------------------
+* Administration: Retention policy changes page
+
+
+------------------
+2023-11-01 release
 ------------------
 * Bug fixed: On Job queue errors page, url now works (was missing a "?")
 * Bug fixed: App slicer now sync across all pages in each report (cannot sync across reports)
@@ -76,6 +64,7 @@ Install beta app from: https://aka.ms/bctelemetryreportbeta
 * Administration: new page 'Change log lifecycle'. Shows all lifecycle events (add/remove/change) for fields in the changelog feature.
 * Administration: on page 'Environment lifecycle', added events LC0156
 * Administration: New page on PTE validations signal. 
+
 
 ------------------
 2023-10-01 release
