@@ -1,6 +1,6 @@
-This extension allows AL developers to quickly get started with completions on the Azure OpenAI service.
+This extension demonstrates how AL developers can use the Copilot toolkit to quickly get started with implementing Copilot features in Dynamics 365 Business Central, leveraging the models on the Azure OpenAI service.
 
-Notice: this app is provided as sample/demo, and should not be used in production.
+Notice: this app is provided as sample/demo, and should not be used in production. Copilot Toolkit is available in Business Central insider builds, and will be available in Business Central Online later in 2023.
 
 ## Getting Started
 
