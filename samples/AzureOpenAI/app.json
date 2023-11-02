@@ -1,23 +1,23 @@
 {
-  "id": "cfa69275-1b36-481d-aebd-6981342df216",
-  "name": "Azure OpenAI Sample",
-  "publisher": "Default publisher",
-  "version": "1.0.0.0",
-  "brief": "Azure OpenAI Sample",
-  "description": "A sample app to connect to Azure OpenAI",
-  "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
-  "EULA": "https://go.microsoft.com/fwlink/?linkid=2009120",
-  "help": "https://go.microsoft.com/fwlink/?linkid=2104024",
-  "url": "https://go.microsoft.com/fwlink/?LinkId=724011",
-  "logo": "ExtensionLogo.png",
-  "dependencies": [],
+  "id": "",
+  "name": "Business Central Copilot Toolkit Demo",
+  "publisher": "BC 23",
+  "version": "0.9.0.0",
+  "brief": "A simple example with Copilot demos.",
+  "description": "This is a demo extension with some sample Copilot experiences, and should not be used in production.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [  ],
   "screenshots": [],
-  "platform": "1.0.0.0",
-  "application": "1.0.0.0",
+  "platform": "23.0.0.0",
+  "application": "23.1.0.0",
   "idRanges": [
     {
-      "from": 50100,
-      "to": 50149
+      "from": 54300,
+      "to": 54350
     }
   ],
   "resourceExposurePolicy": {
@@ -25,7 +25,8 @@
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
   },
-  "runtime": "11.0",
-  "features": ["NoImplicitWith"],
-  "contextSensitiveHelpUrl": "https://learn.microsoft.com/dynamics365/business-central/"
+  "runtime": "12.1",
+  "features": [
+    "NoImplicitWith"
+  ]
 }
