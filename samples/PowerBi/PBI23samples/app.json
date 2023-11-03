@@ -12,8 +12,8 @@
   "logo": "",
   "dependencies": [],
   "screenshots": [],
-  "platform": "1.0.0.0",
-  "application": "22.0.0.0",
+  "platform": "23.0.0.0",
+  "application": "23.1.0.0",
   "idRanges": [
     {
       "from": 50100,
@@ -25,7 +25,7 @@
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
   },
-  "runtime": "11.0",
+  "runtime": "12.1",
   "features": [
     "NoImplicitWith"
   ]
