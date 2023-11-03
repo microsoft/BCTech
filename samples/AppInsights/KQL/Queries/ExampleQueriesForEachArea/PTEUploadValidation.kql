@@ -6,8 +6,9 @@
 // In the online version of Business Central, when a user/administrator uploads a per-tenant extension 
 // to an environment from the Extension Management page, we proactively validate it against the environment.
 // In the KQL sample code below, this is called a "PTE submission validation request".
+
 // With this telemetry, partners can monitor these attempts for customers 
-// and setup alerts on failures so that they know up front which customers will need help.
+// and setup alerts on failures so that they know up-front which customers will need help.
 
 
 // The PTE submission validation flow is as follows:
@@ -27,93 +28,97 @@
 //         PTE submission validation request completed with failures (LC0203)
 
 
-// PTE validation started: request <operation id>
+// PTE validation started: request <submission id>
 traces 
 | where customDimensions has "LC0200"
 | where customDimensions.eventId == "LC0200"
 | where timestamp > ago(30d) // adjust as needed
+| extend mainExtension = parse_json(tostring( customDimensions.mainExtension ))
 | project timestamp
-// need to rename to aadTenantId
+// in which environment is the extension being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
-  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType // need this dimension
 , dependentExtensions = customDimensions.dependentExtensions
+// which extension/app is being validated
+, mainExtensionId = mainExtension.Id
+, mainExtensionPublisher = mainExtension.Publisher
+, mainExtensionVersion = mainExtension.Version 
+, mainExtensionName = mainExtension.Name 
+// validation info
 , submissionOperationId = customDimensions.submissionOperationId 
-, mainExtensionId = customDimensions.mainExtensionId // add this
-, mainExtensionPublisher = customDimensions.mainExtensionPublisher // add this
-, mainExtensionVersion = customDimensions.mainExtensionVersion // add this
-, mainExtensionName = customDimensions.mainExtensionName // add this
-, mainExtension = customDimensions.mainExtension 
 
 
-// Extension validation started: extension ALProject102 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f483e)
+// Extension validation started: extension <extension name> version <extension version> by <extension publisher> (<extension id>)
 traces 
 | where customDimensions has "LC0204"
 | where customDimensions.eventId == "LC0204"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-// need to rename to aadTenantId
+// in which environment is the extension being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
-  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, submissionOperationId = customDimensions.submissionOperationId 
+// which extension/app is being validated
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , extensionName = customDimensions.extensionName
-, mainExtension = customDimensions.mainExtension 
+// validation info
+, submissionOperationId = customDimensions.submissionOperationId 
 
 
-// Extension validation completed successfully: extension ALProject102 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f483e)	
+// Extension validation completed successfully: extension <extension name> version <extension version> by <extension publisher> (<extension id>)
 traces 
 | where customDimensions has "LC0205"
 | where customDimensions.eventId == "LC0205"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-// need to rename to aadTenantId
+// in which environment is the extension being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
-  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType // need this dimension
-, submissionOperationId = customDimensions.submissionOperationId 
+// which extension/app is being validated
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , extensionName = customDimensions.extensionName
-, mainExtension = customDimensions.mainExtension 
+// validation info
+, submissionOperationId = customDimensions.submissionOperationId 
 
 
-// Validation diagnostic reported: extension ALProject101 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f482e)	
+// Validation diagnostic reported: extension <extension name> version <extension version> by <extension publisher> (<extension id>)
 traces 
 | where customDimensions has "LC0210"
 | where customDimensions.eventId == "LC0210"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-// need to rename to aadTenantId
+// in which environment is the extension being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
-  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType // need this dimension
-, submissionOperationId = customDimensions.submissionOperationId 
+, environmentType = customDimensions.environmentType 
+// which extension/app is being validated
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , extensionName = customDimensions.extensionName
-, mainExtension = customDimensions.mainExtension 
+// validation info
+, submissionOperationId = customDimensions.submissionOperationId 
 , diagnosticSourceLocation = customDimensions.diagnosticSourceLocation
 , diagnosticMessage = customDimensions.diagnosticMessage
 , diagnosticSourcePath = customDimensions.diagnosticSourcePath
@@ -121,72 +126,74 @@ traces
 , diagnosticSeverity = customDimensions.diagnosticSeverity
 
 
-// Extension validation completed with failures: extension ALProject101 version 1.0.0.0 by Default publisher (17fb3820-ae2b-43a2-a821-6f041c2f482e)
+// Extension validation completed with failures: extension <extension name> version <extension version> by <extension publisher> (<extension id>)
 traces 
 | where customDimensions has "LC0206"
 | where customDimensions.eventId == "LC0206"
 | where timestamp > ago(30d) // adjust as needed
 | project timestamp
-// need to rename to aadTenantId
+// in which environment is the extension being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
-  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType // need this dimension
-, submissionOperationId = customDimensions.submissionOperationId 
+, environmentType = customDimensions.environmentType
+// which extension/app is being validated
 , extensionId = customDimensions.extensionId
 , extensionPublisher = customDimensions.extensionPublisher
 , extensionVersion = customDimensions.extensionVersion
 , extensionName = customDimensions.extensionName
-, mainExtension = customDimensions.mainExtension 
+// validation info
+, submissionOperationId = customDimensions.submissionOperationId 
 , failureReason = customDimensions.failureReason
 
 
-// PTE submission validation request completed successfully: request <operation id>
+// PTE submission validation request completed successfully: request <submission id>
 traces 
 | where customDimensions has "LC0202"
 | where customDimensions.eventId == "LC0202"
 | where timestamp > ago(30d) // adjust as needed
+| extend mainExtension = parse_json(tostring( customDimensions.mainExtension ))
 | project timestamp
-// need to rename to aadTenantId
+// in which environment is the extension being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
-  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType // need this dimension
+// which extension/app is being validated
+, mainExtensionId = mainExtension.Id
+, mainExtensionPublisher = mainExtension.Publisher
+, mainExtensionVersion = mainExtension.Version 
+, mainExtensionName = mainExtension.Name 
 , dependentExtensions = customDimensions.dependentExtensions
+// validation info
 , submissionOperationId = customDimensions.submissionOperationId 
-, mainExtensionId = customDimensions.mainExtensionId // add this
-, mainExtensionPublisher = customDimensions.mainExtensionPublisher // add this
-, mainExtensionVersion = customDimensions.mainExtensionVersion // add this
-, mainExtensionName = customDimensions.mainExtensionName // add this
-, mainExtension = customDimensions.mainExtension 
 
 
-// PTE submission validation request completed with failures: request <operation id>	
+// PTE submission validation request completed with failures: request <submission id>	
 traces 
 | where customDimensions has "LC0203"
 | where customDimensions.eventId == "LC0203"
 | where timestamp > ago(30d) // adjust as needed
+| extend mainExtension = parse_json(tostring( customDimensions.mainExtension ))
 | project timestamp
-// need to rename to aadTenantId
+// in which environment is the extension being validated
 , aadTenantId = case(
   isnotempty(customDimensions.aadTenantId), customDimensions.aadTenantId  
-  isnotempty(customDimensions.environmentId), customDimensions.environmentId
+, isnotempty(customDimensions.environmentId), customDimensions.environmentId
 , 'Unknown'
 )
 , environmentName = customDimensions.environmentName
-, environmentType = customDimensions.environmentType // need this dimension
+// which extension/app is being validated
+, mainExtensionId = mainExtension.Id
+, mainExtensionPublisher = mainExtension.Publisher
+, mainExtensionVersion = mainExtension.Version 
+, mainExtensionName = mainExtension.Name 
 , dependentExtensions = customDimensions.dependentExtensions
-, submissionOperationId = customDimensions.submissionOperationId 
-, mainExtensionId = customDimensions.mainExtensionId // add this
-, mainExtensionPublisher = customDimensions.mainExtensionPublisher // add this
-, mainExtensionVersion = customDimensions.mainExtensionVersion // add this
-, mainExtensionName = customDimensions.mainExtensionName // add this
-, mainExtension = customDimensions.mainExtension 
+// validation info
+, submissionOperationId = customDimensions.submissionOperationId  
 , failureReason = customDimensions.failureReason
-
