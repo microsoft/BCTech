@@ -1,0 +1,14 @@
+// Power BI embed events
+traces
+| where timestamp >= ago(90d) // adjust as needed. The value 90 comes from the app configuration
+| where customDimensions.alSubCategory == 'Usage'
+| where customDimensions.alFeatureName == 'Power BI Embed'
+| project message, customDimensions.alEventName, customDimensions.eventId
+// not there (yet)
+// extension id/name/version/publisher
+// page name
+// page id
+// pbi guid
+// pbi type? report/page/visual
+// timing ?
+| take 50
