@@ -27,7 +27,6 @@ Ideas
 * Performance: Recurring job queue jobs with long running SQL/AL/locks
 * Performance: Database wait statistics page
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
-* update application areas with 22.0 new app features
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
@@ -40,12 +39,12 @@ Seems like this issue has more pages, at least
 * Outgoing WS errors
 
 
-
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Administration: Retention policy changes page
+* Administration: New page on PTE upload validations signal. 
 
 
 ------------------
