@@ -1,58 +1,15 @@
 # Videos about telemetry
 Want some easy to digest introductions to Business Central telemetry? Here are some videos to get you started
 
-## Want to Learn Business Central telemetry in 30 minutes?
-Haven't got the time to learn Business Central telemetry? Good news: we have recorded a series of short videos on the topic. Watch one every morning for a week and you should be up and running. 
+## Various videos from Microsoft and from the community
 
-
-### How do I get started with Application Insights? (4 min)
-Watch this 4 min video to learn how to connect an environment or an extension to Azure Application Insights. Tip: **CTRL+click** to open in a new window.
+### 2023-11-06 What's new (in 2023 release wave 2): Telemetry (24 min) by Kennie Nybo Pontoppidan
 <p align="center">
-<a href="https://www.youtube.com/watch?v=f4rxr20QG04"><img src="https://img.youtube.com/vi/f4rxr20QG04/0.jpg" width="50%"></a>
+<a href="https://www.youtube.com/watch?v=7rIHz0zrgWU"><img src="https://img.youtube.com/vi/7rIHz0zrgWU/0.jpg" width="50%"></a>
 <br>
 </p>
 
-### How can I write custom Kusto queries in Dynamics 365 Business Central? (9 min)
-Watch this 9 min video to learn how to write Kusto queries against Business Central telemetry. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=A1e9ZMo5xcY"><img src="https://img.youtube.com/vi/A1e9ZMo5xcY/0.jpg" width="50%"></a>
-<br>
-</p>
-
-### How can I troubleshoot issues using the Jupyter Notebook troubleshooting guides? (8 min)
-Watch this 8 min video to learn how to troubleshoot issues using the Jupyter Notebook troubleshooting guides. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=B3EL0xdvaUY"><img src="https://img.youtube.com/vi/B3EL0xdvaUY/0.jpg" width="50%"></a>
-<br>
-</p>
-
-
-
-### How can I emit telemetry to Azure Application Insights from AL code? (1 min)
-Watch this 1 min video to learn how custom telemetry works. If you develop extensions for Business Central, then this is a must-see. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg" width="50%"></a>
-<br>
-</p>
-
-
-### How can I analyze performance using the Power BI performance report? (8 min)
-Watch this 8 min video to learn how to use the DYI Power BI performance report to triage performance issues happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=Kbq6YB8VU-8"><img src="https://img.youtube.com/vi/Kbq6YB8VU-8/0.jpg" width="50%"></a>
-<br>
-</p>
-
-
-### How can I triage errors using the Power BI error report? (6 min)
-Watch this 6 min video to learn how to use the DYI Power BI error report to triage errors happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
-<p align="center">
-<a href="https://www.youtube.com/watch?v=ByealbDQqIU"><img src="https://img.youtube.com/vi/ByealbDQqIU/0.jpg" width="50%"></a>
-<br>
-</p>
-
-
-## Other videos
+https://www.youtube.com/watch?v=7rIHz0zrgWU
 
 ### 2023-03-20 Get Low Friction Go Lives and Optimize Your Investments with Telemetry Data (39 min) by Kennie Nybo Pontoppidan
 <p align="center">
@@ -129,6 +86,56 @@ Watch this 4 min video to learn how to add Azure Alerts as push notifications on
 <br>
 </p>
 
+
+## Want to Learn Business Central telemetry in 30 minutes (a bit old, but still relevant)?
+Haven't got the time to learn Business Central telemetry? Good news: we have recorded a series of short videos on the topic. Watch one every morning for a week and you should be up and running. 
+
+
+### How do I get started with Application Insights? (4 min)
+Watch this 4 min video to learn how to connect an environment or an extension to Azure Application Insights. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=f4rxr20QG04"><img src="https://img.youtube.com/vi/f4rxr20QG04/0.jpg" width="50%"></a>
+<br>
+</p>
+
+### How can I write custom Kusto queries in Dynamics 365 Business Central? (9 min)
+Watch this 9 min video to learn how to write Kusto queries against Business Central telemetry. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=A1e9ZMo5xcY"><img src="https://img.youtube.com/vi/A1e9ZMo5xcY/0.jpg" width="50%"></a>
+<br>
+</p>
+
+### How can I troubleshoot issues using the Jupyter Notebook troubleshooting guides? (8 min)
+Watch this 8 min video to learn how to troubleshoot issues using the Jupyter Notebook troubleshooting guides. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=B3EL0xdvaUY"><img src="https://img.youtube.com/vi/B3EL0xdvaUY/0.jpg" width="50%"></a>
+<br>
+</p>
+
+
+
+### How can I emit telemetry to Azure Application Insights from AL code? (1 min)
+Watch this 1 min video to learn how custom telemetry works. If you develop extensions for Business Central, then this is a must-see. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=gFG5E9Xd5bA"><img src="https://img.youtube.com/vi/gFG5E9Xd5bA/0.jpg" width="50%"></a>
+<br>
+</p>
+
+
+### How can I analyze performance using the Power BI performance report? (8 min)
+Watch this 8 min video to learn how to use the DYI Power BI performance report to triage performance issues happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=Kbq6YB8VU-8"><img src="https://img.youtube.com/vi/Kbq6YB8VU-8/0.jpg" width="50%"></a>
+<br>
+</p>
+
+
+### How can I triage errors using the Power BI error report? (6 min)
+Watch this 6 min video to learn how to use the DYI Power BI error report to triage errors happening in an environment or an extension. Tip: **CTRL+click** to open in a new window.
+<p align="center">
+<a href="https://www.youtube.com/watch?v=ByealbDQqIU"><img src="https://img.youtube.com/vi/ByealbDQqIU/0.jpg" width="50%"></a>
+<br>
+</p>
 
 
 
