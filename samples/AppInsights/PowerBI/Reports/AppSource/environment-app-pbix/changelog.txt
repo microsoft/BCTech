@@ -38,12 +38,12 @@ Seems like this issue has more pages, at least
 * Feature errors
 * Outgoing WS errors
 
-
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Bug fixed: refresh error if you had query usage in the UI and also other signal on those queries
+* Errors: new page 'Per-Tenant Extension upload validation diagnostics'. Shows all diagnostics for extensions that failed to be uploaded to Business Central from the Extensions Management page.
 * Administration: Retention policy changes page
 * Administration: New page on PTE upload validations signal. 
 
