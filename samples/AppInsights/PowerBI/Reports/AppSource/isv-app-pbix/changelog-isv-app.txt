@@ -25,14 +25,22 @@ Ideas
 * Usage: make 'Clients' page filter on AppDim
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
 * Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
-
+* Top level? Single view on customer page
+* Administration: Aged customers (on older versions)
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Dataset: new parameter "Include only these AppIds". Allows you to filter the report dataset (at refresh time) to only include certain apps.
+
+
+------------------
+2023-11-01 release
+------------------
 * Usage: new page 'Queries'. Shows all usage of data analysis on queries.
 * Usage: on most pages, added visual that shows usage over Last 7 Days, Last 30 Days, From 31 Days - 60 Days ago, From 61 Days - 91 Days ago
+
 
 ------------------
 2023-10-02 release
