@@ -1,21 +1,21 @@
 // filter out a single app
 source
-| where Properties.extensionId <> "64e497e6-a104-44e6-88b3-6afd99f60c59"
+| where tostring( Properties.extensionId ) <> "64e497e6-a104-44e6-88b3-6afd99f60c59"
 
 
 
 // filter out multiple apps
 source
-| where Properties.extensionId !in ("64e497e6-a104-44e6-88b3-6afd99f60c59", "55057e46-8952-46de-9f48-a947817e6800")
+| where tostring( Properties.extensionId ) !in ("64e497e6-a104-44e6-88b3-6afd99f60c59", "55057e46-8952-46de-9f48-a947817e6800")
 
 
 
 // only accept data from this app
 source
-| where Properties.extensionId == "64e497e6-a104-44e6-88b3-6afd99f60c59"
+| where tostring( Properties.extensionId ) == "64e497e6-a104-44e6-88b3-6afd99f60c59"
 
 
 
 // filter out data from an app publisher
 source
-| where Properties.extensionPublisher <> "write name of publisher as it appears in telemetry"
+| where tostring( Properties.extensionPublisher ) <> "write name of publisher as it appears in telemetry"
