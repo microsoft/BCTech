@@ -29,20 +29,24 @@ Ideas
 * Performance: outgoing ws calls happening while session is taking database locks/in a write transactions
 * Use KQL functions for user analytics: https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/useranalytics
 * Dataset: EventStatistics table, refactor to use TenantHashQuerySnippet
-* Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * Business event telemetry
 
-Possible bug
+
+Possible bugs
 The "Last 7 days" and "Since Yesterday" values in "Outgoing Web Service Errors" are not calculated correctly. I filtered the dashboard to show only the last 4 days (and I know that 69 of these errors are from today) so it should show all 104 in the last 7 days and 69 in since yesterday)
 Seems like this issue has more pages, at least
 * Feature errors
 * Outgoing WS errors
 
+On Environment Inventory report: "Is Updated" and "Is Deleted" predicates needs to be updated.
+See example https://www.yammer.com/dynamicsnavdev/#/threads/show?threadId=2567423155871744
+
+
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-
+* Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
 
 
 
