@@ -24,20 +24,20 @@ Ideas
 * Usage: make 'Locations' page filter on AppDim
 * Usage: make 'Clients' page filter on AppDim
 * Usage: make 'MAT/WAT/DAT' page filter on AppDim
-* Introduce clientInfoDim and refactor queries ClientBrowserUsageQuery, PageViewPerformanceQuery to use this
 * Top level? Single view on customer page
 * Administration: Aged customers (on older versions)
+
+
+Bug reported on Twitter
+https://twitter.com/phenno1/status/1731977434034008216
+it seems that PowerBI for apps does not count apps installed as part as BC upgrade to Inventory. If I update my app manually (via Admin portal) it is counted but if app is updated automatically, together with major BC update, it is not.
 
 
 ------------------
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-
-Bug reported on Twitter
-https://twitter.com/phenno1/status/1731977434034008216
-it seems that PowerBI for apps does not count apps installed as part as BC upgrade to Inventory. If I update my app manually (via Admin portal) it is counted but if app is updated automatically, together with major BC update, it is not.
-
+* Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
 
 
 ------------------
