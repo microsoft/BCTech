@@ -147,9 +147,7 @@ traces
 , timeout = customDimensions.timeout
 // execution info
 , result = customDimensions.result
-, sqlExecutes = customDimensions.sqlExecutes
-, sqlRowsRead = customDimensions.sqlRowsRead
-, totalTime = customDimensions.totalTime
+, failureReason = customDimensions.failureReason
 
 
 // Task timeout changed because it was exceeding the max timeout value
