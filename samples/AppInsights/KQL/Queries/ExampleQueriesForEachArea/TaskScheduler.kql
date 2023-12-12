@@ -1,17 +1,20 @@
 // KQL samples - Task Scheduler events 
 
-// Task created (raw data)
+// Task created
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0040' // for performance 
 | where customDimensions.eventId == 'LC0040'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what codeunit to run
+, codeunitObjectId = customDimensions.codeunitObjectId
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+// task info
 , formatId = customDimensions.formatId
 , isReady = customDimensions.isReady
 , languageId = customDimensions.languageId
@@ -20,18 +23,21 @@ traces
 , timeout = customDimensions.timeout
 
 
-// Task ready (raw data)
+// Task ready
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0041' // for performance 
 | where customDimensions.eventId == 'LC0041'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what codeunit to run
+, codeunitObjectId = customDimensions.codeunitObjectId
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+// task info
 , formatId = customDimensions.formatId
 , isReady = customDimensions.isReady
 , languageId = customDimensions.languageId
@@ -40,102 +46,110 @@ traces
 , timeout = customDimensions.timeout
 
 
-// Task removed (raw data)
+// Task removed 
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0042' // for performance 
 | where customDimensions.eventId == 'LC0042'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what codeunit to run
+, codeunitObjectId = customDimensions.codeunitObjectId
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+// task info
 , formatId = customDimensions.formatId
-, isReady = customDimensions.isReady
 , languageId = customDimensions.languageId
 , notBefore = customDimensions.notBefore
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
 
 
-// Task completed (raw data)
+// Task completed
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0043' // for performance 
 | where customDimensions.eventId == 'LC0043'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, attemptNumber = customDimensions.attemptNumber
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what codeunit to run
+, codeunitObjectId = customDimensions.codeunitObjectId
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+// task info
 , formatId = customDimensions.formatId
 , isReady = customDimensions.isReady
 , languageId = customDimensions.languageId
 , notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+// execution info
 , result = customDimensions.result
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
-, taskId = customDimensions.taskId
-, timeout = customDimensions.timeout
 
 
-// Task cancelled (raw data)
+// Task cancelled
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0044' // for performance 
 | where customDimensions.eventId == 'LC0044'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, attemptNumber = customDimensions.attemptNumber
-, cancelReasonMessage = customDimensions.cancelReasonMessage
-, cancelReason = customDimensions.cancelReason
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what codeunit to run
+, codeunitObjectId = customDimensions.codeunitObjectId
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+// task info
 , formatId = customDimensions.formatId
 , isReady = customDimensions.isReady
 , languageId = customDimensions.languageId
 , notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+// execution info
 , result = customDimensions.result
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
-, taskId = customDimensions.taskId
-, timeout = customDimensions.timeout
 
 
-// Task failed (raw data)
+// Task failed
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'LC0045' // for performance 
 | where customDimensions.eventId == 'LC0045'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, attemptNumber = customDimensions.attemptNumber
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what codeunit to run
+, codeunitObjectId = customDimensions.codeunitObjectId
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
-, failureReason = customDimensions.failureReason
+// task info
 , formatId = customDimensions.formatId
 , isReady = customDimensions.isReady
 , languageId = customDimensions.languageId
 , notBefore = customDimensions.notBefore
+, taskId = customDimensions.taskId
+, timeout = customDimensions.timeout
+// execution info
 , result = customDimensions.result
 , sqlExecutes = customDimensions.sqlExecutes
 , sqlRowsRead = customDimensions.sqlRowsRead
 , totalTime = customDimensions.totalTime
-, taskId = customDimensions.taskId
-, timeout = customDimensions.timeout
 
 
 // Task timeout changed because it was exceeding the max timeout value
@@ -145,16 +159,18 @@ traces
 | where customDimensions has 'LC0057' // for performance 
 | where customDimensions.eventId == 'LC0057'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, codeunitObjectId = customDimensions.codeunitObjectId
-, companyName = customDimensions.companyName
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what codeunit to run
+, codeunitObjectId = customDimensions.codeunitObjectId
 , failureCodeunitObjectId = customDimensions.failureCodeunitObjectId
+// task info
 , formatId = customDimensions.formatId
 , isReady = customDimensions.isReady
 , languageId = customDimensions.languageId
 , notBefore = customDimensions.notBefore
 , taskId = customDimensions.taskId
 , timeout = customDimensions.timeout
-
