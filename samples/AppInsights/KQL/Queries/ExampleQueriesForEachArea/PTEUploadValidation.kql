@@ -2,7 +2,6 @@
 
 // Available in environment (only online) telemetry from September 2023
 
-// Non-compatible 3rd party apps (PTEs) block upgrades to next major.
 // In the online version of Business Central, when a user/administrator uploads a per-tenant extension 
 // to an environment from the Extension Management page, we proactively validate it against the environment.
 // In the KQL sample code below, this is called a "PTE submission validation request".

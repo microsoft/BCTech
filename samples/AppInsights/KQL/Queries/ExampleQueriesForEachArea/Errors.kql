@@ -4,35 +4,33 @@
 // available from 20.0
 traces
 | where timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'RT0030'
+| where customDimensions.eventId == 'RT0030'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
-, alErrorMessage = customDimensions.alErrorMessage
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// in which extension/app
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
+// in which object
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
-, alStackTrace = customDimensions.alStackTrace
-, clientType = customDimensions.clientType
-, companyName = customDimensions.companyName
-, component = customDimensions.component
-, componentVersion = customDimensions.componentVersion
-, environmentType = customDimensions.environmentType
-, environmentName = customDimensions.environmentName
-, errorMessageInUsersLanguage = customDimensions.alErrorMessage
-, errorMessageInEnglish = customDimensions.alEnglishLanguageDiagnosticsMessage // This dimension was introduced in Business Central 2023 release wave 1, version 21.4.
-, eventId = customDimensions.eventId
-, extensionId = customDimensions.extensionId
-, extensionName = customDimensions.extensionName
-, extensionPublisher = customDimensions.extensionPublisher
-, extensionVersion = customDimensions.extensionVersion
-, failureReason = customDimensions.failureReason
+// which user got the error
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
-, message
-, customDimensions
+// error information
+, clientType = customDimensions.clientType
+, errorMessageInUsersLanguage = customDimensions.alErrorMessage
+, errorMessageInEnglish = customDimensions.alEnglishLanguageDiagnosticsMessage // This dimension was introduced in Business Central 2023 release wave 1, version 21.4.
+, alStackTrace = customDimensions.alStackTrace
+, failureReason = customDimensions.failureReason
 
 
 // Error Message Votes
