@@ -41,6 +41,11 @@ pageViews
 , clientOS = client_OS
 , durationInMs = duration
 , location = client_CountryOrRegion
+, usertelemetryId = case(
+  // user telemetry id was introduced in the platform in version 23.0 for pageVies
+  toint( substring(customDimensions.componentVersion,0,2)) >= 23, user_Id
+, 'N/A'
+)
 
 
 // Page views (for queries)
