@@ -1,6 +1,5 @@
 let _timestamp = todatetime('2022-08-26 14:00:00'); // adjust as needed
 let _interval_hours = 1; // adjust as needed
-
 let _start_date = datetime_add('hour', -_interval_hours, _timestamp);
 let _end_date = datetime_add('hour', _interval_hours, _timestamp);
 traces
