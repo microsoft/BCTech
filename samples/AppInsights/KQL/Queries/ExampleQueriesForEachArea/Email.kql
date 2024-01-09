@@ -9,6 +9,7 @@ traces
 , aadTenantId = tostring( customDimensions.aadTenantId )
 , environmentName = tostring( customDimensions.environmentName )
 , environmentType = tostring( customDimensions.environmentType )
+, companyName = customDimensions.companyName
 , alEmailMessageID = customDimensions.alEmailMessageID
 , alConnector = customDimensions.alConnector
 , usertelemetryId = case(
@@ -27,6 +28,7 @@ traces
 , aadTenantId = tostring( customDimensions.aadTenantId )
 , environmentName = tostring( customDimensions.environmentName )
 , environmentType = tostring( customDimensions.environmentType )
+, companyName = customDimensions.companyName
 , alEmailMessageID = customDimensions.alEmailMessageID
 , alConnector = customDimensions.alConnector
 // alErrorCallStack and alErrorText available from version 19.0
