@@ -38,9 +38,10 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
 * Bug fixed: LRQ page in the Performance report: fixed LRQ by environment visual
-* Bug fixed: Location page in the Usage report: fixed broken visuals
 * Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
 * Usage: On 'Locations' page, added domain to location by environment
+* Performance: On page LRQ: added Domain to filters and visuals
+* Administration: On page 'Extension lifecycle', added Domain to filters and visuals
 
 
 ------------------
