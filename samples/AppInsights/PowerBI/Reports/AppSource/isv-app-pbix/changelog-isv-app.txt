@@ -37,6 +37,7 @@ it seems that PowerBI for apps does not count apps installed as part as BC upgra
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
+* Bug fixed: LRQ page in the performance report: fixed LRQ by environment visual
 * Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
 
 
