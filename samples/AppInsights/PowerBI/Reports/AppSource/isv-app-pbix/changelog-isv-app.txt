@@ -46,8 +46,10 @@ TBA
 * Bug fixed: LRQ page in the Performance report: fixed LRQ by environment visual
 * Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
 * Usage: On 'Locations' page, added domain to location by environment
-* Performance: On page LRQ: added Domain to filters and visuals
-* Administration: On page 'Extension lifecycle', added Domain to filters and visuals
+* Performance: On page LRQ: added Domain to visuals
+* Performance: All pages: added Domain to global filters 
+* Administration: On page 'Extension lifecycle', added Domain to visuals
+* Administration: All pages: added Domain, Environment name/type, AAD tenant, and Partner to global filters 
 
 
 ------------------
