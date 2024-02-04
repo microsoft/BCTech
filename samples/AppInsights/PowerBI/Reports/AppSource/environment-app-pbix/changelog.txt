@@ -11,6 +11,8 @@ Pending teams
 -------------
 * Database deadlocks page: need to fix URL (hide) for user telemetry id (unblocked in 23.1/23.2)
 * Usage: Add user telemetry id to pageview pages and allow filters on this (when available in client telemetry)
+Url (in v24)
+https://businesscentral.dynamics-tie.com/?page=774&filter='Telemetry User ID' IS '<telemetry ID>'
 * Usage: add role dimension to page views (when available in client telemetry)
 * Usage: log search terms (opt-in) (when available in client telemetry)
 * Usage: add license type on sessions page (pending bug fix from server team)
@@ -46,8 +48,13 @@ See example https://www.yammer.com/dynamicsnavdev/#/threads/show?threadId=256742
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-* Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
+TBA
 
+
+------------------
+2024-04-02 release
+------------------
+* Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
 
 
 ------------------
