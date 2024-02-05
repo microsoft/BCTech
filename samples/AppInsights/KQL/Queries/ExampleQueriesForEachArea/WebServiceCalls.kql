@@ -1,38 +1,68 @@
 // KQL samples - Incoming Web Service Calls
 
+// The following operations about web service calls can be found in telemetry
+//
+// Incoming Web Service Requests: eventId == 'RT0008'
+// Web service metadata issues: eventIds RT0033-RT0039 
+// Authentication using web service key/basic authentication: customDimensions.eventId in ( "RT0020" , "RT0021" )
 
-// Incoming Web Service Requests (RAW data)
+
+// Incoming Web Service Requests
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
-| where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used 
-     or customDimensions.eventId == "RT0008" // starting from version 16.1, the eventId is used to identity signal types
+| where customDimensions has "RT0008"
+| where customDimensions.eventId == "RT0008"
+// use this line and comment out the two lines on RT0008 above if you have data prior to version 16.1 
+// | where operation_Name == "Web Services Call" // do note that in a later version of the schema, this field will not be used 
+//      or customDimensions.eventId == "RT0008" // starting from version 16.1, the eventId is used to identity signal types
 | project timestamp
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
-, companyName = customDimensions.companyName
+// in which extension/app
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
+, whoWroteTheCode = case(
+    customDimensions.endpoint startswith "MS/", 'Microsoft' // metadata calls and calls to company endpoints do not have data in extension* dimensions
+  , customDimensions.extensionPublisher
+)
+// in which object
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
-, category = customDimensions.category
-, endpoint = customDimensions.endpoint
+// endpoint information
+, category = customDimensions.category // API, ODataV3, ODataV4, or SOAP
+, endpoint = customDimensions.endpoint // URI
+// how was the endpoint called?
+, httpHeaders = customDimensions.httpHeaders // httpHeaders available from 16.3
+, httpMethod = customDimensions.httpMethod   // httpMethod available from 16.3
+// diagnostics data (how did it go?)
 , httpStatusCode = customDimensions.httpStatusCode // httpStatusCode available from 16.3
-, httpHeaders = customDimensions.httpHeaders       // httpHeaders available from 16.3
-, httpMethod = customDimensions.httpMethod // httpMethod available from 16.3
-, diagnosticsMessage = customDimensions.diagnosticsMessage // Only logged in case of an error in a OData/API call. diagnosticsMessage available from 22.0
-, failureReason = customDimensions.failureReason // Only logged in case of an error in a OData/API call. failureReason available from 22.0
+, diagnosticsMessage = customDimensions.diagnosticsMessage // Not logged for SOAP calls. diagnosticsMessage available from 22.0
+, failureReason = customDimensions.failureReason // Not logged for SOAP calls. failureReason available from 22.0
+// performance data
+// the datatype for executionTime and requestQueueTime is timespan so need to convert to milliseconds
 , executionTime = customDimensions.serverExecutionTime
 , requestQueueTime = customDimensions.requestQueueTime // This dimension was introduced in Business Central 2023 release wave 1, version 22.0.
-// the datatype for executionTime and requestQueueTime is timespan so need to convert to milliseconds
 , requestQueueTimeMS = toreal(totimespan(customDimensions.requestQueueTime))/10000
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 
 , requestTotalTimeMS = ( toreal(totimespan(customDimensions.totalTime))+toreal(totimespan(customDimensions.requestQueueTime)) )/10000
-// these lines illustrate how to extract data from the httpHeaders dimension
+// these extend lines illustrate how to extract data from the httpHeaders dimension
 | extend httpHeadersTmp =  tostring( httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend msUserAgent = tostring( httpHeadersJSON.['ms-dyn-useragent'] )
 | extend httpAuthorization = tostring( httpHeadersJSON.['Authorization'] ) // Authorization header (truncated) available from 17.3
 
+
+
+// Authentication using web service key/basic authentication
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions.eventId in ( "RT0020" , "RT0021" )
+// See full sample in the file AuthenticationWithWebServiceKey.kql
 
 
 // Events RT0033-RT0039 are emitted when web service metadata is not right. 
