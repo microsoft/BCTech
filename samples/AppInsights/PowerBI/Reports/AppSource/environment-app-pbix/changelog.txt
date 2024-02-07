@@ -52,7 +52,13 @@ TBA
 
 
 ------------------
-2024-04-02 release
+2024-02-07 release
+------------------
+* Bug fixed: missing Entra/AAD in global environment slicer
+
+
+------------------
+2024-02-04 release
 ------------------
 * Dataset: Introduced ClientInfoDim and refactored queries ClientBrowserUsageQuery to use this
 
