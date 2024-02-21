@@ -7,7 +7,13 @@
 // Cancelled report generation: eventId == 'RT0007'
 // Cancelled report generation with commits to data: eventId == 'RT0011'
 
-
+////////////////////////////////////////////////////////////////////////////////////////
+//
+// Please read the documentation article
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-reports-trace
+// for updated versions of these queries and also much more details on report telemetry
+// 
+////////////////////////////////////////////////////////////////////////////////////////
 
 // successful report execution (raw data)
 traces
