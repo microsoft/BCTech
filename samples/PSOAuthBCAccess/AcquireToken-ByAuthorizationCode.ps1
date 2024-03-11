@@ -8,8 +8,9 @@
 Import-Module ./CommonData.psm1 -Force
 
 Write-Host "Enter the secret for client $ClientId :"
-$ClientSecret = Read-Host -AsSecureString
-$ClientApplication = New-MsalClientApplication -ClientId $ClientId -ClientSecret $ClientSecret -TenantId $AadTenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb
+$ClientSecret = Read-Host
+
+$app = [Microsoft.Identity.Client.ConfidentialClientApplicationBuilder]::Create($ClientId).WithClientSecret($ClientSecret).WithTenantId($EntraTenantId).WithAuthority($AuthorityUri).WithRedirectUri($RedirectUriWeb).Build()
 
 $BcScopesList = New-Object 'System.Collections.Generic.List[string]'
 foreach ($BcScope in $BcScopes)
@@ -18,7 +19,7 @@ foreach ($BcScope in $BcScopes)
 }
 
 # get url to acquire authorization code
-$AuthorizationRequestUrl = $ClientApplication.GetAuthorizationRequestUrl($BcScopesList).ExecuteAsync().GetAwaiter().GetResult()
+$AuthorizationRequestUrl = $app.GetAuthorizationRequestUrl($BcScopesList).ExecuteAsync().GetAwaiter().GetResult()
 
 # Web browser opens to get authorization code
 Start-Process $AuthorizationRequestUrl
@@ -27,7 +28,7 @@ Start-Process $AuthorizationRequestUrl
 $AuthorizationCode = ./Start-TestWebServer.ps1
 
 # redeem authorization code to acquire access token
-$AuthenticationResult = Get-MsalToken -ClientId $ClientId -ClientSecret $ClientSecret -AuthorizationCode $AuthorizationCode -TenantId $AadTenantId -Authority $AuthorityUri -RedirectUri $RedirectUriWeb -Scopes $BcScopes
+$AuthenticationResult = $app.AcquireTokenByAuthorizationCode($BcScopes, $AuthorizationCode).ExecuteAsync().GetAwaiter().GetResult()
 
 # use access token to get data from BC
 $BcResponse = Invoke-BCWebService -RequestUrl $SampleBCOdataUrl -AccessToken $AuthenticationResult.AccessToken
