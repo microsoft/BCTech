@@ -8,7 +8,8 @@
 Import-Module ./CommonData.psm1 -Force
 
 # acquire access token interactively
-$AuthenticationResult = Get-MsalToken -ClientId $ClientId -RedirectUri $RedirectUri -TenantId $AadTenantId -Authority $AuthorityUri -Prompt SelectAccount -Scopes $BcScopes
+$app = [Microsoft.Identity.Client.PublicClientApplicationBuilder]::Create($ClientId).WithTenantId($EntraTenantId).WithAuthority($AuthorityUri).WithRedirectUri($RedirectUri).Build()
+$AuthenticationResult = $app.AcquireTokenInteractive($BcScopes).WithPrompt([Microsoft.Identity.Client.Prompt]::SelectAccount).ExecuteAsync().GetAwaiter().GetResult()
 
 # use access token to get data from BC
 $BcResponse = Invoke-BCWebService -RequestUrl $SampleBCOdataUrl -AccessToken $AuthenticationResult.AccessToken

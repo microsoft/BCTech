@@ -1,15 +1,21 @@
 # Powershell samples for Business Central access token acquisition and usage
 
-This folder contains 4 samples for different OAuth flows to acquire token to access Business Central:
+This folder contains 3 samples for different OAuth flows to acquire token to access Business Central:
 
 * Acquire token as Application
-* Acquire token with Resource Owner Password Credentials
 * Acquire token by authorization Code
 * Acquire token interactively
 
 Prerequisites:
 
-Installed `MSAL.PS` Powershell module.
+Powershell session should have access to these libraries:
+
+ * Microsoft.Identity.Client (netstandard, nuget package ver. 4.59.0)
+ * Microsoft.IdentityModel.Abstractions (netstandard, nuget package ver. 6.22.0)
+ * System.Buffers (netstandard, nuget package ver. 4.5.1)
+ * System.Diagnostics.DiagnosticSource (netstandard, nuget package ver. 8.0.0)
+ * System.Memory (netstandard, nuget package ver. 4.5.5)
+ * System.Runtime.CompilerServices.Unsafe (netstandard, nuget package ver. 6.0.0)
 
 In order to access **Business Central Automation API**, it is required to **[Setup Azure AD application in Business Central](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/automation-apis-using-s2s-authentication#task-2-set-up-the-azure-ad-application-in-)** .
 
@@ -32,7 +38,7 @@ In order to access **Business Central Automation API**, it is required to **[Set
 
 6. Setup Redirect Uris:
     * For authorization code flow it is required to setup redirect Uri for web platform. Go to **'Authentication'** - **'Platform configurations'**, click **'+ Add a platform'**. Choose **'Web'**, enter **`'http://localhost:8080/login'`** as redirect Uri. Click **'Configure'**.
-    * For interactive and ROPC flows it is required to setup redirect Uri for mobile and desktop platform. Go to **'Authentication'** - **'Platform configurations'**, click **'+ Add a platform'**. Choose **'Mobile and desktop applications'**, click to switch on **'... (MSAL only)'** redirect Uri. Click **'Configure'**.
+    * For interactive and ROPC flows it is required to setup redirect Uri for mobile and desktop platform. Go to **'Authentication'** - **'Platform configurations'**, click **'+ Add a platform'**. Choose **'Mobile and desktop applications'**, add **`'http://localhost'`** as redirect Uri. Click **'Configure'**.
 
 7. In order to use Resource Owner Password Credential flow, allow public client flows. Go to **'Authentication'** - **'Advanced settings'**, and set **'Allow public client flows'** to **'Yes'**. Click **'Save'** button at the top.
 
@@ -40,7 +46,7 @@ Change values in **CommonData.psm1** module:
 
   * Set **`$ClientId`** in the module to registered application Client Id value 
   * Set **`$RedirectUri`** in the module to registered application Web redirect Uri
-  * Set **`$AadTenantId`** in the module to Azure AD Tenant Id where Business Central is located
+  * Set **`$EntraTenantId`** in the module to Azure AD Tenant Id where Business Central is located
 
 ## Disclaimer
 

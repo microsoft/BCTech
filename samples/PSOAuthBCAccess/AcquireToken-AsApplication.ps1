@@ -6,10 +6,11 @@
 Import-Module ./CommonData.psm1 -Force
 
 Write-Host "Enter the secret for client $ClientId :"
-$ClientSecret = Read-Host -AsSecureString
+$ClientSecret = Read-Host
 
 # acquire access token as application with client id and secret
-$AuthenticationResult = Get-MsalToken -ClientId $ClientId -ClientSecret $ClientSecret -TenantId $AadTenantId -Authority $AuthorityUri -Scopes $BcApplicationScopes
+$app = [Microsoft.Identity.Client.ConfidentialClientApplicationBuilder]::Create($ClientId).WithClientSecret($ClientSecret).WithTenantId($EntraTenantId).WithAuthority($AuthorityUri).Build()
+$AuthenticationResult = $app.AcquireTokenForClient($BcApplicationScopes).ExecuteAsync().GetAwaiter().GetResult()
 
 
 # use access token to call BC web service
