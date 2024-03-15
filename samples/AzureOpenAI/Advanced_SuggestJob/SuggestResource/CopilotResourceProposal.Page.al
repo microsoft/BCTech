@@ -2,7 +2,6 @@ namespace CopilotToolkitDemo.SuggestResource;
 
 using Microsoft.Projects.Project.Planning;
 using CopilotToolkitDemo.DescribeJob;
-using Microsoft.Projects.Resources.Resource;
 
 page 54322 "Copilot Resource Proposal"
 {
@@ -33,6 +32,7 @@ page 54322 "Copilot Resource Proposal"
                 Caption = 'Additional notes';
                 MultiLine = true;
                 ApplicationArea = All;
+                InstructionalText = 'If needed, provide additional notes for the resource suggestion.';
 
                 trigger OnValidate()
                 begin
@@ -68,7 +68,7 @@ page 54322 "Copilot Resource Proposal"
             systemaction(OK)
             {
                 Caption = 'Confirm';
-                ToolTip = 'Add selected Resource to the Job Plannig Line.';
+                ToolTip = 'Add selected Resource to the Project Plannig Line.';
             }
             systemaction(Cancel)
             {
