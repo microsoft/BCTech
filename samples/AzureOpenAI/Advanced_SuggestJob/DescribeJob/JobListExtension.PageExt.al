@@ -6,25 +6,26 @@ pageextension 54300 "Job List Extension" extends "Job List"
 {
     actions
     {
-        addafter("Create Job &Sales Invoice")
+        addfirst(Category_New)
         {
-            action(GenerateCopilot)
+            actionref(GenerateCopilotPromoted; GenerateCopilotAction)
             {
-                Caption = 'Suggest with Copilot';
-                Image = Sparkle;
+            }
+        }
+
+        addlast(Prompting)
+        {
+            action(GenerateCopilotAction)
+            {
+                Caption = 'Draft with Copilot';
+                Ellipsis = true;
                 ApplicationArea = All;
-                ToolTip = 'Lets Copilot generate a draft job based on your description.';
+                ToolTip = 'Lets Copilot generate a draft project based on your description.';
 
                 trigger OnAction()
                 begin
                     Page.RunModal(Page::"Copilot Job Proposal");
                 end;
-            }
-        }
-        addfirst(Category_New)
-        {
-            actionref(GenerateCopilotPromoted; GenerateCopilot)
-            {
             }
         }
     }

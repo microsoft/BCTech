@@ -1,7 +1,6 @@
 namespace CopilotToolkitDemo.Common;
 
 using System.AI;
-using System.Environment;
 
 codeunit 54334 "Simplified Copilot Chat"
 {

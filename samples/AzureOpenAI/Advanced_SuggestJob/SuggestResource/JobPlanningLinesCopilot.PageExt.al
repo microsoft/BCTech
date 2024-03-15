@@ -17,43 +17,35 @@ pageextension 54301 "Job Planning Lines Copilot" extends "Job Planning Lines"
 
     actions
     {
-        addbefore("Create &Sales Invoice")
+        addlast(Prompting)
         {
-            group(Copilot)
+            action(SuggestResourceCopilotAction)
             {
-                action(SuggestResource)
-                {
-                    Caption = 'Suggest resource';
-                    ToolTip = 'Asks Copilot which resource can be assigned to the job planning line. You will have to confirm the suggestion from Copilot.';
-                    Image = Sparkle;
-                    Visible = Rec.Type = Rec.Type::Resource;
-                    ApplicationArea = All;
+                Caption = 'Suggest resource';
+                ToolTip = 'Asks Copilot which resource can be assigned to the job planning line. You will have to confirm the suggestion from Copilot.';
+                Visible = Rec.Type = Rec.Type::Resource;
+                ApplicationArea = All;
 
-                    trigger OnAction()
-                    begin
-                        SuggestResourceWithAI(Rec);
-                    end;
-                }
-                action(SuggestItem)
-                {
-                    Caption = 'Suggest item';
-                    ToolTip = 'Asks Copilot which item can be assigned to the job planning line. You will have to confirm the suggestion from Copilot.';
-                    Image = Sparkle;
-                    Visible = Rec.Type = Rec.Type::Item;
-                    ApplicationArea = All;
-
-                    trigger OnAction()
-                    begin
-                        Message('not implemented');
-                    end;
-                }
-
+                trigger OnAction()
+                begin
+                    SuggestResourceWithAI(Rec);
+                end;
             }
         }
-        addbefore("Create &Sales Invoice_Promoted")
+        addlast(Prompting)
         {
-            actionref(SuggestResource_Promoted; SuggestResource) { }
-            actionref(SuggestItem_Promoted; SuggestItem) { }
+            action(SuggestItemCopilotAction)
+            {
+                Caption = 'Suggest item';
+                ToolTip = 'Asks Copilot which item can be assigned to the job planning line. You will have to confirm the suggestion from Copilot.';
+                Visible = Rec.Type = Rec.Type::Item;
+                ApplicationArea = All;
+
+                trigger OnAction()
+                begin
+                    Message('not implemented');
+                end;
+            }
         }
     }
 

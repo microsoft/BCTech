@@ -6,7 +6,7 @@ page 54320 "Copilot Job Proposal"
 {
     PageType = PromptDialog;
     Extensible = false;
-    Caption = 'Draft new job with Copilot';
+    Caption = 'Draft new project with Copilot';
     DataCaptionExpression = InputProjectDescription;
     IsPreview = true;
 
@@ -19,6 +19,7 @@ page 54320 "Copilot Job Proposal"
                 ApplicationArea = All;
                 ShowCaption = false;
                 MultiLine = true;
+                InstructionalText = 'Describe the project you want to create with Copilot';
             }
         }
         area(Content) // <--- this is the output section
@@ -26,7 +27,7 @@ page 54320 "Copilot Job Proposal"
             field("Job Short Description"; JobDescription)
             {
                 ApplicationArea = All;
-                Caption = 'Job Short Description';
+                Caption = 'Project Short Description';
             }
             field("Job Full Details"; JobFullDescription)
             {
@@ -68,12 +69,63 @@ page 54320 "Copilot Job Proposal"
     }
     actions
     {
+        area(PromptGuide)
+        {
+            action(OrganizeCampaign)
+            {
+                ApplicationArea = All;
+                Caption = 'Create a campaign';
+
+                trigger OnAction()
+                begin
+                    InputProjectDescription := 'Campaign on [social media] for [Customer] to [promote education].';
+                end;
+            }
+            group(Furnishing)
+            {
+                action(FurnishOffice)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Furnish an office';
+
+                    trigger OnAction()
+                    begin
+                        InputProjectDescription := '[Customer] needs to furnish [office] for [4 people].';
+                    end;
+                }
+
+                action(SetUpConferenceRooms)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Set up work areas';
+
+                    trigger OnAction()
+                    begin
+                        InputProjectDescription := 'Design and set up [work areas] for [Customer].';
+                    end;
+                }
+            }
+
+            action(OrganizeWorkshop)
+            {
+                ApplicationArea = All;
+                Caption = 'Organize a workshop';
+
+                trigger OnAction()
+                begin
+                    InputProjectDescription := 'Organize a [workshop] for [Customer] about [sustainability].';
+                end;
+            }
+
+
+
+        }
         area(SystemActions)
         {
             systemaction(Generate)
             {
                 Caption = 'Generate';
-                ToolTip = 'Generate job structure with Dynamics 365 Copilot.';
+                ToolTip = 'Generate project structure with Dynamics 365 Copilot.';
 
                 trigger OnAction()
                 begin
@@ -83,17 +135,17 @@ page 54320 "Copilot Job Proposal"
             systemaction(OK)
             {
                 Caption = 'Keep it';
-                ToolTip = 'Save the Job proposed by Dynamics 365 Copilot.';
+                ToolTip = 'Save the Project proposed by Dynamics 365 Copilot.';
             }
             systemaction(Cancel)
             {
                 Caption = 'Discard it';
-                ToolTip = 'Discard the Job proposed by Dynamics 365 Copilot.';
+                ToolTip = 'Discard the Project proposed by Dynamics 365 Copilot.';
             }
             systemaction(Regenerate)
             {
                 Caption = 'Regenerate';
-                ToolTip = 'Regenerate the Job proposed by Dynamics 365 Copilot.';
+                ToolTip = 'Regenerate the Project proposed by Dynamics 365 Copilot.';
 
                 trigger OnAction()
                 begin
