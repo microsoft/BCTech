@@ -38,6 +38,7 @@ page 54324 "Copilot Item Sub Proposal"
                 ShowCaption = false;
                 MultiLine = true;
                 ApplicationArea = All;
+                InstructionalText = 'Provide a description of the item you want to find substitutions for.';
 
                 trigger OnValidate()
                 begin

@@ -99,6 +99,10 @@ codeunit 54323 "Generate Item Sub Proposal"
         else
             Error(AOAIOperationResponse.GetError());
 
+        Result := Result.Replace('&', '&amp;');
+        Result := Result.Replace('"', '');
+        Result := Result.Replace('''', '');
+
         exit(Result);
     end;
 

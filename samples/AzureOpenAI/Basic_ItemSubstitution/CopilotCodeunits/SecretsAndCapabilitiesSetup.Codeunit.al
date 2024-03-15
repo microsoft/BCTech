@@ -1,7 +1,6 @@
 namespace CopilotToolkitDemo.ItemSubstitution;
 
 using System.AI;
-using System.Environment;
 
 codeunit 54310 "Secrets And Capabilities Setup"
 {

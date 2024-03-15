@@ -1,8 +1,8 @@
 {
-  "id": "",
+  "id": "626e352e-ac73-43c9-b1a7-14000c32d026",
   "name": "Business Central Copilot Toolkit Demo",
-  "publisher": "BC 23",
-  "version": "0.9.0.0",
+  "publisher": "BC 24",
+  "version": "1.0.0.0",
   "brief": "A simple example with Copilot demos.",
   "description": "This is a demo extension with some sample Copilot experiences, and should not be used in production.",
   "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
@@ -12,8 +12,8 @@
   "logo": "ExtensionLogo.png",
   "dependencies": [  ],
   "screenshots": [],
-  "platform": "23.0.0.0",
-  "application": "23.1.0.0",
+  "platform": "24.0.0.0",
+  "application": "24.0.0.0",
   "idRanges": [
     {
       "from": 54300,
@@ -27,5 +27,6 @@
   },
   "features": [
     "NoImplicitWith"
-  ]
+  ],
+"runtime": "13.0"
 }
