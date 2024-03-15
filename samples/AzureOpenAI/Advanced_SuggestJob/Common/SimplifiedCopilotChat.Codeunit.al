@@ -16,7 +16,7 @@ codeunit 54334 "Simplified Copilot Chat"
     begin
         AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
 
-        AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Describe Job");
+        AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Describe Project");
 
         AOAIChatCompletionParams.SetMaxTokens(2500);
         AOAIChatCompletionParams.SetTemperature(0);
@@ -46,7 +46,7 @@ codeunit 54334 "Simplified Copilot Chat"
     begin
         AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Text Completions", IsolatedStorageWrapper.GetEndpoint(),
             IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
-        AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Describe Job");
+        AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Describe Project");
 
         AOAITextCompletionParams.SetMaxTokens(2500);
         AOAITextCompletionParams.SetTemperature(0);
