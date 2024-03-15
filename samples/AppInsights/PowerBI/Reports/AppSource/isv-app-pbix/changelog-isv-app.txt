@@ -37,7 +37,7 @@ it seems that PowerBI for apps does not count apps installed as part as BC upgra
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetry-isv-app-beta
 ------------------
-TBA
+* Bug fixed: ObjectDim could not load due to duplicate entries (likely due to using UI on queries)
 
 
 ------------------

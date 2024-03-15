@@ -31,7 +31,7 @@ codeunit 54334 "Simplified Copilot Chat"
         else
             Error(AOAIOperationResponse.GetError());
 
-        // Sometimes Copilot returns special characters against instructions. This is a workaround to fix that for this demo, not recommended for production use.
+        // Sometimes AI model returns special characters against instructions. This is a workaround to fix that for this demo, not recommended for production use.
         Result := Result.Replace('&', '&amp;');
 
         exit(Result);
