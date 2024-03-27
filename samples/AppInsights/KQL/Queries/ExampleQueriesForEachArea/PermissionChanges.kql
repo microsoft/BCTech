@@ -1,139 +1,182 @@
 // KQL samples - Permission changes
 
-// User-defined permission set added (raw data)
+// The following operations about permission changes can be found in telemetry
+//
+// User-defined permission set added: eventId == 'AL0000E2A'
+// User-defined permission set removed: eventId == 'AL0000E2B'
+// Permission set link added: eventId == 'AL0000E28'
+// Permission set link removed: eventId == 'AL0000E29'
+// Permission set assigned to user: eventId == 'AL0000E2C'
+// Permission set removed from user: eventId == 'AL0000E2D'
+// Permission set assigned to user group: eventId == 'AL0000E2E'
+// Permission set removed from user group: eventid == 'AL0000E2F'
+
+////////////////////////////////////////////////////////////////////////////////////////
+//
+// Please read the documentation article
+// https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/administration/telemetry-permission-changes-trace
+// for updated versions of these queries and also much more details on permission telemetry
+// 
+////////////////////////////////////////////////////////////////////////////////////////
+
+// User-defined permission set added 
 traces
 | timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'AL0000E2A'
 | where customDimensions.eventId == 'AL0000E2A'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alNumberOfUserDefinedPermissionSets = customDimensions.alNumberOfUserDefinedPermissionSets
 , alPermissionSetId = customDimensions.alPermissionSetId
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
 
-// User-defined permission set removed (raw data)
+// User-defined permission set removed 
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000E2B'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E2B'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alNumberOfUserDefinedPermissionSets = customDimensions.alNumberOfUserDefinedPermissionSets
 , alPermissionSetId = customDimensions.alPermissionSetId
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
-// Permission set link added (raw data)
+
+// Permission set link added 
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000E28'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E28'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alSourcePermissionSetId = customDimensions.alSourcePermissionSetId
 , alLinkedPermissionSetId = customDimensions.alLinkedPermissionSetId
 , alNumberOfUserDefinedPermissionSetLinks = customDimensions.alNumberOfUserDefinedPermissionSetLinks
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
-// Permission set link removed (raw data)
+
+// Permission set link removed 
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000E29'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E29'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alSourcePermissionSetId = customDimensions.alSourcePermissionSetId
 , alLinkedPermissionSetId = customDimensions.alLinkedPermissionSetId
 , alNumberOfUserDefinedPermissionSetLinks = customDimensions.alNumberOfUserDefinedPermissionSetLinks
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
-// Permission set assigned to user (raw data)
+
+// Permission set assigned to user 
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000E2C'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E2C'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alPermissionSetId = customDimensions.alPermissionSetId
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
-// Permission set removed from user (raw data)
+
+// Permission set removed from user 
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000E2D'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E2D'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alPermissionSetId = customDimensions.alPermissionSetId
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
-// Permission set assigned to user group (raw data)
+
+// Permission set assigned to user group 
 traces
-| where 1==1
-    and timestamp > ago(60d) // adjust as needed
-    and customDimensions.eventId == 'AL0000E2E'
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'AL0000E2E'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alPermissionSetId = customDimensions.alPermissionSetId
 , alUserGroupId = customDimensions.alUserGroupId
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
-// Permission set removed from user group (raw data)
+
+// Permission set removed from user group 
 traces
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions has 'AL0000E2F'
 | where customDimensions.eventId == 'AL0000E2F'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// what was changed
 , alPermissionSetId = customDimensions.alPermissionSetId
 , alUserGroupId = customDimensions.alUserGroupId
+// which user did it
 , usertelemetryId = case(
-  // user telemetry id was introduced in the platform in version 20.0
-  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
+  toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id // user telemetry id was introduced in the platform in version 20.0
 , 'N/A'
 )
 
@@ -145,6 +188,7 @@ traces
 | where customDimensions has 'LC0058'
 | where customDimensions.eventId == 'LC0058'
 | project timestamp
+// in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
