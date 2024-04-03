@@ -59,7 +59,7 @@ page 54320 "Copilot Job Proposal"
             }
             part(ProposalDetails; "Copilot Job Proposal Subpart")
             {
-                Caption = 'Job structure';
+                Caption = 'Project structure';
                 ShowFilter = false;
                 ApplicationArea = All;
                 Editable = true;

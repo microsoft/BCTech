@@ -7,7 +7,7 @@ page 54328 "Copilot Res. Proposal Subpart"
     Extensible = false;
     ApplicationArea = All;
     UsageCategory = Administration;
-    Caption = 'Dynamics 365 Copilot Jobs';
+    Caption = 'Dynamics 365 Copilot Projects';
     SourceTable = "Copilot Resource Proposal";
     SourceTableTemporary = true;
 

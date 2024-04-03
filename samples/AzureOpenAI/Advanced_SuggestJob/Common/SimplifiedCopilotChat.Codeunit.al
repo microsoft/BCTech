@@ -10,11 +10,11 @@ codeunit 54334 "Simplified Copilot Chat"
         AOAIOperationResponse: Codeunit "AOAI Operation Response";
         AOAIChatCompletionParams: Codeunit "AOAI Chat Completion Params";
         AOAIChatMessages: Codeunit "AOAI Chat Messages";
-        IsolatedStorageWrapper: Codeunit "Isolated Storage Wrapper";
+        AOAIDeployments: Codeunit "AOAI Deployments";
         Result: Text;
         EntityTextModuleInfo: ModuleInfo;
     begin
-        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
+        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", AOAIDeployments.GetGPT35TurboLatest());
 
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Describe Project");
 
@@ -42,10 +42,9 @@ codeunit 54334 "Simplified Copilot Chat"
         AzureOpenAI: Codeunit "Azure OpenAI";
         AOAIOperationResponse: Codeunit "AOAI Operation Response";
         AOAITextCompletionParams: Codeunit "AOAI Text Completion Params";
-        IsolatedStorageWrapper: Codeunit "Isolated Storage Wrapper";
+        AOAIDeployments: Codeunit "AOAI Deployments";
     begin
-        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Text Completions", IsolatedStorageWrapper.GetEndpoint(),
-            IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
+        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Text Completions", AOAIDeployments.GetGPT35TurboLatest());
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Describe Project");
 
         AOAITextCompletionParams.SetMaxTokens(2500);

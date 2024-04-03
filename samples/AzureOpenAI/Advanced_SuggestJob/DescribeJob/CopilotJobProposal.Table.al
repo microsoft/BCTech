@@ -4,27 +4,27 @@ using Microsoft.Projects.Project.Job;
 
 table 54320 "Copilot Job Proposal"
 {
-    Caption = 'Copilot Job Proposal';
+    Caption = 'Copilot Project Proposal';
     TableType = Temporary;
 
     fields
     {
         field(1; "Job Task No."; Code[10])
         {
-            Caption = 'Job Task No.';
+            Caption = 'Project Task No.';
             Editable = false;
         }
         field(2; "Job Short Description"; Text[100])
         {
-            Caption = 'Job Short Description';
+            Caption = 'Project Short Description';
         }
         field(3; "Job Full Description"; Blob)
         {
-            Caption = 'Job Full  Description';
+            Caption = 'Project Full  Description';
         }
         field(4; "Job Customer Name"; Text[100])
         {
-            Caption = 'Job Full  Description';
+            Caption = 'Project Customer Name';
         }
         field(100; "Task Description"; Text[100])
         {
@@ -65,7 +65,7 @@ table 54320 "Copilot Job Proposal"
         }
         field(109; "Job Task Type"; Enum "Job Task Type")
         {
-            Caption = 'Job Task Type';
+            Caption = 'Project Task Type';
         }
     }
 

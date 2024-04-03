@@ -6,7 +6,7 @@ page 54321 "Copilot Job Proposal Subpart"
     Extensible = false;
     ApplicationArea = All;
     UsageCategory = Administration;
-    Caption = 'Dynamics 365 Copilot Jobs';
+    Caption = 'Dynamics 365 Copilot Projects';
     SourceTable = "Copilot Job Proposal";
     SourceTableTemporary = true;
 
@@ -21,7 +21,7 @@ page 54321 "Copilot Job Proposal Subpart"
                 IndentationColumn = DescriptionIndent;
                 IndentationControls = "Task Description";
 
-                field("Job Task No."; Rec."Job Task No.")
+                field("Project Task No."; Rec."Job Task No.")
                 {
                     ApplicationArea = All;
                     Style = Strong;

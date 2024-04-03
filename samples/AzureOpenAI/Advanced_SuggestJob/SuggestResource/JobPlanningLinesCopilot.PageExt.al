@@ -22,7 +22,7 @@ pageextension 54301 "Job Planning Lines Copilot" extends "Job Planning Lines"
             action(SuggestResourceCopilotAction)
             {
                 Caption = 'Suggest resource';
-                ToolTip = 'Asks Copilot which resource can be assigned to the job planning line. You will have to confirm the suggestion from Copilot.';
+                ToolTip = 'Asks Copilot which resource can be assigned to the project planning line. You will have to confirm the suggestion from Copilot.';
                 Visible = Rec.Type = Rec.Type::Resource;
                 ApplicationArea = All;
 
@@ -37,7 +37,7 @@ pageextension 54301 "Job Planning Lines Copilot" extends "Job Planning Lines"
             action(SuggestItemCopilotAction)
             {
                 Caption = 'Suggest item';
-                ToolTip = 'Asks Copilot which item can be assigned to the job planning line. You will have to confirm the suggestion from Copilot.';
+                ToolTip = 'Asks Copilot which item can be assigned to the project planning line. You will have to confirm the suggestion from Copilot.';
                 Visible = Rec.Type = Rec.Type::Item;
                 ApplicationArea = All;
 
