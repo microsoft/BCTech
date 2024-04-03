@@ -1,7 +1,7 @@
 {
   "id": "a11337a1-bc23-4acd-8749-1a7ce3f9e6d9",
   "name": "Business Central Copilot Toolkit Demo",
-  "publisher": "Microsoft",
+  "publisher": "BC 24",
   "version": "0.10.0.0",
   "brief": "A simple example with Copilot demos.",
   "description": "This is a demo extension with some sample Copilot experiences, and should not be used in production.",
