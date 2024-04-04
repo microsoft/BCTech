@@ -14,6 +14,8 @@ codeunit 54334 "Simplified Copilot Chat"
         Result: Text;
         EntityTextModuleInfo: ModuleInfo;
     begin
+        // This way of retrieving the deployment version will be available in an upcoming minor version
+        // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", AOAIDeployments.GetGPT35TurboLatest());
         AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", 'gpt-35-turbo-latest');
 
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Describe Project");
