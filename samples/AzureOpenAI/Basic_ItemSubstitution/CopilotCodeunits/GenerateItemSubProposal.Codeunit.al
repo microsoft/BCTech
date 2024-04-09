@@ -76,13 +76,12 @@ codeunit 54323 "Generate Item Sub Proposal"
         AOAIOperationResponse: Codeunit "AOAI Operation Response";
         AOAIChatCompletionParams: Codeunit "AOAI Chat Completion Params";
         AOAIChatMessages: Codeunit "AOAI Chat Messages";
-        IsolatedStorageWrapper: Codeunit "Isolated Storage Wrapper";
         Result: Text;
         EntityTextModuleInfo: ModuleInfo;
     begin
-        // These funtions in the "Azure Open AI" codeunit will be available in Business Central online later this year.
-        // You will need to use your own key for Azure OpenAI for all your Copilot features (for both development and production).
-        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
+        // This way of retrieving the deployment version will be available in an upcoming minor version
+        // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", AOAIDeployments.GetGPT35TurboLatest());
+        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", 'gpt-35-turbo-latest');
 
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Find Item Substitutions");
 
