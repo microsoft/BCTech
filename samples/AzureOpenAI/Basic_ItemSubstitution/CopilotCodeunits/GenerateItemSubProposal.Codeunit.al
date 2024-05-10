@@ -80,7 +80,6 @@ codeunit 54323 "Generate Item Sub Proposal"
         Result: Text;
         EntityTextModuleInfo: ModuleInfo;
     begin
-        // These funtions in the "Azure Open AI" codeunit will be available in Business Central online later this year.
         // You will need to use your own key for Azure OpenAI for all your Copilot features (for both development and production).
         AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
 
