@@ -48,7 +48,8 @@ See example https://www.yammer.com/dynamicsnavdev/#/threads/show?threadId=256742
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
-TBA
+* Bug fixed: 1d/7d count measures now work for incoming web service errors
+* Bug fixed: data load works also when a LOT of web service metadata errors are present
 
 
 ------------------
