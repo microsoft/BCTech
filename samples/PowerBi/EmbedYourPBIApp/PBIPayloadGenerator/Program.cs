@@ -221,7 +221,8 @@ namespace PayloadGenerator
                     row[4],
                     row[5],
                     row[6],
-                    row[7]
+                    row[7],
+                    row[8]
                 );
 
                 if (!row[0].Equals("id"))

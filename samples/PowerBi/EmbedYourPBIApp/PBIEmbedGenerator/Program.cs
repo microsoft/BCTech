@@ -4,6 +4,9 @@ using System.Text;
 using System.IO;
 using Mono.Options;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Reflection.Emit;
+using System.Xml.Linq;
 
 namespace APIQueryGenerator
 {
@@ -15,11 +18,13 @@ namespace APIQueryGenerator
             bool show_help = false;
             string inputfile = "";
             string outputdir = "";
+            Version version = new Version();
 
-            var p = new OptionSet() { 
+            var p = new OptionSet() {
                 { "h|help",  "show this message and exit", v => show_help = v != null },
                 { "i|inputfile=",  "input xml file (required)", v => inputfile = v },
-                { "o|outputdir=",  "output directory (if not specified, then input file name will be used)", v => outputdir = v }
+                { "o|outputdir=",  "output directory (if not specified, then input file name will be used)", v => outputdir = v },
+                { "v|version=",    "target Business Central version", v => version = new Version(v) }
             };
 
             List<string> extra;
@@ -113,6 +118,12 @@ namespace APIQueryGenerator
             {
                 sb.Append(indent);
             }
+        }
+
+        private static void indentAppendLine(StringBuilder sb, int indentLevel, string s)
+        {
+            indents(sb, indentLevel);
+            sb.AppendLine(s);
         }
 
         public static string GeneratePBIRCExtensionCode(XmlNode rcExt)
@@ -226,50 +237,35 @@ namespace APIQueryGenerator
         public static string GeneratePBIEmbedPageCode(XmlNode query)
         {
             StringBuilder sb = new StringBuilder();
+            string context = query.Attributes["id"].Value + "-" + query.Attributes["name"].Value;
 
             /*
-             page <id> <page name>
+            // Auto-generated al file for PBI embed page <id>
+            // 
+            // Adding a PBI embed page for this PBI content:
+            // PBI ReportId = '<PBIReportId>'
+            // PBI ReportName = '<PBIReportName>'
+            page <id> "<name>"
             {
                 UsageCategory = ReportsAndAnalysis;
-                Caption = '<page caption>';
-                AboutTitle = '<teaching tip title>';
-                AboutText = '<teaching tip text>';
+                Caption = '<caption>';
+                AboutTitle = '<aboutTitle>';
+                AboutText = '<aboutText>';
 
                 layout
                 {
                     area(Content)
                     {
-                        part("partname"; "Power BI Embedded Report Part")
+                        part(EmbeddedReport; "Power BI Embedded Report Part")
                         {
-                            Caption = '<page caption>';
-                            SubPageView = where(Context = const('LockedCustomerReport'));
+                            Caption = 'Financial Overview';
+                            SubPageView = where(Context = const('<id>-<name>'));
+                            ApplicationArea = All;
                         }
                     }
                 }
-
-                trigger OnOpenPage()
-                var
-                    PowerBIContextSettings: Record "Power BI Context Settings";
-                    PowerBIDisplayedElement: Record "Power BI Displayed Element";
-                    vReportId: Guid;
-                    vReportName: Text[200];
-                begin
-                    PowerBIContextSettings.SetRange(UserSID, UserSecurityId());
-                    if PowerBIContextSettings.IsEmpty() then
-                        exit; // User has not set up the Power BI integration
-
-                    // some of boiler plate code here
-
-                    vReportId := 'TODO';
-                    vReportName := 'TODO';
-
-                    // TODO: which method to use for a single page in a report
-                    PowerBIDisplayedElement.ElementId := PowerBIDisplayedElement.MakeReportVisualKey(vReportId, vReportName, 'ab1fcfce118c0d14d565');
-
-                    // more of boiler plate code here
-                end;
-            }
              */
+
             sb.AppendLine("// Auto-generated al file for PBI embed page " + query.Attributes["id"].Value);
             sb.AppendLine("// ");
             sb.AppendLine("// Adding a PBI embed page for this PBI content:");
@@ -280,155 +276,158 @@ namespace APIQueryGenerator
             sb.AppendLine ("page " + query.Attributes["id"].Value + " \"" + query.Attributes["name"].Value + "\"");
             sb.AppendLine("{");
 
-            indents(sb, 1);
-            sb.AppendLine("UsageCategory = ReportsAndAnalysis;");
-
-            indents(sb, 1);
-            sb.AppendLine("Caption = '" + query.Attributes["caption"].Value + "';");
-
-            indents(sb, 1);
-            sb.AppendLine("AboutTitle = '" + query.Attributes["aboutTitle"].Value + "'; ");
-
-            indents(sb, 1);
-            sb.AppendLine("AboutText = '" + query.Attributes["aboutText"].Value + "'; ");
-
+            indentAppendLine(sb, 1, "UsageCategory = ReportsAndAnalysis;");
+            indentAppendLine(sb, 1, "Caption = '" + query.Attributes["caption"].Value + "';");
+            indentAppendLine(sb, 1, "AboutTitle = '" + query.Attributes["aboutTitle"].Value + "'; ");
+            indentAppendLine(sb, 1, "AboutText = '" + query.Attributes["aboutText"].Value + "'; ");
             sb.AppendLine("");
 
-            indents(sb, 1);
-            sb.AppendLine("layout");
+            indentAppendLine(sb, 1, "layout");
+            indentAppendLine(sb, 1, "{");
 
-            indents(sb, 1);
-            sb.AppendLine("{");
+            indentAppendLine(sb, 2, "area(Content)");
+            indentAppendLine(sb, 2, "{");
 
-            indents(sb, 2);
-            sb.AppendLine("area(Content)");
+            indentAppendLine(sb, 3, "part(EmbeddedReport; \"Power BI Embedded Report Part\")");
+            indentAppendLine(sb, 3, "{");
 
-            indents(sb, 2);
-            sb.AppendLine("{");
+            indentAppendLine(sb, 4, "ApplicationArea = All;");
+            indentAppendLine(sb, 4, "Caption = '" + query.Attributes["caption"].Value + "';");
+            indentAppendLine(sb, 4, "SubPageView = where(Context = const ('" + context + "'));");
 
-            indents(sb, 3);
-            sb.AppendLine("part(\"partname\"; \"Power BI Embedded Report Part\")");
+            indentAppendLine(sb, 3, "}");
 
-            indents(sb, 3);
-            sb.AppendLine("{");
+            indentAppendLine(sb, 2, "}");
 
-            indents(sb, 4);
-            sb.AppendLine("Caption = '" + query.Attributes["caption"].Value + "';");
-
-            indents(sb, 4);
-            sb.AppendLine("SubPageView = where(Context = const ('LockedCustomerReport'));");
-
-            indents(sb, 3);
-            sb.AppendLine("}");
-
-            indents(sb, 2);
-            sb.AppendLine("}");
-
-            indents(sb, 1);
-            sb.AppendLine("}");
-
-            sb.AppendLine("");
-
-            indents(sb, 1);
-            sb.AppendLine("trigger OnOpenPage()");
-
-            indents(sb, 1);
-            sb.AppendLine("var");
-
-            indents(sb, 2);
-            sb.AppendLine("PowerBIContextSettings: Record \"Power BI Context Settings\";");
-
-            indents(sb, 2);
-            sb.AppendLine("PowerBIDisplayedElement: Record \"Power BI Displayed Element\";");
-
-            indents(sb, 2);
-            sb.AppendLine("vReportId: Guid;");
-
-            indents(sb, 2);
-            sb.AppendLine("vReportName: Text[200];");
-
-            indents(sb, 1);
-            sb.AppendLine("begin");
-
-            indents(sb, 2);
-            sb.AppendLine("PowerBIContextSettings.SetRange(UserSID, UserSecurityId());");
-
-            indents(sb, 2);
-            sb.AppendLine("if PowerBIContextSettings.IsEmpty() then");
-
-            indents(sb, 3);
-            sb.AppendLine("exit; // User has not set up the Power BI integration");
-
+            indentAppendLine(sb, 1, "}");
             sb.AppendLine("");
 
             /*
-                    if not PowerBIDisplayedElement.Get(UserSecurityId(), 'LockedCustomerReport', PowerBIDisplayedElement.MakeReportVisualKey('061ce0f5-3918-44ee-b820-a8d0d384fb2e', 'ReportSection1', 'ab1fcfce118c0d14d565'), PowerBIDisplayedElement.ElementType::"Report Visual") then begin
-                        PowerBIDisplayedElement.Init();
-                        PowerBIDisplayedElement.ElementType := PowerBIDisplayedElement.ElementType::"Report Visual";
-                        PowerBIDisplayedElement.ElementId := PowerBIDisplayedElement.MakeReportVisualKey('061ce0f5-3918-44ee-b820-a8d0d384fb2e', 'ReportSection1', 'ab1fcfce118c0d14d565');
-                        PowerBIDisplayedElement.ElementEmbedUrl := 'https://app.powerbi.com/reportEmbed?reportId=061ce0f5-3918-44ee-b820-a8d0d384fb2e&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVdFU1QtVVMzLUEtUFJJTUFSWS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldCIsImVtYmVkRmVhdHVyZXMiOnsibW9kZXJuRW1iZWQiOnRydWUsInVzYWdlTWV0cmljc1ZOZXh0Ijp0cnVlfX0%3d';
-                        PowerBIDisplayedElement.Context := 'LockedCustomerReport'; // Use here the same context that you specified in the SubPageView of the part;
-                        PowerBIDisplayedElement.UserSID := UserSecurityId();
-                        PowerBIDisplayedElement.ShowPanesInExpandedMode := true;
-                        PowerBIDisplayedElement.ShowPanesInNormalMode := false;
-                        PowerBIDisplayedElement.Insert();
-                    end;
+            trigger OnOpenPage()
+            var
+                PowerBIDisplayedElement: Record "Power BI Displayed Element";
+                PowerBIServiceMgt: Codeunit "Power BI Service Mgt.";
+            begin
+                EnsureUserAcceptedPowerBITerms();
 
-            */
+                // Cleanup previously added reports for this context
+                PowerBIDisplayedElement.SetRange(Context, vContext);
+                PowerBIDisplayedElement.DeleteAll();
+                PowerBIDisplayedElement.SetRange(Context);
 
-            indents(sb, 2);
-            sb.AppendLine("if not PowerBIDisplayedElement.Get(UserSecurityId(), 'LockedCustomerReport', PowerBIDisplayedElement.MakeReportVisualKey('061ce0f5-3918-44ee-b820-a8d0d384fb2e', 'ReportSection1', 'ab1fcfce118c0d14d565'), PowerBIDisplayedElement.ElementType::\"Report Visual\") then begin");
+                // Add the report
+                PowerBIServiceMgt.AddReportForContext(vReportId, vContext);
 
-            indents(sb, 3);
-            sb.AppendLine("PowerBIDisplayedElement.Init();");
+                // Customize page and other settings
+                PowerBIDisplayedElement.Get(UserSecurityId(), vContext, PowerBIDisplayedElement.MakeReportKey(vReportId),
+                    PowerBIDisplayedElement.ElementType::Report);
+                PowerBIDisplayedElement.ReportPage := vReportPage;
+                PowerBIDisplayedElement.ShowPanesInExpandedMode := true;
+                PowerBIDisplayedElement.ShowPanesInNormalMode := true;
+                PowerBIDisplayedElement.Modify();
 
-            indents(sb, 3);
-            sb.AppendLine("// some of boiler plate code here");
+                CurrPage.EmbeddedReport.Page.SetFullPageMode(true);
+            end;
+             */
+            indentAppendLine(sb, 1, "trigger OnOpenPage()");
+            indentAppendLine(sb, 1, "var");
 
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement: Record \"Power BI Displayed Element\";");
+            indentAppendLine(sb, 2, "PowerBIServiceMgt: Codeunit \"Power BI Service Mgt.\";");
+
+            indentAppendLine(sb, 1, "begin");
+
+            indentAppendLine(sb, 2, "EnsureUserAcceptedPowerBITerms();");
+            sb.AppendLine("");
+            indentAppendLine(sb, 2, "// Cleanup previously added reports for this context");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.SetRange(Context, vContext);");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.DeleteAll();");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.SetRange(Context);");
+            sb.AppendLine("");
+            indentAppendLine(sb, 2, "// Add the report");
+            indentAppendLine(sb, 2, "PowerBIServiceMgt.AddReportForContext(vReportId, vContext);");
+            sb.AppendLine("");
+            indentAppendLine(sb, 2, "// Customize page and other settings");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.Get(UserSecurityId(), vContext, PowerBIDisplayedElement.MakeReportKey(vReportId), PowerBIDisplayedElement.ElementType::Report);");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.ReportPage := vReportPage;");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.ShowPanesInExpandedMode := true;");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.ShowPanesInNormalMode := true;");
+            indentAppendLine(sb, 2, "PowerBIDisplayedElement.Modify();");
             sb.AppendLine("");
 
-            indents(sb, 3);
-            sb.AppendLine("vReportId := '" + query.Attributes["PBIReportId"].Value + "';");
+            indentAppendLine(sb, 2, "CurrPage.EmbeddedReport.Page.SetFullPageMode(true);");
 
-            indents(sb, 3);
-            sb.AppendLine("vReportName := '" + query.Attributes["PBIReportName"].Value + "';");
-
+            indentAppendLine(sb, 1, "end;");
             sb.AppendLine("");
 
-            indents(sb, 3);
-            sb.AppendLine("// TODO: which method to use for a single page in a report");
+            /*
+            local procedure EnsureUserAcceptedPowerBITerms()
+            var
+                PowerBIContextSettings: Record "Power BI Context Settings";
+                PowerBIEmbedSetupWizard: Page "Power BI Embed Setup Wizard";
+            begin
+                PowerBIContextSettings.SetRange(UserSID, UserSecurityId());
+                if PowerBIContextSettings.IsEmpty() then begin
+                    PowerBIEmbedSetupWizard.SetContext(vContext);
+                    if PowerBIEmbedSetupWizard.RunModal() <> Action::OK then;
 
-            indents(sb, 3);
-            sb.AppendLine("PowerBIDisplayedElement.ElementId := PowerBIDisplayedElement.MakeReportVisualKey(vReportId, vReportName, 'ab1fcfce118c0d14d565');");
+                    if PowerBIContextSettings.IsEmpty() then
+                        Error(PowerBiNotSetupErr);
+                end;
 
+                PowerBIContextSettings.CreateOrReadForCurrentUser(vContext);
+                if not PowerBIContextSettings.LockToSelectedElement then begin
+                    PowerBIContextSettings.LockToSelectedElement := true;
+                    PowerBIContextSettings.Modify();
+                end;
+            end;
+             */
+            indentAppendLine(sb, 1, "local procedure EnsureUserAcceptedPowerBITerms()");
+            indentAppendLine(sb, 1, "var");
+
+            indentAppendLine(sb, 2, "PowerBIContextSettings: Record \"Power BI Context Settings\";");
+            indentAppendLine(sb, 2, "PowerBIEmbedSetupWizard: Page \"Power BI Embed Setup Wizard\";");
+
+            indentAppendLine(sb, 1, "begin");
+
+            indentAppendLine(sb, 2, "PowerBIContextSettings.SetRange(UserSID, UserSecurityId());");
+            indentAppendLine(sb, 2, "if PowerBIContextSettings.IsEmpty() then begin");
+
+            indentAppendLine(sb, 3, "PowerBIEmbedSetupWizard.SetContext(vContext);");
+            indentAppendLine(sb, 3, "if PowerBIEmbedSetupWizard.RunModal() <> Action::OK then;");
+            sb.AppendLine("");
+            indentAppendLine(sb, 3, "if PowerBIContextSettings.IsEmpty() then");
+
+            indentAppendLine(sb, 4, "Error(PowerBiNotSetupErr);");
+
+            indentAppendLine(sb, 2, "end;");
+            sb.AppendLine("");
+            indentAppendLine(sb, 2, "PowerBIContextSettings.CreateOrReadForCurrentUser(vContext);");
+            indentAppendLine(sb, 2, "if not PowerBIContextSettings.LockToSelectedElement then begin");
+
+            indentAppendLine(sb, 3, "PowerBIContextSettings.LockToSelectedElement := true;");
+            indentAppendLine(sb, 3, "PowerBIContextSettings.Modify();");
+
+            indentAppendLine(sb, 2, "end;");
+
+            indentAppendLine(sb, 1, "end;");
             sb.AppendLine("");
 
-            indents(sb, 3);
-            sb.AppendLine("// more of boiler plate code here");
+            /* 
+            var
+                PowerBiNotSetupErr: Label 'Power BI is not set up. You need to set up Power BI in order to see this report.';
+                vReportId: Label '<PBIReportId>', Locked = true;
+                vReportPage: Label '<PBIReportPage>', Locked = true;
+                vContext: Label '<id>-<name>', MaxLength = 30, Locked = true, Comment = 'IMPORTANT: keep it unique across pages. Also, make sure this value is the same used in the SubPageView above.';
+             */
+            indentAppendLine(sb, 1, "var");
 
-            indents(sb, 3);
-            sb.AppendLine("PowerBIDisplayedElement.Context := 'LockedCustomerReport'; // Use here the same context that you specified in the SubPageView of the part;");
-
-            indents(sb, 3);
-            sb.AppendLine("PowerBIDisplayedElement.UserSID := UserSecurityId();");
-
-            indents(sb, 3);
-            sb.AppendLine("PowerBIDisplayedElement.ShowPanesInExpandedMode := true;");
-
-            indents(sb, 3);
-            sb.AppendLine("PowerBIDisplayedElement.ShowPanesInNormalMode := false;");
-
-            indents(sb, 3);
-            sb.AppendLine("PowerBIDisplayedElement.Insert();");
-
-            indents(sb, 2);
-            sb.AppendLine("end;");
-
-            indents(sb, 1);
-            sb.AppendLine("end;");
-
+            indentAppendLine(sb, 2, "PowerBiNotSetupErr: Label 'Power BI is not set up. You need to set up Power BI in order to see this report.';");
+            indentAppendLine(sb, 2, "vReportId: Label '" + query.Attributes["PBIReportId"].Value + "', Locked = true;");
+            indentAppendLine(sb, 2, "vReportPage: Label '" + query.Attributes["PBIReportPage"].Value + "', Locked = true;");
+            indentAppendLine(sb, 2, "vContext: Label '" + context + "', MaxLength = 30, Locked = true, Comment = 'IMPORTANT: keep it unique across pages. Also, make sure this value is the same used in the SubPageView above.';");
+            
             sb.AppendLine("");
-
             sb.AppendLine("}");
 
             return sb.ToString();
