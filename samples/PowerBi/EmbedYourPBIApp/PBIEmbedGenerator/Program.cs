@@ -90,7 +90,7 @@ namespace APIQueryGenerator
             Console.WriteLine("Found {0} pages", pages.SelectNodes("page").Count.ToString());
             foreach (XmlNode page in pages.SelectNodes("page"))
             {
-                var content = GeneratePBIEmbedPageCode(page);
+                var content = GeneratePBIEmbedPageCode(page, version);
                 var filename = page.Attributes["filename"].Value;
                 SaveFile(outputdir, filename, content);
                 Console.WriteLine(filename);
@@ -234,7 +234,7 @@ namespace APIQueryGenerator
         }
 
 
-        public static string GeneratePBIEmbedPageCode(XmlNode query)
+        public static string GeneratePBIEmbedPageCode(XmlNode query, Version version)
         {
             StringBuilder sb = new StringBuilder();
             string context = query.Attributes["id"].Value + "-" + query.Attributes["name"].Value;
@@ -355,7 +355,10 @@ namespace APIQueryGenerator
             indentAppendLine(sb, 2, "PowerBIDisplayedElement.Modify();");
             sb.AppendLine("");
 
-            indentAppendLine(sb, 2, "CurrPage.EmbeddedReport.Page.SetFullPageMode(true);");
+            if (version == new Version() | version >= new Version("24.2"))
+            {
+                indentAppendLine(sb, 2, "CurrPage.EmbeddedReport.Page.SetFullPageMode(true);");
+            }
 
             indentAppendLine(sb, 1, "end;");
             sb.AppendLine("");
