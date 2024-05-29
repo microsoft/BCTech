@@ -4,9 +4,6 @@ using System.Text;
 using System.IO;
 using Mono.Options;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Reflection.Emit;
-using System.Xml.Linq;
 
 namespace APIQueryGenerator
 {
