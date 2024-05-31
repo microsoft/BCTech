@@ -20,10 +20,11 @@ namespace PayloadGenerator
         string aboutText { get; set; }
         string PBIReportId { get; set; }
         string PBIReportName { get; set; }
+        string PBIReportPage {  get; set; }
 
         public PBIPageDefinition(
             string id, string name, string fileName, string caption, string aboutTitle
-            , string aboutText, string PBIReportId, string PBIReportName
+            , string aboutText, string PBIReportId, string PBIReportName, string PBIReportPage
         )
         {
             this.id = id;
@@ -34,6 +35,7 @@ namespace PayloadGenerator
             this.aboutText = aboutText;
             this.PBIReportId = PBIReportId;
             this.PBIReportName = PBIReportName;
+            this.PBIReportPage = PBIReportPage;
         }
 
 
@@ -47,7 +49,8 @@ namespace PayloadGenerator
                 new XAttribute("aboutTitle", aboutTitle),
                 new XAttribute("aboutText", aboutText),
                 new XAttribute("PBIReportId", PBIReportId),
-                new XAttribute("PBIReportName", PBIReportName)
+                new XAttribute("PBIReportName", PBIReportName),
+                new XAttribute("PBIReportPage", PBIReportPage)
             );
 
             return page;
