@@ -105,7 +105,6 @@ namespace APIQueryGenerator
             }
             Console.WriteLine("-------------------");
 
-            Console.WriteLine("Generating AL files...");
             XmlNode permSets = doc.SelectSingleNode("/objects/PermissionSets");
             Console.WriteLine("Found {0} permission sets", permSets.SelectNodes("permissionset").Count.ToString());
             foreach (XmlNode permSet in permSets.SelectNodes("permissionset"))
