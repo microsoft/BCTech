@@ -105,6 +105,18 @@ namespace APIQueryGenerator
             }
             Console.WriteLine("-------------------");
 
+            Console.WriteLine("Generating AL files...");
+            XmlNode permSets = doc.SelectSingleNode("/objects/PermissionSets");
+            Console.WriteLine("Found {0} permission sets", permSets.SelectNodes("permissionset").Count.ToString());
+            foreach (XmlNode permSet in permSets.SelectNodes("permissionset"))
+            {
+                var content = GeneratePBIEmbedPagePerm(permSet, pages);
+                var filename = permSet.Attributes["filename"].Value;
+                SaveFile(outputdir, filename, content);
+                Console.WriteLine(filename);
+            }
+            Console.WriteLine("-------------------");
+
         }
 
         private static void indents(StringBuilder sb, int indentLevel)
@@ -433,6 +445,40 @@ namespace APIQueryGenerator
             return sb.ToString();
         }
 
+        public static string GeneratePBIEmbedPagePerm(XmlNode permSet, XmlNode pages)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            /*
+            permissionset 50120 "PBI EMBED VIEW"
+            {
+                Caption = 'PBI Embed - View', MaxLength = 30;
+                Assignable = true;
+                Permissions =
+                    page "PBIFinancialOverview" = X,
+                    page "PBIIncomeStatementbyMonth" = X,
+                    page "PBIBalanceSheetbyMonth" = X,
+                    page "PBIBudgetComparison" = X,
+                    page "PBILiquidityKPIs" = X,
+                    page "PBIProfitability" = X,
+            } 
+            */
+
+            indentAppendLine(sb, 0, "permissionset " + permSet.Attributes["id"].Value + " \"" + permSet.Attributes["name"].Value + "\"");
+            indentAppendLine(sb, 0, "{");
+            indentAppendLine(sb, 1, "Caption = '" + permSet.Attributes["caption"].Value + "', MaxLength = 30;");
+            indentAppendLine(sb, 1, "Assignable = true;");
+            indentAppendLine(sb, 1, "Permissions =");
+
+            foreach (XmlNode page in pages.SelectNodes("page"))
+            {
+                indentAppendLine(sb, 2, "page \"" + page.Attributes["name"].Value + "\" = X,");
+            }
+
+            indentAppendLine(sb, 0, "}");
+
+            return sb.ToString();
+        }
 
         // https://epsicodecom.wordpress.com/2019/08/12/tutorial-generate-seperate-files-from-a-t4-template/
         public static void SaveFile(string folder, string fileName, string content)

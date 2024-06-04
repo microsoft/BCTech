@@ -92,9 +92,15 @@ namespace PayloadGenerator
             List<string[]> RCExtensionActionRows = readExcelWorksheet(inputfile, RCExtensionActionsSheetName);
             Console.WriteLine("Worksheet '{0}'. Found : {1} rows", RCExtensionActionsSheetName, RCExtensionActionRows.Count.ToString() );
             List<ActionDefinition> rcExtensionActions = new List<ActionDefinition>();
-            ExcelRowstoRCExtensionActionDefinitions(RCExtensionActionRows, rcExtensionActions);            
+            ExcelRowstoRCExtensionActionDefinitions(RCExtensionActionRows, rcExtensionActions);
 
-            foreach( var ext in rcExtensions)
+            var permSetSheetName = "PermissionSets";
+            List<string[]> permSetRows = readExcelWorksheet(inputfile, permSetSheetName);
+            Console.WriteLine("Worksheet '{0}'. Found : {1} rows", permSetSheetName, permSetRows.Count.ToString());
+            List<PermSetDefinition> permSets = new List<PermSetDefinition>();
+            ExcelRowstoPermSetDefinitions(permSetRows, permSets);
+
+            foreach ( var ext in rcExtensions)
             {
                 var extName = ext.name;
 
@@ -123,13 +129,13 @@ namespace PayloadGenerator
 
             Console.WriteLine("Generating payload file...");
 
-            XDocument payloaddoc = GeneratePayload(pages, rcExtensions);
+            XDocument payloaddoc = GeneratePayload(pages, rcExtensions, permSets);
             string content = payloaddoc.ToString();
             SaveFile(outputdir, outputfile, content);
             Console.WriteLine("Wrote file: " + outputfile);
         }
 
-        public static XDocument GeneratePayload(IEnumerable<PBIPageDefinition> pages, IEnumerable<RCExtensionDefinition> rcExtensions)
+        public static XDocument GeneratePayload(IEnumerable<PBIPageDefinition> pages, IEnumerable<RCExtensionDefinition> rcExtensions, IEnumerable<PermSetDefinition> permSets)
         {
             XDocument doc = new XDocument(
 
@@ -152,6 +158,14 @@ namespace PayloadGenerator
             {
                 XElement el = ext.asXElement();
                 RCExtensions.Add(el);
+            }
+
+            XElement PermissionSets = new XElement("PermissionSets");
+            objects.Add(PermissionSets);
+            foreach (PermSetDefinition permSet in permSets)
+            {
+                XElement el = permSet.asXElement();
+                PermissionSets.Add(el);
             }
 
             return doc;
@@ -270,6 +284,24 @@ namespace PayloadGenerator
                 {
                     actions.Add(Record);
                     Console.WriteLine("Read Role center extension action metadata for: " + Record.name);
+                }
+            }
+        }
+        static private void ExcelRowstoPermSetDefinitions(List<string[]> PermSetRows, List<PermSetDefinition> extensions)
+        {
+            foreach (var row in PermSetRows)
+            {
+                PermSetDefinition Record = new PermSetDefinition(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3]
+                );
+
+                if (!row[0].Equals("id"))
+                {
+                    extensions.Add(Record);
+                    Console.WriteLine("Read permission set metadata for: " + Record.name);
                 }
             }
         }
