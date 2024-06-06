@@ -16,10 +16,13 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using CsvHelper;
+using System.Globalization;
+using System.Security.Cryptography;
 
 namespace TranslationsBuilder.Services {
 
-  class TranslationsManager {
+  internal class TranslationsManager {
 
     public const string TranslatedDatasetObjectsTableName = "Translated Dataset Object Labels";
     public const string LocalizedLabelsTableName = "Localized Labels";
@@ -713,16 +716,6 @@ namespace TranslationsBuilder.Services {
       try {
         var translationsTable = GetTranslationsTable(targetLanguage);
 
-        string linebreak = "\r\n";
-
-        // set csv file headers
-        string csv = string.Join(",", translationsTable.Headers) + linebreak;
-
-        // add line for each row
-        foreach (var row in translationsTable.Rows) {
-          csv += string.Join(",", row) + linebreak;
-        }
-
         DirectoryInfo path = Directory.CreateDirectory(AppSettings.TranslationsOutboxFolderPath);
 
         string filePath;
@@ -735,9 +728,22 @@ namespace TranslationsBuilder.Services {
         }
 
         StreamWriter writer = new StreamWriter(File.Open(filePath, FileMode.Create), Encoding.UTF8);
-        writer.Write(csv);
-        writer.Flush();
-        writer.Dispose();
+        var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
+        foreach (var headerField in translationsTable.Headers)
+        {
+          csvWriter.WriteField(headerField);
+        }
+        csvWriter.NextRecord();
+        foreach (var row in translationsTable.Rows)
+        {
+          foreach (var rowField in row)
+          {
+            csvWriter.WriteField(rowField);
+          }
+          csvWriter.NextRecord();
+        }
+        csvWriter.Flush();
+        csvWriter.Dispose();
 
         //StreamWriter writerJson = new StreamWriter(File.Open(filePath.Replace(".csv", ".json"), FileMode.Create), Encoding.UTF8);
         //writerJson.Write(System.Text.Json.JsonSerializer.Serialize(translationsTable));
@@ -761,20 +767,11 @@ namespace TranslationsBuilder.Services {
     public static void ExportAllTranslationSheets(bool OpenInExcel = false) {
 
       try {
-
-        string linebreak = "\r\n";
-
         foreach (var culture in model.Cultures) {
           if (culture.Name != model.Culture) {
 
             string targetLanguage = culture.Name;
             var translationsTable = GetTranslationsTable(targetLanguage);
-            string csv = string.Join(",", translationsTable.Headers) + linebreak;
-
-            // add line for each row
-            foreach (var row in translationsTable.Rows) {
-              csv += string.Join(",", row) + linebreak;
-            }
 
             DirectoryInfo path = Directory.CreateDirectory(AppSettings.TranslationsOutboxFolderPath);
 
@@ -782,9 +779,23 @@ namespace TranslationsBuilder.Services {
             string filePath = path + @"/" + DatasetName + "-Translations-" + targetLanguageDisplayName + ".csv";
 
             StreamWriter writer = new StreamWriter(File.Open(filePath, FileMode.Create), Encoding.UTF8);
-            writer.Write(csv);
-            writer.Flush();
-            writer.Dispose();
+
+            var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            foreach (var headerField in translationsTable.Headers)
+            {
+              csvWriter.WriteField(headerField);
+            }
+            csvWriter.NextRecord();
+            foreach (var row in translationsTable.Rows)
+            {
+              foreach(var rowField in row)
+              {
+                csvWriter.WriteField(rowField);
+              }
+              csvWriter.NextRecord();
+            }
+            csvWriter.Flush();
+            csvWriter.Dispose();
 
             if (OpenInExcel) {
               string excelFilePath = @"""" + filePath + @"""";
@@ -1000,8 +1011,11 @@ namespace TranslationsBuilder.Services {
 
         FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         StreamReader reader = new StreamReader(stream);
-        var lines = reader.ReadToEnd().Trim().Split(linebreak);
-        var headers = lines[0].Split(",");
+        var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+        csvReader.Read();
+        csvReader.ReadHeader();
+        var headers = csvReader.HeaderRecord;
 
         var cultureCount = headers.Length - 3;
         var culturesList = new List<string>();
@@ -1017,24 +1031,22 @@ namespace TranslationsBuilder.Services {
           }
         }
 
-        // enumerate through lines in CSV data
-        for (int lineNumber = 1; lineNumber <= lines.Length - 1; lineNumber++) {
-          var row = lines[lineNumber];
-          var rowValues = row.Split(",");
-          string objectType = rowValues[0];
-          string propertyName = rowValues[1];
-          string objectName = rowValues[2];
-          // enumerate across language columns
-          for (int columnNumber = 3; (columnNumber < headers.Length); columnNumber++) {
+        while (csvReader.Read())
+        {
+          string objectType = csvReader.GetField(0);
+          string propertyName = csvReader.GetField(1);
+          string objectName = csvReader.GetField(2);
+          for (int columnNumber = 3; columnNumber < csvReader.ColumnCount; columnNumber++)
+          {
             string targetLanguage = SupportedLanguages.GetLanguageFromFullName(headers[columnNumber]).LanguageId;
-            string translatedValue = rowValues[columnNumber];
-            if (!string.IsNullOrEmpty(translatedValue) && TranslationsManager.EnsureMetadataObjectExists(objectType, objectName)) {
+            string translatedValue = csvReader.GetField(columnNumber);
+            if (!string.IsNullOrEmpty(translatedValue) && TranslationsManager.EnsureMetadataObjectExists(objectType, objectName))
+            {
               TranslationsManager.SetDatasetObjectTranslation(objectType, propertyName, objectName, targetLanguage, translatedValue);
             }
           }
         }
 
-        // close file and release resources
         reader.Close();
         stream.Close();
 

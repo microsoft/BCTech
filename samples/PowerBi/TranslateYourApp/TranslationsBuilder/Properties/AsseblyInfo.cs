@@ -1,6 +1,9 @@
 ﻿
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("TranslationsBuilderConsole")]
 
 [assembly: AssemblyCompanyAttribute("Microsoft")]
 [assembly: AssemblyConfigurationAttribute("Release")]

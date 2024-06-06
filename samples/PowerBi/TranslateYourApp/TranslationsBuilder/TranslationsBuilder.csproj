@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="32.0.3" />
     <PackageReference Include="Microsoft.AnalysisServices.AdomdClient.NetCore.retail.amd64" Version="19.61.1.4" />
     <PackageReference Include="Microsoft.AnalysisServices.NetCore.retail.amd64" Version="19.61.1.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
