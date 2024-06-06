@@ -1,0 +1,1 @@
+pandoc -s --extract-media ./images/InstallationGuide "Installation Guide.docx" -t gfm -o "Installation Guide.md"
