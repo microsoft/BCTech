@@ -83,7 +83,7 @@ namespace APIQueryGenerator
             }
 
             string alNamespace = doc.SelectSingleNode("/objects/Namespace").Attributes["namespace"].Value;
-            Console.WriteLine("Useing namespace {0}", alNamespace);
+            Console.WriteLine("Using namespace {0}", alNamespace);
 
             Console.WriteLine("Generating AL files...");
             XmlNode pages = doc.SelectSingleNode("/objects/PBIEmbedPages");
