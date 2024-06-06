@@ -26,21 +26,14 @@ namespace PayloadGenerator
             // http://www.ndesk.org/doc/ndesk-options/NDesk.Options/OptionSet.html
             bool show_help = false;
             string inputfile = "";
-            string inputtablefile = "";
-            string inputfieldfile = "";
             string outputdir = "";
             string outputfile = "";
-            string APIPublisher = "", APIGroup = "", APIVersion = "";
+
             int idnumberstart = 50000;
 
             var p = new OptionSet() {
-                { "apipublisher=",  "APIPublisher (required)", v => APIPublisher = v },
-                { "apigroup=",  "APIGroup (required)", v => APIGroup = v },
-                { "apiversion=",  "APIPublisher (required)", v => APIVersion = v },
                 { "h|help",  "show this message and exit", v => show_help = v != null },
                 { "i|inputfile=",  "input Excel file (required)", v => inputfile = v },
-                { "inputtablefile=",  "input csv file for tables (required)", v => inputtablefile = v },
-                { "inputfieldfile=",  "input csv file for fields (required)", v => inputfieldfile = v },
                 { "outputdir=",  "output directory", v => outputdir = v },
                 { "outputfile=",  "output file (required)", v => outputfile = v },
                 { "idnumberstart=",  "Id numbers for AL objects starts at this number (default is 50000)", v => idnumberstart = int.Parse( v ) },
