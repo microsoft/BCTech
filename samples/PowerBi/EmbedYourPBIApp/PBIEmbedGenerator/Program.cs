@@ -82,12 +82,15 @@ namespace APIQueryGenerator
                 return;
             }
 
+            string alNamespace = doc.SelectSingleNode("/objects/Namespace").Attributes["namespace"].Value;
+            Console.WriteLine("Using namespace {0}", alNamespace);
+
             Console.WriteLine("Generating AL files...");
             XmlNode pages = doc.SelectSingleNode("/objects/PBIEmbedPages");
             Console.WriteLine("Found {0} pages", pages.SelectNodes("page").Count.ToString());
             foreach (XmlNode page in pages.SelectNodes("page"))
             {
-                var content = GeneratePBIEmbedPageCode(page, version);
+                var content = GeneratePBIEmbedPageCode(alNamespace, page, version);
                 var filename = page.Attributes["filename"].Value;
                 SaveFile(outputdir, filename, content);
                 Console.WriteLine(filename);
@@ -98,7 +101,7 @@ namespace APIQueryGenerator
             Console.WriteLine("Found {0} RC extensions", rcExtensions.SelectNodes("pageextension").Count.ToString());
             foreach (XmlNode rc in rcExtensions.SelectNodes("pageextension"))
             {
-                var content = GeneratePBIRCExtensionCode(rc);
+                var content = GeneratePBIRCExtensionCode(alNamespace, rc);
                 var filename = rc.Attributes["filename"].Value;
                 SaveFile(outputdir, filename, content);
                 Console.WriteLine(filename);
@@ -109,7 +112,7 @@ namespace APIQueryGenerator
             Console.WriteLine("Found {0} permission sets", permSets.SelectNodes("permissionset").Count.ToString());
             foreach (XmlNode permSet in permSets.SelectNodes("permissionset"))
             {
-                var content = GeneratePBIEmbedPagePerm(permSet, pages);
+                var content = GeneratePBIEmbedPagePerm(alNamespace, permSet, pages);
                 var filename = permSet.Attributes["filename"].Value;
                 SaveFile(outputdir, filename, content);
                 Console.WriteLine(filename);
@@ -134,7 +137,7 @@ namespace APIQueryGenerator
             sb.AppendLine(s);
         }
 
-        public static string GeneratePBIRCExtensionCode(XmlNode rcExt)
+        public static string GeneratePBIRCExtensionCode(string alNamespace, XmlNode rcExt)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -151,6 +154,8 @@ namespace APIQueryGenerator
             }
             sb.AppendLine("");
 
+            sb.AppendLine("namespace " + alNamespace);
+            sb.AppendLine("");
 
             sb.AppendLine("pageextension " + rcExt.Attributes["id"].Value + " \"" + rcExt.Attributes["name"].Value + "\" extends \"" + rcExt.Attributes["extends"].Value + "\"");
             sb.AppendLine("{");
@@ -242,7 +247,7 @@ namespace APIQueryGenerator
         }
 
 
-        public static string GeneratePBIEmbedPageCode(XmlNode query, Version version)
+        public static string GeneratePBIEmbedPageCode(string alNamespace, XmlNode query, Version version)
         {
             StringBuilder sb = new StringBuilder();
             string context = query.Attributes["id"].Value + "-" + query.Attributes["name"].Value;
@@ -253,6 +258,9 @@ namespace APIQueryGenerator
             // Adding a PBI embed page for this PBI content:
             // PBI ReportId = '<PBIReportId>'
             // PBI ReportName = '<PBIReportName>'
+
+            namespace Microsoft.PowerBIApps
+
             page <id> "<name>"
             {
                 UsageCategory = ReportsAndAnalysis;
@@ -281,7 +289,10 @@ namespace APIQueryGenerator
             sb.AppendLine("// PBI ReportName = '" + query.Attributes["PBIReportName"].Value);
             sb.AppendLine("");
 
-            sb.AppendLine ("page " + query.Attributes["id"].Value + " \"" + query.Attributes["name"].Value + "\"");
+            sb.AppendLine("namespace " + alNamespace);
+            sb.AppendLine("");
+
+            sb.AppendLine("page " + query.Attributes["id"].Value + " \"" + query.Attributes["name"].Value + "\"");
             sb.AppendLine("{");
 
             indentAppendLine(sb, 1, "UsageCategory = ReportsAndAnalysis;");
@@ -444,15 +455,19 @@ namespace APIQueryGenerator
             return sb.ToString();
         }
 
-        public static string GeneratePBIEmbedPagePerm(XmlNode permSet, XmlNode pages)
+        public static string GeneratePBIEmbedPagePerm(string alNamespace, XmlNode permSet, XmlNode pages)
         {
             StringBuilder sb = new StringBuilder();
 
             /*
-            permissionset 50120 "PBI EMBED VIEW"
+            // Auto-generated al file for PBI permissions 50120
+
+            namespace Microsoft.PowerBIApps
+
+            permissionset 50120 "Power BI Finance App - Objects"
             {
-                Caption = 'PBI Embed - View', MaxLength = 30;
-                Assignable = true;
+                Access = Internal;
+                Assignable = false;
                 Permissions =
                     page "PBIFinancialOverview" = X,
                     page "PBIIncomeStatementbyMonth" = X,
@@ -463,10 +478,14 @@ namespace APIQueryGenerator
             } 
             */
 
+            indentAppendLine(sb, 0, "// Auto-generated al file for PBI permissions " + permSet.Attributes["id"].Value);
+            indentAppendLine(sb, 0, "");
+            indentAppendLine(sb, 0, "namespace " + alNamespace);
+            indentAppendLine(sb, 0, "");
             indentAppendLine(sb, 0, "permissionset " + permSet.Attributes["id"].Value + " \"" + permSet.Attributes["name"].Value + "\"");
             indentAppendLine(sb, 0, "{");
-            indentAppendLine(sb, 1, "Caption = '" + permSet.Attributes["caption"].Value + "', MaxLength = 30;");
-            indentAppendLine(sb, 1, "Assignable = true;");
+            indentAppendLine(sb, 1, "Access = Internal;");
+            indentAppendLine(sb, 1, "Assignable = false;");
             indentAppendLine(sb, 1, "Permissions =");
 
             foreach (XmlNode page in pages.SelectNodes("page"))
