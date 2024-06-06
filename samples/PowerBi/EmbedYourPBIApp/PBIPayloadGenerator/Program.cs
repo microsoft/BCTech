@@ -76,6 +76,19 @@ namespace PayloadGenerator
             Console.WriteLine("------------------------");
             Console.WriteLine("Reading input for PBI embed app: " + inputfile);
 
+            var NamespaceSheetName = "Namespace";
+            List<string[]> NamespaceRows = readExcelWorksheet(inputfile, NamespaceSheetName);
+            if (NamespaceRows.Count > 2)
+            {
+                throw new Exception("Only one namespace definition is supported.");
+            }
+            Console.WriteLine("Worksheet '{0}'. Found : {1} rows", NamespaceSheetName, NamespaceRows.Count.ToString());
+            string ALNamespace = "";
+            if (NamespaceRows.Count >= 2 && NamespaceRows[1].Length > 0)
+            {
+                ALNamespace = NamespaceRows[1][0];
+            }
+
             var PBIReportsSheetName = "PBIReports";
             List<string[]> PBIReportRows = readExcelWorksheet(inputfile, PBIReportsSheetName);
             Console.WriteLine("Worksheet '{0}'. Found : {1} rows", PBIReportsSheetName, PBIReportRows.Count.ToString());
@@ -129,13 +142,13 @@ namespace PayloadGenerator
 
             Console.WriteLine("Generating payload file...");
 
-            XDocument payloaddoc = GeneratePayload(pages, rcExtensions, permSets);
+            XDocument payloaddoc = GeneratePayload(ALNamespace, pages, rcExtensions, permSets);
             string content = payloaddoc.ToString();
             SaveFile(outputdir, outputfile, content);
             Console.WriteLine("Wrote file: " + outputfile);
         }
 
-        public static XDocument GeneratePayload(IEnumerable<PBIPageDefinition> pages, IEnumerable<RCExtensionDefinition> rcExtensions, IEnumerable<PermSetDefinition> permSets)
+        public static XDocument GeneratePayload(string ALNamespaceString, IEnumerable<PBIPageDefinition> pages, IEnumerable<RCExtensionDefinition> rcExtensions, IEnumerable<PermSetDefinition> permSets)
         {
             XDocument doc = new XDocument(
 
@@ -143,6 +156,10 @@ namespace PayloadGenerator
 
             XElement objects = new XElement("objects");
             doc.Add(objects);
+
+            XElement ALNamespace = new XElement("Namespace");
+            objects.Add(ALNamespace);
+            ALNamespace.SetAttributeValue("namespace", ALNamespaceString);
 
             XElement PBIEmbedPages = new XElement("PBIEmbedPages");
             objects.Add(PBIEmbedPages);
@@ -294,8 +311,7 @@ namespace PayloadGenerator
                 PermSetDefinition Record = new PermSetDefinition(
                     row[0],
                     row[1],
-                    row[2],
-                    row[3]
+                    row[2]
                 );
 
                 if (!row[0].Equals("id"))
