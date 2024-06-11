@@ -5,7 +5,7 @@ query 50131 FixedAssetsAnalysis
     UsageCategory = ReportsAndAnalysis;
     Caption = 'Fixed Assets Ad-hoc Analysis';
     AboutTitle = 'About Fixed Assets Ad-hoc Analysis';
-    AboutText = 'The Fixed Assets Analysis is a query that joins data from FA ledger entries with Fixed asset master data. Use it to...';
+    AboutText = 'The Fixed Assets Analysis is a query that joins data from FA ledger entries with Fixed asset master data. Use it to reconcile at month end as an alternative to using the report ''Book Value 01''.';
 
     elements
     {

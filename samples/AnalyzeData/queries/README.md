@@ -11,7 +11,17 @@ Many of the first examples will be ledger entry tables (such as customer ledger 
 
 ## Whats in this repo?
 
-This repo will soon hold AL code for these analysis queries as soon as we have first prototypes ready. 
+This repo hold AL code for these analysis queries:
+* Fixed Assets Ad-hoc Analysis
+
+### Fixed Assets Ad-hoc Analysis
+
+The *Fixed Assets Ad-hoc Analysis* query joins data from *fixed assets ledger entries* to relevant master data tables such as *Fixed Asset*, *Fixed Asset Class*, *Fixed Asset Subclass*, *Fixed Asset Location*, and *Depreciation Book*.
+
+When opening the query in the Business Central client, you can slice'n'dice fixed assets data any way you like. 
+
+![FA](../images/AdhocAnalysisFAQuery.png)
+
 
 ## How can I test this in my environments?
 
