@@ -1,6 +1,0 @@
-Translated Month Names = {
-    ("Month", NAMEOF('Translated Month Names Table'[MonthNameTranslationsEnglish]), 0, "en"),
-    ("Mes", NAMEOF('Translated Month Names Table'[MonthNameTranslationsSpanish]), 1, "es"),
-    ("Mois", NAMEOF('Translated Month Names Table'[MonthNameTranslationsFrench]), 2, "fr"),
-    ("Monat", NAMEOF('Translated Month Names Table'[MonthNameTranslationsGerman]), 3, "de")
-}

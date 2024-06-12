@@ -1,6 +1,0 @@
-Translated Day Names = {
-    ("Day", NAMEOF('Translated Day Names Table'[DayNameTranslationsEnglish]), 0, "en"),
-    ("Día", NAMEOF('Translated Day Names Table'[DayNameTranslationsSpanish]), 1, "es"),
-    ("Jour", NAMEOF('Translated Day Names Table'[DayNameTranslationsFrench]), 2, "fr"),
-    ("Tag", NAMEOF('Translated Day Names Table'[DayNameTranslationsGerman]), 3, "de")
-}

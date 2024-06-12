@@ -1,6 +1,0 @@
-Translated Category Names = {
-    ("Category", NAMEOF('Products'[CategoryTranslationEnglish]), 0, "en"),
-    ("Categoría", NAMEOF('Products'[CategoryTranslationSpanish]), 1, "es"),
-    ("Catégorie", NAMEOF('Products'[CategoryTranslationFrench]), 2, "fr"),
-    ("Kategorie", NAMEOF('Products'[CategoryTranslationGerman]), 3, "de")
-}

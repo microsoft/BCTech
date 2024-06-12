@@ -1,6 +1,0 @@
-Translated Product Names = {
-    ("Product", NAMEOF('Products'[ProductTranslationEnglish]), 0, "en" ),
-    ("Producto", NAMEOF('Products'[ProductTranslationSpanish]), 1, "es" ),
-    ("Produit", NAMEOF('Products'[ProductTranslationFrench]), 2, "fr" ),
-    ("Produkt", NAMEOF('Products'[ProductTranslationGerman]), 3, "de" )
-}
