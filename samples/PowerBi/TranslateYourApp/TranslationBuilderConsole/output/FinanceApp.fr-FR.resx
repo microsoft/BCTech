@@ -1,0 +1,3094 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="c3ba4558-e02a-404b-b4a1-a2903520532a" xml:space="preserve">
+    <value>Catégorie De Compte Général</value>
+    <comment>table [G/L Account Category]</comment>
+  </data>
+  <data name="6b744939-6d03-4b1d-ae58-32a1709bba2b" xml:space="preserve">
+    <value>G/L Selon La Catégorie Description</value>
+    <comment>table [G/L Account Category] column [G/L Acc. Category Description]</comment>
+  </data>
+  <data name="10c3d1a2-4c9e-445f-83a5-5620a57acbc6" xml:space="preserve">
+    <value>Glacccategorybrowsedepth</value>
+    <comment>table [G/L Account Category] measure [GLAccCategoryBrowseDepth]</comment>
+  </data>
+  <data name="[10c3d1a2-4c9e-445f-83a5-5620a57acbc6]-displayFolder" xml:space="preserve">
+    <value>Mesures Relatives Aux Catégories De Comptes _G/L</value>
+    <comment>table [G/L Account Category] measure [GLAccCategoryBrowseDepth]</comment>
+  </data>
+  <data name="e161e943-5843-47f5-8f73-35a775419b93" xml:space="preserve">
+    <value>Solde De La Catégorie G/L À La Date</value>
+    <comment>table [G/L Account Category] measure [G/L Acc. Category Balance at Date]</comment>
+  </data>
+  <data name="6c81d57f-b4d1-4e09-9645-e9a80a03166b" xml:space="preserve">
+    <value>Variation Nette De La Catégorie G/L</value>
+    <comment>table [G/L Account Category] measure [G/L Acc. Category Net Change]</comment>
+  </data>
+  <data name="4b253351-6669-4aa6-9f0c-4cb32c4bd319" xml:space="preserve">
+    <value>Solde Budgétaire De La Catégorie Générale À La Date</value>
+    <comment>table [G/L Account Category] measure [G/L Acc. Category Budget Balance at Date]</comment>
+  </data>
+  <data name="4c34ea6c-20c5-4bb8-9bc4-b15037b552c7" xml:space="preserve">
+    <value>Montant Du Budget De La Catégorie G/L</value>
+    <comment>table [G/L Account Category] measure [G/L Acc. Category Budget Amount]</comment>
+  </data>
+  <data name="44f40f11-1542-4438-bf6a-d9c0dfbd200e" xml:space="preserve">
+    <value>Hiérarchie Des Catégories De Compte Général</value>
+    <comment>table [G/L Account Category] hierarchy [G/L Account Category Hierarchy]</comment>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="[G/L Account Category (Level 1)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account Category] hierarchyLevel [G/L Account Category (Level 1)]</comment>
+  </data>
+  <data name="[G/L Account Category (Level 2)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account Category] hierarchyLevel [G/L Account Category (Level 2)]</comment>
+  </data>
+  <data name="[G/L Account Category (Level 3)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account Category] hierarchyLevel [G/L Account Category (Level 3)]</comment>
+  </data>
+  <data name="61462e08-f5a4-4d5b-ae1a-69e602499d89" xml:space="preserve">
+    <value>Mesures Du Bilan</value>
+    <comment>table [Balance Sheet Measures]</comment>
+  </data>
+  <data name="411b861e-e59e-4b26-a1ed-57e5f770062d" xml:space="preserve">
+    <value>Actifs Courants</value>
+    <comment>table [Balance Sheet Measures] measure [Current Assets]</comment>
+  </data>
+  <data name="[411b861e-e59e-4b26-a1ed-57e5f770062d]-displayFolder" xml:space="preserve">
+    <value>ACTIF</value>
+    <comment>table [Balance Sheet Measures] measure [Current Assets]</comment>
+  </data>
+  <data name="716e603e-3c38-47e2-9cd4-848ec4cd00cb" xml:space="preserve">
+    <value>Passif À Court Terme</value>
+    <comment>table [Balance Sheet Measures] measure [Current Liabilities]</comment>
+  </data>
+  <data name="[716e603e-3c38-47e2-9cd4-848ec4cd00cb]-displayFolder" xml:space="preserve">
+    <value>PASSIF</value>
+    <comment>table [Balance Sheet Measures] measure [Current Liabilities]</comment>
+  </data>
+  <data name="b4a0db4c-4b6a-4d44-a8e5-9f35e3442b80" xml:space="preserve">
+    <value>Inventaire</value>
+    <comment>table [Balance Sheet Measures] measure [Inventory]</comment>
+  </data>
+  <data name="17dc7e12-b4bf-45da-8690-036dfd4e6149" xml:space="preserve">
+    <value>Fonds De Roulement</value>
+    <comment>table [Balance Sheet Measures] measure [Working Capital]</comment>
+  </data>
+  <data name="314d4276-ad53-4564-8970-db08b9aa6eb2" xml:space="preserve">
+    <value>Capitaux Propres</value>
+    <comment>table [Balance Sheet Measures] measure [Shareholders' Equity]</comment>
+  </data>
+  <data name="[314d4276-ad53-4564-8970-db08b9aa6eb2]-displayFolder" xml:space="preserve">
+    <value>ÉQUITÉ</value>
+    <comment>table [Balance Sheet Measures] measure [Shareholders' Equity]</comment>
+  </data>
+  <data name="7ce79836-f738-4c51-81d9-3919ff285c4a" xml:space="preserve">
+    <value>Passif</value>
+    <comment>table [Balance Sheet Measures] measure [Liabilities]</comment>
+  </data>
+  <data name="562ef123-5c35-47c1-97f7-ba4813132c4e" xml:space="preserve">
+    <value>Actif</value>
+    <comment>table [Balance Sheet Measures] measure [Assets]</comment>
+  </data>
+  <data name="e4d6cc43-1447-4cd9-bfa5-7e77add591e2" xml:space="preserve">
+    <value>Équité</value>
+    <comment>table [Balance Sheet Measures] measure [Equity]</comment>
+  </data>
+  <data name="d5f0be19-a8cf-42f8-a40a-b6505198b21c" xml:space="preserve">
+    <value>Passif Et Capitaux Propres</value>
+    <comment>table [Balance Sheet Measures] measure [Liabilities &amp; Equity]</comment>
+  </data>
+  <data name="3cc1c883-ada8-4bf3-b121-9dac71d755d0" xml:space="preserve">
+    <value>Comptes Fournisseurs</value>
+    <comment>table [Balance Sheet Measures] measure [Accounts Payable]</comment>
+  </data>
+  <data name="c1cf713a-3f31-4534-bfbf-dd851e327370" xml:space="preserve">
+    <value>Comptes Clients</value>
+    <comment>table [Balance Sheet Measures] measure [Accounts Receivable]</comment>
+  </data>
+  <data name="97f11fed-c598-4629-b315-796f31a949a7" xml:space="preserve">
+    <value>Comptes Clients (Solde D’Ouverture)</value>
+    <comment>table [Balance Sheet Measures] measure [Accounts Receivable (Beginning Balance)]</comment>
+  </data>
+  <data name="c72f202e-dfb7-43e6-a863-c5748df5e422" xml:space="preserve">
+    <value>Débiteurs (Moyenne)</value>
+    <comment>table [Balance Sheet Measures] measure [Accounts Receivable (Average)]</comment>
+  </data>
+  <data name="2b0c46ab-9a54-4a0d-b3a8-116409279aa5" xml:space="preserve">
+    <value>Inventaire (Solde D’Ouverture)</value>
+    <comment>table [Balance Sheet Measures] measure [Inventory (Beginning Balance)]</comment>
+  </data>
+  <data name="8e785f0a-39da-44d7-87da-aa4efdd81680" xml:space="preserve">
+    <value>Inventaire (Moyenne)</value>
+    <comment>table [Balance Sheet Measures] measure [Inventory (Average)]</comment>
+  </data>
+  <data name="19c50b72-0329-4683-9e36-fb41816a1e12" xml:space="preserve">
+    <value>Paiements Anticipés D’Achat</value>
+    <comment>table [Balance Sheet Measures] measure [Purchase Prepayments]</comment>
+  </data>
+  <data name="bf760026-fedd-4ca8-9e2f-2d5d7f491133" xml:space="preserve">
+    <value>Liquidités</value>
+    <comment>table [Balance Sheet Measures] measure [Liquid Assets]</comment>
+  </data>
+  <data name="0c199677-5f9f-41ba-812c-9d27fefa2b47" xml:space="preserve">
+    <value>Immobilisations</value>
+    <comment>table [Balance Sheet Measures] measure [Fixed Assets]</comment>
+  </data>
+  <data name="bd71b97c-5865-43ee-82d4-d123dad547fa" xml:space="preserve">
+    <value>Capital Employé</value>
+    <comment>table [Balance Sheet Measures] measure [Capital Employed]</comment>
+  </data>
+  <data name="a95c556a-6316-4f33-8fff-b00d84d93106" xml:space="preserve">
+    <value>Passif (Neg)</value>
+    <comment>table [Balance Sheet Measures] measure [Liabilities (Neg)]</comment>
+  </data>
+  <data name="02857927-8038-4478-ba9c-9d80a793cc6d" xml:space="preserve">
+    <value>Comptes Fournisseurs (Négatifs)</value>
+    <comment>table [Balance Sheet Measures] measure [Accounts Payable (Neg)]</comment>
+  </data>
+  <data name="8ad0052c-9672-41de-8c24-659c79e06ce3" xml:space="preserve">
+    <value>Responsabilités En Matière De Paie</value>
+    <comment>table [Balance Sheet Measures] measure [Payroll Liabilites]</comment>
+  </data>
+  <data name="c8925826-7623-4d0e-98de-e76ac4f9bb2b" xml:space="preserve">
+    <value>Passifs À Long Terme</value>
+    <comment>table [Balance Sheet Measures] measure [Longterm Liabilities]</comment>
+  </data>
+  <data name="835b042f-3a8e-48ab-b53f-9d3e789df204" xml:space="preserve">
+    <value>Mesures De L’État Des Résultats</value>
+    <comment>table [Income Statement Measures]</comment>
+  </data>
+  <data name="b16a89bb-770a-431e-a8a8-5e560603f78f" xml:space="preserve">
+    <value>Revenu</value>
+    <comment>table [Income Statement Measures] measure [Revenue]</comment>
+  </data>
+  <data name="[b16a89bb-770a-431e-a8a8-5e560603f78f]-displayFolder" xml:space="preserve">
+    <value>REVENU</value>
+    <comment>table [Income Statement Measures] measure [Revenue]</comment>
+  </data>
+  <data name="b55dea07-6fdf-4cd7-998b-3796eb522b26" xml:space="preserve">
+    <value>Coût Des Marchandises Vendues</value>
+    <comment>table [Income Statement Measures] measure [Cost of Goods Sold]</comment>
+  </data>
+  <data name="[b55dea07-6fdf-4cd7-998b-3796eb522b26]-displayFolder" xml:space="preserve">
+    <value>ROUAGES</value>
+    <comment>table [Income Statement Measures] measure [Cost of Goods Sold]</comment>
+  </data>
+  <data name="041a4afd-521c-4f7c-bba3-f364df099ce1" xml:space="preserve">
+    <value>Dépense</value>
+    <comment>table [Income Statement Measures] measure [Expense]</comment>
+  </data>
+  <data name="[041a4afd-521c-4f7c-bba3-f364df099ce1]-displayFolder" xml:space="preserve">
+    <value>DÉPENSE</value>
+    <comment>table [Income Statement Measures] measure [Expense]</comment>
+  </data>
+  <data name="8807884c-e2e5-4750-9515-fd0d22afc2d5" xml:space="preserve">
+    <value>Charges D’Intérêts</value>
+    <comment>table [Income Statement Measures] measure [Interest Expense]</comment>
+  </data>
+  <data name="79a0e131-df34-4668-85a8-25d0a5e51c2f" xml:space="preserve">
+    <value>Charge Fiscale</value>
+    <comment>table [Income Statement Measures] measure [Tax Expense]</comment>
+  </data>
+  <data name="dc8b6044-5190-4b1d-b906-d677fe215341" xml:space="preserve">
+    <value>Dépenses Extraordinaires</value>
+    <comment>table [Income Statement Measures] measure [Extraordinary Expense]</comment>
+  </data>
+  <data name="8553926d-f2d1-4bd2-9c54-f8092aa6e437" xml:space="preserve">
+    <value>Charges D’Exploitation - OPEX</value>
+    <comment>table [Income Statement Measures] measure [Operating Expense - OPEX]</comment>
+  </data>
+  <data name="cde3e206-9adb-4124-b55a-19e8ebea02aa" xml:space="preserve">
+    <value>Achats</value>
+    <comment>table [Income Statement Measures] measure [Purchases]</comment>
+  </data>
+  <data name="091a8d09-c54b-4939-b693-6ceea5cef7ba" xml:space="preserve">
+    <value>Dépenses Liées Aux Pertes De Change</value>
+    <comment>table [Income Statement Measures] measure [FX Losses Expense]</comment>
+  </data>
+  <data name="ca57a5d2-268c-41c5-a31f-5e1ab75b67b1" xml:space="preserve">
+    <value>Dépréciation Et Amortissement</value>
+    <comment>table [Income Statement Measures] measure [Depreciation and Amortization]</comment>
+  </data>
+  <data name="4f7f406e-7166-42fd-8791-d2de4173c31c" xml:space="preserve">
+    <value>Revenus (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Revenue (Balance at Date)]</comment>
+  </data>
+  <data name="55dd5e28-e28f-4f4d-9ca2-28563e0a5dc7" xml:space="preserve">
+    <value>Revenus (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Revenue (Beginning Balance)]</comment>
+  </data>
+  <data name="cfd0b7e2-bd3c-486e-b93b-c4695ee28cf2" xml:space="preserve">
+    <value>Revenus D’Intérêts</value>
+    <comment>table [Income Statement Measures] measure [Interest Revenue]</comment>
+  </data>
+  <data name="c0e89f63-b8ad-439f-9bfd-13a9a54e785d" xml:space="preserve">
+    <value>FX Gagne Des Revenus</value>
+    <comment>table [Income Statement Measures] measure [FX Gains Revenue]</comment>
+  </data>
+  <data name="cb5ac1fa-08c3-488b-a30c-eee77b9518dc" xml:space="preserve">
+    <value>Revenus Extraordinaires</value>
+    <comment>table [Income Statement Measures] measure [Extraordinary Revenue]</comment>
+  </data>
+  <data name="5f38e1da-e2bf-4361-87bd-759a0e169565" xml:space="preserve">
+    <value>Revenus D’Exploitation</value>
+    <comment>table [Income Statement Measures] measure [Operating Revenue]</comment>
+  </data>
+  <data name="940cdaea-69f6-4ccd-8a5d-896b70fed01e" xml:space="preserve">
+    <value>Charges (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Expense (Balance at Date)]</comment>
+  </data>
+  <data name="54ea44fc-3190-4fa1-a115-b5e77f594e0b" xml:space="preserve">
+    <value>Dépense (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Expense (Beginning Balance)]</comment>
+  </data>
+  <data name="c9204ddb-0571-41fe-93c5-245081a05a83" xml:space="preserve">
+    <value>Intérêts Débiteurs (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Interest Expense (Balance at Date)]</comment>
+  </data>
+  <data name="04d7aa06-82b1-429d-8496-8b43b1405cdf" xml:space="preserve">
+    <value>Intérêts Débiteurs (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Interest Expense (Beginning Balance)]</comment>
+  </data>
+  <data name="972c6e67-bdf3-49b4-8723-52b37f4fb73f" xml:space="preserve">
+    <value>Charge De Pertes De Change (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [FX Losses Expense (Balance at Date)]</comment>
+  </data>
+  <data name="3e581b79-71d1-46af-8955-7830d1e25ad5" xml:space="preserve">
+    <value>Charge De Pertes De Change (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [FX Losses Expense (Beginning Balance)]</comment>
+  </data>
+  <data name="d9e89d24-44b8-4951-a41f-8b06660d718f" xml:space="preserve">
+    <value>Charge D’Impôt (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Tax Expense (Balance at Date)]</comment>
+  </data>
+  <data name="dcfb4c12-58b9-478e-9cd0-b31ff375451f" xml:space="preserve">
+    <value>Charge Fiscale (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Tax Expense (Beginning Balance)]</comment>
+  </data>
+  <data name="615e2bbe-c5f6-463b-b6ce-cd411cf2a0d6" xml:space="preserve">
+    <value>Dépense Extraordinaire (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Extraordinary Expense (Balance at Date)]</comment>
+  </data>
+  <data name="b0c67221-1fcb-4add-9057-48987759cdee" xml:space="preserve">
+    <value>Dépense Extraordinaire (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Extraordinary Expense (Beginning Balance)]</comment>
+  </data>
+  <data name="041f3cf5-1df1-4383-9272-e411fa0115ba" xml:space="preserve">
+    <value>Revenus D’Intérêts (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Interest Revenue (Balance at Date)]</comment>
+  </data>
+  <data name="26069255-52a8-442f-994f-2d81f9143828" xml:space="preserve">
+    <value>Revenus D’Intérêts (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Interest Revenue (Beginning Balance)]</comment>
+  </data>
+  <data name="af06fa1a-84ff-48c5-a0c7-25aa6e0edc95" xml:space="preserve">
+    <value>Gains De Change (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [FX Gains Revenue (Balance at Date)]</comment>
+  </data>
+  <data name="f26352ec-74ce-4fcd-b6d4-6322f1a1031b" xml:space="preserve">
+    <value>Gains De Change (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [FX Gains Revenue (Beginning Balance)]</comment>
+  </data>
+  <data name="2d125d97-b729-4e63-a0d4-ef57c5041286" xml:space="preserve">
+    <value>Revenus Extraordinaires (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Extraordinary Revenue (Balance at Date)]</comment>
+  </data>
+  <data name="a3331758-6045-4c04-a901-422489051f73" xml:space="preserve">
+    <value>Revenus Extraordinaires (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Extraordinary Revenue (Beginning Balance)]</comment>
+  </data>
+  <data name="b5687d1c-251a-4f79-b36f-4a7e18cea32c" xml:space="preserve">
+    <value>Charges D’Exploitation - OPEX (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Operating Expense - OPEX (Balance at Date)]</comment>
+  </data>
+  <data name="9911b4f4-a47f-494e-9e35-7fe6abcdb93d" xml:space="preserve">
+    <value>Charges D’Exploitation - OPEX (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Operating Expense - OPEX (Beginning Balance)]</comment>
+  </data>
+  <data name="27e9b07f-5e09-4771-b061-695c8d3bb43c" xml:space="preserve">
+    <value>Revenus D’Exploitation (Solde À La Date)</value>
+    <comment>table [Income Statement Measures] measure [Operating Revenue (Balance at Date)]</comment>
+  </data>
+  <data name="2411ba3e-2a64-4e8c-af1f-4ba787aa14f1" xml:space="preserve">
+    <value>Revenus D’Exploitation (Solde D’Ouverture)</value>
+    <comment>table [Income Statement Measures] measure [Operating Revenue (Beginning Balance)]</comment>
+  </data>
+  <data name="3c497fc9-ea73-408d-9753-186653d55d12" xml:space="preserve">
+    <value>Compte Général</value>
+    <comment>table [G/L Account]</comment>
+  </data>
+  <data name="d2e799e6-a095-40fe-a5a5-469faba0df55" xml:space="preserve">
+    <value>N°/Nom Du Compte Général</value>
+    <comment>table [G/L Account] column [G/L Account No./Name]</comment>
+  </data>
+  <data name="76a6007b-ef2c-4d57-8e72-93eb8d722b78" xml:space="preserve">
+    <value>N° De Compte Général/Nom En Retrait</value>
+    <comment>table [G/L Account] column [G/L Account No./Name Indented]</comment>
+  </data>
+  <data name="7c6d9ee8-70f4-4453-bd76-c8ecbad1715f" xml:space="preserve">
+    <value>N° De Compte Général Parent</value>
+    <comment>table [G/L Account] column [Parent G/L Account No.]</comment>
+  </data>
+  <data name="1a07b76a-7c4c-4807-a4b5-297c9b0af8bf" xml:space="preserve">
+    <value>N° De Compte Général</value>
+    <comment>table [G/L Account] column [G/L Account No.]</comment>
+  </data>
+  <data name="fd18e2c7-764b-45b9-8676-34dfed00cd39" xml:space="preserve">
+    <value>Nom Du Compte Général</value>
+    <comment>table [G/L Account] column [G/L Account Name]</comment>
+  </data>
+  <data name="a83e9a7b-c7fd-43d9-b513-8fffcda403e1" xml:space="preserve">
+    <value>Type De Compte</value>
+    <comment>table [G/L Account] column [Account Type]</comment>
+  </data>
+  <data name="46f152e4-5fab-48ae-b0da-6dd69121b76c" xml:space="preserve">
+    <value>Revenu/Solde</value>
+    <comment>table [G/L Account] column [Income/Balance]</comment>
+  </data>
+  <data name="977db53c-c03a-452f-9ccc-7986f60f7e78" xml:space="preserve">
+    <value>Numéro D’Entrée De La Sous-Catégorie Du Compte</value>
+    <comment>table [G/L Account] column [Account Subcategory Entry No.]</comment>
+  </data>
+  <data name="ff8c1ce0-8975-470e-b6b0-8cfbc68a4e87" xml:space="preserve">
+    <value>Solde Du GL À La Date</value>
+    <comment>table [G/L Account] measure [G/L Acc. Balance at Date]</comment>
+  </data>
+  <data name="[ff8c1ce0-8975-470e-b6b0-8cfbc68a4e87]-displayFolder" xml:space="preserve">
+    <value>Mesures Du Compte _G/L</value>
+    <comment>table [G/L Account] measure [G/L Acc. Balance at Date]</comment>
+  </data>
+  <data name="db09a6ac-762e-46a4-88c0-e46342391de7" xml:space="preserve">
+    <value>G/L Compte Rendu Net</value>
+    <comment>table [G/L Account] measure [G/L Acc. Net Change]</comment>
+  </data>
+  <data name="0dbf1f67-efe8-418e-943f-7c973e7945fd" xml:space="preserve">
+    <value>Solde Budgétaire Général À La Date</value>
+    <comment>table [G/L Account] measure [G/L Acc. Budget Balance at Date]</comment>
+  </data>
+  <data name="e8f078f3-14ef-45ab-b93d-7253de59bdd6" xml:space="preserve">
+    <value>G/L Selon Le Montant Du Budget</value>
+    <comment>table [G/L Account] measure [G/L Acc. Budget Amount]</comment>
+  </data>
+  <data name="1b2168f5-cfc7-4cfe-971f-e2e1745e1ea0" xml:space="preserve">
+    <value>Hiérarchie Des Comptes Généraux</value>
+    <comment>table [G/L Account] hierarchy [G/L Account Hierarchy]</comment>
+  </data>
+  <data name="[G/L Account (Level 1)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account] hierarchyLevel [G/L Account (Level 1)]</comment>
+  </data>
+  <data name="[G/L Account (Level 2)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account] hierarchyLevel [G/L Account (Level 2)]</comment>
+  </data>
+  <data name="[G/L Account (Level 3)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account] hierarchyLevel [G/L Account (Level 3)]</comment>
+  </data>
+  <data name="[G/L Account (Level 4)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account] hierarchyLevel [G/L Account (Level 4)]</comment>
+  </data>
+  <data name="[G/L Account (Level 5)]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [G/L Account] hierarchyLevel [G/L Account (Level 5)]</comment>
+  </data>
+  <data name="d85999e8-4f8d-48c2-9b60-04c69092ec98" xml:space="preserve">
+    <value>KPI D’Activité</value>
+    <comment>table [Activity KPIs]</comment>
+  </data>
+  <data name="4e531563-815e-4caa-baf1-91d1d900141d" xml:space="preserve">
+    <value>Période De Collecte Moyenne (Jours)</value>
+    <comment>table [Activity KPIs] measure [Average Collection Period (Days)]</comment>
+  </data>
+  <data name="fd31cdc6-3250-4c23-8626-9fe940da6366" xml:space="preserve">
+    <value>Variation En % Des Revenus</value>
+    <comment>table [Activity KPIs] measure [% Change in Revenue]</comment>
+  </data>
+  <data name="8a4ab459-9a3b-4dce-86d7-b88c2d08defe" xml:space="preserve">
+    <value>% De Variation Du Résultat D’Exploitation - EBIT</value>
+    <comment>table [Activity KPIs] measure [% Change in Operating Profit - EBIT]</comment>
+  </data>
+  <data name="c05e96c6-716f-49cb-8eb4-d5911e895e81" xml:space="preserve">
+    <value>Jours De Ventes En Suspens - DSO</value>
+    <comment>table [Activity KPIs] measure [Days Sales Outstanding - DSO]</comment>
+  </data>
+  <data name="628f8b4e-c31f-43f8-a764-e19736084479" xml:space="preserve">
+    <value>Jours Payables Impayés - DPO</value>
+    <comment>table [Activity KPIs] measure [Days Payable Outstanding - DPO]</comment>
+  </data>
+  <data name="[Days Payable Outstanding - DPO]-description" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Activity KPIs] measure [Days Payable Outstanding - DPO]</comment>
+  </data>
+  <data name="ccf70313-ff24-42ef-95c8-3970afb5ecf7" xml:space="preserve">
+    <value>Jours De Vente D’Inventaire - DSI</value>
+    <comment>table [Activity KPIs] measure [Days Sales Of Inventory - DSI]</comment>
+  </data>
+  <data name="eb5c4897-2874-4598-9a1b-d9de344ed480" xml:space="preserve">
+    <value>Cycle De Conversion De Trésorerie - CCC</value>
+    <comment>table [Activity KPIs] measure [Cash Conversion Cycle - CCC]</comment>
+  </data>
+  <data name="916898bd-ba1c-476d-8c9e-4ac36c122819" xml:space="preserve">
+    <value>Degré De Levier D’Exploitation - DOL</value>
+    <comment>table [Activity KPIs] measure [Degree Of Operating Leverage - DOL]</comment>
+  </data>
+  <data name="b9c50e36-1e75-4480-8f35-31253df7069d" xml:space="preserve">
+    <value>Ratio De Rotation Des Actifs</value>
+    <comment>table [Activity KPIs] measure [Asset Turnover Ratio]</comment>
+  </data>
+  <data name="61ff79b1-633e-4203-8301-c3443f79a5e6" xml:space="preserve">
+    <value>Rotation Des Stocks</value>
+    <comment>table [Activity KPIs] measure [Inventory Turnover]</comment>
+  </data>
+  <data name="f270f0d7-7345-4133-8fcc-cd818dc3bc36" xml:space="preserve">
+    <value>KPI De Liquidité</value>
+    <comment>table [Liquidity KPIs]</comment>
+  </data>
+  <data name="5254903a-d3f7-419e-be16-4484be543a58" xml:space="preserve">
+    <value>Ratio De Liquidité Générale</value>
+    <comment>table [Liquidity KPIs] measure [Current Ratio]</comment>
+  </data>
+  <data name="b138cc48-e466-4163-be00-453205d991de" xml:space="preserve">
+    <value>Ratio Rapide</value>
+    <comment>table [Liquidity KPIs] measure [Quick Ratio]</comment>
+  </data>
+  <data name="8a2100dd-d9de-4461-bfc2-8ec10b3449d7" xml:space="preserve">
+    <value>Ratio De Trésorerie</value>
+    <comment>table [Liquidity KPIs] measure [Cash Ratio]</comment>
+  </data>
+  <data name="a6bf6c3b-6f8a-4436-80aa-58ecd86bd64a" xml:space="preserve">
+    <value>KPI De Rentabilité</value>
+    <comment>table [Profitability KPIs]</comment>
+  </data>
+  <data name="de13f6d2-5bec-40bc-b469-380fa483d8a0" xml:space="preserve">
+    <value>Marge Bénéficiaire Brute</value>
+    <comment>table [Profitability KPIs] measure [Gross Profit Margin]</comment>
+  </data>
+  <data name="d1e1eece-6fea-429f-aa20-68c632684344" xml:space="preserve">
+    <value>Marge Bénéficiaire Nette</value>
+    <comment>table [Profitability KPIs] measure [Net Profit Margin]</comment>
+  </data>
+  <data name="e35233d1-1365-4c8c-89b3-9c913691480f" xml:space="preserve">
+    <value>Marge Brute</value>
+    <comment>table [Profitability KPIs] measure [Gross Profit]</comment>
+  </data>
+  <data name="12da6c25-edcd-40df-ae16-232fa64a697f" xml:space="preserve">
+    <value>Bénéfice Net</value>
+    <comment>table [Profitability KPIs] measure [Net Profit]</comment>
+  </data>
+  <data name="5a8da567-4469-45de-a774-9339c3c0b122" xml:space="preserve">
+    <value>Résultat D’Exploitation - EBIT (Solde D’Ouverture)</value>
+    <comment>table [Profitability KPIs] measure [Operating Profit - EBIT (Beginning Balance)]</comment>
+  </data>
+  <data name="b8ef9f4f-abfa-47c7-ba7c-1c2727de9711" xml:space="preserve">
+    <value>Résultat D’Exploitation - EBIT</value>
+    <comment>table [Profitability KPIs] measure [Operating Profit - EBIT]</comment>
+  </data>
+  <data name="78075c6d-980f-47b9-b891-4be41a619b57" xml:space="preserve">
+    <value>Résultat Opérationnel - BAII (Solde À La Date)</value>
+    <comment>table [Profitability KPIs] measure [Operating Profit - EBIT (Balance at Date)]</comment>
+  </data>
+  <data name="5bcc78b3-e859-424f-a049-6cbc1e087359" xml:space="preserve">
+    <value>Marge Bénéficiaire D’Exploitation</value>
+    <comment>table [Profitability KPIs] measure [Operating Profit Margin]</comment>
+  </data>
+  <data name="d9aefe9f-be9d-4828-b7a7-c2256d89d0bf" xml:space="preserve">
+    <value>BAIIA</value>
+    <comment>table [Profitability KPIs] measure [EBITDA]</comment>
+  </data>
+  <data name="e1717869-663b-4dcf-851a-fd28b262d0d2" xml:space="preserve">
+    <value>Rendement De L’Actif - ROA</value>
+    <comment>table [Profitability KPIs] measure [Return On Assets - ROA]</comment>
+  </data>
+  <data name="f9af3737-a1ef-4897-b855-774809fa927e" xml:space="preserve">
+    <value>Rendement Des Capitaux Propres - RCP</value>
+    <comment>table [Profitability KPIs] measure [Return On Equity - ROE]</comment>
+  </data>
+  <data name="000eaa9e-4094-4877-a4a3-6b213b0a57cd" xml:space="preserve">
+    <value>Rendement De L’Actif Net - RONA</value>
+    <comment>table [Profitability KPIs] measure [Return On Net Assets - RONA]</comment>
+  </data>
+  <data name="67f17d87-3e40-4914-90c9-0f5c93c58d30" xml:space="preserve">
+    <value>Rendement Du Capital Employé - ROCE</value>
+    <comment>table [Profitability KPIs] measure [Return On Capital Employed - ROCE]</comment>
+  </data>
+  <data name="0059efbf-64e9-46c4-b85a-ad136925f2e1" xml:space="preserve">
+    <value>Ratio D’Endettement/Capitaux Propres</value>
+    <comment>table [Profitability KPIs] measure [Debt/Equity Ratio]</comment>
+  </data>
+  <data name="fac104aa-74de-47dc-a49f-fdfa7dfd15db" xml:space="preserve">
+    <value>Ratio Des Capitaux Propres</value>
+    <comment>table [Profitability KPIs] measure [Shareholder Equity Ratio]</comment>
+  </data>
+  <data name="4e78c898-677e-4291-911b-aefabb463a15" xml:space="preserve">
+    <value>Ratio D’Endettement</value>
+    <comment>table [Profitability KPIs] measure [Debt Ratio]</comment>
+  </data>
+  <data name="31ab228d-b61f-4fdb-859e-d08bcd5e059e" xml:space="preserve">
+    <value>Écritures Budgétaires Générales</value>
+    <comment>table [G/L Budget Entries]</comment>
+  </data>
+  <data name="7fa1b4db-1feb-494f-9efe-07ab9cefd858" xml:space="preserve">
+    <value>Nom Du Budget</value>
+    <comment>table [G/L Budget Entries] column [Budget Name]</comment>
+  </data>
+  <data name="d140a41e-03d3-48e8-88ab-64df845eb45f" xml:space="preserve">
+    <value>Budget Date</value>
+    <comment>table [G/L Budget Entries] column [Budget Date]</comment>
+  </data>
+  <data name="6d6247eb-a8d5-47fe-93ca-715fcaba9ec8" xml:space="preserve">
+    <value>Budget Amt.</value>
+    <comment>table [G/L Budget Entries] column [Budget Amt.]</comment>
+  </data>
+  <data name="31220284-7497-4d6f-a200-88451e745123" xml:space="preserve">
+    <value>N° D’Entrée</value>
+    <comment>table [G/L Budget Entries] column [Entry No.]</comment>
+  </data>
+  <data name="672ce4f6-d49f-42e7-af0e-872a974b6e8f" xml:space="preserve">
+    <value>Solde Budgétaire À Ce Jour</value>
+    <comment>table [G/L Budget Entries] measure [Budget Balance at Date]</comment>
+  </data>
+  <data name="[672ce4f6-d49f-42e7-af0e-872a974b6e8f]-displayFolder" xml:space="preserve">
+    <value>_G/L Mesures D’Entrée Budgétaire</value>
+    <comment>table [G/L Budget Entries] measure [Budget Balance at Date]</comment>
+  </data>
+  <data name="032f8781-490c-4b21-a3ff-bb035554405f" xml:space="preserve">
+    <value>Montant Du Budget</value>
+    <comment>table [G/L Budget Entries] measure [Budget Amount]</comment>
+  </data>
+  <data name="1617752a-65ec-4d0c-b652-07eb46ba12e3" xml:space="preserve">
+    <value>Jeux De Dimensions</value>
+    <comment>table [Dimension Sets]</comment>
+  </data>
+  <data name="509b5a55-d4c9-4990-86ff-4db4ddf6e70b" xml:space="preserve">
+    <value>Dimension Globale 1</value>
+    <comment>table [Dimension Sets] column [Global Dimension 1]</comment>
+  </data>
+  <data name="901124b7-d0cf-4a6b-a97d-03b01fcbbb7b" xml:space="preserve">
+    <value>Dimension Globale 2</value>
+    <comment>table [Dimension Sets] column [Global Dimension 2]</comment>
+  </data>
+  <data name="6da18d1b-4416-4962-9791-a99a2b1b16df" xml:space="preserve">
+    <value>Raccourci Dimension 3</value>
+    <comment>table [Dimension Sets] column [Shortcut Dimension 3]</comment>
+  </data>
+  <data name="0a2ce674-7583-47bb-9152-2ed0202f39bd" xml:space="preserve">
+    <value>Raccourci Dimension 4</value>
+    <comment>table [Dimension Sets] column [Shortcut Dimension 4]</comment>
+  </data>
+  <data name="6e6336a7-10eb-4cdf-a811-12394bcee5ca" xml:space="preserve">
+    <value>Raccourci Dimension 5</value>
+    <comment>table [Dimension Sets] column [Shortcut Dimension 5]</comment>
+  </data>
+  <data name="19675f86-76bf-4a08-8d8f-782bfe6bc306" xml:space="preserve">
+    <value>Raccourci Dimension 6</value>
+    <comment>table [Dimension Sets] column [Shortcut Dimension 6]</comment>
+  </data>
+  <data name="5a352164-bd57-476e-b9e1-1dad571ae15f" xml:space="preserve">
+    <value>Raccourci Dimension 7</value>
+    <comment>table [Dimension Sets] column [Shortcut Dimension 7]</comment>
+  </data>
+  <data name="ae9c39e3-c860-475e-ad05-9ad0ee181ac9" xml:space="preserve">
+    <value>Raccourci Dimension 8</value>
+    <comment>table [Dimension Sets] column [Shortcut Dimension 8]</comment>
+  </data>
+  <data name="135cf14f-b9fb-4a27-b7e9-7e652be296c4" xml:space="preserve">
+    <value>Écritures Générales</value>
+    <comment>table [G/L Entries]</comment>
+  </data>
+  <data name="f7c65158-a256-495b-98b0-b13aa96b7718" xml:space="preserve">
+    <value>Date De Publication</value>
+    <comment>table [G/L Entries] column [Posting Date]</comment>
+  </data>
+  <data name="201c54d9-6514-4fae-b710-b740001c702e" xml:space="preserve">
+    <value>Entrée De Clôture</value>
+    <comment>table [G/L Entries] column [Closing Entry]</comment>
+  </data>
+  <data name="4f5c7cc6-e2f4-46d7-ad87-17fcaa9bf05c" xml:space="preserve">
+    <value>Code Source</value>
+    <comment>table [G/L Entries] column [Source Code]</comment>
+  </data>
+  <data name="67b90c0d-c1ba-41d0-aed5-e8b1dfc6ee35" xml:space="preserve">
+    <value>Source Type</value>
+    <comment>table [G/L Entries] column [Source Type]</comment>
+  </data>
+  <data name="7794a606-5a53-4225-8e80-64e098294c5e" xml:space="preserve">
+    <value>N° De Source</value>
+    <comment>table [G/L Entries] column [Source No.]</comment>
+  </data>
+  <data name="75a094cd-2a8e-44ac-a6a9-41fc68acd5d7" xml:space="preserve">
+    <value>N° D’Entrée</value>
+    <comment>table [G/L Entries] column [Entry No.]</comment>
+  </data>
+  <data name="97592542-406c-44d0-acd8-8d71d5e5cf75" xml:space="preserve">
+    <value>Description</value>
+    <comment>table [G/L Entries] column [Description]</comment>
+  </data>
+  <data name="656091b6-7845-4da2-b45e-333b6a7fd0df" xml:space="preserve">
+    <value>Variation Nette</value>
+    <comment>table [G/L Entries] measure [Net Change]</comment>
+  </data>
+  <data name="[656091b6-7845-4da2-b45e-333b6a7fd0df]-displayFolder" xml:space="preserve">
+    <value>Mesures D’Entrée _G/L</value>
+    <comment>table [G/L Entries] measure [Net Change]</comment>
+  </data>
+  <data name="a51ee6fd-42b6-4c71-a47d-ab1989f8a77b" xml:space="preserve">
+    <value>Variation Nette (Négative)</value>
+    <comment>table [G/L Entries] measure [Net Change (Neg)]</comment>
+  </data>
+  <data name="8295b18c-3938-41e4-8825-e558d0bb9ec7" xml:space="preserve">
+    <value>Solde À La Date</value>
+    <comment>table [G/L Entries] measure [Balance at Date]</comment>
+  </data>
+  <data name="c2966b6f-09db-4be7-85b4-9a0038990b35" xml:space="preserve">
+    <value>Quantité</value>
+    <comment>table [G/L Entries] measure [Amount]</comment>
+  </data>
+  <data name="9f19be81-41cd-4dab-b388-fd993a5fa13a" xml:space="preserve">
+    <value>Balance</value>
+    <comment>table [G/L Entries] measure [Balance]</comment>
+  </data>
+  <data name="50600533-8826-4df7-beff-bef860152365" xml:space="preserve">
+    <value>Écart Par Rapport Au Budget</value>
+    <comment>table [G/L Entries] measure [Variance to Budget]</comment>
+  </data>
+  <data name="a26f75b9-2a72-4024-9116-2d495f0a5603" xml:space="preserve">
+    <value>Écart Par Rapport Au Budget %</value>
+    <comment>table [G/L Entries] measure [Variance to Budget %]</comment>
+  </data>
+  <data name="0d0adef3-2898-4669-a4f4-3e6bb288ecc1" xml:space="preserve">
+    <value>Solde À La Date (Négatif)</value>
+    <comment>table [G/L Entries] measure [Balance at Date (Neg)]</comment>
+  </data>
+  <data name="8f15b5bd-2be9-4f39-bc40-9b10f8d09136" xml:space="preserve">
+    <value>Intelligence Temporelle Du Calendrier Standard</value>
+    <comment>table [Standard Calendar Time Intelligence]</comment>
+  </data>
+  <data name="d9025aa8-2da1-4db9-8a0c-19294d8981d8" xml:space="preserve">
+    <value>Variation Nette AVG 1 An</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change AVG 1Y]</comment>
+  </data>
+  <data name="[d9025aa8-2da1-4db9-8a0c-19294d8981d8]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Moyennes Mobiles</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change AVG 1Y]</comment>
+  </data>
+  <data name="7c9693e3-0d1b-441f-910b-34c3018c8b64" xml:space="preserve">
+    <value>Variation Nette AVG 3M</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change AVG 3M]</comment>
+  </data>
+  <data name="dbbf824e-b1e3-47c6-90e6-97e2b28702a4" xml:space="preserve">
+    <value>Variation Nette AVG 30D</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change AVG 30D]</comment>
+  </data>
+  <data name="d39c1c5d-7ced-49de-b38e-60821149c1f4" xml:space="preserve">
+    <value>Variation Nette MTDOPM %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MTDOPM %]</comment>
+  </data>
+  <data name="[d39c1c5d-7ced-49de-b38e-60821149c1f4]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Cumul De La Période Par Rapport À La Période Précédente Complète</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MTDOPM %]</comment>
+  </data>
+  <data name="f7b6a10b-b025-4c15-977f-c39a35895422" xml:space="preserve">
+    <value>Variation Nette MTDOPM</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MTDOPM]</comment>
+  </data>
+  <data name="300b5732-ca96-4a19-9eff-b95f24e5908e" xml:space="preserve">
+    <value>Variation Nette PMC</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PMC]</comment>
+  </data>
+  <data name="a7dc8e7b-0307-49c7-af3d-0c120642b60d" xml:space="preserve">
+    <value>Variation Nette QTDOPQ %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change QTDOPQ %]</comment>
+  </data>
+  <data name="d42b92e7-690d-460f-9d62-5aab461fc064" xml:space="preserve">
+    <value>Variation Nette QTDOPQ</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change QTDOPQ]</comment>
+  </data>
+  <data name="59acf42f-7746-4c80-9a40-9b912fa4f1bf" xml:space="preserve">
+    <value>Variation Nette PQC</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PQC]</comment>
+  </data>
+  <data name="812458a0-9de0-4cee-899e-736e3be5f0ce" xml:space="preserve">
+    <value>Variation Nette En % Annuel</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change YTDOPY %]</comment>
+  </data>
+  <data name="2c5e4f5b-eda3-4d1a-b474-cc6d6b25975b" xml:space="preserve">
+    <value>Variation Nette Depuis Le Début De L’Année</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change YTDOPY]</comment>
+  </data>
+  <data name="6a4fda02-2201-4cbb-b9e3-0df014396326" xml:space="preserve">
+    <value>Variation Nette PYC</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PYC]</comment>
+  </data>
+  <data name="c5b5df9f-c047-422b-8b04-1ba71513837f" xml:space="preserve">
+    <value>Variation Nette MATG %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MATG %]</comment>
+  </data>
+  <data name="[c5b5df9f-c047-422b-8b04-1ba71513837f]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance Totale Annuelle Mobile</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MATG %]</comment>
+  </data>
+  <data name="0d0d2454-d4f0-42ea-b208-b9fcc6ba77e8" xml:space="preserve">
+    <value>Variation Nette MATG</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MATG]</comment>
+  </data>
+  <data name="7ed94b3a-d932-40a4-adcb-f339a899f67b" xml:space="preserve">
+    <value>Variation Nette PYMAT</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PYMAT]</comment>
+  </data>
+  <data name="a29e9889-455d-4cea-a957-132660d8de54" xml:space="preserve">
+    <value>Variation Nette MAT</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MAT]</comment>
+  </data>
+  <data name="8111194d-34bb-4565-b6ce-8b7d93a650dd" xml:space="preserve">
+    <value>Variation Nette MOMTD %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MOMTD %]</comment>
+  </data>
+  <data name="[8111194d-34bb-4565-b6ce-8b7d93a650dd]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance Depuis Le Début De La Période</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MOMTD %]</comment>
+  </data>
+  <data name="94077ea9-593a-49db-af9d-8c7268c96b12" xml:space="preserve">
+    <value>Variation Nette MOMTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MOMTD]</comment>
+  </data>
+  <data name="760b33d3-7953-41e7-97a1-f735e9cd819d" xml:space="preserve">
+    <value>Variation Nette PMTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PMTD]</comment>
+  </data>
+  <data name="cfadbdf7-a1e4-4fed-954e-7d672e11797a" xml:space="preserve">
+    <value>Variation Nette En % QOQTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change QOQTD %]</comment>
+  </data>
+  <data name="27c5b0e2-a4b1-4d9c-b552-e0cde20b79bc" xml:space="preserve">
+    <value>Variation Nette QOQTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change QOQTD]</comment>
+  </data>
+  <data name="278b9b8c-6b0b-494f-8576-eadfdc974c29" xml:space="preserve">
+    <value>Variation Nette En Glissement Annuel %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change YOYTD %]</comment>
+  </data>
+  <data name="af89549d-7843-4259-8636-06b60c491487" xml:space="preserve">
+    <value>Variation Nette En Glissement Annuel</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change YOYTD]</comment>
+  </data>
+  <data name="20c27430-1bdf-4017-a100-1e78bca95537" xml:space="preserve">
+    <value>Variation Nette PQTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PQTD]</comment>
+  </data>
+  <data name="37cd3370-e27c-404d-9ea9-0271ba10173d" xml:space="preserve">
+    <value>Variation Nette PYTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PYTD]</comment>
+  </data>
+  <data name="2cfc5d7d-1a8a-4855-90ed-01af52278983" xml:space="preserve">
+    <value>Variation Nette POP %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change POP %]</comment>
+  </data>
+  <data name="[2cfc5d7d-1a8a-4855-90ed-01af52278983]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance D’Une Période À L’Autre</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change POP %]</comment>
+  </data>
+  <data name="ce926f74-44e2-4dd0-a929-0227f3571424" xml:space="preserve">
+    <value>Variation Nette POP</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change POP]</comment>
+  </data>
+  <data name="b0dccfae-9544-4ad6-9c7e-149bebb8f712" xml:space="preserve">
+    <value>Variation Nette PP</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PP]</comment>
+  </data>
+  <data name="f3628900-3497-4bf6-83cb-e5f7c15fae97" xml:space="preserve">
+    <value>Variation Nette MOM %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MOM %]</comment>
+  </data>
+  <data name="4baee0df-7b5b-4d9c-88a3-a38a5ddee371" xml:space="preserve">
+    <value>Changement Net MOM</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MOM]</comment>
+  </data>
+  <data name="921959f9-743f-40c3-9088-2f3e5ff1355a" xml:space="preserve">
+    <value>Variation Nette En Glissement Trimestriel %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change QOQ %]</comment>
+  </data>
+  <data name="2b4dfbc6-0be7-40a4-847f-ce488fb7c1b4" xml:space="preserve">
+    <value>Variation Nette PM</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PM]</comment>
+  </data>
+  <data name="05000268-f913-4bd1-b569-4cf77f7a6665" xml:space="preserve">
+    <value>Variation Nette QOQ</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change QOQ]</comment>
+  </data>
+  <data name="47abb4af-e61f-4163-8300-7a5f7a29a5c1" xml:space="preserve">
+    <value>Variation Nette PQ</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PQ]</comment>
+  </data>
+  <data name="3fd93b99-20ae-4769-83c0-31120a67beac" xml:space="preserve">
+    <value>Variation Nette En Glissement Annuel</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change YOY]</comment>
+  </data>
+  <data name="6492f342-8ed5-42f4-82ee-9d9e26bc9447" xml:space="preserve">
+    <value>Variation Nette En % D’Une Année À L’Autre</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change YOY %]</comment>
+  </data>
+  <data name="a877fc4b-5b64-4c0f-beea-d5d545f00006" xml:space="preserve">
+    <value>Variation Nette PY</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change PY]</comment>
+  </data>
+  <data name="0daa3ecb-73f8-4a29-b3ed-9953f05dac44" xml:space="preserve">
+    <value>Variation Nette MTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MTD]</comment>
+  </data>
+  <data name="[0daa3ecb-73f8-4a29-b3ed-9953f05dac44]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Total Cumulatif De La Période</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change MTD]</comment>
+  </data>
+  <data name="48dfa4f7-816a-4b72-ba86-c02e166e12c8" xml:space="preserve">
+    <value>Variation Nette QTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change QTD]</comment>
+  </data>
+  <data name="2fa77d77-9aaa-402d-bf44-57271f88cbc4" xml:space="preserve">
+    <value>Variation Nette Depuis Le Début De L’Année</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Net Change YTD]</comment>
+  </data>
+  <data name="39e8afad-93c0-4139-bed8-d2d347695551" xml:space="preserve">
+    <value>Solde À La Date AVG 1Y</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date AVG 1Y]</comment>
+  </data>
+  <data name="[39e8afad-93c0-4139-bed8-d2d347695551]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Moyennes Mobiles</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date AVG 1Y]</comment>
+  </data>
+  <data name="78c59dd6-c133-4249-89e2-a552d24071cb" xml:space="preserve">
+    <value>Solde À La Date AVG 3M</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date AVG 3M]</comment>
+  </data>
+  <data name="51a851ea-c698-4d2c-b37e-f0c426edb245" xml:space="preserve">
+    <value>Solde À La Date AVG 30D</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date AVG 30D]</comment>
+  </data>
+  <data name="173ff633-58ed-4a4b-b1eb-f1c3a9be5cf4" xml:space="preserve">
+    <value>Solde À La Date MTDOPM %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MTDOPM %]</comment>
+  </data>
+  <data name="[173ff633-58ed-4a4b-b1eb-f1c3a9be5cf4]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Cumul De La Période Précédente</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MTDOPM %]</comment>
+  </data>
+  <data name="1e873ac0-4f04-43c3-9888-4c5c682fd14b" xml:space="preserve">
+    <value>Solde À La Date MTDOPM</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MTDOPM]</comment>
+  </data>
+  <data name="99c9d4e3-5bf7-472d-adad-4cd51eeaf0db" xml:space="preserve">
+    <value>Solde À La Date PMC</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PMC]</comment>
+  </data>
+  <data name="440ecebe-2bf9-403f-a2d4-e9d5cc5d0b07" xml:space="preserve">
+    <value>Solde À La Date QTDOPQ %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date QTDOPQ %]</comment>
+  </data>
+  <data name="d36f6727-0c91-46c0-bc4f-2aa92141500c" xml:space="preserve">
+    <value>Solde À La Date QTDOPQ</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date QTDOPQ]</comment>
+  </data>
+  <data name="c5d30ec1-56a3-41bb-b6fd-8ddfd23d1db2" xml:space="preserve">
+    <value>Solde À La Date PQC</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PQC]</comment>
+  </data>
+  <data name="5017c6ea-ebd1-4b7b-8309-b2136d112465" xml:space="preserve">
+    <value>Solde À La Date YTDOPY %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date YTDOPY %]</comment>
+  </data>
+  <data name="b9cb9d40-2223-44f7-bf00-96c3568455ab" xml:space="preserve">
+    <value>Solde À La Date YTDOPY</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date YTDOPY]</comment>
+  </data>
+  <data name="f2ce8cef-8ddc-4344-a27b-a9ec74f193a3" xml:space="preserve">
+    <value>Solde À La Date PYC</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PYC]</comment>
+  </data>
+  <data name="6be69e35-b3e5-4f05-acf4-7ed6c5ca78b0" xml:space="preserve">
+    <value>Solde À La Date MATG %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MATG %]</comment>
+  </data>
+  <data name="[6be69e35-b3e5-4f05-acf4-7ed6c5ca78b0]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Croissance Totale Annuelle Mobile</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MATG %]</comment>
+  </data>
+  <data name="4c037067-13d0-470b-8217-37828e90ca7b" xml:space="preserve">
+    <value>Solde À La Date MATG</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MATG]</comment>
+  </data>
+  <data name="04b049b4-76e1-45dc-9784-50cb712cee97" xml:space="preserve">
+    <value>Solde À La Date PYMAT</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PYMAT]</comment>
+  </data>
+  <data name="7ae73b89-38c1-4999-be20-d204bb230377" xml:space="preserve">
+    <value>Solde À La Date MAT</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MAT]</comment>
+  </data>
+  <data name="9c54f949-17b8-4fd6-82fd-fd28c6dd8eb3" xml:space="preserve">
+    <value>Solde À La Date MOMTD %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MOMTD %]</comment>
+  </data>
+  <data name="[9c54f949-17b8-4fd6-82fd-fd28c6dd8eb3]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date De La Période À Ce Jour</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MOMTD %]</comment>
+  </data>
+  <data name="3462eba0-91df-4d6f-b2f7-027a9fdb6661" xml:space="preserve">
+    <value>Solde À La Date MOMTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MOMTD]</comment>
+  </data>
+  <data name="bce23f29-c0b4-4874-83f8-49c992c87ed4" xml:space="preserve">
+    <value>Solde À La Date PMTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PMTD]</comment>
+  </data>
+  <data name="381b925b-cd0f-428f-8501-b80db90f0970" xml:space="preserve">
+    <value>Solde À La Date QOQTD %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date QOQTD %]</comment>
+  </data>
+  <data name="6b6a746f-985d-483a-804c-a197184b3e6b" xml:space="preserve">
+    <value>Solde À La Date QOQTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date QOQTD]</comment>
+  </data>
+  <data name="98853db3-2a92-47a8-bb00-bc667920970a" xml:space="preserve">
+    <value>Solde À La Date YOYTD %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date YOYTD %]</comment>
+  </data>
+  <data name="6c702089-908b-4ccf-9510-ee2af99c47f0" xml:space="preserve">
+    <value>Solde À La Date YOYTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date YOYTD]</comment>
+  </data>
+  <data name="9713aedb-372f-4573-87e5-063be73fad50" xml:space="preserve">
+    <value>Solde À La Date PQTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PQTD]</comment>
+  </data>
+  <data name="bb2b391f-10b5-4432-ac98-3febb7279ce5" xml:space="preserve">
+    <value>Solde À La Date PYTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PYTD]</comment>
+  </data>
+  <data name="8dd906b0-f1f8-4671-b8a0-b8a0266015a0" xml:space="preserve">
+    <value>Solde À La Date POP %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date POP %]</comment>
+  </data>
+  <data name="[8dd906b0-f1f8-4671-b8a0-b8a0266015a0]-displayFolder" xml:space="preserve">
+    <value>Solde À Ce Jour\Croissance D’Une Période À L’Autre</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date POP %]</comment>
+  </data>
+  <data name="5d7be04b-63e0-409b-9694-2820913c448e" xml:space="preserve">
+    <value>Solde À La Date POP</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date POP]</comment>
+  </data>
+  <data name="884fcb54-9183-4ddd-b3f6-ee8bb9d1938f" xml:space="preserve">
+    <value>Solde À La Date PP</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PP]</comment>
+  </data>
+  <data name="8902e77e-648b-4a8c-95df-da37c14e4d42" xml:space="preserve">
+    <value>Solde À La Date MOM %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MOM %]</comment>
+  </data>
+  <data name="6f47769d-7d21-42b1-a90d-80f3eff1ccc7" xml:space="preserve">
+    <value>Solde À La Date MOM</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MOM]</comment>
+  </data>
+  <data name="e1a8c7a2-3f34-4faf-b5e8-9419223ca51d" xml:space="preserve">
+    <value>Solde À La Date QOQ %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date QOQ %]</comment>
+  </data>
+  <data name="a4501f9b-7939-4e88-a9ac-540a63e38c8d" xml:space="preserve">
+    <value>Solde À La Date PM</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PM]</comment>
+  </data>
+  <data name="387a41f9-2d9e-4d7e-825e-15e350c20b99" xml:space="preserve">
+    <value>Solde À La Date QOQ</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date QOQ]</comment>
+  </data>
+  <data name="423c12da-da36-4188-a145-19a09a71746f" xml:space="preserve">
+    <value>Solde À La Date PQ</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PQ]</comment>
+  </data>
+  <data name="799d96ab-daee-49f6-9573-acb4ecddbd7d" xml:space="preserve">
+    <value>Solde À La Date De L’Année Précédente</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date YOY]</comment>
+  </data>
+  <data name="d041ca66-a202-460f-ba6a-3df9b20529cc" xml:space="preserve">
+    <value>Solde À La Date D’Une Année Sur L’Autre %</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date YOY %]</comment>
+  </data>
+  <data name="0bb220ee-4b9b-44c6-aab7-0cccfd702131" xml:space="preserve">
+    <value>Solde À La Date PY</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date PY]</comment>
+  </data>
+  <data name="1eb1acb4-27e5-468c-82a9-1b2586c042d2" xml:space="preserve">
+    <value>Solde À La Date MTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MTD]</comment>
+  </data>
+  <data name="[1eb1acb4-27e5-468c-82a9-1b2586c042d2]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date De La Période À Ce Jour Total</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date MTD]</comment>
+  </data>
+  <data name="1ec583bd-0944-44c2-9246-216ad58df3a2" xml:space="preserve">
+    <value>Solde À La Date QTD</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date QTD]</comment>
+  </data>
+  <data name="8cb638ec-c72b-4091-be55-6d1e44caa60b" xml:space="preserve">
+    <value>Solde À La Date D’Entrée En Vigueur</value>
+    <comment>table [Standard Calendar Time Intelligence] measure [Balance at Date YTD]</comment>
+  </data>
+  <data name="4b83d6e8-1ce0-43cf-87d6-b5e84ec5c9d1" xml:space="preserve">
+    <value>Intelligence Temporelle Du Calendrier Fiscal</value>
+    <comment>table [Fiscal Calendar Time Intelligence]</comment>
+  </data>
+  <data name="568d168f-5d8e-49ca-8e68-cbb6fdf85878" xml:space="preserve">
+    <value>Variation Nette Depuis Le Début De L’Année (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YTD (Fiscal)]</comment>
+  </data>
+  <data name="[568d168f-5d8e-49ca-8e68-cbb6fdf85878]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Total Cumulatif De La Période</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YTD (Fiscal)]</comment>
+  </data>
+  <data name="a7a684d3-d1a1-4d44-9670-6b8d8fb20530" xml:space="preserve">
+    <value>Variation Nette QTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change QTD (Fiscal)]</comment>
+  </data>
+  <data name="5cdb5d61-5c46-4342-bdad-ae36f2b77328" xml:space="preserve">
+    <value>Variation Nette MTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MTD (Fiscal)]</comment>
+  </data>
+  <data name="22627f2b-8e1c-40c8-9c28-5392bc65f77d" xml:space="preserve">
+    <value>Variation Nette PY (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PY (Fiscal)]</comment>
+  </data>
+  <data name="[22627f2b-8e1c-40c8-9c28-5392bc65f77d]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance D’Une Période À L’Autre</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PY (Fiscal)]</comment>
+  </data>
+  <data name="36351ded-dd67-40ee-9c82-64287f7fb599" xml:space="preserve">
+    <value>Variation Nette En % (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YOY % (Fiscal)]</comment>
+  </data>
+  <data name="19679669-376f-4966-b3d1-92c6814548d1" xml:space="preserve">
+    <value>Variation Nette En Glissement Annuel (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YOY (Fiscal)]</comment>
+  </data>
+  <data name="d93231b2-73e9-41ae-bccc-d5620aad2dee" xml:space="preserve">
+    <value>Variation Nette PQ (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PQ (Fiscal)]</comment>
+  </data>
+  <data name="13e68448-940c-4958-9bc5-19475cd3b6c6" xml:space="preserve">
+    <value>Variation Nette QOQ (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change QOQ (Fiscal)]</comment>
+  </data>
+  <data name="897a7a67-2ed5-482d-825e-a032f622907a" xml:space="preserve">
+    <value>Variation Nette En % Du Trimestre Précédent (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change QOQ % (Fiscal)]</comment>
+  </data>
+  <data name="0e3d0d62-d77d-4f0b-9cce-b2df4004e105" xml:space="preserve">
+    <value>Variation Nette MP (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PM (Fiscal)]</comment>
+  </data>
+  <data name="a015ce6f-20c8-4e63-bfb4-4bb983e9826d" xml:space="preserve">
+    <value>Variation Nette MOM (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MOM (Fiscal)]</comment>
+  </data>
+  <data name="e55a2cdf-fdff-4c33-8944-24fe186c99f9" xml:space="preserve">
+    <value>Variation Nette En % Mensuel (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MOM % (Fiscal)]</comment>
+  </data>
+  <data name="e1eb4623-bd99-48b3-95e1-40f2e81c3735" xml:space="preserve">
+    <value>Variation Nette PP (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PP (Fiscal)]</comment>
+  </data>
+  <data name="6eec3397-8a02-4fea-a751-2797a2c31fa6" xml:space="preserve">
+    <value>Variation Nette Du PDP (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change POP (Fiscal)]</comment>
+  </data>
+  <data name="44b0734b-39dc-447a-858e-404fbb8cfc49" xml:space="preserve">
+    <value>Variation Nette Du Pourcentage De Pop (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change POP % (Fiscal)]</comment>
+  </data>
+  <data name="ae87b23e-f647-4b3b-ba94-f067b1ed049a" xml:space="preserve">
+    <value>Variation Nette De La Baisse De Débit (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PYTD (Fiscal)]</comment>
+  </data>
+  <data name="[ae87b23e-f647-4b3b-ba94-f067b1ed049a]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance Depuis Le Début De La Période</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PYTD (Fiscal)]</comment>
+  </data>
+  <data name="9880e381-191c-411f-b5c9-ae6ddde1b5f0" xml:space="preserve">
+    <value>Variation Nette PQTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PQTD (Fiscal)]</comment>
+  </data>
+  <data name="7e48ee42-5d18-468e-b7e4-d75c881b74e4" xml:space="preserve">
+    <value>Variation Nette D’Une Année À L’Autre (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YOYTD (Fiscal)]</comment>
+  </data>
+  <data name="3be51617-69a3-4d1a-93db-1c39a9ce421c" xml:space="preserve">
+    <value>Variation Nette En Glissement Annuel % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YOYTD % (Fiscal)]</comment>
+  </data>
+  <data name="41edd74a-002b-4440-bffe-1c7c30e69756" xml:space="preserve">
+    <value>Variation Nette QOQTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change QOQTD (Fiscal)]</comment>
+  </data>
+  <data name="d5e4f293-0b50-450b-9e25-220603afb523" xml:space="preserve">
+    <value>Variation Nette En % Trimestriel (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change QOQTD % (Fiscal)]</comment>
+  </data>
+  <data name="1f696103-19b7-4213-a902-6e5f978b42e2" xml:space="preserve">
+    <value>Variation Nette PMTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PMTD (Fiscal)]</comment>
+  </data>
+  <data name="e5bf0c96-e43e-4489-98d8-966d40265b7e" xml:space="preserve">
+    <value>Variation Nette MOMTD % (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MOMTD % (Fiscal)]</comment>
+  </data>
+  <data name="5a0211c3-73fa-4aac-a48b-87a906291225" xml:space="preserve">
+    <value>Variation Nette MOMTD (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MOMTD (Fiscal)]</comment>
+  </data>
+  <data name="589152a5-10c5-4f0b-8a4b-4a200f4c8c35" xml:space="preserve">
+    <value>Variation Nette MAT (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MAT (Fiscal)]</comment>
+  </data>
+  <data name="[589152a5-10c5-4f0b-8a4b-4a200f4c8c35]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance Totale Annuelle Mobile</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MAT (Fiscal)]</comment>
+  </data>
+  <data name="626fd4c3-d942-404a-8fb6-416ec322c677" xml:space="preserve">
+    <value>Variation Nette PYMAT (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PYMAT (Fiscal)]</comment>
+  </data>
+  <data name="78968807-34aa-413e-bd5d-49b8d543ad0d" xml:space="preserve">
+    <value>Variation Nette MATG (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MATG (Fiscal)]</comment>
+  </data>
+  <data name="03b81c27-ff73-4b42-8463-326a057e5b90" xml:space="preserve">
+    <value>Variation Nette MATG % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MATG % (Fiscal)]</comment>
+  </data>
+  <data name="08b995b8-f212-4523-88b9-9ef4b249522d" xml:space="preserve">
+    <value>Variation Nette MAT (364) (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MAT (364) (Fiscal)]</comment>
+  </data>
+  <data name="887471c7-7433-47e6-bfa2-c1aec92b8612" xml:space="preserve">
+    <value>Variation Nette PYMAT (364) (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PYMAT (364) (Fiscal)]</comment>
+  </data>
+  <data name="cf4e6482-1af3-44f5-9ddb-97d1a54e9cba" xml:space="preserve">
+    <value>Variation Nette PYC (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PYC (Fiscal)]</comment>
+  </data>
+  <data name="[cf4e6482-1af3-44f5-9ddb-97d1a54e9cba]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Cumul De La Période Par Rapport À La Période Précédente Complète</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PYC (Fiscal)]</comment>
+  </data>
+  <data name="eb8d6998-eb7a-4994-8f06-a8f823ad54a1" xml:space="preserve">
+    <value>Variation Nette YTDOPY (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YTDOPY (Fiscal)]</comment>
+  </data>
+  <data name="ae9af555-1dd9-4ba1-bc36-31c14ae44f01" xml:space="preserve">
+    <value>Variation Nette En % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change YTDOPY % (Fiscal)]</comment>
+  </data>
+  <data name="3bdeb8b8-e097-4389-9cd3-afc6058c7466" xml:space="preserve">
+    <value>Variation Nette PQC (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PQC (Fiscal)]</comment>
+  </data>
+  <data name="f7d56e3e-bac8-40e5-9389-6ab169c82ee6" xml:space="preserve">
+    <value>Variation Nette QTDOPQ (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change QTDOPQ (Fiscal)]</comment>
+  </data>
+  <data name="15fca2f6-5807-4d21-a08a-6ba980c58683" xml:space="preserve">
+    <value>Variation Nette QTDOPQ % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change QTDOPQ % (Fiscal)]</comment>
+  </data>
+  <data name="d6c43ea4-e29b-44da-a592-2beb2cc24f74" xml:space="preserve">
+    <value>Variation Nette PMC (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change PMC (Fiscal)]</comment>
+  </data>
+  <data name="dfeba07a-9599-4e44-afda-17e595b33a78" xml:space="preserve">
+    <value>Variation Nette MTDOPM (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MTDOPM (Fiscal)]</comment>
+  </data>
+  <data name="e1cd8e85-ffb6-428a-9621-7e13c348b043" xml:space="preserve">
+    <value>Variation Nette MTDOPM % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change MTDOPM % (Fiscal)]</comment>
+  </data>
+  <data name="5c5f8f5a-4f3d-484f-8c5b-27fbc4be91b9" xml:space="preserve">
+    <value>Variation Nette AVG 30D (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change AVG 30D (Fiscal)]</comment>
+  </data>
+  <data name="[5c5f8f5a-4f3d-484f-8c5b-27fbc4be91b9]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Moyennes Mobiles</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change AVG 30D (Fiscal)]</comment>
+  </data>
+  <data name="b2be3cab-8f9a-4977-97aa-49e4152d2887" xml:space="preserve">
+    <value>Variation Nette AVG 3M (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change AVG 3M (Fiscal)]</comment>
+  </data>
+  <data name="70f7c549-cfb6-4717-be83-4d3e94ac1e08" xml:space="preserve">
+    <value>Variation Nette Moyenne Sur 1 An (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Net Change AVG 1Y (Fiscal)]</comment>
+  </data>
+  <data name="deff657c-5488-4a8d-86e6-f716e81e0a7a" xml:space="preserve">
+    <value>Solde À La Date YTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YTD (Fiscal)]</comment>
+  </data>
+  <data name="[deff657c-5488-4a8d-86e6-f716e81e0a7a]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date De La Période À Ce Jour Total</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YTD (Fiscal)]</comment>
+  </data>
+  <data name="6542b70d-fd05-4d5a-bc24-8aa435e9f647" xml:space="preserve">
+    <value>Solde À La Date QTD (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date QTD (Fiscal)]</comment>
+  </data>
+  <data name="54429163-cfc2-491c-bf93-fb63b3f8de64" xml:space="preserve">
+    <value>Solde À La Date MTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MTD (Fiscal)]</comment>
+  </data>
+  <data name="459df96f-28ae-4bc4-a6d0-298e907651b8" xml:space="preserve">
+    <value>Solde À La Date PY (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PY (Fiscal)]</comment>
+  </data>
+  <data name="[459df96f-28ae-4bc4-a6d0-298e907651b8]-displayFolder" xml:space="preserve">
+    <value>Solde À Ce Jour\Croissance D’Une Période À L’Autre</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PY (Fiscal)]</comment>
+  </data>
+  <data name="57f61c1c-5a7a-48f1-9782-36bc84c7f5c7" xml:space="preserve">
+    <value>Solde À La Date De L’Année Précédente % (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YOY % (Fiscal)]</comment>
+  </data>
+  <data name="7bc5686e-1afc-48c1-a4af-c3124254314d" xml:space="preserve">
+    <value>Solde À La Date De L’Année Précédente (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YOY (Fiscal)]</comment>
+  </data>
+  <data name="cf54e062-106b-4fe5-92df-1c6dd746e15a" xml:space="preserve">
+    <value>Solde À La Date PQ (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PQ (Fiscal)]</comment>
+  </data>
+  <data name="54d330a0-0161-4d38-863c-5b7b07a927bb" xml:space="preserve">
+    <value>Solde À La Date QOQ (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date QOQ (Fiscal)]</comment>
+  </data>
+  <data name="96f7e273-9a39-4bf9-b1e8-7bf2981546b5" xml:space="preserve">
+    <value>Solde À La Date QOQ % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date QOQ % (Fiscal)]</comment>
+  </data>
+  <data name="90efa281-60e2-4583-aa18-6d3d700472a5" xml:space="preserve">
+    <value>Solde À La Date PM (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PM (Fiscal)]</comment>
+  </data>
+  <data name="5d839077-33bc-44d5-af84-17b02768f7fb" xml:space="preserve">
+    <value>Solde À La Date MOM (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MOM (Fiscal)]</comment>
+  </data>
+  <data name="704c9a74-5d9a-41db-a731-754b01715e41" xml:space="preserve">
+    <value>Solde À La Date MOM % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MOM % (Fiscal)]</comment>
+  </data>
+  <data name="b80ad12e-afcf-4c30-9463-747ad303fa9c" xml:space="preserve">
+    <value>Solde À La Date PP (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PP (Fiscal)]</comment>
+  </data>
+  <data name="b8d0d134-2394-4024-8b35-22734ece676e" xml:space="preserve">
+    <value>Solde À La Date De PLP (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date POP (Fiscal)]</comment>
+  </data>
+  <data name="e30e6ebb-650d-4adf-87f8-7a26dee54b9a" xml:space="preserve">
+    <value>Solde À La Date De La Population (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date POP % (Fiscal)]</comment>
+  </data>
+  <data name="505c21e3-b1a2-4e77-bc9c-afca26d616ce" xml:space="preserve">
+    <value>Solde À La Date PYTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PYTD (Fiscal)]</comment>
+  </data>
+  <data name="[505c21e3-b1a2-4e77-bc9c-afca26d616ce]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date De La Période À Ce Jour</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PYTD (Fiscal)]</comment>
+  </data>
+  <data name="19b13457-d44b-4201-b8b7-b343c787a868" xml:space="preserve">
+    <value>Solde À La Date PQTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PQTD (Fiscal)]</comment>
+  </data>
+  <data name="d1a90630-6f6f-4091-9882-1fa0553e8aed" xml:space="preserve">
+    <value>Solde À La Date De L’Année Précédente (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YOYTD (Fiscal)]</comment>
+  </data>
+  <data name="a8fc1e05-e653-467b-a6f5-4aec2cc32666" xml:space="preserve">
+    <value>Solde À La Date YOYTD % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YOYTD % (Fiscal)]</comment>
+  </data>
+  <data name="4bccbb11-6e52-4679-9c8a-79453a2c0200" xml:space="preserve">
+    <value>Solde À La Date QOQTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date QOQTD (Fiscal)]</comment>
+  </data>
+  <data name="734112e5-c84b-442e-af5e-0b4a954c1d5b" xml:space="preserve">
+    <value>Solde À La Date QOQTD % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date QOQTD % (Fiscal)]</comment>
+  </data>
+  <data name="7b5f7b62-8eeb-4e25-8ee8-8b46edf64dea" xml:space="preserve">
+    <value>Solde À La Date PMTD (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PMTD (Fiscal)]</comment>
+  </data>
+  <data name="a9b66436-fd80-49cd-8ee4-32e8820359f2" xml:space="preserve">
+    <value>Solde À La Date MOMTD % (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MOMTD % (Fiscal)]</comment>
+  </data>
+  <data name="6d43a30b-7f4f-46d7-af1d-e192b68653c1" xml:space="preserve">
+    <value>Solde À La Date MOMTD (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MOMTD (Fiscal)]</comment>
+  </data>
+  <data name="65caf418-48e6-4309-b8d4-b9e777214870" xml:space="preserve">
+    <value>Solde À La Date MAT (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MAT (Fiscal)]</comment>
+  </data>
+  <data name="[65caf418-48e6-4309-b8d4-b9e777214870]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Croissance Totale Annuelle Mobile</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MAT (Fiscal)]</comment>
+  </data>
+  <data name="e372664f-24fd-4617-b291-5fbcd9dad1c2" xml:space="preserve">
+    <value>Solde À La Date PYMAT (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PYMAT (Fiscal)]</comment>
+  </data>
+  <data name="45eec965-2cf8-4977-8d07-8f0681fd4f1e" xml:space="preserve">
+    <value>Solde À La Date MATG (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MATG (Fiscal)]</comment>
+  </data>
+  <data name="fb32f0f9-70d0-4c19-a206-ddaba94862e8" xml:space="preserve">
+    <value>Solde À La Date MATG % (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MATG % (Fiscal)]</comment>
+  </data>
+  <data name="d56494bb-b463-45cd-a925-c2c6e13d3784" xml:space="preserve">
+    <value>Solde À La Date MAT (364) (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MAT (364) (Fiscal)]</comment>
+  </data>
+  <data name="178ad970-aaca-47bd-a9ff-1ae455593915" xml:space="preserve">
+    <value>Solde À La Date PYMAT (364) (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PYMAT (364) (Fiscal)]</comment>
+  </data>
+  <data name="3d98fbdf-0896-4a9b-8a2c-6c7ab3665a64" xml:space="preserve">
+    <value>Solde À La Date PYC (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PYC (Fiscal)]</comment>
+  </data>
+  <data name="[3d98fbdf-0896-4a9b-8a2c-6c7ab3665a64]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Cumul De La Période Précédente</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PYC (Fiscal)]</comment>
+  </data>
+  <data name="c0441cb7-e9cc-4a0e-bf82-e0cf316a5e90" xml:space="preserve">
+    <value>Solde À La Date YTDOPY (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YTDOPY (Fiscal)]</comment>
+  </data>
+  <data name="9b16a5f2-1f11-4283-b34a-4876c06e59c5" xml:space="preserve">
+    <value>Solde À La Date YTDOPY % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date YTDOPY % (Fiscal)]</comment>
+  </data>
+  <data name="2310b894-20ed-46bf-a281-fcc0300ccf41" xml:space="preserve">
+    <value>Solde À La Date PQC (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PQC (Fiscal)]</comment>
+  </data>
+  <data name="f95f4c6a-7230-4e75-8459-44dfed884d07" xml:space="preserve">
+    <value>Solde À La Date QTDOPQ (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date QTDOPQ (Fiscal)]</comment>
+  </data>
+  <data name="226b5b17-09fe-4693-aa3a-1b10985e57cb" xml:space="preserve">
+    <value>Solde À La Date QTDOPQ % (Exercice)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date QTDOPQ % (Fiscal)]</comment>
+  </data>
+  <data name="02b057f4-dbe1-4589-b9c0-34cf46b15ee4" xml:space="preserve">
+    <value>Solde À La Date PMC (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date PMC (Fiscal)]</comment>
+  </data>
+  <data name="c2174fa5-eb3d-4478-ba90-d3fc326c2a9e" xml:space="preserve">
+    <value>Solde À La Date MTDOPM (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MTDOPM (Fiscal)]</comment>
+  </data>
+  <data name="5e27a513-0064-42c5-928e-2b60b72e7b04" xml:space="preserve">
+    <value>Solde À La Date MTDOPM % (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date MTDOPM % (Fiscal)]</comment>
+  </data>
+  <data name="9b9bbc3c-5692-4013-a1dc-cdc206999a3a" xml:space="preserve">
+    <value>Solde À La Date AVG 30D (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date AVG 30D (Fiscal)]</comment>
+  </data>
+  <data name="[9b9bbc3c-5692-4013-a1dc-cdc206999a3a]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Moyennes Mobiles</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date AVG 30D (Fiscal)]</comment>
+  </data>
+  <data name="e7bb78cc-ce9d-4d4e-aa62-17be98c98610" xml:space="preserve">
+    <value>Solde À La Date AVG 3M (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date AVG 3M (Fiscal)]</comment>
+  </data>
+  <data name="e83687b4-09b7-46a5-b8f7-577b9ccd8e90" xml:space="preserve">
+    <value>Solde À La Date AVG 1Y (Fiscal)</value>
+    <comment>table [Fiscal Calendar Time Intelligence] measure [Balance at Date AVG 1Y (Fiscal)]</comment>
+  </data>
+  <data name="b5edcdee-7bc9-4b07-b2f0-676f08cf924f" xml:space="preserve">
+    <value>Intelligence Temporelle Du Calendrier Hebdomadaire</value>
+    <comment>table [Weekly Calendar Time Intelligence]</comment>
+  </data>
+  <data name="5ce89637-9eb0-40a3-a406-18447e99a8c9" xml:space="preserve">
+    <value>Variation Nette Depuis Le Début De L’Année (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YTD (Weekly)]</comment>
+  </data>
+  <data name="[5ce89637-9eb0-40a3-a406-18447e99a8c9]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Total Cumulatif De La Période</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YTD (Weekly)]</comment>
+  </data>
+  <data name="684c3421-9799-4914-adfc-c01ae270fcc6" xml:space="preserve">
+    <value>Variation Nette QTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change QTD (Weekly)]</comment>
+  </data>
+  <data name="33adc0ab-28a1-42c1-bd1f-fc336b71c0a0" xml:space="preserve">
+    <value>Variation Nette MTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change MTD (Weekly)]</comment>
+  </data>
+  <data name="9e6efe4a-1d25-4472-83de-730575daf1e4" xml:space="preserve">
+    <value>Variation Nette WTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change WTD (Weekly)]</comment>
+  </data>
+  <data name="93f7a911-438c-4ce5-b1c7-fed619c28fc1" xml:space="preserve">
+    <value>Variation Nette Par Année (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PY (Weekly)]</comment>
+  </data>
+  <data name="[93f7a911-438c-4ce5-b1c7-fed619c28fc1]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance D’Une Période À L’Autre</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PY (Weekly)]</comment>
+  </data>
+  <data name="5a485417-2801-473e-8b5a-b38e1e347afb" xml:space="preserve">
+    <value>Variation Nette En % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YOY % (Weekly)]</comment>
+  </data>
+  <data name="08c97c47-0947-407c-9d67-954a75dc70aa" xml:space="preserve">
+    <value>Variation Nette En Glissement Annuel (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YOY (Weekly)]</comment>
+  </data>
+  <data name="224e9ba2-20ab-449b-80ea-9a6bf998f4ca" xml:space="preserve">
+    <value>Variation Nette PQ (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PQ (Weekly)]</comment>
+  </data>
+  <data name="b9a25b73-2a6b-49ba-9ddd-592a0c74c1f9" xml:space="preserve">
+    <value>Variation Nette QOQ (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change QOQ (Weekly)]</comment>
+  </data>
+  <data name="13f50a0b-f854-4d14-9cf5-c45567277cdf" xml:space="preserve">
+    <value>Variation Nette En % Trimestriel (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change QOQ % (Weekly)]</comment>
+  </data>
+  <data name="60b99dd9-1578-4bd6-9283-d70e514c7709" xml:space="preserve">
+    <value>Variation Nette PW (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PW (Weekly)]</comment>
+  </data>
+  <data name="fb81988b-87b3-480e-ae3f-ba4cf7dd6510" xml:space="preserve">
+    <value>Variation Nette WOW (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change WOW (Weekly)]</comment>
+  </data>
+  <data name="c6b1ec67-2793-4b2f-aa5c-a45fcac17d65" xml:space="preserve">
+    <value>Variation Nette WOW % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change WOW % (Weekly)]</comment>
+  </data>
+  <data name="df60c08e-ba5d-4829-8cf2-01c411505f93" xml:space="preserve">
+    <value>Variation Nette PP (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PP (Weekly)]</comment>
+  </data>
+  <data name="c66d8533-93bb-41a1-a347-d04bdca4f778" xml:space="preserve">
+    <value>Variation Nette Du PDP (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change POP (Weekly)]</comment>
+  </data>
+  <data name="21cc5c96-ce0a-490c-9d5b-9ccf7c93d3c5" xml:space="preserve">
+    <value>Variation Nette POP % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change POP % (Weekly)]</comment>
+  </data>
+  <data name="f43e4681-3bef-4395-9f3d-1ff4603741a2" xml:space="preserve">
+    <value>Variation Nette PYTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PYTD (Weekly)]</comment>
+  </data>
+  <data name="[f43e4681-3bef-4395-9f3d-1ff4603741a2]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance Depuis Le Début De La Période</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PYTD (Weekly)]</comment>
+  </data>
+  <data name="e557faad-f9a4-4304-9ca9-3b631bc1f6fb" xml:space="preserve">
+    <value>Variation Nette PQTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PQTD (Weekly)]</comment>
+  </data>
+  <data name="a6db5fc1-b670-4b7f-b3eb-dd037de9cb05" xml:space="preserve">
+    <value>Variation Nette En Glissement Annuel (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YOYTD (Weekly)]</comment>
+  </data>
+  <data name="774f0d14-e81d-4c27-90a2-7060b7db7655" xml:space="preserve">
+    <value>Variation Nette En % D’Une Année À L’Autre (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YOYTD % (Weekly)]</comment>
+  </data>
+  <data name="5a343c2d-0e6a-4cbc-b27f-ae5c2ea7b2f3" xml:space="preserve">
+    <value>Variation Nette QOQTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change QOQTD (Weekly)]</comment>
+  </data>
+  <data name="d59db534-8368-49b0-8d5d-df467a20ce12" xml:space="preserve">
+    <value>Montant Des Ventes QOQTD % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Sales Amount QOQTD % (Weekly)]</comment>
+  </data>
+  <data name="aaeadd64-0a61-4783-a58c-2f66b1a675dc" xml:space="preserve">
+    <value>Variation Nette PWTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PWTD (Weekly)]</comment>
+  </data>
+  <data name="1ae27b0a-e613-46de-956d-d76f8fceb41e" xml:space="preserve">
+    <value>Variation Nette WOWTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change WOWTD (Weekly)]</comment>
+  </data>
+  <data name="2337a7a6-cb4f-4059-b087-372be29a2738" xml:space="preserve">
+    <value>Variation Nette WOWTD % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change WOWTD % (Weekly)]</comment>
+  </data>
+  <data name="17d69d56-8459-4516-bacc-4b4211506fab" xml:space="preserve">
+    <value>Variation Nette MAT (364) (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change MAT (364) (Weekly)]</comment>
+  </data>
+  <data name="[17d69d56-8459-4516-bacc-4b4211506fab]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Croissance Totale Annuelle Mobile</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change MAT (364) (Weekly)]</comment>
+  </data>
+  <data name="54725121-ea6b-4f9f-b4a3-ddaf772ab546" xml:space="preserve">
+    <value>Variation Nette PYMAT (364) (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PYMAT (364) (Weekly)]</comment>
+  </data>
+  <data name="ba27f3d6-4793-482f-92bb-c947c8cbe72f" xml:space="preserve">
+    <value>Variation Nette MATG (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change MATG (Weekly)]</comment>
+  </data>
+  <data name="febc92bc-ac26-4e14-bc35-4b45eb239a65" xml:space="preserve">
+    <value>Variation Nette MATG % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change MATG % (Weekly)]</comment>
+  </data>
+  <data name="d971b565-75bb-4373-ab89-12b67d18d071" xml:space="preserve">
+    <value>Variation Nette PYC (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PYC (Weekly)]</comment>
+  </data>
+  <data name="[d971b565-75bb-4373-ab89-12b67d18d071]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Cumul De La Période Par Rapport À La Période Précédente Complète</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PYC (Weekly)]</comment>
+  </data>
+  <data name="1d8c9b78-a143-4727-9e7f-fdc76731c318" xml:space="preserve">
+    <value>Variation Nette Depuis Le Début De L’Année (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YTDOPY (Weekly)]</comment>
+  </data>
+  <data name="dbde4cb0-2279-4f9a-b9fc-a9983234b0f6" xml:space="preserve">
+    <value>Variation Nette En % Depuis Le Début De L’Année (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change YTDOPY % (Weekly)]</comment>
+  </data>
+  <data name="a7e48503-776f-49e8-99c8-fa5ac6bb7b68" xml:space="preserve">
+    <value>Variation Nette PQC (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PQC (Weekly)]</comment>
+  </data>
+  <data name="183a93e9-a97b-4e7c-9705-92fb14188e32" xml:space="preserve">
+    <value>Variation Nette QTDOPQ (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change QTDOPQ (Weekly)]</comment>
+  </data>
+  <data name="a579821d-97ea-410a-a318-f4625b8479db" xml:space="preserve">
+    <value>Variation Nette QTDOPQ % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change QTDOPQ % (Weekly)]</comment>
+  </data>
+  <data name="d11bde8f-affa-4e2c-88ac-3b9c4b1f83a8" xml:space="preserve">
+    <value>Variation Nette PWC (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change PWC (Weekly)]</comment>
+  </data>
+  <data name="3e901542-c858-4aae-8ebc-c1dcace181e9" xml:space="preserve">
+    <value>Variation Nette WTDOPW (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change WTDOPW (Weekly)]</comment>
+  </data>
+  <data name="3c326be1-dd6e-4e96-9f8f-8aa7686d33e5" xml:space="preserve">
+    <value>Variation Nette WTDOPW % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change WTDOPW % (Weekly)]</comment>
+  </data>
+  <data name="b0f59b71-e53f-49c3-8ad3-fe52b83c5313" xml:space="preserve">
+    <value>Variation Nette AVG 4W (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change AVG 4W (Weekly)]</comment>
+  </data>
+  <data name="[b0f59b71-e53f-49c3-8ad3-fe52b83c5313]-displayFolder" xml:space="preserve">
+    <value>Variation Nette\Moyennes Mobiles</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change AVG 4W (Weekly)]</comment>
+  </data>
+  <data name="1ee904cb-cf20-4173-8b29-b1413c873ba6" xml:space="preserve">
+    <value>Variation Nette AVG 1Q (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change AVG 1Q (Weekly)]</comment>
+  </data>
+  <data name="bf5ea3d0-02a0-4088-b308-33a68787677e" xml:space="preserve">
+    <value>Variation Nette Moyenne Sur 1 An (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Net Change AVG 1Y (Weekly)]</comment>
+  </data>
+  <data name="3b704581-3a80-4a7e-8d0e-4742c68b1267" xml:space="preserve">
+    <value>Solde À La Date YTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YTD (Weekly)]</comment>
+  </data>
+  <data name="[3b704581-3a80-4a7e-8d0e-4742c68b1267]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date De La Période À Ce Jour Total</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YTD (Weekly)]</comment>
+  </data>
+  <data name="b8cd7f36-ac2b-4ca2-b0a9-a8668f4946c2" xml:space="preserve">
+    <value>Solde À La Date QTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date QTD (Weekly)]</comment>
+  </data>
+  <data name="afe852c7-d544-46a9-b324-fe5a5e80a081" xml:space="preserve">
+    <value>Solde À La Date MTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date MTD (Weekly)]</comment>
+  </data>
+  <data name="af7d8847-59a5-4564-a5db-1127713ed1b4" xml:space="preserve">
+    <value>Solde À La Date De La JMT (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date WTD (Weekly)]</comment>
+  </data>
+  <data name="1d3d6e90-23bd-4f79-bcb3-a4b998210d2a" xml:space="preserve">
+    <value>Solde À La Date PY (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PY (Weekly)]</comment>
+  </data>
+  <data name="[1d3d6e90-23bd-4f79-bcb3-a4b998210d2a]-displayFolder" xml:space="preserve">
+    <value>Solde À Ce Jour\Croissance D’Une Période À L’Autre</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PY (Weekly)]</comment>
+  </data>
+  <data name="32264947-72e4-4793-b04e-80c061947581" xml:space="preserve">
+    <value>Solde À La Date De L’Année Précédente % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YOY % (Weekly)]</comment>
+  </data>
+  <data name="61a64b2b-673b-4a18-af83-cf3a9e4cf226" xml:space="preserve">
+    <value>Solde À La Date D’Une Année Sur L’Autre (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YOY (Weekly)]</comment>
+  </data>
+  <data name="f7e533b0-47ee-4011-b98d-280a2f2dc4aa" xml:space="preserve">
+    <value>Solde À La Date PQ (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PQ (Weekly)]</comment>
+  </data>
+  <data name="7023a59a-f6b8-456b-985d-a1bba4561b59" xml:space="preserve">
+    <value>Solde À La Date QOQ (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date QOQ (Weekly)]</comment>
+  </data>
+  <data name="b1046c7d-e80c-4fb2-9f12-6c949f2e36cb" xml:space="preserve">
+    <value>Solde À La Date QOQ % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date QOQ % (Weekly)]</comment>
+  </data>
+  <data name="709ce724-6f95-4e7c-9b81-f6505cad5704" xml:space="preserve">
+    <value>Solde À La Date PW (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PW (Weekly)]</comment>
+  </data>
+  <data name="bba7a844-ce46-4919-90d3-2c47becd123d" xml:space="preserve">
+    <value>Solde À La Date WOW (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date WOW (Weekly)]</comment>
+  </data>
+  <data name="cb3305fa-e30d-47c3-9d92-f55543e70ef7" xml:space="preserve">
+    <value>Solde À La Date WOW % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date WOW % (Weekly)]</comment>
+  </data>
+  <data name="59dc5f90-eeab-41ef-919d-f60b17206cb5" xml:space="preserve">
+    <value>Solde À La Date PP (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PP (Weekly)]</comment>
+  </data>
+  <data name="64ab27cf-9b58-47ac-857d-2f7555817705" xml:space="preserve">
+    <value>Solde À La Date POP (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date POP (Weekly)]</comment>
+  </data>
+  <data name="de9b60da-8db0-4873-b10b-b9b639f61320" xml:space="preserve">
+    <value>Solde À La Date POP % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date POP % (Weekly)]</comment>
+  </data>
+  <data name="b2c6f444-e763-4d13-87ee-9fb9f89cdafb" xml:space="preserve">
+    <value>Solde À La Date PYTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PYTD (Weekly)]</comment>
+  </data>
+  <data name="[b2c6f444-e763-4d13-87ee-9fb9f89cdafb]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date De La Période À Ce Jour</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PYTD (Weekly)]</comment>
+  </data>
+  <data name="348591ae-c150-4cdf-877d-bbac132d6339" xml:space="preserve">
+    <value>Solde À La Date PQTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PQTD (Weekly)]</comment>
+  </data>
+  <data name="0e059e65-be2d-4ce7-8bf5-3108ee097444" xml:space="preserve">
+    <value>Solde À La Date YOYTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YOYTD (Weekly)]</comment>
+  </data>
+  <data name="4c39b6f1-d7f3-4772-9485-f995aa07786b" xml:space="preserve">
+    <value>Solde À La Date YOYTD % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YOYTD % (Weekly)]</comment>
+  </data>
+  <data name="8fb7ceea-2c95-4387-8983-c2a621e1a0bd" xml:space="preserve">
+    <value>Solde À La Date QOQTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date QOQTD (Weekly)]</comment>
+  </data>
+  <data name="698a9a1d-1c94-474a-b044-6d306c28f22f" xml:space="preserve">
+    <value>Solde À La Date QOQTD % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date QOQTD % (Weekly)]</comment>
+  </data>
+  <data name="c24f6c17-097f-401d-a19f-a98f5d294da9" xml:space="preserve">
+    <value>Solde À La Date PWTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PWTD (Weekly)]</comment>
+  </data>
+  <data name="33cf4a14-4cb1-4e58-8e2c-cb48f52336a5" xml:space="preserve">
+    <value>Solde À La Date WOWTD (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date WOWTD (Weekly)]</comment>
+  </data>
+  <data name="3e285be1-dff8-48b6-82c5-1a38a3cf70b8" xml:space="preserve">
+    <value>Solde À La Date WOWTD % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date WOWTD % (Weekly)]</comment>
+  </data>
+  <data name="fbc270f3-299e-41bc-9f59-d890e9246b2c" xml:space="preserve">
+    <value>Solde À La Date MAT (364) (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date MAT (364) (Weekly)]</comment>
+  </data>
+  <data name="[fbc270f3-299e-41bc-9f59-d890e9246b2c]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Croissance Totale Annuelle Mobile</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date MAT (364) (Weekly)]</comment>
+  </data>
+  <data name="052cf896-05a4-428a-9719-f582a789e468" xml:space="preserve">
+    <value>Solde À La Date PYMAT (364) (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PYMAT (364) (Weekly)]</comment>
+  </data>
+  <data name="34009324-5a7d-46bf-91ce-4945405519fe" xml:space="preserve">
+    <value>Solde À La Date MATG (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date MATG (Weekly)]</comment>
+  </data>
+  <data name="00cead71-a2cf-4126-8741-41a5d6cb642c" xml:space="preserve">
+    <value>Solde À La Date MATG % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date MATG % (Weekly)]</comment>
+  </data>
+  <data name="32acea58-752d-4ac9-ac0b-23e4e494adca" xml:space="preserve">
+    <value>Solde À La Date PYC (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PYC (Weekly)]</comment>
+  </data>
+  <data name="[32acea58-752d-4ac9-ac0b-23e4e494adca]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Cumul De La Période Précédente</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PYC (Weekly)]</comment>
+  </data>
+  <data name="07e0cf08-3870-409b-8c35-300cb0e7130d" xml:space="preserve">
+    <value>Solde À La Date YTDOPY (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YTDOPY (Weekly)]</comment>
+  </data>
+  <data name="8236c9cf-e981-4812-8839-6a940b705e2e" xml:space="preserve">
+    <value>Solde À La Date YTDOPY % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date YTDOPY % (Weekly)]</comment>
+  </data>
+  <data name="3d180d11-183a-405b-b8fb-5332d7c6f778" xml:space="preserve">
+    <value>Solde À La Date PQC (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PQC (Weekly)]</comment>
+  </data>
+  <data name="82f3db32-df50-4a6e-81c7-39b82228a5d1" xml:space="preserve">
+    <value>Solde À La Date QTDOPQ (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date QTDOPQ (Weekly)]</comment>
+  </data>
+  <data name="9cf6aade-9894-414f-a299-6a38592d1d6a" xml:space="preserve">
+    <value>Solde À La Date QTDOPQ % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date QTDOPQ % (Weekly)]</comment>
+  </data>
+  <data name="bb3dad3d-0476-4db3-8b90-176c1bf59a60" xml:space="preserve">
+    <value>Solde À La Date PWC (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date PWC (Weekly)]</comment>
+  </data>
+  <data name="351ecebf-146a-4b14-8309-06da69b93199" xml:space="preserve">
+    <value>Solde À La Date WTDOPW (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date WTDOPW (Weekly)]</comment>
+  </data>
+  <data name="49914b47-480e-49d6-86a0-5ce4d8f862b8" xml:space="preserve">
+    <value>Solde À La Date WTDOPW % (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date WTDOPW % (Weekly)]</comment>
+  </data>
+  <data name="ede6119f-7d22-4e1f-8337-1dbb5e52645f" xml:space="preserve">
+    <value>Solde À La Date AVG 4W (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date AVG 4W (Weekly)]</comment>
+  </data>
+  <data name="[ede6119f-7d22-4e1f-8337-1dbb5e52645f]-displayFolder" xml:space="preserve">
+    <value>Solde À La Date \ Moyennes Mobiles</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date AVG 4W (Weekly)]</comment>
+  </data>
+  <data name="eae02c04-aa5b-46ff-9e70-1c923d2669fe" xml:space="preserve">
+    <value>Solde À La Date AVG 1Q (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date AVG 1Q (Weekly)]</comment>
+  </data>
+  <data name="b80b3f5e-a395-40e5-a5be-a652a2dc56e9" xml:space="preserve">
+    <value>Solde À La Date AVG 1 An (Hebdomadaire)</value>
+    <comment>table [Weekly Calendar Time Intelligence] measure [Balance at Date AVG 1Y (Weekly)]</comment>
+  </data>
+  <data name="f8aa17cd-8145-4225-bfbe-318e8a6f2401" xml:space="preserve">
+    <value>Écritures Comptables Client</value>
+    <comment>table [Customer Ledger Entries]</comment>
+  </data>
+  <data name="79fa1dfe-a75f-479a-98d9-f8b1814c82e3" xml:space="preserve">
+    <value>Numéro D’Entrée CLE</value>
+    <comment>table [Customer Ledger Entries] column [CLE Entry No.]</comment>
+  </data>
+  <data name="7a260df3-790a-4005-8792-43363bd20ce3" xml:space="preserve">
+    <value>Date D’Échéance De La Formation Continue</value>
+    <comment>table [Customer Ledger Entries] column [CLE Due Date]</comment>
+  </data>
+  <data name="ef53385f-8029-4e4a-867e-bf9a7258c9f1" xml:space="preserve">
+    <value>CLE Open</value>
+    <comment>table [Customer Ledger Entries] column [CLE Open]</comment>
+  </data>
+  <data name="7dc9c888-1827-4d1c-b97d-56cbfa9de438" xml:space="preserve">
+    <value>Date D’Affichage De La Formation Continue</value>
+    <comment>table [Customer Ledger Entries] column [CLE Posting Date]</comment>
+  </data>
+  <data name="bd5a490e-abc3-499e-b6db-73df5b55cd42" xml:space="preserve">
+    <value>CLE Document Date</value>
+    <comment>table [Customer Ledger Entries] column [CLE Document Date]</comment>
+  </data>
+  <data name="0bba362f-fe6b-4649-8fb0-cf17f34eb355" xml:space="preserve">
+    <value>Cledimensionsetid</value>
+    <comment>table [Customer Ledger Entries] column [cleDimensionSetID]</comment>
+  </data>
+  <data name="19e4e390-1009-4261-9096-42fefa5c7122" xml:space="preserve">
+    <value>N° D’Entrée DCLE</value>
+    <comment>table [Customer Ledger Entries] column [DCLE Entry No.]</comment>
+  </data>
+  <data name="00aeda32-8c87-4f60-b111-ee2f0e1f460a" xml:space="preserve">
+    <value>Date D’Affichage Du DCLE</value>
+    <comment>table [Customer Ledger Entries] column [DCLE Posting Date]</comment>
+  </data>
+  <data name="be601fc0-0faa-4031-b982-31f58ada7722" xml:space="preserve">
+    <value>Montant De L’Écriture Comptable</value>
+    <comment>table [Customer Ledger Entries] column [Ledger Entry Amount]</comment>
+  </data>
+  <data name="91c091fa-527c-4ef4-a4f3-ba6bd4de5723" xml:space="preserve">
+    <value>Type D’Entrée</value>
+    <comment>table [Customer Ledger Entries] column [Entry Type]</comment>
+  </data>
+  <data name="fc03154c-20b0-4659-af55-28aa084cc6b3" xml:space="preserve">
+    <value>Document Type</value>
+    <comment>table [Customer Ledger Entries] column [Document Type]</comment>
+  </data>
+  <data name="c673d761-bc06-4c12-a0ea-1ef2fa83af75" xml:space="preserve">
+    <value>N° De Document</value>
+    <comment>table [Customer Ledger Entries] column [Document No.]</comment>
+  </data>
+  <data name="c583ee7d-4b55-4ef6-92e5-38d444a58a0e" xml:space="preserve">
+    <value>Date D’Échéance De L’Entrée Initiale DCLE</value>
+    <comment>table [Customer Ledger Entries] column [DCLE Initial Entry Due Date]</comment>
+  </data>
+  <data name="f7971336-ea2a-4cb9-af85-c7f62deaffa4" xml:space="preserve">
+    <value>Montant (DS)</value>
+    <comment>table [Customer Ledger Entries] column [Amount (LCY)]</comment>
+  </data>
+  <data name="e4af91da-0f77-4cf9-ac38-c2c71cadc107" xml:space="preserve">
+    <value>N° De Client</value>
+    <comment>table [Customer Ledger Entries] column [Customer No.]</comment>
+  </data>
+  <data name="7909c4da-30ca-4f16-a911-ae0ed5523b85" xml:space="preserve">
+    <value>No De Demande</value>
+    <comment>table [Customer Ledger Entries] column [Application No.]</comment>
+  </data>
+  <data name="176ab67d-74d3-429f-87f0-5b3c85607959" xml:space="preserve">
+    <value>N° Écriture Comptable Client Lettrée</value>
+    <comment>table [Customer Ledger Entries] column [Applied Customer Ledger Entry No.]</comment>
+  </data>
+  <data name="2b79c586-eef7-4724-9245-77d8b5036ef2" xml:space="preserve">
+    <value>N° De Document D’En-Tête De Facture De Vente</value>
+    <comment>table [Customer Ledger Entries] column [Sales Invoice Header Document No.]</comment>
+  </data>
+  <data name="8e640b18-cecf-40ee-a6e9-80b525e51961" xml:space="preserve">
+    <value>Code Des Conditions De Paiement</value>
+    <comment>table [Customer Ledger Entries] column [Payment Terms Code]</comment>
+  </data>
+  <data name="d6e6924a-267c-4e97-9601-953189442293" xml:space="preserve">
+    <value>Date D’Escompte De Paiement</value>
+    <comment>table [Customer Ledger Entries] column [Payment Discount Date]</comment>
+  </data>
+  <data name="ef07122f-7f8c-4750-9a11-9601f8dda67c" xml:space="preserve">
+    <value>Montant Initial (DS)</value>
+    <comment>table [Customer Ledger Entries] measure [Original Amount (LCY)]</comment>
+  </data>
+  <data name="[ef07122f-7f8c-4750-9a11-9601f8dda67c]-displayFolder" xml:space="preserve">
+    <value>Mesures Comptables _Customer</value>
+    <comment>table [Customer Ledger Entries] measure [Original Amount (LCY)]</comment>
+  </data>
+  <data name="87336c35-6652-44b1-a1e4-4b63170a43d0" xml:space="preserve">
+    <value>Montant À Recevoir (CDI)</value>
+    <comment>table [Customer Ledger Entries] measure [Amount Receivable (LCY)]</comment>
+  </data>
+  <data name="81c9a563-a8d6-469a-9532-987654aaa398" xml:space="preserve">
+    <value>Équilibre (AR)</value>
+    <comment>table [Customer Ledger Entries] measure [Balance (AR)]</comment>
+  </data>
+  <data name="33ccb13f-b328-46c2-80dc-e7a6c1311736" xml:space="preserve">
+    <value>Compartiment 1 (AR)</value>
+    <comment>table [Customer Ledger Entries] measure [Bucket 1 (AR)]</comment>
+  </data>
+  <data name="[33ccb13f-b328-46c2-80dc-e7a6c1311736]-displayFolder" xml:space="preserve">
+    <value>_Customer Mesures Comptables\Tranches De Vieillissement</value>
+    <comment>table [Customer Ledger Entries] measure [Bucket 1 (AR)]</comment>
+  </data>
+  <data name="1a56ed23-b19e-45a7-9f76-44014c5e2d40" xml:space="preserve">
+    <value>Compartiment 2 (AR)</value>
+    <comment>table [Customer Ledger Entries] measure [Bucket 2 (AR)]</comment>
+  </data>
+  <data name="56c925c2-f6f1-4276-934b-1e1c81c0e744" xml:space="preserve">
+    <value>Seau 3 (AR)</value>
+    <comment>table [Customer Ledger Entries] measure [Bucket 3 (AR)]</comment>
+  </data>
+  <data name="6f4a1174-1928-43b3-8988-efad08315f44" xml:space="preserve">
+    <value>Compartiment 4 (AR)</value>
+    <comment>table [Customer Ledger Entries] measure [Bucket 4 (AR)]</comment>
+  </data>
+  <data name="38e25de4-c93e-488f-b1fc-4334bc1c68b5" xml:space="preserve">
+    <value>Courant (AR)</value>
+    <comment>table [Customer Ledger Entries] measure [Current (AR)]</comment>
+  </data>
+  <data name="09757853-7ec3-497c-9202-77e914eb21aa" xml:space="preserve">
+    <value>Écritures Comptables Fournisseur</value>
+    <comment>table [Vendor Ledger Entries]</comment>
+  </data>
+  <data name="4ddfb6eb-6471-4ba1-bc74-304c01b61282" xml:space="preserve">
+    <value>Numéro D’Entrée VLE</value>
+    <comment>table [Vendor Ledger Entries] column [VLE Entry No.]</comment>
+  </data>
+  <data name="18e1ba3d-446e-47b2-9bd4-946679621ebf" xml:space="preserve">
+    <value>Date D’Échéance De L’ENT</value>
+    <comment>table [Vendor Ledger Entries] column [VLE Due Date]</comment>
+  </data>
+  <data name="df1794c3-7fc2-4568-88f3-a2140c5d1c98" xml:space="preserve">
+    <value>VLE Ouvert</value>
+    <comment>table [Vendor Ledger Entries] column [VLE Open]</comment>
+  </data>
+  <data name="977d0475-f47b-47cb-9b2a-4373108cf0e9" xml:space="preserve">
+    <value>Date D’Enregistrement De L’ENT</value>
+    <comment>table [Vendor Ledger Entries] column [VLE Posting Date]</comment>
+  </data>
+  <data name="907f49bb-a8a2-412a-a3c0-72b29a85cc29" xml:space="preserve">
+    <value>VLE Document Date</value>
+    <comment>table [Vendor Ledger Entries] column [VLE Document Date]</comment>
+  </data>
+  <data name="a792cf30-13ee-42f0-95a3-36bb48c7f406" xml:space="preserve">
+    <value>Numéro D’Entrée DVLE</value>
+    <comment>table [Vendor Ledger Entries] column [DVLE Entry No.]</comment>
+  </data>
+  <data name="ccd0221a-a35c-4cd1-b3a7-c68913b8ba95" xml:space="preserve">
+    <value>Date D’Affichage DVLE</value>
+    <comment>table [Vendor Ledger Entries] column [DVLE Posting Date]</comment>
+  </data>
+  <data name="9b82f702-b59b-431b-bc43-383f35a72f20" xml:space="preserve">
+    <value>Montant De L’Écriture Comptable DVLE</value>
+    <comment>table [Vendor Ledger Entries] column [DVLE Ledger Entry Amount]</comment>
+  </data>
+  <data name="4b86f1ea-fbaf-4c51-b12d-aeccc5e47548" xml:space="preserve">
+    <value>Type D’Entrée</value>
+    <comment>table [Vendor Ledger Entries] column [Entry Type]</comment>
+  </data>
+  <data name="6ff41b46-1c7e-4264-aa0d-d1ed00423976" xml:space="preserve">
+    <value>Document Type</value>
+    <comment>table [Vendor Ledger Entries] column [Document Type]</comment>
+  </data>
+  <data name="696631e6-a0fe-4087-904b-eaffd3c1074d" xml:space="preserve">
+    <value>N° De Document</value>
+    <comment>table [Vendor Ledger Entries] column [Document No.]</comment>
+  </data>
+  <data name="74a111dd-b373-4759-b8bb-265a2bcf6207" xml:space="preserve">
+    <value>Date D’Échéance De L’Entrée Initiale DVLE</value>
+    <comment>table [Vendor Ledger Entries] column [DVLE Initial Entry Due Date]</comment>
+  </data>
+  <data name="f53b70fa-016a-4ba9-acaf-b56f2c549f27" xml:space="preserve">
+    <value>N° De Fournisseur</value>
+    <comment>table [Vendor Ledger Entries] column [Vendor No.]</comment>
+  </data>
+  <data name="bbfc035e-4aec-41ae-93b8-5dfac78d69e0" xml:space="preserve">
+    <value>No De Demande</value>
+    <comment>table [Vendor Ledger Entries] column [Application No.]</comment>
+  </data>
+  <data name="2879c05d-ccbb-49f3-aeb2-0b680d3136b7" xml:space="preserve">
+    <value>N° D’Écriture Comptable Fournisseur Imputée</value>
+    <comment>table [Vendor Ledger Entries] column [Applied Vendor Ledger Entry No.]</comment>
+  </data>
+  <data name="c88a3e66-d00e-4c6e-9859-481ac81ad00f" xml:space="preserve">
+    <value>PIH Document No.</value>
+    <comment>table [Vendor Ledger Entries] column [PIH Document No.]</comment>
+  </data>
+  <data name="e0fb000c-1fb6-46c9-8e8c-074a21c5bf99" xml:space="preserve">
+    <value>Code Des Conditions De Paiement</value>
+    <comment>table [Vendor Ledger Entries] column [Payment Terms Code]</comment>
+  </data>
+  <data name="e5d9bec2-7d12-4c97-b024-e7b4d8d5aa4e" xml:space="preserve">
+    <value>Date D’Escompte De Paiement</value>
+    <comment>table [Vendor Ledger Entries] column [Payment Discount Date]</comment>
+  </data>
+  <data name="8484be59-ff8d-4b28-b4b7-b93f5550dcc2" xml:space="preserve">
+    <value>Montant À Payer (DS)</value>
+    <comment>table [Vendor Ledger Entries] measure [Amount Payable (LCY)]</comment>
+  </data>
+  <data name="[8484be59-ff8d-4b28-b4b7-b93f5550dcc2]-displayFolder" xml:space="preserve">
+    <value>_Vendor Mesures Comptables</value>
+    <comment>table [Vendor Ledger Entries] measure [Amount Payable (LCY)]</comment>
+  </data>
+  <data name="7cf9adad-e61f-4c56-ae9d-791da1bb5639" xml:space="preserve">
+    <value>Panier 2 (AP)</value>
+    <comment>table [Vendor Ledger Entries] measure [Bucket 2 (AP)]</comment>
+  </data>
+  <data name="[7cf9adad-e61f-4c56-ae9d-791da1bb5639]-displayFolder" xml:space="preserve">
+    <value>_Vendor Mesures Comptables\Tranches De Vieillissement</value>
+    <comment>table [Vendor Ledger Entries] measure [Bucket 2 (AP)]</comment>
+  </data>
+  <data name="6101afd0-9f73-4cad-863e-31a4888fd0c2" xml:space="preserve">
+    <value>Seau 1 (AP)</value>
+    <comment>table [Vendor Ledger Entries] measure [Bucket 1 (AP)]</comment>
+  </data>
+  <data name="c1155840-eb3b-456a-9ae4-d0ded0517954" xml:space="preserve">
+    <value>Seau 3 (AP)</value>
+    <comment>table [Vendor Ledger Entries] measure [Bucket 3 (AP)]</comment>
+  </data>
+  <data name="8af74228-0c0c-4855-a932-13a7b4218d09" xml:space="preserve">
+    <value>Seau 4 (AP)</value>
+    <comment>table [Vendor Ledger Entries] measure [Bucket 4 (AP)]</comment>
+  </data>
+  <data name="5f36dcd4-cd39-4f3b-b106-e1a93a3780c3" xml:space="preserve">
+    <value>Actuel (AP)</value>
+    <comment>table [Vendor Ledger Entries] measure [Current (AP)]</comment>
+  </data>
+  <data name="e4b97e20-6fb4-4287-919e-971b774d4598" xml:space="preserve">
+    <value>Équilibre (PA)</value>
+    <comment>table [Vendor Ledger Entries] measure [Balance (AP)]</comment>
+  </data>
+  <data name="07d0d657-d4ec-4c0e-854a-8a9e712d6614" xml:space="preserve">
+    <value>Montant Initial</value>
+    <comment>table [Vendor Ledger Entries] measure [Original Amount]</comment>
+  </data>
+  <data name="408107af-c25d-4948-8717-8ea446127d2e" xml:space="preserve">
+    <value>Fournisseurs</value>
+    <comment>table [Vendors]</comment>
+  </data>
+  <data name="8a57adc5-712a-4f45-8885-12dd7f24f447" xml:space="preserve">
+    <value>N° De Fournisseur</value>
+    <comment>table [Vendors] column [Vendor No.]</comment>
+  </data>
+  <data name="d536790e-32c7-456f-bc41-905d14d59418" xml:space="preserve">
+    <value>Nom Du Fournisseur</value>
+    <comment>table [Vendors] column [Vendor Name]</comment>
+  </data>
+  <data name="5dd27886-e5f8-4054-9941-e69c3a7af04f" xml:space="preserve">
+    <value>Adresse</value>
+    <comment>table [Vendors] column [Address]</comment>
+  </data>
+  <data name="409e7da3-999a-4db0-8d4e-fcfaf3726339" xml:space="preserve">
+    <value>Adresse 2</value>
+    <comment>table [Vendors] column [Address 2]</comment>
+  </data>
+  <data name="f19709b6-128b-4010-855b-3cc2d28c9c7c" xml:space="preserve">
+    <value>Ville</value>
+    <comment>table [Vendors] column [City]</comment>
+  </data>
+  <data name="1be292f2-477d-4724-b01a-a86dd32e2c90" xml:space="preserve">
+    <value>Code Postal</value>
+    <comment>table [Vendors] column [Post Code]</comment>
+  </data>
+  <data name="9dcd3364-6145-4c4d-b7d7-9890f4559f9b" xml:space="preserve">
+    <value>État</value>
+    <comment>table [Vendors] column [State]</comment>
+  </data>
+  <data name="0f16ebc0-f487-460e-9f2f-a46086915f2c" xml:space="preserve">
+    <value>Code Pays/Région</value>
+    <comment>table [Vendors] column [Country/Region Code]</comment>
+  </data>
+  <data name="8bfec60c-3142-46d4-a18f-e126baa9f4fb" xml:space="preserve">
+    <value>Groupe De Validation Fournisseur</value>
+    <comment>table [Vendors] column [Vendor Posting Group]</comment>
+  </data>
+  <data name="bb6ca3bf-dc2b-4416-9d7a-e56997791a2c" xml:space="preserve">
+    <value>N° De Fournisseur &amp; Nom</value>
+    <comment>table [Vendors] column [Vendor No. &amp; Name]</comment>
+  </data>
+  <data name="c5f1b472-08f2-46fa-9c1a-3444926ec7d0" xml:space="preserve">
+    <value>Groupe Calc. - Time Intelligence Pour Calendrier (Standard)</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)]</comment>
+  </data>
+  <data name="10fa58b2-342e-4b73-89eb-d698a040912c" xml:space="preserve">
+    <value>Mesure Sélectionnée</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)] column [Selected Measure]</comment>
+  </data>
+  <data name="527bf515-db8f-4cfd-a4a7-2bced5887286" xml:space="preserve">
+    <value>Type</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)] column [Type]</comment>
+  </data>
+  <data name="188616cf-b573-4cc4-bcaa-c8f3a804c026" xml:space="preserve">
+    <value>Sous-Type</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)] column [Sub Type]</comment>
+  </data>
+  <data name="c7866cc9-a64c-4e42-b181-0e4a1b7d58fc" xml:space="preserve">
+    <value>Hiérarchie Des Groupes De Calcul (Standard)</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)] hierarchy [Calc. Group Hierarchy (Standard)]</comment>
+  </data>
+  <data name="[Type]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)] hierarchyLevel [Type]</comment>
+  </data>
+  <data name="[Sub Type]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)] hierarchyLevel [Sub Type]</comment>
+  </data>
+  <data name="[Selected Measure]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Standard)] hierarchyLevel [Selected Measure]</comment>
+  </data>
+  <data name="d395b9e2-7b87-44cf-99bf-01c40c709b0b" xml:space="preserve">
+    <value>Paramètre De Date De Vieillissement</value>
+    <comment>table [Aging Date Parameter]</comment>
+  </data>
+  <data name="d65f0609-200e-46cc-bbb7-3ec48c12080a" xml:space="preserve">
+    <value>PARAMÈTRE DE VIEILLISSEMENT</value>
+    <comment>table [Aging Date Parameter] column [AGING PARAMETER]</comment>
+  </data>
+  <data name="7b6e5cc8-2555-4137-af8f-47e449cb4633" xml:space="preserve">
+    <value>Période De Seau De Vieillissement</value>
+    <comment>table [Aging Bucket Period]</comment>
+  </data>
+  <data name="73184a50-6937-4c96-ab41-7a56c7634a4d" xml:space="preserve">
+    <value>Valeur De La Période Du Panier De Vieillissement</value>
+    <comment>table [Aging Bucket Period] measure [Aging Bucket Period Value]</comment>
+  </data>
+  <data name="fb38b8fc-e341-4f41-92fa-46a410eca0f0" xml:space="preserve">
+    <value>Gamme Bucket 1</value>
+    <comment>table [Aging Bucket Period] measure [Bucket 1 Range]</comment>
+  </data>
+  <data name="93a05484-c456-4542-95e3-9c0080bf44b5" xml:space="preserve">
+    <value>Gamme Bucket 2</value>
+    <comment>table [Aging Bucket Period] measure [Bucket 2 Range]</comment>
+  </data>
+  <data name="02a452d2-13d3-499b-bdc9-d13cb5c0b9f0" xml:space="preserve">
+    <value>Gamme Bucket 3</value>
+    <comment>table [Aging Bucket Period] measure [Bucket 3 Range]</comment>
+  </data>
+  <data name="8bd05019-4991-4900-81ca-b1eb0208ca27" xml:space="preserve">
+    <value>Gamme Bucket 4</value>
+    <comment>table [Aging Bucket Period] measure [Bucket 4 Range]</comment>
+  </data>
+  <data name="f5db9d5f-a970-476c-926e-ca707d38b909" xml:space="preserve">
+    <value>Plage De Dates Du Compartiment 1</value>
+    <comment>table [Aging Bucket Period] measure [Bucket 1 Date Range]</comment>
+  </data>
+  <data name="2568dd31-ab4f-4fcf-ad6f-b3cfe5b6efcb" xml:space="preserve">
+    <value>Plage De Dates Du Budget 2</value>
+    <comment>table [Aging Bucket Period] measure [Budget 2 Date Range]</comment>
+  </data>
+  <data name="56523b88-65b6-4cda-a690-f1504f894781" xml:space="preserve">
+    <value>Plage De Dates Du Compartiment 3</value>
+    <comment>table [Aging Bucket Period] measure [Bucket 3 Date Range]</comment>
+  </data>
+  <data name="775dff5c-9502-4866-90da-0d8e762e9fb5" xml:space="preserve">
+    <value>Plage De Dates Du Compartiment 4</value>
+    <comment>table [Aging Bucket Period] measure [Bucket 4 Date Range]</comment>
+  </data>
+  <data name="d55409c9-b7e4-40a4-9297-5905ff1fb1d6" xml:space="preserve">
+    <value>Clientèle</value>
+    <comment>table [Customers]</comment>
+  </data>
+  <data name="885a8763-e16e-4cd6-bf80-97a1a3b238e5" xml:space="preserve">
+    <value>N° De Client</value>
+    <comment>table [Customers] column [Customer No.]</comment>
+  </data>
+  <data name="765e0664-28ad-47e3-ab5a-3acfac3fe5ac" xml:space="preserve">
+    <value>Nom Du Client</value>
+    <comment>table [Customers] column [Customer Name]</comment>
+  </data>
+  <data name="b1ce4028-11a7-499a-b882-d21202008c79" xml:space="preserve">
+    <value>Adresse</value>
+    <comment>table [Customers] column [Address]</comment>
+  </data>
+  <data name="c990380f-0bd9-456e-a73d-5b2d3d31c0ef" xml:space="preserve">
+    <value>Adresse 2</value>
+    <comment>table [Customers] column [Address 2]</comment>
+  </data>
+  <data name="507ad0ee-0bd2-4956-9150-ecf5afec66ae" xml:space="preserve">
+    <value>Ville</value>
+    <comment>table [Customers] column [City]</comment>
+  </data>
+  <data name="7ec4924a-cfaf-480a-8995-8907f85c1cc5" xml:space="preserve">
+    <value>Code Postal</value>
+    <comment>table [Customers] column [Post Code]</comment>
+  </data>
+  <data name="b92000a3-0df4-436d-8e63-712bd0812091" xml:space="preserve">
+    <value>État</value>
+    <comment>table [Customers] column [State]</comment>
+  </data>
+  <data name="09becb91-bbb5-4a78-b570-7cb46a4e79fe" xml:space="preserve">
+    <value>Code Pays/Région</value>
+    <comment>table [Customers] column [Country/Region Code]</comment>
+  </data>
+  <data name="7d11d0b8-25e1-45be-96c1-5a7ae99fd36f" xml:space="preserve">
+    <value>Groupe Comptabilisation Client</value>
+    <comment>table [Customers] column [Customer Posting Group]</comment>
+  </data>
+  <data name="53e6ca0b-ea85-4edd-920f-152548126eac" xml:space="preserve">
+    <value>Groupe De Prix Client</value>
+    <comment>table [Customers] column [Customer Price Group]</comment>
+  </data>
+  <data name="4eac39c3-f6fd-4e93-a4e9-a1208465d2bb" xml:space="preserve">
+    <value>Groupe De Remise Client</value>
+    <comment>table [Customers] column [Customer Discount Group]</comment>
+  </data>
+  <data name="37d951da-649d-47c2-803a-343fbdae9f5d" xml:space="preserve">
+    <value>N° De Client &amp; Nom</value>
+    <comment>table [Customers] column [Customer No. &amp; Name]</comment>
+  </data>
+  <data name="7f8c5169-0731-42f6-adcc-66724a6e0bce" xml:space="preserve">
+    <value>Groupe Calc. - Time Intelligence Pour Calendrier (Fiscal)</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)]</comment>
+  </data>
+  <data name="024b1eae-3af6-4bbb-adb5-09fe132d5049" xml:space="preserve">
+    <value>Mesure Sélectionnée</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)] column [Selected Measure]</comment>
+  </data>
+  <data name="d2d09a3c-c758-4bab-9eb2-b728d667efec" xml:space="preserve">
+    <value>Type</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)] column [Type]</comment>
+  </data>
+  <data name="8bff1f53-7223-4119-9d99-9e495aa4d2bd" xml:space="preserve">
+    <value>Sous-Type</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)] column [Sub Type]</comment>
+  </data>
+  <data name="e93fa3c3-1c84-4b5e-83df-fa1c2b50364d" xml:space="preserve">
+    <value>Calcul De La Hiérarchie Des Groupes (Fiscal)</value>
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)] hierarchy [Calc. Group Hierarchy (Fiscal)]</comment>
+  </data>
+  <data name="[Type]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)] hierarchyLevel [Type]</comment>
+  </data>
+  <data name="[Sub Type]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)] hierarchyLevel [Sub Type]</comment>
+  </data>
+  <data name="[Selected Measure]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calendar (Fiscal)] hierarchyLevel [Selected Measure]</comment>
+  </data>
+  <data name="001419f5-5059-4c68-8bb7-2dd997224dd6" xml:space="preserve">
+    <value>Calc. Group - Time Intelligence Pour Calenday (Hebdomadaire)</value>
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)]</comment>
+  </data>
+  <data name="36404077-6e32-4fee-bcaf-72366eb42af4" xml:space="preserve">
+    <value>Mesure Sélectionnée</value>
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)] column [Selected Measure]</comment>
+  </data>
+  <data name="3b180c77-b5f9-4730-bc08-594865044f5d" xml:space="preserve">
+    <value>Type</value>
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)] column [Type]</comment>
+  </data>
+  <data name="82f14efd-a8a2-4a4f-b131-06202332f656" xml:space="preserve">
+    <value>Sous-Type</value>
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)] column [Sub Type]</comment>
+  </data>
+  <data name="78a35f4a-6e2d-4bb6-9d1e-74fc12940b19" xml:space="preserve">
+    <value>Hiérarchie Des Groupes De Calcul (Hebdomadaire)</value>
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)] hierarchy [Calc. Group Hierarchy (Weekly)]</comment>
+  </data>
+  <data name="[Type]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)] hierarchyLevel [Type]</comment>
+  </data>
+  <data name="[Sub Type]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)] hierarchyLevel [Sub Type]</comment>
+  </data>
+  <data name="[Selected Measure]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Calc. Group - Time Intelligence for Calenday (Weekly)] hierarchyLevel [Selected Measure]</comment>
+  </data>
+  <data name="43a65c75-84cf-4e19-b893-90aa5fbee72b" xml:space="preserve">
+    <value>Date</value>
+    <comment>table [Date]</comment>
+  </data>
+  <data name="87d986f6-8d0a-4af1-bf9d-2748b7ba57dc" xml:space="preserve">
+    <value>Jour De La Semaine</value>
+    <comment>table [Date] column [Week Day]</comment>
+  </data>
+  <data name="a92edf57-7150-40d0-98b0-670245650ac0" xml:space="preserve">
+    <value>Type De Jour</value>
+    <comment>table [Date] column [Day Type]</comment>
+  </data>
+  <data name="eafb2700-d9bf-40ef-b2a6-d97476b09f5e" xml:space="preserve">
+    <value>Année Civile</value>
+    <comment>table [Date] column [Calendar Year]</comment>
+  </data>
+  <data name="[eafb2700-d9bf-40ef-b2a6-d97476b09f5e]-displayFolder" xml:space="preserve">
+    <value>_Standard Calendrier</value>
+    <comment>table [Date] column [Calendar Year]</comment>
+  </data>
+  <data name="906fcdf7-6285-4922-8968-362fc571dd84" xml:space="preserve">
+    <value>Trimestre Civil</value>
+    <comment>table [Date] column [Calendar Quarter]</comment>
+  </data>
+  <data name="2c5ea502-608c-4500-beb1-042ffb003d68" xml:space="preserve">
+    <value>Calendrier Trimestre Année</value>
+    <comment>table [Date] column [Calendar Quarter Year]</comment>
+  </data>
+  <data name="6e1a2bd3-8529-433c-a4ea-a6a3d3611046" xml:space="preserve">
+    <value>Mois Calendaire</value>
+    <comment>table [Date] column [Calendar Month]</comment>
+  </data>
+  <data name="46388357-c60d-4744-a628-f9ccff2c0687" xml:space="preserve">
+    <value>Calendrier Mois Année</value>
+    <comment>table [Date] column [Calendar Month Year]</comment>
+  </data>
+  <data name="fa556103-ff03-4954-af2d-8e70b22bcfb7" xml:space="preserve">
+    <value>Semaine Calendaire</value>
+    <comment>table [Date] column [Calendar Week]</comment>
+  </data>
+  <data name="43f804c2-759c-4fe1-97d9-0dc74f83630c" xml:space="preserve">
+    <value>Semaine Civile Année</value>
+    <comment>table [Date] column [Calendar Week Year]</comment>
+  </data>
+  <data name="3c121010-847d-4661-86b0-d3306993d1fc" xml:space="preserve">
+    <value>Calendrier Relativeweekpos</value>
+    <comment>table [Date] column [Calendar RelativeWeekPos]</comment>
+  </data>
+  <data name="72d7ff37-a6f6-45ac-9bd1-cb3050da78f3" xml:space="preserve">
+    <value>Calendrier Relativemonthpos</value>
+    <comment>table [Date] column [Calendar RelativeMonthPos]</comment>
+  </data>
+  <data name="b9bbb6c1-a863-42b0-9be0-4c067880aecf" xml:space="preserve">
+    <value>Calendrier Relativequarterpos</value>
+    <comment>table [Date] column [Calendar RelativeQuarterPos]</comment>
+  </data>
+  <data name="0389f321-8c3e-4094-9937-a72690d006ce" xml:space="preserve">
+    <value>Calendrier Relativeyearpos</value>
+    <comment>table [Date] column [Calendar RelativeYearPos]</comment>
+  </data>
+  <data name="86e6859f-ddf3-4905-b792-58c9b97c6e44" xml:space="preserve">
+    <value>Calendrier Startofmonth</value>
+    <comment>table [Date] column [Calendar StartOfMonth]</comment>
+  </data>
+  <data name="cacb2e9f-f673-4700-af72-7afbee746739" xml:space="preserve">
+    <value>Fin Du Mois Calendaire</value>
+    <comment>table [Date] column [Calendar EndOfMonth]</comment>
+  </data>
+  <data name="fe44207b-b823-4d13-a311-0c96e70b987c" xml:space="preserve">
+    <value>Calendrier Startofquarter</value>
+    <comment>table [Date] column [Calendar StartOfQuarter]</comment>
+  </data>
+  <data name="3291fc3a-8587-4dca-b01d-2ab523ce7101" xml:space="preserve">
+    <value>Fin Du Trimestre Calendaire</value>
+    <comment>table [Date] column [Calendar EndOfQuarter]</comment>
+  </data>
+  <data name="c33c2def-e542-47d1-b431-11fa3ec39720" xml:space="preserve">
+    <value>Calendrier Startofyear</value>
+    <comment>table [Date] column [Calendar StartOfYear]</comment>
+  </data>
+  <data name="ef673c14-ae3c-4f69-bb8a-f63db9617875" xml:space="preserve">
+    <value>Fin De L’Année Calendaire</value>
+    <comment>table [Date] column [Calendar EndOfYear]</comment>
+  </data>
+  <data name="c7b6991d-1e93-4a53-b0bf-bb4d9728240b" xml:space="preserve">
+    <value>Mois Calendairejours</value>
+    <comment>table [Date] column [Calendar MonthDays]</comment>
+  </data>
+  <data name="7e1c85c4-20ce-49a5-a788-b44eff618ef3" xml:space="preserve">
+    <value>Quarts De Jour Calendaires</value>
+    <comment>table [Date] column [Calendar QuarterDays]</comment>
+  </data>
+  <data name="4891dfee-1f75-4c3a-9bea-861d3612b2a5" xml:space="preserve">
+    <value>Année Civilejours</value>
+    <comment>table [Date] column [Calendar YearDays]</comment>
+  </data>
+  <data name="34806fca-07c1-4024-a936-9161e13a8c7b" xml:space="preserve">
+    <value>Calendar Dayofmonthnumber</value>
+    <comment>table [Date] column [Calendar DayOfMonthNumber]</comment>
+  </data>
+  <data name="9bddb3d9-8f84-44de-9e0c-30aacc4fe3db" xml:space="preserve">
+    <value>Calendar Dayofquarternumber</value>
+    <comment>table [Date] column [Calendar DayOfQuarterNumber]</comment>
+  </data>
+  <data name="5e77a5c0-44bc-493f-9fd1-3c3c3845fc32" xml:space="preserve">
+    <value>Calendar Dayofyearnumber</value>
+    <comment>table [Date] column [Calendar DayOfYearNumber]</comment>
+  </data>
+  <data name="9412edbb-aa3e-440a-b28b-b815200206c1" xml:space="preserve">
+    <value>Date Du Calendrierprécédentsemaine</value>
+    <comment>table [Date] column [Calendar DatePreviousWeek]</comment>
+  </data>
+  <data name="c0ff8f0c-5607-440d-beb7-be720f02c21c" xml:space="preserve">
+    <value>Date Du Calendrierprécédentmois</value>
+    <comment>table [Date] column [Calendar DatePreviousMonth]</comment>
+  </data>
+  <data name="b1cd39c6-820f-4eec-b95b-eca9e4fb2f3f" xml:space="preserve">
+    <value>Date Du Calendrierprécédenttrimestre</value>
+    <comment>table [Date] column [Calendar DatePreviousQuarter]</comment>
+  </data>
+  <data name="3836d147-36d2-4b0c-be3a-02013f871121" xml:space="preserve">
+    <value>Date Du Calendrierprécédentannée</value>
+    <comment>table [Date] column [Calendar DatePreviousYear]</comment>
+  </data>
+  <data name="4309f1b1-5303-4bbe-a033-3ae569481cb4" xml:space="preserve">
+    <value>Exercice</value>
+    <comment>table [Date] column [Fiscal Year]</comment>
+  </data>
+  <data name="[4309f1b1-5303-4bbe-a033-3ae569481cb4]-displayFolder" xml:space="preserve">
+    <value>_Fiscal Calendrier</value>
+    <comment>table [Date] column [Fiscal Year]</comment>
+  </data>
+  <data name="a3fdb947-7ec9-4f75-a830-9e008027f5be" xml:space="preserve">
+    <value>Trimestre D’Exercice</value>
+    <comment>table [Date] column [Fiscal Quarter]</comment>
+  </data>
+  <data name="55062367-69e1-4f9a-b4a6-ea8e527caec4" xml:space="preserve">
+    <value>Exercice Trimestriel</value>
+    <comment>table [Date] column [Fiscal Quarter Year]</comment>
+  </data>
+  <data name="8a49071b-afae-41c5-b463-81bce1e24c65" xml:space="preserve">
+    <value>Mois Fiscal</value>
+    <comment>table [Date] column [Fiscal Month]</comment>
+  </data>
+  <data name="a6c93316-93e2-4fc2-aebb-21781fcbf7d5" xml:space="preserve">
+    <value>Mois De L’Exercice Année</value>
+    <comment>table [Date] column [Fiscal Month Year]</comment>
+  </data>
+  <data name="3ee8444b-9959-446c-909b-67ccacc04ec1" xml:space="preserve">
+    <value>Semaine Fiscale</value>
+    <comment>table [Date] column [Fiscal Week]</comment>
+  </data>
+  <data name="b09e6e42-954d-401d-901e-73a4908a36eb" xml:space="preserve">
+    <value>Semaine Fiscale Année</value>
+    <comment>table [Date] column [Fiscal Week Year]</comment>
+  </data>
+  <data name="a7092406-c70e-47ce-bb5c-8f8c9eb85e1f" xml:space="preserve">
+    <value>Relatif Fiscalweekpos</value>
+    <comment>table [Date] column [Fiscal RelativeWeekPos]</comment>
+  </data>
+  <data name="e4c65d43-bc58-4c60-a2e6-ca42f109abab" xml:space="preserve">
+    <value>Relatif Fiscalmonthpos</value>
+    <comment>table [Date] column [Fiscal RelativeMonthPos]</comment>
+  </data>
+  <data name="8db19a91-3741-4dfe-832d-0b08d51a578a" xml:space="preserve">
+    <value>Relatif Fiscalquarterpos</value>
+    <comment>table [Date] column [Fiscal RelativeQuarterPos]</comment>
+  </data>
+  <data name="405ce0df-cdba-447e-abb8-2f7fda806b0b" xml:space="preserve">
+    <value>Fiscalitérelativeannéepos</value>
+    <comment>table [Date] column [Fiscal RelativeYearPos]</comment>
+  </data>
+  <data name="96ec7ed1-cf0f-444d-86bc-2cf7fd378db1" xml:space="preserve">
+    <value>Début Du Mois Fiscal</value>
+    <comment>table [Date] column [Fiscal StartOfMonth]</comment>
+  </data>
+  <data name="d4ee5d8b-8ac7-4319-a7a6-0ec65331f465" xml:space="preserve">
+    <value>Fin Du Mois Fiscal</value>
+    <comment>table [Date] column [Fiscal EndOfMonth]</comment>
+  </data>
+  <data name="268275df-62fb-49db-987d-5e4e1b08a39c" xml:space="preserve">
+    <value>Début Du Trimestre Fiscal</value>
+    <comment>table [Date] column [Fiscal StartOfQuarter]</comment>
+  </data>
+  <data name="bc4ac4d0-6d23-43e0-9c0f-bd2039e21980" xml:space="preserve">
+    <value>Fin Du Trimestre Fiscal</value>
+    <comment>table [Date] column [Fiscal EndOfQuarter]</comment>
+  </data>
+  <data name="cfa797dd-4fe9-4af8-9aaf-543956efd413" xml:space="preserve">
+    <value>Début De L’Année Fiscale</value>
+    <comment>table [Date] column [Fiscal StartOfYear]</comment>
+  </data>
+  <data name="3d9bdb34-e70a-44ec-b296-d13266432f70" xml:space="preserve">
+    <value>Fin De L’Exercice</value>
+    <comment>table [Date] column [Fiscal EndOfYear]</comment>
+  </data>
+  <data name="5d912c0d-fcf0-4259-b2f2-1b8f21666e05" xml:space="preserve">
+    <value>Mois Fiscaljours</value>
+    <comment>table [Date] column [Fiscal MonthDays]</comment>
+  </data>
+  <data name="dce72481-e786-4ed9-9776-584f5732d133" xml:space="preserve">
+    <value>Trimestres D’Exercicejours</value>
+    <comment>table [Date] column [Fiscal QuarterDays]</comment>
+  </data>
+  <data name="b2e1d2c0-aa54-4100-a7f2-a4e018e0bce0" xml:space="preserve">
+    <value>Jours De L’Exercice</value>
+    <comment>table [Date] column [Fiscal YearDays]</comment>
+  </data>
+  <data name="9005eda0-cd3d-40ac-800b-72f704c571f2" xml:space="preserve">
+    <value>Fiscal Dayofmonthnumber</value>
+    <comment>table [Date] column [Fiscal DayOfMonthNumber]</comment>
+  </data>
+  <data name="90be3b35-e218-47e3-91fd-707bfc7c7a2a" xml:space="preserve">
+    <value>Jour De L’Exercice</value>
+    <comment>table [Date] column [Fiscal DayOfQuarterNumber]</comment>
+  </data>
+  <data name="51f8869a-eae7-44e0-aaa3-a8219657d14c" xml:space="preserve">
+    <value>Jour De L’Année Fiscale</value>
+    <comment>table [Date] column [Fiscal DayOfYearNumber]</comment>
+  </data>
+  <data name="f3d6591f-f7e3-4909-a849-6ac956f6e4b5" xml:space="preserve">
+    <value>Date De L’Exerciceprécédentsemaine</value>
+    <comment>table [Date] column [Fiscal DatePreviousWeek]</comment>
+  </data>
+  <data name="cca225dd-90da-4aa5-8907-aff394845eee" xml:space="preserve">
+    <value>Date Fiscaleprécédentmois</value>
+    <comment>table [Date] column [Fiscal DatePreviousMonth]</comment>
+  </data>
+  <data name="09daf6ef-268b-4d0d-b5c8-413ce37c6186" xml:space="preserve">
+    <value>Date D’Exerciceprécédenttrimestre</value>
+    <comment>table [Date] column [Fiscal DatePreviousQuarter]</comment>
+  </data>
+  <data name="239ad661-3781-4f71-a474-045ee230e220" xml:space="preserve">
+    <value>Date De L’Exerciceannée Précédente</value>
+    <comment>table [Date] column [Fiscal DatePreviousYear]</comment>
+  </data>
+  <data name="ac826f1e-e350-4f10-a088-7cdd9d921d22" xml:space="preserve">
+    <value>Année FW</value>
+    <comment>table [Date] column [FW Year]</comment>
+  </data>
+  <data name="[ac826f1e-e350-4f10-a088-7cdd9d921d22]-displayFolder" xml:space="preserve">
+    <value>_Weekly Calendrier</value>
+    <comment>table [Date] column [FW Year]</comment>
+  </data>
+  <data name="ea488855-48b0-4a2d-a99c-cfeb1c841c00" xml:space="preserve">
+    <value>Quart FW</value>
+    <comment>table [Date] column [FW Quarter]</comment>
+  </data>
+  <data name="61e1ae08-6194-4c3c-b8d6-b7b3a8548e3f" xml:space="preserve">
+    <value>Trimestre De L’Année FW</value>
+    <comment>table [Date] column [FW Quarter Year]</comment>
+  </data>
+  <data name="3b27db1b-5184-48e7-a64f-8713263bbcde" xml:space="preserve">
+    <value>Mois FW</value>
+    <comment>table [Date] column [FW Month]</comment>
+  </data>
+  <data name="b4fc566a-9fa1-4d4c-b593-b9e688465df8" xml:space="preserve">
+    <value>FW Mois Année</value>
+    <comment>table [Date] column [FW Month Year]</comment>
+  </data>
+  <data name="94ccf79f-75e4-4e53-85e5-d7ba2e318383" xml:space="preserve">
+    <value>Semaine FW</value>
+    <comment>table [Date] column [FW Week]</comment>
+  </data>
+  <data name="1ea40e86-d134-40b0-a117-957e0fcb5c94" xml:space="preserve">
+    <value>Période FW</value>
+    <comment>table [Date] column [FW Period]</comment>
+  </data>
+  <data name="e215dcb4-1cb2-40be-9dbe-972862b3baa2" xml:space="preserve">
+    <value>Semaine FW Année</value>
+    <comment>table [Date] column [FW Week Year]</comment>
+  </data>
+  <data name="13c0c728-c94e-4602-a213-81fdf9318fdd" xml:space="preserve">
+    <value>FW Startofweek</value>
+    <comment>table [Date] column [FW StartOfWeek]</comment>
+  </data>
+  <data name="ba4d5cae-592d-4aa1-bb4f-80d480ac0e32" xml:space="preserve">
+    <value>Fin De Semaine FW</value>
+    <comment>table [Date] column [FW EndOfWeek]</comment>
+  </data>
+  <data name="90865798-3ed2-48db-970d-407a69f604a1" xml:space="preserve">
+    <value>FW Relativeweekpos</value>
+    <comment>table [Date] column [FW RelativeWeekPos]</comment>
+  </data>
+  <data name="15cab468-7f86-4a20-81b2-ef7a1108ed10" xml:space="preserve">
+    <value>FW Relativemonthpos</value>
+    <comment>table [Date] column [FW RelativeMonthPos]</comment>
+  </data>
+  <data name="7c457684-360a-4ede-a38a-41c46bc88d7c" xml:space="preserve">
+    <value>FW Relativequarterpos</value>
+    <comment>table [Date] column [FW RelativeQuarterPos]</comment>
+  </data>
+  <data name="9ba55f9b-2226-4985-a3a5-def688fc151c" xml:space="preserve">
+    <value>FW Relativeyearpos</value>
+    <comment>table [Date] column [FW RelativeYearPos]</comment>
+  </data>
+  <data name="a46d4152-42a0-44af-9ea8-16d4e9a15ecb" xml:space="preserve">
+    <value>FW Début Du Mois</value>
+    <comment>table [Date] column [FW StartOfMonth]</comment>
+  </data>
+  <data name="6293aed1-d7fa-41a1-a62d-fa2d8e89f045" xml:space="preserve">
+    <value>Fin Du Mois</value>
+    <comment>table [Date] column [FW EndOfMonth]</comment>
+  </data>
+  <data name="8483ae63-3171-4889-8dcb-bb706a0cfc45" xml:space="preserve">
+    <value>FW Début Du Trimestre</value>
+    <comment>table [Date] column [FW StartOfQuarter]</comment>
+  </data>
+  <data name="b249ccc8-36bd-4e18-b574-1fc55d8fc9a8" xml:space="preserve">
+    <value>Fin Du Trimestre FW</value>
+    <comment>table [Date] column [FW EndOfQuarter]</comment>
+  </data>
+  <data name="4e147ce6-585a-4b5a-bf49-1e96a65022f6" xml:space="preserve">
+    <value>FW Startofyear</value>
+    <comment>table [Date] column [FW StartOfYear]</comment>
+  </data>
+  <data name="60b08900-3f6c-4855-bc00-789ccb4ca8c2" xml:space="preserve">
+    <value>Fin De L’Année</value>
+    <comment>table [Date] column [FW EndOfYear]</comment>
+  </data>
+  <data name="df984e82-e421-48fc-8a00-59826303e58f" xml:space="preserve">
+    <value>FW Monthdays</value>
+    <comment>table [Date] column [FW MonthDays]</comment>
+  </data>
+  <data name="4b23d5be-1bef-4bee-be02-a48c680a91ed" xml:space="preserve">
+    <value>FW Quarterdays</value>
+    <comment>table [Date] column [FW QuarterDays]</comment>
+  </data>
+  <data name="f94d98c8-b581-4c1d-be31-23d2e0f57fba" xml:space="preserve">
+    <value>FW Yeardays</value>
+    <comment>table [Date] column [FW YearDays]</comment>
+  </data>
+  <data name="8d833c34-a69f-487a-a198-52eb7ae8fa48" xml:space="preserve">
+    <value>FW Dayofmonthnumber</value>
+    <comment>table [Date] column [FW DayOfMonthNumber]</comment>
+  </data>
+  <data name="13d04d86-e5fa-48e4-a680-4ca569b43bfd" xml:space="preserve">
+    <value>FW Dayofquarternumber</value>
+    <comment>table [Date] column [FW DayOfQuarterNumber]</comment>
+  </data>
+  <data name="17054897-fac4-4cab-89a0-88049f3b8b3b" xml:space="preserve">
+    <value>FW Dayofyearnumber</value>
+    <comment>table [Date] column [FW DayOfYearNumber]</comment>
+  </data>
+  <data name="12add804-bcd9-449c-9034-623015558a9e" xml:space="preserve">
+    <value>Date Fwprodudueur Précédentsemaine</value>
+    <comment>table [Date] column [FW DatePreviousWeek]</comment>
+  </data>
+  <data name="81345b13-f5f8-4a2e-a9fa-2aa7a0cded00" xml:space="preserve">
+    <value>Date Fwprodumois Précédent</value>
+    <comment>table [Date] column [FW DatePreviousMonth]</comment>
+  </data>
+  <data name="326717ad-741d-4f97-86fa-864673193d21" xml:space="preserve">
+    <value>Date Fwproqueté Précédent</value>
+    <comment>table [Date] column [FW DatePreviousQuarter]</comment>
+  </data>
+  <data name="eccf8b73-0631-422c-a03b-44fdf591c2a4" xml:space="preserve">
+    <value>Date Fwprodule Précédenteannée</value>
+    <comment>table [Date] column [FW DatePreviousYear]</comment>
+  </data>
+  <data name="065c76e8-8ede-45f4-b15b-f30f6d127e3e" xml:space="preserve">
+    <value>Jour Relatif</value>
+    <comment>table [Date] column [Relative Day]</comment>
+  </data>
+  <data name="3d809386-699f-419e-b16d-f49c19b12b29" xml:space="preserve">
+    <value>Exercice Fiscal-Trimestre-Mois-Semaine</value>
+    <comment>table [Date] hierarchy [Fiscal Year-Quarter-Month-Week]</comment>
+  </data>
+  <data name="[Fiscal Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Year]</comment>
+  </data>
+  <data name="[Fiscal Quarter Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Quarter Year]</comment>
+  </data>
+  <data name="[Fiscal Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Month Year]</comment>
+  </data>
+  <data name="[Fiscal Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Week Year]</comment>
+  </data>
+  <data name="1e1ffcb8-b7cd-4858-91d0-5a8526a6a135" xml:space="preserve">
+    <value>Calendrier Année-Trimestre-Mois-Semaine</value>
+    <comment>table [Date] hierarchy [Calendar Year-Quarter-Month-Week]</comment>
+  </data>
+  <data name="[Calendar Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Year]</comment>
+  </data>
+  <data name="[Calendar Quarter Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Quarter Year]</comment>
+  </data>
+  <data name="[Calendar Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Month Year]</comment>
+  </data>
+  <data name="[Calendar Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Week Year]</comment>
+  </data>
+  <data name="d82a685d-84a6-48dc-9d56-aba3a6d35852" xml:space="preserve">
+    <value>FW Année-Trimestre-Mois-Semaine</value>
+    <comment>table [Date] hierarchy [FW Year-Quarter-Month-Week]</comment>
+  </data>
+  <data name="[FW Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Year]</comment>
+  </data>
+  <data name="[FW Quarter Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Quarter Year]</comment>
+  </data>
+  <data name="[FW Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Month Year]</comment>
+  </data>
+  <data name="[FW Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Week Year]</comment>
+  </data>
+  <data name="b91345f2-a64b-4476-bcdd-bc62e8eddf8c" xml:space="preserve">
+    <value>Exercice-Mois</value>
+    <comment>table [Date] hierarchy [Fiscal Year-Month]</comment>
+  </data>
+  <data name="[Fiscal Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Year]</comment>
+  </data>
+  <data name="[Fiscal Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Month Year]</comment>
+  </data>
+  <data name="298a8eb2-1115-42f8-9b24-319c1f464fce" xml:space="preserve">
+    <value>Exercice-Mois-Semaine</value>
+    <comment>table [Date] hierarchy [Fiscal Year-Month-Week]</comment>
+  </data>
+  <data name="[Fiscal Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Year]</comment>
+  </data>
+  <data name="[Fiscal Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Month Year]</comment>
+  </data>
+  <data name="[Fiscal Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Fiscal Week Year]</comment>
+  </data>
+  <data name="b1438c41-8116-4575-9e46-a0c98f675559" xml:space="preserve">
+    <value>Année Civile-Mois</value>
+    <comment>table [Date] hierarchy [Calendar Year-Month]</comment>
+  </data>
+  <data name="[Calendar Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Year]</comment>
+  </data>
+  <data name="[Calendar Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Month Year]</comment>
+  </data>
+  <data name="14bbd8ca-3b08-45dd-a221-5fde94bf8dc6" xml:space="preserve">
+    <value>Calendrier Année-Mois-Semaine</value>
+    <comment>table [Date] hierarchy [Calendar Year-Month-Week]</comment>
+  </data>
+  <data name="[Calendar Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Year]</comment>
+  </data>
+  <data name="[Calendar Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Month Year]</comment>
+  </data>
+  <data name="[Calendar Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [Calendar Week Year]</comment>
+  </data>
+  <data name="6aaeeccb-1242-43fb-9099-223d53bf7246" xml:space="preserve">
+    <value>FW Année-Mois-Semaine</value>
+    <comment>table [Date] hierarchy [FW Year-Month-Week]</comment>
+  </data>
+  <data name="[FW Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Year]</comment>
+  </data>
+  <data name="[FW Month Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Month Year]</comment>
+  </data>
+  <data name="[FW Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Week Year]</comment>
+  </data>
+  <data name="5dc02715-2940-4e60-8501-f9850f5b89a0" xml:space="preserve">
+    <value>FW Année-Trimestre-Semaine</value>
+    <comment>table [Date] hierarchy [FW Year-Quarter-Week]</comment>
+  </data>
+  <data name="[FW Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Year]</comment>
+  </data>
+  <data name="[FW Quarter Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Quarter Year]</comment>
+  </data>
+  <data name="[FW Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Week Year]</comment>
+  </data>
+  <data name="41126b6f-8505-4d19-a3e8-7452ae3cefaa" xml:space="preserve">
+    <value>Semaine De L’Année FW</value>
+    <comment>table [Date] hierarchy [FW Year-Week]</comment>
+  </data>
+  <data name="[FW Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Year]</comment>
+  </data>
+  <data name="[FW Week Year]-hierarchyLevel" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+    <comment>table [Date] hierarchyLevel [FW Week Year]</comment>
+  </data>
+  <data name="9e65416f-15d8-460c-b41b-c5268ae1171e" xml:space="preserve">
+    <value>Titre De Mon Rapport</value>
+    <comment>table [Localized Labels] measure [My Report Title]</comment>
+  </data>
+  <data name="bb8cf56a-9b48-47e6-a637-878d9618701d" xml:space="preserve">
+    <value>Légende De Mon Bouton</value>
+    <comment>table [Localized Labels] measure [My Button Caption]</comment>
+  </data>
+  <data name="b62c0144-e6a1-4cd7-9ecc-e6a858099595" xml:space="preserve">
+    <value>Mon Titre Visuel</value>
+    <comment>table [Localized Labels] measure [My Visual Title]</comment>
+  </data>
+  <data name="8000bdf6-72c3-42cd-97c6-3aebfaec8465" xml:space="preserve">
+    <value>Aperçu Financier</value>
+    <comment>table [Localized Labels] measure [Financial Overview]</comment>
+  </data>
+  <data name="c1ec492b-4ae1-45be-b731-3db428123a31" xml:space="preserve">
+    <value>Compte De Résultat Par Mois</value>
+    <comment>table [Localized Labels] measure [Income Statement by Month]</comment>
+  </data>
+  <data name="c38831d9-4403-4632-aea7-fd05ed3f9b7e" xml:space="preserve">
+    <value>Bilan Par Mois</value>
+    <comment>table [Localized Labels] measure [Balance Sheet by Month]</comment>
+  </data>
+  <data name="9ada4062-238f-4d9a-8829-116a7c3dec03" xml:space="preserve">
+    <value>Comparaison Des Budgets</value>
+    <comment>table [Localized Labels] measure [Budget Comparison]</comment>
+  </data>
+  <data name="6312265a-9df2-4417-bcb5-d6ed32bdad6d" xml:space="preserve">
+    <value>KPI De Liquidité</value>
+    <comment>table [Localized Labels] measure [Liquidity KPIs]</comment>
+  </data>
+  <data name="b771295a-1538-4b45-9d7e-2740833e3753" xml:space="preserve">
+    <value>Rentabilité</value>
+    <comment>table [Localized Labels] measure [Profitability]</comment>
+  </data>
+  <data name="224f3e68-3c3a-49dc-8768-884df8848ffd" xml:space="preserve">
+    <value>Passif </value>
+    <comment>table [Localized Labels] measure [Liabilities ]</comment>
+  </data>
+  <data name="3aacfadb-e49b-4642-b324-541f61e9265b" xml:space="preserve">
+    <value>Période De Collecte Moyenne </value>
+    <comment>table [Localized Labels] measure [Average Collection Period ]</comment>
+  </data>
+  <data name="afb98f02-465a-4267-84c2-410317ff26ad" xml:space="preserve">
+    <value>Créances Âgées (Antidatation)</value>
+    <comment>table [Localized Labels] measure [Aged Receivables (Back Dating)]</comment>
+  </data>
+  <data name="a2991c31-abc1-4b64-a183-f6ed60cb5d41" xml:space="preserve">
+    <value>Comptes Fournisseurs Âgés (Antidatation)</value>
+    <comment>table [Localized Labels] measure [Aged Payables (Back Dating)]</comment>
+  </data>
+  <data name="016afb90-24aa-4e29-a017-f858eb5aa27d" xml:space="preserve">
+    <value>Écritures Générales</value>
+    <comment>table [Localized Labels] measure [G/L Entries]</comment>
+  </data>
+  <data name="b6138d92-e5c8-43e2-b59d-6c559833e886" xml:space="preserve">
+    <value>Écritures Comptables Fournisseur Détaillées</value>
+    <comment>table [Localized Labels] measure [Detailed Vendor Ledger Entries]</comment>
+  </data>
+  <data name="8cbea3ac-6743-409f-b580-fdd50cbd1f65" xml:space="preserve">
+    <value>Écritures Comptables Détaillées Du Client</value>
+    <comment>table [Localized Labels] measure [Detailed Customer Ledger Entries]</comment>
+  </data>
+  <data name="ad949856-e191-41b7-8451-2a09d1eb2fa7" xml:space="preserve">
+    <value>Extraction De L’État Des Résultats</value>
+    <comment>table [Localized Labels] measure [Income Statement Drill Through]</comment>
+  </data>
+  <data name="120e515c-604e-40ae-bfca-d8e74973359e" xml:space="preserve">
+    <value>Exploration Du Bilan</value>
+    <comment>table [Localized Labels] measure [Balance Sheet Drill Through]</comment>
+  </data>
+  <data name="12bc14fa-3041-42b9-b78e-bf58547b1f8b" xml:space="preserve">
+    <value>Accès Au Détail Des Écritures Comptables Fournisseur</value>
+    <comment>table [Localized Labels] measure [Vendor Ledger Entries Drill Through]</comment>
+  </data>
+  <data name="f0fdb802-3b2b-4c5b-b8fe-8acd8b416ef2" xml:space="preserve">
+    <value>Accès Au Détail Des Écritures Comptables Client</value>
+    <comment>table [Localized Labels] measure [Customer Ledger Entries Drill Through]</comment>
+  </data>
+  <data name="9b5aab08-2647-4ec6-a3ad-9b5fe6b1bbec" xml:space="preserve">
+    <value>Exploration Des Passifs</value>
+    <comment>table [Localized Labels] measure [Liabilities Drill Through]</comment>
+  </data>
+  <data name="acfbba34-e881-4ead-b924-206401623f05" xml:space="preserve">
+    <value>Journal Des Modifications De L’Application Finance</value>
+    <comment>table [Localized Labels] measure [Finance App Change Log]</comment>
+  </data>
+  <data name="f9f0ef49-20b6-4322-98e8-855a26f195b1" xml:space="preserve">
+    <value>À Ce Jour</value>
+    <comment>table [Localized Labels] measure [As At Date]</comment>
+  </data>
+  <data name="6b7228b8-b3c2-4cff-a3bc-7d4cbbc3ebf1" xml:space="preserve">
+    <value>Longueur Du Godet Vieillissant</value>
+    <comment>table [Localized Labels] measure [Aging Bucket Length]</comment>
+  </data>
+  <data name="4e8fb43a-39b8-417b-9bbd-4265e91e6a51" xml:space="preserve">
+    <value>Utiliser La Date De Vieillissement</value>
+    <comment>table [Localized Labels] measure [Use Aging Date]</comment>
+  </data>
+  <data name="58fde422-d29c-4094-a2d4-7bb01b2c1d82" xml:space="preserve">
+    <value>Coût Des Marchandises Vendues </value>
+    <comment>table [Localized Labels] measure [Cost of Goods Sold ]</comment>
+  </data>
+  <data name="fc2758df-015b-4a2f-9625-3226ae703844" xml:space="preserve">
+    <value>Bénéfice Net </value>
+    <comment>table [Localized Labels] measure [Net Profit ]</comment>
+  </data>
+  <data name="5d24c8a7-b311-4699-9047-fe389980775a" xml:space="preserve">
+    <value>Actif À Court Terme / Passif À Court Terme</value>
+    <comment>table [Localized Labels] measure [Current Assets / Current Liabilities]</comment>
+  </data>
+  <data name="01b6e593-fb01-4cbc-b6f0-422fcc7d4057" xml:space="preserve">
+    <value>(Actif Circulant - Inventaire - Purch. Paiements Anticipés) / Passif À Court Terme</value>
+    <comment>table [Localized Labels] measure [(Current Assets - Inventory - Purch. Prepayments) /  Current Liabilities]</comment>
+  </data>
+  <data name="9d248cd9-faf3-4e92-8087-d618a3b020f1" xml:space="preserve">
+    <value>Liquidités / Passifs Courants</value>
+    <comment>table [Localized Labels] measure [Liquid Assets / Current Liabilities]</comment>
+  </data>
+  <data name="3bf6b039-20ab-4d26-9f52-ea9471f8b67b" xml:space="preserve">
+    <value>Revenus - Coût Des Marchandises Vendues - Dépenses</value>
+    <comment>table [Localized Labels] measure [Revenue - Cost of Goods Sold - Expenses]</comment>
+  </data>
+  <data name="75a120e9-a7e7-4c9d-84a5-834dcf348e0f" xml:space="preserve">
+    <value>Bénéfice Net / Chiffre D’Affaires</value>
+    <comment>table [Localized Labels] measure [Net Profit / Revenue]</comment>
+  </data>
+  <data name="3081d59d-3dac-464a-a7b9-e43ace0e89cb" xml:space="preserve">
+    <value>Revenus - Coût Des Marchandises Vendues</value>
+    <comment>table [Localized Labels] measure [Revenue - Cost of Goods Sold]</comment>
+  </data>
+  <data name="b6e65dc1-3839-4c8f-abf0-4608b594c7df" xml:space="preserve">
+    <value>Marge Brute / Chiffre D’Affaires</value>
+    <comment>table [Localized Labels] measure [Gross Profit / Revenue]</comment>
+  </data>
+  <data name="f3467ed3-d71d-4eb6-97b3-21fbff130f0e" xml:space="preserve">
+    <value>Passif Par Mois</value>
+    <comment>table [Localized Labels] measure [Liabilities by Month]</comment>
+  </data>
+  <data name="cf0af75f-1c29-47ac-8502-ba2fbd70e6a0" xml:space="preserve">
+    <value>Revenus Et Comptes Clients (Moyenne) Par Mois</value>
+    <comment>table [Localized Labels] measure [Revenue &amp; Accounts Receivable (Average) by Month]</comment>
+  </data>
+  <data name="cb228245-6d55-4e0c-b4cf-4008e0ac3ede" xml:space="preserve">
+    <value>Période De Recouvrement Moyenne (Jours) Par Mois</value>
+    <comment>table [Localized Labels] measure [Average Collection Period (Days) by Month]</comment>
+  </data>
+  <data name="375f75fb-fa09-4129-b021-132ef205b142" xml:space="preserve">
+    <value>Revenus D’Exploitation </value>
+    <comment>table [Localized Labels] measure [Operating Revenue ]</comment>
+  </data>
+  <data name="107e8bc2-c6b9-4d48-91e5-d789664399a8" xml:space="preserve">
+    <value>Dépenses D’Exploitation </value>
+    <comment>table [Localized Labels] measure [Operating Expenses ]</comment>
+  </data>
+  <data name="2ed69f86-b434-4ed6-b547-6bddd6685dc8" xml:space="preserve">
+    <value>AR / AP VIEILLI</value>
+    <comment>table [Localized Labels] measure [AGED AR / AP]</comment>
+  </data>
+  <data name="81be7c87-5407-4920-a306-7a193d19ce97" xml:space="preserve">
+    <value>Analyse Financière</value>
+    <comment>table [Localized Labels] measure [Finance Analytics]</comment>
+  </data>
+  <data name="7fbb5c61-8d33-4490-865d-2000f111e938" xml:space="preserve">
+    <value>Pour</value>
+    <comment>table [Localized Labels] measure [for]</comment>
+  </data>
+  <data name="2e0d925d-a450-462e-b5aa-768960cbdb6f" xml:space="preserve">
+    <value>CONNECTEZ VOS DONNÉES</value>
+    <comment>table [Localized Labels] measure [CONNECT YOUR DATA]</comment>
+  </data>
+  <data name="8aaa5c35-6d66-4f75-9ce0-4b7747ad09b0" xml:space="preserve">
+    <value>1. Télécharger Le Connecteur Financier Pour Power BI</value>
+    <comment>table [Localized Labels] measure [1. Download the Finance Connector for Power BI]</comment>
+  </data>
+  <data name="fca6e0ca-f179-4be6-83ba-13954a9c6fb8" xml:space="preserve">
+    <value>2. Configurer Dynamics 365 Business Central</value>
+    <comment>table [Localized Labels] measure [2. Configure Dynamics 365 Business Central]</comment>
+  </data>
+  <data name="30ccb8a8-14ea-40b0-b57e-7662a5d0351d" xml:space="preserve">
+    <value>UTILISEZ, MODIFIEZ ET CRÉEZ VOS PROPRES RAPPORTS</value>
+    <comment>table [Localized Labels] measure [USE, EDIT AND BUILD YOUR OWN REPORTS]</comment>
+  </data>
+  <data name="49af546a-c7f8-4d21-b054-1b9196a3e634" xml:space="preserve">
+    <value>Finance Inclut Une Variété De Rapports Prédéfinis Pour Vous Aider À Voir Vos Données Immédiatement. Vous Pouvez Modifier Ces Rapports Ou Créer Votre Propre Rapport À Partir De Zéro.</value>
+    <comment>table [Localized Labels] measure [Finance includes a variety of pre-built reports to help you see your data immediately. You are able to edit these reports or build your own report from scratch.]</comment>
+  </data>
+  <data name="a5955ac3-4cb2-47cd-ad4c-08c768bbc55c" xml:space="preserve">
+    <value>AIDE ET SOUTIEN</value>
+    <comment>table [Localized Labels] measure [HELP AND SUPPORT]</comment>
+  </data>
+  <data name="06dfcd33-477b-4ed5-b9bf-2428c57f4a33" xml:space="preserve">
+    <value>Pour Obtenir De L’Aide Et De L’Aide Concernant Votre Nouveau Rapport, Consultez La Documentation De Présentation D’Analytics.</value>
+    <comment>table [Localized Labels] measure [For help and support with your new report please visit the Analytics overview documentation.]</comment>
+  </data>
+  <data name="a6a3566b-9dff-46e1-9262-a7d1858b81d5" xml:space="preserve">
+    <value>AUTRES RAPPORTS POWER BI</value>
+    <comment>table [Localized Labels] measure [OTHER POWER BI REPORTS]</comment>
+  </data>
+  <data name="1badf6ab-1d10-4cdb-b0da-8bf2c0a4e25a" xml:space="preserve">
+    <value>ACHAT</value>
+    <comment>table [Localized Labels] measure [PURCHASE]</comment>
+  </data>
+  <data name="5745f2f3-9d33-4b61-8cde-d621773038bd" xml:space="preserve">
+    <value>VENTES</value>
+    <comment>table [Localized Labels] measure [SALES]</comment>
+  </data>
+  <data name="edb00914-6261-460a-ab3b-2467ad00c889" xml:space="preserve">
+    <value>INVENTAIRE </value>
+    <comment>table [Localized Labels] measure [INVENTORY ]</comment>
+  </data>
+  <data name="148a9d24-e50b-4717-9dcd-e766641324d9" xml:space="preserve">
+    <value>FABRICATION</value>
+    <comment>table [Localized Labels] measure [MANUFACTURING]</comment>
+  </data>
+  <data name="fbf5929d-02c7-4067-a696-6ae247ac554d" xml:space="preserve">
+    <value>EMPLOIS</value>
+    <comment>table [Localized Labels] measure [JOBS]</comment>
+  </data>
+  <data name="eca50d64-01d0-4c4c-9290-eccae33a5e97" xml:space="preserve">
+    <value>Pour Business Central</value>
+    <comment>table [Localized Labels] measure [for Business Central]</comment>
+  </data>
+</root>
