@@ -11,6 +11,7 @@ using TranslationsBuilder.Models;
 using System.Reflection;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Data.Common;
+using System.Collections;
 
 namespace TranslationsBuilderConsole
 {
@@ -52,12 +53,20 @@ namespace TranslationsBuilderConsole
                 Environment.Exit(0);
             }
 
-            // Assume Power BI Desktop is running
+            try
+            {
+                // Assume Power BI Desktop is running
+                var process = Process.GetProcessesByName("msmdsrv")[0];
+                var tcpTable = ManagedIpHelper.GetExtendedTcpTable();
+                var tcpRow = tcpTable.SingleOrDefault((r) => r.ProcessId == process.Id && r.State == TcpState.Listen && IPAddress.IsLoopback(r.LocalEndPoint.Address));
+                TranslationsManager.Connect("localhost:" + tcpRow?.LocalEndPoint.Port.ToString());
+            } catch (Exception e)
+            {
+                Console.WriteLine("Error connecting to Power BI Desktop");
+                Console.WriteLine(e.Message);
+                Environment.Exit(1);
+            }
 
-            var process = Process.GetProcessesByName("msmdsrv")[0];
-            var tcpTable = ManagedIpHelper.GetExtendedTcpTable();
-            var tcpRow = tcpTable.SingleOrDefault((r) => r.ProcessId == process.Id && r.State == TcpState.Listen && IPAddress.IsLoopback(r.LocalEndPoint.Address));
-            TranslationsManager.Connect("localhost:" + tcpRow?.LocalEndPoint.Port.ToString());
             model = TranslationsManager.model;
 
             if (export)
@@ -68,109 +77,225 @@ namespace TranslationsBuilderConsole
 
             if (import)
             {
-
+                Import(fileName, directory, culture, pbixFile);
                 Environment.Exit(0);
             }
 
             ShowHelp(p);
             Environment.Exit(0);
+        }
 
+        static void Import(string fileName, string directory, string defaultCulture, string pbixFile)
+        {
+            var filePaths = Directory.GetFiles(directory, String.Format("{0}.*.resx", fileName));
+            foreach (var filePath in filePaths)
+            {
+                var cultureName = filePath.Split('.')[1];
+                if (cultureName == defaultCulture)
+                {
+                    continue;
+                }
+                if (!model.Cultures.Contains(cultureName))
+                {
+                    model.Cultures.Add(new Culture { Name = cultureName });
+                    model.SaveChanges();
+                }
+                var reader = new ResXResourceReader(filePath);
+                foreach (DictionaryEntry resource in reader)
+                {
+                    var name = ((string)resource.Key).Split('.');
+                    var value = (string)resource.Value;
+                    if (String.IsNullOrEmpty(value))
+                    {
+                        continue;
+                    }
+                    var table = model.Tables.FindByLineageTag(name[0]);
+                    if (table == null)
+                    {
+                        continue;
+                    }
+                    switch (name[1])
+                    {
+                        case "caption":
+                            model.Cultures[cultureName].ObjectTranslations.SetTranslation(table, TranslatedProperty.Caption, value);
+                            break;
+                        case "description":
+                            model.Cultures[cultureName].ObjectTranslations.SetTranslation(table, TranslatedProperty.Description, value);
+                            break;
+                        case "column":
+                            var column = table.Columns.FindByLineageTag(name[2]);
+                            if (column == null)
+                            {
+                                continue;
+                            }
+                            switch (name[3])
+                            {
+                                case "caption":
+                                    model.Cultures[cultureName].ObjectTranslations.SetTranslation(column, TranslatedProperty.Caption, value);
+                                    break;
+                                case "description":
+                                    model.Cultures[cultureName].ObjectTranslations.SetTranslation(column, TranslatedProperty.Description, value);
+                                    break;
+                                case "displayFolder":
+                                    UpdateDisplayFolderForTable(table, column.DisplayFolder, cultureName, value);
+                                    break;
+                            }
+                            break;
+                        case "measure":
+                            var measure = table.Measures.FindByLineageTag(name[2]);
+                            if (measure == null)
+                            {
+                                continue;
+                            }
+                            switch (name[3])
+                            {
+                                case "caption":
+                                    model.Cultures[cultureName].ObjectTranslations.SetTranslation(measure, TranslatedProperty.Caption, value);
+                                    break;
+                                case "description":
+                                    model.Cultures[cultureName].ObjectTranslations.SetTranslation(measure, TranslatedProperty.Description, value);
+                                    break;
+                                case "displayFolder":
+                                    UpdateDisplayFolderForTable(table, measure.DisplayFolder, cultureName, value);
+                                    break;
+                            }
+                            break;
+                        case "hierarchy":
+                            var hierarchy = table.Hierarchies.FindByLineageTag(name[2]);
+                            if (hierarchy == null)
+                            {
+                                continue;
+                            }
+                            switch (name[3])
+                            {
+                                case "caption":
+                                    model.Cultures[cultureName].ObjectTranslations.SetTranslation(hierarchy, TranslatedProperty.Caption, value);
+                                    break;
+                                case "description":
+                                    model.Cultures[cultureName].ObjectTranslations.SetTranslation(hierarchy, TranslatedProperty.Description, value);
+                                    break;
+                                case "displayFolder":
+                                    UpdateDisplayFolderForTable(table, hierarchy.DisplayFolder, cultureName, value);
+                                    break;
+                                case "level":
+                                    var level = hierarchy.Levels.FindByLineageTag(name[4]);
+                                    if (level == null)
+                                    {
+                                        continue;
+                                    }
+                                    model.Cultures[cultureName].ObjectTranslations.SetTranslation(level, TranslatedProperty.Caption, value);
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                model.SaveChanges();
+            }
+            TranslationsManager.GenerateTranslatedLocalizedLabelsTable();
+        }
 
-
-            TranslationsManager.ImportTranslations(fileName);
-
-            // Assume Power BI Desktop saves changes and closes
+        static void UpdateDisplayFolderForTable(Table table, string folderName, string targetCulure, string value)
+        {
+            foreach (Column column in table.Columns)
+            {
+                if (column.DisplayFolder.Equals(folderName))
+                {
+                    model.Cultures[targetCulure].ObjectTranslations.SetTranslation(column, TranslatedProperty.DisplayFolder, value);
+                }
+            }
+            foreach (Measure measure in table.Measures)
+            {
+                if (measure.DisplayFolder.Equals(folderName))
+                {
+                    model.Cultures[targetCulure].ObjectTranslations.SetTranslation(measure, TranslatedProperty.DisplayFolder, value);
+                }
+            }
+            foreach (Hierarchy hierarchy in table.Hierarchies)
+            {
+                if (hierarchy.DisplayFolder.Equals(folderName))
+                {
+                    model.Cultures[targetCulure].ObjectTranslations.SetTranslation(hierarchy, TranslatedProperty.DisplayFolder, value);
+                }
+            }
         }
 
         static void ExportResX(string fileName, string directory, string cultures, string pbixFile)
         {
             var cultureNames = cultures.Split(',');
 
-            try
-            {
-                var defaultCulture = model.Cultures[model.Culture];
+            var defaultCulture = model.Cultures[model.Culture];
 
-                foreach (var cultureName in cultureNames)
+            foreach (var cultureName in cultureNames)
+            {
+                var writer = new ResXResourceWriter(Path.Combine(directory, String.Format("{0}.{1}.{2}", fileName, cultureName, "resx")));
+                List<ResourceRow> resources = new List<ResourceRow>();
+
+                var targetCulture = model.Cultures.Find(cultureName);
+                var blanks = false;
+                if (targetCulture == null)
                 {
-                    var writer = new ResXResourceWriter(Path.Combine(directory, String.Format("{0}.{1}.{2}", fileName, cultureName, "resx")));
-                    List<ResourceRow> resources = new List<ResourceRow>();
+                    targetCulture = defaultCulture;
+                    blanks = true;
+                } 
+                var useDefault = defaultCulture.Name == targetCulture.Name;
 
-                    var targetCulture = model.Cultures.Find(cultureName);
-                    var blanks = false;
-                    if (targetCulture == null)
+                foreach (Table table in model.Tables)
+                {
+                    List<string> displayFoldersForTable = new List<string>();
+
+                    string tableName = table.Name.ToLower();
+                    if ((!table.IsHidden && !tableName.Contains("translated") && !tableName.Contains("translations")) || table.Name.Equals(TranslationsManager.LocalizedLabelsTableName))
                     {
-                        targetCulture = defaultCulture;
-                        blanks = true;
-                    } 
-                    var useDefault = defaultCulture.Name == targetCulture.Name;
-
-                    foreach (Table table in model.Tables)
-                    {
-                        List<string> displayFoldersForTable = new List<string>();
-
-                        string tableName = table.Name.ToLower();
-                        if ((!table.IsHidden && !tableName.Contains("translated") && !tableName.Contains("translations")) || table.Name.Equals(TranslationsManager.LocalizedLabelsTableName))
+                        if (!table.Name.Equals(TranslationsManager.LocalizedLabelsTableName))
                         {
-                            if (!table.Name.Equals(TranslationsManager.LocalizedLabelsTableName))
-                            {
-                                resources.AddRange(GetTableRows(table, targetCulture, useDefault));
-                            }
-
-                            foreach (Column column in table.Columns)
-                            {
-                                if (!column.IsHidden && !column.Name.ToLower().Contains("translation") && !table.Name.Equals(TranslationsManager.LocalizedLabelsTableName) && column.Name != table.Name)
-                                {
-                                    resources.AddRange(GetColumnRows(table, column, targetCulture, displayFoldersForTable, useDefault));
-                                }
-                            }
-                                
-                            foreach (Measure measure in table.Measures)
-                            {
-                                if (!measure.IsHidden || table.Name.Equals(TranslationsManager.LocalizedLabelsTableName))
-                                {
-                                    resources.AddRange(GetMeasureRows(table, measure, targetCulture, displayFoldersForTable, useDefault));
-                                }
-                            }
-                                
-                            foreach (Hierarchy hierarchy in table.Hierarchies)
-                            {
-                                if (!hierarchy.IsHidden)
-                                {
-                                    resources.AddRange(GetHierarchyRows(table, hierarchy, targetCulture, displayFoldersForTable, useDefault));
-                                }
-                            }
-
+                            resources.AddRange(GetTableRows(table, targetCulture, useDefault));
                         }
-                    }
 
-                    foreach (var resource in resources)
-                    {
-                        ResXDataNode resourceNode = null;
-                        if (blanks)
+                        foreach (Column column in table.Columns)
                         {
-                            resourceNode = new ResXDataNode(resource.Id, "");
-                        } 
-                        else
-                        {
-                            resourceNode = new ResXDataNode(resource.Id, resource.Value);
+                            if (!column.IsHidden && !column.Name.ToLower().Contains("translation") && !table.Name.Equals(TranslationsManager.LocalizedLabelsTableName) && column.Name != table.Name)
+                            {
+                                resources.AddRange(GetColumnRows(table, column, targetCulture, displayFoldersForTable, useDefault));
+                            }
                         }
-                        resourceNode.Comment = resource.Comment;
-                        writer.AddResource(resourceNode);
-                    }
+                                
+                        foreach (Measure measure in table.Measures)
+                        {
+                            if (!measure.IsHidden || table.Name.Equals(TranslationsManager.LocalizedLabelsTableName))
+                            {
+                                resources.AddRange(GetMeasureRows(table, measure, targetCulture, displayFoldersForTable, useDefault));
+                            }
+                        }
+                                
+                        foreach (Hierarchy hierarchy in table.Hierarchies)
+                        {
+                            if (!hierarchy.IsHidden)
+                            {
+                                resources.AddRange(GetHierarchyRows(table, hierarchy, targetCulture, displayFoldersForTable, useDefault));
+                            }
+                        }
 
-                    writer.Close();
+                    }
                 }
-            } catch (Exception ex)
-            {
 
+                foreach (var resource in resources)
+                {
+                    ResXDataNode resourceNode = null;
+                    if (blanks)
+                    {
+                        resourceNode = new ResXDataNode(resource.Id, "");
+                    } 
+                    else
+                    {
+                        resourceNode = new ResXDataNode(resource.Id, resource.Value);
+                    }
+                    resourceNode.Comment = resource.Comment;
+                    writer.AddResource(resourceNode);
+                }
+
+                writer.Close();
             }
         }
-
-        static void Import()
-        {
-
-        }
-
 
         static List<ResourceRow> GetTableRows(Table table, Culture culture, bool useDefault)
         {
@@ -180,7 +305,7 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= table.Name;
             }
-            rows.Add(new ResourceRow(table.LineageTag, caption, String.Format("table [{0}]", table.Name)));
+            rows.Add(new ResourceRow(String.Format("{0}.caption", table.LineageTag), caption, String.Format("table [{0}]", table.Name)));
 
             if (!string.IsNullOrEmpty(table.Description))
             {
@@ -189,7 +314,7 @@ namespace TranslationsBuilderConsole
                 {
                     description ??= table.Description;
                 }
-                rows.Add(new ResourceRow(String.Format("[{0}]-description", table.Name), description, String.Format("table [{0}]", table.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.description", table.LineageTag), description, String.Format("table [{0}]", table.Name)));
             }
 
             return rows;
@@ -204,17 +329,17 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= column.Name;
             }
-            rows.Add(new ResourceRow(column.LineageTag, caption, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
+            rows.Add(new ResourceRow(String.Format("{0}.column.{1}.caption", table.LineageTag, column.LineageTag), caption, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
 
             if (!string.IsNullOrEmpty(column.DisplayFolder) && !displayFoldersForTable.Contains(column.DisplayFolder))
             {
-                rows.Add(new ResourceRow(String.Format("[{0}]-displayFolder", column.LineageTag), culture.ObjectTranslations[column, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.column.{1}.displayFolder", table.LineageTag, column.LineageTag), culture.ObjectTranslations[column, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
                 displayFoldersForTable.Add(column.DisplayFolder);
             }
 
             if (!string.IsNullOrEmpty(column.Description))
             {
-                rows.Add(new ResourceRow(String.Format("[{0}]-description", column.Name), culture.ObjectTranslations[column, TranslatedProperty.Description]?.Value, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.column.{1}.description", table.LineageTag, column.LineageTag), culture.ObjectTranslations[column, TranslatedProperty.Description]?.Value, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
             }
 
             return rows;
@@ -229,17 +354,17 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= measure.Name;
             }
-            rows.Add(new ResourceRow(measure.LineageTag, caption, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
+            rows.Add(new ResourceRow(String.Format("{0}.measure.{1}.caption", table.LineageTag, measure.LineageTag), caption, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
 
             if (!string.IsNullOrEmpty(measure.DisplayFolder) && !displayFoldersForTable.Contains(measure.DisplayFolder))
             {
-                rows.Add(new ResourceRow(String.Format("[{0}]-displayFolder", measure.LineageTag), culture.ObjectTranslations[measure, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.measure.{1}.displayFolder", table.LineageTag, measure.LineageTag), culture.ObjectTranslations[measure, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
                 displayFoldersForTable.Add(measure.DisplayFolder);
             }
 
             if (!string.IsNullOrEmpty(measure.Description))
             {
-                rows.Add(new ResourceRow(String.Format("[{0}]-description", measure.Name), culture.ObjectTranslations[measure, TranslatedProperty.Description]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.measure.{1}.description", table.LineageTag, measure.LineageTag), culture.ObjectTranslations[measure, TranslatedProperty.Description]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
             }
 
             return rows;
@@ -254,11 +379,11 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= hierarchy.Name;
             }
-            rows.Add(new ResourceRow(hierarchy.LineageTag, caption, String.Format("table [{0}] hierarchy [{1}]", table.Name, hierarchy.Name)));
+            rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.caption", table.LineageTag, hierarchy.LineageTag), caption, String.Format("table [{0}] hierarchy [{1}]", table.Name, hierarchy.Name)));
 
             if (!string.IsNullOrEmpty(hierarchy.DisplayFolder) && !displayFoldersForTable.Contains(hierarchy.DisplayFolder))
             {
-                rows.Add(new ResourceRow(String.Format("[{0}]-displayFolder", hierarchy.LineageTag), culture.ObjectTranslations[hierarchy, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] hierarchy [{1}]", table.Name, hierarchy.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.displayFolder", table.LineageTag, hierarchy.LineageTag), culture.ObjectTranslations[hierarchy, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] hierarchy [{1}]", table.Name, hierarchy.Name)));
             }
 
             foreach (Level hierarchyLevel in hierarchy.Levels)
@@ -268,13 +393,13 @@ namespace TranslationsBuilderConsole
                 {
                     hierarchyLevelCaption ??= hierarchyLevel.Name;
                 }
-                rows.Add(new ResourceRow(String.Format("[{0}]-hierarchyLevel", hierarchyLevel.Name), hierarchyLevelCaption, String.Format("table [{0}] hierarchyLevel [{1}]", table.Name, hierarchyLevel.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.level.{2}", table.LineageTag, hierarchy.LineageTag, hierarchyLevel.LineageTag), hierarchyLevelCaption, String.Format("table [{0}] hierarchyLevel [{1}]", table.Name, hierarchyLevel.Name)));
             }
 
 
             if (!string.IsNullOrEmpty(hierarchy.Description))
             {
-                rows.Add(new ResourceRow(String.Format("[{0}]-description", hierarchy.Name), culture.ObjectTranslations[hierarchy, TranslatedProperty.Description]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, hierarchy.Name)));
+                rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.description", table.LineageTag, hierarchy.LineageTag), culture.ObjectTranslations[hierarchy, TranslatedProperty.Description]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, hierarchy.Name)));
             }
 
             return rows;
