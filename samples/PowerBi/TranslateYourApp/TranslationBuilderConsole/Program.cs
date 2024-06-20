@@ -17,6 +17,17 @@ namespace TranslationsBuilderConsole
 {
     internal class Program
     {
+        const string IMPORT = "import";
+        const string EXPORT = "export";
+        const string CAPTION = "caption";
+        const string DESCRIPTION = "description";
+        const string TABLE = "table";
+        const string COLUMN = "column";
+        const string DISPLAYFOLDER = "displayFolder";
+        const string MEASURE = "measure";
+        const string HIERARCHY = "hierarchy";
+        const string LEVEL = "level";
+
         static Model model;
 
         static void Main(string[] args)
@@ -153,13 +164,13 @@ namespace TranslationsBuilderConsole
                     }
                     switch (name[1])
                     {
-                        case "caption":
+                        case CAPTION:
                             model.Cultures[cultureName].ObjectTranslations.SetTranslation(table, TranslatedProperty.Caption, value);
                             break;
-                        case "description":
+                        case DESCRIPTION:
                             model.Cultures[cultureName].ObjectTranslations.SetTranslation(table, TranslatedProperty.Description, value);
                             break;
-                        case "column":
+                        case COLUMN:
                             var column = table.Columns.FindByLineageTag(name[2]);
                             if (column == null)
                             {
@@ -167,18 +178,18 @@ namespace TranslationsBuilderConsole
                             }
                             switch (name[3])
                             {
-                                case "caption":
+                                case CAPTION:
                                     model.Cultures[cultureName].ObjectTranslations.SetTranslation(column, TranslatedProperty.Caption, value);
                                     break;
-                                case "description":
+                                case DESCRIPTION:
                                     model.Cultures[cultureName].ObjectTranslations.SetTranslation(column, TranslatedProperty.Description, value);
                                     break;
-                                case "displayFolder":
+                                case DISPLAYFOLDER:
                                     UpdateDisplayFolderForTable(table, column.DisplayFolder, cultureName, value);
                                     break;
                             }
                             break;
-                        case "measure":
+                        case MEASURE:
                             var measure = table.Measures.FindByLineageTag(name[2]);
                             if (measure == null)
                             {
@@ -186,18 +197,18 @@ namespace TranslationsBuilderConsole
                             }
                             switch (name[3])
                             {
-                                case "caption":
+                                case CAPTION:
                                     model.Cultures[cultureName].ObjectTranslations.SetTranslation(measure, TranslatedProperty.Caption, value);
                                     break;
-                                case "description":
+                                case DESCRIPTION:
                                     model.Cultures[cultureName].ObjectTranslations.SetTranslation(measure, TranslatedProperty.Description, value);
                                     break;
-                                case "displayFolder":
+                                case DISPLAYFOLDER:
                                     UpdateDisplayFolderForTable(table, measure.DisplayFolder, cultureName, value);
                                     break;
                             }
                             break;
-                        case "hierarchy":
+                        case HIERARCHY:
                             var hierarchy = table.Hierarchies.FindByLineageTag(name[2]);
                             if (hierarchy == null)
                             {
@@ -205,16 +216,16 @@ namespace TranslationsBuilderConsole
                             }
                             switch (name[3])
                             {
-                                case "caption":
+                                case CAPTION:
                                     model.Cultures[cultureName].ObjectTranslations.SetTranslation(hierarchy, TranslatedProperty.Caption, value);
                                     break;
-                                case "description":
+                                case DESCRIPTION:
                                     model.Cultures[cultureName].ObjectTranslations.SetTranslation(hierarchy, TranslatedProperty.Description, value);
                                     break;
-                                case "displayFolder":
+                                case DISPLAYFOLDER:
                                     UpdateDisplayFolderForTable(table, hierarchy.DisplayFolder, cultureName, value);
                                     break;
-                                case "level":
+                                case LEVEL:
                                     var level = hierarchy.Levels.FindByLineageTag(name[4]);
                                     if (level == null)
                                     {
