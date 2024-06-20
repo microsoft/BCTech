@@ -75,6 +75,7 @@ namespace TranslationsBuilderConsole
             try
             {
                 // Assume Power BI Desktop is running
+                Console.WriteLine("Connecting to Power BI Desktop...");
                 var process = Process.GetProcessesByName("msmdsrv")[0];
                 var tcpTable = ManagedIpHelper.GetExtendedTcpTable();
                 var tcpRow = tcpTable.SingleOrDefault((r) => r.ProcessId == process.Id && r.State == TcpState.Listen && IPAddress.IsLoopback(r.LocalEndPoint.Address));
@@ -94,6 +95,7 @@ namespace TranslationsBuilderConsole
                     switch (operation)
                     {
                         case IMPORT:
+                            Console.WriteLine("Importing csv translations...");
                             if (String.IsNullOrEmpty(filePath)) { Console.WriteLine("Missing filePath."); }
                             TranslationsManager.ImportTranslations(filePath);
                             Environment.Exit(0);
@@ -109,14 +111,15 @@ namespace TranslationsBuilderConsole
                     switch(operation)
                     {
                         case IMPORT:
-
-                            if (String.IsNullOrEmpty(cultures)) { Console.WriteLine("Missing cultures."); }
-                            ExportResX(filePrefix, directory, cultures, pbixFile);
+                            Console.WriteLine("Importing resx translations...");
+                            if (String.IsNullOrEmpty(defaultCulture)) { Console.WriteLine("Missing defaultCulture."); }
+                            ImportResX(filePrefix, directory, defaultCulture, pbixFile);
                             Environment.Exit(0);
                             break;
                         case EXPORT:
-                            if (String.IsNullOrEmpty(defaultCulture)) { Console.WriteLine("Missing defaultCulture."); }
-                            Import(filePrefix, directory, defaultCulture, pbixFile);
+                            Console.WriteLine("Exporting resx translations...");
+                            if (String.IsNullOrEmpty(cultures)) { Console.WriteLine("Missing cultures."); }
+                            ExportResX(filePrefix, directory, cultures, pbixFile);
                             Environment.Exit(0);
                             break;
                         default:
@@ -133,7 +136,7 @@ namespace TranslationsBuilderConsole
             Environment.Exit(0);
         }
 
-        static void Import(string fileName, string directory, string defaultCulture, string pbixFile)
+        static void ImportResX(string fileName, string directory, string defaultCulture, string pbixFile)
         {
             var filePaths = Directory.GetFiles(directory, String.Format("{0}.*.resx", fileName));
             foreach (var filePath in filePaths)
@@ -387,7 +390,7 @@ namespace TranslationsBuilderConsole
 
             if (!string.IsNullOrEmpty(column.Description))
             {
-                rows.Add(new ResourceRow($"{table.LineageTag}.column.{column.LineageTag}.description", culture.ObjectTranslations[column, TranslatedProperty.Description]?.Value, $"table [{table.Name}] column [{column.Name}]"));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{COLUMN}.{column.LineageTag}.{DESCRIPTION}", culture.ObjectTranslations[column, TranslatedProperty.Description]?.Value, $"{TABLE} [{table.Name}] {COLUMN} [{column.Name}]"));
             }
 
             return rows;
@@ -402,17 +405,17 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= measure.Name;
             }
-            rows.Add(new ResourceRow($"{table.LineageTag}.measure.{measure.LineageTag}.caption", caption, $"table [{table.Name}] measure [{measure.Name}]"));
+            rows.Add(new ResourceRow($"{table.LineageTag}.{MEASURE}.{measure.LineageTag}.{CAPTION}", caption, $"{TABLE} [{table.Name}] {MEASURE} [{measure.Name}]"));
 
             if (!string.IsNullOrEmpty(measure.DisplayFolder) && !displayFoldersForTable.Contains(measure.DisplayFolder))
             {
-                rows.Add(new ResourceRow($"{table.LineageTag}.measure.{measure.LineageTag}.displayFolder", culture.ObjectTranslations[measure, TranslatedProperty.DisplayFolder]?.Value, $"table [{table.Name}] measure [{measure.Name}]"));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{MEASURE}.{measure.LineageTag}.{DISPLAYFOLDER}", culture.ObjectTranslations[measure, TranslatedProperty.DisplayFolder]?.Value, $"{TABLE} [{table.Name}] {MEASURE} [{measure.Name}]"));
                 displayFoldersForTable.Add(measure.DisplayFolder);
             }
 
             if (!string.IsNullOrEmpty(measure.Description))
             {
-                rows.Add(new ResourceRow($"{table.LineageTag}.measure.{measure.LineageTag}.description", culture.ObjectTranslations[measure, TranslatedProperty.Description]?.Value, $"table [{table.Name}] measure [{measure.Name}]"));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{MEASURE}.{measure.LineageTag}.{DESCRIPTION}", culture.ObjectTranslations[measure, TranslatedProperty.Description]?.Value, $"{TABLE} [{table.Name}] {MEASURE} [{measure.Name}]"));
             }
 
             return rows;
@@ -427,11 +430,11 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= hierarchy.Name;
             }
-            rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.caption", caption, $"table [{table.Name}] hierarchy [{hierarchy.Name}]"));
+            rows.Add(new ResourceRow($"{table.LineageTag}.{HIERARCHY}.{hierarchy.LineageTag}.{CAPTION}", caption, $"{TABLE} [{table.Name}] {HIERARCHY} [{hierarchy.Name}]"));
 
             if (!string.IsNullOrEmpty(hierarchy.DisplayFolder) && !displayFoldersForTable.Contains(hierarchy.DisplayFolder))
             {
-                rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.displayFolder", culture.ObjectTranslations[hierarchy, TranslatedProperty.DisplayFolder]?.Value, $"table [{table.Name}] hierarchy [{hierarchy.Name}]"));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{HIERARCHY}.{hierarchy.LineageTag}.{DISPLAYFOLDER}", culture.ObjectTranslations[hierarchy, TranslatedProperty.DisplayFolder]?.Value, $"{TABLE} [{table.Name}] {HIERARCHY} [{hierarchy.Name}]"));
             }
 
             foreach (Level hierarchyLevel in hierarchy.Levels)
@@ -441,13 +444,13 @@ namespace TranslationsBuilderConsole
                 {
                     hierarchyLevelCaption ??= hierarchyLevel.Name;
                 }
-                rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.level.{hierarchyLevel.LineageTag}", hierarchyLevelCaption, $"table [{table.Name}] hierarchyLevel [{hierarchyLevel.Name}]"));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{HIERARCHY}.{hierarchy.LineageTag}.{LEVEL}.{hierarchyLevel.LineageTag}", hierarchyLevelCaption, $"{TABLE} [{table.Name}] {HIERARCHY} [{hierarchy.Name}] {LEVEL} [{hierarchyLevel.Name}]"));
             }
 
 
             if (!string.IsNullOrEmpty(hierarchy.Description))
             {
-                rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.description", culture.ObjectTranslations[hierarchy, TranslatedProperty.Description]?.Value, $"table [{table.Name}] measure [{hierarchy.Name}]"));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{HIERARCHY}.{hierarchy.LineageTag}.{DESCRIPTION}", culture.ObjectTranslations[hierarchy, TranslatedProperty.Description]?.Value, $"{TABLE} [{table.Name}] {HIERARCHY} [{hierarchy.Name}]"));
             }
 
             return rows;
@@ -460,6 +463,9 @@ namespace TranslationsBuilderConsole
             Console.WriteLine("Options:");
             p.WriteOptionDescriptions(Console.Out);
             Console.WriteLine("-------------------");
+            Console.WriteLine("Examples:");
+            Console.WriteLine("\t--operation export --fileFormat resx --directory \"<path>\" --filePrefix \"FinanceApp\" --cultures \"en-US,fr-FR,da-DK\"");
+            Console.WriteLine("\t--operation import --fileFormat resx --directory \"<path>\" --filePrefix \"FinanceApp\" --defaultCulture \"en-US\"");
         }
 
         [Serializable()]
