@@ -353,7 +353,7 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= table.Name;
             }
-            rows.Add(new ResourceRow(String.Format("{0}.caption", table.LineageTag), caption, String.Format("table [{0}]", table.Name)));
+            rows.Add(new ResourceRow($"{table.LineageTag}.{CAPTION}", caption, $"table [table.Name]"));
 
             if (!string.IsNullOrEmpty(table.Description))
             {
@@ -362,7 +362,7 @@ namespace TranslationsBuilderConsole
                 {
                     description ??= table.Description;
                 }
-                rows.Add(new ResourceRow(String.Format("{0}.description", table.LineageTag), description, String.Format("table [{0}]", table.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{DESCRIPTION}", description, $"table [{table.Name}]"));
             }
 
             return rows;
@@ -377,17 +377,17 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= column.Name;
             }
-            rows.Add(new ResourceRow(String.Format("{0}.column.{1}.caption", table.LineageTag, column.LineageTag), caption, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
+            rows.Add(new ResourceRow($"{table.LineageTag}.{COLUMN}.{column.LineageTag}.{CAPTION}", caption, $"{TABLE} [{table.Name}] {COLUMN} [{column.Name}]"));
 
             if (!string.IsNullOrEmpty(column.DisplayFolder) && !displayFoldersForTable.Contains(column.DisplayFolder))
             {
-                rows.Add(new ResourceRow(String.Format("{0}.column.{1}.displayFolder", table.LineageTag, column.LineageTag), culture.ObjectTranslations[column, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.{COLUMN}.{column.LineageTag}.{DISPLAYFOLDER}", culture.ObjectTranslations[column, TranslatedProperty.DisplayFolder]?.Value, $"{TABLE} [{table.Name}] {COLUMN} [{column.Name}]"));
                 displayFoldersForTable.Add(column.DisplayFolder);
             }
 
             if (!string.IsNullOrEmpty(column.Description))
             {
-                rows.Add(new ResourceRow(String.Format("{0}.column.{1}.description", table.LineageTag, column.LineageTag), culture.ObjectTranslations[column, TranslatedProperty.Description]?.Value, String.Format("table [{0}] column [{1}]", table.Name, column.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.column.{column.LineageTag}.description", culture.ObjectTranslations[column, TranslatedProperty.Description]?.Value, $"table [{table.Name}] column [{column.Name}]"));
             }
 
             return rows;
@@ -402,17 +402,17 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= measure.Name;
             }
-            rows.Add(new ResourceRow(String.Format("{0}.measure.{1}.caption", table.LineageTag, measure.LineageTag), caption, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
+            rows.Add(new ResourceRow($"{table.LineageTag}.measure.{measure.LineageTag}.caption", caption, $"table [{table.Name}] measure [{measure.Name}]"));
 
             if (!string.IsNullOrEmpty(measure.DisplayFolder) && !displayFoldersForTable.Contains(measure.DisplayFolder))
             {
-                rows.Add(new ResourceRow(String.Format("{0}.measure.{1}.displayFolder", table.LineageTag, measure.LineageTag), culture.ObjectTranslations[measure, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.measure.{measure.LineageTag}.displayFolder", culture.ObjectTranslations[measure, TranslatedProperty.DisplayFolder]?.Value, $"table [{table.Name}] measure [{measure.Name}]"));
                 displayFoldersForTable.Add(measure.DisplayFolder);
             }
 
             if (!string.IsNullOrEmpty(measure.Description))
             {
-                rows.Add(new ResourceRow(String.Format("{0}.measure.{1}.description", table.LineageTag, measure.LineageTag), culture.ObjectTranslations[measure, TranslatedProperty.Description]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, measure.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.measure.{measure.LineageTag}.description", culture.ObjectTranslations[measure, TranslatedProperty.Description]?.Value, $"table [{table.Name}] measure [{measure.Name}]"));
             }
 
             return rows;
@@ -427,11 +427,11 @@ namespace TranslationsBuilderConsole
             {
                 caption ??= hierarchy.Name;
             }
-            rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.caption", table.LineageTag, hierarchy.LineageTag), caption, String.Format("table [{0}] hierarchy [{1}]", table.Name, hierarchy.Name)));
+            rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.caption", caption, $"table [{table.Name}] hierarchy [{hierarchy.Name}]"));
 
             if (!string.IsNullOrEmpty(hierarchy.DisplayFolder) && !displayFoldersForTable.Contains(hierarchy.DisplayFolder))
             {
-                rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.displayFolder", table.LineageTag, hierarchy.LineageTag), culture.ObjectTranslations[hierarchy, TranslatedProperty.DisplayFolder]?.Value, String.Format("table [{0}] hierarchy [{1}]", table.Name, hierarchy.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.displayFolder", culture.ObjectTranslations[hierarchy, TranslatedProperty.DisplayFolder]?.Value, $"table [{table.Name}] hierarchy [{hierarchy.Name}]"));
             }
 
             foreach (Level hierarchyLevel in hierarchy.Levels)
@@ -441,13 +441,13 @@ namespace TranslationsBuilderConsole
                 {
                     hierarchyLevelCaption ??= hierarchyLevel.Name;
                 }
-                rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.level.{2}", table.LineageTag, hierarchy.LineageTag, hierarchyLevel.LineageTag), hierarchyLevelCaption, String.Format("table [{0}] hierarchyLevel [{1}]", table.Name, hierarchyLevel.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.level.{hierarchyLevel.LineageTag}", hierarchyLevelCaption, $"table [{table.Name}] hierarchyLevel [{hierarchyLevel.Name}]"));
             }
 
 
             if (!string.IsNullOrEmpty(hierarchy.Description))
             {
-                rows.Add(new ResourceRow(String.Format("{0}.hierarchy.{1}.description", table.LineageTag, hierarchy.LineageTag), culture.ObjectTranslations[hierarchy, TranslatedProperty.Description]?.Value, String.Format("table [{0}] measure [{1}]", table.Name, hierarchy.Name)));
+                rows.Add(new ResourceRow($"{table.LineageTag}.hierarchy.{hierarchy.LineageTag}.description", culture.ObjectTranslations[hierarchy, TranslatedProperty.Description]?.Value, $"table [{table.Name}] measure [{hierarchy.Name}]"));
             }
 
             return rows;
