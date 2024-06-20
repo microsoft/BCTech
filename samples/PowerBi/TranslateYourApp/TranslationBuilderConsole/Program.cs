@@ -22,24 +22,26 @@ namespace TranslationsBuilderConsole
         static void Main(string[] args)
         {
             // http://www.ndesk.org/doc/ndesk-options/NDesk.Options/OptionSet.html
-            bool export = false;
-            bool import = false;
+            string operation = "";
             string fileFormat = "";
-            string fileName = "";
+            string filePath = "";
+            string filePrefix = "";
+            string cultures = "";
+            string defaultCulture = "";
             string directory = "";
-            string culture = "";
             string pbixFile = "";
             bool showHelp = false;
 
             var p = new OptionSet() {
-                { "e|export", "export language", v => export = v != null },
-                { "i|import", "import language", v => import = v != null },
+                { "o|operation=", "operation(required) [export,import]", v => operation = v },
+                { "f|fileFormat=",  "file format(required) [csv,resx,json]", v => fileFormat = v },
                 { "h|help",  "show this message and exit", v => showHelp = v != null },
-                { "f|fileFormat=",  "file format (required)", v => fileFormat = v },
-                { "n|fileName=",  "file name (required)", v => fileName = v },
-                { "d|directory=", "directory (require)", v => directory = v },
-                { "c|culture=", "culture", v => culture = v },
-                { "v|pbixFile=",    "target PBIX file path (required)", v => pbixFile = v }
+                { "filePath=", "file to export/import", v => filePath = v },
+                { "filePrefix=",  "file prefix when exporting/importing", v => filePrefix = v },
+                { "directory=", "directory for exporting/importing", v => directory = v },
+                { "cultures=", "cultures to export", v => cultures = v },
+                { "defaultCulture=", "default culture when importing", v => defaultCulture = v },
+                { "pbixFile=", "target PBIX file path", v => pbixFile = v }
             };
 
             List<string> extra;
@@ -50,6 +52,12 @@ namespace TranslationsBuilderConsole
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("Try using --help' for more information.");
+                Environment.Exit(0);
+            }
+
+            if (showHelp)
+            {
+                ShowHelp(p);
                 Environment.Exit(0);
             }
 
@@ -64,21 +72,50 @@ namespace TranslationsBuilderConsole
             {
                 Console.WriteLine("Error connecting to Power BI Desktop");
                 Console.WriteLine(e.Message);
-                Environment.Exit(1);
+                Environment.Exit(0);
             }
 
             model = TranslationsManager.model;
 
-            if (export)
+            switch (fileFormat)
             {
-                ExportResX(fileName, directory, culture, pbixFile);
-                Environment.Exit(0);
-            }
+                case "csv":
+                    switch (operation)
+                    {
+                        case IMPORT:
+                            if (String.IsNullOrEmpty(filePath)) { Console.WriteLine("Missing filePath."); }
+                            TranslationsManager.ImportTranslations(filePath);
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Unsupported operation.");
+                            break;
+                    }
+                    break;
+                case "resx":
+                    if (String.IsNullOrEmpty(filePrefix)) { Console.WriteLine("Missing filePrefix."); }
+                    if (String.IsNullOrEmpty(directory)) { Console.WriteLine("Missing directory."); }
+                    switch(operation)
+                    {
+                        case IMPORT:
 
-            if (import)
-            {
-                Import(fileName, directory, culture, pbixFile);
-                Environment.Exit(0);
+                            if (String.IsNullOrEmpty(cultures)) { Console.WriteLine("Missing cultures."); }
+                            ExportResX(filePrefix, directory, cultures, pbixFile);
+                            Environment.Exit(0);
+                            break;
+                        case EXPORT:
+                            if (String.IsNullOrEmpty(defaultCulture)) { Console.WriteLine("Missing defaultCulture."); }
+                            Import(filePrefix, directory, defaultCulture, pbixFile);
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Unsupported operation.");
+                            break;
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Unsupported fileFormat.");
+                    break;
             }
 
             ShowHelp(p);
