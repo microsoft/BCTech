@@ -39,20 +39,22 @@ pageextension 50101 "Business Manager RC reports" extends "Business Manager Role
                 //     Image = NonStockItem;
                 //     RunObject = Query FixedAssetsAnalysis;
                 // }
-                // action("ProjectAnalysis")
-                // {
-                //     ApplicationArea = Basic, Suite;
-                //     Caption = 'Analyze Projects';
-                //     Image = NonStockItem;
-                //     RunObject = Query FixedAssetsAnalysis;
-                // }
-                // action("ServiceAnalysis")
-                // {
-                //     ApplicationArea = Basic, Suite;
-                //     Caption = 'Analyze Service management';
-                //     Image = NonStockItem;
-                //     RunObject = Query FixedAssetsAnalysis;
-                // }
+                action("ProjectAnalysis")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Analyze Projects';
+                    Image = Job;
+                    RunObject = Query ProjectsAnalysis;
+                    ToolTip = 'Analyze (group, summarize, pivot) your Project Ledger Entries with related Project master data such as Project Task, Resource, Item, and G/L Account.';
+                }
+                action("ServiceAnalysis")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Analyze Services';
+                    Image = ServiceAgreement;
+                    RunObject = Query FixedAssetsAnalysis;
+                    ToolTip = 'Analyze (group, summarize, pivot) your Service Ledger Entries with related Service master data such as Service Contract, Customer, Item, G/L Account, and Job.';
+                }
             }
         }
     }
