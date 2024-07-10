@@ -1,0 +1,44 @@
+{
+	"folders": [
+		{
+			"name": "Human Worker Efficiency Tracker - v1.1",
+			"path": "./../v1.1/HumanWorkerEfficencyTracker"
+		},
+		{
+			"name": "Demodata - v1.0",
+			"path": "./../v1.0/Demodata App"
+		}
+	],
+	"settings": {
+		"al.enableCodeAnalysis": true,
+		"al.codeAnalyzers": ["${CodeCop}", "${PerTenantExtensionCop}", "${UICop}", "${AppSourceCop}"],
+		"al.ruleSetPath": "./../../rulesets/demo.ruleset.json",
+		"al.backgroundCodeAnalysis": "Project",
+		"al.packageCachePath": [
+			"./../../.alpackages"
+		],
+
+		"launch": {
+			"version": "0.2.0",
+			"configurations": [
+				{
+					"name": "Your own server",
+					"request": "launch",
+					"type": "al",
+					"environmentType": "OnPrem",
+					"server": "http://localhost:48900",
+					"serverInstance": "Navision_Main",
+					"authentication": "Windows",
+					"startupObjectType": "Page",
+					"breakOnError": "All",
+					"launchBrowser": true,
+					"enableLongRunningSqlStatements": true,
+					"enableSqlInformationDebugger": true,
+					"tenant": "default",
+					"usePublicURLFromServer": false,
+				}
+			],
+			"compounds": []
+		}
+	}
+}
