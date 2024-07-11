@@ -1,0 +1,42 @@
+{
+    "id": "e19c720d-5ba5-4747-a56a-67ed46410f33",
+    "name": "Human Worker Efficiency Tracker - Demodata",
+    "publisher": "Microsoft",
+    "version": "1.0.0.0",
+    "brief": "A demo app for BC Techdays 2024",
+    "description": "The Human Worker Efficiency Tracker  - Demodata app is a demo app for BC Techdays 2024 to demonstrate the use of the MoveTo/MoveFrom properties in .al.",
+    "privacyStatement":  "",
+    "EULA":  "",
+    "help":  "",
+    "url":  "",
+    "logo":  "ExtensionLogo.png",
+    "dependencies": [
+        {
+            "id": "6b05135b-a955-449b-94cc-d1d5914a168b",
+            "name": "Human Worker Efficiency Tracker",
+            "publisher": "Microsoft",
+            "version": "1.0.0.0"
+        }
+    ],
+    "screenshots": [],
+    "platform": "25.0.0.0",
+    "application": "25.0.0.0",
+    "idRanges": [
+      {
+        "from": 50200,
+        "to": 50249
+      }
+    ],
+    "resourceExposurePolicy": {
+      "allowDebugging": true,
+      "allowDownloadingSource": true,
+      "includeSourceInSymbolFile": true
+    },
+    "runtime": "14.0",
+    "features": [
+      "NoImplicitWith",
+      "TranslationFile",
+      "GenerateCaptions",
+      "NoPromotedActionProperties"
+    ]
+  }

@@ -1,0 +1,6 @@
+{
+    "name": "Task Tracker",
+    "publisher": "Microsoft",
+    "version": "3.1.0.0",
+    "baselinePackageCachePath": "./../../.baselinepackagecache"
+}
