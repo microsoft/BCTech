@@ -138,7 +138,10 @@ namespace TranslationsBuilderConsole
 
         static void ImportResX(string fileName, string directory, string defaultCulture, string pbixFile)
         {
-            TranslationsManager.CreateLocalizedLabelsTable(false);
+            if (!TranslationsManager.DoesTableExistInModel(TranslationsManager.LocalizedLabelsTableName))
+            {
+                TranslationsManager.CreateLocalizedLabelsTable(false);
+            }
             var filePaths = Directory.GetFiles(directory, String.Format("{0}.*.resx", fileName));
             foreach (var filePath in filePaths)
             {
