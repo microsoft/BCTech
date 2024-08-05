@@ -201,7 +201,7 @@ before the WordDocManager class is called.
 
 Once you have moved the add-in to the cloud, you can test it
 independently of your extension by using a tool like
-[Postman](https://www.postman.com/).
+[Insomnia](https://insomnia.rest/), [Bruno](https://www.usebruno.com/)  or [Insomnium](https://github.com/ArchGPT/insomnium/releases/).
 
 ### Refactoring the AL code
 
@@ -308,5 +308,8 @@ Azure](https://azure.microsoft.com/en-us/services/cloud-services/)
 [Develop Azure Functions by using Visual Studio Code \| Microsoft
 Docs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp)
 
-[Postman \| The Collaboration Platform for API
-Development](https://www.postman.com/)
+[Insomnia](https://insomnia.rest/)
+
+[Bruno](https://www.usebruno.com/)
+
+[Insomnium](https://github.com/ArchGPT/insomnium/releases/)
