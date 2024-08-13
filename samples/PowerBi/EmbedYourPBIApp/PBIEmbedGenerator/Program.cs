@@ -154,7 +154,9 @@ namespace APIQueryGenerator
             }
             sb.AppendLine("");
 
-            sb.AppendLine("namespace " + alNamespace);
+            sb.AppendLine($"namespace {alNamespace};");
+            sb.AppendLine("");
+            sb.AppendLine($"using {rcExt.Attributes["rolecenternamespace"].Value};");
             sb.AppendLine("");
 
             sb.AppendLine("pageextension " + rcExt.Attributes["id"].Value + " \"" + rcExt.Attributes["name"].Value + "\" extends \"" + rcExt.Attributes["extends"].Value + "\"");
@@ -220,7 +222,7 @@ namespace APIQueryGenerator
             sb.AppendLine("");
 
             indents(sb, 4);
-            sb.AppendLine("action(" + action.Attributes["name"].Value + ")");
+            sb.AppendLine($"action(\"{action.Attributes["name"].Value}\")");
 
             indents(sb, 4);
             sb.AppendLine("{");
@@ -245,7 +247,6 @@ namespace APIQueryGenerator
 
             return sb.ToString();
         }
-
 
         public static string GeneratePBIEmbedPageCode(string alNamespace, XmlNode query, Version version)
         {
@@ -380,7 +381,7 @@ namespace APIQueryGenerator
 
             indentAppendLine(sb, 0, "// Auto-generated al file for PBI permissions " + permSet.Attributes["id"].Value);
             indentAppendLine(sb, 0, "");
-            indentAppendLine(sb, 0, "namespace " + alNamespace);
+            indentAppendLine(sb, 0, $"namespace {alNamespace};");
             indentAppendLine(sb, 0, "");
             indentAppendLine(sb, 0, "permissionset " + permSet.Attributes["id"].Value + " \"" + permSet.Attributes["name"].Value + "\"");
             indentAppendLine(sb, 0, "{");
@@ -390,8 +391,14 @@ namespace APIQueryGenerator
 
             foreach (XmlNode page in pages.SelectNodes("page"))
             {
-                indentAppendLine(sb, 2, "page \"" + page.Attributes["name"].Value + "\" = X,");
-            }
+                if (page.Attributes["name"].Value == pages.LastChild.Attributes["name"].Value)
+                {
+                    indentAppendLine(sb, 2, "page \"" + page.Attributes["name"].Value + "\" = X;");
+                } else
+                {
+                    indentAppendLine(sb, 2, "page \"" + page.Attributes["name"].Value + "\" = X,");
+                }
+            } 
 
             indentAppendLine(sb, 0, "}");
 

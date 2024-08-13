@@ -17,6 +17,8 @@ namespace PayloadGenerator
         string where { get; set; }
         string tooltip { get; set; }
 
+        string rolecenternamespace { get; set; }
+
         //id = "50140" 
         //name = "BusinessManagerRoleCenterExt" 
         //filename = "BusinessManagerRoleCenterExt.PageExtension" 
@@ -36,7 +38,8 @@ namespace PayloadGenerator
             string filename,
             string extends,
             string where,
-            string tooltip             
+            string tooltip,
+            string rolecenternamespace
         )
         {
             this.id = id;
@@ -45,6 +48,7 @@ namespace PayloadGenerator
             this.extends = extends;
             this.where = where;
             this.tooltip = tooltip;
+            this.rolecenternamespace = rolecenternamespace;
         }
 
 
@@ -56,7 +60,8 @@ namespace PayloadGenerator
                 new XAttribute("filename", filename),
                 new XAttribute("extends", extends),
                 new XAttribute("where", where),
-                new XAttribute("tooltip", tooltip)
+                new XAttribute("tooltip", tooltip),
+                new XAttribute("rolecenternamespace", rolecenternamespace)
             );
 
             foreach(ActionDefinition action in actions)
