@@ -312,7 +312,7 @@ namespace APIQueryGenerator
             sb.AppendLine("");
             sb.AppendLine("    var");
             sb.AppendLine("        ReportId: Guid;");
-            sb.AppendLine($"        ReportPageTok: Label '{query.Attributes["PBIReportPage"].Value}', Locked = true;");
+            sb.AppendLine("        ReportPage: Text;");
             sb.AppendLine("        ErrorNotificationMsg: Label 'An error occurred while loading Power BI. Your Power BI embedded content might not work. Here are the error details: \"%1: %2\"', Comment = '%1: a short error code. %2: a verbose error message in english';");
             sb.AppendLine("        PowerBIEmbedReportUrlTemplateTxt: Label 'https://app.powerbi.com/reportEmbed?reportId=%1', Locked = true;");
             sb.AppendLine("");
@@ -322,8 +322,8 @@ namespace APIQueryGenerator
             sb.AppendLine("    begin");
             sb.AppendLine("        PowerBIReportsSetup.EnsureUserAcceptedPowerBITerms();");
             sb.AppendLine("");
-            sb.AppendLine("        // Replace with your own report id");
-            sb.AppendLine($"        ReportId := PowerBIReportsSetup.GetReportIdAndEnsureSetup(CurrPage.Caption(), PowerBIReportsSetup.FieldNo(\"{query.Attributes["PBIReportIdFieldName"].Value}\"));");
+            sb.AppendLine("        // Replace with your own report id and page");
+            sb.AppendLine($"        PowerBIReportsSetup.GetReportIdAndEnsureSetup(PowerBIReportsSetup.FieldNo(\"{query.Attributes["PBIReportIdFieldName"].Value}\"), Enum::\"Embedded Report Type\"::\"{query.Attributes["PBIReportPage"].Value}\", ReportId, ReportPage);");
             sb.AppendLine("    end;");
             sb.AppendLine("");
             sb.AppendLine("    local procedure ShowErrorNotification(ErrorCategory: Text; ErrorMessage: Text)");
@@ -349,7 +349,7 @@ namespace APIQueryGenerator
             sb.AppendLine("        CurrPage.PowerBIAddin.EmbedPowerBIReport(");
             sb.AppendLine("            StrSubstNo(PowerBIEmbedReportUrlTemplateTxt, ReportId),");
             sb.AppendLine("            ReportId,");
-            sb.AppendLine("            ReportPageTok);");
+            sb.AppendLine("            ReportPage);");
             sb.AppendLine("    end;");
             sb.AppendLine("}");
 
