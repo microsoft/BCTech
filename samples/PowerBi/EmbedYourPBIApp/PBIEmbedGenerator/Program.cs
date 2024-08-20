@@ -319,11 +319,12 @@ namespace APIQueryGenerator
             sb.AppendLine("    trigger OnOpenPage()");
             sb.AppendLine("    var");
             sb.AppendLine("        PowerBIReportsSetup: Record \"PowerBI Reports Setup\";");
+            sb.AppendLine("        SetupHelper: Codeunit \"Setup Helper\";");
             sb.AppendLine("    begin");
-            sb.AppendLine("        PowerBIReportsSetup.EnsureUserAcceptedPowerBITerms();");
+            sb.AppendLine("        SetupHelper.EnsureUserAcceptedPowerBITerms();");
             sb.AppendLine("");
             sb.AppendLine("        // Replace with your own report id");
-            sb.AppendLine($"        ReportId := PowerBIReportsSetup.GetReportIdAndEnsureSetup(CurrPage.Caption(), PowerBIReportsSetup.FieldNo(\"{query.Attributes["PBIReportIdFieldName"].Value}\"));");
+            sb.AppendLine($"        ReportId := SetupHelper.GetReportIdAndEnsureSetup(CurrPage.Caption(), PowerBIReportsSetup.FieldNo(\"{query.Attributes["PBIReportIdFieldName"].Value}\"));");
             sb.AppendLine("    end;");
             sb.AppendLine("");
             sb.AppendLine("    local procedure ShowErrorNotification(ErrorCategory: Text; ErrorMessage: Text)");
