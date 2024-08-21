@@ -1,0 +1,34 @@
+{
+  "id": "a7ea6772-7ba7-4e10-9982-b24bc9426a8b",
+  "name": "Techdays 2024 - Order Copilot",
+  "publisher": "Microsoft",
+  "version": "1.0.0.0",
+  "brief": "Order Copilot",
+  "description": "Order Copilot",
+  "privacyStatement": "https://www.microsoft.com",
+  "EULA": "https://www.microsoft.com",
+  "help": "https://www.microsoft.com",
+  "url": "https://www.microsoft.com",
+  "contextSensitiveHelpUrl": "https://www.microsoft.com",
+  "logo": "ExtensionLogo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "24.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "13.0",
+  "features": [
+    "NoImplicitWith",
+    "TranslationFile"
+  ]
+}

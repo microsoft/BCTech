@@ -287,37 +287,7 @@ We need to set things up for our cookie jar project as follows:
     |API permissions     |Dynamics 365 Business Central<br>user_impersonation         |
 
 ### Get a refresh token
-Request a refresh token manually using a tool such as Postman or Fiddler, and store the token and client secret in Azure Key Vault.
-
-To use Postman to get a refresh token, follow these steps:
-
-1. Do a GET request.
-2. Use the following URL, but replace the tenant domain with our own: https://api.businesscentral.dynamics.com/v1.0<tenant domain\>/api/v1.0
-3. On the Authorization tab, fill in the following fields:
-
-    |Field  |Value  |
-    |---------|---------|
-    |Type     |OAuth 2.0         |
-    |Add authorization data to     |Request Headers         |
-
-4. Click **Get New Access Token**, and then fill in the following fields.
-
-    |Field  |Value  |
-    |---------|---------|
-    |Token Name     |Enter a name.         |
-    |Grant Type     |Authorization Code         |
-    |Callback URL     |http://localhost (must be the same as in our application registration)         |
-    |Auth URL     |https://login.microsoftonline.com/common/oauth2/authorize?resource=https://api.businesscentral.dynamics.com         |
-    |Access Token URL     |https://login.windows.net/<tenant domain\>/oauth2/token?resource=https://api.businesscentral.dynamics.com         |
-    |Client ID     |The ID of application registration         |
-    |Client Secret     |The client secret we created         |
-    |Scope     |offline_access (required to get a refresh token)         |
-    |State:      |leave this blank         |
-    |Client Authentication     |Send client credentials in body         |
-
-5. Click **Request Token**, and then sign in.
-6. The **Manage Access Tokens** page should open and display our token. Find the refresh_token property. This long string is the refresh token we’ll need later.
-7. To test the token, we can click **Use Token** and then click **Send** on the request. If it works, we’ll get the list of APIs that are available in our Business Central tenant.
+Request a refresh token manually using a tool such as [Insomnia](https://insomnia.rest/), [Bruno](https://www.usebruno.com/), [Insomnium](https://github.com/ArchGPT/insomnium/releases/), or [Fiddler](https://www.telerik.com/download/fiddler/), and store the token and client secret in Azure Key Vault.
 
 ### Use Azure Key Vault
 To keep things safe, store the client secret and the refresh token in Azure Key Vault, so that our logic app can use them without exposing them. 
@@ -566,7 +536,7 @@ As before, we’ll need to parse the JSON response with this schema:
     |Field  |Value  |
     |---------|---------|
     |Method     |Post         |
-    |URI     |https://api.businesscentral.dynamics.com/v1.0/sandbox/api/iot/azureiotcentral/v2.0/companies(\<company guid\>)/measurements<br>**Note:** We must insert the GUID of the company we are connecting to in the URI. To find the GUID we can use a tool like Postman to call this API: https://api.businesscentral.dynamics.com/v1.0/sandbox/api/microsoft/automation/v1.0/companies.         |
+    |URI     |https://api.businesscentral.dynamics.com/v1.0/sandbox/api/iot/azureiotcentral/v2.0/companies(\<company guid\>)/measurements<br>**Note:** We must insert the GUID of the company we are connecting to in the URI. To find the GUID we can use a tool like [Insomnia](https://insomnia.rest/), [Bruno](https://www.usebruno.com/), [Insomnium](https://github.com/ArchGPT/insomnium/releases/), or [Fiddler](https://www.telerik.com/download/fiddler/), to call this API: https://api.businesscentral.dynamics.com/v1.0/sandbox/api/microsoft/automation/v1.0/companies.         |
     |Headers     |Connection	Keep-Alive<br>Content-Type	Application/json         |
     |Body     |Paste the code that is available immediately below this table.<br>**Note:** The schema only gives us the structure. We must fill in each value by selecting the corresponding values from the **When a rule is fired** trigger on the **Dynamic Content** page.         |
     |Authentication     |Raw         |

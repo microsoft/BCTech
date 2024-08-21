@@ -1,0 +1,39 @@
+{
+    "name": "Ruleset for BC NavTechdays 2024 demo",
+    "description": "This ruleset applies to the BC Techdays 2024 demo fot eh movetable session.",
+    "generalAction": "Error",
+    "includedRuleSets": [
+      {
+        "action": "Error",
+        "path": "./ruleset.json"
+      }
+    ],
+    "rules": [
+      {
+        "id": "AA0247",
+        "action": "None",
+        "justification": "Not required for a demo app. Use namespaces to organize your code and isolate it from changes."
+      },
+      {
+        "id": "AS0051",
+        "action": "None",
+        "justification": "Not required for a demo app. The manifest property *** must be specified and contain a meaningful value."
+      },
+      {
+        "id": "AS0052",
+        "action": "None",
+        "justification": "Not required for a demo app. The property 'url' must be set to a valid URL."
+      },
+      {
+        "id": "AS0084",
+        "action": "None",
+        "justification": "Not required for a demo app. The ID range '[50100..50149]' is not valid. It must be within the range allocated to the partner for AppSource, within the range '[1000000..75999999]' allocated to AppSource applications, and outside the range '[50000..99999]' allocated to per-tenant customizations."
+      },
+      {
+        "id": "AS0092",
+        "action": "None",
+        "justification": "Not required for a demo app. The app.json file must specify an Azure Application Insights resource with the property 'applicationInsightsConnectionString' for monitoring operations related to this extension. See https://learn.microsoft.com/dynamics365/business-central/dev-itpro/administration/telemetry-overview for additional information."
+      }
+    ]
+}
+  

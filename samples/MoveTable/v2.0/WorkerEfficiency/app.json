@@ -1,0 +1,61 @@
+{
+  "id": "6b05135b-a955-449b-94cc-d1d5914a168b",
+  "name": "Human Worker Efficiency Tracker",
+  "publisher": "Microsoft",
+  "version": "2.0.0.0",
+  "brief": "A demo app for BC Techdays 2024",
+  "description": "The Human Worker Efficiency Tracker is a demo app for BC Techdays 2024 to demonstrate the use of the MoveTo/MoveFrom properties in .al.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo":  "ExtensionLogo.png",
+  "dependencies": [
+    {
+      "id": "c961a87e-0390-403c-b6d0-9441f1e06958",
+      "name": "Base Library - Tracker",
+      "publisher": "Microsoft",
+      "version": "2.0.0.0"
+    },
+    {
+      "id": "e22bf1de-1ac3-4ef8-983e-945f50436d34",
+      "name": "Coffee Tracker",
+      "publisher": "Microsoft",
+      "version": "2.0.0.0"
+    },
+    {
+      "id": "1f9ab25f-1aaf-42dc-81cc-facfde1f942f",
+      "name": "Energy Level Tracker",
+      "publisher": "Microsoft",
+      "version": "2.0.0.0"
+    },
+    {
+      "id": "279534fe-6d71-4abe-81ee-ff81556ffd8c",
+      "name": "Task Tracker",
+      "publisher": "Microsoft",
+      "version": "2.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "25.0.0.0",
+  "application": "25.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "14.0",
+  "features": [
+    "NoImplicitWith",
+    "TranslationFile",
+    "GenerateCaptions",
+    "NoPromotedActionProperties"
+  ],
+  "propagateDependencies": true
+}
