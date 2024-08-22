@@ -10,6 +10,46 @@ GitHub repository with the Translations Builder source code and extend
 this application to meet whatever translation and localization
 requirements your organization faces.
 
+## Translations Builder Console
+
+The *Translations Builder Console* tool is a version of Translation Builder that does not require UI. A prerequisite for running the console application is that Power BI desktop is running.
+
+To build the binaries for the tool, open the TranslationBuilderConsole solution in Visual Studio and build.
+
+To understand how to use the tool, run *TranslationBuilderConsole.exe /?*:
+
+``` cmd
+C:\git\BCTech\samples\PowerBi\TranslateYourApp\TranslationBuilderConsole\bin\Debug\net6.0-windows>TranslationsBuilderConsole.exe /?
+Connecting to Power BI Desktop...
+16000
+msmdsrv
+Untitled - Power BI Desktop
+Port: 61024
+16000
+msmdsrv
+Untitled - Power BI Desktop
+Port: 61024
+Unsupported fileFormat.
+Usage: TranslationBuilderConsole [OPTIONS]+
+
+Options:
+  -o, --operation=VALUE      operation(required) [export,import]
+  -f, --fileFormat=VALUE     file format(required) [csv,resx,json]
+  -h, --help                 show this message and exit
+      --filePath=VALUE       file to export/import
+      --filePrefix=VALUE     file prefix when exporting/importing
+      --directory=VALUE      directory for exporting/importing
+      --cultures=VALUE       cultures to export
+      --defaultCulture=VALUE default culture when importing
+      --pbixFile=VALUE       target PBIX file path
+-------------------
+Examples:
+        --operation export --fileFormat resx --directory "<path>" --filePrefix "FinanceApp" --cultures "en-US,fr-FR,da-DK"
+        --operation import --fileFormat resx --directory "<path>" --filePrefix "FinanceApp" --defaultCulture "en-US"
+```
+
+
+
 ## Quick Start Guide
 Here are the primary links for learning how to build multi-language reports for Power BI using Translations Builder.
  - [**Guidance Document**: *Building Multi-language Reports for Power BI*](Docs/Building%20Multi-language%20Reports%20in%20Power%20BI.md)
