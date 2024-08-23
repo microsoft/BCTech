@@ -72,23 +72,6 @@ namespace TranslationsBuilderConsole
                 Environment.Exit(0);
             }
 
-            try
-            {
-                // Assume Power BI Desktop is running
-                Console.WriteLine("Connecting to Power BI Desktop...");
-                var process = Process.GetProcessesByName("msmdsrv")[0];
-                var tcpTable = ManagedIpHelper.GetExtendedTcpTable();
-                var tcpRow = tcpTable.SingleOrDefault((r) => r.ProcessId == process.Id && r.State == TcpState.Listen && IPAddress.IsLoopback(r.LocalEndPoint.Address));
-                TranslationsManager.Connect("localhost:" + tcpRow?.LocalEndPoint.Port.ToString());
-            } catch (Exception e)
-            {
-                Console.WriteLine("Error connecting to Power BI Desktop");
-                Console.WriteLine(e.Message);
-                Environment.Exit(0);
-            }
-
-            model = TranslationsManager.model;
-
             switch (fileFormat)
             {
                 case "csv":
@@ -97,6 +80,7 @@ namespace TranslationsBuilderConsole
                         case IMPORT:
                             Console.WriteLine("Importing csv translations...");
                             if (String.IsNullOrEmpty(filePath)) { Console.WriteLine("Missing filePath."); }
+                            TryConnectPBIDesktop();
                             TranslationsManager.ImportTranslations(filePath);
                             Environment.Exit(0);
                             break;
@@ -113,12 +97,14 @@ namespace TranslationsBuilderConsole
                         case IMPORT:
                             Console.WriteLine("Importing resx translations...");
                             if (String.IsNullOrEmpty(defaultCulture)) { Console.WriteLine("Missing defaultCulture."); }
+                            TryConnectPBIDesktop();
                             ImportResX(filePrefix, directory, defaultCulture, pbixFile);
                             Environment.Exit(0);
                             break;
                         case EXPORT:
                             Console.WriteLine("Exporting resx translations...");
                             if (String.IsNullOrEmpty(cultures)) { Console.WriteLine("Missing cultures."); }
+                            TryConnectPBIDesktop();
                             ExportResX(filePrefix, directory, cultures, pbixFile);
                             Environment.Exit(0);
                             break;
@@ -136,8 +122,31 @@ namespace TranslationsBuilderConsole
             Environment.Exit(0);
         }
 
+        static void TryConnectPBIDesktop()
+        {
+            try
+            {
+                // Assume Power BI Desktop is running
+                Console.WriteLine("Connecting to Power BI Desktop...");
+                var process = Process.GetProcessesByName("msmdsrv")[0];
+                var tcpTable = ManagedIpHelper.GetExtendedTcpTable();
+                var tcpRow = tcpTable.SingleOrDefault((r) => r.ProcessId == process.Id && r.State == TcpState.Listen && IPAddress.IsLoopback(r.LocalEndPoint.Address));
+                TranslationsManager.Connect("localhost:" + tcpRow?.LocalEndPoint.Port.ToString());
+            } catch (Exception e)
+            {
+                Console.WriteLine("Error connecting to Power BI Desktop");
+                Console.WriteLine(e.Message);
+                Environment.Exit(0);
+            }
+            model = TranslationsManager.model;
+        }
+
         static void ImportResX(string fileName, string directory, string defaultCulture, string pbixFile)
         {
+            if (!TranslationsManager.DoesTableExistInModel(TranslationsManager.LocalizedLabelsTableName))
+            {
+                TranslationsManager.CreateLocalizedLabelsTable(false);
+            }
             var filePaths = Directory.GetFiles(directory, String.Format("{0}.*.resx", fileName));
             foreach (var filePath in filePaths)
             {
