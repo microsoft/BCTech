@@ -26,6 +26,7 @@ smart.forecast <- function(dataset1, dataset2) {
 
   MISSING_VALUE_OPTIONS <- c(MISSING_VALUE_MEAN, MISSING_VALUE_PREVIOUS, MISSING_VALUE_INTERPOLATION_LINEAR, MISSING_VALUE_INTERPOLATION_POLYNOMIAL)
 
+  dataset1$DateKey = as.numeric(dataset1$DateKey)
   data <- dataset1
 
   order_and_fill_missing_values <- function(data, missingValueSubstitution) {
@@ -344,7 +345,17 @@ smart.forecast <- function(dataset1, dataset2) {
 
   for (i in 1:granularityAttributes_num) {
     # Prepare training and test data for given granularity attribute
-    granularityAttribute_data <- data[which(data$GranularityAttribute == granularityAttributes[i]), ]
+    if (is.na(granularityAttributes[i])) {
+      granularityAttribute_data <- data[which(is.na(data$GranularityAttribute)), ]
+    }
+    else {
+      granularityAttribute_data <- data[which(data$GranularityAttribute == granularityAttributes[i]), ]
+    }
+
+    if (nrow(granularityAttribute_data) == 0) {
+      next
+    }
+
     granularityAttribute_data <- order_and_fill_missing_values(granularityAttribute_data, missingValueSubstitution)
 
     full_data <- as.numeric(granularityAttribute_data$TransactionQty)

@@ -21,17 +21,29 @@ function() {
 #* @param GlobalParameters
 #* @post /score
 function(Inputs, GlobalParameters, res) { # nolint: object_name_linter.
+  return(execute_score(Inputs, GlobalParameters, res))
+}
+
+#* @serializer json list(dataframe="values")
+#* @param Inputs
+#* @param GlobalParameters
+#* @post /score/execute
+function(Inputs, GlobalParameters, res) { # nolint: object_name_linter.
+  return(execute_score(Inputs, GlobalParameters, res))
+}
+
+execute_score <- function(Inputs, GlobalParameters, res) {
   tryCatch({
     start_time <- Sys.time()
 
     parameters <- read.csv(
-                           text = GlobalParameters$Parameters,
-                           header = TRUE,
-                           stringsAsFactors = FALSE)
+      text = GlobalParameters$Parameters,
+      header = TRUE,
+      stringsAsFactors = FALSE)
     is_forecast_request <- grepl(
-                                 "TIME_SERIES_MODEL",
-                                 GlobalParameters$Parameters,
-                                 ignore.case = TRUE)
+      "TIME_SERIES_MODEL",
+      GlobalParameters$Parameters,
+      ignore.case = TRUE)
 
     if (is_forecast_request) {
       output <- execute_forecast(Inputs, parameters)
@@ -53,8 +65,8 @@ function(Inputs, GlobalParameters, res) { # nolint: object_name_linter.
 
     end_time <- Sys.time()
     res$setHeader(
-                  "x-ms-request-duration",
-                  format_timespan(start_time, end_time))
+      "x-ms-request-duration",
+      format_timespan(start_time, end_time))
 
     return(result)
   }, error = function(e) {
@@ -82,7 +94,7 @@ execute_forecast <- function(inputs, parameters) {
 execute_predict <- function(inputs, parameters) {
   cat("Predict using method: ", parameters$method, "\n")
 
-  data <- convert_inputs_to_dataframe(inputs, FALSE)
+  data <- convert_inputs_to_dataframe(inputs)
   data[data == ""] <- NA
 
   output <- smart.prediction(data, parameters)
@@ -90,27 +102,11 @@ execute_predict <- function(inputs, parameters) {
   return(output)
 }
 
-convert_inputs_to_dataframe <- function(inputs, convert_strings = TRUE) {
+convert_inputs_to_dataframe <- function(inputs) {
   df <- as.data.frame(inputs$input1$Values)
   colnames(df) <- gsub(" ", "_", inputs$input1$ColumnNames)
-  if (convert_strings) {
-    list <- lapply(df, function(col) sapply(col, convert_string_to_value))
-    df <- as.data.frame(list)
-  }
 
   return(df)
-}
-
-convert_string_to_value <- function(s) {
-  if (grepl("^[0-9]+$", s)) {
-    return(as.integer(s))
-  }
-
-  if (grepl("^[0-9]+\\.[0-9]+$", s)) {
-    return(as.numeric(s))
-  }
-
-  return(s)
 }
 
 format_timespan <- function(start_time, end_time) {
