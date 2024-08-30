@@ -18,9 +18,11 @@ Log into the desired Azure subscription in a terminal:
 az login
 ```
 
-Deploy machine learning resources using the provided PowerShell script. In the following example, we are using the resource group `MyResourceGroup` in the Azure location `West US`. The resource group will be created if it does not exist. See the documentation in `DeployMachineLearningResources.ps1` for additional parameters.
+Deploy machine learning resources using the provided PowerShell script. In the following example, we are using the resource group `MyResourceGroup` in the Azure location `West US`. A Azure Container Registry named `mybcmlregistry` will be created or used for the Docker images created.
+
+The resource group will be created if it does not exist. See the documentation in `DeployMachineLearningResources.ps1` for additional parameters.
 ```
-.\DeployMachineLearningResources.ps1 -ResourceGroupName "MyResourceGroup" -Location "West US"
+.\DeployMachineLearningResources.ps1 -ResourceGroupName "MyResourceGroup" -Location "West US" -RegistryName "mybcmlregistry"
 ```
 
 This should give an output similar to
