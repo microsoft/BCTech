@@ -1,14 +1,38 @@
 # What is the Word add-in for document layouts in Business Central?
 Business Central 2024 release wave 2 (version 25) introduced a new Word add-in as a way to layout document reports with conditional visibility.
 
-# Design controls for document reports
+# Layout controls for document reports
 
-The new Word add-in for Business Central introduces design controls for the layout creator to encode the layout to conditional visibility of field, tables, table rows, and table columns based on data. It also includes a way for layout creators to include comments in the layout file. These comments will then be removed from the document when the report is rendered.
+The new Word add-in for Business Central introduces *layout controls* for the layout creator to encode a layout file with conditional visibility of field, tables, table rows, and table columns based on data. It also includes a way for layout creators to include comments in the layout file. These comments will then be removed from the document when the report is rendered.
 
 ## The *comment* control
 
+As a layout creator, you might want to include comments in the layout file to help you or the next person who need to maintain the layout. These comments will then be removed from the document when the report is rendered. You can include text or tables in a comment control. 
+
+Use comments for things such as describing difficult parts of the layout, or maybe add a change log table in the end of the file to track different versions of the layout. This could be useful when troubleshooting a report issue (you will need to get both a copy of the rendered report and the layout as the comment will have been removed from the former at runtime).
+
+## Hide if empty: the *Hide Field if Zero* control
+
+In some reports, you might want to mimic the BlankZero or BlankNumbers properties that exist on table and page fields. You can achieve this in the dataset, but what if you don't have control over the AL code? Or if some layouts should show zeros and others blank them out? 
+
+Here, the *Hide Field if Zero* control comes to the rescue: simply apply it to a field (standalone or as part of a repeater). At runtime, the Business Central server will then convert any zero values to a blank string.
 
 
+## Hide if empty: the *Hide Empty Table* control
+
+If you have a data item in the dataset that might have data and might not, you can enclose the repeater in a table with the *Hide Empty Table* control. If no rows exists when rendering the report at runtime, the Business Central server will then simply cut the enclosing table from the document. 
+
+
+## Hide if empty: the *Hide Empty Table Row* control
+
+If you have a data item in the dataset, where one field should determine if the row is shown, you can enclose that fields in the repeater with the *Hide Empty Table Row* control. For rows, where that field has no value, when rendering the report at runtime, the Business Central server will then simply cut the row from the table. 
+
+
+## Hide if empty: the *Hide Empty Table Column* control
+
+If you have a data item in the dataset, where no table header and table column should be visible in the absense of data in the field (across all rows in the dataitem), you can enclose that fields in the table header with the *Hide Empty Table Column* control. For datasets, where that no values exist for that field, when rendering the report at runtime, the Business Central server will then simply cut the column from the table. 
+
+One use case for this layout control is discounts, where you want to remove the discount column from the invoice if no discount has been applied. 
 
 
 # Disclaimer
