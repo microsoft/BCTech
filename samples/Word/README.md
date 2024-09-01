@@ -11,7 +11,9 @@ As a layout creator, you might want to include comments in the layout file to he
 
 Use comments for things such as describing difficult parts of the layout, or maybe add a change log table in the end of the file to track different versions of the layout. This could be useful when troubleshooting a report issue (you will need to get both a copy of the rendered report and the layout as the comment will have been removed from the former at runtime).
 
-Exercise: download a Word layout from Business Central from the Report Layouts page (filter to type *Word* and then use the *Export Layout* action). Navigate to the end of the Word file. Add a table with three columns and two rows like this:
+### Exercise: Add a versioning table
+
+Download a Word layout from Business Central from the Report Layouts page (filter to type *Word* and then use the *Export Layout* action). Navigate to the end of the Word file. Add a table with three columns and two rows like this:
 
 | Layout description | Version | Date of change |
 | ------------------ | ------- | -------------- | 
