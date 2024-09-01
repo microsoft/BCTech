@@ -11,6 +11,20 @@ As a layout creator, you might want to include comments in the layout file to he
 
 Use comments for things such as describing difficult parts of the layout, or maybe add a change log table in the end of the file to track different versions of the layout. This could be useful when troubleshooting a report issue (you will need to get both a copy of the rendered report and the layout as the comment will have been removed from the former at runtime).
 
+Exercise: download a Word layout from Business Central from the Report Layouts page (filter to type *Word* and then use the *Export Layout* action). Navigate to the end of the Word file. Add a table with three columns and two rows like this:
+
+| Layout description | Version | Date of change |
+| ------------------ | ------- | -------------- | 
+| Layout using a comment | 1.0 | <todays date> |
+
+Then mark the table and choose the *comment* control from the *Layout Controls* menu in the Business Central add-in.
+
+When you place your cursor somewhere in the table, you will notice that the control displays a "Hidden Comment" text. 
+
+Contratulations, you have added your first comment. 
+
+Now, try importing the layout back to Business Central: from the Report Layouts page, make sure you have focus on the report, and then use the *New* action to import the layout. Then use the *Run* action to test the layout. Hopefully, the comment is now gone (from the generated report.)
+
 ## Hide if empty: the *Hide Field if Zero* control
 
 In some reports, you might want to mimic the BlankZero or BlankNumbers properties that exist on table and page fields. You can achieve this in the dataset, but what if you don't have control over the AL code? Or if some layouts should show zeros and others blank them out? 
