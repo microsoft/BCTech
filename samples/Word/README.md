@@ -1,6 +1,13 @@
 # What is the Word add-in for document layouts in Business Central?
 Business Central 2024 release wave 2 (version 25) introduced a new Word add-in as a way to layout document reports with conditional visibility.
 
+# Design controls for document reports
+
+The new Word add-in for Business Central introduces design controls for the layout creator to encode the layout to conditional visibility of field, tables, table rows, and table columns based on data. It also includes a way for layout creators to include comments in the layout file. These comments will then be removed from the document when the report is rendered.
+
+## The *comment* control
+
+
 
 
 
