@@ -13,7 +13,7 @@ Use comments for things such as describing difficult parts of the layout, or may
 
 ### Exercise: Add a versioning table
 
-Download a Word layout from Business Central from the Report Layouts page (filter to type *Word* and then use the *Export Layout* action). Navigate to the end of the Word file. Add a table with three columns and two rows like this:
+Download any Word layout from Business Central from the Report Layouts page (filter to type *Word* and then use the *Export Layout* action). Navigate to the end of the Word file. Add a table with three columns and two rows like this:
 
 | Layout description | Version | Date of change |
 | ------------------ | ------- | -------------- | 
@@ -49,6 +49,12 @@ If you have a data item in the dataset, where one field should determine if the 
 If you have a data item in the dataset, where no table header and table column should be visible in the absense of data in the field (across all rows in the dataitem), you can enclose that fields in the table header with the *Hide Empty Table Column* control. For datasets, where that no values exist for that field, when rendering the report at runtime, the Business Central server will then simply cut the column from the table. 
 
 One use case for this layout control is discounts, where you want to remove the discount column from the invoice if no discount has been applied. 
+
+### Exercise: Make a version of the purchase invoice report where discount column is removed
+
+The RDLC layout for report 406, *Purchase - Invoice* has a table with a *Discount %* column. The demo data for Cronus should have plenty of purchase invoices without any discount. 
+
+In this exercise, try to create an empty Word layout for report 406 and then see if you can re-create the table from the RDLC layout, but now in a version where the *Discount %* column is removed if no discount is given.
 
 
 # Disclaimer
