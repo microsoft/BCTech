@@ -50,6 +50,8 @@ If you have a data item in the dataset, where no table header and table column s
 
 One use case for this layout control is discounts, where you want to remove the discount column from the invoice if no discount has been applied. 
 
+**Note!** You can combine *Hide Empty Table Column* with *Hide Field if Zero* to hide columns with zero values. Just add the *Hide Field if Zero* to the field in the repeater and use *Hide Empty Table Column* on the corresponding field in the table header.
+
 ### Exercise: Make a version of the purchase invoice report where discount column is removed
 
 The RDLC layout for report 406, *Purchase - Invoice* has a table with a *Discount %* column. The demo data for Cronus should have plenty of purchase invoices without any discount. 
