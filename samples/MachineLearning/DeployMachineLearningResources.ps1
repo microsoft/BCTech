@@ -37,13 +37,20 @@ The tag of the image. Default is "latest".
 
 .PARAMETER NumberOfDeployments
 The number of deployments. Default is 1.
+You can increase these if you experience performance issues.
 
 .PARAMETER NumberOfConcurrentRequests
-The number of concurrent requests. Default is 1.
+The number of concurrent requests. Default is 4.
 
 .PARAMETER InstanceType
 The type of the instance. Default is "Standard_DS2_v2".
-git 
+You can use a different instance type if you experience performance issues, cf.
+https://learn.microsoft.com/en-us/azure/machine-learning/reference-managed-online-endpoints-vm-sku-list?view=azureml-api-2
+
+.PARAMETER RequestTimeoutMs
+The request timeout in milliseconds. Requests to the Azure ML endpoint will time out if
+they take longer than this value. Default is 90000.
+
 .EXAMPLE
 .\DeployMachineLearningResources.ps1 -ResourceGroupName "MyResourceGroup" -Location "West US"
 This example deploys the Azure Machine Learning resources in the specified resource group and location.
@@ -72,9 +79,11 @@ Param
 
     [int] $NumberOfDeployments = 1,
 
-    [int] $NumberOfConcurrentRequests = 1,
+    [int] $NumberOfConcurrentRequests = 8,
 
-    [string] $InstanceType = "Standard_DS2_v2"
+    [string] $InstanceType = "Standard_DS2_v2",
+
+    [int] $RequestTimeoutMs = 90000
 )
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
@@ -103,16 +112,17 @@ if (!(Invoke-AzCliCommand { az group exists --name $ResourceGroupName } | Conver
     Write-Host ("Creating resource group '{0}' in location '{1}'." -f $ResourceGroupName, $Location)
     Invoke-AzCliCommand { az group create --name $ResourceGroupName --location $Location } | Out-Null
 }
-else {
+else
+{
     Write-Host ("Resource group '{0}' already exists." -f $ResourceGroupName)
 }
 
 if (!(Invoke-AzCliCommand { az ml workspace list --resource-group $ResourceGroupName --query "[?name == '$WorkspaceName']" } | ConvertFrom-Json))
 {
     Write-Host ("Creating Azure Machine Learning workspace '{0}' in resource group '{1}'." -f $WorkspaceName, $ResourceGroupName)
-    Invoke-AzCliCommand { az ml workspace create --resource-group $ResourceGroupName --name $WorkspaceName } | Out-Null
+    Invoke-AzCliCommand { az ml workspace create --resource-group $ResourceGroupName --name $WorkspaceName --system-datastores-auth-mode identity} | Out-Null
 }
-else 
+else
 {
     Write-Host ("Azure Machine Learning workspace '{0}' already exists." -f $WorkspaceName)
 }
@@ -123,7 +133,7 @@ if (!(Invoke-AzCliCommand { az acr list --query "[?name == '$RegistryName']" } |
     Write-Host ("Creating Azure Container Registry '{0}' in resource group '{1}'." -f $RegistryName, $ResourceGroupName)
     Invoke-AzCliCommand { az acr create --resource-group $ResourceGroupName --name $RegistryName --sku Standard } | Out-Null
 }
-else 
+else
 {
     Write-Host ("Azure Container Registry '{0}' already exists." -f $RegistryName)
 }
@@ -141,9 +151,11 @@ else
 }
 
 $ImageNameAndTag = ("{0}:{1}" -f $ImageName, $ImageTag)
-if (!(az acr repository show --image $ImageNameAndTag --name $RegistryName 2>$null))
+# The following is not wrapped in Invoke-AzCliCommand, because it errors out if the image does not exist
+if (!(az acr repository show --image $ImageNameAndTag --name $RegistryName))
 {
     Write-Host ("Building container image {0} for Azure Machine Learning model." -f $ImageNameAndTag)
+    # The following is not wrapped in Invoke-AzCliCommand because running it requires console output
     az acr build . --registry $RegistryName --image ("{0}:{1}" -f $ImageName, $ImageTag)
 }
 else
@@ -193,6 +205,7 @@ $OnlineDeploymentYaml = @"
     instance_count: $NumberOfDeployments
     request_settings:
         max_concurrent_requests_per_instance: $NumberOfConcurrentRequests
+        request_timeout_ms: $RequestTimeoutMs
 "@
 $OnlineDeploymentYaml | Out-File $OnlineDeploymentYamlFile -Force
 
