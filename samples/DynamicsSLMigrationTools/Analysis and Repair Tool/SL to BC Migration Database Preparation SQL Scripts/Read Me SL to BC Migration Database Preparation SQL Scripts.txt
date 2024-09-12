@@ -1,0 +1,52 @@
+Microsoft Dynamics SL to BC Migration Database Preparation SQL Scripts
+
+IMPORTANT INFORMATION:  
+	Loading the new BC Migration Procedures and Enabling Change Tracking are required to run the SL Cloud Migration process.
+	Customers on Microsoft Dynamics SL 2018 can perform this function through the Database Maintenance screen.
+	Please see the details on the SL 2018 installation.  
+	This document outlines the alternative manual process and other options
+
+1. Locate a machine that has access to the Microsoft SQL Server installation that is hosting the Microsoft Dynamics SL databases.
+2. Identify the names of the 
+	SL Application database:
+	SL System database:
+4. Verify that a restorable backup of both databases exists before installing the Analysis tools
+5. Create a folder called "Microsoft Dynamics SL to BC Migration Preparation Scripts"
+6. Copy the SL to BC Migration Database Preparation SQL Scripts to this folder.
+
+Files:	1-Create BC Migration Procedures.sql - REQUIRED FOR MIGRATION
+	These SQL scripts prepare the Microsoft Dynamics SL database to support Change Tracking.
+	This must be run first before running the Enabling or Disabling Change Tracking in Microsoft SQL Server.
+
+	2-Enable Change Tracking on SL Database.sql - REQUIRED FOR MIGRATION
+	Change tracking is a SQL feature that must be turned on prior to starting the Microsoft Dynamics SL Cloud Migration process.
+	The 1-Create BC Migration Procedures must be run first.
+	Run this script against the Microsoft Dynamics SL Application database to turn on Change Tracking.
+
+	3-Disable Change Tracking on SL Database.sql
+	When running Microsoft Dynamics SL, it is recommended that you do not have Change Tracking turned on.
+	This script will turn off a SQL feature, Change Tracking.
+	Run this script against the Microsoft Dynamics SL Application database to turn off Change Tracking.
+	
+	Set SQL Compatibility Level to 130.sql
+	A Dynamics SL database must be at a minimum Compatibility Level of 130 and running on SQL Server 2016 or higher.
+	This script will set the Compatibility Level to 130 for older Dynamics SL databases running on SQL Server 2016 or higher
+	Run this script against the Microsoft Dynamics SL Application database to set the Compatibility Level to 130.
+	
+	Add Functions to Dynamics SL 2011 Database.sql
+	Microsoft Dynamics SL customers who want to migrate to Microsoft Dynamics Business Central must be on Microsoft Dynamics SL 2015 or higher.
+	If a customer is still on SL 2011, it is possible to run the enclosed script to add the minimum required functions to their SL Database.
+	Run this script against the Microsoft Dynamics SL Application database to add the functions needed.
+
+
+	Read Me Microsoft Dynamics SL to BC Migration Database Preparation SQL Scripts.txt - The file that you are reading that walks through the installation process.
+
+****IMPORTANT NOTE: DO NOT CONTINUE IF A RESTORABLE BACKUP OF BOTH DYNAMICS SL DATABASES DOES NOT EXIST****
+
+7. Open Microsoft SQL Server 
+8. Select the SL Application database
+9. Open and run the SQL scripts listed above that apply to your situation.
+	1-Create BC Migration Procedures.sql
+	2-Enable Change Tracking on SL Database.sql 
+
+10. Installation is now complete

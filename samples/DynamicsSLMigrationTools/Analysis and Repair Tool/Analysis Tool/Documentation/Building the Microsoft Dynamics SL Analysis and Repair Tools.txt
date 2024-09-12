@@ -1,0 +1,35 @@
+Microsoft Dynamics SL Analysis tool 
+	Description: The Analysis tool creates a text file providing an overview of a single Dynamics SL company.
+
+	This includes: modules in use, and number of master records.
+
+	Requirements:
+	Microsoft Dynamics SL 2015 or SL 2018 database
+	Microsoft SQL Server 2016 or higher
+
+Microsoft Dynamics SL Repair tool
+	Description: The repair tool runs against one Dynamics SL company at a time.
+	The tool looks for issues that would prevent a successful migration.
+	Makes automatic fixes where possible (example: removing data missing key fields).
+	Reports on issues that should be addressed prior to staring a migration.
+
+	Requirements:
+	Microsoft Dynamics SL 2015 or SL 2018 database
+	Microsoft SQL Server 2016 or higher
+
+GitHub provides the files necessary to create the executables to run against a Dynamics SL 2015 or SL 2018 database.
+
+How to Building the Analysis and Repair Tools:
+
+Requirements:
+	Visual Studios 2017 or later
+	.Net Framework version 4.8.1
+
+Build steps:
+	1.  Open Visual Studio.
+	2.  Load the project:  SLSAT00.vbproj for the Analysis Tool
+	3.  Load the project:  SLMPT00.vbproj for the Repair Tool
+	4.  Select Build->Build Solution from the menu to create the executable.
+
+Place the executable on a machine that has access to the Microsoft Dynamics SL 2015 or SL 2018 database on Microsoft SQL Server.
+See the readme files for each of the programs on how to use each tool.
