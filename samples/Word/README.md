@@ -38,6 +38,7 @@ Here, the *Hide Field if Zero* control comes to the rescue: simply apply it to a
 
 If you have a data item in the dataset that might have data and might not, you can enclose the repeater in a table with the *Hide Empty Table* control. If no rows exists when rendering the report at runtime, the Business Central server will then simply cut the enclosing table from the document. 
 
+**Note!** The *Hide Empty table* you have to place on the table itself, not on the repeater.
 
 ## Hide if empty: the *Hide Empty Table Row* control
 
