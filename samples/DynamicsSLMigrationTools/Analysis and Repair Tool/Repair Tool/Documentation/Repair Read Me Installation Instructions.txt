@@ -1,0 +1,24 @@
+Microsoft Dynamics SL Repair Tool Installation Instructions
+
+1. Locate a machine that has access to the Microsoft SQL Server installation that is hosting the Microsoft Dynamics SL databases.
+2. Identify the names of the 
+	SL Application database:
+	SL System database:
+4. Verify that a backup of both databases exists before installing the repair tools
+5. Create a folder called "Microsoft Dynamics SL Repair Tool"
+6. Copy the Microsoft Dynamics SL Repair Tools file to this folder.
+	Files:	SLMPT00.exe - Repair Tool (Microsoft Dynamics SL)
+		Dynamics SL Repair Tool Installation for SL Application Database.sql - SQL scripts to install the necessary files
+		Read Me Installation Instructions.txt - The file that you are reading that walks through the installation process.
+
+****IMPORTANT NOTE: DO NOT CONTINUE IF A RESTORABLE BACKUP OF BOTH DYNAMICS SL DATABASES DOES NOT EXIST****
+
+The Repair tool will make updates to the data in your Microsoft Dynamics SL application database so a restorable backup is required.
+
+7. Open Microsoft SQL Server 
+8. Select the SL Application database
+9. Open and run the following SQL script file:
+	Dynamics SL Repair Tool Installation for SL Application Database.sql
+		Note: This file creates the tables and procedures needed to run the Microsoft Dynamics SL Repair Tool
+10. Installation is now complete
+11. Open the User Guide to walk through the use of the tool.
