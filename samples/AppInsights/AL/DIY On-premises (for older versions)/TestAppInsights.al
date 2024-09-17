@@ -4,7 +4,7 @@ codeunit 50114 TestAppInsights
 
     var
         AppInsightsInstance: Codeunit AppInsightsSDK;
-        apiKey: label '5be7a45c-81b6-4505-affe-479b464da3e4', Locked = true;
+        apiKey: label '<enter you own key or even better use Azure keyvault>', Locked = true;
 
     procedure Init()
     begin
