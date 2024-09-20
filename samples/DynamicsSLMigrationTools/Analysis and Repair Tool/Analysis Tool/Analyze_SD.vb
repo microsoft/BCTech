@@ -55,6 +55,10 @@ Module Analyze_SD
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Date of oldest Service Call:"
             sqlStmt = "SELECT MIN(Crtd_DateTime) FROM smServCall"
@@ -796,7 +800,7 @@ Module Analyze_SD
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message, "Error Encountered")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SD")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Service Dispatch data"
             OkToContinue = False
 

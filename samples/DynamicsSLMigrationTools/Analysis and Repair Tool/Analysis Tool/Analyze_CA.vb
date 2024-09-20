@@ -4,7 +4,7 @@ Imports System.Data.SqlClient
 
 Module Analyze_CA
     '================================================================================
-    ' This module contains code to analyze tables used with the Currency Manager Module
+    ' This module contains code to analyze tables used with the Cash Manager Module
     '
     '================================================================================
 
@@ -51,6 +51,10 @@ Module Analyze_CA
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
+
+            If sResult = "NO" Then
+                Exit Sub
+            End If
 
             RecID = RecID + 1
             sDescr = "Number of unreleased batches:"
@@ -485,7 +489,7 @@ Module Analyze_CA
 
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - CA")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Cash Manager data"
             OkToContinue = False
         End Try

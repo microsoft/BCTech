@@ -50,6 +50,10 @@ Module Analyze_CM
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Base Currency ID application database (" + DBName.Trim + "):"
             sqlStmt = "SELECT BaseCuryID, Central_Cash_Cntl, COAOrder, CpnyId, LedgerID, MCActive, Mult_Cpny_Db, NbrPer, PerNbr, PerRetHist, PerRetModTran, PerRetTran, RetEarnAcct, ValidateAcctSub, YtdNetIncAcct FROM GLSetup"
@@ -308,7 +312,7 @@ Module Analyze_CM
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - CM")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Currency Manager data"
             OkToContinue = False
 

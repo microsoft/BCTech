@@ -57,6 +57,10 @@ Module Analyze_TM
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "First Day of Week in Timecard Entry:"
             Call InitPJContrlValues(bPJContrlInfo)
@@ -1388,7 +1392,7 @@ Module Analyze_TM
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - TM")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Time and Expense for Projects data"
             OkToContinue = False
 

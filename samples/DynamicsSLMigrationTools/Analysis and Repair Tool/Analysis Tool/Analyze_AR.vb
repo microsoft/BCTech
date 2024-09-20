@@ -34,17 +34,16 @@ Module Analyze_AR
         Try
             Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Receivable"
 
-            ' Call TranBeg(True)Form1.
+
             '===== Accounts Receivable ======
 
             '=== Module Usage ===
             Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Receivable Module Usage"
-
+            sAnalysisType = "Module Usage"
             Call oEventLog.LogMessage(0, "ACCOUNTS RECEIVABLE")
+            Call oEventLog.LogMessage(0, "")
 
             Call oEventLog.LogMessage(0, "Analyzing Accounts Receivable Module Usage")
-
-            sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
             sDescr = "Is the module being used?"
@@ -61,6 +60,10 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
+
+            If sResult = "NO" Then
+                Exit Sub
+            End If
 
             RecID = RecID + 1
             sDescr = "Number of unreleased batches:"
@@ -1174,6 +1177,7 @@ Module Analyze_AR
 
 
         Catch ex As Exception
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - AR")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Accounts Receivable data"
             OkToContinue = False
         End Try

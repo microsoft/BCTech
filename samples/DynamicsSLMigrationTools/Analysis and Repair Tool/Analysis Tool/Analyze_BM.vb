@@ -19,10 +19,8 @@ Module Analyze_BM
         Dim sResult As String = String.Empty
         Dim retValInt1 As Integer
         Dim retValDbl1 As Double
-        ''Dim retValDbl2 As Double
         Dim retValStr1 As String = String.Empty
         Dim calcValDbl1 As Double
-        ''Dim sqlQuery As String = String.Empty
 
         Dim sqlStmt As String = String.Empty
         Dim sqlReader As SqlDataReader = Nothing
@@ -39,8 +37,6 @@ Module Analyze_BM
             Call oEventLog.LogMessage(0, "")
 
             Call oEventLog.LogMessage(0, "Analyzing Bill of Materials Module Usage")
-
-
 
             sAnalysisType = "Module Usage"
 
@@ -59,6 +55,10 @@ Module Analyze_BM
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
+
+            If sResult = "NO" Then
+                Exit Sub
+            End If
 
             RecID = RecID + 1
             sDescr = "Number of unreleased batches:"
@@ -812,7 +812,7 @@ Module Analyze_BM
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - BM")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Bill of Material data"
             OkToContinue = False
 

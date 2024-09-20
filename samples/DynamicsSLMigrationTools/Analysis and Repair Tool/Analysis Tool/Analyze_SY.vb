@@ -438,7 +438,8 @@ Module Analyze_SY
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SY")
+            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Administration data"
             OkToContinue = False
 
         End Try

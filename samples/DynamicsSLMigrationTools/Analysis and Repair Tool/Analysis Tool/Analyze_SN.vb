@@ -50,6 +50,10 @@ Module Analyze_SN
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Date of oldest Contract start date:"
             sqlStmt = "SELECT MIN(StartDate) FROM smContract WHERE Status IN ('A', 'P', 'E')"
@@ -657,7 +661,7 @@ Module Analyze_SN
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SN")
 
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Service Contracts data"
             OkToContinue = False

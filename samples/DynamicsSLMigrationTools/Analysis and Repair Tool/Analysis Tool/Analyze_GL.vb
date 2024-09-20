@@ -60,6 +60,10 @@ Module Analyze_GL
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Number of unreleased batches:"
             sqlStmt = "SELECT COUNT(Rlsed) FROM Batch WHERE Module = 'GL' AND Rlsed = 0"
@@ -1176,7 +1180,7 @@ Module Analyze_GL
             '***********************************************************************************'            
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - GL")
             ' Call TranEnd()
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing General Ledger data"
             OkToContinue = False

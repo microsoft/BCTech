@@ -53,6 +53,10 @@ Module Analyze_OM
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Are Salespeople being used?"
             sqlStmt = "SELECT COUNT(*) FROM SOShipHeader WHERE Status = 'C' AND Cancelled = 0 AND RTRIM(SlsperID) <> ''"
@@ -1084,7 +1088,7 @@ Module Analyze_OM
 
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - OM")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Order Management data"
             OkToContinue = False
 
