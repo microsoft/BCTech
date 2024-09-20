@@ -77,11 +77,8 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-// for which report and layout
+// for which report
 , reportId = customDimensions.alReportId // object id of the report
-, newDefaultLayoutName = customDimensions.alLayoutName 
-// NB! alLayoutFormat shows as an integer in the telemetry in versions prior to 25.1
-, layoutFormat = customDimensions.alLayoutFormat // possible values: RDLC, Word, Excel, Custom
 // what did the user do
 , action = customDimensions.alAction // alAction is "Edit" for this event
 , oldLayoutDescription = customDimensions.alOldLayoutDescription
