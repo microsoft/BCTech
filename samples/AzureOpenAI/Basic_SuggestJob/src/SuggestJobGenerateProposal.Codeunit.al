@@ -34,7 +34,11 @@ codeunit 54390 "SuggestJob - Generate Proposal"
         AoaiKey: SecretText;
     begin
         AoaiKey := Format(CreateGuid());
-        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions", 'notused', 'notused', AoaiKey, AOAIDeployments.GetGPT4oLatest());
+        // If you are using managed resources, call this function:
+        // NOTE: endpoint, deployment, and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
+        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetApiKey(), AOAIDeployments.GetGPT4oLatest());
+        // If you are using your own Azure OpenAI subscription, call this function instead:
+        // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetApiKey());
 
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Suggest Project");
 
@@ -61,9 +65,26 @@ codeunit 54390 "SuggestJob - Generate Proposal"
     begin
         SystemPrompt := StrSubstNo(
             'The user will describe a project. Your task is to prepare the project plan for this project to be used in Microsoft Dynamics 365 Business Central.' +
-            'You must call the function "create_job" to create the job, and the function "create_job_task" to create at least 6 tasks for the job.' +
-            'Use %1 as a start date for the project. Use the yyyy-mm-dd date format for dates.',
-            Format(CurrentDateTime(), 0, 9));
+            'You must call the function "create_job" to create the job, and the function "create_job_task" to create at least 6 tasks for the job.');
+    end;
+
+    local procedure GetApiKey(): SecretText
+    begin
+        // Use your Azure Open AI secret key.
+        // NOTE: Do not add the key in plain text. Instead, use Isolated Storage or other more secure ways.
+        exit(Format(CreateGuid()));
+    end;
+
+    local procedure GetDeployment(): Text
+    begin
+        // Use your deployment name from Azure Open AI here
+        exit('gpt-' + CreateGuid());
+    end;
+
+    local procedure GetEndpoint(): Text
+    begin
+        // Use your endpoint name from Azure Open AI here
+        exit('https://my-deployment.azure.com/');
     end;
 
     var

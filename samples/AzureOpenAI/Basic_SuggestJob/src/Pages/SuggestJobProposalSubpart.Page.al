@@ -34,14 +34,6 @@ page 54397 "SuggestJob - Proposal Subpart"
                     Style = Strong;
                     StyleExpr = StyleIsStrong;
                 }
-                field("Start Date"; Rec."Start Date")
-                {
-                    ApplicationArea = All;
-                }
-                field("End Date"; Rec."End Date")
-                {
-                    ApplicationArea = All;
-                }
             }
         }
     }

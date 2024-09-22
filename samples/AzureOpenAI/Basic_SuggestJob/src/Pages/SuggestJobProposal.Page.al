@@ -162,6 +162,12 @@ page 54395 "SuggestJob - Proposal"
         Attempts: Integer;
         LocalCustomerName: Text;
     begin
+        if InputProjectDescription = '' then
+            Error('Please describe a project that Copilot can draft for you.');
+
+        if StrLen(InputProjectDescription) < 20 then
+            Message('The description of the project is too short, and this might impact the result quality.');
+
         ProgressDialog.Open(GeneratingTextDialogTxt);
         SuggestJobGenerateProposal.SetUserPrompt(InputProjectDescription);
 
