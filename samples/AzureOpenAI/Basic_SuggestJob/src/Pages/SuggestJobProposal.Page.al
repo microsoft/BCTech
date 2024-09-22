@@ -163,10 +163,10 @@ page 54395 "SuggestJob - Proposal"
         LocalCustomerName: Text;
     begin
         if InputProjectDescription = '' then
-            Error('Please describe a project that Copilot can draft for you.');
+            Error(ProjectDescriptionEmptyErr);
 
         if StrLen(InputProjectDescription) < 20 then
-            Message('The description of the project is too short, and this might impact the result quality.');
+            Message(DescriptionTooShortMsg);
 
         ProgressDialog.Open(GeneratingTextDialogTxt);
         SuggestJobGenerateProposal.SetUserPrompt(InputProjectDescription);
@@ -175,15 +175,12 @@ page 54395 "SuggestJob - Proposal"
         TempJobTask.DeleteAll();
 
         for Attempts := 0 to 3 do
-            if SuggestJobGenerateProposal.Run() then begin
-                SuggestJobGenerateProposal.GetResult(TempJobTask, TempJob.Description, LocalCustomerName);
-
-                if not TempJobTask.IsEmpty() then begin
+            if SuggestJobGenerateProposal.Run() then
+                if SuggestJobGenerateProposal.GetResult(TempJobTask, TempJob.Description, LocalCustomerName) then begin
                     FindCustomerNameAndNumber(LocalCustomerName, true);
                     CurrPage.ProposalDetails.Page.Load(TempJobTask);
                     exit;
                 end;
-            end;
 
         if GetLastErrorText() = '' then
             Error(SomethingWentWrongErr)
@@ -229,9 +226,11 @@ page 54395 "SuggestJob - Proposal"
     var
         TempJob: Record Job temporary;
         TempJobTask: Record "Job Task" temporary;
+        InputProjectDescription: Text;
         GeneratingTextDialogTxt: Label 'Generating with Copilot...';
         SomethingWentWrongErr: Label 'Something went wrong. Please try again.';
         SomethingWentWrongWithLatestErr: Label 'Something went wrong. Please try again. The latest error is: %1';
+        ProjectDescriptionEmptyErr: Label 'Please describe a project that Copilot can draft for you.';
         CustomerDoesNotExistErr: Label 'Customer does not exist';
-        InputProjectDescription: Text;
+        DescriptionTooShortMsg: Label 'The description of the project is too short, and this might impact the result quality.';
 }

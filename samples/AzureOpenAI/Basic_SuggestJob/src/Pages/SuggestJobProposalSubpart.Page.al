@@ -19,20 +19,14 @@ page 54397 "SuggestJob - Proposal Subpart"
             {
                 Caption = ' ';
                 ShowCaption = false;
-                IndentationColumn = DescriptionIndent;
-                IndentationControls = "Task Description";
 
                 field("Job Task No."; Rec."Job Task No.")
                 {
                     ApplicationArea = All;
-                    Style = Strong;
-                    StyleExpr = StyleIsStrong;
                 }
                 field("Task Description"; Rec.Description)
                 {
                     ApplicationArea = All;
-                    Style = Strong;
-                    StyleExpr = StyleIsStrong;
                 }
             }
         }
@@ -46,14 +40,4 @@ page 54397 "SuggestJob - Proposal Subpart"
 
         CurrPage.Update(false);
     end;
-
-    trigger OnAfterGetRecord()
-    begin
-        DescriptionIndent := Rec.Indentation;
-        StyleIsStrong := Rec."Job Task Type" <> Rec."Job Task Type"::Posting;
-    end;
-
-    var
-        DescriptionIndent: Integer;
-        StyleIsStrong: Boolean;
 }

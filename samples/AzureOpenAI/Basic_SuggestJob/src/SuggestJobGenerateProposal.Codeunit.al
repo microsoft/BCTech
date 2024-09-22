@@ -15,11 +15,16 @@ codeunit 54390 "SuggestJob - Generate Proposal"
         UserPrompt := InputUserPrompt;
     end;
 
-    procedure GetResult(var LocalTempJobTask: Record "Job Task" temporary; var JobDescription: Text; var CustomerName: Text)
+    procedure GetResult(var LocalTempJobTask: Record "Job Task" temporary; var JobDescription: Text; var CustomerName: Text): Boolean
     begin
+        if TempJobTask.IsEmpty() then
+            exit(false);
+
         LocalTempJobTask.Copy(TempJobTask, true);
         JobDescription := TempJob.Description;
         CustomerName := TempJob."Bill-to Name";
+
+        exit(true);
     end;
 
     local procedure GenerateJobProposal()
