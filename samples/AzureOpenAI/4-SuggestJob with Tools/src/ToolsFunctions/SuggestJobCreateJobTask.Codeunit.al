@@ -48,6 +48,7 @@ codeunit 54395 "SuggestJob - Create Job Task" implements "AOAI Function"
         exit(FunctionNameLbl);
     end;
 
+    // NOTE: this is not part of the interface
     procedure GetJobTasks(var LocalTempJobTask: Record "Job Task" temporary)
     begin
         LocalTempJobTask.Copy(TempJobTask, true);

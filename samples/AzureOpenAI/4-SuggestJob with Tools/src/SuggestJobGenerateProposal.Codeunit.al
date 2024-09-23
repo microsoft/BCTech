@@ -36,12 +36,11 @@ codeunit 54390 "SuggestJob - Generate Proposal"
         AOAIChatMessages: Codeunit "AOAI Chat Messages";
         SuggestJobCreateJob: Codeunit "SuggestJob - Create Job";
         SuggestJobCreateJobTask: Codeunit "SuggestJob - Create Job Task";
-        AoaiKey: SecretText;
     begin
-        AoaiKey := Format(CreateGuid());
         // If you are using managed resources, call this function:
         // NOTE: endpoint, deployment, and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
-        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetApiKey(), AOAIDeployments.GetGPT4oLatest());
+        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
+            GetEndpoint(), GetDeployment(), GetApiKey(), AOAIDeployments.GetGPT4oLatest());
         // If you are using your own Azure OpenAI subscription, call this function instead:
         // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetApiKey());
 
@@ -52,10 +51,11 @@ codeunit 54390 "SuggestJob - Generate Proposal"
 
         AOAIChatMessages.AddSystemMessage(GetSystemPrompt());
         AOAIChatMessages.AddUserMessage(UserPrompt);
-        AOAIChatMessages.SetToolInvokePreference("AOAI Tool Invoke Preference"::Automatic);
-        AOAIChatMessages.SetToolChoice('auto');
+
         AOAIChatMessages.AddTool(SuggestJobCreateJob);
         AOAIChatMessages.AddTool(SuggestJobCreateJobTask);
+        AOAIChatMessages.SetToolInvokePreference("AOAI Tool Invoke Preference"::Automatic);
+        AOAIChatMessages.SetToolChoice('auto');
 
         AzureOpenAI.GenerateChatCompletion(AOAIChatMessages, AOAIChatCompletionParams, AOAIOperationResponse);
 
@@ -68,9 +68,9 @@ codeunit 54390 "SuggestJob - Generate Proposal"
 
     local procedure GetSystemPrompt() SystemPrompt: Text
     begin
-        SystemPrompt := StrSubstNo(
+        SystemPrompt :=
             'The user will describe a project. Your task is to prepare the project plan for this project to be used in Microsoft Dynamics 365 Business Central.' +
-            'You must call the function "create_job" to create the job, and the function "create_job_task" to create at least 6 tasks for the job.');
+            'You must call the function "create_job" to create the job, and the function "create_job_task" to create at least 6 tasks for the job.';
     end;
 
     local procedure GetApiKey(): SecretText

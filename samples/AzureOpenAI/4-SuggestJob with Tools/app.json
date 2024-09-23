@@ -1,8 +1,8 @@
 {
   "id": "4d4424bc-1e44-49c2-9879-5963972ead38",
-  "name": "Business Central Copilot Toolkit Demo (Suggest Job Basic)",
-  "publisher": "BC 25",
-  "version": "0.1.0.0",
+  "name": "4-SuggestJob with Tools Demo",
+  "publisher": "Copilot Toolkit Demo",
+  "version": "0.10.0.0",
   "brief": "A simple example with a Copilot demo scenario about suggesting a job/project.",
   "description": "This is a demo extension with some sample Copilot experiences, and should not be used in production.",
   "privacyStatement": "",

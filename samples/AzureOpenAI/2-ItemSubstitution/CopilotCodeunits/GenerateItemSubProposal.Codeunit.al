@@ -76,12 +76,17 @@ codeunit 54323 "Generate Item Sub Proposal"
         AOAIOperationResponse: Codeunit "AOAI Operation Response";
         AOAIChatCompletionParams: Codeunit "AOAI Chat Completion Params";
         AOAIChatMessages: Codeunit "AOAI Chat Messages";
+        AOAIDeployments: Codeunit "AOAI Deployments";
         IsolatedStorageWrapper: Codeunit "Isolated Storage Wrapper";
         Result: Text;
         EntityTextModuleInfo: ModuleInfo;
     begin
-        // You will need to use your own key for Azure OpenAI for all your Copilot features (for both development and production).
-        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
+        // If you are using managed resources, call this function:
+        // NOTE: endpoint, deployment, and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
+        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
+            IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey(), AOAIDeployments.GetGPT4oLatest());
+        // If you are using your own Azure OpenAI subscription, call this function instead:
+        // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
 
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Find Item Substitutions");
 
