@@ -239,7 +239,7 @@ Module Analyze_SI
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SI")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Shared Information data"
             OkToContinue = False
 

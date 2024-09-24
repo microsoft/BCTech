@@ -57,6 +57,10 @@ Module Analyze_MC
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Is Multi-company processing enabled in Multi-Company Setup?"
             sqlStmt = "SELECT COUNT(*) FROM MCSetup WHERE MCActivated = 1"
@@ -841,12 +845,11 @@ Module Analyze_MC
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
+            Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
-            '  Call TranEnd()
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - MC")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Multi-Company data"
             OkToContinue = False
 

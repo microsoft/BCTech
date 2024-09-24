@@ -53,6 +53,10 @@ Module Analyze_PA
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Financial modules Integrated:"
             sqlStmt = "SELECT Control_Data FROM PJCONTRL WHERE control_type = 'PA' AND control_code = 'INTERFACE-LIST'"
@@ -948,7 +952,7 @@ Module Analyze_PA
 
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - PA")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Project Controller data"
             OkToContinue = False
 

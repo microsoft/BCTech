@@ -58,6 +58,10 @@ Module Analyze_AP
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
 
             RecID = RecID + 1
             sDescr = "Number of unreleased batches:"
@@ -68,7 +72,7 @@ Module Analyze_AP
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-            ' Loop through each of the companyies
+            ' Loop through each of the companies
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -1162,7 +1166,7 @@ Module Analyze_AP
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered" + ex.Message)
+            Call MessageBox.Show("Error Encountered" + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - AP")
 
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Accounts Payable data"
 

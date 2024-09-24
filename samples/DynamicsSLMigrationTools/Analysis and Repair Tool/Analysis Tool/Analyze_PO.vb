@@ -57,6 +57,10 @@ Module Analyze_PO
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Number of unreleased batches:"
             sqlStmt = "SELECT COUNT(Rlsed) FROM Batch WHERE Module = 'PO' AND Rlsed = 0"
@@ -872,7 +876,7 @@ Module Analyze_PO
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message)
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - PO")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Purchasing data"
             OkToContinue = False
 

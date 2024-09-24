@@ -130,159 +130,163 @@ Friend Class Form1
             'Analyze Administration Information
             AnalysisStatusLbl.Text = "Analyzing Administration Information"
             Call Analyze_SY.Analyze_SY()
-            AnalysisStatusLbl.Text = "Finished analyzing Administration Information"
-
             If OkToContinue = True Then
-                'Analyze MC - Multi-Company
-                Call Analyze_MC.Analyze_MC()
+                AnalysisStatusLbl.Text = "Finished analyzing Administration Information"
+            Else
+                AnalysisStatusLbl.Text = "Error encountered analyzing Administration Information"
+                Exit Sub
+            End If
+
+            'Analyze MC - Multi-Company
+            Call Analyze_MC.Analyze_MC()
+            If OkToContinue = True Then
                 AnalysisStatusLbl.Text = "Finished analyzing Multi-Company"
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing Multi-Company"
                 Exit Sub
             End If
 
-
+            'Analyze GL - General Ledger
+            Call Analyze_GL.Analyze_GL()
             If OkToContinue = True Then
-                'Analyze GL - General Ledger
-                Call Analyze_GL.Analyze_GL()
                 AnalysisStatusLbl.Text = "Finished analyzing General Ledger at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the General Ledger Module"
                 Exit Sub
             End If
 
+            'Analyze AP - Accounts Payable
+            Call Analyze_AP.Analyze_AP()
             If OkToContinue = True Then
-                'Analyze AP - Accounts Payable
-                Call Analyze_AP.Analyze_AP()
                 AnalysisStatusLbl.Text = "Finished analyzing Accounts Payable at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Accounts Payable Module"
                 Exit Sub
             End If
 
+            'Analyze AR - Accounts Receivable
+            Call Analyze_AR.Analyze_AR()
             If OkToContinue = True Then
-                'Analyze AR - Accounts Receivable
-                Call Analyze_AR.Analyze_AR()
                 AnalysisStatusLbl.Text = "Finished analyzing Accounts Receivable at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Accounts Receivable Module"
+                Exit Sub
             End If
 
+            'Analyze CA - Cash Manager
+            Call Analyze_CA.Analyze_CA()
             If OkToContinue = True Then
-                'Analyze CA - Cash Manager
-                Call Analyze_CA.Analyze_CA()
                 AnalysisStatusLbl.Text = "Finished analyzing Cash Manager at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Cash Manager Module"
                 Exit Sub
             End If
 
+            'Analyze IN - Inventory
+            Call Analyze_IN.Analyze_IN()
             If OkToContinue = True Then
-                'Analyze IN - Inventory
-                Call Analyze_IN.Analyze_IN()
                 AnalysisStatusLbl.Text = "Finished analyzing Inventory at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Inventory Module"
                 Exit Sub
             End If
 
+            'Analyze BM - Bill of Material
+            Call Analyze_BM.Analyze_BM()
             If OkToContinue = True Then
-                'Analyze BM - Bill of Material
-                Call Analyze_BM.Analyze_BM()
                 AnalysisStatusLbl.Text = "Finished analyzing Bill of Material at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Bill of Material Module"
                 Exit Sub
             End If
 
+            'Analyze PO - Purchasing
+            Call Analyze_PO.Analyze_PO()
             If OkToContinue = True Then
-                'Analyze PO - Purchasing
-                Call Analyze_PO.Analyze_PO()
                 AnalysisStatusLbl.Text = "Finished analyzing Purchasing at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Purchasing Module"
                 Exit Sub
             End If
 
+            'Analyze RQ - Requisitions
+            Call Analyze_RQ.Analyze_RQ()
             If OkToContinue = True Then
-                'Analyze RQ - Requisitions
-                Call Analyze_RQ.Analyze_RQ()
                 AnalysisStatusLbl.Text = "Finished analyzing Requisitions at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Requisitions Module"
                 Exit Sub
             End If
 
+            'Analyze OM - Order Management
+            Call Analyze_OM.Analyze_OM()
             If OkToContinue = True Then
-                'Analyze OM - Order Management
-                Call Analyze_OM.Analyze_OM()
                 AnalysisStatusLbl.Text = "Finished analyzing Order Management at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Order Management Module"
                 Exit Sub
             End If
 
+            'Analyze PA - Project Controller
+            Call Analyze_PA.Analyze_PA()
             If OkToContinue = True Then
-                'Analyze PA - Project Controller
-                Call Analyze_PA.Analyze_PA()
                 AnalysisStatusLbl.Text = "Finished analyzing Project Controller at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Project Controller Module"
                 Exit Sub
             End If
 
+            'Analyze BI - Flexible Billings
+            Call Analyze_BI.Analyze_BI()
             If OkToContinue = True Then
-                'Analyze BI - Flexible Billings
-                Call Analyze_BI.Analyze_BI()
                 AnalysisStatusLbl.Text = "Finished analyzing Flexible Billings at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Flexible Billings Module"
                 Exit Sub
             End If
 
+            'Analyze TM - Time and Expense for Projects
+            Call Analyze_TM.Analyze_TM()
             If OkToContinue = True Then
-                'Analyze TM - Time and Expense for Projects
-                Call Analyze_TM.Analyze_TM()
                 AnalysisStatusLbl.Text = "Finished analyzing Time and Expense for Projects at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Time and Expense for Projects Module"
                 Exit Sub
             End If
 
+            'Analyze SD - Service Dispatch
+            Call Analyze_SD.Analyze_SD()
             If OkToContinue = True Then
-                'Analyze SD - Service Dispatch
-                Call Analyze_SD.Analyze_SD()
                 AnalysisStatusLbl.Text = "Finished analyzing Service Dispatch at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Service Dispatch Module"
                 Exit Sub
             End If
 
+            'Analyze SN - Service Contracts
+            Call Analyze_SN.Analyze_SN()
             If OkToContinue = True Then
-                'Analyze SN - Service Contracts
-                Call Analyze_SN.Analyze_SN()
                 AnalysisStatusLbl.Text = "Finished analyzing Service Contracts at " + Now.ToString("hh:mm:ss")
             Else
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Service Contracts Module"
                 Exit Sub
             End If
 
+            'Analyze SI - Shared Information
+            Call Analyze_SI.Analyze_SI()
             If OkToContinue = True Then
-                'Analyze SI - Shared Information
-                Call Analyze_SI.Analyze_SI()
                 AnalysisStatusLbl.Text = "Finished analyzing Shared Information at " + Now.ToString("hh:mm:ss")
             Else
-                ' AnalysisStatusLbl.Text = "Error encountered analyzing the Time and Expense for Projects Module", LOG_AND_DISP)
                 AnalysisStatusLbl.Text = "Error encountered analyzing the Shared Information Module"
                 Exit Sub
             End If
 
+            'Analyze CM - Currency Manager
+            Call Analyze_CM.Analyze_CM()
             If OkToContinue = True Then
-                'Analyze CM - Currency Manager
-                Call Analyze_CM.Analyze_CM()
                 AnalysisStatusLbl.Text = "Finished analyzing Currency Manager at " + Now.ToString("hh:mm:ss")
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the  Currency Manager Module"
+                AnalysisStatusLbl.Text = "Error encountered analyzing the Currency Manager Module"
                 Exit Sub
             End If
 

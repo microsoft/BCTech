@@ -55,6 +55,10 @@ Module Analyze_RQ
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
+            If sResult = "NO" Then
+                Exit Sub
+            End If
+
             RecID = RecID + 1
             sDescr = "Are request for bids allowed?"
             sqlStmt = "SELECT ZZEnableBid FROM RQSetup"
@@ -1147,7 +1151,7 @@ Module Analyze_RQ
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message, "Error Encountered")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - RQ")
             Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Requisitions data"
             OkToContinue = False
 
