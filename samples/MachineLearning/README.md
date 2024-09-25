@@ -22,12 +22,12 @@ online endpoint:
 - An Azure subscription in which Azure Machine Learning resources can be deployed
 - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) installed.
 - The [Azure ML extension to Azure CLI](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-configure-cli?view=azureml-api-2&tabs=public) installed
-  - If you run into issues installing the Azure ML extension (cf. this [bug](https://github.com/Azure/azure-cli-extensions/issues/7968)), you may need to install the CLI via Python by doing `pip install azure-cli` in a terminal
 
-These instructions were tested with version Azure CLI version 2.64.0 and Azure ML extension version 2.29.0.
+These instructions were tested with version Azure CLI version 2.64.0, Azure ML extension version 2.29.0, and run in a PowerShell 7 terminal.
 
 Not all steps can be performed in Azure ML Studio, so the Azure CLI with the ML extension is needed.
 
+If you encounter issues, try the [troubleshooting](#Troubleshooting) tips listed below.
 
 ## Steps
 
@@ -71,3 +71,10 @@ Go to [Azure Machine Learning Studio](https://ml.azure.com/) and locate the crea
 ![Azure Machine Learning Studio](images/bcmlendpoint.png)
 
 Finally, add the URI and key to appropriate BC configuration, e.g., to the Sales and Inventory forecast and Late Payment Prediction setups.
+
+## Troubleshooting
+
+- If you run into issues installing the Azure ML extension (cf. this [bug](https://github.com/Azure/azure-cli-extensions/issues/7968)), you may need to install the CLI via Python by doing `pip install azure-cli` in a terminal.
+- If you see the error `Resource provider [N/A] isn't registered with Subscription [N/A]`, you may need to register the `Microsoft.Cdn` and `Microsoft.PolicyInsights` resource providers for the subscription used, cf. this [accepted support answer](https://learn.microsoft.com/en-us/answers/questions/1983847/error-while-creating-a-managed-online-endpoint-in).
+- You need virtual machine quota for the VM used by the online endpoint, so if you see `Not enough quota available for Standard_DS2_v2`, request quota for the desired VM.
+- For the `UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte` error, please use PowerShell 7 as a terminal.
