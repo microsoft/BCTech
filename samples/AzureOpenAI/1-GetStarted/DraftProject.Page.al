@@ -23,7 +23,8 @@ page 50100 "Draft Project"
 
         area(PromptOptions)
         {
-
+            // In PromptDialog pages, you can define a PromptOptions area. Here you can add different settings to tweak the output that Copilot will generate.
+            // These settings must be defined as page fields, and must be of type Option or Enum. You cannot define groups in this area.
         }
 
         area(Content)
