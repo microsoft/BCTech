@@ -17,7 +17,6 @@ codeunit 54310 "Secrets And Capabilities Setup"
 
     local procedure RegisterCapability()
     var
-        cd: Codeunit "AOAI Deployments";
         CopilotCapability: Codeunit "Copilot Capability";
         EnvironmentInformation: Codeunit "Environment Information";
         IsolatedStorageWrapper: Codeunit "Isolated Storage Wrapper";
