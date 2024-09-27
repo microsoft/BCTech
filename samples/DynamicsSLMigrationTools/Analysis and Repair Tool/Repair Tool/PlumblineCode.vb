@@ -54,9 +54,6 @@ Module PlumblineCode
     Public Const StartProcess As Short = -3
     Public Const StopProcess As Short = -4
 
-
-
-
     Public Const FOUND As Short = 0
 
 
@@ -167,7 +164,6 @@ Module PlumblineCode
                 'Check to see if the module is unlocked
                 sqlStmt = "SELECT Count(*) FROM RegistDetail WHERE (RegItem = 'A1' AND Unlocked = 1) OR (RegItem = 'AP' AND Unlocked = 1)"
                 Call sqlFetch_Num(countRegEntries, sqlStmt, SqlSysDbConn)
-
 
                 If countRegEntries > 0 Then
                     'Module unlocked
@@ -441,186 +437,143 @@ Module PlumblineCode
         Dim msgstr As String
         Dim MsgStrg As String = ""
         Dim custValMsgsExist As Boolean = False
-
         Dim sqlReader As SqlDataReader = Nothing
-
         Dim sqlTran As SqlTransaction
         Dim curStatus As TransactionStatus
-
-
         Dim sqlTranConn As SqlConnection = New SqlConnection(AppDbConnStr)
         Dim sqlUpdConn As SqlConnection = New SqlConnection(AppDbConnStr)
 
-        '    Call SetRestart(c_CustBal)
 
         Try
-
             If (sqlTranConn.State = ConnectionState.Closed) Then
                 sqlTranConn.Open()
             End If
 
             sqlTran = TranBeg(sqlTranConn)
-
-
-
             msgstr = "After running this process, you should print your A/R Trial Balance report (08.260) and verify that your Accounts Receivable general ledger balance(s) agree with the document detail in the Accounts Receivable module. This process will not make any adjustments to general ledger records."
+            CustId_Logged = False
 
-                CustId_Logged = False
-            'Clean out work table
-
-            ' Delete the entries in the work table.
+            'Delete the entries in the work table.
             Call sqlFetch_1(sqlReader, "p08990DeleteLogs", sqlTranConn, CommandType.StoredProcedure, sqlTran)
             Call sqlReader.Close()
 
             curStatus = TranStatus(sqlTran)
             If (curStatus <> TransactionStatus.Active And curStatus <> TransactionStatus.Committed) Then ErrorOccurred = curStatus
 
-            'clean up old logs
+            'Clean up old logs
             Call sqlFetch_1(sqlReader, "p08990DeleteLogs", sqlTranConn, CommandType.StoredProcedure, sqlTran)
             Call sqlReader.Close()
-
 
             MsgStrg = "Verifying Customer Balances"
 
             Call sqlFetch_1(sqlReader, "p08990CheckARAcct", sqlTranConn, CommandType.StoredProcedure, sqlTran)
-
             curStatus = TranStatus(sqlTran)
             If (curStatus <> TransactionStatus.Active And curStatus <> TransactionStatus.Committed) Then
                 ErrorOccurred = TranStatus(sqlTran)
                 NbrOfErrors_Cust = NbrOfErrors_Cust + 1
             End If
-
             Call sqlReader.Close()
 
             'Update worktable for customers whose balances don't match
             Call sqlFetch_1(sqlReader, "p08990ChkCurBal", sqlTranConn, CommandType.StoredProcedure, sqlTran)
-
-
             curStatus = TranStatus(sqlTran)
             If (curStatus <> TransactionStatus.Active And curStatus <> TransactionStatus.Committed) Then
                 ErrorOccurred = TranStatus(sqlTran)
                 NbrOfErrors_Cust = NbrOfErrors_Cust + 1
             End If
-
             Call sqlReader.Close()
-
 
             Call sqlFetch_1(sqlReader, "p08990ChkFutBal", sqlTranConn, CommandType.StoredProcedure, sqlTran)
-
-
             curStatus = TranStatus(sqlTran)
             If (curStatus <> TransactionStatus.Active And curStatus <> TransactionStatus.Committed) Then
                 ErrorOccurred = TranStatus(sqlTran)
                 NbrOfErrors_Cust = NbrOfErrors_Cust + 1
             End If
-
             Call sqlReader.Close()
+
             'Compare calc'd balances to history balances
             Call sqlFetch_1(sqlReader, "p08990CheckHistCalc", sqlTranConn, CommandType.StoredProcedure, sqlTran)
-
-
             curStatus = TranStatus(sqlTran)
             If (curStatus <> TransactionStatus.Active And curStatus <> TransactionStatus.Committed) Then
                 ErrorOccurred = TranStatus(sqlTran)
                 NbrOfErrors_Cust = NbrOfErrors_Cust + 1
             End If
-
             Call sqlReader.Close()
 
             'Make note of any missing history records
             Call sqlFetch_1(sqlReader, "p08990CheckHist", sqlTranConn, CommandType.StoredProcedure, sqlTran)
-
-
             curStatus = TranStatus(sqlTran)
             If (curStatus <> TransactionStatus.Active And curStatus <> TransactionStatus.Committed) Then
                 ErrorOccurred = TranStatus(sqlTran)
                 NbrOfErrors_Cust = NbrOfErrors_Cust + 1
             End If
-
             Call sqlReader.Close()
 
             Call TranEnd(sqlTran)
             Call sqlTranConn.Close()
 
-
-
-            '    End Using
         Catch ex As Exception
             Call LogMessage("Error in checking customer balances" + vbNewLine, EventLog)
-            Call LogMessage("Error:  " + ex.Message, EventLog)
-
+            Call LogMessage("Error:  " + ex.Message + vbNewLine + ex.StackTrace, EventLog)
         End Try
 
         Try
-
-
             If (sqlTranConn.State = ConnectionState.Closed) Then
                 sqlTranConn.Open()
             End If
-
-            '   sqlTran = TranBeg(sqlTranConn)
 
             'Write information to log file
             Call sqlFetch_1(sqlReader, "p08990GetLogMsgs", sqlTranConn, CommandType.StoredProcedure)
 
             If sqlReader.HasRows() Then
-                    Call LogMessage("", EventLog)
-                    Call LogMessage(MsgStrg, EventLog)
-                End If
+                Call LogMessage("", EventLog)
+                Call LogMessage(MsgStrg, EventLog)
+            End If
 
-                While sqlReader.Read()
+            While sqlReader.Read()
+                Call SetWrkIChkValues(sqlReader, bWrkIChkInfo)
+                Call LogMessage("", EventLog)
 
-                    Call SetWrkIChkValues(sqlReader, bWrkIChkInfo)
-
-                    Call LogMessage("", EventLog)
-
-                    Select Case bWrkIChkInfo.MsgId
-                        Case 1
-                            Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "current period" + SParm(bWrkIChkInfo.Other.Trim) + "does not match current AR period.", EventLog)
-                            NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-                            custValMsgsExist = True
-                        Case 2
-                            Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "default AR account" + SParm(bWrkIChkInfo.Other.Trim) + "is not valid.", EventLog)
-                            NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-                            custValMsgsExist = True
-                        Case 3
-                            Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "default sales account" + SParm(bWrkIChkInfo.Other.Trim) + "is not valid.", EventLog)
-                            NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-                            custValMsgsExist = True
-                        Case 10
+                Select Case bWrkIChkInfo.MsgId
+                    Case 1
+                        Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "current period" + SParm(bWrkIChkInfo.Other.Trim) + "does not match current AR period.", EventLog)
+                        NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                        custValMsgsExist = True
+                    Case 2
+                        Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "default AR account" + SParm(bWrkIChkInfo.Other.Trim) + "is not valid.", EventLog)
+                        NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                        custValMsgsExist = True
+                    Case 3
+                        Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "default sales account" + SParm(bWrkIChkInfo.Other.Trim) + "is not valid.", EventLog)
+                        NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                        custValMsgsExist = True
+                    Case 10
                         Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "current balance: " + FToA(bWrkIChkInfo.OldBal, BaseCuryPrec) + " for company" + SParm(bWrkIChkInfo.Cpnyid.Trim) + "does not agree with sum of open docs: " + FToA(bWrkIChkInfo.NewBal, BaseCuryPrec) + ".", EventLog)
                         NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-                            custValMsgsExist = True
-                        Case 20
+                        custValMsgsExist = True
+                    Case 20
                         Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "future balance: " + FToA(bWrkIChkInfo.OldBal, BaseCuryPrec) + " for company" + SParm(bWrkIChkInfo.Cpnyid.Trim) + "does not agree with sum of open future period docs: " + FToA(bWrkIChkInfo.NewBal, BaseCuryPrec) + ".", EventLog)
                         NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-                            custValMsgsExist = True
-                        Case 30
+                        custValMsgsExist = True
+                    Case 30
                         Call LogMessage("WARNING: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "YTD balance: " + FToA(bWrkIChkInfo.OldBal, BaseCuryPrec) + " for company" + SParm(bWrkIChkInfo.Cpnyid.Trim) + "differs from calculated balance: " + FToA(bWrkIChkInfo.NewBal, BaseCuryPrec) + ".", EventLog)
                         NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
-                            custValMsgsExist = True
-                        Case 40
-                            Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "missing history record for company" + SParm(bWrkIChkInfo.Cpnyid.Trim) + ".", EventLog)
-                            NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-                            custValMsgsExist = True
-                    End Select
+                        custValMsgsExist = True
+                    Case 40
+                        Call LogMessage("ERROR: Customer" + SParm(bWrkIChkInfo.Custid.Trim) + "missing history record for company" + SParm(bWrkIChkInfo.Cpnyid.Trim) + ".", EventLog)
+                        NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                        custValMsgsExist = True
+                End Select
 
-                End While
+            End While
 
-            '   Call TranEnd(sqlTran)
             Call sqlReader.Close()
-
             Call sqlTranConn.Close()
 
-
         Catch ex As Exception
-
             Call LogMessage("Error in checking customer balances" + vbNewLine, EventLog)
-            Call LogMessage("Error:  " + ex.Message, EventLog)
-
-
+            Call LogMessage("Error:  " + ex.Message + vbNewLine + ex.StackTrace, EventLog)
         End Try
-
 
 
         'Display message in Event Log for suggested actions for correcting balances
@@ -648,20 +601,14 @@ Module PlumblineCode
         Dim vendValMsgsExist As Boolean = False
         Dim sqlStmt As String = ""
         Dim sqlReader As SqlDataReader = Nothing
-
         Dim APBalCount As Integer = 0
         Dim sqlString As String = ""
-
         Dim sqlBalConn As SqlConnection = Nothing
         Dim sqlBalReader As SqlDataReader = Nothing
-
         Dim sqlAdjConn As SqlConnection = Nothing
         Dim sqlAdjReader As SqlDataReader = Nothing
-
         Dim sqlAdHistConn As SqlConnection = Nothing
         Dim sqlAdHistReader As SqlDataReader = Nothing
-
-
         Dim RecordParmList As New List(Of ParmList)
         Dim ParmValues As ParmList
 
@@ -675,312 +622,302 @@ Module PlumblineCode
             sqlBalConn = New SqlClient.SqlConnection(AppDbConnStr)
             sqlBalConn.Open()
 
-        End If
+            While sqlReader.Read()
+                Call SetVendorValues(sqlReader, bVendorInfo)
 
-        While sqlReader.Read()
-            Call SetVendorValues(sqlReader, bVendorInfo)
+                ' Get the balances sum for the vendor.  If there are no balances for the vendor, then set default values.
+                Call sqlFetch_Num(APBalCount, "Select Count(*) from AP_Balances where VendID = " + SParm(bVendorInfo.VendId), sqlBalConn)
+                If (APBalCount = 0) Then
+                    bBalanceValues.CurrBal = 0.0
+                    bBalanceValues.FutureBal = 0.0
+                    bBalanceValues.LastChkDate = Date.MinValue
+                    bBalanceValues.LastVODate = Date.MinValue
+                Else
+                    RecordParmList.Clear()
+                    ParmValues = New ParmList
+                    ParmValues.ParmName = "parm1"
+                    ParmValues.ParmType = SqlDbType.VarChar
+                    ParmValues.ParmValue = bVendorInfo.VendId
+                    RecordParmList.Add(ParmValues)
 
-            ' Get the balances sum for the vendor.  If there are no balances for the vendor, then set default values.
-            Call sqlFetch_Num(APBalCount, "Select Count(*) from AP_Balances where VendID = " + SParm(bVendorInfo.VendId), sqlBalConn)
-            If (APBalCount = 0) Then
-                bBalanceValues.CurrBal = 0.0
-                bBalanceValues.FutureBal = 0.0
-                bBalanceValues.LastChkDate = Date.MinValue
-                bBalanceValues.LastVODate = Date.MinValue
-            Else
+                    Call sqlFetch_1(sqlBalReader, "APBalances_Tot1", sqlBalConn, CommandType.StoredProcedure, RecordParmList)
 
-
-
-                RecordParmList.Clear()
-                ParmValues = New ParmList
-                ParmValues.ParmName = "parm1"
-                ParmValues.ParmType = SqlDbType.VarChar
-                ParmValues.ParmValue = bVendorInfo.VendId
-                RecordParmList.Add(ParmValues)
-
-                Call sqlFetch_1(sqlBalReader, "APBalances_Tot1", sqlBalConn, CommandType.StoredProcedure, RecordParmList)
-
-                'Actually retrieve the SUM from the database server
-                Call sqlBalReader.Read()
-                Call SetVendBalances(sqlBalReader, bBalanceValues)
-                sqlBalReader.Close()
-            End If
-
-
-            'Verify Vendor Period Number
-            If bVendorInfo.PerNbr <> bAPSetupInfo.CurrPerNbr Then
-                Call LogMessage("Vendor: " + bVendorInfo.VendId.Trim, EventLog)
-                'Warning - period is not the current fiscal period
-                Call LogMessage("Period is not the current GL fiscal period.", EventLog)
-            End If
-
-            'Verify the Accounts associated with Vendor
-            Call VerifyAccount(bVendorInfo.APAcct, EventLog, sqlBalConn)
-            Call VerifyAccount(bVendorInfo.ExpAcct, EventLog, sqlBalConn)
-
-            'Select the Documents for this vendor
-            'Only want all open vouchers
-            sqlstrg = "Select d.CpnyId, d.DocBal, d.DocType, d.OpenDoc, d.OrigDocAmt, d.PerPost, d.RefNbr, d.Rlsed, d.Terms, d.Vendid from APDoc d where d.VendId =" + SParm(bVendorInfo.VendId.Trim) + "and d.DocClass = 'N' Order by d.VendId, d.RefNbr"
-            Call sqlFetch_1(sqlBalReader, sqlstrg, sqlBalConn, CommandType.Text)
-
-            If sqlBalReader.HasRows() Then
-                VendorCurrBal = 0
-                VendorFutBal = 0
-                HistBal = 0
-
-                sqlAdjConn = New SqlClient.SqlConnection(AppDbConnStr)
-                sqlAdjConn.Open()
-
-                While sqlBalReader.Read()
-
-                    Call SetAPDocValues(sqlBalReader, bAPDocInfo)
-                    If bAPDocInfo.Rlsed = LTRUE Then
-
-
-
-                        'Based on Doc Type compute Vendor current and future Balances
-                        Select Case bAPDocInfo.DocType
-                            Case "VO", "AC"
-                                'A vendor's balance should be the sum of the docbals from all open vouchers which are released
-                                If bAPDocInfo.PerPost <= bVendorInfo.PerNbr Then
-                                    VendorCurrBal = FPAdd(VendorCurrBal, bAPDocInfo.DocBal, BaseCuryPrec)
-
-                                    SqlStrg2 = "Select * from apadjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
-
-                                    Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
-                                    While sqlAdjReader.Read()
-                                        Call SetAPAdjustValues(sqlAdjReader, bAPAdjustInfo)
-                                        If bAPAdjustInfo.AdjgPerPost > bVendorInfo.PerNbr Then
-                                            VendorCurrBal = FPAdd(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                            VendorFutBal = FPSub(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                        End If
-                                    End While
-                                    Call sqlAdjReader.Close()
-                                Else
-                                    VendorFutBal = FPAdd(VendorFutBal, bAPDocInfo.DocBal, BaseCuryPrec)
-                                    SqlStrg2 = "Select * from APAdjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
-                                    Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
-
-                                    While sqlAdjReader.Read()
-                                        If bAPAdjustInfo.AdjgPerPost <= bVendorInfo.PerNbr Then
-                                            VendorCurrBal = FPSub(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                            VendorFutBal = FPAdd(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                        End If
-                                    End While
-                                    Call sqlAdjReader.Close()
-                                End If
-
-                            Case "AD", "PP"
-                                If bAPDocInfo.PerPost <= bVendorInfo.PerNbr Then
-                                    VendorCurrBal = FPSub(VendorCurrBal, bAPDocInfo.DocBal, BaseCuryPrec)
-                                    SqlStrg2 = "Select * from APAdjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
-                                    Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
-
-                                    'If no adjustment record for PP, reverse change in calculated current balance since vendor current balance only changes when check is cut for PP
-                                    If bAPDocInfo.DocType = "PP" And AdjFound <> 0 And bAPDocInfo.DocBal <> 0 Then
-                                        VendorCurrBal = FPAdd(VendorCurrBal, bAPDocInfo.DocBal, BaseCuryPrec)
-                                    End If
-
-                                    While sqlAdjReader.Read()
-                                        Call SetAPAdjustValues(sqlAdjReader, bAPAdjustInfo)
-                                        'Add Currbal in if PPay but only add future bal if in future period.
-                                        If bAPAdjustInfo.AdjgPerPost > bVendorInfo.PerNbr Or bAPDocInfo.DocType = "PP" Then
-                                            VendorCurrBal = FPSub(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                            If bAPAdjustInfo.AdjgPerPost > bVendorInfo.PerNbr Then
-                                                VendorFutBal = FPAdd(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                            End If
-                                        End If
-
-                                    End While
-                                    Call sqlAdjReader.Close()
-                                Else
-                                    VendorFutBal = FPSub(VendorFutBal, bAPDocInfo.DocBal, BaseCuryPrec)
-                                    SqlStrg2 = "Select * from APAdjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
-                                    Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
-
-                                    While sqlAdjReader.Read()
-                                        Call SetAPAdjustValues(sqlReader, bAPAdjustInfo)
-
-                                        If bAPAdjustInfo.AdjgPerPost <= bVendorInfo.PerNbr Then
-                                            VendorCurrBal = FPAdd(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                            VendorFutBal = FPSub(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
-                                        End If
-                                    End While
-                                    Call sqlAdjReader.Close()
-                                End If
-
-                        End Select
-                    End If
-
-                End While
-
-                sqlAdjConn.Close()
-
-
-                If VendorCurrBal.ToString.Trim <> bBalanceValues.CurrBal.ToString.Trim Or VendorFutBal.ToString.Trim <> bBalanceValues.FutureBal.ToString.Trim Then
-                    Call LogMessage("", EventLog)
-                    MsgStrg0 = "Error: Vendor " + bVendorInfo.VendId.Trim
-
-                    If FPRnd(VendorCurrBal, BaseCuryPrec) <> FPRnd(bBalanceValues.CurrBal, BaseCuryPrec) Then
-                        MsgStrg = "Calculated Current Balance of " + FToA(VendorCurrBal, BaseCuryPrec) + " does not agree with AP_Balances.CurrBal of " + FToA(bBalanceValues.CurrBal, BaseCuryPrec)
-                        NbrOfErrors_Vend = NbrOfErrors_Vend + 1
-                        vendValMsgsExist = True
-                    End If
-                    If FPRnd(VendorFutBal, BaseCuryPrec) <> FPRnd(bBalanceValues.FutureBal, BaseCuryPrec) Then
-                        MsgStrg = "Calculated Future Balance of " + FToA(VendorFutBal, BaseCuryPrec) + " does not agree with AP_Balances.FutureBal of " + FToA(bBalanceValues.FutureBal, BaseCuryPrec)
-                        NbrOfErrors_Vend = NbrOfErrors_Vend + 1
-                        vendValMsgsExist = True
-                    End If
-
-                    Call LogMessage(MsgStrg0.Trim + " " + MsgStrg.Trim, EventLog)
+                    'Actually retrieve the SUM from the database server
+                    Call sqlBalReader.Read()
+                    Call SetVendBalances(sqlBalReader, bBalanceValues)
+                    sqlBalReader.Close()
                 End If
 
-                'Validate YTD Vendor History for Current Year/Period
-                ' Create the parameters for the stored procedure.
-                RecordParmList.Clear()
-                ParmValues = New ParmList
-                ParmValues.ParmName = "parm1"
-                ParmValues.ParmType = SqlDbType.VarChar
-                ParmValues.ParmValue = bVendorInfo.VendId
-                RecordParmList.Add(ParmValues)
 
-                ParmValues = New ParmList
-                ParmValues.ParmName = "parm2"
-                ParmValues.ParmType = SqlDbType.VarChar
-                ParmValues.ParmValue = bVendorInfo.PerNbr.Substring(0, 4)
-                RecordParmList.Add(ParmValues)
+                'Verify Vendor Period Number
+                If bVendorInfo.PerNbr <> bAPSetupInfo.CurrPerNbr Then
+                    Call LogMessage("Vendor: " + bVendorInfo.VendId.Trim, EventLog)
+                    'Warning - period is not the current fiscal period
+                    Call LogMessage("Period is not the current GL fiscal period.", EventLog)
+                End If
 
-                sqlAdHistConn = New SqlClient.SqlConnection(AppDbConnStr)
-                sqlAdHistConn.Open()
+                'Verify the Accounts associated with Vendor
+                Call VerifyAccount(bVendorInfo.APAcct, EventLog, sqlBalConn)
+                Call VerifyAccount(bVendorInfo.ExpAcct, EventLog, sqlBalConn)
 
-                Call sqlFetch_1(sqlAdHistReader, "APHist_All", sqlAdHistConn, CommandType.StoredProcedure, RecordParmList)
-                If sqlAdHistReader.HasRows() Then
+                'Select the Documents for this vendor
+                'Only want all open vouchers
+                sqlstrg = "Select d.CpnyId, d.DocBal, d.DocType, d.OpenDoc, d.OrigDocAmt, d.PerPost, d.RefNbr, d.Rlsed, d.Terms, d.Vendid from APDoc d where d.VendId =" + SParm(bVendorInfo.VendId.Trim) + "and d.DocClass = 'N' Order by d.VendId, d.RefNbr"
+                Call sqlFetch_1(sqlBalReader, sqlstrg, sqlBalConn, CommandType.Text)
 
-                    Dim PtdCrAdjList As List(Of Double) = New List(Of Double)
-                    Dim PtdDrAdjList As List(Of Double) = New List(Of Double)
-                    Dim PtdDiscTknList As List(Of Double) = New List(Of Double)
-                    Dim PtdPaymtList As List(Of Double) = New List(Of Double)
-                    Dim PtdPurchList As List(Of Double) = New List(Of Double)
-
+                If sqlBalReader.HasRows() Then
+                    VendorCurrBal = 0
+                    VendorFutBal = 0
                     HistBal = 0
-                    ' Retrieve the data and set up arrays for each of the indexed fields.
+                    sqlAdjConn = New SqlClient.SqlConnection(AppDbConnStr)
+                    sqlAdjConn.Open()
 
-                    While sqlAdHistReader.Read()
+                    While sqlBalReader.Read()
+                        Call SetAPDocValues(sqlBalReader, bAPDocInfo)
+                        If bAPDocInfo.Rlsed = LTRUE Then
 
-                        PtdCrAdjList.Clear()
-                        PtdDrAdjList.Clear()
-                        PtdDiscTknList.Clear()
-                        PtdPaymtList.Clear()
-                        PtdPurchList.Clear()
+                            'Based on Doc Type compute Vendor current and future Balances
+                            Select Case bAPDocInfo.DocType
+                                Case "VO", "AC"
+                                    'A vendor's balance should be the sum of the docbals from all open vouchers which are released
+                                    If bAPDocInfo.PerPost <= bVendorInfo.PerNbr Then
+                                        VendorCurrBal = FPAdd(VendorCurrBal, bAPDocInfo.DocBal, BaseCuryPrec)
 
-                        Call SetAPHistValues(sqlAdHistReader, bAPHistInfo)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs00)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs01)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs02)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs03)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs04)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs05)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs06)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs07)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs08)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs09)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs10)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs11)
-                        PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs12)
+                                        SqlStrg2 = "Select * from apadjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
 
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs00)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs01)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs02)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs03)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs04)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs05)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs06)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs07)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs08)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs09)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs10)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs11)
-                        PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs12)
+                                        Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
+                                        While sqlAdjReader.Read()
+                                            Call SetAPAdjustValues(sqlAdjReader, bAPAdjustInfo)
+                                            If bAPAdjustInfo.AdjgPerPost > bVendorInfo.PerNbr Then
+                                                VendorCurrBal = FPAdd(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                                VendorFutBal = FPSub(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                            End If
+                                        End While
+                                        Call sqlAdjReader.Close()
+                                    Else
+                                        VendorFutBal = FPAdd(VendorFutBal, bAPDocInfo.DocBal, BaseCuryPrec)
+                                        SqlStrg2 = "Select * from APAdjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
+                                        Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
 
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn00)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn01)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn02)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn03)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn04)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn05)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn06)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn07)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn08)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn09)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn10)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn11)
-                        PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn12)
+                                        While sqlAdjReader.Read()
+                                            If bAPAdjustInfo.AdjgPerPost <= bVendorInfo.PerNbr Then
+                                                VendorCurrBal = FPSub(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                                VendorFutBal = FPAdd(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                            End If
+                                        End While
+                                        Call sqlAdjReader.Close()
+                                    End If
 
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt00)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt01)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt02)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt03)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt04)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt05)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt06)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt07)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt08)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt09)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt10)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt11)
-                        PtdPaymtList.Add(bAPHistInfo.PtdPaymt12)
+                                Case "AD", "PP"
+                                    If bAPDocInfo.PerPost <= bVendorInfo.PerNbr Then
+                                        VendorCurrBal = FPSub(VendorCurrBal, bAPDocInfo.DocBal, BaseCuryPrec)
+                                        SqlStrg2 = "Select * from APAdjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
+                                        Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
 
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch00)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch01)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch02)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch03)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch04)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch05)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch06)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch07)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch08)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch09)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch10)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch11)
-                        PtdPurchList.Add(bAPHistInfo.PtdPurch12)
+                                        'If no adjustment record for PP, reverse change in calculated current balance since vendor current balance only changes when check is cut for PP
+                                        If bAPDocInfo.DocType = "PP" And AdjFound <> 0 And bAPDocInfo.DocBal <> 0 Then
+                                            VendorCurrBal = FPAdd(VendorCurrBal, bAPDocInfo.DocBal, BaseCuryPrec)
+                                        End If
 
+                                        While sqlAdjReader.Read()
+                                            Call SetAPAdjustValues(sqlAdjReader, bAPAdjustInfo)
+                                            'Add Currbal in if PPay but only add future bal if in future period.
+                                            If bAPAdjustInfo.AdjgPerPost > bVendorInfo.PerNbr Or bAPDocInfo.DocType = "PP" Then
+                                                VendorCurrBal = FPSub(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                                If bAPAdjustInfo.AdjgPerPost > bVendorInfo.PerNbr Then
+                                                    VendorFutBal = FPAdd(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                                End If
+                                            End If
 
-                        HistBal = FPAdd(HistBal, bAPHistInfo.BegBal, BaseCuryPrec)
+                                        End While
+                                        Call sqlAdjReader.Close()
+                                    Else
+                                        VendorFutBal = FPSub(VendorFutBal, bAPDocInfo.DocBal, BaseCuryPrec)
+                                        SqlStrg2 = "Select * from APAdjust where AdjdRefNbr =" + SParm(bAPDocInfo.RefNbr) + "And AdjdDocType =" + SParm(bAPDocInfo.DocType) + "And VendID =" + SParm(bAPDocInfo.VendId)
+                                        Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
 
-                        For ndx = 0 To (Val(bVendorInfo.PerNbr.Substring(4, 2)) - 1)
-                            HistBal = FPAdd(HistBal, PtdPurchList(ndx), BaseCuryPrec)
-                            HistBal = FPSub(HistBal, PtdPaymtList(ndx), BaseCuryPrec)
-                            HistBal = FPAdd(HistBal, PtdCrAdjList(ndx), BaseCuryPrec)
-                            HistBal = FPSub(HistBal, PtdDiscTknList(ndx), BaseCuryPrec)
-                            HistBal = FPSub(HistBal, PtdDrAdjList(ndx), BaseCuryPrec)
-                        Next
+                                        While sqlAdjReader.Read()
+                                            Call SetAPAdjustValues(sqlReader, bAPAdjustInfo)
 
+                                            If bAPAdjustInfo.AdjgPerPost <= bVendorInfo.PerNbr Then
+                                                VendorCurrBal = FPAdd(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                                VendorFutBal = FPSub(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
+                                            End If
+                                        End While
+                                        Call sqlAdjReader.Close()
+                                    End If
+
+                            End Select
+                        End If
 
                     End While
 
+                    sqlAdjConn.Close()
 
-                    Call sqlAdHistReader.Close()
-                    If CStr(HistBal).Trim <> CStr(VendorCurrBal).Trim Then
+
+                    If VendorCurrBal.ToString.Trim <> bBalanceValues.CurrBal.ToString.Trim Or VendorFutBal.ToString.Trim <> bBalanceValues.FutureBal.ToString.Trim Then
                         Call LogMessage("", EventLog)
-                        MsgStrg0 = "WARNING: Vendor " + bVendorInfo.VendId.Trim
-                        MsgStrg = "Calculated Year to Date Balance of " + FToA(HistBal, BaseCuryPrec) + " does not agree with Calculated Current Balance of " + FToA(VendorCurrBal, BaseCuryPrec)
+                        MsgStrg0 = "Error: Vendor " + bVendorInfo.VendId.Trim
+
+                        If FPRnd(VendorCurrBal, BaseCuryPrec) <> FPRnd(bBalanceValues.CurrBal, BaseCuryPrec) Then
+                            MsgStrg = "Calculated Current Balance of " + FToA(VendorCurrBal, BaseCuryPrec) + " does not agree with AP_Balances.CurrBal of " + FToA(bBalanceValues.CurrBal, BaseCuryPrec)
+                            NbrOfErrors_Vend = NbrOfErrors_Vend + 1
+                            vendValMsgsExist = True
+                        End If
+                        If FPRnd(VendorFutBal, BaseCuryPrec) <> FPRnd(bBalanceValues.FutureBal, BaseCuryPrec) Then
+                            MsgStrg = "Calculated Future Balance of " + FToA(VendorFutBal, BaseCuryPrec) + " does not agree with AP_Balances.FutureBal of " + FToA(bBalanceValues.FutureBal, BaseCuryPrec)
+                            NbrOfErrors_Vend = NbrOfErrors_Vend + 1
+                            vendValMsgsExist = True
+                        End If
+
                         Call LogMessage(MsgStrg0.Trim + " " + MsgStrg.Trim, EventLog)
-                        NbrOfWarnings_Vend = NbrOfWarnings_Vend + 1
-                        vendValMsgsExist = True
+                    End If
+
+                    'Validate YTD Vendor History for Current Year/Period
+                    RecordParmList.Clear()
+                    ParmValues = New ParmList
+                    ParmValues.ParmName = "parm1"
+                    ParmValues.ParmType = SqlDbType.VarChar
+                    ParmValues.ParmValue = bVendorInfo.VendId
+                    RecordParmList.Add(ParmValues)
+
+                    ParmValues = New ParmList
+                    ParmValues.ParmName = "parm2"
+                    ParmValues.ParmType = SqlDbType.VarChar
+                    ParmValues.ParmValue = bVendorInfo.PerNbr.Substring(0, 4)
+                    RecordParmList.Add(ParmValues)
+
+                    sqlAdHistConn = New SqlClient.SqlConnection(AppDbConnStr)
+                    sqlAdHistConn.Open()
+
+                    Call sqlFetch_1(sqlAdHistReader, "APHist_All", sqlAdHistConn, CommandType.StoredProcedure, RecordParmList)
+                    If sqlAdHistReader.HasRows() Then
+
+                        Dim PtdCrAdjList As List(Of Double) = New List(Of Double)
+                        Dim PtdDrAdjList As List(Of Double) = New List(Of Double)
+                        Dim PtdDiscTknList As List(Of Double) = New List(Of Double)
+                        Dim PtdPaymtList As List(Of Double) = New List(Of Double)
+                        Dim PtdPurchList As List(Of Double) = New List(Of Double)
+
+                        HistBal = 0
+                        ' Retrieve the data and set up arrays for each of the indexed fields.
+
+                        While sqlAdHistReader.Read()
+
+                            PtdCrAdjList.Clear()
+                            PtdDrAdjList.Clear()
+                            PtdDiscTknList.Clear()
+                            PtdPaymtList.Clear()
+                            PtdPurchList.Clear()
+
+                            Call SetAPHistValues(sqlAdHistReader, bAPHistInfo)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs00)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs01)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs02)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs03)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs04)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs05)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs06)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs07)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs08)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs09)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs10)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs11)
+                            PtdCrAdjList.Add(bAPHistInfo.PtdCrAdjs12)
+
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs00)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs01)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs02)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs03)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs04)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs05)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs06)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs07)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs08)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs09)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs10)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs11)
+                            PtdDrAdjList.Add(bAPHistInfo.PtdDrAdjs12)
+
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn00)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn01)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn02)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn03)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn04)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn05)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn06)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn07)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn08)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn09)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn10)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn11)
+                            PtdDiscTknList.Add(bAPHistInfo.PtdDiscTkn12)
+
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt00)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt01)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt02)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt03)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt04)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt05)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt06)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt07)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt08)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt09)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt10)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt11)
+                            PtdPaymtList.Add(bAPHistInfo.PtdPaymt12)
+
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch00)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch01)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch02)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch03)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch04)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch05)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch06)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch07)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch08)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch09)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch10)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch11)
+                            PtdPurchList.Add(bAPHistInfo.PtdPurch12)
+
+
+                            HistBal = FPAdd(HistBal, bAPHistInfo.BegBal, BaseCuryPrec)
+
+                            For ndx = 0 To (Val(bVendorInfo.PerNbr.Substring(4, 2)) - 1)
+                                HistBal = FPAdd(HistBal, PtdPurchList(ndx), BaseCuryPrec)
+                                HistBal = FPSub(HistBal, PtdPaymtList(ndx), BaseCuryPrec)
+                                HistBal = FPAdd(HistBal, PtdCrAdjList(ndx), BaseCuryPrec)
+                                HistBal = FPSub(HistBal, PtdDiscTknList(ndx), BaseCuryPrec)
+                                HistBal = FPSub(HistBal, PtdDrAdjList(ndx), BaseCuryPrec)
+                            Next
+                        End While
+
+                        Call sqlAdHistReader.Close()
+                        If CStr(HistBal).Trim <> CStr(VendorCurrBal).Trim Then
+                            Call LogMessage("", EventLog)
+                            MsgStrg0 = "WARNING: Vendor " + bVendorInfo.VendId.Trim
+                            MsgStrg = "Calculated Year to Date Balance of " + FToA(HistBal, BaseCuryPrec) + " does not agree with Calculated Current Balance of " + FToA(VendorCurrBal, BaseCuryPrec)
+                            Call LogMessage(MsgStrg0.Trim + " " + MsgStrg.Trim, EventLog)
+                            NbrOfWarnings_Vend = NbrOfWarnings_Vend + 1
+                            vendValMsgsExist = True
+                        End If
+
+                    End If
+                    If (sqlAdHistConn.State <> ConnectionState.Closed) Then
+                        sqlAdHistConn.Close()
                     End If
 
                 End If
-                If (sqlAdHistConn.State <> ConnectionState.Closed) Then
-                    sqlAdHistConn.Close()
-                End If
-
-            End If
                 sqlBalReader.Close()
 
-        End While
+            End While
 
-        If (sqlBalConn.State <> ConnectionState.Closed) Then
-            sqlBalConn.Close()
+            If (sqlBalConn.State <> ConnectionState.Closed) Then
+                sqlBalConn.Close()
+            End If
+        Else
+            Call LogMessage("No Vendor records found.", EventLog)
         End If
 
         Call sqlReader.Close()
