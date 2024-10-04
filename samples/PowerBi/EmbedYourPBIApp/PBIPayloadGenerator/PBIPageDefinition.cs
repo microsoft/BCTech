@@ -18,7 +18,7 @@ namespace PayloadGenerator
         string caption { get; set; }
         string aboutTitle { get; set; }
         string aboutText { get; set; }
-        string PBIReportId { get; set; }
+        string PBIReportIdFieldName { get; set; }
         string PBIReportName { get; set; }
         string PBIReportPage {  get; set; }
 
@@ -33,7 +33,7 @@ namespace PayloadGenerator
             this.caption = caption;
             this.aboutTitle = aboutTitle;
             this.aboutText = aboutText;
-            this.PBIReportId = PBIReportId;
+            this.PBIReportIdFieldName = PBIReportId;
             this.PBIReportName = PBIReportName;
             this.PBIReportPage = PBIReportPage;
         }
@@ -48,7 +48,7 @@ namespace PayloadGenerator
                 new XAttribute("caption", caption),
                 new XAttribute("aboutTitle", aboutTitle),
                 new XAttribute("aboutText", aboutText),
-                new XAttribute("PBIReportId", PBIReportId),
+                new XAttribute("PBIReportIdFieldName", PBIReportIdFieldName),
                 new XAttribute("PBIReportName", PBIReportName),
                 new XAttribute("PBIReportPage", PBIReportPage)
             );
