@@ -20,8 +20,9 @@ $script:TokenExpirationTime = (Get-Date)
 
 function Copy-TenantMedia
 (
-    [int] $startIndex = 0, # Use this parameters if you want to run the script in parallel. Start the first scripts by specifying e.g. $maxCount 10.000 and second script with $startIndex 10.000 and $maxCount 10.000
-    [int] $maxCount = 0
+    [int]   $startIndex = 0, # Use this parameters if you want to run the script in parallel. Start the first scripts by specifying e.g. $maxCount 10.000 and second script with $startIndex 10.000 and $maxCount 10.000
+    [int]   $maxCount = 0
+    [bool]  $transferMediaSets = $false
 )
 {
     # Setup URLs
@@ -29,11 +30,15 @@ function Copy-TenantMedia
     $sourceCompanyId = Get-SourceCompanyURL -EnvironmentUlr $script:SourceEnvironmentUlr
     $sourceMediaAPIUrl = $script:SourceEnvironmentUlr + '(' + $sourceCompanyId + ')/tenantMedia' 
     $sourceMediaIDsAPIUrl = $script:SourceEnvironmentUlr + '(' + $sourceCompanyId + ')/tenantMediaIds' 
+    $sourceMediaSetAPIUrl = $script:SourceEnvironmentUlr + '(' + $sourceCompanyId + ')/tenantMediaSet' 
+    $sourceMediaSetIDsAPIUrl = $script:SourceEnvironmentUlr + '(' + $sourceCompanyId + ')/tenantMediaSetIds' 
     Write-Host "Using company with ID $sourceCompanyId as source"    
 
     $targetCompanyId = Get-SourceCompanyURL -EnvironmentUlr $script:TargetEnvironmentUlr
     $targetMediaAPIUrl = $script:TargetEnvironmentUlr + '(' + $targetCompanyId + ')/tenantMedia' 
-    $targetMediaIDsAPIUrl = $script:TargetEnvironmentUlr + '(' + $targetCompanyId + ')/tenantMediaIds' 
+    $targetMediaIDsAPIUrl = $script:TargetEnvironmentUlr + '(' + $targetCompanyId + ')/tenantMediaIds'
+    $targetMediaSetAPIUrl = $script:TargetEnvironmentUlr + '(' + $targetCompanyId + ')/tenantMediaSet' 
+    $targetMediaSetIDsAPIUrl = $script:TargetEnvironmentUlr + '(' + $targetCompanyId + ')/tenantMediaSetIds'
     Write-Host "Using company with ID $targetCompanyId as target"    
 
     # Get Tenant Media Records to copy
@@ -41,6 +46,13 @@ function Copy-TenantMedia
     $sourceTenantMediaIDs = Get-TenantMediaIDs -MediaIDsAPIUrl $sourceMediaIDsAPIUrl
     [System.Collections.ArrayList] $itemsToMove =  $sourceTenantMediaIDs | Select-Object -Property id | Sort-Object -Property id
 
+    $MediaSetitemsToMove = [System.Collections.ArrayList]@()
+    if ($transferMediaSets) 
+    {
+        $sourceTenantMediaSetIDs = Get-TenantMediaIDs -MediaIDsAPIUrl $sourceMediaSetIDsAPIUrl
+        $MediaSetitemsToMove =  $sourceTenantMediaSetIDs | Select-Object -Property id | Sort-Object -Property id
+    }
+      
     $targetTenantMediaIDs = Get-TenantMediaIDs -MediaIDsAPIUrl $targetMediaIDsAPIUrl
     $ExistingTenantMedia = New-Object System.Collections.Specialized.OrderedDictionary
 
@@ -53,6 +65,24 @@ function Copy-TenantMedia
             for ($i = 0; $i -lt $targetTenantMediaIDs.Count; $i++)
             {
                 $ExistingTenantMedia.Add($targetTenantMediaIDs[$i].id,'')
+            }
+        }
+    }
+
+    $ExistingTenantMediaSets = New-Object System.Collections.Specialized.OrderedDictionary
+    if ($transferMediaSets) 
+    {
+        $targetTenantMediaSetIDs = Get-TenantMediaIDs -MediaIDsAPIUrl $targetMediaSetIDsAPIUrl
+        if($targetTenantMediaSetIDs)
+        {
+            if($targetTenantMediaSetIDs.value.Count -gt 0)
+            {
+                [System.Collections.ArrayList] $targetTenantMediaSetIDs = $targetTenantMediaSetIDs | Select-Object -Property id  | Sort-Object -Property id
+
+                for ($i = 0; $i -lt $targetTenantMediaSetIDs.Count; $i++)
+                {
+                    $ExistingTenantMediaSets.Add($targetTenantMediaSetIDs[$i].id,'')
+                }
             }
         }
     }
@@ -91,6 +121,39 @@ function Copy-TenantMedia
 
             Write-Host "Moving Media with ID " $tenantMediaBody.id " File Name " $tenantMediaBody.fileName
             $response = Invoke-PostMethod -Uri $targetMediaAPIUrl -Token $Token -Body $tenantMediaBody
+        }
+    }
+
+    if ($transferMediaSets) 
+    {
+
+        $endIndexOfItemSetssToMove = $MediaSetitemsToMove.Count
+
+        if($maxCount) 
+        {
+            $endIndexOfItemSetssToMove =  $startIndex + $maxCount
+        }
+
+        # Move selected records
+        for($i = $startIndex; $i -le $endIndexOfItemSetssToMove; $i++)
+        {
+            $mediaIDToMove = $MediaSetitemsToMove[$i].id
+            if (-not $ExistingTenantMediaSets.Contains($MediaSetitemsToMove[$i].id))
+            {
+                $sourceURl = $sourceMediaSetAPIUrl + '(' + $mediaIDToMove + ')'
+                $Token = Get-AADToken
+                $sourceResponse = Invoke-GetMethod -Uri $sourceURl -Token $Token
+            
+                $tenantMediaBody = @{
+                    id="$($sourceResponse.id)";
+                    companyName=$($sourceResponse.companyName);
+                    mediaID=$($sourceResponse.mediaID);
+                    base64ContentTxt=$($sourceResponse.base64ContentTxt);
+                }
+
+                Write-Host "Moving Media with ID " $tenantMediaBody.id " File Name " $tenantMediaBody.fileName
+                $response = Invoke-PostMethod -Uri $targetMediaSetAPIUrl -Token $Token -Body $tenantMediaBody
+            }
         }
     }
 }
