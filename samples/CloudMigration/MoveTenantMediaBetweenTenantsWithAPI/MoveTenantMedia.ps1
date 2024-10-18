@@ -21,7 +21,7 @@ $script:TokenExpirationTime = (Get-Date)
 function Copy-TenantMedia
 (
     [int]   $startIndex = 0, # Use this parameters if you want to run the script in parallel. Start the first scripts by specifying e.g. $maxCount 10.000 and second script with $startIndex 10.000 and $maxCount 10.000
-    [int]   $maxCount = 0
+    [int]   $maxCount = 0,
     [bool]  $transferMediaSets = $false
 )
 {
