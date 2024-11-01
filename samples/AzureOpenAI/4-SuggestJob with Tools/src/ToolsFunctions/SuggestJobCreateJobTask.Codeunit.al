@@ -41,6 +41,7 @@ codeunit 54395 "SuggestJob - Create Job Task" implements "AOAI Function"
         TempJobTask.Description := Desc.AsValue().AsText();
         TempJobTask."Job Task Type" := TempJobTask."Job Task Type"::Posting;
         TempJobTask.Insert();
+        exit('Completed creating job task');
     end;
 
     procedure GetName(): Text
