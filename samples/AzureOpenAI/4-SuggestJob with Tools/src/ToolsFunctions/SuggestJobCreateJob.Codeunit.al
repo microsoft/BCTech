@@ -40,6 +40,7 @@ codeunit 54396 "SuggestJob - Create Job" implements "AOAI Function"
         TempJob."Bill-to Name" := CustomerName.AsValue().AsText();
         TempJob.Description := Desc.AsValue().AsText();
         TempJob.Insert();
+        exit('Completed creating job');
     end;
 
     procedure GetName(): Text
