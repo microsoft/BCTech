@@ -1,0 +1,33 @@
+{
+  "id": "8c3845b7-7ffe-4b52-954c-fbf3292f9ab6",
+  "name": "Sustainability",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "V2 API to expose Sustainability Account table",
+  "dependencies": [
+    {
+      "id": "b3780cd9-f8f8-4a83-a4d5-0c2ad87b28af",
+      "name": "Sustainability",
+      "publisher": "Microsoft",
+      "version": "24.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "24.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "13.1",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
