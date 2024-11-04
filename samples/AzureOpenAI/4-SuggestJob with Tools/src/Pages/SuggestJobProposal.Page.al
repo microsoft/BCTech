@@ -2,6 +2,7 @@ namespace CopilotToolkitDemo.SuggestJobBasic;
 
 using Microsoft.Sales.Customer;
 using Microsoft.Projects.Project.Job;
+using Microsoft.Projects.Project.Planning;
 
 page 54395 "SuggestJob - Proposal"
 {
@@ -173,10 +174,12 @@ page 54395 "SuggestJob - Proposal"
 
         TempJobTask.Reset();
         TempJobTask.DeleteAll();
+        TempJobTaskLines.Reset();
+        TempJobTaskLines.DeleteAll();
 
         for Attempts := 0 to 3 do
             if SuggestJobGenerateProposal.Run() then
-                if SuggestJobGenerateProposal.GetResult(TempJobTask, TempJob.Description, LocalCustomerName) then begin
+                if SuggestJobGenerateProposal.GetResult(TempJobTask, TempJobTaskLines, TempJob.Description, LocalCustomerName) then begin
                     FindCustomerNameAndNumber(LocalCustomerName, true);
                     CurrPage.ProposalDetails.Page.Load(TempJobTask);
                     exit;
@@ -208,6 +211,7 @@ page 54395 "SuggestJob - Proposal"
     var
         JobTask: Record "Job Task";
         Job: Record Job;
+        JobTaskLines: Record "Job Planning Line";
     begin
         Job.Init();
         Job.Description := TempJob.Description;
@@ -221,11 +225,20 @@ page 54395 "SuggestJob - Proposal"
                 JobTask.Validate("Job No.", Job."No.");
                 JobTask.Insert(true);
             until TempJobTask.Next() = 0;
+
+        if TempJobTaskLines.FindSet() then
+            repeat
+                JobTaskLines.Init();
+                JobTaskLines.TransferFields(TempJobTaskLines);
+                JobTaskLines.Validate("Job No.", Job."No.");
+                JobTaskLines.Insert(true);
+            until TempJobTaskLines.Next() = 0;
     end;
 
     var
         TempJob: Record Job temporary;
         TempJobTask: Record "Job Task" temporary;
+        TempJobTaskLines: Record "Job Planning Line" temporary;
         InputProjectDescription: Text;
         GeneratingTextDialogTxt: Label 'Generating with Copilot...';
         SomethingWentWrongErr: Label 'Something went wrong. Please try again.';

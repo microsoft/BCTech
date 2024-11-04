@@ -18,7 +18,7 @@ codeunit 54396 "SuggestJob - Create Job" implements "AOAI Function"
             );
 
         FunctionDefinition.Add('name', FunctionNameLbl);
-        FunctionDefinition.Add('description', 'Call this function to create a new job line (also called job task)');
+        FunctionDefinition.Add('description', 'Call this function to create a new job (also called project).');
         FunctionDefinition.Add('parameters', ParametersDefinition);
 
         ToolDefinition.Add('type', 'function');

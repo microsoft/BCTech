@@ -2,6 +2,7 @@ namespace CopilotToolkitDemo.SuggestJobBasic;
 
 using Microsoft.Projects.Project.Job;
 using System.AI;
+using Microsoft.Projects.Project.Planning;
 
 codeunit 54390 "SuggestJob - Generate Proposal"
 {
@@ -15,14 +16,18 @@ codeunit 54390 "SuggestJob - Generate Proposal"
         UserPrompt := InputUserPrompt;
     end;
 
-    procedure GetResult(var LocalTempJobTask: Record "Job Task" temporary; var JobDescription: Text; var CustomerName: Text): Boolean
+    procedure GetResult(var LocalTempJobTask: Record "Job Task" temporary; var LocalTempJobPlanningLines: Record "Job Planning Line" temporary; var JobDescription: Text; var CustomerName: Text): Boolean
     begin
         if TempJobTask.IsEmpty() then
             exit(false);
 
         LocalTempJobTask.Copy(TempJobTask, true);
+
         JobDescription := TempJob.Description;
         CustomerName := TempJob."Bill-to Name";
+
+        if not TempJobPlanningLines.IsEmpty() then
+            LocalTempJobPlanningLines.Copy(TempJobPlanningLines, true);
 
         exit(true);
     end;
@@ -64,13 +69,14 @@ codeunit 54390 "SuggestJob - Generate Proposal"
 
         SuggestJobCreateJob.GetJob(TempJob);
         SuggestJobCreateJobTask.GetJobTasks(TempJobTask);
+        SuggestJobCreateJobTask.GetJobTaskLines(TempJobPlanningLines);
     end;
 
     local procedure GetSystemPrompt() SystemPrompt: Text
     begin
         SystemPrompt :=
             'The user will describe a project. Your task is to prepare the project plan for this project to be used in Microsoft Dynamics 365 Business Central.' +
-            'You must call the function "create_job" to create the job, and the function "create_job_task" to create at least 6 tasks for the job.';
+            'You must call the function "create_job" to create the job, and the function "create_job_task" to create at least 6 tasks for the job, each with at least 2 subtasks.';
     end;
 
     local procedure GetApiKey(): SecretText
@@ -95,5 +101,6 @@ codeunit 54390 "SuggestJob - Generate Proposal"
     var
         TempJobTask: Record "Job Task" temporary;
         TempJob: Record "Job" temporary;
+        TempJobPlanningLines: Record "Job Planning Line" temporary;
         UserPrompt: Text;
 }
