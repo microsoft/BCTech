@@ -4,7 +4,7 @@ using Microsoft.eServices.EDocument;
 using Microsoft.eServices.EDocument.Integration.Interfaces;
 using System.Utilities;
 
-codeunit 50105 "Demo Integration V2" implements Sender, Receiver
+codeunit 50105 "Demo Integration V2" implements Sender, Receiver, "Default Int. Actions"
 {
     InherentEntitlements = X;
     InherentPermissions = X;
@@ -71,6 +71,21 @@ codeunit 50105 "Demo Integration V2" implements Sender, Receiver
     end;
 
     procedure DownloadDocument(var EDocument: Record "E-Document"; var EDocumentService: Record "E-Document Service"; var DocumentsBlob: codeunit System.Utilities."Temp Blob"; var DocumentBlob: codeunit "Temp Blob"; var HttpRequestMessage: HttpRequestMessage; var HttpResponseMessage: HttpResponseMessage)
+    begin
+        Error('Not Implemented');
+    end;
+
+    procedure GetSentDocumentApprovalStatus(var EDocument: Record "E-Document"; var EDocumentService: Record "E-Document Service"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage; var Status: enum Microsoft.eServices.EDocument."E-Document Service Status"): Boolean
+    begin
+        Error('Not Implemented');
+    end;
+
+    procedure GetSentDocumentCancellationStatus(var EDocument: Record "E-Document"; var EDocumentService: Record "E-Document Service"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage; var Status: enum Microsoft.eServices.EDocument."E-Document Service Status"): Boolean
+    begin
+        Error('Not Implemented');
+    end;
+
+    procedure OpenServiceIntegrationSetupPage(var EDocumentService: Record "E-Document Service"): Boolean
     begin
         Error('Not Implemented');
     end;
