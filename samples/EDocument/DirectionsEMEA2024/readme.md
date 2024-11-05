@@ -10,12 +10,38 @@ Look at the connector and format specifc code.
 - Follow steps to authenticate vscode with your sandbox
 - Then you can publish
 - Additional information for sandbox setup : [Get started with AL - Business Central | Microsoft Learn](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-get-started#steps-to-set-up-a-sandbox-environment-and-visual-studio-code)
+- Follow the Tasks To Complete 
+- Do the capture the flag - Optional
 
 # Demo API 
-
 https://bc-edoc-workshop.azurewebsites.net/demo-api/
 
-The following endpoints exists 
+### Important information 
+
+All API calls must have Bearer token. The token itself is "secret"
+
+All API calls must have Service header. Pick a service name for your team.
+
+Example:
+#### Authorization: Bearer secret
+#### Service: MyTeamName
+
+
+# Tasks to complete
+
+- Implement Send Async with API. Then post sales invoice for customer with EDoc Doc Sending profile. 
+- Implement GetResponse. Then for a edocument with PendingResponse status, run Get Response job queue.
+- Implement Receive. On EDoc service page, click receive
+- Implement Approve. On Sent EDocument click approve.
+
+# Capture the flag - Optional 
+
+If you want, we added some flags in the communication logs response messages. If you collect them there might be a price! If 
+
+Format: {Flag1}-{Flag2}-{Flag3} 
+
+
+# Endpoints 
  
 ##  Root Endpoint - 
 GET /
@@ -34,7 +60,8 @@ Saves the provided XML data to a file based on the Service header and the cbc:ID
 
 Headers:
 
-Authorization: Bearer <token>
+Authorization: Bearer
+
 Service: <service_name> 
 
 Request Body:
@@ -55,7 +82,8 @@ Checks if a specific XML file exists based on the provided invoice_id and Servic
 
 Headers:
 
-Authorization: Bearer <token>
+Authorization: Bearer
+
 Service: <service_name>
 
 Query Parameters:
@@ -83,3 +111,34 @@ Response:
 - 404 Not Found: Returns {"message": "No files found in upload directory"} if no files are found.
 - 500 Internal Server Error: Returns {"message": "Error reading file", "error": "<error_message>"} if there is an error reading the file.
 - 401 Unauthorized: If the Service header is missing.
+
+## Approval
+
+GET /demo-api/approve
+ 
+Get if edoucment is approved
+
+Headers:
+
+Authorization: Bearer <token>
+
+Service: <service_name>
+
+Response:
+- 200 OK: 
+
+
+## CustomAction
+
+GET /demo-api/customaction
+ 
+CustomAction endpoint
+
+Headers:
+
+Authorization: Bearer <token>
+
+Service: <service_name>
+
+Response:
+- 200 OK: 
