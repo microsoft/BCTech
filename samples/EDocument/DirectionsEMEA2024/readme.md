@@ -26,20 +26,32 @@ Example:
 #### Authorization: Bearer secret
 #### Service: MyTeamName
 
-
 # Tasks to complete
 
-- Implement Send Async with API. Then post sales invoice for customer with EDoc Doc Sending profile. 
-- Implement GetResponse. Then for a edocument with PendingResponse status, run Get Response job queue.
-- Implement Receive. On EDoc service page, click receive
-- Implement Approve. On Sent EDocument click approve.
+## Implement Send Async with API.
+Then post sales invoice for customer with EDoc Doc Sending profile. 
+## Implement GetResponse. 
+Then for a edocument with PendingResponse status, run Get Response job queue.
 
-# Capture the flag - Optional 
+## Implement Receive. 
+On the EDoc service page, you can click receive, or use auto import 
 
-If you want, we added some flags in the communication logs response messages. If you collect them there might be a price! If 
+## Implement Approve
+On Sent EDocument click approve.
 
-Format: {Flag1}-{Flag2}-{Flag3} 
 
+# Capture the flag - Win a Microsoft t-shirt and some Merch 
+
+If you want, we added some flags in the communication logs response messages. 
+If you collect them and get the right right url, and can show that to the instructors. 
+You will get the flags by completing the above actions. 
+
+Url looks like
+https://bc-edoc-workshop.azurewebsites.net/{Flag1}/{Flag2}/{Flag3}
+
+There is 1 t-shirt for the first.
+
+We also have stickers.
 
 # Endpoints 
  

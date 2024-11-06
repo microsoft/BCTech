@@ -19,7 +19,6 @@ codeunit 50101 "Demo Integration" implements "E-Document Integration"
         Error('Not Implemented');
     end;
 
-
     procedure SendBatch(var EDocuments: Record "E-Document"; var TempBlob: codeunit "Temp Blob"; var IsAsync: Boolean; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage)
     begin
         Error('Not Implemented');
