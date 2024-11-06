@@ -9,47 +9,6 @@ codeunit 50105 "Demo Integration V2" implements Sender, Receiver, "Default Int. 
     InherentEntitlements = X;
     InherentPermissions = X;
 
-    procedure Send(var EDocument: Record "E-Document"; var TempBlob: codeunit System.Utilities."Temp Blob"; var IsAsync: Boolean; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage)
-    begin
-        Error('Not Implemented');
-    end;
-
-    procedure GetResponse(var EDocument: Record "E-Document"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage): Boolean
-    begin
-        Error('Not Implemented');
-    end;
-
-
-    procedure SendBatch(var EDocuments: Record "E-Document"; var TempBlob: codeunit "Temp Blob"; var IsAsync: Boolean; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage)
-    begin
-        Error('Not Implemented');
-    end;
-
-    procedure GetApproval(var EDocument: Record "E-Document"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage): Boolean
-    begin
-        Error('Not Implemented');
-    end;
-
-    procedure Cancel(var EDocument: Record "E-Document"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage): Boolean
-    begin
-        Error('Not Implemented');
-    end;
-
-    procedure ReceiveDocument(var TempBlob: codeunit "Temp Blob"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage)
-    begin
-        Error('Not Implemented');
-    end;
-
-    procedure GetDocumentCountInBatch(var TempBlob: codeunit "Temp Blob"): Integer
-    begin
-        Error('Not Implemented');
-    end;
-
-    procedure GetIntegrationSetup(var SetupPage: Integer; var SetupTable: Integer)
-    begin
-        Error('Not Implemented');
-    end;
-
     procedure Send(var EDocument: Record "E-Document"; var EDocumentService: Record "E-Document Service"; var TempBlob: codeunit System.Utilities."Temp Blob"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage; var IsAsync: Boolean)
     begin
         Error('Not Implemented');
@@ -89,4 +48,46 @@ codeunit 50105 "Demo Integration V2" implements Sender, Receiver, "Default Int. 
     begin
         Error('Not Implemented');
     end;
+
+    procedure Send(var EDocument: Record "E-Document"; var TempBlob: codeunit System.Utilities."Temp Blob"; var IsAsync: Boolean; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage)
+    begin
+        Error('Not used in V2');
+    end;
+
+    procedure GetResponse(var EDocument: Record "E-Document"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage): Boolean
+    begin
+        Error('Not used in V2');
+    end;
+
+    procedure SendBatch(var EDocuments: Record "E-Document"; var TempBlob: codeunit "Temp Blob"; var IsAsync: Boolean; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage)
+    begin
+        Error('Not used in V2');
+    end;
+
+    procedure GetApproval(var EDocument: Record "E-Document"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage): Boolean
+    begin
+        Error('Not used in V2');
+    end;
+
+    procedure Cancel(var EDocument: Record "E-Document"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage): Boolean
+    begin
+        Error('Not used in V2');
+    end;
+
+    procedure ReceiveDocument(var TempBlob: codeunit "Temp Blob"; var HttpRequest: HttpRequestMessage; var HttpResponse: HttpResponseMessage)
+    begin
+        Error('Not used in V2');
+    end;
+
+    procedure GetDocumentCountInBatch(var TempBlob: codeunit "Temp Blob"): Integer
+    begin
+        Error('Not used in V2');
+    end;
+
+    procedure GetIntegrationSetup(var SetupPage: Integer; var SetupTable: Integer)
+    begin
+        Error('Not used in V2');
+    end;
+
+
 }
