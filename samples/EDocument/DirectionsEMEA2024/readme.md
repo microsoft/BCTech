@@ -18,6 +18,9 @@ https://bc-edoc-workshop.azurewebsites.net/demo-api/
 
 ### Important information 
 
+When you call the API, you must provide two headers. Authorization and Service. Authorization is a bearer token. 
+Service is a name to identify your connector. You can pick anything. Example: MyConnector123 
+
 All API calls must have Bearer token. The token itself is "secret"
 
 All API calls must have Service header. Pick a service name for your team.
@@ -26,18 +29,37 @@ Example:
 #### Authorization: Bearer secret
 #### Service: MyTeamName
 
+It is also a good idea to read the Interface documentation. You can control click the interfaces that the codeunit implements to read more.
+
 # Tasks to complete
 
-## Implement Send Async with API.
-Then post sales invoice for customer with EDoc Doc Sending profile. 
-## Implement GetResponse. 
-Then for a edocument with PendingResponse status, run Get Response job queue.
+## Implement OpenServiceIntegrationSetupPage to open demo setup page
+On the EDocument service the action "Open Integration Setup". On the setup page, set the field API Key to "secret". Then set the service name to your team name. If you use the functions in the IntegrationHelpers.Codeunit.al, the fields from the demo service will be added as headers automatically.
 
-## Implement Receive. 
-On the EDoc service page, you can click receive, or use auto import 
+## Implement Send Async with API.
+Then post sales invoice for customer with "EDocuments" Doc Sending profile. You need to change this for the customer you are sending to. 
+Go to the E-Document and check the logs. If you have GetResposne status, then you completed sending async. Check the communication logs for the first flag. 
+
+You need to communicate to the service endpoint by sending a http request.
+Use the IntegrationHelpers.Codeunit.al use the PrepareRequestMessage to make it easier, and use HttpClient to send it.
+
+You also need to use WriteBlobToRequestMessage to send the XML to the service.
+
+## Implement GetResponse. 
+Then for a edocument with PendingResponse status, run Get Response job queue manually. If the e-document is not Sent status, then you completed sending and get response. Check the communication logs for the second flag.
+
+Similar to Send, you need to communicate to the service endpoint by sending a http request.
+Use the IntegrationHelpers.Codeunit.al use the PrepareRequestMessage to make it easier, and use HttpClient to send it.
 
 ## Implement Approve
-On Sent EDocument click approve.
+On Sent EDocument click approve. The implementation should return true to mark edocument approved. Check the communication logs for the third flag.
+
+Similar to Send, you need to communicate to the service endpoint by sending a http request.
+Use the IntegrationHelpers.Codeunit.al use the PrepareRequestMessage to make it easier, and use HttpClient to send it.
+
+
+## Implement Receive. 
+On the EDoc service page, you can click receive, or use auto import. The service will get one of the documents you sent to it. 
 
 
 # Capture the flag - Win a Microsoft t-shirt and some Merch 
@@ -86,7 +108,7 @@ Response:
 - 401 Unauthorized: If the Service header is missing.
 
 
-## Get Response
+## Get Response from service
  
 GET /demo-api/getresponse
  
@@ -108,6 +130,22 @@ Response:
 - 401 Unauthorized: If the Bearer token is missing or invalid.
 - 401 Unauthorized: If the Service header is missing.
 
+## Approval of sent edocument
+
+GET /demo-api/approve
+ 
+Get if edoucment is approved
+
+Headers:
+
+Authorization: Bearer <token>
+
+Service: <service_name>
+
+Response:
+- 200 OK: 
+
+
 ## Receive File
 
 GET /demo-api/receive
@@ -124,33 +162,4 @@ Response:
 - 500 Internal Server Error: Returns {"message": "Error reading file", "error": "<error_message>"} if there is an error reading the file.
 - 401 Unauthorized: If the Service header is missing.
 
-## Approval
 
-GET /demo-api/approve
- 
-Get if edoucment is approved
-
-Headers:
-
-Authorization: Bearer <token>
-
-Service: <service_name>
-
-Response:
-- 200 OK: 
-
-
-## CustomAction
-
-GET /demo-api/customaction
- 
-CustomAction endpoint
-
-Headers:
-
-Authorization: Bearer <token>
-
-Service: <service_name>
-
-Response:
-- 200 OK: 
