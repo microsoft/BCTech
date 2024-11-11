@@ -7,8 +7,8 @@ page 50105 "APIV2 - Sust. Accounts"
 
     APIVersion = 'v2.0';
     PageType = API;
-    APIPublisher = 'msm';
-    APIGroup = 'esg';
+    APIPublisher = 'MicrosoftCloudForSustainability';
+    APIGroup = 'ExternalReporting';
     DelayedInsert = true;
     EntityName = 'sustainabilityAccount';
     EntitySetName = 'sustainabilityAccounts';
