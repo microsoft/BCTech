@@ -1,5 +1,8 @@
 # What is Financial Reporting templates for Business Central?
-Business Central 2022 release wave 1 (version 20) introduced the feature _Excel layouts_ as a way to layout and run reports using Excel.
+The Financial Reporting feature gives you insights into the financial data shown on your chart of accounts (COA). A financial report consists of three elements: a row definition, a column definition, and a report definition. These definitions are also called templates. 
+
+To learn more about the Finacial Reporting feature, go to
+https://learn.microsoft.com/en-us/dynamics365/business-central/bi-how-work-account-schedule
 
 # What resources can I find here?
 This repo contains configuration packages for Financial Reporting templates that was releases in 2025 release wave 1 (version 26)
