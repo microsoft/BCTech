@@ -5,8 +5,13 @@
 // TODO: kennie
 
 
-// Financial Report run
-// TODO: Financial Report run on-screen: {report definition code}
+// Financial Report usage events
+// 
+// Financial Report run on-screen: eventId == 'AL0000O76'
+// Financial Report run from request page: eventId == 'AL0000O76' // TODO: clash of event id
+
+
+// Financial Report run on-screen: {report definition code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O76'
@@ -17,20 +22,19 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-// report definitions
-// TODO, reportDefinitionCode=customDimensions.alReportDefinitionCode
+// report/row/column definitions
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
 , rowDefinitionCode=customDimensions.alRowDefinitionCode
-// TODO, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
 // which user ran the report
 , usertelemetryId = user_Id
 
 
-// TODO: not implmented yet
 // Financial Report run from request page: {report definition code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
-| where customDimensions has 'TODO'
-| where customDimensions.eventId == 'TODO'
+| where customDimensions has 'AL0000O76' // TODO: clash of event id
+| where customDimensions.eventId == 'AL0000O76' // TODO: clash of event id
 | project timestamp
 // in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
@@ -51,10 +55,10 @@ traces
 // Financial Report Row Definition created: customDimensions.eventId == 'AL0000O81'
 // Financial Report Row Definition modified: customDimensions.eventId == 'AL0000O82'
 // Financial Report Row Definition deleted: customDimensions.eventId == 'AL0000O84'
+// Financial Report Row Definition copied: customDimensions.eventId == 'AL0000OKV'
 
 
-// Financial Report Row Definition created
-// TODO: Financial Report Row Definition created: {Row Definition Code}
+// Financial Report Row Definition created: {Row Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O81'
@@ -71,8 +75,7 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Row Definition modified
-// TODO: Financial Report Row Definition modified: {Row Definition Code}
+// Financial Report Row Definition modified: {Row Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O82'
@@ -89,9 +92,23 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Row Definition copied
-// This operation is currently implemented in report 26
-// TODO: Add explicit telemetry event for this, if possible. Must include rowDefinitionCode
+// Financial Report Row Definition copied: {Row Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000OKV'
+| where customDimensions.eventId == 'AL0000OKV'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was copied
+, sourceRowDefinitionCode = customDimensions.alSourceRowDefinitionCode
+, newRowDefinitionCode = customDimensions.alSourceRowDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
 
 // Financial Report Row Definition imported
 // This operation is in configuration package telemetry
@@ -102,8 +119,7 @@ traces
 // TODO: Add explicit telemetry event for this, if possible. Must include rowDefinitionCode
 
 
-// Financial Report Row Definition deleted
-// TODO: Financial Report Row Definition deleted: {Row Definition Code}
+// Financial Report Row Definition deleted: {Row Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O84'
@@ -126,10 +142,10 @@ traces
 // Financial Report Column Definition created: customDimensions.eventId == 'AL0000O85'
 // Financial Report Column Definition modified: customDimensions.eventId == 'AL0000O86'
 // Financial Report Column Definition deleted: customDimensions.eventId == 'AL0000O88'
+// Financial Report Column Definition copied: customDimensions.eventId == 'AL0000OKW' 
 
 
-// Financial Report Column Definition created
-// TODO: Financial Report Column Definition created: {Column Definition Code}
+// Financial Report Column Definition created: {Column Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O85'
@@ -146,8 +162,7 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Column Definition modified
-// TODO: Financial Report Column Definition modified: {Column Definition Code}
+// Financial Report Column Definition modified: {Column Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O86'
@@ -164,9 +179,23 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Column Definition copied
-// This operation is currently implemented in report 960
-// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+// Financial Report Column Definition copied: {Column Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000OKW'
+| where customDimensions.eventId == 'AL0000OKW'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was copied
+, sourceColDefinitionCode = customDimensions.alSourceColDefinitionCode
+, newColDefinitionCode = customDimensions.alNewColDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
 
 // Financial Report Column Definition imported
 // This operation is in configuration package telemetry
@@ -177,8 +206,7 @@ traces
 // TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
 
 
-// Financial Report Column Definition deleted
-// TODO: Financial Report Column Definition deleted: {Column Definition Code}
+// Financial Report Column Definition deleted: {Column Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O88'
@@ -200,11 +228,11 @@ traces
 //
 // Financial Report created: customDimensions.eventId == 'AL0000O77'
 // Financial Report modified: customDimensions.eventId == 'AL0000O78'
+// Financial Report Definition copied: customDimensions.eventId == 'AL0000OKX'
 // Financial Report Definition deleted: customDimensions.eventId == 'AL0000O80'
 
 
-// Financial Report created
-// TODO: Financial Report Definition deleted: {Report Definition Code}
+// Financial Report Definition created: {Report Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O77'
@@ -215,15 +243,29 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-// which definition was deleted
+// which definition was created
 , reportDefinitionCode=customDimensions.alReportDefinitionCode
 // which user did it
 , usertelemetryId = user_Id
 
 
-// Financial Report Definition copied
-// This operation is currently implemented in report 39
-// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+// Financial Report Definition copied: {Report Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000OKX'
+| where customDimensions.eventId == 'AL0000OKX'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was copied
+, sourceReportDefinitionCode = customDimensions.alSourceReportDefinitionCode
+, newReportDefinitionCode = customDimensions.alNewReportDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
 
 // Financial Report Definition imported
 // This operation is in configuration package telemetry
@@ -234,8 +276,7 @@ traces
 // TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
 
 
-// Financial Report modified
-// TODO: Financial Report Definition deleted: {Report Definition Code}
+// Financial Report Definition modified: {Report Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O78'
@@ -246,14 +287,13 @@ traces
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-// which definition was deleted
+// which definition was modified
 , reportDefinitionCode=customDimensions.alReportDefinitionCode
 // which user did it
 , usertelemetryId = user_Id
 
 
-// Financial Report deleted
-// TODO: Financial Report Definition deleted: {Report Definition Code}
+// Financial Report Definition deleted: {Report Definition Code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000O80'
