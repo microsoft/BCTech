@@ -7,15 +7,15 @@
 
 // Financial Report usage events
 // 
-// Financial Report run on-screen: eventId == 'AL0000O76'
-// Financial Report run from request page: eventId == 'AL0000O76' // TODO: clash of event id
+// Financial Report run on-screen: eventId == 'AL0000OKU'
+// Financial Report run from request page: eventId == 'AL0000O76' 
 
 
 // Financial Report run on-screen: {report definition code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
-| where customDimensions has 'AL0000O76'
-| where customDimensions.eventId == 'AL0000O76'
+| where customDimensions has 'AL0000OKU'
+| where customDimensions.eventId == 'AL0000OKU'
 | project timestamp
 // in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
@@ -33,8 +33,8 @@ traces
 // Financial Report run from request page: {report definition code}
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
-| where customDimensions has 'AL0000O76' // TODO: clash of event id
-| where customDimensions.eventId == 'AL0000O76' // TODO: clash of event id
+| where customDimensions has 'AL0000O76' 
+| where customDimensions.eventId == 'AL0000O76' 
 | project timestamp
 // in which environment/company did it happen
 , aadTenantId = customDimensions.aadTenantId
