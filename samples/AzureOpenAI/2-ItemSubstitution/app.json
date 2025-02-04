@@ -1,0 +1,32 @@
+{
+  "id": "626e352e-ac73-43c9-b1a7-14000c32d026",
+  "name": "2-ItemSubstitution Demo",
+  "publisher": "Copilot Toolkit Demo",
+  "version": "0.10.0.0",
+  "brief": "A simple example with Copilot demos.",
+  "description": "This is a demo extension with some sample Copilot experiences, and should not be used in production.",
+  "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
+  "EULA": "https://go.microsoft.com/fwlink/?linkid=2009120",
+  "help": "https://go.microsoft.com/fwlink/?linkid=2104024",
+  "url": "https://go.microsoft.com/fwlink/?LinkId=724011",
+  "logo": "ExtensionLogo.png",
+  "dependencies": [  ],
+  "screenshots": [],
+  "platform": "24.0.0.0",
+  "application": "24.0.0.0",
+  "idRanges": [
+    {
+      "from": 54300,
+      "to": 54350
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "features": [
+    "NoImplicitWith"
+  ],
+  "runtime": "14.0"
+}

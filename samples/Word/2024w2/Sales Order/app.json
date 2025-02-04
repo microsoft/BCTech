@@ -1,0 +1,32 @@
+{
+    "id":  "f0f34810-9027-4288-9c6e-feddb557f067",
+    "name":  "Sales Order Report",
+    "publisher":  "Microsoft",
+    "version":  "25.0.0.0",
+    "dependencies":  [
+                         {
+                             "id":  "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+                             "publisher":  "Microsoft",
+                             "name":  "System Application",
+                             "version":  "25.0.0.0"
+                         },
+                         {
+                             "id":  "437dbf0e-84ff-417a-965d-ed2bb9650972",
+                             "publisher":  "Microsoft",
+                             "name":  "Base Application",
+                             "version":  "25.0.0.0"
+                         }
+                     ],
+    "screenshots":  [
+
+                    ],
+    "platform":  "25.0.0.0",
+    "resourceExposurePolicy":  {
+                                   "allowDebugging":  true,
+                                   "allowDownloadingSource":  true,
+                                   "includeSourceInSymbolFile":  true
+                               },
+    "target":  "OnPrem",
+    "preprocessorSymbols":  [
+                            ]
+}

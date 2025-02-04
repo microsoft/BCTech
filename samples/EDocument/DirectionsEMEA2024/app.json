@@ -1,0 +1,39 @@
+{
+  "id": "b34f2f52-4964-416d-9ab6-07a166c6506e",
+  "name": "app",
+  "publisher": "Workshop Publisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "e1d97edc-c239-46b4-8d84-6368bdf67c8b",
+      "name": "E-Document Core",
+      "publisher": "Microsoft",
+      "version": "25.1.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "25.1.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "14.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}

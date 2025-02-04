@@ -1,0 +1,151 @@
+// KQL samples - Report layout lifecycle
+
+
+// Generally available (GA) in version 25.1
+//
+// The following operations about report layout lifecycle actions (done by a user in the Report Layouts page) can be found in telemetry
+//
+// Report layout added by user : eventId == 'AL0000N0E'
+// Report layout default changed by user : eventId == 'AL0000N0D' 
+// Report layout properties changed by user : eventId == 'AL0000N0H'
+// Report layout exported by user : eventId == 'AL0000N0I'
+// Report layout replaced by user : eventId == 'AL0000N0G'
+// Report layout deleted by user : eventId == 'AL0000N0F'
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Please read the documentation article
+// 
+// for updated versions of these queries and also much more details on report layout lifecycle telemetry
+// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Report layout added by user
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000N0E' // performance optimization
+| where customDimensions.eventId == 'AL0000N0E'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// for which report and layout
+, reportId = customDimensions.alReportId // object id of the report
+, layoutName = customDimensions.alLayoutName 
+// NB! alLayoutFormat shows as an integer in the telemetry in versions prior to 25.1
+, layoutFormat = customDimensions.alLayoutFormat // possible values: RDLC, Word, Excel, Custom
+// what did the user do
+, action = customDimensions.alAction // alAction is "New" for this event
+// which user did it
+, user_Id // user telemetry id
+
+
+// Report layout default changed by user 
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000N0D' // performance optimization
+| where customDimensions.eventId == 'AL0000N0D'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// for which report and layout
+, reportId = customDimensions.alReportId // object id of the report
+, newDefaultLayoutName = customDimensions.alLayoutName 
+// NB! alLayoutFormat shows as an integer in the telemetry in versions prior to 25.1
+, layoutFormat = customDimensions.alLayoutFormat // possible values: RDLC, Word, Excel, Custom
+// what did the user do
+, action = customDimensions.alAction // alAction is "SetDefault" for this event
+// which user did it
+, user_Id // user telemetry id
+
+
+// Report layout properties changed by user
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000N0H' // performance optimization
+| where customDimensions.eventId == 'AL0000N0H'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// for which report
+, reportId = customDimensions.alReportId // object id of the report
+// what did the user do
+, action = customDimensions.alAction // alAction is "Edit" for this event
+, oldLayoutDescription = customDimensions.alOldLayoutDescription
+, oldLayoutName = customDimensions.alOldLayoutName
+, newLayoutDescription = customDimensions.alNewLayoutDescription
+, newLayoutName = customDimensions.alNewLayoutName
+// which user did it
+, user_Id // user telemetry id
+
+
+// Report layout exported by user
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000N0I' // performance optimization
+| where customDimensions.eventId == 'AL0000N0I'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// for which report and layout
+, reportId = customDimensions.alReportId // object id of the report
+, layoutName = customDimensions.alLayoutName 
+// what did the user do
+, action = customDimensions.alAction // alAction is "Export" for this event
+// which user did it
+, user_Id // user telemetry id
+
+
+// Report layout deleted by user
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000N0F' // performance optimization
+| where customDimensions.eventId == 'AL0000N0F'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// for which report and layout
+, reportId = customDimensions.alReportId // object id of the report
+, layoutName = customDimensions.alLayoutName 
+// what did the user do
+, action = customDimensions.alAction // alAction is "Delete" for this event
+// which user did it
+, user_Id // user telemetry id
+
+
+// Report layout replaced by user
+traces
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions has 'AL0000N0G' // performance optimization
+| where customDimensions.eventId == 'AL0000N0G'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// for which report and layout
+, reportId = customDimensions.alReportId // object id of the report
+, layoutName = customDimensions.alLayoutName 
+// what did the user do
+, action = customDimensions.alAction // alAction is "Replace" for this event
+// which user did it
+, user_Id // user telemetry id
+
+
