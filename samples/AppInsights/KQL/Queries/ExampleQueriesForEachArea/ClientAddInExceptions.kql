@@ -1,0 +1,53 @@
+// KQL samples - Exceptions
+
+// Client add-in exceptions (raw data) 
+// available from 26.0
+exceptions
+| where timestamp > ago(60d) // adjust as needed
+| where customDimensions.eventId == 'CL0005' 
+| take 5
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// in which extension/app
+, appId = customDimensions.appId
+, appName = customDimensions.appName
+, appPublisher = customDimensions.appPublisher
+, appVersion = customDimensions.appVersion
+// in which object
+, alObjectId = customDimensions.alObjectId // is this always empty?
+, alObjectName = customDimensions.alObjectName // is this always empty?
+, alObjectType = customDimensions.alObjectType
+// which add-in
+, controlAddInName = customDimensions.controlAddInName
+// which client (browser, tablet, phone, ...)
+, clientType = customDimensions.clientType
+, hostType = customDimensions.hostType
+// device info
+// these two are not conforming to the naming convention used in PageView events
+//, deviceLocale = customDimensions.deviceLocale
+// , deviceScreenResolution = customDimensions.deviceScreenResolution
+, deviceScreenResolution = customDimensions.screenRes
+// error information
+, problemId 
+, type
+, assembly
+, method
+, outerType 
+, outerMessage 
+, outerAssembly 
+, outerMethod 
+, innermostType 
+, innermostMessage 
+, innermostAssembly 
+, innermostMethod 
+, details // json structure with more information, such as stack traces
+// which user got the error
+, usertelemetryId = user_Id 
+// other dimensions
+, domain = customDimensions.domain // remove
+, version = customDimensions.version // what does this do?
+, errorType = customDimensions.typeName // consider removing this

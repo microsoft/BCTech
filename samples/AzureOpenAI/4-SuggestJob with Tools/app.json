@@ -1,0 +1,32 @@
+{
+  "id": "4d4424bc-1e44-49c2-9879-5963972ead38",
+  "name": "4-SuggestJob with Tools Demo",
+  "publisher": "Copilot Toolkit Demo",
+  "version": "0.10.0.0",
+  "brief": "A simple example with a Copilot demo scenario about suggesting a job/project.",
+  "description": "This is a demo extension with some sample Copilot experiences, and should not be used in production.",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [  ],
+  "screenshots": [],
+  "platform": "25.0.0.0",
+  "application": "25.0.0.0",
+  "idRanges": [
+    {
+      "from": 54380,
+      "to": 54399
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "features": [
+    "NoImplicitWith"
+  ],
+  "runtime": "14.0"
+}

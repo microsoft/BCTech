@@ -1,0 +1,310 @@
+// KQL samples - Financial Reporting Usage and Lifecycle
+// Available from version 26.0
+
+// Financial Reporting telemetry docs
+// TODO: kennie
+
+
+// Financial Report usage events
+// 
+// Financial Report run on-screen: eventId == 'AL0000OKU'
+// Financial Report run from request page: eventId == 'AL0000O76' 
+
+
+// Financial Report run on-screen: {report definition code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000OKU'
+| where customDimensions.eventId == 'AL0000OKU'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// report/row/column definitions
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
+, rowDefinitionCode=customDimensions.alRowDefinitionCode
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+// which user ran the report
+, usertelemetryId = user_Id
+
+
+// Financial Report run from request page: {report definition code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O76' 
+| where customDimensions.eventId == 'AL0000O76' 
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// report definitions
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
+, rowDefinitionCode=customDimensions.alRowDefinitionCode
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+// which user ran the report
+, usertelemetryId = user_Id
+
+
+
+// Financial Report Row Definition lifecycle events
+// 
+// Financial Report Row Definition created: customDimensions.eventId == 'AL0000O81'
+// Financial Report Row Definition modified: customDimensions.eventId == 'AL0000O82'
+// Financial Report Row Definition deleted: customDimensions.eventId == 'AL0000O84'
+// Financial Report Row Definition copied: customDimensions.eventId == 'AL0000OKV'
+
+
+// Financial Report Row Definition created: {Row Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O81'
+| where customDimensions.eventId == 'AL0000O81'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was created
+, rowDefinitionCode=customDimensions.alRowDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Row Definition modified: {Row Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O82'
+| where customDimensions.eventId == 'AL0000O82'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was modified
+, rowDefinitionCode=customDimensions.alRowDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Row Definition copied: {Row Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000OKV'
+| where customDimensions.eventId == 'AL0000OKV'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was copied
+, sourceRowDefinitionCode = customDimensions.alSourceRowDefinitionCode
+, newRowDefinitionCode = customDimensions.alSourceRowDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Row Definition imported
+// This operation is in configuration package telemetry
+// TODO: Add explicit telemetry event for this, if possible. Must include rowDefinitionCode
+
+// Financial Report Row Definition exported
+// This operation is in configuration package telemetry
+// TODO: Add explicit telemetry event for this, if possible. Must include rowDefinitionCode
+
+
+// Financial Report Row Definition deleted: {Row Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O84'
+| where customDimensions.eventId == 'AL0000O84'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was deleted
+, rowDefinitionCode=customDimensions.alRowDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+
+// Financial Report Column Definition lifecycle events
+// 
+// Financial Report Column Definition created: customDimensions.eventId == 'AL0000O85'
+// Financial Report Column Definition modified: customDimensions.eventId == 'AL0000O86'
+// Financial Report Column Definition deleted: customDimensions.eventId == 'AL0000O88'
+// Financial Report Column Definition copied: customDimensions.eventId == 'AL0000OKW' 
+
+
+// Financial Report Column Definition created: {Column Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O85'
+| where customDimensions.eventId == 'AL0000O85'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was created
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Column Definition modified: {Column Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O86'
+| where customDimensions.eventId == 'AL0000O86'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was modified
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Column Definition copied: {Column Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000OKW'
+| where customDimensions.eventId == 'AL0000OKW'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was copied
+, sourceColDefinitionCode = customDimensions.alSourceColDefinitionCode
+, newColDefinitionCode = customDimensions.alNewColDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Column Definition imported
+// This operation is in configuration package telemetry
+// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+
+// Financial Report Column Definition exported
+// This operation is in configuration package telemetry
+// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+
+
+// Financial Report Column Definition deleted: {Column Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O88'
+| where customDimensions.eventId == 'AL0000O88'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was deleted
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+
+// Financial Report Definition lifecycle events
+//
+// Financial Report created: customDimensions.eventId == 'AL0000O77'
+// Financial Report modified: customDimensions.eventId == 'AL0000O78'
+// Financial Report Definition copied: customDimensions.eventId == 'AL0000OKX'
+// Financial Report Definition deleted: customDimensions.eventId == 'AL0000O80'
+
+
+// Financial Report Definition created: {Report Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O77'
+| where customDimensions.eventId == 'AL0000O77'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was created
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Definition copied: {Report Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000OKX'
+| where customDimensions.eventId == 'AL0000OKX'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was copied
+, sourceReportDefinitionCode = customDimensions.alSourceReportDefinitionCode
+, newReportDefinitionCode = customDimensions.alNewReportDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Definition imported
+// This operation is in configuration package telemetry
+// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+
+// Financial Report Definition exported
+// This operation is in configuration package telemetry
+// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+
+
+// Financial Report Definition modified: {Report Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O78'
+| where customDimensions.eventId == 'AL0000O78'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was modified
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Definition deleted: {Report Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000O80'
+| where customDimensions.eventId == 'AL0000O80'
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was deleted
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
