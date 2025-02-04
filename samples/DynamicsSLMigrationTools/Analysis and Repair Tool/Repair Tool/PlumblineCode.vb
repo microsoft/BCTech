@@ -128,7 +128,7 @@ Module PlumblineCode
 
             If bAPSetupInfo.PerNbr.Trim <> "" Then
                 'Check to see if the module is unlocked
-                sqlStmt = "SELECT Count(*) FROM RegistDetail WHERE (RegItem = 'A1' AND Unlocked = 1) OR (RegItem = 'AP' AND Unlocked = 1)"
+                sqlStmt = "SELECT Count(*) FROM RegistDetail WHERE (RegItem IN ('A1', 'B1') AND Unlocked = 1) OR (RegItem = 'AP' AND Unlocked = 1)"
                 Call sqlFetch_Num(countRegEntries, sqlStmt, SqlSysDbConn)
 
                 If countRegEntries > 0 Then
@@ -162,7 +162,7 @@ Module PlumblineCode
 
             If bARSetupInfo.PerNbr.Trim <> "" Then
                 'Check to see if the module is unlocked
-                sqlStmt = "SELECT Count(*) FROM RegistDetail WHERE (RegItem = 'A1' AND Unlocked = 1) OR (RegItem = 'AP' AND Unlocked = 1)"
+                sqlStmt = "SELECT Count(*) FROM RegistDetail WHERE (RegItem IN ('A1', 'B1') AND Unlocked = 1) OR (RegItem = 'AP' AND Unlocked = 1)"
                 Call sqlFetch_Num(countRegEntries, sqlStmt, SqlSysDbConn)
 
                 If countRegEntries > 0 Then
