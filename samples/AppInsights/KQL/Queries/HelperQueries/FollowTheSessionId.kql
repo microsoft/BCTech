@@ -1,11 +1,17 @@
 // use this query to follow along what happens in a single session. Can be useful when troubleshooting.
+
+let _session_Id = 'fea0995e-525d-499a-bc2e-0fd27bfe412b' // change to the guid for the session you want to follow
+;
+let pv = 
+pageViews
+| where session_Id == _session_Id
+| extend message = strcat('Page opened: ', name)
+| project timestamp, session_Id, user_Id, message, clientType='WebClient'
+;
+let tra = 
 traces
-| where timestamp >= datetime(2021-01-08 10:00:18.0587533) // adjust as needed
-| where timestamp <= datetime(2021-01-08 16:29:18.0587533) // adjust as needed
-| where operation_Id == '<insert session id here>'
-| extend eventId = customDimensions.eventId 
-, alObjectId = customDimensions.alObjectId
-, alObjectName = customDimensions.alObjectName
-, alObjectType = customDimensions.alObjectType
-| project timestamp, eventId, operation_Id, message, alObjectId, alObjectName, alObjectType, customDimensions
+| where session_Id == _session_Id
+| project timestamp, session_Id, user_Id, message, clientType= tostring(customDimensions.clientType)
+;
+union pv, tra
 | order by timestamp asc
