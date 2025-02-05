@@ -31,14 +31,12 @@ Module Analyze_SY
         Dim SepPos As Integer
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Administration information"
-
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Administration information")
 
             '====== Administration ======
 
             '=== General Information ===
             sAnalysisType = "General Information"
-
             Call oEventLog.LogMessage(0, "ADMINISTRATION - GENERAL INFORMATION")
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
@@ -56,7 +54,6 @@ Module Analyze_SY
             sResult = DecodeCustId(bRegistrationInfo.CustomerId)
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
-
 
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
             Call oEventLog.LogMessage(0, "")
@@ -120,16 +117,11 @@ Module Analyze_SY
                     ProdName = String.Concat(ProdName, " CU11")
             End Select
 
-
-
             sResult = bVersionSL.VersionNbr.Trim + " " + ProdName
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
 
-
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
-
 
             RecID = RecID + 1
             sDescr = "SQL Server Information:"
@@ -144,7 +136,6 @@ Module Analyze_SY
                 sResult = "Microsoft SQL Server "
                 Dim verMajor As String = bSQLInfo.ProductVersion.Substring(0, 2)
                 Select Case verMajor
-
                     Case "10"
                         sResult = sResult + "2010"
                     Case "11"
@@ -157,7 +148,6 @@ Module Analyze_SY
                         sResult = sResult + "2017"
                     Case "15"
                         sResult = sResult + "2019"
-
                 End Select
 
                 RecID = RecID + 1
@@ -166,7 +156,6 @@ Module Analyze_SY
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
                 RecID = RecID + 1
                 sDescr = "-- Edition: "
                 sResult = bSQLInfo.Edition.Trim()
@@ -174,14 +163,12 @@ Module Analyze_SY
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
                 RecID = RecID + 1
                 sDescr = "-- Machine/Server: "
                 sResult = bSQLInfo.MachineName + "//" + bSQLInfo.ServerName
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             End If
             Call sqlReader.Close()
 
@@ -192,7 +179,6 @@ Module Analyze_SY
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
             RecID = RecID + 1
             sDescr = "Application Database Size:"
 
@@ -201,11 +187,8 @@ Module Analyze_SY
 
             Call sqlFetch_1(sqlReader, sqlStringRet, SqlAppDbConn, CommandType.Text)
             If (sqlReader.HasRows()) Then
-
-
                 Call sqlReader.Read()
                 Call SetUnboundList30Values(sqlReader, bUnboundList30)
-
                 sResult = bUnboundList30.ListID.Trim + " MB"
             End If
             Call sqlReader.Close()
@@ -214,14 +197,12 @@ Module Analyze_SY
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
             RecID = RecID + 1
             sDescr = "Logged in User ID:"
             sResult = UserId.Trim
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
 
             RecID = RecID + 1
             ' List the modules that are in use.
@@ -231,10 +212,8 @@ Module Analyze_SY
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
             ' Check each module to see what is in use currently.
             sqlStmt = "SELECT COUNT(MCActivated) FROM MCSetup WHERE MCActivated = 1"
-
             Call sqlFetch_Num(retValInt1, sqlStmt, SqlSysDbConn)
 
             sqlStmt = "SELECT COUNT(*) FROM GLTran WHERE TranType = 'IC' AND Rlsed = 1"
@@ -245,11 +224,7 @@ Module Analyze_SY
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             End If
-
-
-
             sqlStmt = "SELECT COUNT(Init) FROM GLSetup WHERE Init = 1"
             Call sqlFetch_Num(retValInt1, sqlStmt, SqlAppDbConn)
             sqlStmt = "SELECT COUNT(Rlsed) FROM GLTran WHERE Rlsed = 1"
@@ -397,7 +372,6 @@ Module Analyze_SY
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
             End If
 
-
             sqlStmt = "SELECT COUNT(*) FROM smProServSetup"
             Call sqlFetch_Num(retValInt1, sqlStmt, SqlAppDbConn)
             sqlStmt = "SELECT COUNT(*) FROM smServCall WHERE ServiceCallCompleted = 1"
@@ -438,11 +412,9 @@ Module Analyze_SY
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SY")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Administration data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Administration data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - System Administration")
             OkToContinue = False
-
         End Try
-
     End Sub
 End Module

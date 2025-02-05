@@ -986,8 +986,9 @@ Module Functions
 
         If (sqlMsgConn Is Nothing) Then
             sqlMsgConn = New SqlClient.SqlConnection(AppDbConnStr)
+        ElseIf (sqlMsgConn.Database <> AppDBName.Trim()) Then
+            sqlMsgConn = New SqlClient.SqlConnection(AppDbConnStr)
         End If
-
 
         sqlMsgConn.Open()
         dbTran = TranBeg(sqlMsgConn)
@@ -1000,8 +1001,6 @@ Module Functions
 
         ' Write the information to the status report.
         Call oEventLog.LogMessage(0, String.Format("       {0} {1}", strDescr, strResult, vbNewLine))
-
-
     End Sub
 
     Public Function PeriodPlusPerNum(CurrPer As String, NumVal As Integer) As String

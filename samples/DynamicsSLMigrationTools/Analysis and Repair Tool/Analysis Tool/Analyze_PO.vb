@@ -39,7 +39,7 @@ Module Analyze_PO
             '===== Purchasing =====
 
             '=== Module Usage ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Purchasing Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Purchasing Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -876,12 +876,9 @@ Module Analyze_PO
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - PO")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Purchasing data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Purchasing data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Purchasing")
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module
