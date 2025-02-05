@@ -27,11 +27,7 @@ exceptions
 , clientType = customDimensions.clientType
 , hostType = customDimensions.hostType
 // device info
-// these two are not conforming to the naming convention used in PageView events
-//, deviceLocale = customDimensions.deviceLocale
-// , deviceLocale = customDimensions.deviceLocale
-// , deviceScreenResolution = customDimensions.deviceScreenResolution
-, deviceScreenResolution = customDimensions.screenRes // fix this
+, deviceScreenResolution = customDimensions.screenRes
 , hostType = customDimensions.hostType
 // error information
 , problemId 
