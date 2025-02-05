@@ -5,7 +5,7 @@ Imports System.Data.SqlClient
 Module Analyze_OM
     '================================================================================
     ' This module contains code to analyze tables used with the Order Management Module
-     '================================================================================
+    '================================================================================
 
     Public Sub Analyze_OM()
         Dim sqlStringExec As String = String.Empty
@@ -35,6 +35,7 @@ Module Analyze_OM
 
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "Analyzing Order Management Module Usage")
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Order Management Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -1086,16 +1087,10 @@ Module Analyze_OM
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
 
-
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - OM")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Order Management data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Order Management data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Order Management")
             OkToContinue = False
-
         End Try
-
-
-
     End Sub
-
 End Module
