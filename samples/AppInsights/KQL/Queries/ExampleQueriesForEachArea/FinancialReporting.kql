@@ -110,11 +110,43 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Row Definition imported
-// This operation is in configuration package telemetry
-// TODO: Add explicit telemetry event for this, if possible. Must include rowDefinitionCode
 
-// Financial Report Row Definition exported
+// Financial Report Row Definition imported: {Row Definition Code}
+// TODO: Financial Report Row Definition ACC-CAT2: Import
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000ONP' // event id collision
+| where customDimensions.eventId == 'AL0000ONP' // event id collision
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was imported
+, rowDefinitionCode=customDimensions.alRowDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
+// Financial Report Row Definition exported: {Row Definition Code}
+// TODO: Financial Report Row Definition ACC-CAT: Export
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000ONP' // event id collision
+| where customDimensions.eventId == 'AL0000ONP' // event id collision
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was exported
+, rowDefinitionCode=customDimensions.alRowDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
 // This operation is in configuration package telemetry
 // TODO: Add explicit telemetry event for this, if possible. Must include rowDefinitionCode
 
@@ -197,13 +229,41 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Column Definition imported
-// This operation is in configuration package telemetry
-// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+// Financial Report Column Definition imported: {Column Definition Code}
+// TODO: Financial Report Column Definition PERIODS2: Import
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000ONQ' // event id collision
+| where customDimensions.eventId == 'AL0000ONQ' // event id collision
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was imported
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
 
-// Financial Report Column Definition exported
-// This operation is in configuration package telemetry
-// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+
+// Financial Report Column Definition exported: {Column Definition Code}
+// TODO: Financial Report Column Definition PERIODS: Export
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000ONQ' // event id collision
+| where customDimensions.eventId == 'AL0000ONQ' // event id collision
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was exported
+, columnDefinitionCode=customDimensions.alColumnDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
 
 
 // Financial Report Column Definition deleted: {Column Definition Code}
@@ -267,13 +327,42 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Definition imported
-// This operation is in configuration package telemetry
-// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+// TODO: Financial Report Definition imported: {Report Definition Code}
+// Financial Report ACC-CAT2: Imported
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000ONR' // event id collision
+| where customDimensions.eventId == 'AL0000ONR' // event id collision
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was imported
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
 
-// Financial Report Definition exported
-// This operation is in configuration package telemetry
-// TODO: Add explicit telemetry event for this, if possible. Must include columnDefinitionCode
+
+// TODO: Financial Report ACC-CAT: Exported
+// Financial Report Definition exported: {Report Definition Code}
+traces
+| where timestamp > ago(5d) // adjust the time range as needed
+| where customDimensions has 'AL0000ONR' // event id collision
+| where customDimensions.eventId == 'AL0000ONR' // event id collision
+| project timestamp
+// in which environment/company did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// which definition was exported
+, reportDefinitionCode=customDimensions.alReportDefinitionCode
+// which user did it
+, usertelemetryId = user_Id
+
+
 
 
 // Financial Report Definition modified: {Report Definition Code}
