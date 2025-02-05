@@ -1,15 +1,15 @@
-// KQL samples - Exceptions
+// KQL samples - Client addin exceptions
 
-// Client add-in exceptions (raw data) 
-// available from 26.0
-exceptions
+
+exceptions 
 | where timestamp > ago(60d) // adjust as needed
 | where customDimensions.eventId == 'CL0005' 
+| order by timestamp desc 
 | take 5
 | project timestamp
 // in which environment/company did it happen
-, aadTenantId = customDimensions.aadTenantId
-, environmentName = customDimensions.environmentName
+, aadTenantId = customDimensions.aadTenantId // null - just because testing in dev env?
+, environmentName = customDimensions.environmentName // undefined - just because testing in dev env?
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 // in which extension/app
@@ -19,7 +19,7 @@ exceptions
 , appVersion = customDimensions.appVersion
 // in which object
 , alObjectId = customDimensions.alObjectId // is this always empty?
-, alObjectName = customDimensions.alObjectName // is this always empty?
+, alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 // which add-in
 , controlAddInName = customDimensions.controlAddInName
@@ -29,8 +29,10 @@ exceptions
 // device info
 // these two are not conforming to the naming convention used in PageView events
 //, deviceLocale = customDimensions.deviceLocale
+// , deviceLocale = customDimensions.deviceLocale
 // , deviceScreenResolution = customDimensions.deviceScreenResolution
-, deviceScreenResolution = customDimensions.screenRes
+, deviceScreenResolution = customDimensions.screenRes // fix this
+, hostType = customDimensions.hostType
 // error information
 , problemId 
 , type
@@ -47,7 +49,6 @@ exceptions
 , details // json structure with more information, such as stack traces
 // which user got the error
 , usertelemetryId = user_Id 
-// other dimensions
+// other dimensions: TODO
 , domain = customDimensions.domain // remove
-, version = customDimensions.version // what does this do?
 , errorType = customDimensions.typeName // consider removing this
