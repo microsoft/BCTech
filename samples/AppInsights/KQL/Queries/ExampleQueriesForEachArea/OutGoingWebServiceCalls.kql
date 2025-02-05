@@ -1,36 +1,47 @@
 // KQL samples - Outgoing Web Service Requests 
 
-// Use renames in the project operator if you don't need to filter on the columns extracted from customDimensions
-// move columns up to the extend operator and add a tostring function call if you need to filter or summarize on it
+// Outgoing Web Service request events
+// 
+// Outgoing Web Service Requests: eventId == 'RT0019'
+// HTTP server certificate validation failed when calling endpoint: eventId == 'RT0052'
 
-// Outgoing Web Service Requests from AL HttpClient (RAW data)
+
+
+// Outgoing Web Service Requests from AL HttpClient
 traces
 | where timestamp > ago(60d) // change if your retention policy is different than the default
 | where customDimensions has 'RT0019'
 | where customDimensions.eventId == 'RT0019'
-| project eventId = customDimensions.eventId 
+| project timestamp
+// in which environment did it happen
 , aadTenantId = customDimensions.aadTenantId
 , environmentName = customDimensions.environmentName
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
-, alAuthenticationMethod = customDimensions.alAuthenticationMethod
-, alHttpTimeout = customDimensions.alHttpTimeout
+// in which extension/app
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
+// in which object
 , alObjectId = customDimensions.alObjectId
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
-, alStackTrace = customDimensions.alStackTrace // This dimension was introduced in Business Central 2022 release wave 2, version 21.3.
-, clientType = customDimensions.clientType // This dimension was introduced in Business Central 2022 release wave 2, version 21.4.
+// http request details
+, alAuthenticationMethod = customDimensions.alAuthenticationMethod
+, alHttpTimeout = customDimensions.alHttpTimeout
 , endpoint = customDimensions.endpoint
-, extensionId = customDimensions.extensionId
-, extensionName = customDimensions.extensionName
-, extensionPublisher = customDimensions.extensionPublisher
-, extensionVersion = customDimensions.extensionVersion
 , httpMethod = toupper( customDimensions.httpMethod ) // httpMethod is logged as the value used in the AL code
 // httpReturnCode was deprecated in version 17.2. Use httpStatusCode instead 
 , httpStatusCode = case( isnotempty(customDimensions.httpStatusCode), customDimensions.httpStatusCode, customDimensions.httpReturnCode ) 
 , httpHeaders = customDimensions.httpHeaders       
+// diagnostics data (how did it go?)
+, alStackTrace = customDimensions.alStackTrace // This dimension was introduced in Business Central 2022 release wave 2, version 21.3.
+, clientType = customDimensions.clientType // This dimension was introduced in Business Central 2022 release wave 2, version 21.4.
+// performance data
 , executionTime = customDimensions.serverExecutionTime
 , executionTimeInMS = toreal(totimespan(customDimensions.serverExecutionTime))/10000 //the datatype for executionTime is timespan
+// who did it?
 , usertelemetryId = case(
   // user telemetry id was introduced in the platform in version 20.0
   toint( substring(customDimensions.componentVersion,0,2)) >= 20, user_Id
@@ -46,3 +57,35 @@ traces
 , path = url_json.Path
 , scheme = url_json.Scheme
 | project-away url_json
+
+
+// HTTP server certificate validation failed when calling endpoint: {endpoint}
+// added in version 26.0
+traces
+| where timestamp > ago(60d) // change if your retention policy is different than the default
+| where customDimensions has 'RT0052'
+| where customDimensions.eventId == 'RT0052'
+| project timestamp
+// in which environment did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+, companyName = customDimensions.companyName
+// in which extension/app
+, extensionId = customDimensions.extensionId
+, extensionName = customDimensions.extensionName
+, extensionVersion = customDimensions.extensionVersion
+, extensionPublisher = customDimensions.extensionPublisher
+// in which object
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+// certificate information
+, certificateChain = customDimensions.certificateChain
+, certificateIssuerName = customDimensions.certificateIssuerName
+, certificateSubject = customDimensions.certificateSubject
+// http request details
+, endpoint = customDimensions.endpoint
+, httpMethod = customDimensions.httpMethod
+// why did it fail?
+, failureReason = customDimensions.failureReason
