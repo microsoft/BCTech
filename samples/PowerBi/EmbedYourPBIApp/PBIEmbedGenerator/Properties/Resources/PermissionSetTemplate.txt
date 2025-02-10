@@ -1,0 +1,8 @@
+namespace {0};
+
+permissionset {1} "{2}"
+{{
+    Access = Internal;
+    Assignable = false;
+    Permissions =
+{3}}}
