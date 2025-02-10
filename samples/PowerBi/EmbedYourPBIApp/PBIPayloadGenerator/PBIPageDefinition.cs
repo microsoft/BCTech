@@ -1,11 +1,4 @@
-﻿using CsvHelper.Configuration.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace PayloadGenerator
 {
@@ -18,13 +11,16 @@ namespace PayloadGenerator
         string caption { get; set; }
         string aboutTitle { get; set; }
         string aboutText { get; set; }
-        string PBIReportId { get; set; }
+        string PBIReportIdFieldName { get; set; }
         string PBIReportName { get; set; }
         string PBIReportPage {  get; set; }
+        string obsolete { get; set; }
+        string applicationArea { get; set; }
 
         public PBIPageDefinition(
-            string id, string name, string fileName, string caption, string aboutTitle
-            , string aboutText, string PBIReportId, string PBIReportName, string PBIReportPage
+            string id, string name, string fileName, string caption, string aboutTitle,
+            string aboutText, string PBIReportId, string PBIReportName, string PBIReportPage,
+            string obsolete, string applicationArea
         )
         {
             this.id = id;
@@ -33,9 +29,11 @@ namespace PayloadGenerator
             this.caption = caption;
             this.aboutTitle = aboutTitle;
             this.aboutText = aboutText;
-            this.PBIReportId = PBIReportId;
+            this.PBIReportIdFieldName = PBIReportId;
             this.PBIReportName = PBIReportName;
             this.PBIReportPage = PBIReportPage;
+            this.obsolete = obsolete;
+            this.applicationArea = applicationArea;
         }
 
 
@@ -48,9 +46,11 @@ namespace PayloadGenerator
                 new XAttribute("caption", caption),
                 new XAttribute("aboutTitle", aboutTitle),
                 new XAttribute("aboutText", aboutText),
-                new XAttribute("PBIReportId", PBIReportId),
+                new XAttribute("PBIReportIdFieldName", PBIReportIdFieldName),
                 new XAttribute("PBIReportName", PBIReportName),
-                new XAttribute("PBIReportPage", PBIReportPage)
+                new XAttribute("PBIReportPage", PBIReportPage),
+                new XAttribute("obsolete", obsolete),
+                new XAttribute("applicationArea", applicationArea)
             );
 
             return page;

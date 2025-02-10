@@ -1,20 +1,8 @@
-﻿using System;
-using System.Xml;
-using System.Text;
-using System.IO;
-using Mono.Options;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Xml.Serialization;
-using System.Xml.Linq;
-using System.Collections.ObjectModel;
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
-using DocumentFormat.OpenXml.Packaging;
+﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using System.CommandLine;
 
 
 namespace PayloadGenerator
@@ -23,45 +11,43 @@ namespace PayloadGenerator
     {
         static void Main(string[] args)
         {
-            // http://www.ndesk.org/doc/ndesk-options/NDesk.Options/OptionSet.html
-            bool show_help = false;
-            string inputfile = "";
-            string outputdir = "";
-            string outputfile = "";
-
-            int idnumberstart = 50000;
-
-            var p = new OptionSet() {
-                { "h|help",  "show this message and exit", v => show_help = v != null },
-                { "i|inputfile=",  "input Excel file (required)", v => inputfile = v },
-                { "outputdir=",  "output directory", v => outputdir = v },
-                { "outputfile=",  "output file (required)", v => outputfile = v },
-                { "idnumberstart=",  "Id numbers for AL objects starts at this number (default is 50000)", v => idnumberstart = int.Parse( v ) },
+            var rootCommand = new RootCommand("Power BI content - AL payload generator");
+            var inputFileOption = new Option<FileInfo>("--inputfile", "The input Excel file")
+            {
+                IsRequired = true
             };
+            inputFileOption.AddAlias("--i");
+            var outputFileOption = new Option<FileInfo>("--outputfile", "The output file to be used as payload for the AL generator")
+            {
+                IsRequired = true
+            };
+            var outputDirOption = new Option<DirectoryInfo>(
+                "--outputdir",
+                description: "The output directory for the output file",
+                getDefaultValue: () => new DirectoryInfo(System.IO.Directory.GetCurrentDirectory())
+            );
+            rootCommand.AddOption(inputFileOption);
+            rootCommand.AddOption(outputFileOption);
+            rootCommand.AddOption(outputDirOption);
 
-            List<string> extra;
+            rootCommand.SetHandler((inputFile, outputFile, outputDir) =>
+            {
+                Run(inputFile.FullName, outputFile.FullName, outputDir.FullName);
+            }, inputFileOption, outputFileOption, outputDirOption);
+
             try
             {
-                extra = p.Parse(args);
+                rootCommand.InvokeAsync(args);
             }
-            catch (OptionException e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.Message);
                 Console.WriteLine("Try using --help' for more information.");
-                Environment.Exit(0);
+                Environment.Exit(-1);
             }
-
-            if (show_help)
-            {
-                ShowHelp(p);
-                Environment.Exit(0);
-            }
-
-            if (inputfile.Equals(""))
-            {
-                ShowHelp(p);
-                Environment.Exit(0);
-            }
+        }
+        public static void Run(string inputfile, string outputfile, string outputdir)
+        { 
 
             Console.WriteLine("PBI embed app payload generator");
 
@@ -77,9 +63,9 @@ namespace PayloadGenerator
             }
             Console.WriteLine("Worksheet '{0}'. Found : {1} rows", NamespaceSheetName, NamespaceRows.Count.ToString());
             string ALNamespace = "";
-            if (NamespaceRows.Count >= 2 && NamespaceRows[1].Length > 0)
+            if (NamespaceRows.Count >= 1 && NamespaceRows[0].Length > 0)
             {
-                ALNamespace = NamespaceRows[1][0];
+                ALNamespace = NamespaceRows[0][0];
             }
 
             var PBIReportsSheetName = "PBIReports";
@@ -122,17 +108,9 @@ namespace PayloadGenerator
             if (outputfile.Equals(""))
             {
                 Console.WriteLine("Output file parameter required.");
-                Environment.Exit(0);
-            }
-
-
-            if (outputdir.Equals(""))
-            {
-                outputdir = System.IO.Directory.GetCurrentDirectory();
+                Environment.Exit(-1);
             }
             Console.WriteLine("Using directory for output files: " + outputdir);
-
-
             Console.WriteLine("Generating payload file...");
 
             XDocument payloaddoc = GeneratePayload(ALNamespace, pages, rcExtensions, permSets);
@@ -196,16 +174,6 @@ namespace PayloadGenerator
             }
         }
 
-        static void ShowHelp(OptionSet p)
-        {
-            Console.WriteLine("Usage: PayloadGenerator [OPTIONS]+");
-            Console.WriteLine();
-            Console.WriteLine("Options:");
-            p.WriteOptionDescriptions(Console.Out);
-
-            Console.WriteLine("-------------------");
-        }
-
         static private List<string[]> readExcelWorksheet(string inputfile, string worksheetName)
         {
             List<string[]> rows = new List<string[]>();
@@ -216,18 +184,39 @@ namespace PayloadGenerator
                 var sheet = workbookPart.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == worksheetName);
                 var worksheetPart = (WorksheetPart)(workbookPart.GetPartById(sheet.Id));
                 var sheetData = worksheetPart.Worksheet.Elements<SheetData>().First();
+                var columnRefs = new List<string>();
+                var regex = new Regex("\\d+");
 
                 foreach (var row in sheetData.Elements<Row>())
                 {
-                    List<string> cells = new List<string>();
-
-                    foreach (var cell in row.Elements<Cell>())
+                    if (row.RowIndex == 1)
                     {
-                        cells.Add(GetCellValue(cell, workbookPart));
-                    }
+                        foreach (var cell in row.Elements<Cell>())
+                        {
+                            columnRefs.Add(regex.Replace(cell.CellReference, ""));
+                        }
+                    } 
+                    else
+                    {
+                        List<string> cells = new List<string>();
 
-                    var cellArray = cells.ToArray();
-                    rows.Add(cellArray);
+                        foreach(var columnRef in columnRefs)
+                        {
+                            var query = row.Elements<Cell>().Where(cell => regex.Replace(cell.CellReference, "") == columnRef).FirstOrDefault();
+
+                            if (query == null)
+                            {
+                                cells.Add("");
+                            }
+                            else
+                            {
+                                cells.Add(GetCellValue(query, workbookPart));
+                            }
+                        }
+
+                        var cellArray = cells.ToArray();
+                        rows.Add(cellArray);
+                    }
                 }
             }
             return rows;
@@ -246,8 +235,10 @@ namespace PayloadGenerator
                     row[5],
                     row[6],
                     row[7],
-                    row[8]
-                );
+                    row[8],
+                    row[9],
+                    row[10]
+                ); 
 
                 if (!row[0].Equals("id"))
                 {
@@ -267,7 +258,9 @@ namespace PayloadGenerator
                     row[2],
                     row[3],
                     row[4],
-                    row[5]
+                    row[5],
+                    row[6],
+                    row[7]
                 );
 
                 if (!row[0].Equals("id"))
@@ -287,7 +280,8 @@ namespace PayloadGenerator
                     row[1],
                     row[2],
                     row[3],
-                    row[4]
+                    row[4],
+                    row[5]
                 );
 
                 if (!row[0].Equals("rcextensionname"))
@@ -320,7 +314,7 @@ namespace PayloadGenerator
         {
             if (cell == null)
             {
-                return null;
+                return "";
             }
 
             var value = cell.CellFormula != null
@@ -369,39 +363,6 @@ namespace PayloadGenerator
                             break;
                     }
                 }
-            //switch (cell.DataType.Value)
-            //{
-            //    case CellValues.SharedString:
-
-            //        // For shared strings, look up the value in the
-            //        // shared strings table.
-            //        var stringTable =
-            //            workbookPart.GetPartsOfType<SharedStringTablePart>()
-            //                .FirstOrDefault();
-
-            //        // If the shared string table is missing, something 
-            //        // is wrong. Return the index that is in
-            //        // the cell. Otherwise, look up the correct text in 
-            //        // the table.
-            //        if (stringTable != null)
-            //        {
-            //            value =
-            //                stringTable.SharedStringTable
-            //                    .ElementAt(int.Parse(value)).InnerText;
-            //        }
-            //        break;
-
-            //    case CellValues.Boolean:
-            //        switch (value)
-            //        {
-            //            case "0":
-            //                value = "FALSE";
-            //                break;
-            //            default:
-            //                value = "TRUE";
-            //                break;
-            //        }
-            //        break;
             }
 
             return value;

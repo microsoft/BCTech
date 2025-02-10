@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace PayloadGenerator
 {
@@ -16,6 +10,8 @@ namespace PayloadGenerator
         string extends{ get; set; }
         string where { get; set; }
         string tooltip { get; set; }
+        string rolecenternamespace { get; set; }
+        string image { get; set; }
 
         //id = "50140" 
         //name = "BusinessManagerRoleCenterExt" 
@@ -36,7 +32,9 @@ namespace PayloadGenerator
             string filename,
             string extends,
             string where,
-            string tooltip             
+            string tooltip,
+            string rolecenternamespace,
+            string image
         )
         {
             this.id = id;
@@ -45,6 +43,8 @@ namespace PayloadGenerator
             this.extends = extends;
             this.where = where;
             this.tooltip = tooltip;
+            this.rolecenternamespace = rolecenternamespace;
+            this.image = image;
         }
 
 
@@ -56,7 +56,9 @@ namespace PayloadGenerator
                 new XAttribute("filename", filename),
                 new XAttribute("extends", extends),
                 new XAttribute("where", where),
-                new XAttribute("tooltip", tooltip)
+                new XAttribute("tooltip", tooltip),
+                new XAttribute("rolecenternamespace", rolecenternamespace),
+                new XAttribute("image", image)
             );
 
             foreach(ActionDefinition action in actions)

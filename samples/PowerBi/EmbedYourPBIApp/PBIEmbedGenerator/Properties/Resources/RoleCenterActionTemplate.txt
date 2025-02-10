@@ -1,0 +1,7 @@
+                action("{0}")
+                {{
+                    ApplicationArea = Basic, Suite;
+                    Caption = '{1}';
+                    Image = "PowerBI";
+                    RunObject = page "{2}";
+{3}                }}
