@@ -1,9 +1,10 @@
-﻿using PBIEmbedGenerator.Properties;
-using System;
-using System.CommandLine;
-using System.IO;
-using System.Text;
+﻿using System;
 using System.Xml;
+using System.Text;
+using System.IO;
+using Mono.Options;
+using System.Collections.Generic;
+using PBIEmbedGenerator.Properties;
 
 namespace APIQueryGenerator
 {
@@ -11,38 +12,43 @@ namespace APIQueryGenerator
     {
         static void Main(string[] args)
         {
-            var inputFileOption = new Option<FileInfo>("--inputfile", "The XML payload input file")
-            {
-                IsRequired = true
-            };
-            inputFileOption.AddAlias("--i");
-            var outputDirOption = new Option<DirectoryInfo>("--outputdir", "The output directory where the AL files will be generated")
-            {
-                IsRequired = true
-            };
-            outputDirOption.AddAlias("--o");
+            // http://www.ndesk.org/doc/ndesk-options/NDesk.Options/OptionSet.html
+            bool show_help = false;
+            string inputfile = "";
+            string outputdir = "";
+            Version version = new Version();
 
-            var rootCommand = new RootCommand("Power BI content - AL generator");
-            rootCommand.AddOption(inputFileOption);
-            rootCommand.AddOption(outputDirOption);
-            rootCommand.SetHandler((inputFile, outputDir) =>
-            {
-                Run(inputFile.FullName, outputDir.FullName);
-            }, inputFileOption, outputDirOption);
+            var p = new OptionSet() {
+                { "h|help",  "show this message and exit", v => show_help = v != null },
+                { "i|inputfile=",  "input xml file (required)", v => inputfile = v },
+                { "o|outputdir=",  "output directory (if not specified, then input file name will be used)", v => outputdir = v },
+                { "v|version=",    "target Business Central version", v => version = new Version(v) }
+            };
 
+            List<string> extra;
             try
             {
-                rootCommand.InvokeAsync(args);
+                extra = p.Parse(args);
             }
-            catch (Exception ex)
+            catch (OptionException e)
             {
-                Console.WriteLine(ex.Message);
-                Environment.Exit(-1);
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Try using --help' for more information.");
+                Environment.Exit(0);
             }
-        }
 
-        static void Run(string inputfile, string outputdir)
-        {
+            if (show_help)
+            {
+                ShowHelp(p);
+                Environment.Exit(0);
+            }
+
+            if (inputfile.Equals(""))
+            {
+                ShowHelp(p);
+                Environment.Exit(0);
+            }
+
             Console.WriteLine("PBI embed page AL code generator");
 
             Console.WriteLine("------------------------");
@@ -85,7 +91,7 @@ namespace APIQueryGenerator
             Console.WriteLine("Found {0} pages", pages.SelectNodes("page").Count.ToString());
             foreach (XmlNode page in pages.SelectNodes("page"))
             {
-                var content = GeneratePBIEmbedPageCode(alNamespace, page);
+                var content = GeneratePBIEmbedPageCode(alNamespace, page, version);
                 var filename = page.Attributes["filename"].Value;
                 SaveFile(outputdir, filename, content);
                 Console.WriteLine(filename);
@@ -173,7 +179,7 @@ namespace APIQueryGenerator
             }
         }
 
-        public static string GeneratePBIEmbedPageCode(string alNamespace, XmlNode query)
+        public static string GeneratePBIEmbedPageCode(string alNamespace, XmlNode query, Version version)
         {
             StringBuilder sb = new StringBuilder();
             StringBuilder additionalProperties = new StringBuilder();
@@ -275,5 +281,35 @@ namespace APIQueryGenerator
                 }
             }
         }
+
+        static void ShowHelp(OptionSet p)
+        {
+            Console.WriteLine("Usage: APIQueryGenerator [OPTIONS]+");
+            Console.WriteLine();
+            Console.WriteLine("Options:");
+            p.WriteOptionDescriptions(Console.Out);
+
+            Console.WriteLine("-------------------");
+            var exampleXML = """
+<?xml version="1.0" encoding="utf-8" ?>
+<APIQueries APIPublisher="Contoso" APIGroup="datawarehouse" APIVersion="1.0">
+  <query id ="50000" name="QueryForTable1" filename="50000_QueryForTable1" Caption="customers" Locked="true" EntityName="Customer" EntitySetName="Customers" DataItemName="Customer" TableName ="Customers">
+    <field DataItemFieldName="customerId" FieldName="Id" Caption="Customer Id" Locked="true"/>
+    <field DataItemFieldName="customerNumber" FieldName="No." Caption="No" Locked="true"/>
+    <field DataItemFieldName="customerName" FieldName="name" Caption="Customer Name" Locked="true"/>
+  </query>
+  <query id ="50001" name="QueryForTable2" filename="50001_QueryForTable2" Caption="vendors" Locked="false" EntityName="Vendor" EntitySetName="Vendors" DataItemName="Vendor" TableName ="Vendors" >
+    <field DataItemFieldName="vendorId" FieldName="Id" Caption="Vendor Id" Locked="true"/>
+    <field DataItemFieldName="vendorNumber" FieldName="No." Caption="No" Locked="true"/>
+    <field DataItemFieldName="vendorName" FieldName="name" Caption="Vendor Name" Locked="true"/>
+  </query>
+</APIQueries>
+""";
+
+            Console.WriteLine("Example input file");
+            Console.WriteLine(exampleXML);
+            Console.WriteLine("-------------------");
+        }
+
     }
 }

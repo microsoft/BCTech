@@ -1,8 +1,8 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Mono.Options;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using System.CommandLine;
 
 
 namespace PayloadGenerator
@@ -11,43 +11,45 @@ namespace PayloadGenerator
     {
         static void Main(string[] args)
         {
-            var rootCommand = new RootCommand("Power BI content - AL payload generator");
-            var inputFileOption = new Option<FileInfo>("--inputfile", "The input Excel file")
-            {
-                IsRequired = true
-            };
-            inputFileOption.AddAlias("--i");
-            var outputFileOption = new Option<FileInfo>("--outputfile", "The output file to be used as payload for the AL generator")
-            {
-                IsRequired = true
-            };
-            var outputDirOption = new Option<DirectoryInfo>(
-                "--outputdir",
-                description: "The output directory for the output file",
-                getDefaultValue: () => new DirectoryInfo(System.IO.Directory.GetCurrentDirectory())
-            );
-            rootCommand.AddOption(inputFileOption);
-            rootCommand.AddOption(outputFileOption);
-            rootCommand.AddOption(outputDirOption);
+            // http://www.ndesk.org/doc/ndesk-options/NDesk.Options/OptionSet.html
+            bool show_help = false;
+            string inputfile = "";
+            string outputdir = "";
+            string outputfile = "";
 
-            rootCommand.SetHandler((inputFile, outputFile, outputDir) =>
-            {
-                Run(inputFile.FullName, outputFile.FullName, outputDir.FullName);
-            }, inputFileOption, outputFileOption, outputDirOption);
+            int idnumberstart = 50000;
 
+            var p = new OptionSet() {
+                { "h|help",  "show this message and exit", v => show_help = v != null },
+                { "i|inputfile=",  "input Excel file (required)", v => inputfile = v },
+                { "outputdir=",  "output directory", v => outputdir = v },
+                { "outputfile=",  "output file (required)", v => outputfile = v },
+                { "idnumberstart=",  "Id numbers for AL objects starts at this number (default is 50000)", v => idnumberstart = int.Parse( v ) },
+            };
+
+            List<string> extra;
             try
             {
-                rootCommand.InvokeAsync(args);
+                extra = p.Parse(args);
             }
-            catch (Exception ex)
+            catch (OptionException e)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(e.Message);
                 Console.WriteLine("Try using --help' for more information.");
-                Environment.Exit(-1);
+                Environment.Exit(0);
             }
-        }
-        public static void Run(string inputfile, string outputfile, string outputdir)
-        { 
+
+            if (show_help)
+            {
+                ShowHelp(p);
+                Environment.Exit(0);
+            }
+
+            if (inputfile.Equals(""))
+            {
+                ShowHelp(p);
+                Environment.Exit(0);
+            }
 
             Console.WriteLine("PBI embed app payload generator");
 
@@ -172,6 +174,16 @@ namespace PayloadGenerator
                     str.Flush();
                 }
             }
+        }
+
+        static void ShowHelp(OptionSet p)
+        {
+            Console.WriteLine("Usage: PayloadGenerator [OPTIONS]+");
+            Console.WriteLine();
+            Console.WriteLine("Options:");
+            p.WriteOptionDescriptions(Console.Out);
+
+            Console.WriteLine("-------------------");
         }
 
         static private List<string[]> readExcelWorksheet(string inputfile, string worksheetName)
@@ -314,7 +326,7 @@ namespace PayloadGenerator
         {
             if (cell == null)
             {
-                return "";
+                return null;
             }
 
             var value = cell.CellFormula != null
@@ -363,6 +375,39 @@ namespace PayloadGenerator
                             break;
                     }
                 }
+            //switch (cell.DataType.Value)
+            //{
+            //    case CellValues.SharedString:
+
+            //        // For shared strings, look up the value in the
+            //        // shared strings table.
+            //        var stringTable =
+            //            workbookPart.GetPartsOfType<SharedStringTablePart>()
+            //                .FirstOrDefault();
+
+            //        // If the shared string table is missing, something 
+            //        // is wrong. Return the index that is in
+            //        // the cell. Otherwise, look up the correct text in 
+            //        // the table.
+            //        if (stringTable != null)
+            //        {
+            //            value =
+            //                stringTable.SharedStringTable
+            //                    .ElementAt(int.Parse(value)).InnerText;
+            //        }
+            //        break;
+
+            //    case CellValues.Boolean:
+            //        switch (value)
+            //        {
+            //            case "0":
+            //                value = "FALSE";
+            //                break;
+            //            default:
+            //                value = "TRUE";
+            //                break;
+            //        }
+            //        break;
             }
 
             return value;
