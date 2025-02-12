@@ -35,7 +35,7 @@ Module Analyze_PA
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "Analyzing Project Controller Module Usage")
 
-            Form1.AnalysisStatusLbl.Text = "Analyzing Project Controller Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Project Controller Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -952,12 +952,9 @@ Module Analyze_PA
 
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - PA")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Project Controller data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Project Controller data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Project Controller")
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module

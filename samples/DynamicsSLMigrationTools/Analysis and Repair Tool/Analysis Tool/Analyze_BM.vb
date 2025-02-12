@@ -21,23 +21,18 @@ Module Analyze_BM
         Dim retValDbl1 As Double
         Dim retValStr1 As String = String.Empty
         Dim calcValDbl1 As Double
-
         Dim sqlStmt As String = String.Empty
         Dim sqlReader As SqlDataReader = Nothing
 
-
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Bill of Materials"
-
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Bill of Materials")
 
             '===== Bill of Materials =====
 
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "BILL OF MATERIALS")
             Call oEventLog.LogMessage(0, "")
-
             Call oEventLog.LogMessage(0, "Analyzing Bill of Materials Module Usage")
-
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -812,12 +807,9 @@ Module Analyze_BM
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Bill of Material data")
             Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - BM")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Bill of Material data"
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module

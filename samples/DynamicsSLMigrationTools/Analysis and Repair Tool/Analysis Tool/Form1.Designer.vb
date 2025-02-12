@@ -61,6 +61,7 @@
         Me.NameOfServer = New System.Windows.Forms.TextBox()
         Me.Analyze = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.cLastRunDate = New System.Windows.Forms.DateTimePicker()
         Me.lExportFolder = New System.Windows.Forms.Label()
         Me.cmdBrowse = New System.Windows.Forms.Button()
@@ -74,7 +75,6 @@
         Me.StatusUpdateLbl = New System.Windows.Forms.ToolStripStatusLabel()
         Me.UpdateStatusLbl = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.DBConnect.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
@@ -122,7 +122,7 @@
         Me.GroupBox8.Controls.Add(Me.NameOfServer)
         Me.GroupBox8.Location = New System.Drawing.Point(6, 3)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(774, 363)
+        Me.GroupBox8.Size = New System.Drawing.Size(774, 351)
         Me.GroupBox8.TabIndex = 1
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Database Connection"
@@ -366,6 +366,17 @@
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "System Analysis"
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.Red
+        Me.Label3.Location = New System.Drawing.Point(517, 126)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(50, 13)
+        Me.Label3.TabIndex = 89
+        Me.Label3.Text = "Required"
+        '
         'cLastRunDate
         '
         Me.cLastRunDate.Enabled = False
@@ -464,17 +475,6 @@
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(0, 17)
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.ForeColor = System.Drawing.Color.Red
-        Me.Label3.Location = New System.Drawing.Point(517, 126)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(50, 13)
-        Me.Label3.TabIndex = 89
-        Me.Label3.Text = "Required"
         '
         'Form1
         '

@@ -5,7 +5,7 @@ Imports System.Data.SqlClient
 Module Analyze_SI
     '================================================================================
     ' This module contains code to analyze tables used across multiple modules
-     '================================================================================
+    '================================================================================
 
     Public Sub Analyze_SI()
         Dim sqlStringExec As String = String.Empty
@@ -23,12 +23,9 @@ Module Analyze_SI
 
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Shared Information"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Shared Information")
             Call oEventLog.LogMessage(0, "SHARED INFORMATION")
             Call oEventLog.LogMessage(0, "")
-
-
-
             '===== Shared Information =====
 
             '=== Master Table Counts ===
@@ -239,12 +236,9 @@ Module Analyze_SI
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SI")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Shared Information data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Shared Information data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Shared Information")
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module
