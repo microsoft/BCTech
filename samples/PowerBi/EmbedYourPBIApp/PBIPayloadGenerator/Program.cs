@@ -1,20 +1,8 @@
-﻿using System;
-using System.Xml;
-using System.Text;
-using System.IO;
-using Mono.Options;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Xml.Serialization;
-using System.Xml.Linq;
-using System.Collections.ObjectModel;
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
-using DocumentFormat.OpenXml.Packaging;
+﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Mono.Options;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 
 namespace PayloadGenerator
@@ -77,9 +65,9 @@ namespace PayloadGenerator
             }
             Console.WriteLine("Worksheet '{0}'. Found : {1} rows", NamespaceSheetName, NamespaceRows.Count.ToString());
             string ALNamespace = "";
-            if (NamespaceRows.Count >= 2 && NamespaceRows[1].Length > 0)
+            if (NamespaceRows.Count >= 1 && NamespaceRows[0].Length > 0)
             {
-                ALNamespace = NamespaceRows[1][0];
+                ALNamespace = NamespaceRows[0][0];
             }
 
             var PBIReportsSheetName = "PBIReports";
@@ -122,17 +110,9 @@ namespace PayloadGenerator
             if (outputfile.Equals(""))
             {
                 Console.WriteLine("Output file parameter required.");
-                Environment.Exit(0);
-            }
-
-
-            if (outputdir.Equals(""))
-            {
-                outputdir = System.IO.Directory.GetCurrentDirectory();
+                Environment.Exit(-1);
             }
             Console.WriteLine("Using directory for output files: " + outputdir);
-
-
             Console.WriteLine("Generating payload file...");
 
             XDocument payloaddoc = GeneratePayload(ALNamespace, pages, rcExtensions, permSets);
@@ -216,18 +196,39 @@ namespace PayloadGenerator
                 var sheet = workbookPart.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == worksheetName);
                 var worksheetPart = (WorksheetPart)(workbookPart.GetPartById(sheet.Id));
                 var sheetData = worksheetPart.Worksheet.Elements<SheetData>().First();
+                var columnRefs = new List<string>();
+                var regex = new Regex("\\d+");
 
                 foreach (var row in sheetData.Elements<Row>())
                 {
-                    List<string> cells = new List<string>();
-
-                    foreach (var cell in row.Elements<Cell>())
+                    if (row.RowIndex == 1)
                     {
-                        cells.Add(GetCellValue(cell, workbookPart));
-                    }
+                        foreach (var cell in row.Elements<Cell>())
+                        {
+                            columnRefs.Add(regex.Replace(cell.CellReference, ""));
+                        }
+                    } 
+                    else
+                    {
+                        List<string> cells = new List<string>();
 
-                    var cellArray = cells.ToArray();
-                    rows.Add(cellArray);
+                        foreach(var columnRef in columnRefs)
+                        {
+                            var query = row.Elements<Cell>().Where(cell => regex.Replace(cell.CellReference, "") == columnRef).FirstOrDefault();
+
+                            if (query == null)
+                            {
+                                cells.Add("");
+                            }
+                            else
+                            {
+                                cells.Add(GetCellValue(query, workbookPart));
+                            }
+                        }
+
+                        var cellArray = cells.ToArray();
+                        rows.Add(cellArray);
+                    }
                 }
             }
             return rows;
@@ -246,8 +247,10 @@ namespace PayloadGenerator
                     row[5],
                     row[6],
                     row[7],
-                    row[8]
-                );
+                    row[8],
+                    row[9],
+                    row[10]
+                ); 
 
                 if (!row[0].Equals("id"))
                 {
@@ -267,7 +270,9 @@ namespace PayloadGenerator
                     row[2],
                     row[3],
                     row[4],
-                    row[5]
+                    row[5],
+                    row[6],
+                    row[7]
                 );
 
                 if (!row[0].Equals("id"))
@@ -287,7 +292,8 @@ namespace PayloadGenerator
                     row[1],
                     row[2],
                     row[3],
-                    row[4]
+                    row[4],
+                    row[5]
                 );
 
                 if (!row[0].Equals("rcextensionname"))
