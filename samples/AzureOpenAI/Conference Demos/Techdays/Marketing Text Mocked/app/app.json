@@ -1,0 +1,40 @@
+{
+  "id": "74d86897-1c24-4889-9335-44449c0938a1",
+  "name": "Marketing Text Mocked",
+  "publisher": "Microsoft",
+  "version": "1.0.0.0",
+  "brief": "Demo app for using AI TestToolkit",
+  "description": "Demo app for using AI TestToolkit",
+  "privacyStatement": "https://www.microsoft.com",
+  "EULA": "https://www.microsoft.com",
+  "help": "https://www.microsoft.com",
+  "url": "https://www.microsoft.com",
+  "contextSensitiveHelpUrl": "https://www.microsoft.com",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "26.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "15.0",
+  "features": [
+    "NoImplicitWith"
+  ],
+  "internalsVisibleTo": [
+    {
+      "id": "74d86897-1c24-4889-9335-44449c0938a1",
+      "name": "Marketing Text Mocked Test",
+      "publisher": "Microsoft"
+    }
+  ]
+}
