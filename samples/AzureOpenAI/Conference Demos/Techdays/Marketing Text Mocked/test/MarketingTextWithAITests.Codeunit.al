@@ -1,8 +1,6 @@
 namespace Techdays.AITestToolkitDemo;
 
 using System.TestTools.TestRunner;
-using System.TestLibraries.AI;
-using System.AI;
 using Microsoft.Inventory.Item;
 using System.TestTools.AITestToolkit;
 
@@ -10,11 +8,11 @@ codeunit 50200 "Marketing Text With AI Tests"
 {
     Subtype = Test;
     TestPermissions = Disabled;
+    InherentEntitlements = X;
+    InherentPermissions = X;
 
     var
-        IsInitialized: Boolean;
         StyleEnum: Enum "Marketing Text Style";
-        MarketingTextSimpleAppIdLbl: Label '74d86897-1c24-4889-9335-44449c0938a1';
 
     [Test]
     procedure TestTagLineLength()
@@ -24,35 +22,19 @@ codeunit 50200 "Marketing Text With AI Tests"
         TagLine: Text;
         MaxLength: Integer;
         ItemNo: Code[20];
-        TaglineLengthErr: Label 'Tagline: %1; Length: %2; Exceeds maximum lenght of %3', Comment = '%1 = Tagline, %2 = Length, %3 = Maximum Length';
+        TaglineLengthErr: Label 'Tagline: %1; Length: %2; Exceeds maximum length of %3', Comment = '%1 = Tagline, %2 = Length, %3 = Maximum Length';
     begin
-        // [GIVEN] The setup to create an item and required maximum length
-        Initialize();
+        // [GIVEN] The item and required maximum length
+        CreateItem();
         ItemNo := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(ItemNo));
-        MaxLength := 20;
+        MaxLength := TestContext.GetExpectedData().Element('tagline_max_length').ValueAsInteger();
 
         // [WHEN] Generating the tagline with required maximum length
         TagLine := MarketingTextWithAI.GenerateTagLine(ItemNo, MaxLength);
 
         // [THEN] The tagline should be within the required maximum length
         if StrLen(TagLine) > MaxLength then
-            Error(TaglineLengthErr, ItemNo, StrLen(TagLine), MaxLength);
-    end;
-
-    local procedure Initialize()
-    var
-        CopilotTestLibrary: Codeunit "Copilot Test Library";
-    begin
-        if IsInitialized then
-            exit;
-
-        // Register the feature for the test. This is useful if the capability is not activated in the tenant.
-        CopilotTestLibrary.RegisterCopilotCapabilityWithAppId(Enum::"Copilot Capability"::"Marketing Text Simple", MarketingTextSimpleAppIdLbl);
-
-        // Setup the items needed for the test
-        CreateItem();
-
-        IsInitialized := true;
+            Error(TaglineLengthErr, TagLine, StrLen(TagLine), MaxLength);
     end;
 
     local procedure CreateItem()
@@ -63,8 +45,34 @@ codeunit 50200 "Marketing Text With AI Tests"
         Item."No." := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(Item."No."));
         Item.Description := CopyStr(TestContext.GetTestSetup().Element('description').ValueAsText(), 1, MaxStrLen(Item.Description));
         Item."Base Unit of Measure" := CopyStr(TestContext.GetTestSetup().Element('uom').ValueAsText(), 1, MaxStrLen(Item."Base Unit of Measure"));
-        Item.Insert();
+
+        if Item.Get(Item."No.") then
+            Item.Modify()
+        else
+            Item.Insert();
     end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -114,7 +122,7 @@ codeunit 50200 "Marketing Text With AI Tests"
         ItemNo: Code[20];
     begin
         // [GIVEN] The setup to create an item
-        Initialize();
+        CreateItem();
         ItemNo := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(ItemNo));
 
         // [WHEN] Generating the marketing text with formal tone
@@ -125,6 +133,8 @@ codeunit 50200 "Marketing Text With AI Tests"
         // Groundedness evaluator requires: query, response, context
 
         TestOutputJson.Initialize();
+
+        // Query
         QueryTxt := 'Generate a marketing text for the given item in Business Central in ';
         case
             Style of
@@ -137,8 +147,8 @@ codeunit 50200 "Marketing Text With AI Tests"
         end;
 
         TestOutputJson.Add('query', QueryTxt);
-        TestOutputJson.Add('response', MarketingText);
 
+        // Context
         ContextOutputJson.Initialize('{}');
         ContextOutputJson.Add('item_no', ItemNo);
         Item.Get(ItemNo);
@@ -147,7 +157,11 @@ codeunit 50200 "Marketing Text With AI Tests"
 
         TestOutputJson.Add('context', ContextOutputJson.ToText()); // Context on the basis of which the response is generated
 
+        // Response
+        TestOutputJson.Add('response', MarketingText);
+
         TestContext.SetTestOutput(TestOutputJson.ToText());
+    end;
 
 
 
@@ -159,9 +173,27 @@ codeunit 50200 "Marketing Text With AI Tests"
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    local procedure MoreFunctions()
+    var
+        TestContext: Codeunit "AIT Test Context";
+        MaxLength: Integer;
+    begin
 
         // Another way of setting the test output
-        // TestContext.SetAnswerForQnAEvaluation(MarketingText);
+        TestContext.SetAnswerForQnAEvaluation('Some Response');
+        MaxLength := TestContext.GetExpectedData().Element('max_length').ValueAsInteger();
         // query and context is copied from the dataset
     end;
 }

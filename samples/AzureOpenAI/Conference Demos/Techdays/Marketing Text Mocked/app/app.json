@@ -1,7 +1,7 @@
 {
   "id": "74d86897-1c24-4889-9335-44449c0938a1",
   "name": "Marketing Text Simple",
-  "publisher": "Microsoft",
+  "publisher": "MicrosoftDemo",
   "version": "1.0.0.0",
   "brief": "Demo app for using AI TestToolkit",
   "description": "Demo app for using AI TestToolkit",
@@ -14,7 +14,7 @@
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "26.0.0.0",
+  "application": "25.3.0.0",
   "idRanges": [
     {
       "from": 50100,
@@ -26,7 +26,7 @@
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
   },
-  "runtime": "15.0",
+  "runtime": "14.3",
   "features": [
     "NoImplicitWith"
   ],
@@ -34,7 +34,7 @@
     {
       "id": "e3b0c442-98fc-1c14-9afb-4c4e6e4a3f4b",
       "name": "Marketing Text Simple Test",
-      "publisher": "Microsoft"
+      "publisher": "MicrosoftDemo"
     }
   ]
 }
