@@ -1,27 +1,20 @@
 namespace Techdays.AITestToolkitDemo;
+
 using System.TestTools.TestRunner;
+using System.TestLibraries.AI;
+using System.AI;
 using Microsoft.Inventory.Item;
 using System.TestTools.AITestToolkit;
 
 codeunit 50200 "Marketing Text With AI Tests"
 {
     Subtype = Test;
+    TestPermissions = Disabled;
 
     var
         IsInitialized: Boolean;
-
-    local procedure Initialize()
-    begin
-        if IsInitialized then
-            exit;
-
-        // Register the feature for the test
-
-        // Setup the items needed for the test
-        CreateItem();
-
-        IsInitialized := true;
-    end;
+        StyleEnum: Enum "Marketing Text Style";
+        MarketingTextSimpleAppIdLbl: Label '74d86897-1c24-4889-9335-44449c0938a1';
 
     [Test]
     procedure TestTagLineLength()
@@ -35,8 +28,8 @@ codeunit 50200 "Marketing Text With AI Tests"
     begin
         // [GIVEN] The setup to create an item and required maximum length
         Initialize();
-        ItemNo := CopyStr(TestContext.GetTestSetup().Element('ItemNo').ValueAsText(), 1, MaxStrLen(ItemNo));
-        MaxLength := TestContext.GetTestSetup().Element('MaxLength').ValueAsInteger();
+        ItemNo := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(ItemNo));
+        MaxLength := 20;
 
         // [WHEN] Generating the tagline with required maximum length
         TagLine := MarketingTextWithAI.GenerateTagLine(ItemNo, MaxLength);
@@ -46,64 +39,20 @@ codeunit 50200 "Marketing Text With AI Tests"
             Error(TaglineLengthErr, ItemNo, StrLen(TagLine), MaxLength);
     end;
 
-    [Test]
-    procedure TestMarketingTextContentFormal()
+    local procedure Initialize()
     var
-        TestContext: Codeunit "AIT Test Context";
-        MarketingTextWithAI: Codeunit "Marketing Text With AI";
-        Style: Enum "Marketing Text Style";
-        MarketingText: Text;
-        ItemNo: Code[20];
+        CopilotTestLibrary: Codeunit "Copilot Test Library";
     begin
-        // [GIVEN] The setup to create an item
-        Initialize();
-        ItemNo := CopyStr(TestContext.GetTestSetup().Element('ItemNo').ValueAsText(), 1, MaxStrLen(ItemNo));
+        if IsInitialized then
+            exit;
 
-        // [WHEN] Generating the marketing text with formal tone
-        MarketingText := MarketingTextWithAI.GenerateMarketingText(ItemNo, Style::Formal);
+        // Register the feature for the test. This is useful if the capability is not activated in the tenant.
+        CopilotTestLibrary.RegisterCopilotCapabilityWithAppId(Enum::"Copilot Capability"::"Marketing Text Simple", MarketingTextSimpleAppIdLbl);
 
-        // [THEN] Return the marketing text for external evaluation
+        // Setup the items needed for the test
+        CreateItem();
 
-    end;
-
-    [Test]
-    procedure TestMarketingTextContentVerbose()
-    var
-        TestContext: Codeunit "AIT Test Context";
-        MarketingTextWithAI: Codeunit "Marketing Text With AI";
-        Style: Enum "Marketing Text Style";
-        MarketingText: Text;
-        ItemNo: Code[20];
-    begin
-        // [GIVEN] The setup to create an item
-        Initialize();
-        ItemNo := CopyStr(TestContext.GetTestSetup().Element('ItemNo').ValueAsText(), 1, MaxStrLen(ItemNo));
-
-        // [WHEN] Generating the marketing text with verbose tone
-        MarketingText := MarketingTextWithAI.GenerateMarketingText(ItemNo, Style::Verbose);
-
-        // [THEN] Return the marketing text for external evaluation
-        TestContext.SetAnswerForQnAEvaluation(MarketingText);
-    end;
-
-    [Test]
-    procedure TestMarketingTextContentCasual()
-    var
-        TestContext: Codeunit "AIT Test Context";
-        MarketingTextWithAI: Codeunit "Marketing Text With AI";
-        Style: Enum "Marketing Text Style";
-        MarketingText: Text;
-        ItemNo: Code[20];
-    begin
-        // [GIVEN] The setup to create an item
-        Initialize();
-        ItemNo := CopyStr(TestContext.GetTestSetup().Element('ItemNo').ValueAsText(), 1, MaxStrLen(ItemNo));
-
-        // [WHEN] Generating the marketing text with casual tone
-        MarketingText := MarketingTextWithAI.GenerateMarketingText(ItemNo, Style::Casual);
-
-        // [THEN] Return the marketing text for external evaluation
-        TestContext.SetAnswerForQnAEvaluation(MarketingText);
+        IsInitialized := true;
     end;
 
     local procedure CreateItem()
@@ -111,8 +60,108 @@ codeunit 50200 "Marketing Text With AI Tests"
         Item: Record Item;
         TestContext: Codeunit "AIT Test Context";
     begin
-        Item."No." := CopyStr(TestContext.GetTestSetup().Element('ItemNo').ValueAsText(), 1, MaxStrLen(Item."No."));
-        Item.Description := CopyStr(TestContext.GetTestSetup().Element('ItemDescription').ValueAsText(), 1, MaxStrLen(Item.Description));
+        Item."No." := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(Item."No."));
+        Item.Description := CopyStr(TestContext.GetTestSetup().Element('description').ValueAsText(), 1, MaxStrLen(Item.Description));
+        Item."Base Unit of Measure" := CopyStr(TestContext.GetTestSetup().Element('uom').ValueAsText(), 1, MaxStrLen(Item."Base Unit of Measure"));
         Item.Insert();
+    end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    [Test]
+    procedure TestMarketingTextContentFormal()
+    begin
+        TestScenario(StyleEnum::Formal);
+    end;
+
+    [Test]
+    procedure TestMarketingTextContentVerbose()
+    begin
+        TestScenario(StyleEnum::Verbose);
+    end;
+
+    [Test]
+    procedure TestMarketingTextContentCasual()
+    begin
+        TestScenario(StyleEnum::Casual);
+    end;
+
+    local procedure TestScenario(Style: Enum "Marketing Text Style")
+    var
+        Item: Record Item;
+        TestContext: Codeunit "AIT Test Context";
+        MarketingTextWithAI: Codeunit "Marketing Text With AI";
+        TestOutputJson: Codeunit "Test Output Json";
+        ContextOutputJson: Codeunit "Test Output Json";
+        MarketingText: Text;
+        QueryTxt: Text;
+        ItemNo: Code[20];
+    begin
+        // [GIVEN] The setup to create an item
+        Initialize();
+        ItemNo := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(ItemNo));
+
+        // [WHEN] Generating the marketing text with formal tone
+        MarketingText := MarketingTextWithAI.GenerateMarketingText(ItemNo, Style);
+
+        // [THEN] Return the marketing text for external evaluation
+        // Groundedness Evaluator: Measures how well the generated response aligns with the given context, focusing on its relevance and accuracy with respect to the context.
+        // Groundedness evaluator requires: query, response, context
+
+        TestOutputJson.Initialize();
+        QueryTxt := 'Generate a marketing text for the given item in Business Central in ';
+        case
+            Style of
+            StyleEnum::Formal:
+                QueryTxt += '*Formal* Tone.';
+            StyleEnum::Verbose:
+                QueryTxt += '*Verbose* Tone.';
+            StyleEnum::Casual:
+                QueryTxt += '*Casual* Tone.';
+        end;
+
+        TestOutputJson.Add('query', QueryTxt);
+        TestOutputJson.Add('response', MarketingText);
+
+        ContextOutputJson.Initialize('{}');
+        ContextOutputJson.Add('item_no', ItemNo);
+        Item.Get(ItemNo);
+        ContextOutputJson.Add('description', Item.Description);
+        ContextOutputJson.Add('uom', Item."Base Unit of Measure");
+
+        TestOutputJson.Add('context', ContextOutputJson.ToText()); // Context on the basis of which the response is generated
+
+        TestContext.SetTestOutput(TestOutputJson.ToText());
+
+
+
+
+
+
+
+
+
+
+
+
+        // Another way of setting the test output
+        // TestContext.SetAnswerForQnAEvaluation(MarketingText);
+        // query and context is copied from the dataset
     end;
 }

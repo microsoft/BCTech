@@ -1,6 +1,6 @@
 {
   "id": "74d86897-1c24-4889-9335-44449c0938a1",
-  "name": "Marketing Text Mocked",
+  "name": "Marketing Text Simple",
   "publisher": "Microsoft",
   "version": "1.0.0.0",
   "brief": "Demo app for using AI TestToolkit",
@@ -32,8 +32,8 @@
   ],
   "internalsVisibleTo": [
     {
-      "id": "74d86897-1c24-4889-9335-44449c0938a1",
-      "name": "Marketing Text Mocked Test",
+      "id": "e3b0c442-98fc-1c14-9afb-4c4e6e4a3f4b",
+      "name": "Marketing Text Simple Test",
       "publisher": "Microsoft"
     }
   ]
