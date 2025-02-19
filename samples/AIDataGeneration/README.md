@@ -28,7 +28,14 @@ The test scenarios that need to be covered depend on your AI feature, but would 
 
 The Python example in `data_generation\generate_quality_data.py` shows an example of data generation for items to be used in a marketing text scenario.
 
-To run the example, open a terminal and change to the subdirectory `cd data_generation`. Set the URI of the GPT-4o deployment to be used as an environment variable, e.g., `$env:AZURE_OPENAI_ENDPOINT="https://airedcarpet.openai.azure.com/"`. If you are using an API key, also set an environment variable for that, e.g., `$env:AZURE_OPENAI_API_KEY=...`.
+To run the example, open a terminal and change to the subdirectory `cd data_generation`. Set the URI of the GPT-4o deployment to be used as an environment variable, e.g.,
+
+```powershell
+$env:AZURE_OPENAI_ENDPOINT="https://airedcarpet.openai.azure.com"
+$env:OPENAI_API_VERSION = "2024-08-01-preview"
+```
+
+If you are using an API key, also set an environment variable for that, e.g., `$env:AZURE_OPENAI_API_KEY=...`.
 
 Run the example with any request prompt that you would like, e.g.,
 

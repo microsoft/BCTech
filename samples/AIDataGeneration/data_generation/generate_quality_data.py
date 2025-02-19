@@ -5,22 +5,14 @@ from openai import AzureOpenAI
 
 from model import model
 
-def create_azure_openai_client(
-    azure_endpoint: str,
-    azure_deployment: str = "gpt-4o",
-    api_key: str = None,
-    api_version = "2024-08-01-preview") -> AzureOpenAI:
-
+def create_azure_openai_client(azure_deployment: str = "gpt-4o") -> AzureOpenAI:
+    api_key = os.environ.get("AZURE_OPENAI_API_KEY")
+    
     if api_key:
         return AzureOpenAI(
-            azure_endpoint=azure_endpoint,
-            api_version=api_version,
-            azure_deployment=azure_deployment,
-            azure_api_key=api_key)
+            azure_deployment=azure_deployment)
     else:
         return AzureOpenAI(
-            azure_endpoint=azure_endpoint,
-            api_version=api_version,
             azure_deployment=azure_deployment,
             azure_ad_token_provider=
                 get_bearer_token_provider(
@@ -28,10 +20,7 @@ def create_azure_openai_client(
                     "https://cognitiveservices.azure.com/.default"))    
 
 if __name__ == "__main__":
-    client = create_azure_openai_client(
-        os.getenv("AZURE_OPENAI_ENDPOINT"),
-        os.getenv("AZURE_OPENAI_DEPLOYMENT") or "gpt-4o",
-        os.getenv("AZURE_OPENAI_API_KEY"))
+    client = create_azure_openai_client()
 
     system_prompt = """
     You are a helpful synthetic data generator. 
