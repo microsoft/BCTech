@@ -14,7 +14,6 @@ codeunit 50100 "Marketing Text With AI"
         // Generate the tag line using AI
         Item.Get(ItemNo);
 
-        MaxLength := 100;
         TagLine := GenerateCompletion('Generate *only* the tagline for the item ' + Item.Description
                             + ' with unit of measure ' + Item."Base Unit of Measure"
                             + '. *The maximum length of the tagline should be ' + Format(MaxLength) + ' characters*.',
