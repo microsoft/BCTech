@@ -1,0 +1,19 @@
+namespace {0};
+
+using {1};
+
+pageextension {2} "{3}" extends "{4}"
+{{
+    actions
+    {{
+        {5}
+        {{
+            group("PBI Reports")
+            {{
+                Caption = 'Power BI Reports';
+                Image = {6};
+                ToolTip = '{7}';
+{8}            }}
+        }}
+    }}
+}}
