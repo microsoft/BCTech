@@ -17,7 +17,7 @@ codeunit 50200 "Marketing Text With AI Tests"
     [Test]
     procedure TestTagLineLength()
     var
-        TestContext: Codeunit "AIT Test Context";
+        AITTestContext: Codeunit "AIT Test Context";
         MarketingTextWithAI: Codeunit "Marketing Text With AI";
         TagLine: Text;
         MaxLength: Integer;
@@ -26,8 +26,8 @@ codeunit 50200 "Marketing Text With AI Tests"
     begin
         // [GIVEN] The item and required maximum length
         CreateItem();
-        ItemNo := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(ItemNo));
-        MaxLength := TestContext.GetExpectedData().Element('tagline_max_length').ValueAsInteger();
+        ItemNo := CopyStr(AITTestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(ItemNo));
+        MaxLength := AITTestContext.GetExpectedData().Element('tagline_max_length').ValueAsInteger();
 
         // [WHEN] Generating the tagline with required maximum length
         TagLine := MarketingTextWithAI.GenerateTagLine(ItemNo, MaxLength);
@@ -40,57 +40,17 @@ codeunit 50200 "Marketing Text With AI Tests"
     local procedure CreateItem()
     var
         Item: Record Item;
-        TestContext: Codeunit "AIT Test Context";
+        AITTestContext: Codeunit "AIT Test Context";
     begin
-        Item."No." := CopyStr(TestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(Item."No."));
-        Item.Description := CopyStr(TestContext.GetTestSetup().Element('description').ValueAsText(), 1, MaxStrLen(Item.Description));
-        Item."Base Unit of Measure" := CopyStr(TestContext.GetTestSetup().Element('uom').ValueAsText(), 1, MaxStrLen(Item."Base Unit of Measure"));
+        Item."No." := CopyStr(AITTestContext.GetTestSetup().Element('item_no').ValueAsText(), 1, MaxStrLen(Item."No."));
+        Item.Description := CopyStr(AITTestContext.GetTestSetup().Element('description').ValueAsText(), 1, MaxStrLen(Item.Description));
+        Item."Base Unit of Measure" := CopyStr(AITTestContext.GetTestSetup().Element('uom').ValueAsText(), 1, MaxStrLen(Item."Base Unit of Measure"));
 
         if Item.Get(Item."No.") then
             Item.Modify()
         else
             Item.Insert();
     end;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     [Test]
     procedure TestMarketingTextContentFormal()
@@ -129,10 +89,8 @@ codeunit 50200 "Marketing Text With AI Tests"
         MarketingText := MarketingTextWithAI.GenerateMarketingText(ItemNo, Style);
 
         // [THEN] Return the marketing text for external evaluation
-        // Groundedness Evaluator: Measures how well the generated response aligns with the given context, focusing on its relevance and accuracy with respect to the context.
-        // Groundedness evaluator requires: query, response, context
-
-        TestOutputJson.Initialize();
+        // Groundedness Evaluator (Azure AI Foundry): Measures how well the generated response aligns with the given context.
+        // It requires: query, response, context
 
         // Query
         QueryTxt := 'Generate a marketing text for the given item in Business Central in ';
@@ -146,10 +104,11 @@ codeunit 50200 "Marketing Text With AI Tests"
                 QueryTxt += '*Casual* Tone.';
         end;
 
+        TestOutputJson.Initialize();
         TestOutputJson.Add('query', QueryTxt);
 
         // Context
-        ContextOutputJson.Initialize('{}');
+        ContextOutputJson.Initialize();
         ContextOutputJson.Add('item_no', ItemNo);
         Item.Get(ItemNo);
         ContextOutputJson.Add('description', Item.Description);
@@ -161,39 +120,5 @@ codeunit 50200 "Marketing Text With AI Tests"
         TestOutputJson.Add('response', MarketingText);
 
         TestContext.SetTestOutput(TestOutputJson.ToText());
-    end;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    local procedure MoreFunctions()
-    var
-        TestContext: Codeunit "AIT Test Context";
-        MaxLength: Integer;
-    begin
-
-        // Another way of setting the test output
-        TestContext.SetAnswerForQnAEvaluation('Some Response');
-        MaxLength := TestContext.GetExpectedData().Element('max_length').ValueAsInteger();
-        // query and context is copied from the dataset
     end;
 }

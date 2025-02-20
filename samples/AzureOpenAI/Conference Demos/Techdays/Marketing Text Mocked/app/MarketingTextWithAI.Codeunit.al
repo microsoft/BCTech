@@ -14,7 +14,7 @@ codeunit 50100 "Marketing Text With AI"
         // Generate the tag line using AI
         Item.Get(ItemNo);
 
-        MaxLength := 150;
+        MaxLength := 100;
         TagLine := GenerateCompletion('Generate *only* the tagline for the item ' + Item.Description
                             + ' with unit of measure ' + Item."Base Unit of Measure"
                             + '. *The maximum length of the tagline should be ' + Format(MaxLength) + ' characters*.',
@@ -22,37 +22,6 @@ codeunit 50100 "Marketing Text With AI"
 
         exit(TagLine);
     end;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     procedure GenerateMarketingText(ItemNo: Code[20]; Style: Enum "Marketing Text Style"): Text
     var
@@ -103,43 +72,17 @@ codeunit 50100 "Marketing Text With AI"
             Error(AOAIOperationResponse.GetError());
     end;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    local procedure SetAuthorization(var AzureOpenAI: Codeunit "Azure OpenAI")
+    var
+        Endpoint: Text;
+        Deployment: Text;
+        Apikey: SecretText;
+    begin
+        IsolatedStorage.Get('Endpoint', Endpoint);
+        IsolatedStorage.Get('Deployment', Deployment);
+        IsolatedStorage.Get('Apikey', Apikey);
+        AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", Endpoint, Deployment, Apikey);
+    end;
 
     var
         GeneratedTextOption: Option Tagline,Content;
