@@ -247,8 +247,9 @@ traces
 , usertelemetryId = user_Id
 
 
-// Financial Report Column Definition exported: {Column Definition Code}
-// TODO: Financial Report Column Definition PERIODS: Export
+// TODO SHOULD BE LIKE THIS: Financial Report Column Definition exported: {Column Definition Code}
+// IS LIKE THIS TODAY: Financial Report Column Definition {Column Definition Code}: Export
+Financial Report Column Definition : exported
 traces
 | where timestamp > ago(5d) // adjust the time range as needed
 | where customDimensions has 'AL0000ONQ' // event id collision

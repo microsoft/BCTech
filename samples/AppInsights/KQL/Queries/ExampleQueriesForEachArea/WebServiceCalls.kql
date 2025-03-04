@@ -152,3 +152,30 @@ traces
 , metadataStack = customDimensions.metadataStack
 , errorDetails = customDimensions.errorDetails
 , entityName = customDimensions.entityName
+
+
+
+// Deprecated endpoint called: {endpoint}
+// available from 26.0
+traces
+| where timestamp > ago(60d) // change as needed
+| where customDimensions has "RT0053"
+| where customDimensions.eventId == "RT0053"
+| project timestamp
+// in which environment did it happen
+, aadTenantId = customDimensions.aadTenantId
+, environmentName = customDimensions.environmentName
+, environmentType = customDimensions.environmentType
+// in which object
+, alObjectId = customDimensions.alObjectId
+, alObjectName = customDimensions.alObjectName
+, alObjectType = customDimensions.alObjectType
+// endpoint information
+, category = customDimensions.category // API, ODataV3, ODataV4, or SOAP
+, endpoint = customDimensions.endpoint // URI
+// what is the issue?
+, depricationMessage = customDimensions.depricationMessage 
+// example: SOAP webservice on UI page by Microsoft publisher
+
+
+

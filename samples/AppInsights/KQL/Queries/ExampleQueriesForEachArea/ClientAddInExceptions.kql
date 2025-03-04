@@ -8,8 +8,8 @@ exceptions
 | take 5
 | project timestamp
 // in which environment/company did it happen
-, aadTenantId = customDimensions.aadTenantId // null - just because testing in dev env?
-, environmentName = customDimensions.environmentName // undefined - just because testing in dev env?
+, aadTenantId = customDimensions.aadTenantId 
+, environmentName = customDimensions.environmentName 
 , environmentType = customDimensions.environmentType
 , companyName = customDimensions.companyName
 // in which extension/app
@@ -18,7 +18,7 @@ exceptions
 , appPublisher = customDimensions.appPublisher
 , appVersion = customDimensions.appVersion
 // in which object
-, alObjectId = customDimensions.alObjectId // is this always empty?
+, alObjectId = customDimensions.alObjectId 
 , alObjectName = customDimensions.alObjectName
 , alObjectType = customDimensions.alObjectType
 // which add-in
@@ -45,6 +45,3 @@ exceptions
 , details // json structure with more information, such as stack traces
 // which user got the error
 , usertelemetryId = user_Id 
-// other dimensions: TODO
-, domain = customDimensions.domain // remove
-, errorType = customDimensions.typeName // consider removing this
