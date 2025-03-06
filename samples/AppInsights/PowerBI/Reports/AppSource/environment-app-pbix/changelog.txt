@@ -48,10 +48,12 @@ See example https://www.yammer.com/dynamicsnavdev/#/threads/show?threadId=256742
 vNext (implemented, coming in the next release, probably available in the beta app)
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
+* Usage: new page 'Deprecated features (SOAP)'. Shows usage of SOAP on UI pages published by Microsoft
+
 
 
 ------------------
-2025-12-12 release
+2025-02-12 release
 ------------------
 * Bug fixed: DAU/WAU/MAU query did not respect ago parameter
 * Bug fixed: 1d/7d count measures now work for incoming web service errors
