@@ -1,0 +1,1 @@
+{"test_setup":{"item_no": "C-10000", "description": "Contoso Cofee Machine", "uom": "PCS", "Category": "Coffee Machine"}, "query": "Generate a marketing text for an item in Business Central in *Formal* tone", "context": {"description": "Contoso Cofee Machine", "uom": "PCS"}}
