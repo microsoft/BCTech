@@ -16,9 +16,9 @@ namespace FileSystemPlugin
     public class DirectoryInfoPlugIn : IAgentPlugin
     {
         [PluginMethod("GET")]
-        public string GetFiles(string path, string searchPattern)
+        public static string GetFiles(string path, string searchPattern)
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            DirectoryInfo directoryInfo = new(path);
 
             var sb = new StringBuilder();
             using (var sw = new StringWriter(sb, CultureInfo.InvariantCulture))
@@ -30,9 +30,9 @@ namespace FileSystemPlugin
         }
 
         [PluginMethod("GET")]
-        public string GetDirectories(string path, string searchPattern)
+        public static string GetDirectories(string path, string searchPattern)
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            DirectoryInfo directoryInfo = new(path);
 
             var sb = new StringBuilder();
             using (var sw = new StringWriter(sb, CultureInfo.InvariantCulture))
@@ -45,9 +45,9 @@ namespace FileSystemPlugin
 
 
         [PluginMethod("GET")]
-        public string GetDirectoryItems(string path, string searchPattern)
+        public static string GetDirectoryItems(string path, string searchPattern)
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            DirectoryInfo directoryInfo = new(path);
 
             var sb = new StringBuilder();
             using (var sw = new StringWriter(sb, CultureInfo.InvariantCulture))

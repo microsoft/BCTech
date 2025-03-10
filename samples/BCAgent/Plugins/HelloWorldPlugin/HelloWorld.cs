@@ -11,7 +11,7 @@ namespace HelloWorldPlugin
     public class HelloWorld : IAgentPlugin
     {
         [PluginMethod("GET")]
-        public string SayHello(string name)
+        public static string SayHello(string name)
         {
             return $"Hello, {name}";
         }

@@ -18,7 +18,7 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.RequestDispatcher
 
         public static CompositionHost CreateCompositionHost(string pluginFolder)
         {
-            HashSet<Assembly> assemblies = new HashSet<Assembly>();
+            HashSet<Assembly> assemblies = [];
 
             LoadPluginAssemblies(pluginFolder, assemblies);
 
@@ -40,8 +40,8 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.RequestDispatcher
 
         private static ImmutableArray<string> GetAssemblyPathsFromPluginFolder(string pluginFolder)
             => Directory.Exists(pluginFolder) ?
-                Directory.EnumerateFiles(pluginFolder, "*.dll", SearchOption.AllDirectories).ToImmutableArray() :
-                ImmutableArray<string>.Empty;
+                [.. Directory.EnumerateFiles(pluginFolder, "*.dll", SearchOption.AllDirectories)] :
+                [];
 
         private static void LoadExternalAssemblies(IEnumerable<string> analyzerFileNames, HashSet<Assembly> builder)
         {

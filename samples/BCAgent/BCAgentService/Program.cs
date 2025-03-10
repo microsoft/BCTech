@@ -15,10 +15,10 @@ namespace BCLocalService
         static void Main()
         {
             ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
+            ServicesToRun =
+            [
                 new BCLocalService()
-            };
+            ];
             ServiceBase.Run(ServicesToRun);
         }
     }

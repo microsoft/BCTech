@@ -10,13 +10,8 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.Common
 
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class AgentPluginAttribute : ExportAttribute
+    public sealed class AgentPluginAttribute(string rootPath) : ExportAttribute(typeof(IAgentPlugin))
     {
-        public string RootPath { get; }
-
-        public AgentPluginAttribute(string rootPath) : base(typeof(IAgentPlugin))
-        {
-            this.RootPath = rootPath;
-        }
+        public string RootPath { get; } = rootPath;
     }
 }

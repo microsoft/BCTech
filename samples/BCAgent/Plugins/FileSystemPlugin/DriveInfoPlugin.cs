@@ -16,7 +16,7 @@ namespace FileSystemPlugin
     public class DriveInfoPlugIn: IAgentPlugin
     {
         [PluginMethod("GET")]
-        public string GetDrives()
+        public static string GetDrives()
         {
             var sb = new StringBuilder();
             using (var sw = new StringWriter(sb, CultureInfo.InvariantCulture))
@@ -28,9 +28,9 @@ namespace FileSystemPlugin
         }
 
         [PluginMethod("GET")]
-        public long GetAvailableFreeSpace(string driveName)
+        public static long GetAvailableFreeSpace(string driveName)
         {
-            DriveInfo driveInfo = new DriveInfo(driveName);
+            DriveInfo driveInfo = new(driveName);
             return driveInfo.AvailableFreeSpace;
         }
     }
