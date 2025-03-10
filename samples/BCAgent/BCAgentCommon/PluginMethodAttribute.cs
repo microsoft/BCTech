@@ -11,22 +11,17 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.Common
     /// <summary>
     /// Attribute to expose a method through Azure Relay.
     /// </summary>
+    /// <remarks>
+    /// Attribute constructor
+    /// </remarks>
+    /// <param name="httpMethod">Http Method</param>
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class PluginMethodAttribute : Attribute
+    public sealed class PluginMethodAttribute(string httpMethod) : Attribute
     {
         /// <summary>
         /// Specifies the HttpMethod supported by this method. E.g. GET, PUT, ...
         /// </summary>
-        public string HttpMethod { get; }
-
-        /// <summary>
-        /// Attribute constructor
-        /// </summary>
-        /// <param name="httpMethod">Http Method</param>
-        public PluginMethodAttribute(string httpMethod)
-        {
-            this.HttpMethod = httpMethod;
-        }
+        public string HttpMethod { get; } = httpMethod;
     }
 }
