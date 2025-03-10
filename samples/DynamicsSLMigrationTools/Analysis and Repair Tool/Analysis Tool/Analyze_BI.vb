@@ -26,7 +26,6 @@ Module Analyze_BI
         Dim sqlStmt As String = String.Empty
         Dim sqlReader As SqlDataReader = Nothing
 
-
         Try
             Call oEventLog.LogMessage(0, "FLEXIBLE BILLINGS")
             Call oEventLog.LogMessage(0, "")
@@ -35,8 +34,7 @@ Module Analyze_BI
 
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "Analyzing Flexible Billings Module Usage")
-
-            Form1.AnalysisStatusLbl.Text = "Analyzing Flexible Billings Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Flexible Billings Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -61,7 +59,6 @@ Module Analyze_BI
 
             RecID = RecID + 1
             sDescr = "Invoice Entry Rate Table:"
-
             sqlStmt = "SELECT control_data FROM PJCONTRL WHERE control_type = 'BI' AND control_code = 'SETUP'"
 
             Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
@@ -238,12 +235,10 @@ Module Analyze_BI
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
             '***** End of Module Usage section *****
-
             Call oEventLog.LogMessage(0, "")
 
-
             '=== Master Table Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Flexible Billings Master Table Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Flexible Billings Master Table Counts")
             sAnalysisType = "Master Table Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -303,12 +298,10 @@ Module Analyze_BI
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
             '***** End of Master Table Counts section *****
-
             Call oEventLog.LogMessage(0, "")
 
-
             '=== Document/Transaction Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Flexible Billings Document/Transaction Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Flexible Billings Document/Transaction Counts")
             sAnalysisType = "Document/Transaction Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -433,12 +426,11 @@ Module Analyze_BI
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
             '***** End of Document/Transaction Counts section *****
-
             Call oEventLog.LogMessage(0, "")
 
-
             '=== Data Integrity Checks ===
-            Form1.AnalysisStatusLbl.Text = "Performing Flexible Billings Data Integrity Checks"
+            Form1.UpdateAnalysisToolStatusBar("Performing Flexible Billings Data Integrity Checks")
+
             sAnalysisType = "Data Integrity Checks"
             sDescr = String.Empty
             sResult = String.Empty
@@ -829,12 +821,9 @@ Module Analyze_BI
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Flexible Billings data")
             Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - BI")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Flexible Billings data"
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module

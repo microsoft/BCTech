@@ -5,7 +5,7 @@ Imports System.Data.SqlClient
 Module Analyze_TM
     '================================================================================
     ' This module contains code to analyze tables used with the Time and Expense for Projects Module
-     '================================================================================
+    '================================================================================
 
     Public Sub Analyze_TM()
         Dim sqlStringExec As String = String.Empty
@@ -29,13 +29,11 @@ Module Analyze_TM
         Try
             Call oEventLog.LogMessage(0, "TIME AND EXPENSE FOR PROJECTS")
             Call oEventLog.LogMessage(0, "")
-
             '===== Time and Expense for Projects =====
 
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "Analyzing Time and Expense for Projects Module Usage")
-
-            Form1.AnalysisStatusLbl.Text = "Analyzing Time and Expense for Projects Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Time and Expense for Projects Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -1392,14 +1390,9 @@ Module Analyze_TM
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - TM")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Time and Expense for Projects data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Time and Expense for Projects data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Time and Expense for Projects")
             OkToContinue = False
-
         End Try
-
-
-
     End Sub
-
 End Module

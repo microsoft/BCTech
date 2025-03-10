@@ -20,7 +20,6 @@ Module Analyze_CM
         Dim retValInt1 As Integer
         Dim retValDbl1 As Double
         Dim calcValDbl1 As Double
-
         Dim sqlStmt As String = String.Empty
         Dim sqlReader As SqlDataReader = Nothing
 
@@ -28,11 +27,11 @@ Module Analyze_CM
             Call oEventLog.LogMessage(0, "CURRENCY MANAGER")
             Call oEventLog.LogMessage(0, "")
 
-
             '===== Currency Manager =====
 
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "Analyzing Currency Manager Module Usage")
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Currency Manager Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -312,14 +311,9 @@ Module Analyze_CM
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - CM")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Currency Manager data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Currency Manager data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Currency Manager")
             OkToContinue = False
-
         End Try
-
-
-
     End Sub
-
 End Module

@@ -18,12 +18,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Migration Prep and Repair Tool")>
+<Assembly: AssemblyTitle("Dynamics SL Migration Repair Tool")>
 
 
-<Assembly: AssemblyCompany("Progressus Software")>
+<Assembly: AssemblyCompany("Microsoft")>
 <Assembly: AssemblyProduct("Microsoft Dynamics SL 2018 CU1")>
-<Assembly: AssemblyCopyright("2019")>
+<Assembly: AssemblyCopyright("2024")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: CLSCompliant(True)> 
@@ -44,5 +44,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2.4.0.1")>
-<Assembly: AssemblyFileVersion("2.4.0.1")>
+<Assembly: AssemblyVersion("2.4.0.2")>
+<Assembly: AssemblyFileVersion("2.4.0.2")>
