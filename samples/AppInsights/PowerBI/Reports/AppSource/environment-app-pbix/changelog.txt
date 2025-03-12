@@ -49,6 +49,7 @@ vNext (implemented, coming in the next release, probably available in the beta a
 Install beta app from: https://aka.ms/bctelemetryreportbeta
 ------------------
 * Usage: new page 'Deprecated features (SOAP)'. Shows usage of SOAP on UI pages published by Microsoft
+* Errors: new query 'ClientControlAddinErrors'. Shows errors happening in client control add-ins.
 
 
 
