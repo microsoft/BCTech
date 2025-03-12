@@ -11,13 +11,13 @@ namespace CalculatorPlugin
     public class Calculator : IAgentPlugin
     {
         [PluginMethod("GET")]
-        public decimal Add(decimal a, decimal b)
+        public static decimal Add(decimal a, decimal b)
         {
             return a + b;
         }
 
         [PluginMethod("GET")]
-        public decimal Subtract(decimal a, decimal b)
+        public static decimal Subtract(decimal a, decimal b)
         {
             return a - b;
         }

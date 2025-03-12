@@ -127,19 +127,19 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.RequestDispatcher
                 return null;
             }
 
-            string subPath = uri.Substring(this.listenerAddress.Length + 1);
+            string subPath = uri[(listenerAddress.Length + 1)..];
             int index = subPath.LastIndexOf('/');
             if (index < 0)
             {
                 return null;
             }
 
-            if (!this.plugins.TryGetValue(subPath.Substring(0, index), out AgentPlugin plugin))
+            if (!this.plugins.TryGetValue(subPath[..index], out AgentPlugin plugin))
             {
                 return null;
             }
 
-            return plugin.FindMethod(httpMethod, subPath.Substring(index + 1));
+            return plugin.FindMethod(httpMethod, subPath[(index + 1)..]);
         }
     }
 }

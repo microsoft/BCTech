@@ -28,7 +28,7 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.RequestDispatcher
         private readonly ParameterInfo[] parameters;
         private readonly Func<string, object>[] parameterConverters;
 
-        private ParameterInfo returnParameter;
+        private readonly ParameterInfo returnParameter;
 
         internal static PluginMethod Create(IAgentPlugin plugin, MethodInfo methodInfo)
         {
@@ -93,14 +93,12 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.RequestDispatcher
             var result = this.MethodInfo.Invoke(this.Plugin, this.PrepareArguments(context.Request.Url.Query));
             if (result != null)
             {
-                using (var sw = new StreamWriter(context.Response.OutputStream))
-                {
-                    sw.WriteLine(result.ToString());
-                }
+                using var sw = new StreamWriter(context.Response.OutputStream);
+                sw.WriteLine(result.ToString());
             }
         }
 
-        private static readonly object[] EmptyParameters = new object[0];
+        private static readonly object[] EmptyParameters = [];
 
         /// <summary>
         /// Create an object array with converted parameters.
@@ -120,21 +118,15 @@ namespace Microsoft.Dynamics.BusinessCentral.Agent.RequestDispatcher
                 return EmptyParameters;
             }
 
-            List<Object> arguments = new List<object>();
+            List<Object> arguments = [];
             for (int i = 0; i < this.parameters.Length; i++)
             {
                 ParameterInfo parameter = this.parameters[i];
-                string value = nameValueCollection.Get(parameter.Name);
-                if (value == null)
-                {
-                    // Error missing parameter.
-                    throw new ArgumentException($"Parameter '{parameter.Name}' not found.");
-                }
-
+                string value = nameValueCollection.Get(parameter.Name) ?? throw new ArgumentException($"Parameter '{parameter.Name}' not found.");
                 arguments.Add(this.parameterConverters[i](value));
             }
 
-            return arguments.ToArray();
+            return [.. arguments];
         }
 
         /// <summary>
