@@ -4,7 +4,7 @@ Option Explicit On
 Module Analyze_SN
     '================================================================================
     ' This module contains code to analyze tables used with the Service Contracts Module
-     '================================================================================
+    '================================================================================
 
     Public Sub Analyze_SN()
         Dim sqlStringExec As String = String.Empty
@@ -23,16 +23,15 @@ Module Analyze_SN
         Dim sqlStmt As String = String.Empty
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Service Contracts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Service Contracts")
 
             Call oEventLog.LogMessage(0, "SERVICE CONTRACT")
             Call oEventLog.LogMessage(0, "")
-
             '===== Service Contracts =====
 
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "Analyzing Service Contracts Module Usage")
-
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Service Contracts Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -118,7 +117,7 @@ Module Analyze_SN
             Call oEventLog.LogMessage(0, "")
 
             '=== Master Table Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Service Contracts Master Table Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Service Contracts Master Table Counts")
             sAnalysisType = "Master Table Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -661,15 +660,9 @@ Module Analyze_SN
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SN")
-
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Service Contracts data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Service Contracts data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Service Contracts")
             OkToContinue = False
-
         End Try
-
-
-
     End Sub
-
 End Module

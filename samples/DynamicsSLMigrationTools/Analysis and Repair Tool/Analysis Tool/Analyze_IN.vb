@@ -6,7 +6,7 @@ Module Analyze_IN
     '================================================================================
     ' This module contains code to analyze tables used with the Inventory Module
     '
-     '================================================================================
+    '================================================================================
 
     Public Sub Analyze_IN()
         Dim sqlStringExec As String = String.Empty
@@ -21,21 +21,18 @@ Module Analyze_IN
         Dim retValDbl1 As Double
         Dim retValStr1 As String = String.Empty
         Dim calcValDbl1 As Double
-
         Dim sqlStmt As String = String.Empty
         Dim sqlReader As SqlDataReader = Nothing
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Inventory"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Inventory")
             Call oEventLog.LogMessage(0, "INVENTORY")
             Call oEventLog.LogMessage(0, "")
-
-
             Call oEventLog.LogMessage(0, "Analyzing Inventory Module Usage")
             '===== Inventory ======
 
             '=== Module Usage ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Inventory Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Inventory Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -1238,12 +1235,9 @@ Module Analyze_IN
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - IN")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Inventory data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Inventory data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Inventory")
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module

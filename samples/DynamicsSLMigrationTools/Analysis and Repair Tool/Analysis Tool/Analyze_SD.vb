@@ -5,7 +5,7 @@ Imports System.Data.SqlClient
 Module Analyze_SD
     '================================================================================
     ' This module contains code to analyze tables used with the Service Dispatch Module
-     '================================================================================
+    '================================================================================
 
     Public Sub Analyze_SD()
         Dim sqlStringExec As String = String.Empty
@@ -29,15 +29,14 @@ Module Analyze_SD
         Dim payrollInterface As String = String.Empty
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Service Dispatch"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Service Dispatch")
             Call oEventLog.LogMessage(0, "SERVICE DISPATCH")
             Call oEventLog.LogMessage(0, "")
             '===== Service Dispatch =====
 
             '=== Module Usage ===
             Call oEventLog.LogMessage(0, "Analyzing Service Dispatch Module Usage")
-
-            Form1.AnalysisStatusLbl.Text = "Analyzing Service Dispatch Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Service Dispatch Module Usage")
             sAnalysisType = "Module Usage"
 
             RecID = RecID + 1
@@ -470,7 +469,7 @@ Module Analyze_SD
             Call oEventLog.LogMessage(0, "")
 
             '=== Document/Transaction Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Service Dispatch Document/Transaction Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Service Dispatch Document/Transaction Counts")
             sAnalysisType = "Document/Transaction Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -795,17 +794,13 @@ Module Analyze_SD
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - SD")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Service Dispatch data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Service Dispatch data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Service Dispatch")
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module

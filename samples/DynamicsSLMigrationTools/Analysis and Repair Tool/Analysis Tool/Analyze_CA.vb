@@ -22,12 +22,11 @@ Module Analyze_CA
         Dim retValStr1 As String = String.Empty
         Dim calcValDbl1 As Double
         Dim retValDte As Date
-
         Dim sqlStmt As String = String.Empty
         Dim sqlReader As SqlDataReader = Nothing
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Cash Manager"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Cash Manager")
 
             '===== Cash Manager =====
 
@@ -483,17 +482,13 @@ Module Analyze_CA
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
-
 
         Catch ex As Exception
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Cash Manager data")
             Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - CA")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Cash Manager data"
             OkToContinue = False
         End Try
-
     End Sub
-
 End Module

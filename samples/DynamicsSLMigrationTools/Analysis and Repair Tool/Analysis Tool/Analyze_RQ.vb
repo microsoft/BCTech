@@ -1151,12 +1151,9 @@ Module Analyze_RQ
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Requisitions data")
             Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - RQ")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Requisitions data"
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module

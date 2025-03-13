@@ -27,17 +27,15 @@ Module Analyze_GL
         Dim perNbrDelete As String = String.Empty
         Dim sqlStringRet As String = String.Empty
         Dim sqlStmt As String = String.Empty
-
         Dim sqlReader As SqlDataReader = Nothing
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing General Ledger"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing General Ledger")
 
             '====== General Ledger ======
 
             '=== Module Usage ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing General Ledger Module Usage"
-
+            Form1.UpdateAnalysisToolStatusBar("Analyzing General Ledger Module Usage")
             Call oEventLog.LogMessage(0, "GENERAL LEDGER")
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "Analyzing General Ledger Module Usage")
@@ -191,7 +189,6 @@ Module Analyze_GL
             sqlStmt = "SELECT MAX(PerPost) FROM Batch WHERE Module = 'GL' AND Status NOT IN ('D', 'V')"
             Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
             If (sqlReader.HasRows()) Then
-
                 Call sqlReader.Read()
                 Try
                     retValStr1 = sqlReader(0)
@@ -227,7 +224,6 @@ Module Analyze_GL
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
             '**************************************************************************
             '*** Verify GL is in balance (Assets = Income - Expenses + Liabilities) ***
             '**************************************************************************
@@ -257,7 +253,6 @@ Module Analyze_GL
             sqlStmt = "xSLMPT_AcctCurBalByType" + SParm(CpnyId) + "," + SParm(bGLSetupInfo.PerNbr.Substring(0, 4)) + "," + SParm(bGLSetupInfo.YtdNetIncAcct) + ", 'L'"
             Call sqlFetch_Num(curBal_L, sqlStmt, SqlAppDbConn)
             curBal_L = FPRnd(curBal_L, 2)
-
             checkVal = FPRnd((curBal_I - curBal_E + curBal_L), 2)
             If checkVal <> curBal_A Then
                 sResult = "NO"
@@ -309,8 +304,6 @@ Module Analyze_GL
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
             '***** End of Module Usage section *****
-
-
             Call oEventLog.LogMessage(0, "")
 
             '=== Master Table Counts ===
@@ -381,7 +374,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 RecID = RecID + 1
                 sDescr = "Number of Account History records by Company ID:"
@@ -400,7 +392,6 @@ Module Analyze_GL
                         sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                         Call AddStatusInfo(sqlStringExec, sDescr, sResult)
                     End If
-
                 Next
             End If
 
@@ -442,7 +433,6 @@ Module Analyze_GL
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
             '***** End of Master Table Counts section *****
-
             Call oEventLog.LogMessage(0, "")
 
             '=== Document/Transaction Counts ===
@@ -459,7 +449,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -493,7 +482,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -517,7 +505,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -550,7 +537,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -584,7 +570,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If retValInt1 > 1 Then
                 'Display the Currency IDs
                 sqlStmt = "SELECT DISTINCT(CuryId) FROM GLTran WHERE Module = 'GL' AND TranType <> 'IC' AND IC_Distribution = 0"
@@ -610,7 +595,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -635,7 +619,6 @@ Module Analyze_GL
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If MultiCpnyAppDB = True Then
                 RecID = RecID + 1
                 sDescr = "Average number of transactions per day over last 365 days:"
@@ -647,7 +630,6 @@ Module Analyze_GL
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
                 If retValInt1 > 0 Then
                     For Each Cpny As CpnyDatabase In CpnyDBList
                         RecID = RecID + 1
@@ -673,7 +655,6 @@ Module Analyze_GL
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
                 If retValInt1 > 0 Then
                     For Each Cpny As CpnyDatabase In CpnyDBList
                         RecID = RecID + 1
@@ -718,7 +699,6 @@ Module Analyze_GL
                         End If
                     Next
                 End If
-
             Else
                 RecID = RecID + 1
                 sDescr = "Average number of transactions per day over last 365 days:"
@@ -751,9 +731,7 @@ Module Analyze_GL
 
             End If
 
-
             '***** End of Document/Transaction Counts section *****
-
             Call oEventLog.LogMessage(0, "")
 
             '=== Data Integrity Checks ===
@@ -1023,26 +1001,20 @@ Module Analyze_GL
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
             '***********************************************************************************'
             '*** Check for Subaccount segment values in GLTran that are not the SegDef table ***'
             '***********************************************************************************'
             Dim sqlString As String = String.Empty
             Dim sqlString2 As String = String.Empty
             Dim sqlString3 As String = String.Empty
-
             Dim sqlDefConn As SqlConnection = Nothing
             Dim sqlDefReader As SqlDataReader = Nothing
             Dim sqlErrConn As SqlConnection = Nothing
             Dim sqlErrReader As SqlDataReader = Nothing
-
             Dim dbTran As SqlTransaction = Nothing
             Dim sqlInsertStmt As String = String.Empty
-
             Dim retVal As Integer
-
             Dim StartPos As Integer = 0
-
             Dim SegDefLengthArray As List(Of Short) = New List(Of Short)
 
             'Get FlexDef information
@@ -1050,7 +1022,6 @@ Module Analyze_GL
             sqlStmt = "SELECT NumberSegments, SegLength00, SegLength01, SegLength02, SegLength03, SegLength04, SegLength05, SegLength06, SegLength07 FROM FlexDef WHERE FieldClassName = 'SUBACCOUNT'"
             Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
             If (sqlReader.HasRows) Then
-
                 Call sqlReader.Read()
                 Call SetFlexDefValues(sqlReader, bFlexDefInfo)
             Else
@@ -1068,18 +1039,13 @@ Module Analyze_GL
             SegDefLengthArray.Add(bFlexDefInfo.SegLength07)
 
             sqlReader.Close()
-
             sqlDefConn = New SqlClient.SqlConnection(AppDbConnStr)
-
-
             sqlErrConn = New SqlClient.SqlConnection(AppDbConnStr)
-
 
             'Check Segment 1
             'Check Each Segment
             StartPos = 1
             For cnt As Integer = 1 To bFlexDefInfo.NumberSegments
-
 
                 sqlString = "SELECT DISTINCT(SUBSTRING(Sub, " + StartPos.ToString + ", " + SegDefLengthArray(cnt - 1).ToString + ")) FROM GLTran"
                 Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
@@ -1087,48 +1053,36 @@ Module Analyze_GL
                     While sqlReader.Read()
                         Call SetSubAcctListValues(sqlReader, bSubAcctList)
                         If bSubAcctList.SubAcct.Trim IsNot String.Empty Then
-
                             If (sqlDefConn.State <> ConnectionState.Open) Then
                                 Call sqlDefConn.Open()
                             End If
                             'Check to see if segment value is in the SegDef table
                             sqlString2 = "Select * FROM SegDef WHERE FieldClassName = 'SUBACCOUNT' AND SegNumber =  '" + CStr(cnt) + "' AND ID =" + SParm(bSubAcctList.SubAcct.Trim)
-
                             Call sqlFetch_1(sqlDefReader, sqlString2, sqlDefConn, CommandType.Text)
-
                             If sqlDefReader.HasRows() = False Then
                                 'Write record to xSLMPTSubErrors table
                                 sqlString3 = "SELECT * FROM xSLMPTSubErrors WHERE SegNumber = '1' AND ID =" + SParm(bSubAcctList.SubAcct.Trim)
                                 Call sqlFetch_1(sqlErrReader, sqlString3, sqlErrConn, CommandType.Text)
-
                                 If sqlErrReader.HasRows() = False Then
                                     Call sqlErrReader.Close()
                                     bxSLMPTSubErrors.SegNumber = cnt
                                     bxSLMPTSubErrors.ID = bSubAcctList.SubAcct.Trim
-
                                     If (sqlErrConn.State <> ConnectionState.Open) Then
                                         sqlErrConn.Open()
                                     End If
-
                                     dbTran = TranBeg(sqlErrConn)
-
                                     sqlInsertStmt = "Insert into xSLMPTSubErrors ([ID], [SegNumber]) Values(" + SParm(bSubAcctList.SubAcct.Trim) + "," + SParm(cnt.ToString) + ")"
-
-
                                     retVal = sql_1(sqlErrReader, sqlInsertStmt, sqlErrConn, OperationType.InsertOp, CommandType.Text, dbTran)
                                     If (retVal = 1) Then
                                         statusExists = True
                                     End If
                                     Call TranEnd(dbTran)
-
                                     sqlErrConn.Close()
-
                                 End If
                                 Call sqlErrReader.Close()
                             End If
                             Call sqlDefReader.Close()
                         End If
-
                     End While
                 End If
 
@@ -1139,8 +1093,6 @@ Module Analyze_GL
                 Call sqlReader.Close()
 
                 StartPos = StartPos + SegDefLengthArray(cnt - 1)
-
-
             Next
 
             RecID = RecID + 1
@@ -1175,18 +1127,13 @@ Module Analyze_GL
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
 
-
             '***********************************************************************************'
             '***********************************************************************************'            
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - GL")
-            ' Call TranEnd()
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing General Ledger data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing General Ledger data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - General Ledger")
             OkToContinue = False
         End Try
-
     End Sub
-
-
 End Module

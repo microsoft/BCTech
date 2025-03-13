@@ -501,18 +501,10 @@ Module PlumblineCode
             sqlDefConn = New SqlClient.SqlConnection(AppDbConnStr)
             sqlDefConn.Open()
 
-
-
         End If
-
-
 
         'Delete records in xSLMPTSubErrors table
         sqlStmt = "Delete from xSLMPTSubErrors"
         Call sql_1(sqlReader, sqlStmt, SqlAppDbConn, OperationType.DeleteOp, CommandType.Text)
-
-
-
     End Sub
-
 End Module

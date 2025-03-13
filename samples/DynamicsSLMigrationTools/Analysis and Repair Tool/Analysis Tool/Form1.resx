@@ -130,25 +130,6 @@
     <value>This process will scan the logged in database to provide a summary report of the modules in use and the number of various master/document/transaction records. It also identifies any records that have orphaned or missing data.
 </value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Update1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        Qk02AwAAAAAAADYAAAAoAAAAEAAAABAAAAABABgAAAAAAAAAAAATCwAAEwsAAAAAAAAAAAAA////////
-        ////////////////////////////////////////////////////////////7L+y0pWPx4qEvISEvISE
-        vISEsX6EsX55sX55pnl5pnN5pnN5mnN5mnNu////////3pWa9LGx6aamx35ieW5i0s3H0s3H3tLS3tjS
-        hISEvHluvHluvHNumnN5////////3pqa/7a89Kum6aammoqEeXlusaCa9Onp9O7psaaavHluvHl5vHlu
-        pnN5////////3qCa/7y89LGx9KummoqETExMeXlu9OPe9OnepqCPx355x355vHl5pnl5////////3qCm
-        /8LH/7y89LGxmoqEmoqEmoqEmoqEmo+EppWP0oqEx4SEx355pnl5////////6aam/8fH/8fH/7y89LGx
-        9Kum6aam6aCm3pqa3pWa0o+P0oqEx4SEsX55////////6aux/83S/83H3o+P0o+E0oqE0oR5x4Rux35u
-        vHlivHNX0o+P0oqEsX55////////6bGx/9LS3pWP//////////r09PT09O7p9OPe6d7S6djSvHNX0o+P
-        sX6E////////6ba8/9LS3pqa//////////////r09PT09O7p9OPe6d7SvHli3pWPvISE////////9Ly8
-        /9LS6aCa//////////////////r09PT09O7p9OPex35u3pqavISE////////9MK8/9LS6aam////////
-        //////////////r09PT09O7px4Ru6aCmvISE////////9MfH/9LS9Kux////////////////////////
-        //r09PT00oR5j25ux4qE////////9MfH/9LS/7Gx//////////////////////////////r00oqEx4qP
-        x4qP////////9M3H9M3H9MfH9MfH9MLH9Ly86ba86bGx6bGx6aux6aam3qCm3qCa3pqa////////////
-        ////////////////////////////////////////////////////////
-</value>
-  </data>
   <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>430, 17</value>
   </metadata>

@@ -26,23 +26,19 @@ Module Analyze_AR
         Dim fiscYearDelete As String = String.Empty
         Dim currPerNbrAR As String = String.Empty
         Dim perNbrDelete As String = String.Empty
-
         Dim sqlStmt As String = String.Empty
         Dim sqlReader As SqlDataReader = Nothing
 
-
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Receivable"
-
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Receivable")
 
             '===== Accounts Receivable ======
 
             '=== Module Usage ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Receivable Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Receivable Module Usage")
             sAnalysisType = "Module Usage"
             Call oEventLog.LogMessage(0, "ACCOUNTS RECEIVABLE")
             Call oEventLog.LogMessage(0, "")
-
             Call oEventLog.LogMessage(0, "Analyzing Accounts Receivable Module Usage")
 
             RecID = RecID + 1
@@ -60,7 +56,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If sResult = "NO" Then
                 Exit Sub
             End If
@@ -73,7 +68,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -124,7 +118,6 @@ Module Analyze_AR
                 Call SetARSetupValues(sqlReader, bARSetupInfo)
             End If
             Call sqlReader.Close()
-
             If bARSetupInfo.PerNbr.Trim <> "" Then
                 sResult = bARSetupInfo.PerNbr.Substring(4, 2) + "-" + bARSetupInfo.PerNbr.Substring(0, 4)
                 currPerNbrAR = bARSetupInfo.PerNbr
@@ -204,10 +197,8 @@ Module Analyze_AR
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "Master Table Counts")
 
-
-
             '=== Master Table Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Receivable Master Table Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Receivable Master Table Counts")
             sAnalysisType = "Master Table Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -293,16 +284,12 @@ Module Analyze_AR
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
-
-
             '***** End of Master Table Counts section *****
-
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "Document / Transaction Counts")
 
-
             '=== Document/Transaction Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Receivable Document/Transaction Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Receivable Document/Transaction Counts")
             sAnalysisType = "Document/Transaction Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -315,7 +302,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -329,7 +315,6 @@ Module Analyze_AR
                         Call AddStatusInfo(sqlStringExec, sDescr, sResult)
                     End If
                 Next
-
             End If
 
             If currPerNbrAR.Trim <> "" Then
@@ -352,7 +337,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -366,7 +350,6 @@ Module Analyze_AR
                         Call AddStatusInfo(sqlStringExec, sDescr, sResult)
                     End If
                 Next
-
             End If
 
             If currPerNbrAR.Trim <> "" Then
@@ -389,7 +372,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -413,7 +395,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -437,7 +418,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -461,7 +441,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -485,7 +464,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -509,7 +487,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -533,7 +510,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -557,7 +533,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -581,7 +556,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -605,7 +579,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -638,7 +611,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -671,7 +643,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If (retValInt1 > 0 And MultiCpnyAppDB = True) Then
                 For Each Cpny As CpnyDatabase In CpnyDBList
                     RecID = RecID + 1
@@ -707,7 +678,6 @@ Module Analyze_AR
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             If retValInt1 > 1 Then
                 'Display the Currency IDs
                 Call InitUnboundList30Values(bUnboundList30)
@@ -715,7 +685,6 @@ Module Analyze_AR
                 Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
                 While sqlReader.Read()
                     Call SetUnboundList30Values(sqlReader, bUnboundList30)
-
                     RecID = RecID + 1
                     sDescr = " - " + bUnboundList30.ListID.Trim
                     sResult = ""
@@ -737,7 +706,6 @@ Module Analyze_AR
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
                 If retValInt1 > 0 Then
                     For Each Cpny As CpnyDatabase In CpnyDBList
                         RecID = RecID + 1
@@ -764,7 +732,6 @@ Module Analyze_AR
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
                 If retValInt1 > 0 Then
                     For Each Cpny As CpnyDatabase In CpnyDBList
                         RecID = RecID + 1
@@ -791,14 +758,12 @@ Module Analyze_AR
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
                 If retValInt1 > 0 Then
                     For Each Cpny As CpnyDatabase In CpnyDBList
                         RecID = RecID + 1
                         sDescr = " - CpnyID: " + Cpny.CompanyId.Trim + " " + Cpny.CompanyName.Trim()
                         sqlStmt = "SELECT COUNT(*) FROM ARTran WHERE Crtd_DateTime >=" + SParm(LastYrDateStr) + "AND CpnyID =" + SParm(Cpny.CompanyId.Trim)
                         Call sqlFetch_Num(retValInt2, sqlStmt, SqlAppDbConn)
-
                         calcValDbl1 = (retValInt2 / 12)
                         calcValDbl1 = Decimal.Round(calcValDbl1, 2, MidpointRounding.AwayFromZero)
                         sResult = calcValDbl1
@@ -809,7 +774,6 @@ Module Analyze_AR
                         End If
                     Next
                 End If
-
             Else
                 RecID = RecID + 1
                 sDescr = "Average number of transactions per day over last 365 days:"
@@ -839,7 +803,6 @@ Module Analyze_AR
                 sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
                 sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
                 Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-
             End If
 
             RecID = RecID + 1
@@ -888,13 +851,11 @@ Module Analyze_AR
             End If
 
             '***** End of Document/Transaction Counts section *****
-
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "Data Integrity Checks")
 
-
             '=== Data Integrity Checks ===
-            Form1.AnalysisStatusLbl.Text = "Performing Accounts Receivable Data Integrity Checks"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Receivable Document/Transaction Counts")
             sAnalysisType = "Data Integrity Checks"
             sDescr = String.Empty
             sResult = String.Empty
@@ -1170,18 +1131,13 @@ Module Analyze_AR
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
             Call sqlReader.Close()
-
             Call oEventLog.LogMessage(0, "")
             Call oEventLog.LogMessage(0, "")
-
-
 
         Catch ex As Exception
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Accounts Receivable data")
             Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - AR")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Accounts Receivable data"
             OkToContinue = False
         End Try
-
     End Sub
-
 End Module
