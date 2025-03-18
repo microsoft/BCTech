@@ -30,13 +30,12 @@ Module Analyze_AP
         Dim sqlReader As SqlDataReader = Nothing
 
         Try
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Payable"
-
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Payable")
 
             '===== Accounts Payable =====
 
             '=== Module Usage ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Payable Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Payable Module Usage")
             sAnalysisType = "Module Usage"
 
             Call oEventLog.LogMessage(0, "ACCOUNTS PAYABLE")
@@ -194,7 +193,7 @@ Module Analyze_AP
 
 
             '=== Master Table Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Payable Master Table Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Payable Master Table Counts")
             sAnalysisType = "Master Table Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -269,7 +268,7 @@ Module Analyze_AP
 
 
             '=== Document/Transaction Counts ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Accounts Payable Document/Transaction Counts"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Accounts Payable Document/Transaction Counts")
             sAnalysisType = "Document/Transaction Counts"
             sDescr = String.Empty
             sResult = String.Empty
@@ -860,7 +859,7 @@ Module Analyze_AP
             Call oEventLog.LogMessage(0, "")
 
             '=== Data Integrity Checks ===
-            Form1.AnalysisStatusLbl.Text = "Performing Accounts Payable Data Integrity Checks"
+            Form1.UpdateAnalysisToolStatusBar("Performing Accounts Payable Data Integrity Checks")
             sAnalysisType = "Data Integrity Checks"
             sDescr = String.Empty
             sResult = String.Empty
@@ -1166,13 +1165,9 @@ Module Analyze_AP
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Accounts Payable data")
             Call MessageBox.Show("Error Encountered" + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - AP")
-
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Accounts Payable data"
-
             OkToContinue = False
         End Try
-
     End Sub
-
 End Module

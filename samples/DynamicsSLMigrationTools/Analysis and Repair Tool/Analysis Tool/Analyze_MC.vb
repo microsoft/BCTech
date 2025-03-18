@@ -32,7 +32,7 @@ Module Analyze_MC
             '===== Multi-Company =====
 
             '=== Module Usage ===
-            Form1.AnalysisStatusLbl.Text = "Analyzing Multi-Company Module Usage"
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Multi-Company Module Usage")
 
             Call oEventLog.LogMessage(0, "MULTI-COMPANY")
             Call oEventLog.LogMessage(0, "")
@@ -849,12 +849,9 @@ Module Analyze_MC
             Call oEventLog.LogMessage(0, "")
 
         Catch ex As Exception
-            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - MC")
-            Form1.AnalysisStatusLbl.Text = "Error encountered while analyzing Multi-Company data"
+            Form1.UpdateAnalysisToolStatusBar("Error encountered while analyzing Multi-Company data")
+            Call MessageBox.Show("Error Encountered " + ex.Message + vbNewLine + ex.StackTrace, "Error Encountered - Multi-Company")
             OkToContinue = False
-
         End Try
-
     End Sub
-
 End Module

@@ -72,12 +72,10 @@ Friend Class Form1
     End Sub
 
     Private Sub PerformAnalysis()
-
         Dim sqlReader As SqlDataReader = Nothing
         oEventLog = New clsEventLog
         Dim sqlStmt As String = String.Empty
         Dim ExportFilename As String
-
         Dim fmtDate As String
 
         fmtDate = Date.Now.ToString
@@ -87,16 +85,13 @@ Friend Class Form1
         fmtDate = fmtDate.Replace(" ", "-")
         fmtDate = fmtDate & Date.Now.Millisecond
 
-
         Try
             ExportFilename = "SystemAnalysis_" + fmtDate + ".txt"
             oEventLog.FileName = ExportFilename
 
             ' Begin the output file for reporting results.
             Call oEventLog.LogMessage(StartProcess, "")
-
-
-            UpdateStatusLbl.Text = "Begin Analysis"
+            UpdateAnalysisToolStatusBar("Begin Analysis")
 
             'Truncate data in the work tables
             sqlStmt = "Delete from xSLAnalysisSum"
@@ -104,19 +99,15 @@ Friend Class Form1
             sqlStmt = "Delete from xSLAnalysisCpny"
             Call sql_1(sqlReader, sqlStmt, SqlAppDbConn, OperationType.DeleteOp, CommandType.Text)
 
-
             'Populate xSLAnalysisCpny table
             Call sql_1(sqlReader, "EXEC xp_SLAnalysisCpnyPop", SqlAppDbConn, OperationType.ExecProc, CommandType.Text)
-
             RecID = 0
 
             'Get date values
             CurrDate = Date.Now
 
-
             'Log Database and Company Information
             Dim strVersion As String = String.Empty
-
 
             ' Get the current version of Dynamics SL.
             Call sqlFetch_1(sqlReader, "getVersion", SqlSysDbConn, CommandType.StoredProcedure)
@@ -124,183 +115,179 @@ Friend Class Form1
                 sqlReader.Read()
                 bVersionSL.VersionNbr = sqlReader(0)
             End If
-
             Call sqlReader.Close()
 
             'Analyze Administration Information
-            AnalysisStatusLbl.Text = "Analyzing Administration Information"
+            UpdateAnalysisToolStatusBar("Analyzing Administration Information")
+
             Call Analyze_SY.Analyze_SY()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Administration Information"
+                UpdateAnalysisToolStatusBar("Finished analyzing Administration Information")
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing Administration Information"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing Administration Information")
                 Exit Sub
             End If
 
             'Analyze MC - Multi-Company
             Call Analyze_MC.Analyze_MC()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Multi-Company"
+                UpdateAnalysisToolStatusBar("Finished analyzing Multi-Company")
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing Multi-Company"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing Multi-Company")
                 Exit Sub
             End If
 
             'Analyze GL - General Ledger
             Call Analyze_GL.Analyze_GL()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing General Ledger at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing General Ledger at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the General Ledger Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the General Ledger Module")
                 Exit Sub
             End If
 
             'Analyze AP - Accounts Payable
             Call Analyze_AP.Analyze_AP()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Accounts Payable at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Accounts Payable at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Accounts Payable Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Accounts Payable Module")
                 Exit Sub
             End If
 
             'Analyze AR - Accounts Receivable
             Call Analyze_AR.Analyze_AR()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Accounts Receivable at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Accounts Receivable at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Accounts Receivable Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Accounts Receivable Module")
                 Exit Sub
             End If
 
             'Analyze CA - Cash Manager
             Call Analyze_CA.Analyze_CA()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Cash Manager at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Cash Manager at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Cash Manager Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Cash Manager Module")
                 Exit Sub
             End If
 
             'Analyze IN - Inventory
             Call Analyze_IN.Analyze_IN()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Inventory at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Inventory at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Inventory Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Inventory Module")
                 Exit Sub
             End If
 
             'Analyze BM - Bill of Material
             Call Analyze_BM.Analyze_BM()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Bill of Material at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Bill of Material at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Bill of Material Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Bill of Material Module")
                 Exit Sub
             End If
 
             'Analyze PO - Purchasing
             Call Analyze_PO.Analyze_PO()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Purchasing at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Purchasing at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Purchasing Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Purchasing Module")
                 Exit Sub
             End If
 
             'Analyze RQ - Requisitions
             Call Analyze_RQ.Analyze_RQ()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Requisitions at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Requisitions at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Requisitions Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Requisitions Module")
                 Exit Sub
             End If
 
             'Analyze OM - Order Management
             Call Analyze_OM.Analyze_OM()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Order Management at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Order Management at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Order Management Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Order Management Module")
                 Exit Sub
             End If
 
             'Analyze PA - Project Controller
             Call Analyze_PA.Analyze_PA()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Project Controller at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Project Controller at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Project Controller Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Project Controller Module")
                 Exit Sub
             End If
 
             'Analyze BI - Flexible Billings
             Call Analyze_BI.Analyze_BI()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Flexible Billings at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Flexible Billings at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Flexible Billings Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Flexible Billings Module")
                 Exit Sub
             End If
 
             'Analyze TM - Time and Expense for Projects
             Call Analyze_TM.Analyze_TM()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Time and Expense for Projects at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Time and Expense for Projects at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Time and Expense for Projects Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Time and Expense for Projects Module")
                 Exit Sub
             End If
 
             'Analyze SD - Service Dispatch
             Call Analyze_SD.Analyze_SD()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Service Dispatch at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Service Dispatch at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Service Dispatch Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Service Dispatch Module")
                 Exit Sub
             End If
 
             'Analyze SN - Service Contracts
             Call Analyze_SN.Analyze_SN()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Service Contracts at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Service Contracts at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Service Contracts Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Service Contracts Module")
                 Exit Sub
             End If
 
             'Analyze SI - Shared Information
             Call Analyze_SI.Analyze_SI()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Shared Information at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Shared Information at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Shared Information Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Shared Information Module")
                 Exit Sub
             End If
 
             'Analyze CM - Currency Manager
             Call Analyze_CM.Analyze_CM()
             If OkToContinue = True Then
-                AnalysisStatusLbl.Text = "Finished analyzing Currency Manager at " + Now.ToString("hh:mm:ss")
+                UpdateAnalysisToolStatusBar("Finished analyzing Currency Manager at " + Now.ToString("hh:mm:ss"))
             Else
-                AnalysisStatusLbl.Text = "Error encountered analyzing the Currency Manager Module"
+                UpdateAnalysisToolStatusBar("Error encountered analyzing the Currency Manager Module")
                 Exit Sub
             End If
-
-
 
             'Truncate table xSLAnalysisCpny
             sqlStmt = "Delete from xSLAnalysisCpny"
             Call sql_1(sqlReader, sqlStmt, SqlAppDbConn, OperationType.DeleteOp, CommandType.Text)
 
-
-
             If OkToContinue = True Then
                 'End process
-                AnalysisStatusLbl.Text = ""
+                UpdateAnalysisToolStatusBar("")
 
                 Dim retValDte1 As Date
                 Dim sResult As String = String.Empty
@@ -312,39 +299,31 @@ Friend Class Form1
                 cmdViewAnalysis.Enabled = True
             End If
 
-
         Catch ex As Exception
             AnalysisStatusLbl.Text = ex.Message.Trim + vbNewLine + ex.StackTrace
             AnalysisStatusLbl.Text = "Error Encountered: "
-
         End Try
 
         Call oEventLog.LogMessage(EndProcess, "Microsoft Dynamics SL Analysis Report")
+        UpdateAnalysisToolStatusBar("Analysis Complete")
         ' Display message to indicate that analysis is complete.
         Call MessageBox.Show("Analysis Complete")
-
     End Sub
 
     Private Sub cmdViewAnalysis_Click(sender As System.Object, e As System.EventArgs) Handles cmdViewAnalysis.Click
-
         Dim fileOutput As String = oEventLog.GetLogFile().FullName
         Dim NPErr As Integer
 
         ' Open the log file generated by the previous run in notepad.
         ' Display the event log.
         If (My.Computer.FileSystem.FileExists(fileOutput)) Then
-
             ' See if the file also exists in the Virtual Store....
             NPErr = Shell("Notepad.exe " + fileOutput.Trim, AppWinStyle.NormalFocus, True)
             If NPErr > 0 Then
                 Call MessageBox.Show("Unable to display log = " + fileOutput)
             End If
         End If
-
-
     End Sub
-
-
 
     Private Sub rbAuthenticationTypeWindows_CheckedChanged(sender As Object, e As EventArgs) Handles rbAuthenticationTypeWindows.CheckedChanged
         ' If this is selected, then indicate that the Windows Authentication is enabled.
@@ -367,9 +346,6 @@ Friend Class Form1
         Dim sqlCpnySet As SqlDataReader
         Dim CpnyDBEntry As CpnyDatabase
 
-
-
-
         'Set the global variables that hold the userid and password
         'that the user entered.
         SQLAuthUser = Trim(txtUserId.Text)
@@ -379,16 +355,10 @@ Friend Class Form1
         If (String.IsNullOrEmpty(SysDb.Text.Trim())) Then
             MsgBox("Database name is required")
         Else
-
-
             connStr = GetConnectionString(True)
-
             SqlSysDbConn = New SqlClient.SqlConnection(connStr)
-
             SQLCommand = New SqlClient.SqlCommand()
             SQLCommand.Connection = SqlSysDbConn
-
-
             SQLCommand.Connection.Open()
 
             ' If the connection opened successfully, then get the list of companies.
@@ -397,8 +367,6 @@ Friend Class Form1
                 sqlString = "Select Active, CpnyId, CpnyName, DatabaseName From Company"
                 SQLCommand.CommandText = sqlString
                 sqlCpnySet = SQLCommand.ExecuteReader()
-
-
 
                 If (sqlCpnySet.HasRows = True) Then
                     While (sqlCpnySet.Read())
@@ -414,13 +382,10 @@ Friend Class Form1
             End If
 
             SQLCommand.Connection.Close()
-
             lblDbStatus.Text = "Connected"
             UserId = System.Environment.UserName()
-
         End If
     End Sub
-
 
     Private Sub cmdBrowse_Click(sender As Object, e As EventArgs) Handles cmdBrowse.Click
         Dim myResult As System.Windows.Forms.DialogResult
@@ -445,10 +410,7 @@ Friend Class Form1
         'Set folder selected and display the value
         cExportFolder.Text = folderBrowserDialog1.SelectedPath.Trim
         EventLogDir = cExportFolder.Text.Trim()
-
     End Sub
-
-
 
     Private Sub SysDb_TextChanged(sender As Object, e As EventArgs) Handles SysDb.TextChanged
         SysDBName = SysDb.Text
@@ -475,10 +437,7 @@ Friend Class Form1
         Else
             ' Open the connection to the app database.
             AppDbConnStr = GetConnectionString(False)
-
             SqlAppDbConn = New SqlClient.SqlConnection(AppDbConnStr)
-
-
             sqlStmt = "SELECT MAX(LUpd_DateTime) FROM xSLAnalysisSum"
             Call sqlFetch_Num(retValDte, sqlStmt, SqlAppDbConn)
             sResult = retValDte.ToShortDateString()
@@ -488,32 +447,26 @@ Friend Class Form1
             Else
                 cLastRunDate.Value = ""
                 cmdViewAnalysis.Enabled = False
-
             End If
             TabControl1.TabPages.Item("Analyze").Enabled = True
-
         End If
     End Sub
 
-
-
     Private Sub cExportFolder_Leave(sender As Object, e As EventArgs) Handles cExportFolder.Leave
-
         ' Verify the validity of the output folder.
         If (Directory.Exists(cExportFolder.Text.Trim())) Then
-
             EventLogDir = cExportFolder.Text.Trim()
         Else
             Call MessageBox.Show("Directory path is invalid.  Please enter a valid directory.", "Invalid Directory", MessageBoxButtons.OK)
-
         End If
     End Sub
 
-
     Private Sub NameOfServer_Leave(sender As Object, e As EventArgs) Handles NameOfServer.Leave
         SQLServerName = NameOfServer.Text
-
     End Sub
 
-
+    Public Sub UpdateAnalysisToolStatusBar(strStatusBarText As String)
+        UpdateStatusLbl.Text = strStatusBarText
+        StatusStrip1.Refresh()
+    End Sub
 End Class
