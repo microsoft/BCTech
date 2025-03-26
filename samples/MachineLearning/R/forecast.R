@@ -366,11 +366,13 @@ smart.forecast <- function(dataset1, dataset2) {
     test_size <- floor(length(granularityAttribute_data$TransactionQty) * testSetSizePercent / 100)
     resultTimeSeriesModel <- timeSeriesModel
 
-    if (test_size > 0) {
+    if (test_size > 0 && timeSeriesModel == "ALL") {
       # When there is data in the test set then the model will be chosen based on how well it predicts the demand in the test set
+      # If there is only a single model used (e.g., STL but not ETS+STL), we will always use it, so no need to test
+      # since BC removes the test results from the output (cf. plumber.R line 86)
 
       test_data <- tail(as.numeric(granularityAttribute_data$TransactionQty), n = test_size)
-      train_data <- head(granularityAttribute_data$TransactionQty, n = -test_size)
+      train_data <- head(as.numeric(granularityAttribute_data$TransactionQty), n = -test_size)
 
       train_data_ts <- ts(train_data, frequency = seasonality)
 
@@ -396,7 +398,7 @@ smart.forecast <- function(dataset1, dataset2) {
 
       result <- trainModels(resultTimeSeriesModel, full_data_ts, full_data_horizon_offset, confidenceLevel)
     } else {
-      # There is no data in the test set so the model will be chosen based on how well it fits historical data
+      # There is no data in the test set so the model (or the model is not ALL) will be chosen based on how well it fits historical data
 
       result <- trainModels(timeSeriesModel, full_data_ts, full_data_horizon_offset, confidenceLevel)
 
