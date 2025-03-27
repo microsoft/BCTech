@@ -40,6 +40,7 @@ execute_score <- function(Inputs, GlobalParameters, res) {
       text = GlobalParameters$Parameters,
       header = TRUE,
       stringsAsFactors = FALSE)
+
     is_forecast_request <- grepl(
       "TIME_SERIES_MODEL",
       GlobalParameters$Parameters,
@@ -77,7 +78,7 @@ execute_score <- function(Inputs, GlobalParameters, res) {
 }
 
 execute_forecast <- function(inputs, parameters) {
-  cat("Forecast using time series model: ", parameters$TIME_SERIES_MODEL, "\n")
+  cat("Forecast using time series model: ", parameters$time_series_model, "\n")
 
   data <- convert_inputs_to_dataframe(inputs)
 
