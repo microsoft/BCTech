@@ -30,6 +30,8 @@ codeunit 54324 "ItemSubstitutionTest"
             Attempts += 1;
         end;
 
+        AITestContext.SetTestOutput(GenerateItemSubProposal.GetCompletionResult());
+
         // Check if the proposal is not empty
         if (Attempts < 2) then begin
             // Check if the proposal contains at least one item
@@ -40,7 +42,7 @@ codeunit 54324 "ItemSubstitutionTest"
     end;
 
     [Test]
-    procedure TestSubstitutionAccuracy()
+    procedure TestSubstitutionAvailableItems()
     var
         AITestContext: Codeunit "AIT Test Context";
         GenerateItemSubProposal: Codeunit "Generate Item Sub Proposal";
@@ -53,6 +55,7 @@ codeunit 54324 "ItemSubstitutionTest"
 
         // Set up the test context
         GenerateItemSubProposal.SetUserPrompt(AITestContext.GetQuestion().ValueAsText());
+        GenerateItemSubProposal.SetSuggestOnlyAvailableItems();
 
         TmpItemSubstAIProposal.Reset();
         TmpItemSubstAIProposal.DeleteAll();
@@ -63,6 +66,8 @@ codeunit 54324 "ItemSubstitutionTest"
                 GenerateItemSubProposal.GetResult(TmpItemSubstAIProposal);
             Attempts += 1;
         end;
+
+        AITestContext.SetTestOutput(GenerateItemSubProposal.GetCompletionResult());
 
         // Check if the proposal is not empty
         if (Attempts < 2) then begin

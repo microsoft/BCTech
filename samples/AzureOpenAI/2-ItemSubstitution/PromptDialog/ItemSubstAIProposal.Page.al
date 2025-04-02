@@ -28,6 +28,16 @@ page 54324 "Copilot Item Sub Proposal"
     {
         // In PromptDialog pages, you can define a PromptOptions area. Here you can add different settings to tweak the output that Copilot will generate.
         // These settings must be defined as page fields, and must be of type Option or Enum. You cannot define groups in this area.
+        area(PromptOptions)
+        {
+            field(OnlyAvailableOption; OnlyAvailableOption)
+            {
+                ApplicationArea = All;
+                Caption = 'Items to include';
+                ToolTip = 'Select if you want to include only items with available inventory.';
+                ShowCaption = true;
+            }
+        }
 
         // The Prompt area is where the user can provide input for your Copilot feature. The PromptOptions area should contain fields that have a limited set of options,
         // whereas the Prompt area can contain more structured and powerful controls, such as free text controls and subparts with grids.
@@ -59,6 +69,34 @@ page 54324 "Copilot Item Sub Proposal"
     }
     actions
     {
+        // In PromptDialog pages, you can define a PromptGuide area. This area is used to help the user understand what they need to do in the Prompt area.
+        // You can add an example of the expected input, or partially fill the fields.
+        area(PromptGuide)
+        {
+            action(SubstituteItem)
+            {
+                ApplicationArea = All;
+                Caption = 'Substitute item';
+                ToolTip = 'Substitute Item using Description';
+                trigger OnAction()
+                begin
+                    ChatRequest := SourceItem.Description;
+                    CurrPage.Update(false);
+                end;
+            }
+            action(SubstituteItemWithDescription)
+            {
+                ApplicationArea = All;
+                Caption = 'Substitute item with description';
+                ToolTip = 'Substitute Item using Description and a statement about it';
+                trigger OnAction()
+                begin
+                    ChatRequest := 'Substitute [' + SourceItem.Description + ']. Priortize items that are [yellow]';
+                    CurrPage.Update(false);
+                end;
+            }
+        }
+
         area(SystemActions)
         {
             // You can have custom behaviour for the main system actions in a PromptDialog page, such as generating a suggestion with copilot, regenerate, or discard the
@@ -117,6 +155,8 @@ page 54324 "Copilot Item Sub Proposal"
         CurrPage.Caption := ChatRequest;
         GenItemSubstProposal.SetUserPrompt(ChatRequest);
 
+        if OnlyAvailableOption = OnlyAvailableOption::"Only With Available Inventory" then
+            GenItemSubstProposal.SetSuggestOnlyAvailableItems();
         TmpItemSubstAIProposal.Reset();
         TmpItemSubstAIProposal.DeleteAll();
 
@@ -136,7 +176,8 @@ page 54324 "Copilot Item Sub Proposal"
     procedure SetSourceItem(Item2: Record Item)
     begin
         SourceItem := Item2;
-        ChatRequest := SourceItem.Description;
+        // If the chat request is empty, the instructional text will be shown.
+        //ChatRequest := SourceItem.Description;
     end;
 
     procedure Load(var TmpItemSubstAIProposal: Record "Copilot Item Sub Proposal" temporary)
@@ -150,5 +191,6 @@ page 54324 "Copilot Item Sub Proposal"
         SourceItem: Record Item;
         TmpItemSubstAIProposal: Record "Copilot Item Sub Proposal" temporary;
         GenItemSubstProposal: Codeunit "Generate Item Sub Proposal";
+        OnlyAvailableOption: Option "All","Only With Available Inventory";
         ChatRequest: Text;
 }

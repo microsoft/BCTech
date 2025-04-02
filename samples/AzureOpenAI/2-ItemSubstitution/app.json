@@ -34,5 +34,6 @@
   },
   "features": [
     "NoImplicitWith"
-  ]
+  ],
+  "runtime": "15.0"
 }

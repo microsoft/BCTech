@@ -23,6 +23,16 @@ codeunit 54323 "Generate Item Sub Proposal"
         TmpItemSubstAIProposal2.Copy(TmpItemSubstAIProposal, true);
     end;
 
+    procedure SetSuggestOnlyAvailableItems()
+    begin
+        SuggestOnlyAvailableItems := true;
+    end;
+
+    internal procedure GetCompletionResult(): Text
+    begin
+        exit(CompletionResult);
+    end;
+
     local procedure GenerateItemProposal()
     var
         InStr: InStream;
@@ -36,10 +46,12 @@ codeunit 54323 "Generate Item Sub Proposal"
         NumberToken: JsonToken;
         DescToken: JsonToken;
         ExplToken: JsonToken;
+        InvToken: JsonToken;
         DateVar: Date;
         TmpText: Text;
         i: Integer;
     begin
+        CompletionResult := '';
         TmpText := Chat(GetSystemPrompt(), GetFinalUserPrompt(UserPrompt));
 
         JResTok.ReadFrom(TmpText);
@@ -49,8 +61,7 @@ codeunit 54323 "Generate Item Sub Proposal"
         if JsonItemsArray.Count() > 0 then begin
             LineNo := 10000;
             for i := 0 to JsonItemsArray.Count() - 1 do begin
-                JsonItemsArray.Get(i, JItemTok);
-                JItemTok.AsObject().Get('item', JItem);
+                JsonItemsArray.Get(i, JItem);
                 TmpItemSubstAIProposal.Init();
 
                 if JItem.AsObject().Get('number', NumberToken) then
@@ -63,6 +74,9 @@ codeunit 54323 "Generate Item Sub Proposal"
                     TmpItemSubstAIProposal.Explanation := CopyStr(ExplToken.AsValue().AsText(), 1, MaxStrLen(TmpItemSubstAIProposal.Explanation));
                     TmpItemSubstAIProposal."Full Explanation".CreateOutStream(OutStr);
                     OutStr.WriteText(ExplToken.AsValue().AsText());
+                end;
+                if JItem.AsObject().Get('inventory', InvToken) then begin
+                    TmpItemSubstAIProposal.Quantity := InvToken.AsValue().AsDecimal();
                 end;
 
                 TmpItemSubstAIProposal.Insert();
@@ -104,6 +118,7 @@ codeunit 54323 "Generate Item Sub Proposal"
             Result := AOAIChatMessages.GetLastMessage()
         else
             Error(AOAIOperationResponse.GetError());
+        CompletionResult := Result;
         exit(Result);
     end;
 
@@ -115,12 +130,14 @@ codeunit 54323 "Generate Item Sub Proposal"
         Newline := 10;
         FinalUserPrompt := 'These are the items:' + Newline;
         if Item.FindSet() then
-            repeat
+            repeat begin
+                // Calculate inventory for the item
+                Item.CalcFields(Inventory);
                 FinalUserPrompt +=
                     'Number: ' + Item."No." + ', ' +
-                    'Description:' + Item.Description + '.' + Newline;
-            //+ 'Quantity Available:' + Item.Inventory.ToText() + Newline;
-            until Item.Next() = 0;
+                    'Description:' + Item.Description + '. ' +
+                    'Inventory:' + Item.Inventory.ToText() + Newline;
+            end until Item.Next() = 0;
 
         FinalUserPrompt += Newline;
         FinalUserPrompt += StrSubstNo('The description of the item that needs to be substituted is: %1.', InputUserPrompt);
@@ -131,15 +148,19 @@ codeunit 54323 "Generate Item Sub Proposal"
         Item: Record Item;
     begin
         SystemPrompt += 'The user will provide an item description, and a list of other items. Your task is to find items that can substitute that item.';
-        SystemPrompt += 'Try to suggest several relevant items if possible.';
-        SystemPrompt += 'The output should be in json with items array. ';
-        SystemPrompt += 'Each item should contain item number (use number tag), item description (use description tag), and explanation why this item was suggested (use explanation tag).';
-        SystemPrompt += 'Use items as a root level tag, use item as item tag.';
-        SystemPrompt += 'Do not use line breaks or other special characters in explanation.';
-        SystemPrompt += 'Skip empty nodes.';
+        SystemPrompt += ' Try to suggest several relevant items if possible.';
+        if SuggestOnlyAvailableItems then
+            SystemPrompt += ' Only suggest items that have inventory larger than 0.';
+        SystemPrompt += ' The output should be in json with items array as a root node.';
+        SystemPrompt += ' Each item should be a json object with the following fields:';
+        SystemPrompt += ' number - item number, description - item description, inventory - item inventory, explanation - explanation why this item was suggested.';
+        SystemPrompt += ' Do not use line breaks or other special characters in explanation.';
+        SystemPrompt += ' Skip empty nodes.';
     end;
 
     var
         TmpItemSubstAIProposal: Record "Copilot Item Sub Proposal" temporary;
         UserPrompt: Text;
+        SuggestOnlyAvailableItems: Boolean;
+        CompletionResult: Text;
 }
