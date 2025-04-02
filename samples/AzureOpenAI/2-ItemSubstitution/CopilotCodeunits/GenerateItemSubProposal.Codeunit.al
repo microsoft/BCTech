@@ -155,7 +155,6 @@ codeunit 54323 "Generate Item Sub Proposal"
         SystemPrompt += ' Each item should be a json object with the following fields:';
         SystemPrompt += ' number - item number, description - item description, inventory - item inventory, explanation - explanation why this item was suggested.';
         SystemPrompt += ' Do not use line breaks or other special characters in explanation.';
-        SystemPrompt += ' Skip empty nodes.';
     end;
 
     var
