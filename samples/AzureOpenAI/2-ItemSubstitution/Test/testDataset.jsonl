@@ -1,0 +1,2 @@
+{"name": "Test01", "question": "PARIS Guest Chair, black", "expected_data": "1936-S,1964-S,1988-S,1968-S,1980-S,2000-S"}
+{"name": "Test02", "question": "MOSCOW Swivel Chair, red", "expected_data": "1936-S,1964-S,1988-S,1968-S,1900-S,2000-S"}

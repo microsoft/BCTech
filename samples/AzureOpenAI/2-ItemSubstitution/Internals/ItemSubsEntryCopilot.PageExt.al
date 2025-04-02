@@ -8,11 +8,11 @@ pageextension 54320 "Item Subst. Entry Copilot" extends "Item Substitution Entry
 {
     actions
     {
-        addLast(Prompting)
+        addfirst(Prompting)
         {
             action(SuggestItem)
             {
-                Caption = 'Suggest with Copilot';
+                Caption = 'Suggest with Copilot (Directions)';
                 Image = Sparkle;
                 ApplicationArea = All;
 
