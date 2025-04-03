@@ -29,11 +29,6 @@ table 54323 "Copilot Item Sub Proposal"
         {
             Caption = 'Select';
         }
-        field(23; "Quantity"; Decimal)
-        {
-            Caption = 'Quantity';
-            Editable = false;
-        }
     }
 
     keys
