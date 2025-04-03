@@ -10,7 +10,7 @@ codeunit 54325 "SelfSubstitutionTest"
     TestPermissions = Disabled;
 
     [Test]
-    procedure TestItemSubWorking()
+    procedure TestNoSelfSubstitution()
     var
         AITestContext: Codeunit "AIT Test Context";
         GenerateItemSubProposal: Codeunit "Generate Item Sub Proposal";
