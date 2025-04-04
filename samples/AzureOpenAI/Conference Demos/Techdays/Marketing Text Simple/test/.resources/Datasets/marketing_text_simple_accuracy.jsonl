@@ -1,0 +1,3 @@
+{"test_setup":{"item_no": "C-10000", "description": "Contoso Cofee Machine", "uom": "PCS"}, "expected_data": {"tagline_max_length": 20}}
+{"test_setup":{"item_no": "C-10001", "description": "Contoso Toaster", "uom": "PCS"}, "expected_data": {"tagline_max_length": 20}}
+{"test_setup":{"item_no": "C-10002", "description": "Contoso Microwave Oven", "uom": "PCS"}, "expected_data": {"tagline_max_length": 20}}
