@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+	    <LangVersion>12.0</LangVersion>
+	    <UserSecretsId>e00d550d-6494-4ad2-8d36-fbfbb94f3cc6</UserSecretsId>
+	    <Authors>Microsoft</Authors>
+	    <Company>Microsoft</Company>
+	    <Product>GP Migration Diagnostic Tool</Product>
+	    <Copyright>©2025 Microsoft. All rights reserved</Copyright>
+	    <PackageId>GP Migration Diagnostic Tool</PackageId>
+	    <AssemblyName>GP Migration Diagnostic Tool</AssemblyName>
+		<RootNamespace>Microsoft.GP.MigrationDiagnostic</RootNamespace>
+	    <Description>Use this tool to connect to your Dynamics GP SQL Server to perform a diagnostic of your data for migration. When the diagnostic run is complete you can choose to get a json output file of the data that was analyzed.</Description>
+		<Nullable>enable</Nullable>
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="UI\Resources\**" />
+        <EmbeddedResource Remove="UI\Resources\**" />
+        <None Remove="UI\Resources\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="Resources\Checkmark_64x.png" />
+        <None Remove="Resources\Checkmark_grey_64x.png" />
+        <None Remove="Resources\Checkmark_red_64x.png" />
+        <None Remove="Resources\greydash.png" />
+        <None Remove="Resources\X_grey_64x.png" />
+        <None Remove="Resources\X_red_64x.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Checkmark_64x.png" />
+      <EmbeddedResource Include="Resources\Checkmark_grey_64x.png" />
+      <EmbeddedResource Include="Resources\Checkmark_red_64x.png" />
+      <EmbeddedResource Include="Resources\greydash.png" />
+      <EmbeddedResource Include="Resources\X_grey_64x.png" />
+      <EmbeddedResource Include="Resources\X_red_64x.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+        <PackageReference Include="System.Drawing.Common" Version="8.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="UI\DatabaseSettings.cs">
+        <SubType>Form</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>

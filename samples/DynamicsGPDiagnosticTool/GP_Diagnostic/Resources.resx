@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Checkmark_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Checkmark_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Checkmark_grey_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Checkmark_grey_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Checkmark_red_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Checkmark_red_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GpAccountCategoryMismatchTaskDescription" xml:space="preserve">
+    <value>Main Segments with different Account Categories</value>
+  </data>
+  <data name="GpAccountCategoryMismatchTaskSummary" xml:space="preserve">
+    <value>{0} main segment(s) detected to have more than 1 account category. When accounts have the same main segment but different Account Categories, migrated transactions will be consolidated into a single account in Business Central. This could potentially lead to unintended outcomes.</value>
+    <comment>{0} = Number of segments</comment>
+  </data>
+  <data name="GpBlankAccountSegmentsTaskDescription" xml:space="preserve">
+    <value>Accounts with blank segments</value>
+  </data>
+  <data name="GpBlankAccountSegmentsTaskSummary" xml:space="preserve">
+    <value>{0} account(s) with a blank main segment. The Business Central migration tool does not allow for blank main account segments that have transactions.</value>
+    <comment>{0} = Number of accounts</comment>
+  </data>
+  <data name="GpCompanyVersionTaskDescription" xml:space="preserve">
+    <value>Unsupported company version</value>
+  </data>
+  <data name="GpCompanyVersionTaskIncompatible" xml:space="preserve">
+    <value>GP company version {0} matches the current system version, but doesn't meet the minimum requirements. The Business Central Migration Tool requires the company and system versions to match, and be GP 14 or later.</value>
+    <comment>{0} = Company version</comment>
+  </data>
+  <data name="GpCompanyVersionTaskNotMatching" xml:space="preserve">
+    <value>GP company version {0} and system version {1} don't match. The Business Central Migration Tool requires the company and system versions to match, and be GP 14 or later.</value>
+    <comment>{0} = Company version, {1} = GP version</comment>
+  </data>
+  <data name="GpCompanyVersionTaskUndetermined" xml:space="preserve">
+    <value>Could not determine company or system GP versions. It will need to be manually evaluated. The Business Central Migration Tool requires the company and system versions to match, and be GP 14 or later.</value>
+  </data>
+  <data name="GpCustomerAddressIdLengthTaskDescription" xml:space="preserve">
+    <value>Active customer address IDs greater than 10 characters</value>
+  </data>
+  <data name="GpCustomerAddressIdLengthTaskSummary" xml:space="preserve">
+    <value>{0} address(es) of active customers have IDs greater than 10 characters. Business Central requires address IDs to be 10 or fewer characters. Address IDs greater than 10 characters will be truncated when migrated.</value>
+    <comment>{0} = Number of addresses</comment>
+  </data>
+  <data name="GpCustomerInvalidEmailTaskDescription" xml:space="preserve">
+    <value>Active customer email addresses invalidly formatted</value>
+  </data>
+  <data name="GpCustomerInvalidEmailTaskSummary" xml:space="preserve">
+    <value>{0} customer email address(es) invalidly formatted. Business Central requires email addresses be in a specific format, and emails outside this format will not be migrated.</value>
+    <comment>{0} = Number of email addresses</comment>
+  </data>
+  <data name="GpCustomerMissingMasterRecordTaskDescription" xml:space="preserve">
+    <value>Customer classes used and are missing its master record</value>
+  </data>
+  <data name="GpCustomerMissingMasterRecordTaskSummary" xml:space="preserve">
+    <value>{0} used customer class(es) found missing master record. The default GP posting group will be used during the migration if the customer class does not have a master record.</value>
+    <comment>{0} = Number of customer classes</comment>
+  </data>
+  <data name="GpCustomerNameLengthTaskDescription" xml:space="preserve">
+    <value>Customer name length</value>
+  </data>
+  <data name="GpCustomerNameLengthTaskSummary" xml:space="preserve">
+    <value>{0} customer name(s) over 50 characters. Business Central requires Customer names to be 50 or fewer characters. Customer names greater than 50 characters will be truncated when migrated. This may cause duplicate Customers in Business Central and other integrating services depending on Customer names may no longer work.</value>
+    <comment>{0} = Number of customers</comment>
+  </data>
+  <data name="GpCustomerPhoneNumberAlphaTaskDescription" xml:space="preserve">
+    <value>Active customer phone numbers with alpha characters</value>
+  </data>
+  <data name="GpCustomerPhoneNumberAlphaTaskSummary" xml:space="preserve">
+    <value>{0} active customer(s) with phone numbers that contain alpha characters. Business Central does not allow alpha characters in phone numbers. The Customers will still be migrated, but the phone numbers will be skipped.</value>
+    <comment>{0} = Number of customers</comment>
+  </data>
+  <data name="GpDirectTransactionsPostingToRetainedEarningsAccountTaskDescription" xml:space="preserve">
+    <value>Transactions posted directly to Retained Earnings</value>
+  </data>
+  <data name="GpDirectTransactionsPostingToRetainedEarningsAccountTaskSummary" xml:space="preserve">
+    <value>{0} transaction(s) posted directly to the Retained Earnings account. Transactions directly posted to the Retained Earnings account can require additional effort when reconciling the GP and BC systems.</value>
+    <comment>{0} = Number of transactions</comment>
+  </data>
+  <data name="GpDuplicateApTransactionDocumentNumberTaskDescription" xml:space="preserve">
+    <value>Duplicate AP document numbers</value>
+  </data>
+  <data name="GpDuplicateApTransactionDocumentNumberTaskSummary" xml:space="preserve">
+    <value>{0} dupicate AP transaction document number(s) found. Business Central requires that Document Numbers are unique per Vendor. If duplicate document numbers are detected during a migration the transactions will not post. Document numbers will need to be made unique.</value>
+    <comment>{0} = Number of duplicate document numbers</comment>
+  </data>
+  <data name="GpDuplicateCustomerAddressIdsTaskDescription" xml:space="preserve">
+    <value>Customer address IDs duplicated when truncated</value>
+  </data>
+  <data name="GpDuplicateCustomerAddressIdsTaskSummary" xml:space="preserve">
+    <value>{0} customer address(es) will not be migrated because of duplicate IDs caused by truncation. Address IDs greater than 10 characters will be truncated when migrated. Truncated Address IDs could cause duplicates and therefore not migrated.</value>
+    <comment>{0} = Number of addresses</comment>
+  </data>
+  <data name="GpDuplicateGlSummaryTaskDescription" xml:space="preserve">
+    <value>Years with duplicate records across Summary Open and History</value>
+  </data>
+  <data name="GpDuplicateGlSummaryTaskSummary" xml:space="preserve">
+    <value>{0} year(s) identified as duplicated in Summary Open and Summary History tables. Duplicate records across Summary Open and History Years will cause unbalanced transactions and will not be posted in Business Central when migrated.</value>
+    <comment>{0} = Number of years</comment>
+  </data>
+  <data name="GpDuplicateItemIdsTaskDescription" xml:space="preserve">
+    <value>Active item IDs duplicated when truncated</value>
+  </data>
+  <data name="GpDuplicateItemIdsTaskSummary" xml:space="preserve">
+    <value>{0} active item(s) will not be migrated due to duplicate IDs caused by truncation. Item IDs greater than 20 characters will be truncated when migrated. Truncated Item IDs could cause duplicates and therefore not migrated.</value>
+    <comment>{0} = Number of duplicate item numbers</comment>
+  </data>
+  <data name="GpDuplicateVendorAddressIdsTaskDescription" xml:space="preserve">
+    <value>Vendor address IDs duplicated when truncated</value>
+  </data>
+  <data name="GpDuplicateVendorAddressIdsTaskSummary" xml:space="preserve">
+    <value>{0} vendor address(es) will not be migrated because of duplicate IDs caused by truncation. Address IDs greater than 10 haracters will be truncated when migrated. Truncated address IDs could cause duplicates and therefore not migrated.</value>
+    <comment>{0} = Number of addresses</comment>
+  </data>
+  <data name="GpGlSummaryValuesBeyondTwoDecimalsTaskDescription" xml:space="preserve">
+    <value>GL Summary values beyond 2 decimal places</value>
+  </data>
+  <data name="GpGlSummaryValuesBeyondTwoDecimalsTaskSummary" xml:space="preserve">
+    <value>{0} GL summary record(s) identified as having values beyond two decimals. GL Summary values beyond two decimal places may cause unbalanced transactions due to rounding rules in Business Central.</value>
+    <comment>{0} = Number of records</comment>
+  </data>
+  <data name="GpIncorrectMainSegmentTaskDescription" xml:space="preserve">
+    <value>Accounts with incorrect main segment</value>
+  </data>
+  <data name="GpIncorrectMainSegmentTaskSummary" xml:space="preserve">
+    <value>{0} account(s) identified as not having the correct main segment. Run Checklinks on the Financial Account Master to correct the issue in GP before migrating.</value>
+    <comment>{0} = Number of accounts</comment>
+  </data>
+  <data name="GpInvalidPaymentTermsTaskDescription" xml:space="preserve">
+    <value>Invalid payment terms</value>
+  </data>
+  <data name="GpInvalidPaymentTermsTaskSummary" xml:space="preserve">
+    <value>{0} invalid payment term(s) found. Migrating invalid payment terms will cause the migration to fail.</value>
+    <comment>{0} = Number of invalid payment terms</comment>
+  </data>
+  <data name="GpInvalidPeriodTaskDescription" xml:space="preserve">
+    <value>Invalid records in period setup (SY40100)</value>
+  </data>
+  <data name="GpInvalidPeriodTaskSummary" xml:space="preserve">
+    <value>{0} invalid period setup record(s). Remove the invalid period setup records.</value>
+    <comment>{0} = Number of periods</comment>
+  </data>
+  <data name="GpItemMissingMasterRecordTaskDescription" xml:space="preserve">
+    <value>Item classes used and are missing its master record</value>
+  </data>
+  <data name="GpItemMissingMasterRecordTaskSummary" xml:space="preserve">
+    <value>{0} used item class(es) found missing master record. The default GP posting group will be used during the migration if the item class does not have a master record.</value>
+    <comment>{0} = Number of item classes</comment>
+  </data>
+  <data name="GpItemNoUomScheduleTaskDescription" xml:space="preserve">
+    <value>Active items with no Unit of Measure Schedules</value>
+  </data>
+  <data name="GpItemNoUomScheduleTaskSummary" xml:space="preserve">
+    <value>{0} active item(s) missing a Unit of Measure Schedule. To post migrated quantities in Business Central, it is necessary for Items to be assigned a unit of measure.</value>
+    <comment>{0} = Number of items</comment>
+  </data>
+  <data name="GpItemNumberLengthTaskDescription" xml:space="preserve">
+    <value>Active item number length</value>
+  </data>
+  <data name="GpItemNumberLengthTaskSummary" xml:space="preserve">
+    <value>{0} active item number(s) with length over 20 characters. Business Central requires Item IDs to be 20 or fewer characters. Item IDs greater than 20 characters will be truncated when migrated. This may cause duplicate Item IDs in Business Central and other integrating services depending on Item IDs may no longer work.</value>
+    <comment>{0} = Number of items</comment>
+  </data>
+  <data name="GpMainSegmentNotIdentifiedTaskDescription" xml:space="preserve">
+    <value>Main segment not configured</value>
+  </data>
+  <data name="GpMainSegmentNotIdentifiedTaskSummary" xml:space="preserve">
+    <value>The main segment has not been identified in GP. A main segment must be indicated for accounts to migrate to Business Central.</value>
+  </data>
+  <data name="GpOpenPosInactiveItemsTaskDescription" xml:space="preserve">
+    <value>Open purchase orders with inactive/discontinued items</value>
+  </data>
+  <data name="GpOpenPosInactiveItemsTaskSummary" xml:space="preserve">
+    <value>{0} open purchase order(s) containing inactive or discontinued items, and those line items will not be migrated. Business Central will mark the migrated items as Blocked, which prevents the purchase order from posting transactions.</value>
+    <comment>{0} = Number of purchase orders</comment>
+  </data>
+  <data name="GpPostingAccountsNotSetupTaskDescription" xml:space="preserve">
+    <value>Posting accounts not set up</value>
+  </data>
+  <data name="GpPostingAccountsNotSetupTaskSummary" xml:space="preserve">
+    <value>{0} posting account(s) not set up. Migrated transactions will not post if posting accounts are missing.</value>
+    <comment>{0} = Number of accounts</comment>
+  </data>
+  <data name="GpPurchaseReceiptsWithoutValuationMethodTaskDescription" xml:space="preserve">
+    <value>Purchase receipts without valuation method</value>
+  </data>
+  <data name="GpPurchaseReceiptsWithoutValuationMethodTaskSummary" xml:space="preserve">
+    <value>{0} record(s) detected in the Inventory Purchase Recepts Work table with no valuation method. If there are entries in the IV10200 without a specified valuation method, it could imply that the Historical Inventory Trial Balance Reset Tool hasn't been executed. This could potentially lead to reconciliation problems when transitioning between systems post-migration. To learn more about the HITB Reset Tool and to download see the following article: https://learn.microsoft.com/en-us/dynamics/s-e/gp/mdgp10_hitb</value>
+    <comment>{0} = Number of records</comment>
+  </data>
+  <data name="GpSystemVersionTaskDescription" xml:space="preserve">
+    <value>Unsupported system version</value>
+  </data>
+  <data name="GpSystemVersionTaskIncompatible" xml:space="preserve">
+    <value>GP system version {0} was found. The Business Central Migration Tool requires GP 14 or later.</value>
+    <comment>{0} = GP version</comment>
+  </data>
+  <data name="GpSystemVersionTaskUndetermined" xml:space="preserve">
+    <value>Could not determine the value or format of the GP system version. It will need to be manually evaluated. The Business Central Migration Tool requires GP 14 or later.</value>
+  </data>
+  <data name="GpTooManyAccountSegmentsTaskDescription" xml:space="preserve">
+    <value>Number of account segments</value>
+  </data>
+  <data name="GpTooManyAccountSegmentsTaskSummary" xml:space="preserve">
+    <value>{0} account segment(s). Business Central allows for a maximum of 9 segments.</value>
+    <comment>{0} = Number of segments</comment>
+  </data>
+  <data name="GpUnbalancedJournalEntriesTaskDescription" xml:space="preserve">
+    <value>Unbalanced transactions ({0})</value>
+    <comment>{0} = SQL table name</comment>
+  </data>
+  <data name="GpUnbalancedJournalEntriesTaskSummary" xml:space="preserve">
+    <value>{0} unbalanced transaction(s). The Business Central Migration Tool will not automatically migrate unbalanced work transactions. Review and update the records as necessary.</value>
+    <comment>{0} = Number of transactions</comment>
+  </data>
+  <data name="GpUnbalancedSummaryBalanceTaskDescription" xml:space="preserve">
+    <value>Unbalanced summary balances ({0})</value>
+    <comment>{0} = SQL table name</comment>
+  </data>
+  <data name="GpUnbalancedSummaryBalanceTaskSummary" xml:space="preserve">
+    <value>{0} unbalanced summary balance(s) will not migrate. The Business Central Migration Tool will attempt to migrate summary balances. If transactions are not balanced you will receive posting errors, and batches will not be posted. Correct associated Journal Entries.</value>
+    <comment>{0} = number of summary balances</comment>
+  </data>
+  <data name="GpVendorAddressIdLengthTaskDescription" xml:space="preserve">
+    <value>ddress IDs greater than 10 characters</value>
+  </data>
+  <data name="GpVendorAddressIdLengthTaskSummary" xml:space="preserve">
+    <value>{0} address(es) of active vendors have IDs greater than 10 characters. Business Central requires address IDs to be 10 or fewer characters. Address IDs greater than 10 characters will be truncated when migrated.</value>
+    <comment>{0} = Number of addresses</comment>
+  </data>
+  <data name="GpVendorInvalidEmailTaskDescription" xml:space="preserve">
+    <value>Active vendor email addresses invalidly formatted</value>
+  </data>
+  <data name="GpVendorInvalidEmailTaskSummary" xml:space="preserve">
+    <value>{0} vendor email address(es) invalidly formatted. Business Central requires email addresses be in a specific format, and emails outside this format will not be migrated.</value>
+    <comment>{0} = Number of email addresses</comment>
+  </data>
+  <data name="GpVendorNameLengthTaskDescription" xml:space="preserve">
+    <value>Vendor name length</value>
+  </data>
+  <data name="GpVendorNameLengthTaskSummary" xml:space="preserve">
+    <value>{0} vendor name(s) over 50 characters. Business Central requires Vendor names to be 50 or fewer characters. Vendor names greater than 50 characters will be truncated when migrated. This may cause duplicate Vendors in Business Central and other integrating services depending on Vendor names may no longer work.</value>
+    <comment>{0} = Number of vendors</comment>
+  </data>
+  <data name="GpVendorPhoneNumberAlphaTaskDescription" xml:space="preserve">
+    <value>Active vendor phone numbers with alpha characters</value>
+  </data>
+  <data name="GpVendorPhoneNumberAlphaTaskSummary" xml:space="preserve">
+    <value>{0} active vendor(s) detected with phone numbers that contain alpha characters. Business Central does not allow alpha characters in phone numbers. The vendors will still be migrated, but the phone numbers will be skipped.</value>
+    <comment>{0} = Number of vendors</comment>
+  </data>
+  <data name="GpVerifyPostingTypesTaskDescription" xml:space="preserve">
+    <value>Accounts with different posting types</value>
+  </data>
+  <data name="GpVerifyPostingTypesTaskSummary" xml:space="preserve">
+    <value>{0} account(s) identified as having the same main segment but different posting types. If multiple accounts have been identified as having the same main segment but different posting types this may cause issues when reconciling year end information across systems.</value>
+    <comment>{0} = Number of accounts</comment>
+  </data>
+  <data name="greydash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\greydash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SqlChangeTrackingDisabledTaskDescription" xml:space="preserve">
+    <value>Change tracking status</value>
+  </data>
+  <data name="SqlChangeTrackingDisabledTaskNotEnabled" xml:space="preserve">
+    <value>Change tracking is not enabled. The Business Central Migration Tool requires databases to have change tracking enabled.</value>
+  </data>
+  <data name="SqlChangeTrackingDisabledTaskNotEnabledDetail" xml:space="preserve">
+    <value>The following SQL query can be used to enable change tracking:
+
+ALTER DATABASE [{0}]
+SET
+    CHANGE_TRACKING = ON (
+        CHANGE_RETENTION = 2 DAYS, AUTO_CLEANUP = ON
+    )</value>
+    <comment>{0} = Database name</comment>
+  </data>
+  <data name="SqlCompatibilityLevelTaskDescription" xml:space="preserve">
+    <value>Database compatibility level</value>
+  </data>
+  <data name="SqlCompatibilityLevelTaskDetail" xml:space="preserve">
+    <value>See the following article on instructions for changing the compatibility level: https://learn.microsoft.com/en-us/sql/relational-databases/databases/view-or-change-the-compatibility-level-of-a-database?view=sql-server-ver16</value>
+  </data>
+  <data name="SqlCompatibilityLevelTaskSummary" xml:space="preserve">
+    <value>The database has as compatibility level of {0}. The database must have a compatibility level of 130 or higher.</value>
+    <comment>{0} = Database compatibility level</comment>
+  </data>
+  <data name="SqlCompatibilityLevelTaskUndetermined" xml:space="preserve">
+    <value>Could not determine the database compatibility level. The database must have a compatibility level of 130 or higher. It will need to be manually evaluated.</value>
+  </data>
+  <data name="SqlIncompatibleVersionTaskDescription" xml:space="preserve">
+    <value>SQL server product version</value>
+  </data>
+  <data name="SqlIncompatibleVersionTaskIncompatible" xml:space="preserve">
+    <value>An incompatible SQL server version was found. Migration requires SQL Server 2016 SP1 or later.</value>
+  </data>
+  <data name="SqlIncompatibleVersionTaskUndetermined" xml:space="preserve">
+    <value>Could not determine the value or format of the SQL version. It will need to be manually evaluated.</value>
+  </data>
+  <data name="X_grey_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\X_grey_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="X_red_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\X_red_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>
