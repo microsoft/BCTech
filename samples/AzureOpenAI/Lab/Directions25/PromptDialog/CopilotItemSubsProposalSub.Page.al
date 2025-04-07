@@ -31,10 +31,6 @@ page 54338 "Copilot Item Subs Proposal Sub"
                 {
                     ApplicationArea = All;
                 }
-                field(Quantity; Rec.Quantity)
-                {
-                    ApplicationArea = All;
-                }
                 field(Explanation; Rec.Explanation)
                 {
                     ApplicationArea = All;

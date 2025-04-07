@@ -23,11 +23,6 @@ codeunit 54323 "Generate Item Sub Proposal"
         TmpItemSubstAIProposal2.Copy(TmpItemSubstAIProposal, true);
     end;
 
-    procedure SetSuggestOnlyAvailableItems()
-    begin
-        SuggestOnlyAvailableItems := true;
-    end;
-
     internal procedure GetCompletionResult(): Text
     begin
         exit(CompletionResult);
@@ -46,7 +41,6 @@ codeunit 54323 "Generate Item Sub Proposal"
         NumberToken: JsonToken;
         DescToken: JsonToken;
         ExplToken: JsonToken;
-        InvToken: JsonToken;
         DateVar: Date;
         TmpText: Text;
         i: Integer;
@@ -75,9 +69,6 @@ codeunit 54323 "Generate Item Sub Proposal"
                     TmpItemSubstAIProposal."Full Explanation".CreateOutStream(OutStr);
                     OutStr.WriteText(ExplToken.AsValue().AsText());
                 end;
-                if JItem.AsObject().Get('inventory', InvToken) then begin
-                    TmpItemSubstAIProposal.Quantity := InvToken.AsValue().AsDecimal();
-                end;
 
                 TmpItemSubstAIProposal.Insert();
             end;
@@ -98,6 +89,7 @@ codeunit 54323 "Generate Item Sub Proposal"
     begin
         // If you are using managed resources, call this function:
         // NOTE: endpoint, deployment, and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
+        // NOTE: This way of setting authorization is now deprecated, but for this workshop we will still use it
         AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
             IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey(), AOAIDeployments.GetGPT4oLatest());
         // If you are using your own Azure OpenAI subscription, call this function instead:
@@ -130,14 +122,11 @@ codeunit 54323 "Generate Item Sub Proposal"
         Newline := 10;
         FinalUserPrompt := 'These are the items:' + Newline;
         if Item.FindSet() then
-            repeat begin
-                // Calculate inventory for the item
-                Item.CalcFields(Inventory);
+            repeat
                 FinalUserPrompt +=
                     'Number: ' + Item."No." + ', ' +
-                    'Description:' + Item.Description + '. ' +
-                    'Inventory:' + Item.Inventory.ToText() + Newline;
-            end until Item.Next() = 0;
+                    'Description:' + Item.Description + '.' + Newline;
+            until Item.Next() = 0;
 
         FinalUserPrompt += Newline;
         FinalUserPrompt += StrSubstNo('The description of the item that needs to be substituted is: %1.', InputUserPrompt);
@@ -149,17 +138,15 @@ codeunit 54323 "Generate Item Sub Proposal"
     begin
         SystemPrompt += 'The user will provide an item description, and a list of other items. Your task is to find items that can substitute that item.';
         SystemPrompt += ' Try to suggest several relevant items if possible.';
-        if SuggestOnlyAvailableItems then
-            SystemPrompt += ' Only suggest items that have inventory larger than 0.';
         SystemPrompt += ' The output should be in json with items array as a root node.';
         SystemPrompt += ' Each item should be a json object with the following fields:';
-        SystemPrompt += ' number - item number, description - item description, inventory - item inventory, explanation - explanation why this item was suggested.';
+        SystemPrompt += ' number - item number, description - item description, explanation - explanation why this item was suggested.';
         SystemPrompt += ' Do not use line breaks or other special characters in explanation.';
+        SystemPrompt += ' Skip empty nodes.';
     end;
 
     var
         TmpItemSubstAIProposal: Record "Copilot Item Sub Proposal" temporary;
         UserPrompt: Text;
-        SuggestOnlyAvailableItems: Boolean;
         CompletionResult: Text;
 }
