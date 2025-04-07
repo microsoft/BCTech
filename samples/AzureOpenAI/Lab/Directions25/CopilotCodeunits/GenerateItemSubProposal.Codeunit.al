@@ -89,6 +89,7 @@ codeunit 54323 "Generate Item Sub Proposal"
     begin
         // If you are using managed resources, call this function:
         // NOTE: endpoint, deployment, and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
+        // NOTE: This way of setting authorization is now deprecated, but for this workshop we will still use it
         AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
             IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey(), AOAIDeployments.GetGPT4oLatest());
         // If you are using your own Azure OpenAI subscription, call this function instead:
@@ -125,7 +126,6 @@ codeunit 54323 "Generate Item Sub Proposal"
                 FinalUserPrompt +=
                     'Number: ' + Item."No." + ', ' +
                     'Description:' + Item.Description + '.' + Newline;
-            //+ 'Quantity Available:' + Item.Inventory.ToText() + Newline;
             until Item.Next() = 0;
 
         FinalUserPrompt += Newline;
