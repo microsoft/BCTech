@@ -67,7 +67,7 @@ page 50100 "Draft Project"
                 Caption = 'Organize an event';
                 trigger OnAction()
                 begin
-                    InputProjectDescription += 'Plan for organizing a <project name> for the attendees of <event name>';
+                    InputProjectDescription += 'Plan for organizing a [project name] for the attendees of [event name]';
                 end;
             }
         }
