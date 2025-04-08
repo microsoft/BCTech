@@ -1,0 +1,49 @@
+{
+  "id": "e3b0c442-98fc-1c14-9afb-4c4e6e4a3f4b",
+  "name": "Marketing Text Simple Test",
+  "publisher": "MicrosoftDemo",
+  "version": "1.0.0.0",
+  "brief": "Demo app for using AI TestToolkit",
+  "description": "Demo app for using AI TestToolkit",
+  "privacyStatement": "https://www.microsoft.com",
+  "EULA": "https://www.microsoft.com",
+  "help": "https://www.microsoft.com",
+  "url": "https://www.microsoft.com",
+  "contextSensitiveHelpUrl": "https://www.microsoft.com",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "74d86897-1c24-4889-9335-44449c0938a1",
+      "name": "Marketing Text Simple",
+      "publisher": "MicrosoftDemo",
+      "version": "1.0.0.0"
+    },
+    {
+      "id": "2156302a-872f-4568-be0b-60968696f0d5",
+      "name": "AI Test Toolkit",
+      "publisher": "Microsoft",
+      "version": "26.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "26.0.0.0",
+  "idRanges": [
+    {
+      "from": 50200,
+      "to": 50249
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "15.0",
+  "features": [
+    "NoImplicitWith"
+  ],
+  "resourceFolders": [
+    ".resources"
+  ]
+}

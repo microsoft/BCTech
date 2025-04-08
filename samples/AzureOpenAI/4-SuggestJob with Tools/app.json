@@ -12,8 +12,8 @@
   "logo": "",
   "dependencies": [  ],
   "screenshots": [],
-  "platform": "25.0.0.0",
-  "application": "25.0.0.0",
+  "platform": "26.0.0.0",
+  "application": "26.0.0.0",
   "idRanges": [
     {
       "from": 54380,
@@ -28,5 +28,5 @@
   "features": [
     "NoImplicitWith"
   ],
-  "runtime": "14.0"
+  "runtime": "15.0"
 }
