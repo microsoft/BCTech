@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using Mono.Options;
 using System.Collections.Generic;
+using PBIEmbedGenerator.Properties;
 
 namespace APIQueryGenerator
 {
@@ -60,7 +61,7 @@ namespace APIQueryGenerator
             catch (Exception e)
             {
                 Console.WriteLine("Could not read input file as a xml file.");
-                Environment.Exit(0);
+                Environment.Exit(-1);
             }
 
 
@@ -121,381 +122,151 @@ namespace APIQueryGenerator
 
         }
 
-        private static void indents(StringBuilder sb, int indentLevel)
-        {
-            var indent = "    ";
-
-            for (int i = 0; i < indentLevel; i++)
-            {
-                sb.Append(indent);
-            }
-        }
-
-        private static void indentAppendLine(StringBuilder sb, int indentLevel, string s)
-        {
-            indents(sb, indentLevel);
-            sb.AppendLine(s);
-        }
-
         public static string GeneratePBIRCExtensionCode(string alNamespace, XmlNode rcExt)
         {
+            StringBuilder actionssb = new StringBuilder();
+            foreach (XmlNode action in rcExt.SelectNodes("action"))
+            {
+                GeneratePBIRCExtensionActionCode(action, actionssb);
+            }
+
             StringBuilder sb = new StringBuilder();
 
-            /*
-             pageextension 50100 BusinessManagerRoleCenterExt extends "Business Manager Role Center"
-             */
-
-            sb.AppendLine("// Auto-generated al file for PBI role centre extension " + rcExt.Attributes["id"].Value);
-            sb.AppendLine("// ");
-            sb.AppendLine("// Adding actions for the following AL PBI pages:");
-            foreach (XmlNode action in rcExt.SelectNodes("action"))
-            {
-                sb.AppendLine("// * " + action.Attributes["pbipagename"].Value );
-            }
-            sb.AppendLine("");
-
-            sb.AppendLine("namespace " + alNamespace);
-            sb.AppendLine("");
-
-            sb.AppendLine("pageextension " + rcExt.Attributes["id"].Value + " \"" + rcExt.Attributes["name"].Value + "\" extends \"" + rcExt.Attributes["extends"].Value + "\"");
-            sb.AppendLine("{");
-
-            indents(sb, 1);
-            sb.AppendLine("actions");
-
-            indents(sb, 1);
-            sb.AppendLine("{");
-
-            indents(sb, 2);
-            sb.AppendLine(rcExt.Attributes["where"].Value);
-
-            indents(sb, 2);
-            sb.AppendLine("{");
-
-            indents(sb, 3);
-            sb.AppendLine("group(\"PBIReports\")");
-
-            indents(sb, 3);
-            sb.AppendLine("{");
-
-            indents(sb, 4);
-            sb.AppendLine("Caption = 'Power BI Reports';");
-
-            indents(sb, 4);
-            sb.AppendLine("Image = PowerBI;");
-
-            indents(sb, 4);
-            sb.AppendLine("ToolTip = '" + rcExt.Attributes["tooltip"].Value + "';");
-
-            foreach (XmlNode action in rcExt.SelectNodes("action"))
-            {
-                var content = GeneratePBIRCExtensionActionCode(action, sb);
-            }
-
-            indents(sb, 3);
-            sb.AppendLine("}");
-
-            indents(sb, 2);
-            sb.AppendLine("}");
-
-            indents(sb, 1);
-            sb.AppendLine("}");
-
-            sb.AppendLine("}");
+            sb.AppendFormat(Encoding.UTF8.GetString(Resources.RoleCenterExtensionTemplate),
+                alNamespace, // 0
+                rcExt.Attributes["rolecenternamespace"].Value, // 1
+                rcExt.Attributes["id"].Value, // 2
+                EscapeALTextString(rcExt.Attributes["name"].Value), // 3
+                EscapeALTextString(rcExt.Attributes["extends"].Value), // 4
+                rcExt.Attributes["where"].Value, // 5
+                rcExt.Attributes["image"].Value, // 6
+                rcExt.Attributes["tooltip"].Value, // 7
+                actionssb.ToString() // 8
+                );
 
             return sb.ToString();
         }
 
-        public static string GeneratePBIRCExtensionActionCode(XmlNode action, StringBuilder sb)
+        public static void GeneratePBIRCExtensionActionCode(XmlNode action, StringBuilder sb)
         {
-            //action(PBIFinancialOverview)
-            //{
-            //    ApplicationArea = Basic, Suite;
-            //    Caption = 'Financial Overview';
-            //    Image = "PowerBI";
-            //    RunObject = page PBIFinancialOverview;
-            //    ToolTip = 'Open a Power BI report that shows your company''s assets, liabilities, and equity.';
-            //}
-
-            sb.AppendLine("");
-
-            indents(sb, 4);
-            sb.AppendLine("action(" + action.Attributes["name"].Value + ")");
-
-            indents(sb, 4);
-            sb.AppendLine("{");
-
-            indents(sb, 5);
-            sb.AppendLine("ApplicationArea = Basic, Suite;");
-
-            indents(sb, 5);
-            sb.AppendLine("Caption = '" + action.Attributes["caption"].Value + "';");
-
-            indents(sb, 5);
-            sb.AppendLine("Image = \"PowerBI\";");
-
-            indents(sb, 5);
-            sb.AppendLine("RunObject = page \"" + action.Attributes["pbipagename"].Value + "\";");
-
-            indents(sb, 5);
-            sb.AppendLine("Tooltip = '" + action.Attributes["tooltip"].Value + "';");
-
-            indents(sb, 4);
-            sb.AppendLine("}");
-
-            return sb.ToString();
+            if (action.Attributes["obsolete"].Value.Length > 0)
+            {
+                sb.AppendLine($"#if not CLEAN{action.Attributes["obsolete"].Value}");
+            }
+            StringBuilder additionalActionProperties = new StringBuilder();
+            if (!string.IsNullOrEmpty(action.Attributes["tooltip"].Value)){
+                additionalActionProperties.AppendLine($"                    Tooltip = '{EscapeALTextString(action.Attributes["tooltip"].Value)}';");
+            }
+            if (action.Attributes["obsolete"].Value.Length > 0)
+            {
+                var indentationInAction = "                    ";
+                additionalActionProperties.AppendFormat(Encoding.UTF8.GetString(Resources.ObsoletePropertiesTemplate),
+                    indentationInAction,
+                    EscapeALTextString(action.Attributes["obsolete"].Value)
+                );
+                additionalActionProperties.AppendLine();
+                additionalActionProperties.AppendLine(indentationInAction + "Visible = false;");
+            }
+            sb.AppendFormat(Encoding.UTF8.GetString(Resources.RoleCenterActionTemplate),
+                action.Attributes["name"].Value, // 0
+                EscapeALTextString(action.Attributes["caption"].Value), // 1
+                action.Attributes["pbipagename"].Value, // 2
+                additionalActionProperties // 3
+                );
+            if (action.Attributes["obsolete"].Value.Length > 0)
+            {
+                sb.AppendLine("#endif");
+            }
         }
-
 
         public static string GeneratePBIEmbedPageCode(string alNamespace, XmlNode query, Version version)
         {
             StringBuilder sb = new StringBuilder();
-            string context = query.Attributes["id"].Value + "-" + query.Attributes["name"].Value;
-
-            /*
-            // Auto-generated al file for PBI embed page <id>
-            // 
-            // Adding a PBI embed page for this PBI content:
-            // PBI ReportId = '<PBIReportId>'
-            // PBI ReportName = '<PBIReportName>'
-
-            namespace Microsoft.PowerBIApps
-
-            page <id> "<name>"
+            StringBuilder additionalProperties = new StringBuilder();
+            if (query.Attributes["obsolete"].Value.Length > 0)
             {
-                UsageCategory = ReportsAndAnalysis;
-                Caption = '<caption>';
-                AboutTitle = '<aboutTitle>';
-                AboutText = '<aboutText>';
-
-                layout
-                {
-                    area(Content)
-                    {
-                        part(EmbeddedReport; "Power BI Embedded Report Part")
-                        {
-                            Caption = 'Financial Overview';
-                            SubPageView = where(Context = const('<id>-<name>'));
-                            ApplicationArea = All;
-                        }
-                    }
-                }
-             */
-
-            sb.AppendLine("// Auto-generated al file for PBI embed page " + query.Attributes["id"].Value);
-            sb.AppendLine("// ");
-            sb.AppendLine("// Adding a PBI embed page for this PBI content:");
-            sb.AppendLine("// PBI ReportId = '" + query.Attributes["PBIReportId"].Value);
-            sb.AppendLine("// PBI ReportName = '" + query.Attributes["PBIReportName"].Value);
-            sb.AppendLine("");
-
-            sb.AppendLine("namespace " + alNamespace);
-            sb.AppendLine("");
-
-            sb.AppendLine("page " + query.Attributes["id"].Value + " \"" + query.Attributes["name"].Value + "\"");
-            sb.AppendLine("{");
-
-            indentAppendLine(sb, 1, "UsageCategory = ReportsAndAnalysis;");
-            indentAppendLine(sb, 1, "Caption = '" + query.Attributes["caption"].Value + "';");
-            indentAppendLine(sb, 1, "AboutTitle = '" + query.Attributes["aboutTitle"].Value + "'; ");
-            indentAppendLine(sb, 1, "AboutText = '" + query.Attributes["aboutText"].Value + "'; ");
-            sb.AppendLine("");
-
-            indentAppendLine(sb, 1, "layout");
-            indentAppendLine(sb, 1, "{");
-
-            indentAppendLine(sb, 2, "area(Content)");
-            indentAppendLine(sb, 2, "{");
-
-            indentAppendLine(sb, 3, "part(EmbeddedReport; \"Power BI Embedded Report Part\")");
-            indentAppendLine(sb, 3, "{");
-
-            indentAppendLine(sb, 4, "ApplicationArea = All;");
-            indentAppendLine(sb, 4, "Caption = '" + query.Attributes["caption"].Value + "';");
-            indentAppendLine(sb, 4, "SubPageView = where(Context = const ('" + context + "'));");
-
-            indentAppendLine(sb, 3, "}");
-
-            indentAppendLine(sb, 2, "}");
-
-            indentAppendLine(sb, 1, "}");
-            sb.AppendLine("");
-
-            /*
-            trigger OnOpenPage()
-            var
-                PowerBIDisplayedElement: Record "Power BI Displayed Element";
-                PowerBIServiceMgt: Codeunit "Power BI Service Mgt.";
-            begin
-                EnsureUserAcceptedPowerBITerms();
-
-                // Cleanup previously added reports for this context
-                PowerBIDisplayedElement.SetRange(Context, vContext);
-                PowerBIDisplayedElement.DeleteAll();
-                PowerBIDisplayedElement.SetRange(Context);
-
-                // Add the report
-                PowerBIServiceMgt.AddReportForContext(vReportId, vContext);
-
-                // Customize page and other settings
-                PowerBIDisplayedElement.Get(UserSecurityId(), vContext, PowerBIDisplayedElement.MakeReportKey(vReportId),
-                    PowerBIDisplayedElement.ElementType::Report);
-                PowerBIDisplayedElement.ReportPage := vReportPage;
-                PowerBIDisplayedElement.ShowPanesInExpandedMode := true;
-                PowerBIDisplayedElement.ShowPanesInNormalMode := true;
-                PowerBIDisplayedElement.Modify();
-
-                CurrPage.EmbeddedReport.Page.SetFullPageMode(true);
-            end;
-             */
-            indentAppendLine(sb, 1, "trigger OnOpenPage()");
-            indentAppendLine(sb, 1, "var");
-
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement: Record \"Power BI Displayed Element\";");
-            indentAppendLine(sb, 2, "PowerBIServiceMgt: Codeunit \"Power BI Service Mgt.\";");
-
-            indentAppendLine(sb, 1, "begin");
-
-            indentAppendLine(sb, 2, "EnsureUserAcceptedPowerBITerms();");
-            sb.AppendLine("");
-            indentAppendLine(sb, 2, "// Cleanup previously added reports for this context");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.SetRange(Context, vContext);");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.DeleteAll();");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.SetRange(Context);");
-            sb.AppendLine("");
-            indentAppendLine(sb, 2, "// Add the report");
-            indentAppendLine(sb, 2, "PowerBIServiceMgt.AddReportForContext(vReportId, vContext);");
-            sb.AppendLine("");
-            indentAppendLine(sb, 2, "// Customize page and other settings");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.Get(UserSecurityId(), vContext, PowerBIDisplayedElement.MakeReportKey(vReportId), PowerBIDisplayedElement.ElementType::Report);");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.ReportPage := vReportPage;");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.ShowPanesInExpandedMode := true;");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.ShowPanesInNormalMode := true;");
-            indentAppendLine(sb, 2, "PowerBIDisplayedElement.Modify();");
-            sb.AppendLine("");
-
-            if (version == new Version() | version >= new Version("24.2"))
-            {
-                indentAppendLine(sb, 2, "CurrPage.EmbeddedReport.Page.SetFullPageMode(true);");
+                var indentationInAction = "    ";
+                sb.AppendLine($"#if not CLEAN{query.Attributes["obsolete"].Value}");
+                additionalProperties.AppendFormat(Encoding.UTF8.GetString(Resources.ObsoletePropertiesTemplate),
+                    indentationInAction,
+                    EscapeALTextString(query.Attributes["obsolete"].Value)
+                    );
             }
 
-            indentAppendLine(sb, 1, "end;");
-            sb.AppendLine("");
-
-            /*
-            local procedure EnsureUserAcceptedPowerBITerms()
-            var
-                PowerBIContextSettings: Record "Power BI Context Settings";
-                PowerBIEmbedSetupWizard: Page "Power BI Embed Setup Wizard";
-            begin
-                PowerBIContextSettings.SetRange(UserSID, UserSecurityId());
-                if PowerBIContextSettings.IsEmpty() then begin
-                    PowerBIEmbedSetupWizard.SetContext(vContext);
-                    if PowerBIEmbedSetupWizard.RunModal() <> Action::OK then;
-
-                    if PowerBIContextSettings.IsEmpty() then
-                        Error(PowerBiNotSetupErr);
-                end;
-
-                PowerBIContextSettings.CreateOrReadForCurrentUser(vContext);
-                if not PowerBIContextSettings.LockToSelectedElement then begin
-                    PowerBIContextSettings.LockToSelectedElement := true;
-                    PowerBIContextSettings.Modify();
-                end;
-            end;
-             */
-            indentAppendLine(sb, 1, "local procedure EnsureUserAcceptedPowerBITerms()");
-            indentAppendLine(sb, 1, "var");
-
-            indentAppendLine(sb, 2, "PowerBIContextSettings: Record \"Power BI Context Settings\";");
-            indentAppendLine(sb, 2, "PowerBIEmbedSetupWizard: Page \"Power BI Embed Setup Wizard\";");
-
-            indentAppendLine(sb, 1, "begin");
-
-            indentAppendLine(sb, 2, "PowerBIContextSettings.SetRange(UserSID, UserSecurityId());");
-            indentAppendLine(sb, 2, "if PowerBIContextSettings.IsEmpty() then begin");
-
-            indentAppendLine(sb, 3, "PowerBIEmbedSetupWizard.SetContext(vContext);");
-            indentAppendLine(sb, 3, "if PowerBIEmbedSetupWizard.RunModal() <> Action::OK then;");
-            sb.AppendLine("");
-            indentAppendLine(sb, 3, "if PowerBIContextSettings.IsEmpty() then");
-
-            indentAppendLine(sb, 4, "Error(PowerBiNotSetupErr);");
-
-            indentAppendLine(sb, 2, "end;");
-            sb.AppendLine("");
-            indentAppendLine(sb, 2, "PowerBIContextSettings.CreateOrReadForCurrentUser(vContext);");
-            indentAppendLine(sb, 2, "if not PowerBIContextSettings.LockToSelectedElement then begin");
-
-            indentAppendLine(sb, 3, "PowerBIContextSettings.LockToSelectedElement := true;");
-            indentAppendLine(sb, 3, "PowerBIContextSettings.Modify();");
-
-            indentAppendLine(sb, 2, "end;");
-
-            indentAppendLine(sb, 1, "end;");
-            sb.AppendLine("");
-
-            /* 
-            var
-                PowerBiNotSetupErr: Label 'Power BI is not set up. You need to set up Power BI in order to see this report.';
-                vReportId: Label '<PBIReportId>', Locked = true;
-                vReportPage: Label '<PBIReportPage>', Locked = true;
-                vContext: Label '<id>-<name>', MaxLength = 30, Locked = true, Comment = 'IMPORTANT: keep it unique across pages. Also, make sure this value is the same used in the SubPageView above.';
-             */
-            indentAppendLine(sb, 1, "var");
-
-            indentAppendLine(sb, 2, "PowerBiNotSetupErr: Label 'Power BI is not set up. You need to set up Power BI in order to see this report.';");
-            indentAppendLine(sb, 2, "vReportId: Label '" + query.Attributes["PBIReportId"].Value + "', Locked = true;");
-            indentAppendLine(sb, 2, "vReportPage: Label '" + query.Attributes["PBIReportPage"].Value + "', Locked = true;");
-            indentAppendLine(sb, 2, "vContext: Label '" + context + "', MaxLength = 30, Locked = true, Comment = 'IMPORTANT: keep it unique across pages. Also, make sure this value is the same used in the SubPageView above.';");
+            var applicationArea = query.Attributes["applicationArea"].Value.Length > 0 ? query.Attributes["applicationArea"].Value : "All" ;
             
-            sb.AppendLine("");
-            sb.AppendLine("}");
-
+            sb.AppendFormat(Encoding.UTF8.GetString(Resources.ReportPageTemplate),
+                alNamespace, // 0
+                query.Attributes["id"].Value, // 1
+                query.Attributes["name"].Value, // 2
+                EscapeALTextString(query.Attributes["caption"].Value), // 3
+                EscapeALTextString(query.Attributes["aboutTitle"].Value), // 4
+                EscapeALTextString(query.Attributes["aboutText"].Value), // 5
+                query.Attributes["PBIReportPage"].Value, // 6
+                query.Attributes["PBIReportIdFieldName"].Value, // 7
+                additionalProperties, // 8
+                applicationArea // 9
+                );
+            if (query.Attributes["obsolete"].Value.Length > 0)
+            {
+                sb.AppendLine("#endif");
+            }
             return sb.ToString();
         }
 
         public static string GeneratePBIEmbedPagePerm(string alNamespace, XmlNode permSet, XmlNode pages)
         {
-            StringBuilder sb = new StringBuilder();
-
-            /*
-            // Auto-generated al file for PBI permissions 50120
-
-            namespace Microsoft.PowerBIApps
-
-            permissionset 50120 "Power BI Finance App - Objects"
-            {
-                Access = Internal;
-                Assignable = false;
-                Permissions =
-                    page "PBIFinancialOverview" = X,
-                    page "PBIIncomeStatementbyMonth" = X,
-                    page "PBIBalanceSheetbyMonth" = X,
-                    page "PBIBudgetComparison" = X,
-                    page "PBILiquidityKPIs" = X,
-                    page "PBIProfitability" = X,
-            } 
-            */
-
-            indentAppendLine(sb, 0, "// Auto-generated al file for PBI permissions " + permSet.Attributes["id"].Value);
-            indentAppendLine(sb, 0, "");
-            indentAppendLine(sb, 0, "namespace " + alNamespace);
-            indentAppendLine(sb, 0, "");
-            indentAppendLine(sb, 0, "permissionset " + permSet.Attributes["id"].Value + " \"" + permSet.Attributes["name"].Value + "\"");
-            indentAppendLine(sb, 0, "{");
-            indentAppendLine(sb, 1, "Access = Internal;");
-            indentAppendLine(sb, 1, "Assignable = false;");
-            indentAppendLine(sb, 1, "Permissions =");
-
+            StringBuilder pageStringBuilder = new StringBuilder();
             foreach (XmlNode page in pages.SelectNodes("page"))
             {
-                indentAppendLine(sb, 2, "page \"" + page.Attributes["name"].Value + "\" = X,");
+                if (page.Attributes["name"].Value == pages.LastChild.Attributes["name"].Value)
+                {
+                    pageStringBuilder.AppendLine("        page \"" + page.Attributes["name"].Value + "\" = X;");
+                }
+                else
+                {
+                    if (page.NextSibling.Attributes["obsolete"].Value.Length > 0 && page.NextSibling.Attributes["name"].Value == pages.LastChild.Attributes["name"].Value)
+                    {
+                        pageStringBuilder.AppendLine($"#if not CLEAN{page.NextSibling.Attributes["obsolete"].Value}");
+                        pageStringBuilder.AppendLine("        page \"" + page.Attributes["name"].Value + "\" = X,");
+                        pageStringBuilder.AppendLine("#pragma warning disable AL0432");
+                        pageStringBuilder.AppendLine("        page \"" + page.NextSibling.Attributes["name"].Value + "\" = X;");
+                        pageStringBuilder.AppendLine("#pragma warning restore AL0432");
+                        pageStringBuilder.AppendLine("#else");
+                        pageStringBuilder.AppendLine("        page \"" + page.Attributes["name"].Value + "\" = X;");
+                        pageStringBuilder.AppendLine("#endif");
+                        break;
+                    }
+
+                    if (page.Attributes["obsolete"].Value.Length > 0)
+                    {
+                        pageStringBuilder.AppendLine($"#if not CLEAN{page.Attributes["obsolete"].Value}");
+                        pageStringBuilder.AppendLine("#pragma warning disable AL0432");
+                    }
+                    pageStringBuilder.AppendLine("        page \"" + page.Attributes["name"].Value + "\" = X,");
+                    if (page.Attributes["obsolete"].Value.Length > 0)
+                    {
+                        pageStringBuilder.AppendLine("#pragma warning restore AL0432");
+                        pageStringBuilder.AppendLine("#endif");
+                    }
+                }
             }
 
-            indentAppendLine(sb, 0, "}");
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendFormat(Encoding.UTF8.GetString(Resources.PermissionSetTemplate),
+                alNamespace, // 0
+                permSet.Attributes["id"].Value, // 1
+                permSet.Attributes["name"].Value, // 2
+                pageStringBuilder.ToString() // 3
+                );
 
             return sb.ToString();
+        }
+
+        public static string EscapeALTextString(string s)
+        {
+            return s.Replace("'", "''");
         }
 
         // https://epsicodecom.wordpress.com/2019/08/12/tutorial-generate-seperate-files-from-a-t4-template/
