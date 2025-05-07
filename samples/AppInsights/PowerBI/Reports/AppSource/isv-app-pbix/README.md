@@ -1,16 +1,11 @@
 In this folder, you will find the source code for the PowerBI app report on Dynamics 365 Business Central *ISV* telemetry in Azure Application Insights. 
 
 # Power BI prerequisites
-The app is not on appsource yet, so you need to allow it to be installed. 
 
-Go to the PBI admin portal.
-Under Tenant settings, Go to Template App settings. Here you can enable template apps that are not listed on app source.
-Remember to set the setting back after installing the beta version of the app.
-
-![Prereq](../../../../images/power-bi-prereq.png)
+You need Power BI PRO to install the app.
 
 # Getting the report
-Use this link to install/update the template app from Appsource: https://aka.ms/bctelemetry-isv-app-beta
+Use this link to install/update the template app from Appsource: https://aka.ms/bctelemetry-isv-app
 
 The app comes with sample data.
 
