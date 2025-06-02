@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "saveformat": {
+      "type": "string",
+      "enum": [ "Default", "PdfA3B", "Einvoice" ]
+    },
+    "primaryDocument": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attachments": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 0,
+      "items": {
+        "required": [
+          "name",
+          "description",
+          "relationship",
+          "mimetype",
+          "filename"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relationship": {
+            "type": "string",
+            "enum": [ "Source", "Data", "Alternative", "Supplement", "Unspecified" ]
+          },
+          "mimetype": {
+            "type": "string",
+            "minLength": 1
+          },
+          "filename": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "additionalDocuments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "protection": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "minLength": 0
+        },
+        "admin": {
+          "type": "string",
+          "minLength": 0
+        }
+      },
+      "required": [
+        "user",
+        "admin"
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "saveformat",
+    "attachments",
+    "additionalDocuments",
+    "protection"
+  ]
+}
