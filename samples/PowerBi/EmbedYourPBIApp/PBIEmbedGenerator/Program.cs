@@ -267,6 +267,7 @@ namespace APIQueryGenerator
                 Caption = '<caption>';
                 AboutTitle = '<aboutTitle>';
                 AboutText = '<aboutText>';
+                PageType = UserControlHost;
 
                 layout
                 {
@@ -299,6 +300,7 @@ namespace APIQueryGenerator
             indentAppendLine(sb, 1, "Caption = '" + query.Attributes["caption"].Value + "';");
             indentAppendLine(sb, 1, "AboutTitle = '" + query.Attributes["aboutTitle"].Value + "'; ");
             indentAppendLine(sb, 1, "AboutText = '" + query.Attributes["aboutText"].Value + "'; ");
+            indentAppendLine(sb, 1, "PageType = UserControlHost; ");
             sb.AppendLine("");
 
             indentAppendLine(sb, 1, "layout");
