@@ -12,8 +12,12 @@ codeunit 50100 "Contoso Shoes" implements "Contoso Demo Data Module"
     end;
 
     procedure CreateSetupData()
+    var
+        InventoryModule: Codeunit "Inventory Module";
     begin
-
+        InventoryModule.CreateSetupData();
+        Codeunit.Run(Codeunit::"Contoso Shoes Item Category");
+        Codeunit.Run(Codeunit::"Contoso Shoes Unit of Measure");
     end;
 
     procedure CreateMasterData()
