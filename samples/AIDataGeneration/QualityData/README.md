@@ -7,8 +7,6 @@ The overall idea is to combine OpenAI constrained decoding/[structured outputs](
 ## Getting Started
 
 Prerequisites
-- [Python](https://www.python.org/downloads/windows/) 3.11+
-- Poetry 2.0.1+ (`pip install poetry`)
 - an Azure OpenAI LLM deployment that supports structured outputs and for which you have Entra ID-based access. (For this you will need the `Cognitive Services OpenAI User` role assignment for the Azure OpenAI resource).
 
 The following commands will create a virtual Python environment and allow you to run the examples:
@@ -25,7 +23,7 @@ poetry install
 # Set environment variables
 $env:AZURE_OPENAI_ENDPOINT = "<URL of an Azure OpenAI endpoint to which you have Entra ID-based access>"
 $env:AZURE_OPENAI_DEPLOYMENT = "<name of an Azure OpenAI deployment that supports structured outputs>"
-$env:OPENAI_API_VERSION = "2024-08-01-preview"
+$env:OPENAI_API_VERSION = "<API version>"
 ```
 
 ## Example
