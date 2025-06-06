@@ -5,9 +5,10 @@ codeunit 50100 "Contoso Shoes" implements "Contoso Demo Data Module"
 
     end;
 
-    procedure GetDependencies(): List of [Enum "Contoso Demo Data Module"]
+    procedure GetDependencies() Dependencies: List of [Enum "Contoso Demo Data Module"]
     begin
-
+        Dependencies.Add(Enum::"Contoso Demo Data Module"::Foundation);
+        Dependencies.Add(Enum::"Contoso Demo Data Module"::Finance);
     end;
 
     procedure CreateSetupData()
