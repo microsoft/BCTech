@@ -22,7 +22,8 @@ codeunit 50100 "Contoso Shoes" implements "Contoso Demo Data Module"
 
     procedure CreateMasterData()
     begin
-
+        Codeunit.Run(Codeunit::"Contoso Shoes Item");
+        Codeunit.Run(Codeunit::"Contoso Shoes Size");
     end;
 
     procedure CreateTransactionalData()
