@@ -1,0 +1,28 @@
+{
+  "id": "9b796361-4ea2-4265-863d-9999c037d394",
+  "name": "ContosoDemoData",
+  "publisher": "Contoso Shoes",
+  "version": "1.0.0.0",
+  "brief": "App to demonstrate the use of Contoso Demo Data feature in Business Central",
+  "description": "The app is designed to showcase how to use the Contoso Demo Data feature",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "27.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "16.0",
+  "features": [
+    "NoImplicitWith",
+    "TranslationFile"
+  ]
+}
