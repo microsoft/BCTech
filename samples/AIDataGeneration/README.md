@@ -6,3 +6,7 @@ See
 
 - the [QualityData](QualityData/README.md) directory for how to create test data for quality (e.g., accuracy) tests
 - the [HarmsData](HarmsData/README.md) directory for how to create harms test data
+
+In both cases, you will need to install
+- Python (3.11 or higher, except 3.13)
+- Poetry (`pip install poetry`)

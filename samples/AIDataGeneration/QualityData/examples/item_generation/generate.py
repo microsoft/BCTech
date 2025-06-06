@@ -33,7 +33,7 @@ if __name__ == "__main__":
   items = items_creator.create()
 
   print(dump_as_yaml(items))
-      
+  
   """
   items:
   - name: 🦄 Magical Unicorn

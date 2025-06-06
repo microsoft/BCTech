@@ -1,0 +1,28 @@
+{
+  "id": "3e75ec63-8d7b-4bf8-9c79-9182a7caad84",
+  "name": "Adversarial Simulation Test Library",
+  "publisher": "Microsoft",
+  "brief": "Test library for adversarial simulation using Azure AI Studio.",
+  "description": "Test library for adversarial simulation using Azure AI Studio.",
+  "version": "27.0.0.0",
+  "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
+  "EULA": "https://go.microsoft.com/fwlink/?LinkId=847985",
+  "help": "https://go.microsoft.com/fwlink/?LinkId=849257",
+  "url": "https://go.microsoft.com/fwlink/?LinkId=724011",
+  "contextSensitiveHelpUrl": "https://go.microsoft.com/fwlink/?LinkId=849257",
+  "logo": "ExtensionLogo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "application": "27.0.0.0",
+  "platform": "27.0.0.0",
+  "target": "OnPrem",
+  "features": [
+    "TranslationFile"
+  ],
+  "idRanges": [
+    {
+      "from": 135395,
+      "to": 135396
+    }
+  ]
+}
