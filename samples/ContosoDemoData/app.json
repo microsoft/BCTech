@@ -5,7 +5,14 @@
   "version": "1.0.0.0",
   "brief": "App to demonstrate the use of Contoso Demo Data feature in Business Central",
   "description": "The app is designed to showcase how to use the Contoso Demo Data feature",
-  "dependencies": [],
+  "dependencies": [
+    {
+      "id": "5a0b41e9-7a42-4123-d521-2265186cfb31",
+      "name": "Contoso Coffee Demo Dataset",
+      "publisher": "Microsoft",
+      "version": "27.0.0.0"
+    }
+  ],
   "screenshots": [],
   "platform": "1.0.0.0",
   "application": "27.0.0.0",
