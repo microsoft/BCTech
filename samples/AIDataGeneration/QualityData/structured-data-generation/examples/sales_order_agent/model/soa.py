@@ -62,7 +62,6 @@ class OrderLine(BaseModel):
 class Order(BaseModel):
     """Represents a sales order in a test for the Sales Order Agent"""
     customerName: str = Field(None, description="Name of the customer")
-    totalExclVAT: float = Field(None, description="Total amount of the quote excluding VAT")
     lines: List[OrderLine] = Field(None, description="Lines in the sales order")
 
 class ExpectedData(BaseModel):
