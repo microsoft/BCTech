@@ -1,0 +1,94 @@
+name: Running Supplies Basic Sales Flow
+tests:
+- name: Quote to Order for Running Shoes and Socks
+  description: A customer requests a quote for running shoes and socks, then replies
+    to convert it into an order. Demonstrates unit of measure handling (BOX, PCS).
+  test_setup:
+    itemsToCreate:
+    - description: Running Shoe
+      itemNo: RS100
+      baseUnitOfMeasure: PCS
+      unitsOfMeasure:
+      - code: PCS
+        quantityPerUnitOfMeasure: 1
+      - code: BOX
+        quantityPerUnitOfMeasure: 10
+      unitPrice: 80.0
+    - description: Sports Socks
+      itemNo: SS200
+      baseUnitOfMeasure: PCS
+      unitsOfMeasure:
+      - code: PCS
+        quantityPerUnitOfMeasure: 1
+      - code: BOX
+        quantityPerUnitOfMeasure: 12
+      unitPrice: 5.0
+    customersToCreate:
+    - name: Marathon Club
+      address: 42 Sprinter Lane
+      countryRegionCode: US
+      postCode: 12345
+      city: Runtown
+      phoneNo: +1-555-1010
+      email: contact@marathonclub.com
+    contactsToCreate:
+    - name: Joanna Marks
+      companyName: Marathon Club
+      phoneNo: +1-555-1011
+      email: joanna.marks@marathonclub.com
+  turns:
+  - incoming_email:
+      from: joanna.marks@marathonclub.com
+      subject: 'Request for quote: running items'
+      body: 'Hello,
+
+
+        We would like a quote for 2 boxes of Running Shoes and 3 boxes of Sports Socks
+        for our upcoming event.
+
+        Kindly send us your offer.
+
+
+        Thank you,
+
+        Joanna'
+    expected_data:
+      attachments: true
+      quotes:
+      - customerName: Marathon Club
+        lines:
+        - itemDescription: Running Shoe
+          quantity: 2
+          unitOfMeasure: BOX
+        - itemDescription: Sports Socks
+          quantity: 3
+          unitOfMeasure: BOX
+      email: A quote is sent to Joanna Marks attached, listing 2 BOX of Running Shoes
+        and 3 BOX of Sports Socks for Marathon Club.
+  - incoming_email:
+      from: joanna.marks@marathonclub.com
+      subject: Place order
+      body: 'Hello,
+
+
+        Thank you for the quote. Please proceed with the order as per your quotation
+        for the shoes and socks.
+
+
+        Regards,
+
+        Joanna'
+    expected_data:
+      attachments: true
+      orders:
+      - customerName: Marathon Club
+        totalExclVAT: 200.0
+        lines:
+        - itemDescription: Running Shoe
+          quantity: 2
+          unitOfMeasure: BOX
+        - itemDescription: Sports Socks
+          quantity: 3
+          unitOfMeasure: BOX
+      email: Order confirmation is sent to Joanna Marks with a sales order attached
+        for 2 BOX of Running Shoes and 3 BOX of Sports Socks.
