@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import yaml
 from model import soa
 from structured_data_generation import ElementCreator
-from validation import TestSuiteValidator
+from validator import TestSuiteValidator
 
 class TestSuiteCreator(ElementCreator):
     # Specify the model for the response format
