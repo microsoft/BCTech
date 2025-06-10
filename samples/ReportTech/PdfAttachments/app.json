@@ -1,0 +1,47 @@
+{
+  "id": "bdafd76a-e5f8-4c09-b7c4-e52ce9898025",
+  "name": "PdfAttachments",
+  "publisher": "BCTech",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies":  [
+                         {
+                             "id":  "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+                             "publisher":  "Microsoft",
+                             "name":  "System Application",
+                             "version":  "26.0.0.0"
+                         },
+                         {
+                             "id":  "437dbf0e-84ff-417a-965d-ed2bb9650972",
+                             "publisher":  "Microsoft",
+                             "name":  "Base Application",
+                             "version":  "26.0.0.0"
+                         }
+                     ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "26.0.0.0",
+  "idRanges": [
+    {
+      "from": 50950,
+      "to": 50960
+    }
+  ],
+  "resourceFolders": ["Resources"],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "target": "OnPrem",
+  "runtime": "15.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
