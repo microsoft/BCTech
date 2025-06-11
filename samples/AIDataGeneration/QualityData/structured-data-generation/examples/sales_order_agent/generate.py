@@ -1,114 +1,130 @@
-import json
 import os
 from pydantic import BaseModel
 import yaml
 from model import soa
 from structured_data_generation import ElementCreator
-
-class TestSetupCreator(ElementCreator):
-    response_format: BaseModel = soa.TestSetup
-
-    def create(self) -> soa.TestSetup:
-        script_dir = os.path.dirname(__file__)
-        file_path = os.path.join(script_dir, "seeds/test_setup.yaml")
-        with open(file_path, 'r') as f:
-            data = yaml.safe_load(f)
-        
-        self.request_prompt =  f"""
-        Create a test setup with items, customers, and contacts for the Sales Order Agent.
-        Don't create quotes.
-
-        The created element are for this customer: Phoenix Runners Supply. 
-        Phoenix Runners Supply is a locally owned small business specializing in running gear and accessories, serving the Phoenix, AZ area.". 
-
-        Create 10 items, 3 customers that might buy these items, and 5 contacts that work for the customers.
-
-        Here's an example in YAML format: 
-        {data}
-        """
-        # Units of measure: PCS, BOX, SET, PACK, GR, KG
-
-        return self._create_internal()
+from validator import TestSuiteValidator
 
 class TestSuiteCreator(ElementCreator):
+    # Specify the model for the response format
     response_format: BaseModel = soa.TestSuite
 
     def create(self, instructions: str) -> soa.TestSuite:
-        script_dir = os.path.dirname(__file__)
-        
-        file_path = os.path.join(script_dir, "seeds/test_setup.yaml")
-        with open(file_path, 'r') as f:
-            test_setup = yaml.safe_load(f)
-        
-        file_path = os.path.join(script_dir, "seeds/p0.yaml")
-        with open(file_path, 'r') as f:
-            p0 = yaml.safe_load(f)
-        
-        self.request_prompt =  f"""
-        You create test suites for the Sales Order Agent that processes emails in
-        Dynamics 365 Business Central. The agent creates sales quotes and later converts
-        these to sales orders.
 
-        Here's an example of setup for a test suite in YAML format. Names and descriptions need to be realistic and specific.
-        {test_setup}
+#region Seed example: test_setup.yaml
+        # script_dir = os.path.dirname(__file__)
+        # file_path = os.path.join(script_dir, "seeds/test_setup.yaml")
+        # with open(file_path, 'r') as f:
+        #     test_setup = yaml.safe_load(f)
+
+        # Here's the existing test setup in YAML format. Create the tests based on this setup:
+        # {test_setup}
+#endregion
+
+        self.request_prompt =  f"""
+        You create test suites for the Sales Order Agent that processes emails in Dynamics 365 Business Central. The agent creates sales quotes and later converts these to sales orders.
         
-        Here's an example of a test suite in YAML format:
-        {p0}
-        
-        Be sure to: {instructions}
+        Be sure to: {instructions}        
         """
 
+        print("🤖 Generating test suite...")
         result = self._create_internal()
         
-        self._validate_test_suite(result)
+        print("🤖 Validating test suite...")
+        validator = TestSuiteValidator()
+        validator.validate_test_suite(result)
         
         return result
 
-    def _validate_test_suite(self, test_suite: soa.TestSuite):
-        item_prices = {item.description: item.unitPrice for item in test_suite.test_setup.itemsToCreate}
-
-        for tests in test_suite.tests:
-            for turn in tests.turns:
-                if not turn.expected_data or not turn.expected_data.quotes:
-                    continue
-                for quote in turn.expected_data.quotes:
-                    total = 0
-                    for line in quote.lines:
-                        line.lineAmount = line.quantity * item_prices.get(line.itemDescription)
-                        total += line.lineAmount
-                    total = round(total, 2)
-                    if total != quote.totalExclVAT:
-                        print(f"Error in test {tests.name}: total {quote.totalExclVAT} does not match calculated total {total} for quote {quote.customerName}")
-                    quote.totalExclVAT = total
-
 if __name__ == "__main__":
+    # Create output directory if it doesn't exist
+    output_dir = "output"
+    os.makedirs(output_dir, exist_ok=True)
+
     creator = TestSuiteCreator()
-    result = creator.create("Create a test suite where the company sells running supplies. The unit of meaures used are BOX and PCS. Generate a test with 2 turns.")
-    print(yaml.dump(result.model_dump(exclude_none=True), default_flow_style=False))
-"""
-name: Running Supplies Agent
-test_setup:
-  contactsToCreate:
-  - companyName: Trail Warriors
-    email: elena.miles@trailwarriors.com
-    name: Elena Miles
-    phoneNo: (310) 555-1000
-  customersToCreate:
-  - address: 456 Terrain Drive
-    city: Beverly Hills
-    countryRegionCode: US
-    email: info@trailwarriors.com
-    name: Trail Warriors
-    phoneNo: (310) 555-1000
-    postCode: 90210
-  itemsToCreate:
-  - baseUnitOfMeasure: PRS
-    description: Trail Running Shoes
-    itemNo: RunSup-001
-    unitPrice: 120.0
-    unitsOfMeasure:
-    - code: BOX
-      quantityPerUnitOfMeasure: 2
-  - baseUnitOfMeasure: PCS
-  ...
-"""
+    result = creator.create("Create a test suite where the company sells running supplies. The unit of measures used are BOX and PCS. Generate a test with 2 turns.")
+
+    # Write to file
+    output_file = os.path.join(output_dir, "soa_test_dataset.yaml")
+    with open(output_file, 'w') as f:
+        yaml.dump(result.model_dump(by_alias=True, exclude_none=True), f, default_flow_style=False, sort_keys=False)
+    print(f"\n\nTest dataset saved to {output_file}. Please review the errors in the console output.\n\n")
+
+
+
+
+
+
+
+#region Generate test suites from test suites file
+    # print("\n🌱 Generating test suites from test suites file...")
+    # script_dir = os.path.dirname(__file__)
+    # test_suites_file_path = os.path.join(script_dir, "seeds/test_suites.yaml")
+    
+    # if not os.path.exists(test_suites_file_path):
+    #     print(f"❌ Test suites file not found at {test_suites_file_path}")
+    #     exit()
+    
+    # with open(test_suites_file_path, 'r') as f:
+    #     test_suites_data = yaml.safe_load(f)
+    #   # Parse test_suites structure
+    # test_suites_list = test_suites_data.get('test_suites', [])
+    # test_suites = {}
+    # total_tests = 0
+    
+    # for test_suite_obj in test_suites_list:
+    #     suite_name = test_suite_obj.get('name')
+    #     if not suite_name:
+    #         raise ValueError(f"Test suite missing required 'name' field: {test_suite_obj}")
+            
+    #     test_cases = test_suite_obj.get('test_cases', [])
+    #     test_suites[suite_name] = test_cases
+    #     total_tests += len(test_cases)
+        
+    # print(f"📊 Found {total_tests} test cases across {len(test_suites)} test suites")
+    #   # Generate test suites for each test suite
+    # for test_suite_name, test_cases in test_suites.items():
+    #     print(f"\n📂 Processing test suite: {test_suite_name} ({len(test_cases)} test cases)")
+        
+    #     # Generate all test cases for this test suite
+    #     generated_tests = []
+    #     for i, test_case in enumerate(test_cases):
+    #         test_name = test_case.get('name', f'Test {i+1}')
+    #         test_description = test_case.get('description', '')
+            
+    #         if not test_description:
+    #             print(f"⚠️ Skipping {test_name} - no description found")
+    #             continue
+                
+    #         print(f"🧪 Generating {i+1}/{len(test_cases)}: {test_name}")
+            
+    #         test_result = TestSuiteCreator().create(test_description)
+    #         # Extract the individual tests from the generated test suite
+    #         if hasattr(test_result, 'tests') and test_result.tests:
+    #             generated_tests.extend(test_result.tests)
+        
+    #     # Create one test suite containing all generated tests
+    #     if generated_tests:
+    #         suite_result = {
+    #             'test_suite': {
+    #                 'name': test_suite_name,
+    #                 'tests': [test.model_dump(by_alias=True, exclude_none=True) for test in generated_tests]
+    #             }
+    #         }
+            
+    #         # Save the complete test suite to one file
+    #         suite_filename = "".join(c.lower() if c.isalnum() else '-' for c in test_suite_name).strip('-')
+    #         suite_output_file = os.path.join(output_dir, f"{suite_filename}.yaml")
+            
+    #         print(f"💾 Saving to: {suite_output_file}")
+    #         try:
+    #             with open(suite_output_file, 'w') as f:
+    #                 yaml.dump(suite_result, f, default_flow_style=False, sort_keys=False)
+    #             print(f"✅ Test suite with {len(generated_tests)} tests saved to {suite_output_file}")
+    #         except Exception as e:
+    #             print(f"❌ Error saving file: {e}")
+    #             print(f"Debug - test suite: '{test_suite_name}', filename: '{suite_filename}'")
+    
+    # print(f"\n✅ Completed generating test suites for {len(test_suites)} test suites")
+
+#endregion
