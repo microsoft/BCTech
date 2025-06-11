@@ -27,7 +27,7 @@ if __name__ == "__main__":
   items_creator = ElementCreator(
     response_format=ItemList,
     request_prompt="""
-      Create a list of items for a company that uses Business Central and sells silly stuffed animals. 
+      Create a list of 5 items for a company that uses Business Central and sells silly stuffed animals. 
       Include emojis in the item names and vary the number of attributes per item.
   """)
   items = items_creator.create()
