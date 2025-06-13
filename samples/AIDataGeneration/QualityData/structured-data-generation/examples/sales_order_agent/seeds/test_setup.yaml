@@ -1,0 +1,71 @@
+test_setup:
+  itemsToCreate:
+  - description: WonderWagon Pull-Along Train
+    itemNo: AItem-0001
+    baseUnitOfMeasure: PCS
+    unitsOfMeasure:
+    - code: BOX
+      quantityPerUnitOfMeasure: 6
+    unitPrice: 39.95
+
+  - description: WonderWagon Electric Train
+    itemNo: AItem-0002
+    baseUnitOfMeasure: PCS
+    unitPrice: 59.95
+
+  - description: AdventureCraft Building Blocks
+    itemNo: AItem-0003
+    baseUnitOfMeasure: BOX
+    unitPrice: 50.00
+
+  - description: JoySprout Toy Bicycle
+    itemNo: AItem-0013
+    baseUnitOfMeasure: PCS
+    unitsOfMeasure:
+    - code: BOX
+      quantityPerUnitOfMeasure: 50
+    - code: SET
+      quantityPerUnitOfMeasure: 3
+    - code: PACK
+      quantityPerUnitOfMeasure: 10
+    unitPrice: 234.99
+    variants:
+    - code: SMALL
+      description: JoySprout Toy Bicycle - Small Size
+    - code: MEDIUM
+      description: JoySprout Toy Bicycle - Medium Size
+    - code: LARGE
+      description: JoySprout Toy Bicycle - Large Size
+
+  customersToCreate:
+  - name: Toytopia
+    address: 123 Fun Street, Suite 300
+    countryRegionCode: US
+    postCode: 10001
+    city: New York
+    phoneNo: (212) 555-6789
+    email: info@toytopia.com
+
+  - name: WonderToys Co.
+    address: 789 Imagination Blvd, Suite 200
+    countryRegionCode: US
+    postCode: 90015
+    city: Los Angeles
+    phoneNo: (213) 555-4567
+    email: hello@wondertoysco.com
+      
+  contactsToCreate:   
+  - name: Jessica Stone
+    companyName: Toytopia
+    phoneNo: (212) 555-6789
+    email: jessica.stone@toytopia.com
+  
+  - name: Michael Reyes
+    companyName: Toytopia
+    phoneNo: (212) 555-6789
+    email: michael.reyes@toytopia.com
+
+  - name: Rachel Green
+    companyName: WonderToys Co.
+    phoneNo: (213) 555-4567
+    email: rachel.green@wondertoysco.com

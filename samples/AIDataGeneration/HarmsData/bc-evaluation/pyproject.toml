@@ -1,0 +1,20 @@
+[project]
+name = "bc-evaluation"
+version = "0.1.0"
+description = "Simulate and evaluate Business Central AI features using Azure AI Foundry"
+authors = [
+    {name = "Microsoft"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11,!=3.13,<4.0"
+dependencies = [
+    "azure-ai-evaluation >= 1.8.0"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+bcevaluation = "bc_evaluation.cli:cli"

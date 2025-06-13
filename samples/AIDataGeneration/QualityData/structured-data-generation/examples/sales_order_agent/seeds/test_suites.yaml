@@ -1,0 +1,45 @@
+test_suites:
+  - name: "BASIC_QUOTE_SCENARIOS"
+    test_cases:
+      - name: "QUOTE_SINGLE_ITEM_01"
+        description: "Terse email with quote request for 1 item with specific quantity. The email should be straightforward and professional. There is only one turn with expected data containing a quote."
+      - name: "QUOTE_MULTIPLE_ITEMS_01"
+        description: "Terse email with quote request for 3-5 items with varying quantities. Items should be from different categories with different units of measure. There is only one turn with expected data containing a quote."
+      - name: "QUOTE_MULTIPLE_ITEMS_02"
+        description: "Verbose email with quote request for 5-7 items with varying quantities. Email should include business context and urgency. Items should use both PCS and BOX units. There is only one turn."
+  
+  - name: "QUOTE_TO_ORDER_SCENARIOS"
+    test_cases:
+      - name: "QUOTE_TO_ORDER_SINGLE_01"
+        description: "Two-turn scenario where customer requests quote for 1-2 items, then converts to order. First turn generates quote, second turn converts to sales order with total amount."
+      - name: "QUOTE_TO_ORDER_MULTIPLE_01"
+        description: "Two-turn scenario where customer requests quote for 3-5 items, then converts to order. Customer should express satisfaction with pricing in second email."
+      - name: "QUOTE_TO_ORDER_WITH_CHANGES_01"
+        description: "Two-turn scenario where customer requests quote, then converts to order with quantity modifications. Customer should request slight changes before ordering."
+  
+  - name: "UNIT_OF_MEASURE_SCENARIOS"
+    test_cases:
+      - name: "MIXED_UOM_QUOTE_01"
+        description: "Email requesting items using different units of measure. Some items in PCS, others in BOX. Customer should be specific about units needed."
+      - name: "BULK_ORDER_QUOTE_01"
+        description: "Email requesting large quantities primarily in BOX units. Should emphasize bulk pricing and wholesale quantities."
+      - name: "INDIVIDUAL_ITEMS_QUOTE_01"
+        description: "Email requesting specific quantities in PCS units. Should focus on precise quantities for specific needs."
+  
+  - name: "ERROR_HANDLING_SCENARIOS"
+    test_cases:
+      - name: "UNAVAILABLE_ITEMS_01"
+        description: "Email requesting items not in the catalog. Should result in polite explanation and alternative suggestions. No quotes should be generated."
+      - name: "MISSING_QUANTITY_01"
+        description: "Email requesting items without specifying quantities. System should default to quantity 1 and ask for clarification in response."
+      - name: "AMBIGUOUS_ITEMS_01"
+        description: "Email using vague item descriptions that could match multiple products. System should ask for clarification with available options."
+  
+  - name: "DELIVERY_TIMELINE_SCENARIOS"
+    test_cases:
+      - name: "SPECIFIC_DELIVERY_DATE_01"
+        description: "Email requesting quote with specific delivery date mentioned. Response should acknowledge delivery requirements."
+      - name: "RUSH_ORDER_01"
+        description: "Email requesting expedited processing and delivery. Should emphasize time-sensitive nature of request."
+      - name: "FLEXIBLE_DELIVERY_01"
+        description: "Email with flexible delivery timeline. Should show understanding of delivery flexibility."

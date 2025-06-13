@@ -1,0 +1,21 @@
+[project]
+name = "structured-data-generation"
+version = "0.1.0"
+description = "Generation of synthetic structured data using Azure OpenAI-deployed LLMs."
+authors = [
+    {name = "Microsoft"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "openai (>=1.59.6,<2.0.0)",
+    "pyyaml (>=6.0.2,<7.0.0)",
+    "azure-identity (>=1.19.0,<2.0.0)",
+    "swarm @ git+https://github.com/kmhansen/structured-swarm.git"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
