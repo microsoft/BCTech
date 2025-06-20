@@ -7,22 +7,16 @@ codeunit 54306 "Isolated Storage Wrapper"
 
     var
         IsolatedStorageSecretKeyKey: Label 'CopilotToolkitDemoSecret', Locked = true;
-        IsolatedStorageDeploymentKey: Label 'CopilotToolkitDemoDeployment', Locked = true;
-        IsolatedStorageEndpointKey: Label 'CopilotToolkitDemoEndpoint', Locked = true;
+        IsolatedStorageAccountNameKey: Label 'CopilotToolkitDemoAccountName', Locked = true;
 
     procedure GetSecretKey() SecretKey: Text
     begin
         IsolatedStorage.Get(IsolatedStorageSecretKeyKey, SecretKey);
     end;
 
-    procedure GetDeployment() Deployment: Text
+    procedure GetAccountName() AccountName: Text
     begin
-        IsolatedStorage.Get(IsolatedStorageDeploymentKey, Deployment);
-    end;
-
-    procedure GetEndpoint() Endpoint: Text
-    begin
-        IsolatedStorage.Get(IsolatedStorageEndpointKey, Endpoint);
+        IsolatedStorage.Get(IsolatedStorageAccountNameKey, AccountName);
     end;
 
     procedure SetSecretKey(SecretKey: Text)
@@ -30,14 +24,8 @@ codeunit 54306 "Isolated Storage Wrapper"
         IsolatedStorage.Set(IsolatedStorageSecretKeyKey, SecretKey);
     end;
 
-    procedure SetDeployment(Deployment: Text)
+    procedure SetAccountName(AccountName: Text)
     begin
-        IsolatedStorage.Set(IsolatedStorageDeploymentKey, Deployment);
+        IsolatedStorage.Set(IsolatedStorageAccountNameKey, AccountName);
     end;
-
-    procedure SetEndpoint(Endpoint: Text)
-    begin
-        IsolatedStorage.Set(IsolatedStorageEndpointKey, Endpoint);
-    end;
-
 }
