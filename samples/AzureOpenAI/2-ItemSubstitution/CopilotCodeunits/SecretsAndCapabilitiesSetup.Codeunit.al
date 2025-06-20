@@ -26,7 +26,6 @@ codeunit 54310 "Secrets And Capabilities Setup"
         // You will need to use your own key for Azure OpenAI for all your Copilot features (for both development and production).
         Error('Set up your secrets here before publishing the app.');
         // IsolatedStorageWrapper.SetSecretKey('secretkey');
-        // IsolatedStorageWrapper.SetDeployment('deployment');
-        // IsolatedStorageWrapper.SetEndpoint('endpoint');
+        // IsolatedStorageWrapper.SetAccountName('accountName');
     end;
 }

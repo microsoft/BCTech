@@ -90,9 +90,9 @@ page 50100 "Draft Project"
             CopilotCapability.RegisterCapability(Enum::"Copilot Capability"::"Project Task Creation", 'https://about:none');
 
         // If you are using managed resources, call this function:
-        // NOTE: endpoint, deployment, and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
+        // NOTE: account name and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
         AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
-            GetEndpoint(), GetDeployment(), GetApiKey(), AOAIDeployments.GetGPT4oLatest());
+            GetAccountName(), GetApiKey(), AOAIDeployments.GetGPT4oLatest());
         // If you are using your own Azure OpenAI subscription, call this function instead:
         // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetApiKey());
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Project Task Creation");
@@ -107,7 +107,23 @@ page 50100 "Draft Project"
         if (AOAIOperationResponse.IsSuccess()) then
             exit(AOAIChatMessages.GetLastMessage());
 
-        exit('Error: ' + AOAIOperationResponse.GetError());
+        case AOAIOperationResponse.GetStatusCode() of
+            402: // Payment Required
+                Error('Your Entra Tenant ran out of AI quota. '
+                    + 'Make sure your Business Central environment is linked to a Power Platform environment, and billing is set up correctly. '
+                    + 'Consult the Business Central documentation for more information.');
+            429: // Too many requests
+                Error('You have been using Copilot very fast! '
+                    + 'So fast that we suspect you might have some automation or scheduled task that calls Copilot a lot. '
+                    + 'Have a look at your Job Queues, scheduled tasks, and automations, and make sure that everything looks fine. '
+                    + 'And don''t worry, you''ll be able to use Copilot again in less than a minute!');
+            503: // Service Unavailable (very very rare)
+                Error('It seems like our services are under heavy load right now. '
+                    + 'This happens very rarely, and our engineers are notified whenever this happens. '
+                    + 'We are probably already working on it as soon as you are done reading this message!');
+            else // Others
+                exit('A generic error occurred: ' + AOAIOperationResponse.GetError());
+        end;
     end;
 
     local procedure GetApiKey(): SecretText
@@ -117,16 +133,10 @@ page 50100 "Draft Project"
         exit(Format(CreateGuid()));
     end;
 
-    local procedure GetDeployment(): Text
+    local procedure GetAccountName(): Text
     begin
-        // Use your deployment name from Azure Open AI here
-        exit('gpt-' + CreateGuid());
-    end;
-
-    local procedure GetEndpoint(): Text
-    begin
-        // Use your endpoint name from Azure Open AI here
-        exit('https://my-deployment.azure.com/');
+        // Use your Azure OpenAI account name (the first part of your own Azure OpenAI url, for example for "MyPartner.openai.azure.com" use "MyPartner"
+        exit('MyPartner');
     end;
 
 }
