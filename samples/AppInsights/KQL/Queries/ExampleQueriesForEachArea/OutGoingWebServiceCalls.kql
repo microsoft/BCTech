@@ -52,7 +52,7 @@ traces
 | extend httpHeadersTmp =  tostring( httpHeaders)
 | extend httpHeadersJSON = parse_json(httpHeadersTmp)
 | extend Authorization = tostring( httpHeadersJSON.['Authorization'] )
-| extend url_json = parse_url( tostring(customDimensions.endpoint) )
+| extend url_json = parse_url( tostring(endpoint) )
 | extend host = url_json.Host
 , path = url_json.Path
 , scheme = url_json.Scheme
