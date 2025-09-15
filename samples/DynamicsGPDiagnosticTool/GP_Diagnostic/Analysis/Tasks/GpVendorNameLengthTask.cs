@@ -50,7 +50,7 @@ public class GpVendorNameLengthTask : IDiagnosticTask
 FROM
     [PM00200]
 WHERE
-    LEN([VENDNAME]) > 50";
+    LEN([VENDNAME]) > 100";
 
         using (var reader = await this.database.ExecuteSqlAsync(sql, cancellationToken))
         {
