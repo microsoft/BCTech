@@ -226,7 +226,7 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} customer name(s) over 50 characters. Business Central requires Customer names to be 50 or fewer characters. Customer names greater than 50 characters will be truncated when migrated. This may cause duplicate Customers in Business Central and other integrating services depending on Customer names may no longer work..
+        ///   Looks up a localized string similar to {0} customer name(s) over 100 characters. Business Central requires Customer names to be 100 or fewer characters. Customer names greater than 100 characters will be truncated when migrated. This may cause duplicate Customers in Business Central and other integrating services depending on Customer names may no longer work..
         /// </summary>
         internal static string GpCustomerNameLengthTaskSummary {
             get {
@@ -685,7 +685,7 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} vendor name(s) over 50 characters. Business Central requires Vendor names to be 50 or fewer characters. Vendor names greater than 50 characters will be truncated when migrated. This may cause duplicate Vendors in Business Central and other integrating services depending on Vendor names may no longer work..
+        ///   Looks up a localized string similar to {0} vendor name(s) over 100 characters. Business Central requires Vendor names to be 100 or fewer characters. Vendor names greater than 100 characters will be truncated when migrated. This may cause duplicate Vendors in Business Central and other integrating services depending on Vendor names may no longer work..
         /// </summary>
         internal static string GpVendorNameLengthTaskSummary {
             get {
