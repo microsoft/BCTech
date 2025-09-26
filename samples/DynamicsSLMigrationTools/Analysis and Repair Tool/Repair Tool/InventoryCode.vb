@@ -151,6 +151,26 @@ Module InventoryCode
         End If
 
 
+
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
+
+        Try
+            Call UpdateDates_IV(oEventLog)
+
+        Catch ex As Exception
+            Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("Error in removing time values in date fields - Inventory", oEventLog)
+            Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+            Call LogMessage("", oEventLog)
+            OkToContinue = False
+            NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+            Exit Sub
+        End Try
+
         '****************************************************************************
         '*** Check for Inventory records with an Item description longer than 50 characters ***
         '****************************************************************************

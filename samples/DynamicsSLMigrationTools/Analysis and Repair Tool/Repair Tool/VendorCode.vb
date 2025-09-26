@@ -419,6 +419,25 @@ Module VendorCode
             End If
         End If
 
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
+
+        Try
+            Call UpdateDates_AP(oEventLog)
+
+        Catch ex As Exception
+            Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("Error in removing time values in date fields - Accounts Payable", oEventLog)
+            Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+            Call LogMessage("", oEventLog)
+            OkToContinue = False
+            NbrOfWarnings_Vend = NbrOfWarnings_Vend + 1
+            'Exit Sub
+        End Try
+
         Call oEventLog.LogMessage(EndProcess, "Validate Accounts Payable")
 
         Call MessageBox.Show("Vendor Validation Complete", "Vendor Validation")
