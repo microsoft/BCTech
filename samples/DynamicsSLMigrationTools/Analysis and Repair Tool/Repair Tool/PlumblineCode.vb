@@ -55,6 +55,8 @@ Module PlumblineCode
     Public Const StopProcess As Short = -4
 
     Public Const FOUND As Short = 0
+    Public DateField_LogMess_Line1 As String = "WARNING: Date Field Time Values Removed"
+    Public DateField_LogMess_Line2 As String = "During the migration from Dynamics SL To D365 Business Central, Date fields containing time values may result in incorrect Date mappings. To ensure accurate data migration, all time values have now been removed from date fields for the following tables:"
 
 
 
@@ -952,6 +954,1735 @@ Module PlumblineCode
         End If
 
     End Sub
+
+    Public Sub UpdateDates_AP(EventLog As clsEventLog)
+
+        '**********************************************************************************************************
+        '*** Identify any Accounts Payable records with time values in date fields and log them to the event log.
+        '**********************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = ""
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_APAdjust As Boolean = False
+        Dim lb_APDoc As Boolean = False
+        Dim lb_APSetup As Boolean = False
+        Dim lb_APTran As Boolean = False
+        Dim lb_AP_Balances As Boolean = False
+        Dim lb_VendClass As Boolean = False
+        Dim lb_Vendor As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+
+            ' APAdjust - Check for time values in AdjgDocDate, DateAppl, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM APAdjust WHERE (CAST(AdjgDocDate AS TIME) <> '00:00:00') OR (CAST(DateAppl AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_APAdjust = True
+            Call sqlReader.Close()
+
+            ' APDoc - Check for time values in ApplyDate, ClearDate, CuryEffDate, DiscDate, DocDate, DueDate, InvcDate, PayDate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM APDoc WHERE (CAST(ApplyDate AS TIME) <> '00:00:00') OR (CAST(ClearDate AS TIME) <> '00:00:00') OR (CAST(CuryEffDate AS TIME) <> '00:00:00') OR (CAST(DiscDate AS TIME) <> '00:00:00') OR (CAST(DocDate AS TIME) <> '00:00:00') OR (CAST(DueDate AS TIME) <> '00:00:00') OR (CAST(InvcDate AS TIME) <> '00:00:00') OR (CAST(PayDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_APDoc = True
+            Call sqlReader.Close()
+
+            ' APSetup - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM APSetup WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_APSetup = True
+            Call sqlReader.Close()
+
+            ' APTran - Check for time values in S4Future07, S4Future08, ServiceDate, TranDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM APTran WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(ServiceDate AS TIME) <> '00:00:00') OR (CAST(TranDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_APTran = True
+            Call sqlReader.Close()
+
+            ' AP_Balances - Check for time values in LastChkDate, LastVODate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM AP_Balances WHERE (CAST(LastChkDate AS TIME) <> '00:00:00') OR (CAST(LastVODate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_AP_Balances = True
+            Call sqlReader.Close()
+
+            ' VendClass - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM [dbo].[VendClass] WHERE (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_VendClass = True
+            Call sqlReader.Close()
+
+            ' Vendor - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM Vendor WHERE (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_Vendor = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_APAdjust Or lb_APDoc Or lb_APSetup Or lb_APTran Or lb_AP_Balances Or lb_VendClass Or lb_Vendor Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_APAdjust Then
+
+                    cmdText = "UPDATE APAdjust SET AdjgDocDate = CAST(AdjgDocDate AS date) WHERE CAST(AdjgDocDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APAdjust SET DateAppl = CAST(DateAppl AS date) WHERE CAST(DateAppl AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APAdjust SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APAdjust SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APAdjust SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APAdjust SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("APAdjust", EventLog)
+
+                End If
+
+                If lb_APDoc Then
+
+                    cmdText = "UPDATE APDoc SET ApplyDate = CAST(ApplyDate AS date) WHERE CAST(ApplyDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET ClearDate = CAST(ClearDate AS date) WHERE CAST(ClearDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET CuryEffDate = CAST(CuryEffDate AS date) WHERE CAST(CuryEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET DiscDate = CAST(DiscDate AS date) WHERE CAST(DiscDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET DocDate = CAST(DocDate AS date) WHERE CAST(DocDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET DueDate = CAST(DueDate AS date) WHERE CAST(DueDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET InvcDate = CAST(InvcDate AS date) WHERE CAST(InvcDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET PayDate = CAST(PayDate AS date) WHERE CAST(PayDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APDoc SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("APDoc", EventLog)
+
+                End If
+
+                If lb_APSetup Then
+
+                    cmdText = "UPDATE APSetup SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APSetup SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APSetup SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APSetup SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("APSetup", EventLog)
+
+                End If
+
+                If lb_APTran Then
+
+                    cmdText = "UPDATE APTran SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APTran SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APTran SET ServiceDate = CAST(ServiceDate AS date) WHERE CAST(ServiceDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APTran SET TranDate = CAST(TranDate AS date) WHERE CAST(TranDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APTran SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE APTran SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("APTran", EventLog)
+
+                End If
+
+                If lb_AP_Balances Then
+
+                    cmdText = "UPDATE AP_Balances SET LastChkDate = CAST(LastChkDate AS date) WHERE CAST(LastChkDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AP_Balances SET LastVODate = CAST(LastVODate AS date) WHERE CAST(LastVODate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AP_Balances SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AP_Balances SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AP_Balances SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AP_Balances SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("AP_Balances", EventLog)
+
+                End If
+
+                If lb_VendClass Then
+
+                    cmdText = "UPDATE VendClass SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE VendClass SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE VendClass SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE VendClass SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("VendClass", EventLog)
+
+                End If
+
+                If lb_Vendor Then
+
+                    cmdText = "UPDATE Vendor SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Vendor SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Vendor SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Vendor SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("Vendor", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - Accounts Payable" + vbNewLine, EventLog)
+            Call LogMessage("Error:  " + ex.Message + vbNewLine, EventLog)
+
+        End Try
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+    End Sub
+
+    Public Sub UpdateDates_AR(EventLog As clsEventLog)
+
+        '*************************************************************************************************************
+        '*** Identify any Accounts Receivable records with time values in date fields and log them to the event log.
+        '*************************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = String.Empty
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_ARAdjust As Boolean = False
+        Dim lb_ARDoc As Boolean = False
+        Dim lb_ARSetup As Boolean = False
+        Dim lb_ARTran As Boolean = False
+        Dim lb_AR_Balances As Boolean = False
+        Dim lb_CustClass As Boolean = False
+        Dim lb_Customer As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+
+            ' ARAdjust - Check for time values in AdjgDocDate, DateAppl, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM ARAdjust WHERE (CAST(AdjgDocDate AS TIME) <> '00:00:00') OR (CAST(DateAppl AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_ARAdjust = True
+            Call sqlReader.Close()
+
+            ' ARDoc - Check for time values in Cleardate, CuryEffDate, DiscDate, DocDate, DueDate, StmtDate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM ARDoc WHERE (CAST(Cleardate AS TIME) <> '00:00:00') OR (CAST(CuryEffDate AS TIME) <> '00:00:00') OR (CAST(DiscDate AS TIME) <> '00:00:00') OR (CAST(DocDate AS TIME) <> '00:00:00') OR (CAST(DueDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(StmtDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_ARDoc = True
+            Call sqlReader.Close()
+
+            ' ARSetup - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM ARSetup WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_ARSetup = True
+            Call sqlReader.Close()
+
+            ' ARTran - Check for time values in S4Future07, S4Future08, ServiceDate, TranDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM ARTran WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(ServiceDate AS TIME) <> '00:00:00') OR (CAST(TranDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_ARTran = True
+            Call sqlReader.Close()
+
+            ' AR_Balances - Check for time values in LastActDate, LastAgeDate, LastFinChrgDate, LastInvcDate, LastStmtDate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM AR_Balances WHERE (CAST(LastActDate AS TIME) <> '00:00:00') OR (CAST(LastAgeDate AS TIME) <> '00:00:00') OR (CAST(LastFinChrgDate AS TIME) <> '00:00:00') OR (CAST(LastInvcDate AS TIME) <> '00:00:00') OR (CAST(LastStmtDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_AR_Balances = True
+            Call sqlReader.Close()
+
+            ' CustClass - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM CustClass WHERE (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_CustClass = True
+            Call sqlReader.Close()
+
+            ' Customer - Check for time values in CardExpDate, S4Future07, S4Future08, SetupDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM Customer	WHERE (CAST(CardExpDate AS time) <> '00:00:00') OR (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(SetupDate AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_Customer = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_ARAdjust Or lb_ARDoc Or lb_ARSetup Or lb_ARTran Or lb_AR_Balances Or lb_CustClass Or lb_Customer Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_ARAdjust Then
+
+                    cmdText = "UPDATE ARAdjust SET AdjgDocDate = CAST(AdjgDocDate AS date) WHERE CAST(AdjgDocDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARAdjust SET DateAppl = CAST(DateAppl AS date) WHERE CAST(DateAppl AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARAdjust SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARAdjust SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARAdjust SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARAdjust SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("ARAdjust", EventLog)
+
+                End If
+
+                If lb_ARDoc Then
+
+                    cmdText = "UPDATE ARDoc SET Cleardate = CAST(Cleardate AS date) WHERE CAST(Cleardate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET CuryEffDate = CAST(CuryEffDate AS date) WHERE CAST(CuryEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET DiscDate = CAST(DiscDate AS date) WHERE CAST(DiscDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET DocDate = CAST(DocDate AS date) WHERE CAST(DocDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET DueDate = CAST(DueDate AS date) WHERE CAST(DueDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET StmtDate = CAST(StmtDate AS date) WHERE CAST(StmtDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARDoc SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("ARDoc", EventLog)
+
+                End If
+
+                If lb_ARSetup Then
+
+                    cmdText = "UPDATE ARSetup SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARSetup SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARSetup SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARSetup SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("ARSetup", EventLog)
+
+                End If
+
+                If lb_ARTran Then
+
+                    cmdText = "UPDATE ARTran SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARTran SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARTran SET ServiceDate = CAST(ServiceDate AS date) WHERE CAST(ServiceDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARTran SET TranDate = CAST(TranDate AS date) WHERE CAST(TranDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARTran SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ARTran SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("ARTran", EventLog)
+
+                End If
+
+                If lb_AR_Balances Then
+
+                    cmdText = "UPDATE AR_Balances SET LastActDate = CAST(LastActDate AS date) WHERE CAST(LastActDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET LastAgeDate = CAST(LastAgeDate AS date) WHERE CAST(LastAgeDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET LastFinChrgDate = CAST(LastFinChrgDate AS date) WHERE CAST(LastFinChrgDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET LastInvcDate = CAST(LastInvcDate AS date) WHERE CAST(LastInvcDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET LastStmtDate = CAST(LastStmtDate AS date) WHERE CAST(LastStmtDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AR_Balances SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("AR_Balances", EventLog)
+
+                End If
+
+                If lb_CustClass Then
+
+                    cmdText = "UPDATE CustClass SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE CustClass SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE CustClass SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE CustClass SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("CustClass", EventLog)
+
+                End If
+
+                If lb_Customer Then
+
+                    cmdText = "UPDATE Customer SET CardExpDate = CAST(CardExpDate AS date) WHERE CAST(CardExpDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Customer SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Customer SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Customer SET SetupDate = CAST(SetupDate AS date) WHERE CAST(SetupDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Customer SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Customer SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("Customer", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - Accounts Receivable", EventLog)
+            Call LogMessage("Error:  " + ex.Message, EventLog)
+
+
+        End Try
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+
+    End Sub
+
+    Public Sub UpdateDates_GL(EventLog As clsEventLog)
+
+        '**********************************************************************************************************
+        '*** Identify any General Ledger records with time values in date fields and log them to the event log.
+        '**********************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = ""
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_Account As Boolean = False
+        Dim lb_AcctHist As Boolean = False
+        Dim lb_Batch As Boolean = False
+        Dim lb_GLSetup As Boolean = False
+        Dim lb_GLTran As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+            ' Account - Check for time values in S4Future07, S4Future08, User7, User8 
+            sqlString = "SELECT TOP 1 * FROM Account WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_Account = True
+            Call sqlReader.Close()
+
+            ' AcctHist - Check for time values in BdgtRvsnDate, S4Future07, S4Future08, User7, User8 
+            sqlString = "SELECT TOP 1 * FROM AcctHist WHERE (CAST(BdgtRvsnDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_AcctHist = True
+            Call sqlReader.Close()
+
+            ' Batch - Check for time values in CuryEffDate, DateClr, DateEnt, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM Batch WHERE (CAST(CuryEffDate AS time) <> '00:00:00') OR (CAST(DateClr AS time) <> '00:00:00') OR (CAST(DateEnt AS time) <> '00:00:00') OR (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_Batch = True
+            Call sqlReader.Close()
+
+            ' GLSetup - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM GLSetup WHERE (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_GLSetup = True
+            Call sqlReader.Close()
+
+            ' GLTran - Check for time values in AppliedDate, CuryEffDate, S4Future07, S4Future08, ServiceDate, TranDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM GLTran WHERE (CAST(AppliedDate AS time) <> '00:00:00') OR (CAST(CuryEffDate AS time) <> '00:00:00') OR (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(ServiceDate AS time) <> '00:00:00') OR (CAST(TranDate AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_GLTran = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_Account Or lb_AcctHist Or lb_Batch Or lb_GLSetup Or lb_GLTran Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_Account Then
+
+                    cmdText = "UPDATE Account SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Account SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Account SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Account SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("Account", EventLog)
+
+                End If
+
+                If lb_AcctHist Then
+
+                    cmdText = "UPDATE AcctHist SET BdgtRvsnDate = CAST(BdgtRvsnDate AS date) WHERE CAST(BdgtRvsnDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AcctHist SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AcctHist SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AcctHist SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE AcctHist SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("AcctHist", EventLog)
+
+                End If
+
+
+                If lb_Batch Then
+
+                    cmdText = "UPDATE Batch SET CuryEffDate = CAST(CuryEffDate AS date) WHERE CAST(CuryEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Batch SET DateClr = CAST(DateClr AS date) WHERE CAST(DateClr AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Batch SET DateEnt = CAST(DateEnt AS date) WHERE CAST(DateEnt AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Batch SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Batch SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Batch SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Batch SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("Batch", EventLog)
+
+                End If
+
+                If lb_GLSetup Then
+
+                    cmdText = "UPDATE GLSetup SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLSetup SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLSetup SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLSetup SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("GLSetup", EventLog)
+
+                End If
+
+                If lb_GLTran Then
+
+                    cmdText = "UPDATE GLTran SET AppliedDate = CAST(AppliedDate AS date) WHERE CAST(AppliedDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLTran SET CuryEffDate = CAST(CuryEffDate AS date) WHERE CAST(CuryEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLTran SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLTran SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLTran SET ServiceDate = CAST(ServiceDate AS date) WHERE CAST(ServiceDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLTran SET TranDate = CAST(TranDate AS date) WHERE CAST(TranDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLTran SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE GLTran SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("GLTran", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - General Ledger" + vbNewLine, EventLog)
+            Call LogMessage("Error:  " + ex.Message + vbNewLine, EventLog)
+
+        End Try
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+    End Sub
+
+    Public Sub UpdateDates_IV(EventLog As clsEventLog)
+
+        '*************************************************************************************************
+        '*** Identify any Inventory records with time values in date fields and log them to the event log.
+        '*************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = ""
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_INSetup As Boolean = False
+        Dim lb_Inventory As Boolean = False
+        Dim lb_InventoryADG As Boolean = False
+        Dim lb_ItemCost As Boolean = False
+        Dim lb_ItemSite As Boolean = False
+        Dim lb_LotSerMst As Boolean = False
+        Dim lb_LotSerT As Boolean = False
+        Dim lb_Site As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+
+            ' INSetup - Check for time values in LastArchiveDate, LastCountDate, S4Future07, S4Future08, User7, User8 
+            sqlString = "SELECT TOP 1 * FROM INSetup WHERE (CAST(LastArchiveDate AS TIME) <> '00:00:00') OR (CAST(LastCountDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_INSetup = True
+            Call sqlReader.Close()
+
+            ' Inventory - Check for time values in IRFutureDate, LastCountDate, S4Future07, S4Future08, StdCostDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM Inventory WHERE (CAST(IRFutureDate AS TIME) <> '00:00:00') OR (CAST(LastCountDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(StdCostDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_Inventory = True
+            Call sqlReader.Close()
+
+            ' InventoryADG - Check for time values in S4Future07, S4Future08, User9, User10
+            sqlString = "SELECT TOP 1 * FROM InventoryADG WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User9 AS TIME) <> '00:00:00') OR (CAST(User10 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_InventoryADG = True
+            Call sqlReader.Close()
+
+            ' ItemCost - Check for time values in RcptDate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM ItemCost WHERE (CAST(RcptDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_ItemCost = True
+            Call sqlReader.Close()
+
+            ' ItemSite - Check for time values in IRFutureDate, LastCountDate, LastPurchaseDate, PStdCostDate, S4Future07, S4Future08, StdCostDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM ItemSite WHERE (CAST(IRFutureDate AS TIME) <> '00:00:00') OR (CAST(LastCountDate AS TIME) <> '00:00:00') OR (CAST(LastPurchaseDate AS TIME) <> '00:00:00') OR (CAST(PStdCostDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(StdCostDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_ItemSite = True
+            Call sqlReader.Close()
+
+            ' LotSerMst - Check for time values in ExpDate, LIFODate, RcptDate, S4Future07, S4Future08, StatusDate, User7, User8, WarrantyDate
+            sqlString = "SELECT TOP 1 * FROM LotSerMst WHERE (CAST(ExpDate AS TIME) <> '00:00:00') OR (CAST(LIFODate AS TIME) <> '00:00:00') OR (CAST(RcptDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(StatusDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00') OR (CAST(WarrantyDate AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_LotSerMst = True
+            Call sqlReader.Close()
+
+            ' LotSerT - Check for time values in ExpDate, S4Future07, S4Future08, TranDate, TranTime, User7, User8, WarrantyDate
+            sqlString = "SELECT TOP 1 * FROM LotSerT WHERE (CAST(ExpDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(TranDate AS TIME) <> '00:00:00') OR (CAST(TranTime AS TIME) <> '00:00:00') OR	(CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00') OR (CAST(WarrantyDate AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_LotSerT = True
+            Call sqlReader.Close()
+
+            ' Site - Check for time values in IRFutureDate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM Site WHERE (CAST(IRFutureDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_Site = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_INSetup Or lb_Inventory Or lb_InventoryADG Or lb_ItemCost Or lb_ItemSite Or lb_LotSerMst Or lb_LotSerT Or lb_Site Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_INSetup Then
+
+                    cmdText = "UPDATE INSetup SET LastArchiveDate = CAST(LastArchiveDate AS date) WHERE CAST(LastArchiveDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE INSetup SET LastCountDate = CAST(LastCountDate AS date) WHERE CAST(LastCountDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE INSetup SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE INSetup SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE INSetup SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE INSetup SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("INSetup", EventLog)
+
+                End If
+
+                If lb_Inventory Then
+
+                    cmdText = "UPDATE Inventory SET IRFutureDate = CAST(IRFutureDate AS date) WHERE CAST(IRFutureDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Inventory SET LastCountDate = CAST(LastCountDate AS date) WHERE CAST(LastCountDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Inventory SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Inventory SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Inventory SET StdCostDate = CAST(StdCostDate AS date) WHERE CAST(StdCostDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Inventory SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Inventory SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("Inventory", EventLog)
+
+                End If
+
+                If lb_InventoryADG Then
+
+                    cmdText = "UPDATE InventoryADG SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE InventoryADG SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE InventoryADG SET User9 = CAST(User9 AS date) WHERE CAST(User9 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE InventoryADG SET User10 = CAST(User10 AS date) WHERE CAST(User10 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("InventoryADG", EventLog)
+
+                End If
+
+                If lb_ItemCost Then
+
+                    cmdText = "UPDATE ItemCost SET RcptDate = CAST(RcptDate AS date) WHERE CAST(RcptDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemCost SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemCost SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemCost SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemCost SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("ItemCost", EventLog)
+
+                End If
+
+                If lb_ItemSite Then
+
+                    cmdText = "UPDATE ItemSite SET IRFutureDate = CAST(IRFutureDate AS date) WHERE CAST(IRFutureDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET LastCountDate = CAST(LastCountDate AS date) WHERE CAST(LastCountDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET LastPurchaseDate = CAST(LastPurchaseDate AS date) WHERE CAST(LastPurchaseDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET PStdCostDate = CAST(PStdCostDate AS date) WHERE CAST(PStdCostDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET StdCostDate = CAST(StdCostDate AS date) WHERE CAST(StdCostDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE ItemSite SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("ItemSite", EventLog)
+
+                End If
+
+                If lb_LotSerMst Then
+
+                    cmdText = "UPDATE LotSerMst SET ExpDate = CAST(ExpDate AS date) WHERE CAST(ExpDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerMst SET LIFODate = CAST(LIFODate AS date) WHERE CAST(LIFODate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerMst SET RcptDate = CAST(RcptDate AS date) WHERE CAST(RcptDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotserMst SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerMst SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerMst SET StatusDate = CAST(StatusDate AS date) WHERE CAST(StatusDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerMst SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerMst SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerMst SET WarrantyDate = CAST(WarrantyDate AS date) WHERE CAST(WarrantyDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("LotSerMst", EventLog)
+
+                End If
+
+                If lb_LotSerT Then
+
+                    cmdText = "UPDATE LotSerT SET ExpDate = CAST(ExpDate AS date) WHERE CAST(ExpDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerT SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerT SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerT SET TranDate = CAST(TranDate AS date) WHERE CAST(TranDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerT SET TranTime = CAST(TranTime AS date) WHERE CAST(TranTime AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerT SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerT SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE LotSerT SET WarrantyDate = CAST(WarrantyDate AS date) WHERE CAST(WarrantyDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("LotSerT", EventLog)
+
+                End If
+
+                If lb_Site Then
+
+                    cmdText = "UPDATE Site SET IRFutureDate = CAST(IRFutureDate AS date) WHERE CAST(IRFutureDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Site SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Site SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Site SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Site SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("Site", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - Inventory" + vbNewLine, EventLog)
+            Call LogMessage("Error:  " + ex.Message + vbNewLine, EventLog)
+
+        End Try
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+    End Sub
+
+    Public Sub UpdateDates_OM(EventLog As clsEventLog)
+
+        '**********************************************************************************************************
+        '*** Identify any Order Management records with time values in date fields and log them to the event log.
+        '**********************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = ""
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_SOHeader As Boolean = False
+        Dim lb_SOLine As Boolean = False
+        Dim lb_SOShipLine As Boolean = False
+        Dim lb_SOShipLot As Boolean = False
+        Dim lb_SOType As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+
+            ' SOHeader - Check for time values in BuildAvailDate, CancelDate, CreditHoldDate, CuryEffDate, DateCancelled, InvcDate, OrdDate, QuoteDate, S4Future07, S4Future08, User9, User10
+            sqlString = "SELECT TOP 1 * FROM SOHeader WHERE (CAST(BuildAvailDate AS TIME) <> '00:00:00') OR (CAST(CancelDate AS TIME) <> '00:00:00') OR (CAST(CreditHoldDate AS TIME) <> '00:00:00') OR (CAST(CuryEffDate AS TIME) <> '00:00:00') OR (CAST(DateCancelled AS TIME) <> '00:00:00') OR (CAST(InvcDate AS TIME) <> '00:00:00') OR (CAST(OrdDate AS TIME) <> '00:00:00') OR (CAST(QuoteDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User9 AS TIME) <> '00:00:00') OR (CAST(User10 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_SOHeader = True
+            Call sqlReader.Close()
+
+            ' SOLine - Check for time values in BMIEffDate, CancelDate, PromDate, ReqDate, S4Future07, S4Future08, User9, User10
+            sqlString = "SELECT TOP 1 * FROM SOLine WHERE (CAST(BMIEffDate AS TIME) <> '00:00:00') OR (CAST(CancelDate AS TIME) <> '00:00:00') OR (CAST(PromDate AS TIME) <> '00:00:00') OR (CAST(ReqDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User9 AS TIME) <> '00:00:00') OR (CAST(User10 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_SOLine = True
+            Call sqlReader.Close()
+
+            ' SOShipLine - Check for time values in BMIEffDate, S4Future07, S4Future08, User9, User10
+            sqlString = "SELECT TOP 1 * FROM SOShipLine WHERE (CAST(BMIEffDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR	(CAST(User9 AS TIME) <> '00:00:00') OR (CAST(User10 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_SOShipLine = True
+            Call sqlReader.Close()
+
+            ' SOShipLot - Check for time values in S4Future07, S4Future08, User9, User10
+            sqlString = "SELECT TOP 1 * FROM SOShipLot WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User9 AS TIME) <> '00:00:00') OR (CAST(User10 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_SOShipLot = True
+            Call sqlReader.Close()
+
+            ' SOType - Check for time values in S4Future07, S4Future08, User9, User10
+            sqlString = "SELECT TOP 1 * FROM SOType WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User9 AS TIME) <> '00:00:00') OR (CAST(User10 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_SOType = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_SOHeader Or lb_SOLine Or lb_SOShipLine Or lb_SOShipLot Or lb_SOType Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_SOHeader Then
+
+                    cmdText = "UPDATE SOHeader SET BuildAvailDate = CAST(BuildAvailDate AS date) WHERE CAST(BuildAvailDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET CancelDate = CAST(CancelDate AS date) WHERE CAST(CancelDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET CreditHoldDate = CAST(CreditHoldDate AS date) WHERE CAST(CreditHoldDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET CuryEffDate = CAST(CuryEffDate AS date) WHERE CAST(CuryEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET DateCancelled = CAST(DateCancelled AS date) WHERE CAST(DateCancelled AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET InvcDate = CAST(InvcDate AS date) WHERE CAST(InvcDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET OrdDate = CAST(OrdDate AS date) WHERE CAST(OrdDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET QuoteDate = CAST(QuoteDate AS date) WHERE CAST(QuoteDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET User9 = CAST(User9 AS date) WHERE CAST(User9 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOHeader SET User10 = CAST(User10 AS date) WHERE CAST(User10 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("SOHeader", EventLog)
+
+                End If
+
+                If lb_SOLine Then
+
+                    cmdText = "UPDATE SOLine SET BMIEffDate = CAST(BMIEffDate AS date) WHERE CAST(BMIEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOLine SET CancelDate = CAST(CancelDate AS date) WHERE CAST(CancelDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOLine SET PromDate = CAST(PromDate AS date) WHERE CAST(PromDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOLine SET ReqDate = CAST(ReqDate AS date) WHERE CAST(ReqDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOLine SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOLine SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOLine SET User9 = CAST(User9 AS date) WHERE CAST(User9 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOLine SET User10 = CAST(User10 AS date) WHERE CAST(User10 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("SOLine", EventLog)
+
+                End If
+
+                If lb_SOShipLine Then
+
+                    cmdText = "UPDATE SOShipLine SET BMIEffDate = CAST(BMIEffDate AS date) WHERE CAST(BMIEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOShipLine SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOShipLine SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOShipLine SET User9 = CAST(User9 AS date) WHERE CAST(User9 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOShipLine SET User10 = CAST(User10 AS date) WHERE CAST(User10 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("SOShipLine", EventLog)
+
+                End If
+
+                If lb_SOShipLot Then
+
+                    cmdText = "UPDATE SOShipLot SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOShipLot SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOShipLot SET User9 = CAST(User9 AS date) WHERE CAST(User9 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOShipLot SET User10 = CAST(User10 AS date) WHERE CAST(User10 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("SOShipLot", EventLog)
+
+                End If
+
+                If lb_SOType Then
+
+                    cmdText = "UPDATE SOType SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOType SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOType SET User9 = CAST(User9 AS date) WHERE CAST(User9 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SOType SET User10 = CAST(User10 AS date) WHERE CAST(User10 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("SOType", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - Order Management" + vbNewLine, EventLog)
+            Call LogMessage("Error:  " + ex.Message + vbNewLine, EventLog)
+
+        End Try
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+    End Sub
+
+    Public Sub UpdateDates_PA(EventLog As clsEventLog)
+
+        '************************************************************************************************************
+        '*** Identify any Project Controller records with time values in date fields and log them to the event log.
+        '************************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = ""
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_PJADDR As Boolean = False
+        Dim lb_PJEMPLOY As Boolean = False
+        Dim lb_PJEMPJT As Boolean = False
+        Dim lb_PJEQRATE As Boolean = False
+        Dim lb_PJEQUIP As Boolean = False
+        Dim lb_PJPENT As Boolean = False
+        Dim lb_PJPROJ As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+
+            ' PJADDR - Check for time values in ad_id08
+            sqlString = "SELECT TOP 1 * FROM PJADDR WHERE (CAST(ad_id08 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PJADDR = True
+            Call sqlReader.Close()
+
+            ' PJEMPLOY - Check for time values in date_hired, date_terminated, em_id08, em_id09, em_id19, S4Future07, S4Future08, VacaLUpd
+            sqlString = "SELECT TOP 1 * FROM PJEMPLOY WHERE (CAST(date_hired AS TIME) <> '00:00:00') OR (CAST(date_terminated AS TIME) <> '00:00:00') OR (CAST(em_id08 AS TIME) <> '00:00:00') OR (CAST(em_id09 AS TIME) <> '00:00:00') OR (CAST(em_id19 AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(VacaLUpd AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PJEMPLOY = True
+            Call sqlReader.Close()
+
+            'PJEMPPJT - Check for time values in ep_id08, ep_id09, effect_date
+            sqlString = "SELECT TOP 1 * FROM PJEMPPJT	WHERE (CAST(ep_id08 AS TIME) <> '00:00:00') OR (CAST(ep_id09 AS TIME) <> '00:00:00') OR	(CAST(effect_date AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PJEMPJT = True
+            Call sqlReader.Close()
+
+            ' PJEQRATE - Check for time values in ec_id08, ec_id09, ec_id18, ec_id19, effect_date
+            sqlString = "SELECT TOP 1 * FROM PJEQRATE WHERE (CAST(ec_id08 AS TIME) <> '00:00:00') OR (CAST(ec_id09 AS TIME) <> '00:00:00') OR (CAST(ec_id18 AS TIME) <> '00:00:00') OR (CAST(ec_id19 AS TIME) <> '00:00:00') OR (CAST(effect_date AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PJEQRATE = True
+            Call sqlReader.Close()
+
+            ' PJEQUIP - Check for time values in eq_id08, eq_id09, er_id08, er_id09
+            sqlString = "SELECT TOP 1 * FROM PJEQUIP WHERE (CAST(eq_id08 AS TIME) <> '00:00:00') OR (CAST(eq_id09 AS TIME) <> '00:00:00') OR (CAST(er_id08 AS TIME) <> '00:00:00') OR 	(CAST(er_id09 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PJEQUIP = True
+            Call sqlReader.Close()
+
+            ' PJPENT - Check for time values in end_date, pe_id08, pe_id09, pe_id39, start_date
+            sqlString = "SELECT TOP 1 * FROM PJPENT WHERE (CAST(end_date AS TIME) <> '00:00:00') OR (CAST(pe_id08 AS TIME) <> '00:00:00') OR (CAST(pe_id09 AS TIME) <> '00:00:00') OR (CAST(pe_id39 AS TIME) <> '00:00:00') OR (CAST(start_date  AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PJPENT = True
+            Call sqlReader.Close()
+
+            ' PJPROJ - Check for time values in end_date, pm_id08, pm_id09, pm_id39, ProjCuryBudEffDate, S4Future07, S4Future08, start_date
+            sqlString = "SELECT TOP 1 * FROM PJPROJ WHERE (CAST(end_date AS TIME) <> '00:00:00') OR (CAST(pm_id08 AS TIME) <> '00:00:00') OR (CAST(pm_id09 AS TIME) <> '00:00:00') OR (CAST(pm_id39 AS TIME) <> '00:00:00') OR (CAST(ProjCuryBudEffDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST([start_date] AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PJPROJ = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_PJADDR Or lb_PJEMPJT Or lb_PJEMPLOY Or lb_PJEQRATE Or lb_PJEQUIP Or lb_PJPENT Or lb_PJPROJ Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_PJADDR Then
+
+                    cmdText = "UPDATE PJADDR SET ad_id08 = CAST(ad_id08 AS date) WHERE CAST(ad_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PJADDR", EventLog)
+
+                End If
+
+                If lb_PJEMPLOY Then
+                    cmdText = "UPDATE PJEMPLOY SET date_hired = CAST(date_hired AS date) WHERE CAST(date_hired AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPLOY SET date_terminated = CAST(date_terminated AS date) WHERE CAST(date_terminated AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPLOY SET em_id08 = CAST(em_id08 AS date) WHERE CAST(em_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPLOY SET em_id09 = CAST(em_id09 AS date) WHERE CAST(em_id09 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPLOY SET em_id19 = CAST(em_id19 AS date) WHERE CAST(em_id19 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPLOY SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPLOY SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PJEMPLOY", EventLog)
+
+                End If
+
+                If lb_PJEMPJT Then
+
+                    cmdText = "UPDATE PJEMPPJT SET ep_id08 = CAST(ep_id08 AS date) WHERE CAST(ep_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPPJT SET ep_id09 = CAST(ep_id09 AS date) WHERE CAST(ep_id09 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEMPPJT SET effect_date = CAST(effect_date AS date) WHERE CAST(effect_date AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PJEMPPJT", EventLog)
+
+                End If
+
+                If lb_PJEQRATE Then
+
+                    cmdText = "UPDATE PJEQRATE SET ec_id08 = CAST(ec_id08 AS date) WHERE CAST(ec_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEQRATE SET ec_id09 = CAST(ec_id09 AS date) WHERE CAST(ec_id09 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEQRATE SET ec_id18 = CAST(ec_id18 AS date) WHERE CAST(ec_id18 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEQRATE SET ec_id19 = CAST(ec_id19 AS date) WHERE CAST(ec_id19 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEQRATE SET effect_date = CAST(effect_date AS date) WHERE CAST(effect_date AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PJEQRATE", EventLog)
+
+                End If
+
+                If lb_PJEQUIP Then
+
+                    cmdText = "UPDATE PJEQUIP SET eq_id08 = CAST(eq_id08 AS date) WHERE CAST(eq_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEQUIP SET eq_id09 = CAST(eq_id09 AS date) WHERE CAST(eq_id09 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEQUIP SET er_id08 = CAST(er_id08 AS date) WHERE CAST(er_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJEQUIP SET er_id09 = CAST(er_id09 AS date) WHERE CAST(er_id09 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PJEQUIP", EventLog)
+
+                End If
+
+                If lb_PJPENT Then
+
+                    cmdText = "UPDATE PJPENT SET end_date = CAST(end_date AS date) WHERE CAST(end_date AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPENT SET pe_id08 = CAST(pe_id08 AS date) WHERE CAST(pe_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPENT SET pe_id09 = CAST(pe_id09 AS date) WHERE CAST(pe_id09 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPENT SET pe_id39 = CAST(pe_id39 AS date) WHERE CAST(pe_id39 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPENT SET start_date = CAST(start_date AS date) WHERE CAST(start_date AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PJPENT", EventLog)
+
+                End If
+
+                If lb_PJPROJ Then
+
+                    cmdText = "UPDATE PJPROJ SET end_date = CAST(end_date AS date) WHERE CAST(end_date AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPROJ SET pm_id08 = CAST(pm_id08 AS date) WHERE CAST(pm_id08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPROJ SET pm_id09 = CAST(pm_id09 AS date) WHERE CAST(pm_id09 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPROJ SET pm_id39 = CAST(pm_id39 AS date) WHERE CAST(pm_id39 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPROJ SET ProjCuryBudEffDate = CAST(ProjCuryBudEffDate AS date) WHERE CAST(ProjCuryBudEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPROJ SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPROJ SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PJPROJ SET start_date = CAST(start_date AS date) WHERE CAST(start_date AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PJPROJ", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - Project Controller" + vbNewLine, EventLog)
+            Call LogMessage("Error:  " + ex.Message + vbNewLine, EventLog)
+
+        End Try
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+    End Sub
+
+    Public Sub UpdateDates_PO(EventLog As clsEventLog)
+
+        '**********************************************************************************************************
+        '*** Identify any Purchasing records with time values in date fields and log them to the event log.
+        '**********************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = ""
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_POReceipt As Boolean = False
+        Dim lb_POSetup As Boolean = False
+        Dim lb_POTran As Boolean = False
+        Dim lb_PurchOrd As Boolean = False
+        Dim lb_PurOrdDet As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+
+            ' POReceipt - Check for time values in CuryEffDate, RcptDate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM POReceipt WHERE (CAST(CuryEffDate AS TIME) <> '00:00:00') OR (CAST(RcptDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_POReceipt = True
+            Call sqlReader.Close()
+
+            ' POSetup - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM POSetup WHERE (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_POSetup = True
+            Call sqlReader.Close()
+
+            ' POTran - Check for time values in BMIEffDate, OrigRcptDate, RcptDate, S4Future07, S4Future08, TranDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM POTran WHERE (CAST(BMIEffDate AS TIME) <> '00:00:00') OR (CAST(OrigRcptDate AS TIME) <> '00:00:00') OR (CAST(RcptDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(TranDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_POTran = True
+            Call sqlReader.Close()
+
+            ' PurchOrd - Check for time values in AckDateTime, BlktExprDate, CuryEffDate, LastRcptDate, PODate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM PurchOrd WHERE (CAST(AckDateTime AS TIME) <> '00:00:00') OR (CAST(BlktExprDate AS TIME) <> '00:00:00') OR (CAST(CuryEffDate AS TIME) <> '00:00:00') OR (CAST(LastRcptDate AS TIME) <> '00:00:00') OR (CAST(PODate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PurchOrd = True
+            Call sqlReader.Close()
+
+            ' PurOrdDet - Check for time values in PromDate, ReqdDate, S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM PurOrdDet WHERE (CAST(PromDate AS TIME) <> '00:00:00') OR (CAST(ReqdDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_PurOrdDet = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_POReceipt Or lb_POSetup Or lb_POTran Or lb_PurchOrd Or lb_PurOrdDet Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_POReceipt Then
+
+                    cmdText = "UPDATE POReceipt SET CuryEffDate = CAST(CuryEffDate AS date) WHERE CAST(CuryEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POReceipt SET RcptDate = CAST(RcptDate AS date) WHERE CAST(RcptDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POReceipt SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POReceipt SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POReceipt SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POReceipt SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("POReceipt", EventLog)
+
+                End If
+
+                If lb_POSetup Then
+
+                    cmdText = "UPDATE POSetup SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POSetup SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POSetup SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POSetup SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("POSetup", EventLog)
+
+                End If
+
+                If lb_POTran Then
+
+                    cmdText = "UPDATE POTran SET BMIEffDate = CAST(BMIEffDate AS date) WHERE CAST(BMIEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POTran SET OrigRcptDate = CAST(OrigRcptDate AS date) WHERE CAST(OrigRcptDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POTran SET RcptDate = CAST(RcptDate AS date) WHERE CAST(RcptDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POTran SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POTran SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POTran SET TranDate = CAST(TranDate AS date) WHERE CAST(TranDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POTran SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE POTran SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("POTran", EventLog)
+
+                End If
+
+                If lb_PurchOrd Then
+
+                    cmdText = "UPDATE PurchOrd SET AckDateTime = CAST(AckDateTime AS date) WHERE CAST(AckDateTime AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET BlktExprDate = CAST(BlktExprDate AS date) WHERE CAST(BlktExprDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET CuryEffDate = CAST(CuryEffDate AS date) WHERE CAST(CuryEffDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET LastRcptDate = CAST(LastRcptDate AS date) WHERE CAST(LastRcptDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET PODate = CAST(PODate AS date) WHERE CAST(PODate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurchOrd SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PurchOrd", EventLog)
+
+                End If
+
+                If lb_PurOrdDet Then
+
+                    cmdText = "UPDATE PurOrdDet SET PromDate = CAST(PromDate AS date) WHERE CAST(PromDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurOrdDet SET ReqdDate = CAST(ReqdDate AS date) WHERE CAST(ReqdDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurOrdDet SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurOrdDet SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurOrdDet SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE PurOrdDet SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("PurOrdDet", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - Purchasing" + vbNewLine, EventLog)
+            Call LogMessage("Error:  " + ex.Message + vbNewLine, EventLog)
+
+        End Try
+
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+    End Sub
+
+    Public Sub UpdateDates_SI(EventLog As clsEventLog)
+
+        '************************************************************************************************************
+        '*** Identify any Shared Information records with time values in date fields and log them to the event log.
+        '************************************************************************************************************
+
+        Dim SqlTranConn As SqlConnection = Nothing
+        Dim cmdText As String = ""
+        Dim Operation As OperationType
+        Dim sqlUpdate As SqlDataReader = Nothing
+        Dim sqlString As String = String.Empty
+        Dim msgText As String = String.Empty
+
+        Dim sqlReader As SqlDataReader = Nothing
+
+        Dim lb_SalesTax As Boolean = False
+        Dim lb_Terms As Boolean = False
+
+        Dim updTran As SqlTransaction = Nothing
+
+        Try
+
+            ' SalesTax - Check for time values in NewRateDate, S4Future07, S4Future08, TaxRvsdDate, User7, User8
+            sqlString = "SELECT TOP 1 * FROM SalesTax WHERE (CAST(NewRateDate AS TIME) <> '00:00:00') OR (CAST(S4Future07 AS TIME) <> '00:00:00') OR (CAST(S4Future08 AS TIME) <> '00:00:00') OR (CAST(TaxRvsdDate AS TIME) <> '00:00:00') OR (CAST(User7 AS TIME) <> '00:00:00') OR (CAST(User8 AS TIME) <> '00:00:00')"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_SalesTax = True
+            Call sqlReader.Close()
+
+            ' Terms - Check for time values in S4Future07, S4Future08, User7, User8
+            sqlString = "SELECT TOP 1 * FROM Terms WHERE (CAST(S4Future07 AS time) <> '00:00:00') OR (CAST(S4Future08 AS time) <> '00:00:00') OR (CAST(User7 AS time) <> '00:00:00') OR (CAST(User8 AS time) <> '00:00:00');"
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then lb_Terms = True
+            Call sqlReader.Close()
+
+            ' If any tables are found, then open a new connection for updating.
+            If lb_SalesTax Or lb_Terms Then
+
+                ' Set operation and write to event log
+                Operation = OperationType.UpdateOp
+                Call LogMessage("", EventLog)
+                Call LogMessage(DateField_LogMess_Line1, EventLog)
+                Call LogMessage(DateField_LogMess_Line2, EventLog)
+
+                ' Open a new connection for the update transaction
+                SqlTranConn = New SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
+
+                updTran = TranBeg(SqlTranConn)
+
+                If lb_SalesTax Then
+
+                    cmdText = "UPDATE SalesTax SET NewRateDate = CAST(NewRateDate AS date) WHERE CAST(NewRateDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SalesTax SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SalesTax SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SalesTax SET TaxRvsdDate = CAST(TaxRvsdDate AS date) WHERE CAST(TaxRvsdDate AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SalesTax SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE SalesTax SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("SalesTax", EventLog)
+
+                End If
+
+                If lb_Terms Then
+
+                    cmdText = "UPDATE Terms SET S4Future07 = CAST(S4Future07 AS date) WHERE CAST(S4Future07 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Terms SET S4Future08 = CAST(S4Future08 AS date) WHERE CAST(S4Future08 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Terms SET User7 = CAST(User7 AS date) WHERE CAST(User7 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+                    cmdText = "UPDATE Terms SET User8 = CAST(User8 AS date) WHERE CAST(User8 AS time) <> '00:00:00'"
+                    Call sql_1(sqlUpdate, cmdText, SqlTranConn, Operation, CommandType.Text, updTran)
+
+                    'Write to event log
+                    Call LogMessage("Terms", EventLog)
+
+                End If
+
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
+
+            End If
+
+        Catch ex As Exception
+
+            Call LogMessage("Error in removing time values in date fields - Shared Information" + vbNewLine, EventLog)
+            Call LogMessage("Error:  " + ex.Message + vbNewLine, EventLog)
+
+        End Try
+
+        ' Close the connection if it is open.
+        If (SqlTranConn IsNot Nothing) Then
+            If (SqlTranConn.State = ConnectionState.Open) Then
+                SqlTranConn.Close()
+                SqlTranConn = Nothing
+            End If
+        End If
+
+        ' Close the readers if they are open.
+        sqlReader.Close()
+
+    End Sub
+
 
     '****************************
     '***** Public Functions *****

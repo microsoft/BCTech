@@ -293,7 +293,24 @@ Module SalesOrder
         End While
         Call SqlReader.Close()
 
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
 
+        Try
+            Call UpdateDates_OM(oEventLog)
+
+        Catch ex As Exception
+            Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("Error in removing time values in date fields - Order Management", oEventLog)
+            Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+            Call LogMessage("", oEventLog)
+            OkToContinue = False
+            NbrOfErrors_SO = NbrOfErrors_SO + 1
+            'Exit Sub
+        End Try
 
         Call oEventLog.LogMessage(EndProcess, "Validate Sales Order")
 

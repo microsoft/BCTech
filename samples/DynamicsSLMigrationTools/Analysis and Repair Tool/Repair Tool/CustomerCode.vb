@@ -383,6 +383,27 @@ Module CustomerCode
 
         End If
 
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
+        If OkToContinue = True Then
+
+            Try
+                Call UpdateDates_AR(oEventLog)
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error in removing time values in date fields - Accounts Receivable", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                Exit Sub
+            End Try
+
+        End If
         '  Detect AR_Balance records with blank key fields - keys are VendId, CpnyId
         If OkToContinue = True Then
             sqlStmt = "SELECT COUNT(*) FROM AR_Balances WHERE RTRIM(CpnyId) = '' or RTRIM(CustId) = ''"

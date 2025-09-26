@@ -134,6 +134,24 @@ Module ProjectCode
         End While
         Call sqlReader.Close()
 
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
+
+        Try
+            Call UpdateDates_PA(oEventLog)
+
+        Catch ex As Exception
+            Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("Error in removing time values in date fields - Project Controller", oEventLog)
+            Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+            Call LogMessage("", oEventLog)
+            OkToContinue = False
+            NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
+        End Try
+
         Call oEventLog.LogMessage(EndProcess, "Validate Project")
 
 

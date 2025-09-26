@@ -653,6 +653,51 @@ Module AccountCode
             '   End If
         End If
 
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
+        If OkToContinue = True Then
+
+            Try
+                sqlReader.Close()
+                Call UpdateDates_GL(oEventLog)
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error in removing time values in date fields - General Ledger", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+                'Exit Sub
+            End Try
+
+        End If
+
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
+        If OkToContinue = True Then
+
+            Try
+                sqlReader.Close()
+                Call UpdateDates_SI(oEventLog)
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error in removing time values in date fields - Shared Information", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+                ' Exit Sub
+            End Try
+
+        End If
 
         '*********************************************************************************************
         '*** Identify GLTran records with Fiscal Year different from period to post year
