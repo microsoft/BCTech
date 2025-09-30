@@ -245,6 +245,24 @@ Module PurchasingCode
         End While
         sqlReader.Close()
 
+        '*******************************************
+        '*** Remove time values from date fields ***
+        '*******************************************
+
+        Try
+            Call UpdateDates_PO(oEventLog)
+
+        Catch ex As Exception
+            Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("Error in removing time values in date fields - Purchasing", oEventLog)
+            Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+            Call LogMessage("", oEventLog)
+            OkToContinue = False
+            NbrOfWarnings_PO = NbrOfWarnings_PO + 1
+        End Try
+
         Call oEventLog.LogMessage(EndProcess, "Validate Purchasing")
 
         Call MessageBox.Show("Purchasing Validation Complete", "Purchasing Validation")
