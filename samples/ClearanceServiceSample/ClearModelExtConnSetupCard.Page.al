@@ -2,12 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
-namespace Microsoft.EServices.EDocumentConnector;
+namespace BCTech.EServices.EDocumentConnector;
 
 using System.Environment;
 using System.Utilities;
 
-page 9601 "ClearModelExtConnSetupCard"
+page 50105 "ClearModelExtConnSetupCard"
 {
     PageType = Card;
     SourceTable = "ClearModelExtConnectionSetup";

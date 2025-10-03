@@ -2,11 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
-namespace Microsoft.EServices.EDocumentConnector;
+namespace BCTech.EServices.EDocumentConnector;
 
 using Microsoft.eServices.EDocument;
 
-table 9601 "ClearModelExtConnectionSetup"
+table 50104 "ClearModelExtConnectionSetup"
 {
     fields
     {

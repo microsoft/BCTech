@@ -1,10 +1,10 @@
 {
   "id": "ee41c05d-0d9f-49e2-a8b4-581c07e40d87",
-  "name": "E-Document Connector - Clearance Example",
-  "publisher": "Microsoft",
-  "version": "$(app_currentVersion)",
-  "brief": "E-Document Connector - Clearance Example",
-  "description": "E-Document Connector - Clearance Example",
+  "name": "Clearance Service",
+  "publisher": "BCTech",
+  "version": "27.0.0.2",
+  "brief": "Clearance Service",
+  "description": "Clearance Service",
   "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
   "EULA": "https://go.microsoft.com/fwlink/?linkid=2009120",
   "help": " https://learn.microsoft.com/en-us/dynamics365/business-central/finance-edocuments-overview",
@@ -12,20 +12,20 @@
   "logo": "ExtensionLogo.png",
   "contextSensitiveHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2206603", 
   "screenshots": [],
-  "platform": "$(app_platformVersion)",
-  "application": "$(app_minimumVersion)",
+  "platform": "27.0.0.0",
+  "application": "27.0.0.0",
   "dependencies": [
     {
       "id": "e1d97edc-c239-46b4-8d84-6368bdf67c8b",
       "name": "E-Document Core",
       "publisher": "Microsoft",
-      "version": "$(app_minimumVersion)"
+      "version": "27.0.0.0"
     }
   ],
   "idRanges": [
     {
-      "from": 9600,
-      "to": 9670
+      "from": 50000,
+      "to": 51000
     }
   ],
   "resourceExposurePolicy": {
