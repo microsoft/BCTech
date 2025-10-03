@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
-namespace Microsoft.EServices.EDocumentConnector;
+namespace BCTech.EServices.EDocumentConnector;
 
 using Microsoft.eServices.EDocument;
 using Microsoft.Sales.History;
@@ -12,11 +12,18 @@ using Microsoft.Foundation.Company;
 using System.Utilities;
 using System.Text;
 
-codeunit 9600 "Clearance Service Processing"
+codeunit 50103 "Clearance Service Processing"
 {
     Access = Internal;
+    Permissions = tabledata "Sales Invoice Header" = rimd,
+    tabledata ClearModelExtConnectionSetup = rimd;
+    local procedure InitRequest(var ExternalConnectionSetup: Record ClearModelExtConnectionSetup;
 
-    local procedure InitRequest(var ExternalConnectionSetup: Record ClearModelExtConnectionSetup; var HttpRequestMessage: HttpRequestMessage; var HttpResponseMessage: HttpResponseMessage)
+    var
+        HttpRequestMessage: HttpRequestMessage;
+
+    var
+        HttpResponseMessage: HttpResponseMessage)
     begin
         Clear(HttpRequestMessage);
         Clear(HttpResponseMessage);
