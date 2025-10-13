@@ -33,5 +33,6 @@ public class GpCompanyPurchasingTaskGroup : IMultiCompanyDiagnosticTaskGroup
         this.Tasks.Add(new GpVendorInvalidEmailTask(database));
         this.Tasks.Add(new GpVendorMissingMasterRecordTask(database));
         this.Tasks.Add(new GpOpenPosInactiveItemsTask(database));
+        this.Tasks.Add(new GpVendorNumberSpacePrefixTask(database));
     }
 }

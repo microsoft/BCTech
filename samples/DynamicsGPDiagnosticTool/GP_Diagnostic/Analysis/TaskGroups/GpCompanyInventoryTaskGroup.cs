@@ -31,5 +31,6 @@ public class GpCompanyInventoryTaskGroup : IMultiCompanyDiagnosticTaskGroup
         this.Tasks.Add(new GpItemMissingMasterRecordTask(database));
         this.Tasks.Add(new GpItemNumberLengthTask(database));
         this.Tasks.Add(new GpDuplicateItemIdsTask(database));
+        this.Tasks.Add(new GpItemNumberSpacePrefixTask(database));
     }
 }

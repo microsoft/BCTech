@@ -39,5 +39,6 @@ public class GpCompanyFinanceTaskGroup : IMultiCompanyDiagnosticTaskGroup
         this.Tasks.Add(new GpUnbalancedJournalEntriesTask(database, "GL10001")); // Work
         this.Tasks.Add(new GpUnbalancedJournalEntriesTask(database, "GL20000")); // Open
         this.Tasks.Add(new GpUnbalancedJournalEntriesTask(database, "GL30000")); // History
+        this.Tasks.Add(new GpCheckbookNumberSpacePrefixTask(database));
     }
 }

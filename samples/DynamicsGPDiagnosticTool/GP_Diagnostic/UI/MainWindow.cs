@@ -6,7 +6,10 @@ using Microsoft.GP.MigrationDiagnostic.TaskProcessing;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Windows.Forms;
@@ -362,5 +365,41 @@ public partial class MainWindow : Form
     {
         var aboutBox = new AboutBox();
         aboutBox.Show(this);
+    }
+
+    private void exportTasksToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var exportBuilder = new StringBuilder();
+        exportBuilder.AppendLine("************************************************************");
+        exportBuilder.AppendLine("****** GP Migration Diagnostic Tool Issue Check Export *****");
+        exportBuilder.AppendLine("************************************************************");
+
+        foreach (var group in engine.TaskGroups)
+        {
+            exportBuilder.AppendLine($"\r\n***** {group.Name} *****\r\n");
+            foreach (var task in group.Tasks.OrderBy(t => t.Description))
+            {
+                exportBuilder.AppendLine($" - {task.Description}");
+            }
+        }
+
+        var sfd = new SaveFileDialog();
+        sfd.FileName = "GP Diagnostic All Tasks";
+        sfd.DefaultExt = "txt";
+        sfd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+        sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        if (sfd.ShowDialog() == DialogResult.OK)
+        {
+            File.WriteAllText(sfd.FileName, exportBuilder.ToString());
+
+            // Open exported file with default application
+            new Process
+            {
+                StartInfo = new ProcessStartInfo(sfd.FileName)
+                {
+                    UseShellExecute = true
+                }
+            }.Start();
+        }
     }
 }

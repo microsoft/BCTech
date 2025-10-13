@@ -14,6 +14,8 @@ public class GpEngineJsonConverter : JsonConverter<GpEngine>
         {
             writer.WriteStartObject();
 
+            writer.WriteString(GetPropertyName(nameof(value.Name), options), value.Name);
+
             writer.WriteStartArray(GetPropertyName(nameof(value.TaskGroups), options));
 
             foreach (var item in value.TaskGroups)

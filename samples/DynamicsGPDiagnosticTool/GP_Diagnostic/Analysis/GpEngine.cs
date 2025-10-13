@@ -33,6 +33,8 @@ public class GpEngine
     {
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
+        this.Name = "GPEngine";
+
         this.companyDatabaseFactory = gpCompanyDatabaseFactory ?? throw new ArgumentNullException(nameof(gpCompanyDatabaseFactory));
         this.systemDatabase = systemDatabase ?? throw new ArgumentNullException(nameof(systemDatabase));
         this.managementReporterDatabase = managementReporterDatabase ?? throw new ArgumentNullException(nameof(managementReporterDatabase));
@@ -46,6 +48,11 @@ public class GpEngine
     /// Gets whether the engine is configured and ready to execute.
     /// </summary>
     public bool IsConfigured => this.gpConfig.CurrentValue.IsValidConfig;
+
+    /// <summary>
+    /// The name of the task engine.
+    /// </summary>
+    public string Name { get; protected set; } = string.Empty;
 
     /// <summary>
     /// The groups that make up the engine.

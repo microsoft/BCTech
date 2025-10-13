@@ -423,4 +423,32 @@ SET
   <data name="X_red_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\X_red_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GpCheckbookNumberSpacePrefixTaskDescription" xml:space="preserve">
+    <value>Checkbook number with leading spaces in the Id</value>
+  </data>
+  <data name="GpCheckbookNumberSpacePrefixTaskSummary" xml:space="preserve">
+    <value>{0} checkbook(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate bank accounts.</value>
+    <comment>{0} = Number of checkbooks</comment>
+  </data>
+  <data name="GpCustomerNumberSpacePrefixTaskDescription" xml:space="preserve">
+    <value>Customer number with leading spaces in the Id</value>
+  </data>
+  <data name="GpCustomerNumberSpacePrefixTaskSummary" xml:space="preserve">
+    <value>{0} customer(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate customers.</value>
+    <comment>{0} = Number of customers</comment>
+  </data>
+  <data name="GpItemNumberSpacePrefixTaskDescription" xml:space="preserve">
+    <value>Item number with leading spaces in the Id</value>
+  </data>
+  <data name="GpItemNumberSpacePrefixTaskSummary" xml:space="preserve">
+    <value>{0} item(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate items.</value>
+    <comment>{0} = Number of items</comment>
+  </data>
+  <data name="GpVendorNumberSpacePrefixTaskDescription" xml:space="preserve">
+    <value>Vendor number with leading spaces in the Id</value>
+  </data>
+  <data name="GpVendorNumberSpacePrefixTaskSummary" xml:space="preserve">
+    <value>{0} vendor(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate vendor.</value>
+    <comment>{0} = Number of vendors</comment>
+  </data>
 </root>

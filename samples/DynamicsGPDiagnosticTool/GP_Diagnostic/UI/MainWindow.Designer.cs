@@ -37,6 +37,7 @@ partial class MainWindow
         this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.databaseSettings = new System.Windows.Forms.ToolStripMenuItem();
         this.runEvaluationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        this.exportTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -92,22 +93,29 @@ partial class MainWindow
         // 
         // toolsToolStripMenuItem
         // 
-        this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.databaseSettings, this.runEvaluationMenuItem });
+        this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.databaseSettings, this.exportTasksToolStripMenuItem, this.runEvaluationMenuItem });
         this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-        this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 22);
+        this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 22);
         this.toolsToolStripMenuItem.Text = "&Tools";
         // 
         // databaseSettings
         // 
         this.databaseSettings.Name = "databaseSettings";
-        this.databaseSettings.Size = new System.Drawing.Size(153, 22);
+        this.databaseSettings.Size = new System.Drawing.Size(180, 22);
         this.databaseSettings.Text = "Settings";
         // 
         // runEvaluationMenuItem
         // 
         this.runEvaluationMenuItem.Name = "runEvaluationMenuItem";
-        this.runEvaluationMenuItem.Size = new System.Drawing.Size(153, 22);
+        this.runEvaluationMenuItem.Size = new System.Drawing.Size(180, 22);
         this.runEvaluationMenuItem.Text = "Run Evaluation";
+        // 
+        // exportTasksToolStripMenuItem
+        // 
+        this.exportTasksToolStripMenuItem.Name = "exportTasksToolStripMenuItem";
+        this.exportTasksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+        this.exportTasksToolStripMenuItem.Text = "Export Tasks";
+        this.exportTasksToolStripMenuItem.Click += this.exportTasksToolStripMenuItem_Click;
         // 
         // helpToolStripMenuItem
         // 
@@ -169,7 +177,7 @@ partial class MainWindow
         // 
         this.tabSummary.Location = new System.Drawing.Point(4, 24);
         this.tabSummary.Name = "tabSummary";
-        this.tabSummary.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+        this.tabSummary.Padding = new System.Windows.Forms.Padding(3);
         this.tabSummary.Size = new System.Drawing.Size(751, 370);
         this.tabSummary.TabIndex = 0;
         this.tabSummary.Text = "Summary";
@@ -179,7 +187,7 @@ partial class MainWindow
         // 
         this.tabIssues.Location = new System.Drawing.Point(4, 24);
         this.tabIssues.Name = "tabIssues";
-        this.tabIssues.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+        this.tabIssues.Padding = new System.Windows.Forms.Padding(3);
         this.tabIssues.Size = new System.Drawing.Size(758, 431);
         this.tabIssues.TabIndex = 1;
         this.tabIssues.Text = "Issues";
@@ -212,7 +220,7 @@ partial class MainWindow
         this.Controls.Add(this.btnRunEvaluation);
         this.Controls.Add(this.btnCancelEvaluation);
         this.MainMenuStrip = this.menuStrip1;
-        this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+        this.Margin = new System.Windows.Forms.Padding(2);
         this.MinimumSize = new System.Drawing.Size(795, 504);
         this.Name = "MainWindow";
         this.Text = "GP Migration Diagnostic Tool";
@@ -244,4 +252,5 @@ partial class MainWindow
     private System.Windows.Forms.TabPage tabSummary;
     private System.Windows.Forms.TabPage tabIssues;
     private System.Windows.Forms.Button btnCancelEvaluation;
+    private System.Windows.Forms.ToolStripMenuItem exportTasksToolStripMenuItem;
 }

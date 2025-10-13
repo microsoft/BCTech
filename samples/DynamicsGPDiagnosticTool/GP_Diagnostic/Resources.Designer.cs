@@ -127,6 +127,24 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checkbook number with leading spaces in the Id.
+        /// </summary>
+        internal static string GpCheckbookNumberSpacePrefixTaskDescription {
+            get {
+                return ResourceManager.GetString("GpCheckbookNumberSpacePrefixTaskDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} checkbook(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate bank accounts..
+        /// </summary>
+        internal static string GpCheckbookNumberSpacePrefixTaskSummary {
+            get {
+                return ResourceManager.GetString("GpCheckbookNumberSpacePrefixTaskSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unsupported company version.
         /// </summary>
         internal static string GpCompanyVersionTaskDescription {
@@ -231,6 +249,24 @@ namespace Microsoft.GP.MigrationDiagnostic {
         internal static string GpCustomerNameLengthTaskSummary {
             get {
                 return ResourceManager.GetString("GpCustomerNameLengthTaskSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer number with leading spaces in the Id.
+        /// </summary>
+        internal static string GpCustomerNumberSpacePrefixTaskDescription {
+            get {
+                return ResourceManager.GetString("GpCustomerNumberSpacePrefixTaskDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} customer(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate customers..
+        /// </summary>
+        internal static string GpCustomerNumberSpacePrefixTaskSummary {
+            get {
+                return ResourceManager.GetString("GpCustomerNumberSpacePrefixTaskSummary", resourceCulture);
             }
         }
         
@@ -487,6 +523,24 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item number with leading spaces in the Id.
+        /// </summary>
+        internal static string GpItemNumberSpacePrefixTaskDescription {
+            get {
+                return ResourceManager.GetString("GpItemNumberSpacePrefixTaskDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} item(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate items..
+        /// </summary>
+        internal static string GpItemNumberSpacePrefixTaskSummary {
+            get {
+                return ResourceManager.GetString("GpItemNumberSpacePrefixTaskSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main segment not configured.
         /// </summary>
         internal static string GpMainSegmentNotIdentifiedTaskDescription {
@@ -690,6 +744,24 @@ namespace Microsoft.GP.MigrationDiagnostic {
         internal static string GpVendorNameLengthTaskSummary {
             get {
                 return ResourceManager.GetString("GpVendorNameLengthTaskSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor number with leading spaces in the Id.
+        /// </summary>
+        internal static string GpVendorNumberSpacePrefixTaskDescription {
+            get {
+                return ResourceManager.GetString("GpVendorNumberSpacePrefixTaskDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} vendor(s) contains leading spaces in the Id. Business Central will strip the spaces during the migration, which could result in duplicates. This causes the migration to skip migrating the duplicate vendor..
+        /// </summary>
+        internal static string GpVendorNumberSpacePrefixTaskSummary {
+            get {
+                return ResourceManager.GetString("GpVendorNumberSpacePrefixTaskSummary", resourceCulture);
             }
         }
         
