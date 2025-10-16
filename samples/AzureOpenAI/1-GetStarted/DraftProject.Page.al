@@ -87,12 +87,14 @@ page 50100 "Draft Project"
         AOAIOperationResponse: Codeunit "AOAI Operation Response";
     begin
         if not CopilotCapability.IsCapabilityRegistered(Enum::"Copilot Capability"::"Project Task Creation") then
-            CopilotCapability.RegisterCapability(Enum::"Copilot Capability"::"Project Task Creation", 'https://about:none');
+            CopilotCapability.RegisterCapability(Enum::"Copilot Capability"::"Project Task Creation",
+                Enum::"Copilot Availability"::Preview,
+                Enum::"Copilot Billing Type"::"Microsoft Billed",
+                'https://about:none');
 
         // If you are using managed resources, call this function:
         // NOTE: account name and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
-        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
-            GetAccountName(), GetApiKey(), AOAIDeployments.GetGPT4oLatest());
+        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions", AOAIDeployments.GetGPT41Latest());
         // If you are using your own Azure OpenAI subscription, call this function instead:
         // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetApiKey());
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Project Task Creation");

@@ -38,9 +38,7 @@ codeunit 54390 "SuggestJob - Generate Proposal"
         SuggestJobCreateJobTask: Codeunit "SuggestJob - Create Job Task";
     begin
         // If you are using managed resources, call this function:
-        // NOTE: account name and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
-        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
-            GetAccountName(), GetApiKey(), AOAIDeployments.GetGPT4oLatest());
+        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions", AOAIDeployments.GetGPT41Latest());
         // If you are using your own Azure OpenAI subscription, call this function instead:
         // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetApiKey());
 
