@@ -92,16 +92,13 @@ codeunit 54323 "Generate Item Sub Proposal"
         AOAIChatCompletionParams: Codeunit "AOAI Chat Completion Params";
         AOAIChatMessages: Codeunit "AOAI Chat Messages";
         AOAIDeployments: Codeunit "AOAI Deployments";
-        IsolatedStorageWrapper: Codeunit "Isolated Storage Wrapper";
         Result: Text;
         EntityTextModuleInfo: ModuleInfo;
     begin
         // If you are using managed resources, call this function:
-        // NOTE: account name and key are only used to verify that you have a valid Azure OpenAI subscription; we don't use them to generate the result
-        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions",
-            IsolatedStorageWrapper.GetAccountName(), IsolatedStorageWrapper.GetSecretKey(), AOAIDeployments.GetGPT4oLatest());
+        AzureOpenAI.SetManagedResourceAuthorization(Enum::"AOAI Model Type"::"Chat Completions", AOAIDeployments.GetGPT41Latest());
         // If you are using your own Azure OpenAI subscription, call this function instead:
-        // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", IsolatedStorageWrapper.GetEndpoint(), IsolatedStorageWrapper.GetDeployment(), IsolatedStorageWrapper.GetSecretKey());
+        // AzureOpenAI.SetAuthorization(Enum::"AOAI Model Type"::"Chat Completions", GetEndpoint(), GetDeployment(), GetSecretKey());
 
         AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::"Find Item Substitutions");
 
