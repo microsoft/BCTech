@@ -52,21 +52,21 @@ public class GpPostingAccountsNotSetupTask : IDiagnosticTask
     /// <inheritdoc/>
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var sql = $@"SELECT 
-    [SERIES],
-    [SEQNUMBR],
-    [ACTINDX],
-    [PTGACDSC],
-    [DEX_ROW_ID]
-FROM
-    {this.database.DatabaseName.AsSqlBracketedValue()}.[dbo].[SY01100]
-WHERE
-    (
-        ((PTGACDSC IN ('Accounts Receivable')) AND SERIES = 3) -- SALES
-        OR ((PTGACDSC IN ('Accounts Payable')) AND SERIES = 4) -- PURCHASING
-        OR ((PTGACDSC IN ('Inventory Control')) AND SERIES = 5) -- INVENTORY
-    )
-    AND ACTINDX = 0";
+        var sql = $@"SELECT
+	search.SERIES,
+	ISNULL(setup.SEQNUMBR, 0) AS SEQNUMBR,
+	ISNULL(setup.ACTINDX, 0) AS ACTINDX,
+    search.PTGACDSC,
+	ISNULL(setup.DEX_ROW_ID, 0) AS DEX_ROW_ID
+FROM (
+    SELECT 'Accounts Payable' AS PTGACDSC, 4  AS SERIES
+	UNION
+	SELECT 'Accounts Receivable', 3
+	UNION
+	SELECT 'Inventory Control', 5
+) search
+LEFT OUTER JOIN {this.database.DatabaseName.AsSqlBracketedValue()}.[dbo].[SY01100] setup ON setup.SERIES = search.SERIES AND setup.PTGACDSC = search.PTGACDSC
+WHERE ISNULL(setup.ACTINDX, 0) = 0";
 
         using (var reader = await this.database.ExecuteSqlAsync(sql, cancellationToken))
         {
@@ -74,7 +74,7 @@ WHERE
             {
                 this.items.Add(new Item
                 {
-                    SERIES = reader.GetInt16(0),
+                    SERIES = reader.GetInt32(0),
                     SEQNUMBR = reader.GetInt32(1),
                     ACTINDX = reader.GetInt32(2),
                     PTGACDSC = reader.GetString(3),

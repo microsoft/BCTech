@@ -10,10 +10,12 @@ public class TableValueTaskAdapter : ITaskValueAdapter
     private static readonly HashSet<string> TaskIds =
     [
         "BLANKACCOUNTS",
+        "CheckbookNumberSpacePrefix",
         "CustomerAddressIdLength",
         "CustomerInvalidEmail",
         "CustomerMissingMasterRecord",
         "CustomerNameLength",
+        "CustomerNumberSpacePrefix",
         "CustomerPhoneNumberAlpha",
         "DirectPostingRetainedEarnings",
         "DuplicateApTransactionDocumentNumber",
@@ -27,6 +29,7 @@ public class TableValueTaskAdapter : ITaskValueAdapter
         "ItemMissingMasterRecord",
         "ItemNoUomSchedule",
         "ItemNumberLength",
+        "ItemNumberSpacePrefix",
         "MSMAC",
         "OpenPosInactiveItems",
         "PostingAccountsNotSetup",
@@ -41,6 +44,7 @@ public class TableValueTaskAdapter : ITaskValueAdapter
         "VendorInvalidEmail",
         "VendorMissingMasterRecord",
         "VendorNameLength",
+        "VendorNumberSpacePrefix",
         "VendorPhoneNumberAlpha",
         "VerifyPostingTypes",
     ];

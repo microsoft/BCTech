@@ -32,5 +32,6 @@ public class GpCompanySalesTaskGroup : IMultiCompanyDiagnosticTaskGroup
         this.Tasks.Add(new GpDuplicateCustomerAddressIdsTask(companyDatabase));
         this.Tasks.Add(new GpCustomerInvalidEmailTask(companyDatabase));
         this.Tasks.Add(new GpCustomerMissingMasterRecordTask(companyDatabase));
+        this.Tasks.Add(new GpCustomerNumberSpacePrefixTask(companyDatabase));
     }
 }
