@@ -1,0 +1,32 @@
+{
+  "id": "12345678-0001-0001-0001-000000000001",
+  "name": "SimpleJson E-Document Format",
+  "publisher": "Directions EMEA Workshop",
+  "version": "1.0.0.0",
+  "brief": "SimpleJson format for E-Document workshop",
+  "description": "Workshop extension that implements the E-Document format interface for JSON documents",
+  "privacyStatement": "https://privacy.microsoft.com",
+  "EULA": "https://www.microsoft.com/en-us/legal/intellectualproperty/copyright",
+  "help": "https://learn.microsoft.com/dynamics365/business-central/",
+  "url": "https://github.com/microsoft/BCTech",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "e1d97edc-c239-46b4-8d84-6368bdf67c8b",
+      "name": "E-Document Core",
+      "publisher": "Microsoft",
+      "version": "25.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "25.0.0.0",
+  "idRanges": [
+    {
+      "from": 81000,
+      "to": 81099
+    }
+  ],
+  "features": [],
+  "target": "OnPrem",
+  "runtime": "13.0"
+}

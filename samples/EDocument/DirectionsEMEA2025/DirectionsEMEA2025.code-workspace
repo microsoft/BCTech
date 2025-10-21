@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "E-Document Core",
+			"path": "C:\\depot\\NAV_1\\App\\BCApps\\src\\Apps\\W1\\EDocument\\App"
+		},
+		{
+			"name": "Avalara Connector",
+			"path": "C:\\depot\\NAV_1\\App\\BCApps\\src\\Apps\\W1\\EDocumentConnectors\\Avalara\\App"
+		}
+	],
+	"settings": {}
+}
