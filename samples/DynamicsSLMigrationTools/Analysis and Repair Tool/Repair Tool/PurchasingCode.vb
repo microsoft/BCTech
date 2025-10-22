@@ -40,10 +40,41 @@ Module PurchasingCode
         fmtDate = fmtDate & Date.Now.Millisecond
 
         oEventLog = New clsEventLog
-        oEventLog.FileName = "SL-PO-" & "-" & fmtDate & "-" & Trim(UserId) & ".log"
+        oEventLog.FileName = "SL-PO-" & fmtDate & "-" & Trim(UserId) & ".log"
 
         Call oEventLog.LogMessage(StartProcess, "")
         Call oEventLog.LogMessage(0, "")
+
+        '=====================================================================================
+        ' SScatliffe 10/8/2025 - VSTS 134249/145393 - Check for voided batches and warn user
+        '=====================================================================================
+
+        Call VoidedBatchCheck("PO")
+
+        If VBatchesExistPO = True Then
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("WARNING: Voided batches exist in Purchasing.", oEventLog)
+            Call LogMessage("", oEventLog)
+
+            ' list voided batches
+            sqlStmt = "SELECT BatNbr, EditScrnNbr, PerPost FROM Batch WHERE Module = 'PO' AND Status = 'V' AND CpnyID = " + SParm(CpnyId) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim)
+
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            While sqlReader.Read()
+
+                Call SetBatchValues(sqlReader, bBatchInfo)
+                'Write Batch info to event log
+                Call LogMessage("Batch: " + bBatchInfo.BatNbr.Trim + vbTab + "Period: " + FormatPeriodNbr(bBatchInfo.PerPost) + vbTab + vbTab + "Screen: " + GetScreenName(bBatchInfo.EditScrnNbr), oEventLog)
+                NbrOfWarnings_PO = NbrOfWarnings_PO + 1
+
+            End While
+
+            Call sqlReader.Close()
+            Call LogMessage("", oEventLog)
+
+        End If
 
         Call oEventLog.LogMessage(0, "Processing Purchase Orders")
 
@@ -79,11 +110,11 @@ Module PurchasingCode
                 Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
                 Call LogMessage("", oEventLog)
                 OkToContinue = False
-				NbrOfErrors_PO = NbrOfErrors_PO + 1
+                NbrOfErrors_PO = NbrOfErrors_PO + 1
                 Call MessageBox.Show("Error Encountered: " + ex.Message.Trim + " Operation ended.")
                 Exit Sub
-			End Try
-		End If
+            End Try
+        End If
 
 
         '***********************************************************************************************************************
@@ -117,11 +148,11 @@ Module PurchasingCode
                 LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
                 LogMessage("", oEventLog)
                 OkToContinue = False
-				NbrOfErrors_PO = NbrOfErrors_PO + 1
+                NbrOfErrors_PO = NbrOfErrors_PO + 1
                 Call MessageBox.Show("Error Encountered: " + ex.Message.Trim + " Operation ended.")
                 Exit Sub
-			End Try
-		End If
+            End Try
+        End If
 
         '*******************************************************
         '*** Check for invalid Vendor IDs on Purchase Orders ***
@@ -176,8 +207,8 @@ Module PurchasingCode
         If invtID20PlusExists = True Then
             Call LogMessage(" ", oEventLog)
             msgText = "Suggested actions for updating Inventory IDs are listed below:" + vbNewLine
-			msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Inventory IDs to 20 characters or less" + vbNewLine
-			msgText = msgText + " - Set the Transaction Status on these items to Inactive or Delete in Inventory Items (10.250.00) to exclude these items from the migration" + vbNewLine
+            msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Inventory IDs to 20 characters or less" + vbNewLine
+            msgText = msgText + " - Set the Transaction Status on these items to Inactive or Delete in Inventory Items (10.250.00) to exclude these items from the migration" + vbNewLine
             msgText = msgText + " - Contact your Microsoft Dynamics SL Partner  for further assistance"
             Call LogMessage(msgText, oEventLog)
             Call LogMessage("", oEventLog)
@@ -215,9 +246,9 @@ Module PurchasingCode
         If poItemErrorExists = True Then
             Call LogMessage("", oEventLog)
             msgText = "Suggested actions for resolving this error:" + vbNewLine
-			msgText = msgText + " - Delete the listed line(s) from the Purchase Order." + vbNewLine
-			msgText = msgText + " - Change the Transaction Status of the item to a value other than Inactive or Delete in Inventory Items (10.250.00)."
-			msgText = msgText + " - Change the status of the Purchase Order to Completed."
+            msgText = msgText + " - Delete the listed line(s) from the Purchase Order." + vbNewLine
+            msgText = msgText + " - Change the Transaction Status of the item to a value other than Inactive or Delete in Inventory Items (10.250.00)."
+            msgText = msgText + " - Change the status of the Purchase Order to Completed."
             Call LogMessage(msgText, oEventLog)
             Call LogMessage("", oEventLog)
             Call LogMessage("", oEventLog)
@@ -265,10 +296,10 @@ Module PurchasingCode
 
         Call oEventLog.LogMessage(EndProcess, "Validate Purchasing")
 
-        Call MessageBox.Show("Purchasing Validation Complete", "Purchasing Validation")
+        Call MessageBox.Show("Purchasing validation complete.", "Purchasing Validation")
 
         ' Display the event log just created.
-        Call DisplayLog(oEventLog.LogFile.FullName.Trim())
+        'Call DisplayLog(oEventLog.LogFile.FullName.Trim())
 
         ' Store the filename in the table.
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then

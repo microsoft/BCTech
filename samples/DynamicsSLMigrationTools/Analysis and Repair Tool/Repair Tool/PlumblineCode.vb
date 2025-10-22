@@ -43,9 +43,14 @@ Module PlumblineCode
     Public UBatchesExistGL As Boolean = False
     Public UBatchesExistAP As Boolean = False
     Public UBatchesExistAR As Boolean = False
-	Public UBatchesExistIN As Boolean = False
-	Public UBatchesExistPO As Boolean = False
-	Public mcProductCode As String = String.Empty
+    Public UBatchesExistIN As Boolean = False
+    Public UBatchesExistPO As Boolean = False
+    Public VBatchesExistGL As Boolean = False
+    Public VBatchesExistAP As Boolean = False
+    Public VBatchesExistAR As Boolean = False
+    Public VBatchesExistIN As Boolean = False
+    Public VBatchesExistPO As Boolean = False
+    Public mcProductCode As String = String.Empty
     Public MultiCuryEnabled As Boolean = False
     Public BaseCuryPrec As Short = 0
 
@@ -426,10 +431,109 @@ Module PlumblineCode
                 Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
 
                 If retValInt > 0 Then
-					UBatchesExistPO = True
-				End If
+                    UBatchesExistPO = True
+                End If
 
-		End Select
+        End Select
+
+    End Sub
+
+    Public Sub VoidedBatchCheck(ByVal pModule As String)
+
+        '=============================================
+        ' USER STORY 134249/145393
+        '   Check to see if Voided batches exist
+        '   By module or all modules (%)           
+        '=============================================
+
+        Dim sqlString As String
+        Dim retValInt As Integer
+
+        VBatchesExistGL = False
+        VBatchesExistAP = False
+        VBatchesExistAR = False
+        VBatchesExistIN = False
+        VBatchesExistPO = False
+
+        Select Case pModule
+            Case "GL"
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'GL' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistGL = True
+                End If
+
+            Case "AP"
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'AP' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistAP = True
+                End If
+
+            Case "AR"
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'AR' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistAR = True
+                End If
+
+            Case "IN"
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'IN' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistIN = True
+                End If
+
+            Case "PO"
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'PO' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistPO = True
+                End If
+
+            Case "%"
+                'All Modules
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'GL' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistGL = True
+                End If
+
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'AP' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistAP = True
+                End If
+
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'AR' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistAR = True
+                End If
+
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'IN' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistIN = True
+                End If
+
+                sqlString = "SELECT COUNT(*) FROM Batch WHERE CpnyID = " + SParm(CpnyId.Trim) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim) + " AND Module = 'PO' AND Status = 'V'"
+                Call sqlFetch_Num(retValInt, sqlString, SqlAppDbConn)
+
+                If retValInt > 0 Then
+                    VBatchesExistPO = True
+                End If
+
+        End Select
 
     End Sub
 
@@ -616,7 +720,7 @@ Module PlumblineCode
 
         Call LogMessage("Verifying Vendor Balances", EventLog)
 
-        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name FROM Vendor"
+        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name FROM Vendor WHERE (NOT CHARINDEX('''', VendId) <> 0)"
         Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
 
         If sqlReader.HasRows() Then
@@ -702,6 +806,7 @@ Module PlumblineCode
                                         Call sqlFetch_1(sqlAdjReader, SqlStrg2, sqlAdjConn, CommandType.Text)
 
                                         While sqlAdjReader.Read()
+                                            Call SetAPAdjustValues(sqlAdjReader, bAPAdjustInfo)
                                             If bAPAdjustInfo.AdjgPerPost <= bVendorInfo.PerNbr Then
                                                 VendorCurrBal = FPSub(VendorCurrBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
                                                 VendorFutBal = FPAdd(VendorFutBal, bAPAdjustInfo.AdjAmt + bAPAdjustInfo.AdjDiscAmt, BaseCuryPrec)
@@ -1027,6 +1132,8 @@ Module PlumblineCode
             ' If any tables are found, then open a new connection for updating.
             If lb_APAdjust Or lb_APDoc Or lb_APSetup Or lb_APTran Or lb_AP_Balances Or lb_VendClass Or lb_Vendor Then
 
+                NbrOfWarnings_Vend = NbrOfWarnings_Vend + 1
+
                 ' Set operation and write to event log
                 Operation = OperationType.UpdateOp
                 Call LogMessage("", EventLog)
@@ -1305,6 +1412,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("ARAdjust", EventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
                 End If
 
@@ -1333,6 +1441,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("ARDoc", EventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
                 End If
 
@@ -1349,6 +1458,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("ARSetup", EventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
                 End If
 
@@ -1369,6 +1479,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("ARTran", EventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
                 End If
 
@@ -1395,6 +1506,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("AR_Balances", EventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
                 End If
 
@@ -1411,6 +1523,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("CustClass", EventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
                 End If
 
@@ -1431,6 +1544,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("Customer", EventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
                 End If
 
@@ -1545,6 +1659,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("Account", EventLog)
+                    NbrOfWarnings_COA = NbrOfWarnings_COA + 1
 
                 End If
 
@@ -1563,6 +1678,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("AcctHist", EventLog)
+                    NbrOfWarnings_COA = NbrOfWarnings_COA + 1
 
                 End If
 
@@ -1586,6 +1702,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("Batch", EventLog)
+                    NbrOfWarnings_COA = NbrOfWarnings_COA + 1
 
                 End If
 
@@ -1602,6 +1719,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("GLSetup", EventLog)
+                    NbrOfWarnings_COA = NbrOfWarnings_COA + 1
 
                 End If
 
@@ -1626,6 +1744,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("GLTran", EventLog)
+                    NbrOfWarnings_COA = NbrOfWarnings_COA + 1
 
                 End If
 
@@ -1762,6 +1881,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("INSetup", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -1784,6 +1904,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("Inventory", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -1800,6 +1921,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("InventoryADG", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -1818,6 +1940,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("ItemCost", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -1844,6 +1967,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("ItemSite", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -1870,6 +1994,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("LotSerMst", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -1894,6 +2019,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("LotSerT", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -1912,6 +2038,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("Site", EventLog)
+                    NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
 
                 End If
 
@@ -2039,6 +2166,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("SOHeader", EventLog)
+                    NbrOfWarnings_SO = NbrOfWarnings_SO + 1
 
                 End If
 
@@ -2063,6 +2191,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("SOLine", EventLog)
+                    NbrOfWarnings_SO = NbrOfWarnings_SO + 1
 
                 End If
 
@@ -2081,6 +2210,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("SOShipLine", EventLog)
+                    NbrOfWarnings_SO = NbrOfWarnings_SO + 1
 
                 End If
 
@@ -2097,6 +2227,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("SOShipLot", EventLog)
+                    NbrOfWarnings_SO = NbrOfWarnings_SO + 1
 
                 End If
 
@@ -2113,6 +2244,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("SOType", EventLog)
+                    NbrOfWarnings_SO = NbrOfWarnings_SO + 1
 
                 End If
 
@@ -2253,6 +2385,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("PJEMPLOY", EventLog)
+                    NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
 
                 End If
 
@@ -2267,6 +2400,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("PJEMPPJT", EventLog)
+                    NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
 
                 End If
 
@@ -2285,6 +2419,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("PJEQRATE", EventLog)
+                    NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
 
                 End If
 
@@ -2301,6 +2436,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("PJEQUIP", EventLog)
+                    NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
 
                 End If
 
@@ -2319,6 +2455,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("PJPENT", EventLog)
+                    NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
 
                 End If
 
@@ -2343,6 +2480,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("PJPROJ", EventLog)
+                    NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
 
                 End If
 
@@ -2428,6 +2566,8 @@ Module PlumblineCode
 
             ' If any tables are found, then open a new connection for updating.
             If lb_POReceipt Or lb_POSetup Or lb_POTran Or lb_PurchOrd Or lb_PurOrdDet Then
+
+                NbrOfWarnings_PO = NbrOfWarnings_PO + 1
 
                 ' Set operation and write to event log
                 Operation = OperationType.UpdateOp
@@ -2639,6 +2779,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("SalesTax", EventLog)
+                    NbrOfWarnings_COA = NbrOfWarnings_COA + 1
 
                 End If
 
@@ -2655,6 +2796,7 @@ Module PlumblineCode
 
                     'Write to event log
                     Call LogMessage("Terms", EventLog)
+                    NbrOfWarnings_COA = NbrOfWarnings_COA + 1
 
                 End If
 
@@ -2855,6 +2997,55 @@ Module PlumblineCode
         Return phoneNum
     End Function
 
+    Public Function FormatPeriodNbr(ByVal pPerNbr As String) As String
+
+        '====================================
+        ' Formats Period Number as "MM-YYYY"
+        '====================================
+
+        Dim sFiscYear As String = String.Empty
+        Dim sPeriod As String = String.Empty
+
+        sFiscYear = pPerNbr.Substring(0, 4)
+        sPeriod = pPerNbr.Substring(4, 2)
+
+        Return sPeriod + "-" + sFiscYear
+
+    End Function
+
+    Public Function GetScreenName(ByVal bScreenNumber As String) As String
+
+        '===============================
+        ' Returns the name of the screen
+        '===============================
+
+        Dim sScreenName As String
+        Dim sFullScreenNumber As String
+        Dim sqlStmt As String
+        Dim sqlReader_Sys As SqlDataReader = Nothing
+        Dim ReturnThis As String
+
+        Call SqlSysDbConn.Close()
+        sFullScreenNumber = bScreenNumber + "00"
+
+        sqlStmt = "SELECT Name FROM Screen WHERE Number = " + SParm(sFullScreenNumber)
+
+        Call sqlFetch_1(sqlReader_Sys, sqlStmt, SqlSysDbConn, CommandType.Text)
+
+        If sqlReader_Sys.HasRows Then
+            sqlReader_Sys.Read()
+            sScreenName = sqlReader_Sys(0).ToString
+            ReturnThis = sScreenName.Trim + " (" + sFullScreenNumber.Substring(0, 2) + "." + sFullScreenNumber.Substring(2, 3) + "." + sFullScreenNumber.Substring(5, 2) + ")"
+        Else
+            ReturnThis = "Unknown Screen"
+        End If
+
+        Call SqlSysDbConn.Close()
+        Call sqlReader_Sys.Close()
+
+        Return ReturnThis
+
+    End Function
 
     '**************************
     '***** Public Classes *****
@@ -3482,7 +3673,7 @@ Module PlumblineCode
                 Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
                 While sqlReader.Read()
 
-                    Call setSubAcctListValues(sqlReader, bSubAcctListInfo)
+                    Call SetSubAcctListValues(sqlReader, bSubAcctListInfo)
                     If bSubAcctListInfo.SubAcct.Trim IsNot String.Empty Then
 
                         If sqlDefConn.State <> ConnectionState.Open Then
@@ -3548,7 +3739,7 @@ Module PlumblineCode
             Call LogMessage("", EventLog)
             msgText = "The following Subaccount Segment IDs are not found in the SegDef table. All Subaccount Segment IDs must be set up in"
             msgText = msgText + " Flexkey Table Maintenance (21.330.00) prior to migrating data."
-            msgText = msgText + " Missing Segment IDs will be added TypeOf the SegDef table."
+            msgText = msgText + " Missing Segment IDs will be added to the SegDef table."
             Call LogMessage(msgText, EventLog)
 
             sqlDefConn = New SqlClient.SqlConnection(AppDbConnStr)
@@ -3616,6 +3807,7 @@ Module PlumblineCode
             Catch ex As Exception
                 msgText = "Failed to add Segment Number: " + bxSLMPTSubErrorsInfo.SegNumber.Trim + " Segment ID: " + bxSLMPTSubErrorsInfo.ID.Trim
                 Call LogMessage(msgText, EventLog)
+                OkToContinue = False
             End Try
 
         End While

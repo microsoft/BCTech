@@ -151,7 +151,7 @@ Friend Class Form1
 
             If (UBatchesExistGL = True Or UBatchesExistAP = True Or UBatchesExistAR = True Or UBatchesExistIN = True) Then
                 'Display message that unposted batches exist
-                msgText = "WARNING: Unposted batches exist in the following modules."
+                msgText = "WARNING: Unposted batches exist in the following modules:"
                 If UBatchesExistGL = True Then
                     msgText = msgText + vbNewLine + "General Ledger"
                 End If
@@ -174,6 +174,35 @@ Friend Class Form1
 
             End If
 
+            '=====================================================================================
+            ' SScatliffe 10/8/2025 - VSTS 134249/145393 - Check for voided batches and warn user
+            '=====================================================================================
+
+            Call VoidedBatchCheck("%")
+
+            If (VBatchesExistGL = True Or VBatchesExistAP = True Or VBatchesExistAR = True Or VBatchesExistIN = True) Then
+
+                NbrOfWarnings_COA = NbrOfWarnings_COA + 1
+
+                'Display message that Voided batches exist
+                msgText = "WARNING: Voided batches exist in the following modules:"
+                If VBatchesExistGL = True Then
+                    msgText = msgText + vbNewLine + "General Ledger"
+                End If
+                If VBatchesExistAP = True Then
+                    msgText = msgText + vbNewLine + "Accounts Payable"
+                End If
+                If VBatchesExistAR = True Then
+                    msgText = msgText + vbNewLine + "Accounts Receivable"
+                End If
+                If VBatchesExistIN = True Then
+                    msgText = msgText + vbNewLine + "Inventory"
+                End If
+                msgText = msgText + vbNewLine + vbNewLine + "Amounts from voided batches will not be included in the calculated current balance of an Account."
+
+                dlgResult = MessageBox.Show(msgText, "Voided Batches Exist", MessageBoxButtons.OK)
+
+            End If
             'Validate Chart of Accounts data
             NbrOfErrors_COA = 0
             NbrOfWarnings_COA = 0
@@ -204,7 +233,13 @@ Friend Class Form1
                         Call LogMessage("", eventLog)
                         Call LogMessage("Number of Chart of Accounts warnings found: " + NbrOfWarnings_COA.ToString, eventLog)
                         Call eventLog.LogMessage(EndProcess, "")
-
+                    Else
+                        ' SScatliffe 10/9/2025 Force ending log messages even if no warnings
+                        Call eventLog.LogMessage(StartProcess, "")
+                        Call LogMessage("Number of Chart of Accounts errors found: " + NbrOfErrors_COA.ToString, eventLog)
+                        Call LogMessage("", eventLog)
+                        Call LogMessage("Number of Chart of Accounts warnings found:  " + NbrOfWarnings_COA.ToString, eventLog)
+                        Call eventLog.LogMessage(EndProcess, "")
                     End If
 
                 Else  'Errors found
@@ -216,18 +251,33 @@ Friend Class Form1
                     cCompletedCOA.Checked = bSLMPTStatus.COA_ValCmpltd
                     cCompletedGLChk.Checked = bSLMPTStatus.COA_ValCmpltd
 
-
-
-                    If NbrOfWarnings_COA > 0 Then
-                        Call LogMessage("", eventLog)
-                        Call LogMessage("Number of Chart of Accounts warnings found: " + NbrOfWarnings_COA.ToString, eventLog)
-
-                    End If
+                    ' If NbrOfWarnings_COA > 0 Then
+                    Call LogMessage("", eventLog)
+                    Call LogMessage("Number of Chart of Accounts warnings found: " + NbrOfWarnings_COA.ToString, eventLog)
+                    'End If
                     Call eventLog.LogMessage(EndProcess, "")
-                    eventLog = Nothing
+
                 End If
 
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                Call DisplayLog(eventLog.LogFile.FullName.Trim())
+                eventLog = Nothing
+
             Else
+
+                Dim eventLog_else As clsEventLog = New clsEventLog
+                eventLog_else.FileName = System.IO.Path.GetFileName(bSLMPTStatus.COAEventLogName)
+
+                Call eventLog_else.LogMessage(StartProcess, "")
+                Call LogMessage("", eventLog_else)
+                Call LogMessage("ERROR: Failed to finish.", eventLog_else)
+                Call eventLog_else.LogMessage(EndProcess, "")
+
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                If (My.Computer.FileSystem.FileExists(eventLog_else.LogFile.FullName.Trim())) Then
+                    Call DisplayLog(eventLog_else.LogFile.FullName.Trim())
+                End If
+
                 'Set Completed field to 0 (unchecked) since an error occurred at some point in the process
                 bSLMPTStatus.COA_ValCmpltd = 0
 
@@ -354,6 +404,13 @@ Friend Class Form1
                         Call LogMessage("Number of Customer warnings found: " + NbrOfWarnings_Cust.ToString, eventLog)
                         Call eventLog.LogMessage(EndProcess, "")
 
+                    Else
+                        ' SScatliffe 10/9/2025 Force ending log messages even if no warnings
+                        Call eventLog.LogMessage(StartProcess, "")
+                        Call LogMessage("Number of Customer errors found: " + NbrOfErrors_Cust.ToString, eventLog)
+                        Call LogMessage("", eventLog)
+                        Call LogMessage("Number of Customer warnings found:  " + NbrOfWarnings_Cust.ToString, eventLog)
+                        Call eventLog.LogMessage(EndProcess, "")
                     End If
 
                 Else  'Errors found
@@ -367,16 +424,31 @@ Friend Class Form1
 
                     cCompletedARChk.Text = bSLMPTStatus.Cust_ValCmpltd
 
-                    If NbrOfWarnings_Cust > 0 Then
-                        Call LogMessage("", eventLog)
-                        Call LogMessage("Number of Customer warnings found: " + NbrOfWarnings_Cust.ToString, eventLog)
-                    End If
+                    'If NbrOfWarnings_Cust > 0 Then
+                    Call LogMessage("", eventLog)
+                    Call LogMessage("Number of Customer warnings found: " + NbrOfWarnings_Cust.ToString, eventLog)
+                    ' End If
                     Call eventLog.LogMessage(EndProcess, "")
                 End If
 
+                ' Display the event log just created.
+                Call DisplayLog(eventLog.LogFile.FullName.Trim())
                 eventLog = Nothing
 
             Else
+
+                Dim eventLog_else As clsEventLog = New clsEventLog
+                eventLog_else.FileName = System.IO.Path.GetFileName(bSLMPTStatus.CustEventLogName)
+
+                Call eventLog_else.LogMessage(StartProcess, "")
+                Call LogMessage("", eventLog_else)
+                Call LogMessage("ERROR: Failed to finish.", eventLog_else)
+                Call eventLog_else.LogMessage(EndProcess, "")
+
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                If (My.Computer.FileSystem.FileExists(eventLog_else.LogFile.FullName.Trim())) Then
+                    Call DisplayLog(eventLog_else.LogFile.FullName.Trim())
+                End If
                 'Set Completed field to 0 (unchecked) since an error occurred at some point in the process
                 bSLMPTStatus.Cust_ValCmpltd = 0
 
@@ -493,6 +565,13 @@ Friend Class Form1
                         Call LogMessage("", eventLog)
                         Call LogMessage("Number of Vendor warnings found:  " + NbrOfWarnings_Vend.ToString, eventLog)
                         Call eventLog.LogMessage(EndProcess, "")
+                    Else
+                        ' SScatliffe 10/9/2025 Force ending log messages even if no warnings
+                        Call eventLog.LogMessage(StartProcess, "")
+                        Call LogMessage("Number of Vendor errors found: " + NbrOfErrors_Vend.ToString, eventLog)
+                        Call LogMessage("", eventLog)
+                        Call LogMessage("Number of Vendor warnings found:  " + NbrOfWarnings_Vend.ToString, eventLog)
+                        Call eventLog.LogMessage(EndProcess, "")
                     End If
 
                 Else  'Errors found
@@ -504,18 +583,35 @@ Friend Class Form1
 
                     cCompletedAPChk.Checked = bSLMPTStatus.Vend_ValCmpltd
 
-                    If NbrOfWarnings_Vend > 0 Then
+                    '  If NbrOfWarnings_Vend > 0 Then
                         Call LogMessage("", eventLog)
                         Call LogMessage("Number of Vendor warnings found:  " + NbrOfWarnings_Vend.ToString, eventLog)
-                    End If
+                    '   End If
                     Call eventLog.LogMessage(EndProcess, "")
 
 
                 End If
 
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                Call DisplayLog(eventLog.LogFile.FullName.Trim())
+
                 eventLog = Nothing
 
             Else
+
+                Dim eventLog_else As clsEventLog = New clsEventLog
+                eventLog_else.FileName = System.IO.Path.GetFileName(bSLMPTStatus.VendEventLogName)
+
+                Call eventLog_else.LogMessage(StartProcess, "")
+                Call LogMessage("", eventLog_else)
+                Call LogMessage("ERROR: Failed to finish.", eventLog_else)
+                Call eventLog_else.LogMessage(EndProcess, "")
+
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                If (My.Computer.FileSystem.FileExists(eventLog_else.LogFile.FullName.Trim())) Then
+                    Call DisplayLog(eventLog_else.LogFile.FullName.Trim())
+                End If
+
                 'Set Completed field to 0 (unchecked) since an error occurred at some point in the process
                 bSLMPTStatus.Vend_ValCmpltd = 0
 
@@ -649,7 +745,13 @@ Friend Class Form1
                         Call LogMessage("", eventLog)
                         Call LogMessage("Number of Item warnings found: " + NbrOfWarnings_Inv.ToString, eventLog)
                         Call eventLog.LogMessage(EndProcess, "")
-
+                    Else
+                        ' SScatliffe 10/9/2025 Force ending log messages even if no warnings
+                        Call eventLog.LogMessage(StartProcess, "")
+                        Call LogMessage("Number of Item errors found: " + NbrOfErrors_Inv.ToString, eventLog)
+                        Call LogMessage("", eventLog)
+                        Call LogMessage("Number of Item warnings found:  " + NbrOfWarnings_Inv.ToString, eventLog)
+                        Call eventLog.LogMessage(EndProcess, "")
                     End If
 
                 Else  'Errors found
@@ -661,16 +763,32 @@ Friend Class Form1
 
                     cCompletedINChk.Checked = bSLMPTStatus.Inv_ValCmpltd
 
-                    If NbrOfWarnings_Inv > 0 Then
-                        Call LogMessage("", eventLog)
-                        Call LogMessage("Number of Vendor warnings found:  " + NbrOfWarnings_Vend.ToString, eventLog)
-                    End If
+                    ' If NbrOfWarnings_Inv > 0 Then
+                    Call LogMessage("", eventLog)
+                    Call LogMessage("Number of Item warnings found:  " + NbrOfWarnings_Inv.ToString, eventLog)
+                    ' End If
                     Call eventLog.LogMessage(EndProcess, "")
 
                 End If
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                Call DisplayLog(eventLog.LogFile.FullName.Trim())
+
                 eventLog = Nothing
 
             Else
+
+                Dim eventLog_else As clsEventLog = New clsEventLog
+                eventLog_else.FileName = System.IO.Path.GetFileName(bSLMPTStatus.InvEventLogName)
+
+                Call eventLog_else.LogMessage(StartProcess, "")
+                Call LogMessage("", eventLog_else)
+                Call LogMessage("ERROR: Failed to finish.", eventLog_else)
+                Call eventLog_else.LogMessage(EndProcess, "")
+
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                If (My.Computer.FileSystem.FileExists(eventLog_else.LogFile.FullName.Trim())) Then
+                    Call DisplayLog(eventLog_else.LogFile.FullName.Trim())
+                End If
                 'Set Completed field to 0 (unchecked) since an error occurred at some point in the process
                 bSLMPTStatus.Inv_ValCmpltd = 0
 
@@ -785,7 +903,13 @@ Friend Class Form1
                         Call LogMessage("", eventLog)
                         Call LogMessage("Number of Project warnings found: " + NbrOfWarnings_Proj.ToString, eventLog)
                         Call eventLog.LogMessage(EndProcess, "")
-
+                    Else
+                        ' SScatliffe 10/9/2025 Force ending log messages even if no warnings
+                        Call eventLog.LogMessage(StartProcess, "")
+                        Call LogMessage("Number of Project errors found: " + NbrOfErrors_Proj.ToString, eventLog)
+                        Call LogMessage("", eventLog)
+                        Call LogMessage("Number of Project warnings found:  " + NbrOfWarnings_Proj.ToString, eventLog)
+                        Call eventLog.LogMessage(EndProcess, "")
                     End If
 
                 Else  'Errors found
@@ -798,16 +922,33 @@ Friend Class Form1
                     cCompletedPAChk.Text = bSLMPTStatus.Proj_ValCmpltd
 
 
-                    If NbrOfWarnings_Proj > 0 Then
-                        Call LogMessage("", eventLog)
-                        Call LogMessage("Number of Project warnings found: " + NbrOfWarnings_Proj.ToString, eventLog)
-                    End If
+                    'If NbrOfWarnings_Proj > 0 Then
+                    Call LogMessage("", eventLog)
+                    Call LogMessage("Number of Project warnings found: " + NbrOfWarnings_Proj.ToString, eventLog)
+                    'End If
                     Call eventLog.LogMessage(EndProcess, "")
                 End If
+
+                ' Display the event log just created.
+                Call DisplayLog(eventLog.LogFile.FullName.Trim())
 
                 eventLog = Nothing
 
             Else
+
+                Dim eventLog_else As clsEventLog = New clsEventLog
+                eventLog_else.FileName = System.IO.Path.GetFileName(bSLMPTStatus.ProjEventLogName)
+
+                Call eventLog_else.LogMessage(StartProcess, "")
+                Call LogMessage("", eventLog_else)
+                Call LogMessage("ERROR: Failed to finish.", eventLog_else)
+                Call eventLog_else.LogMessage(EndProcess, "")
+
+                ' Display the event log just created.
+                If (My.Computer.FileSystem.FileExists(eventLog_else.LogFile.FullName.Trim())) Then
+                    Call DisplayLog(eventLog_else.LogFile.FullName.Trim())
+                End If
+
                 'Set Completed field to 0 (unchecked) since an error occurred at some point in the process
                 bSLMPTStatus.Proj_ValCmpltd = 0
 
@@ -917,7 +1058,7 @@ Friend Class Form1
             If OkToContinue = True Then
 
                 Dim eventLog As clsEventLog = New clsEventLog
-                eventLog.FileName = System.IO.Path.GetFileName(bSLMPTStatus.VendEventLogName)
+                eventLog.FileName = System.IO.Path.GetFileName(bSLMPTStatus.POEventLogName)
 
                 'Set as Completed if no error were found
                 If NbrOfErrors_PO = 0 Then
@@ -932,9 +1073,16 @@ Friend Class Form1
                         Call eventLog.LogMessage(StartProcess, "")
 
                         Call LogMessage("", eventLog)
-                        Call LogMessage("Number of Vendor warnings found:  " + NbrOfWarnings_Vend.ToString, eventLog)
+                        Call LogMessage("Number of Purchasing warnings found:  " + NbrOfWarnings_PO.ToString, eventLog)
                         Call eventLog.LogMessage(EndProcess, "")
 
+                    Else
+                        ' SScatliffe 10/9/2025 Force ending log messages even if no warnings
+                        Call eventLog.LogMessage(StartProcess, "")
+                        Call LogMessage("Number of Purchasing errors found: " + NbrOfErrors_PO.ToString, eventLog)
+                        Call LogMessage("", eventLog)
+                        Call LogMessage("Number of Purchasing warnings found:  " + NbrOfWarnings_PO.ToString, eventLog)
+                        Call eventLog.LogMessage(EndProcess, "")
                     End If
 
                 Else  'Errors found
@@ -950,11 +1098,11 @@ Friend Class Form1
                     cCompletedPOChk.Checked = bSLMPTStatus.PO_ValCmpltd
 
 
-                    If NbrOfWarnings_PO > 0 Then
-                        Call LogMessage("", eventLog)
-                        Call LogMessage("Number of Purchasing warnings found: " + NbrOfWarnings_PO.ToString, eventLog)
+                    'If NbrOfWarnings_PO > 0 Then
+                    Call LogMessage("", eventLog)
+                    Call LogMessage("Number of Purchasing warnings found: " + NbrOfWarnings_PO.ToString, eventLog)
 
-                    End If
+                    'End If
                     Call eventLog.LogMessage(EndProcess, "")
 
                 End If
@@ -976,10 +1124,26 @@ Friend Class Form1
                     lOrderActive.Text = String.Concat("Active: " + CStr(retValInt))
                 End If
 
+                '  SScatliffe 10/9/2025 Display the event log just created.
+                Call DisplayLog(eventLog.LogFile.FullName.Trim())
 
                 eventLog = Nothing
 
             Else
+
+                Dim eventLog_else As clsEventLog = New clsEventLog
+                eventLog_else.FileName = System.IO.Path.GetFileName(bSLMPTStatus.POEventLogName)
+
+                Call eventLog_else.LogMessage(StartProcess, "")
+                Call LogMessage("", eventLog_else)
+                Call LogMessage("ERROR: Failed to finish.", eventLog_else)
+                Call eventLog_else.LogMessage(EndProcess, "")
+
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                If (My.Computer.FileSystem.FileExists(eventLog_else.LogFile.FullName.Trim())) Then
+                    Call DisplayLog(eventLog_else.LogFile.FullName.Trim())
+                End If
+
                 'Set Completed field to 0 (unchecked) since an error occurred at some point in the process
                 bSLMPTStatus.PO_ValCmpltd = 0
                 cValCompletedPurch.Checked = bSLMPTStatus.PO_ValCmpltd
@@ -1128,9 +1292,16 @@ Friend Class Form1
                     cCompletedSOChk.Text = bSLMPTStatus.SO_ValCmpltd
 
 
-                    If NbrOfWarnings_Vend > 0 Then
+                    If NbrOfWarnings_SO > 0 Then
                         Call eventLog.LogMessage(StartProcess, "")
 
+                        Call LogMessage("", eventLog)
+                        Call LogMessage("Number of Sales Order warnings found:  " + NbrOfWarnings_SO.ToString, eventLog)
+                        Call eventLog.LogMessage(EndProcess, "")
+                    Else
+                        ' SScatliffe 10/9/2025 Force ending log messages even if no warnings
+                        Call eventLog.LogMessage(StartProcess, "")
+                        Call LogMessage("Number of Sales Order errors found: " + NbrOfErrors_SO.ToString, eventLog)
                         Call LogMessage("", eventLog)
                         Call LogMessage("Number of Sales Order warnings found:  " + NbrOfWarnings_SO.ToString, eventLog)
                         Call eventLog.LogMessage(EndProcess, "")
@@ -1145,17 +1316,35 @@ Friend Class Form1
                     cCompletedSOChk.Text = bSLMPTStatus.SO_ValCmpltd
 
 
-                    If NbrOfWarnings_SO > 0 Then
-                        Call LogMessage("", eventLog)
-                        Call LogMessage("Number of Sales Order warnings found:  " + NbrOfWarnings_SO.ToString, eventLog)
-                    End If
+                    'If NbrOfWarnings_SO > 0 Then
+                    Call LogMessage("", eventLog)
+                    Call LogMessage("Number of Sales Order warnings found:  " + NbrOfWarnings_SO.ToString, eventLog)
+                    'End If
                     Call eventLog.LogMessage(EndProcess, "")
 
 
                 End If
+
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                Call DisplayLog(eventLog.LogFile.FullName.Trim())
+
                 eventLog = Nothing
 
             Else
+
+                Dim eventLog_else As clsEventLog = New clsEventLog
+                eventLog_else.FileName = System.IO.Path.GetFileName(bSLMPTStatus.SOEventLogName)
+
+                Call eventLog_else.LogMessage(StartProcess, "")
+                Call LogMessage("", eventLog_else)
+                Call LogMessage("ERROR: Failed to finish.", eventLog_else)
+                Call eventLog_else.LogMessage(EndProcess, "")
+
+                ' SScatliffe 10/9/2025 Display the event log just created.
+                If (My.Computer.FileSystem.FileExists(eventLog_else.LogFile.FullName.Trim())) Then
+                    Call DisplayLog(eventLog_else.LogFile.FullName.Trim())
+                End If
+
                 'Set Completed field to 0 (unchecked) since an error occurred at some point in the process
                 bSLMPTStatus.SO_ValCmpltd = 0
 
@@ -1179,6 +1368,8 @@ Friend Class Form1
 
             ' Update the control values
             Call UpdateSOControls()
+
+            StatusLbl.Text = "Sales Order Validation Complete"
 
         Else
             Exit Sub

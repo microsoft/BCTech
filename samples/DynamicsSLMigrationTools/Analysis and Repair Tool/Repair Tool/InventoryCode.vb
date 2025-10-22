@@ -83,6 +83,38 @@ Module InventoryCode
         Call oEventLog.LogMessage(StartProcess, "")
         Call oEventLog.LogMessage(0, "")
 
+        '=====================================================================================
+        ' SScatliffe 10/8/2025 - VSTS 134249/145393 - Check for voided batches and warn user
+        '=====================================================================================
+
+        Call VoidedBatchCheck("IN")
+
+        If VBatchesExistIN = True Then
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("WARNING: Voided batches exist in Inventory.", oEventLog)
+            Call LogMessage("", oEventLog)
+
+            ' list voided batches
+            sqlStmt = "SELECT BatNbr, EditScrnNbr, PerPost FROM Batch WHERE Module = 'IN' AND Status = 'V' AND CpnyID = " + SParm(CpnyId) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim)
+
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            While sqlReader.Read()
+
+                Call SetBatchValues(sqlReader, bBatchInfo)
+                'Write Batch info to event log
+                Call LogMessage("Batch: " + bBatchInfo.BatNbr.Trim + vbTab + "Period: " + FormatPeriodNbr(bBatchInfo.PerPost) + vbTab + vbTab + "Screen: " + GetScreenName(bBatchInfo.EditScrnNbr), oEventLog)
+                NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
+
+            End While
+
+            Call sqlReader.Close()
+            Call LogMessage("", oEventLog)
+
+        End If
+
+
         Call oEventLog.LogMessage(0, "Processing Inventory")
 
         '***************************************************************************************************************
@@ -570,33 +602,33 @@ Module InventoryCode
             '********************************************************
             sqlString = "SELECT InvtId, QtyOnHand, SiteId, TotCost FROM ItemSite WHERE RTRIM(ItemSite.SiteID) = ''"
 
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
 
-                If sqlReader.HasRows() Then
+            If sqlReader.HasRows() Then
                 Call LogMessage("ItemSite records exist with blank SiteID", oEventLog)
                 Call LogMessage("", oEventLog)
 
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
-                While sqlReader.Read()
-
-
-                    Call SetItemSiteValues(sqlReader, bItemSiteInfo)
-
-                    'Delete invalid ItemSite record
-                    Call LogMessage("Deleted invalid ItemSite record for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemSiteInfo.SiteID.Trim), oEventLog)
-
-                    sqlStmt = "DELETE FROM ItemSite WHERE InvtID =" + SParm(bItemSiteInfo.InvtID) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID)
-                    Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+            While sqlReader.Read()
 
 
-                End While
-                '
-                Call sqlReader.Close()
+                Call SetItemSiteValues(sqlReader, bItemSiteInfo)
+
+                'Delete invalid ItemSite record
+                Call LogMessage("Deleted invalid ItemSite record for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemSiteInfo.SiteID.Trim), oEventLog)
+
+                sqlStmt = "DELETE FROM ItemSite WHERE InvtID =" + SParm(bItemSiteInfo.InvtID) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID)
+                Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+
+
+            End While
+            '
+            Call sqlReader.Close()
             If SqlTranReader IsNot Nothing Then
                 Call SqlTranReader.Close()
                 SqlTranReader = Nothing
@@ -615,16 +647,16 @@ Module InventoryCode
             '*** Check for Location records where InvtID is blank ***
             '********************************************************
             sqlString = "SELECT InvtId, SiteId, WhseLoc FROM Location WHERE RTRIM(Location.InvtID) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
 
-                If sqlReader.HasRows() Then
+            If sqlReader.HasRows() Then
                 Call LogMessage("Location records exist with blank Inventory ID", oEventLog)
                 Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
             While sqlReader.Read()
                 Call SetLocationValues(sqlReader, bLocationInfo)
@@ -637,11 +669,11 @@ Module InventoryCode
                 Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
             End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
             If SqlTranConn IsNot Nothing Then
 
                 If (SqlTranConn.State <> ConnectionState.Closed) Then
@@ -656,30 +688,30 @@ Module InventoryCode
             '*** Check for Location records where SiteID is blank ***
             '********************************************************
             sqlString = "SELECT InvtId, SiteId, WhseLoc FROM Location WHERE RTRIM(Location.SiteID) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows Then
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then
                 Call LogMessage("Location records exist with blank SiteID", oEventLog)
                 Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetLocationValues(sqlReader, bLocationInfo)
-                    'Delete invalid Location record
-                    Call LogMessage("Deleted invalid Location record for InvtID:" + SParm(bLocationInfo.InvtID.Trim) + "and SiteID:" + SParm(bLocationInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLocationInfo.WhseLoc.Trim), oEventLog)
+            While sqlReader.Read()
+                Call SetLocationValues(sqlReader, bLocationInfo)
+                'Delete invalid Location record
+                Call LogMessage("Deleted invalid Location record for InvtID:" + SParm(bLocationInfo.InvtID.Trim) + "and SiteID:" + SParm(bLocationInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLocationInfo.WhseLoc.Trim), oEventLog)
 
-                    sqlStmt = "DELETE FROM Location WHERE InvtID =" + SParm(bLocationInfo.InvtID) + "AND SiteID =" + SParm(bLocationInfo.SiteID) + "AND WhseLoc =" + SParm(bLocationInfo.WhseLoc)
-                    Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+                sqlStmt = "DELETE FROM Location WHERE InvtID =" + SParm(bLocationInfo.InvtID) + "AND SiteID =" + SParm(bLocationInfo.SiteID) + "AND WhseLoc =" + SParm(bLocationInfo.WhseLoc)
+                Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
-                End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            End While
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
 
             If SqlTranConn IsNot Nothing Then
 
@@ -694,30 +726,30 @@ Module InventoryCode
             '*** Check for Location records where WhseLoc is blank ***
             '*********************************************************
             sqlString = "SELECT InvtId, SiteId, WhseLoc FROM Location WHERE RTRIM(Location.WhseLoc) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows = True Then
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows = True Then
                 Call LogMessage("Location records exist with blank WhseLoc", oEventLog)
                 Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetLocationValues(sqlReader, bLocationInfo)
+            While sqlReader.Read()
+                Call SetLocationValues(sqlReader, bLocationInfo)
 
-                    'Delete invalid Location record
-                    Call LogMessage("Deleted invalid Location record for InvtID:" + SParm(bLocationInfo.InvtID.Trim) + "and SiteID:" + SParm(bLocationInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLocationInfo.WhseLoc.Trim), oEventLog)
+                'Delete invalid Location record
+                Call LogMessage("Deleted invalid Location record for InvtID:" + SParm(bLocationInfo.InvtID.Trim) + "and SiteID:" + SParm(bLocationInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLocationInfo.WhseLoc.Trim), oEventLog)
 
-                    sqlStmt = "DELETE FROM Location WHERE InvtID =" + SParm(bLocationInfo.InvtID) + "AND SiteID =" + SParm(bLocationInfo.SiteID) + "AND WhseLoc =" + SParm(bLocationInfo.WhseLoc)
-                    Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
-                End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+                sqlStmt = "DELETE FROM Location WHERE InvtID =" + SParm(bLocationInfo.InvtID) + "AND SiteID =" + SParm(bLocationInfo.SiteID) + "AND WhseLoc =" + SParm(bLocationInfo.WhseLoc)
+                Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+            End While
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
             If SqlTranConn IsNot Nothing Then
 
                 If (SqlTranConn.State <> ConnectionState.Closed) Then
@@ -732,31 +764,31 @@ Module InventoryCode
             '********************************************************
 
             sqlString = "SELECT InvtId, LayerType, RcptDate, RcptNbr, SpecificCostId, SiteId FROM ItemCost WHERE RTRIM(ItemCost.InvtID) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows Then
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
-                While sqlReader.Read()
+            While sqlReader.Read()
 
-                    'Delete invalid ItemCost record
-                    Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
+                'Delete invalid ItemCost record
+                Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
 
-                    sqlStmt = sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
-                    Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+                sqlStmt = sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
+                Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
 
-                End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            End While
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
 
             If SqlTranConn IsNot Nothing Then
 
@@ -770,31 +802,31 @@ Module InventoryCode
             '*** Check for ItemCost records where SiteID is blank ***
             '********************************************************
             sqlString = "SELECT InvtId, LayerType, RcptDate, RcptNbr, SpecificCostId, SiteId FROM ItemCost WHERE RTRIM(ItemCost.SiteID) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows() Then
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows() Then
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetItemCostValues(sqlReader, bItemCostInfo)
-                    'Delete invalid ItemCost record
-                    Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
+            While sqlReader.Read()
+                Call SetItemCostValues(sqlReader, bItemCostInfo)
+                'Delete invalid ItemCost record
+                Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
 
-                    sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
-                    Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+                sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
+                Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
 
-                End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            End While
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
             If SqlTranConn IsNot Nothing Then
 
                 If (SqlTranConn.State <> ConnectionState.Closed) Then
@@ -808,32 +840,32 @@ Module InventoryCode
             '***********************************************************
             sqlString = "SELECT InvtId, LayerType, RcptDate, RcptNbr, SpecificCostId, SiteId FROM ItemCost WHERE RTRIM(ItemCost.LayerType) = ''"
 
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows() Then
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows() Then
 
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
-                While sqlReader.Read()
+            While sqlReader.Read()
 
-                    Call SetItemCostValues(sqlReader, bItemCostInfo)
-                    'Delete invalid ItemCost record
-                    Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
+                Call SetItemCostValues(sqlReader, bItemCostInfo)
+                'Delete invalid ItemCost record
+                Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
 
-                    sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
-                    Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+                sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
+                Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
-                End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            End While
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
 
             If SqlTranConn IsNot Nothing Then
 
@@ -849,33 +881,33 @@ Module InventoryCode
             '*** Check for ItemCost records where RcptNbr is blank for FIFO/LIFO valued items ***
             '************************************************************************************
             sqlString = "SELECT c.InvtId, c.LayerType, c.RcptDate, c.RcptNbr, c.SpecificCostId, c.SiteId  FROM ItemCost c JOIN Inventory v ON v.InvtID = c.InvtID WHERE v.ValMthd IN ('F', 'L') AND RTRIM(c.RcptNbr) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
 
 
-                If sqlReader.HasRows() Then
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+            If sqlReader.HasRows() Then
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetItemCostValues(sqlReader, bItemCostInfo)
-                    'Delete invalid ItemCost record
-                    Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
+            While sqlReader.Read()
+                Call SetItemCostValues(sqlReader, bItemCostInfo)
+                'Delete invalid ItemCost record
+                Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
 
-                    sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
-                    Call sql_1(sqlReader, sqlStmt, SqlAppDbConn, OperationType.DeleteOp, CommandType.Text)
+                sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
+                Call sql_1(sqlReader, sqlStmt, SqlAppDbConn, OperationType.DeleteOp, CommandType.Text)
 
-                End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            End While
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
 
             If SqlTranConn IsNot Nothing Then
 
@@ -890,30 +922,30 @@ Module InventoryCode
             '*** Check for ItemCost records where SpecificCostID is blank for Specific Identification valued items ***
             '*********************************************************************************************************
             sqlString = "SELECT c.InvtId, c.LayerType, c.RcptDate, c.RcptNbr, c.SpecificCostId, c.SiteId FROM ItemCost c JOIN Inventory v ON v.InvtID = c.InvtID WHERE v.ValMthd = 'S' AND RTRIM(c.SpecificCostID) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
 
-                If sqlReader.HasRows() Then
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+            If sqlReader.HasRows() Then
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
-                End If
+            End If
 
-                While sqlReader.Read()
+            While sqlReader.Read()
 
-                    Call SetItemCostValues(sqlReader, bItemCostInfo)
-                    'Delete invalid ItemCost record
-                    Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
+                Call SetItemCostValues(sqlReader, bItemCostInfo)
+                'Delete invalid ItemCost record
+                Call LogMessage("Deleted invalid ItemCost record for InvtID:" + SParm(bItemCostInfo.InvtID.Trim) + "and SiteID:" + SParm(bItemCostInfo.SiteID.Trim) + "and LayerType:" + SParm(bItemCostInfo.LayerType.Trim) + "and SpecificCostID:" + SParm(bItemCostInfo.SpecificCostID.Trim) + "and RcptNbr:" + SParm(bItemCostInfo.RcptNbr.Trim) + "and RcptDate:" + SParm(bItemCostInfo.RcptDate), oEventLog)
 
-                    sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
-                    Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
+                sqlStmt = "DELETE FROM ItemCost WHERE InvtID =" + SParm(bItemCostInfo.InvtID) + "AND SiteID =" + SParm(bItemCostInfo.SiteID) + "AND LayerType =" + SParm(bItemCostInfo.LayerType) + "AND SpecificCostID =" + SParm(bItemCostInfo.SpecificCostID) + "AND RcptNbr =" + SParm(bItemCostInfo.RcptNbr) + "AND RcptDate =" + bItemCostInfo.RcptDate
+                Call sql_1(SqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
 
-                End While
+            End While
 
-                Call sqlReader.Close()
+            Call sqlReader.Close()
             If SqlTranReader IsNot Nothing Then
                 Call SqlTranReader.Close()
                 SqlTranReader = Nothing
@@ -932,31 +964,31 @@ Module InventoryCode
             '*** Check for LotSerMst records where InvtID is blank ***
             '*********************************************************
             sqlString = "SELECT InvtId, LotSerNbr, SiteId, WhseLoc FROM LotSerMst WHERE RTRIM(LotSerMst.InvtID) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows() Then
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows() Then
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
-                    'Delete invalid LotSerMst record
-                    Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
+            While sqlReader.Read()
+                Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
+                'Delete invalid LotSerMst record
+                Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
 
-                    sqlStmt = "DELETE FROM LotSerMst WHERE InvtID =" + SParm(bLotSerMstInfo.InvtID) + "AND LotSerNbr =" + SParm(bLotSerMstInfo.LotSerNbr) + "AND SiteID =" + SParm(bLotSerMstInfo.SiteID) + "AND WhseLoc =" + SParm(bLotSerMstInfo.WhseLoc)
+                sqlStmt = "DELETE FROM LotSerMst WHERE InvtID =" + SParm(bLotSerMstInfo.InvtID) + "AND LotSerNbr =" + SParm(bLotSerMstInfo.LotSerNbr) + "AND SiteID =" + SParm(bLotSerMstInfo.SiteID) + "AND WhseLoc =" + SParm(bLotSerMstInfo.WhseLoc)
                 Call sql_1(sqlReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
             End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
 
             If SqlTranConn IsNot Nothing Then
 
@@ -970,22 +1002,22 @@ Module InventoryCode
             '*** Check for LotSerMst records where LotSerNbr is blank ***
             '************************************************************
             sqlString = "SELECT InvtId, LotSerNbr, SiteId, WhseLoc FROM LotSerMst WHERE RTRIM(LotSerMst.LotSerNbr) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows() Then
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows() Then
 
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
-                    'Delete invalid LotSerMst record
-                    Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
+            While sqlReader.Read()
+                Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
+                'Delete invalid LotSerMst record
+                Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
 
 
 
@@ -993,11 +1025,11 @@ Module InventoryCode
                 Call sql_1(sqlReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
             End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
 
             If SqlTranConn IsNot Nothing Then
 
@@ -1011,31 +1043,31 @@ Module InventoryCode
             '*** Check for LotSerMst records where SiteID is blank ***
             '*********************************************************
             sqlString = "SELECT InvtId, LotSerNbr, SiteId, WhseLoc FROM LotSerMst WHERE RTRIM(LotSerMst.SiteID) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows() Then
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows() Then
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
-                    'Delete invalid LotSerMst record
-                    Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
+            While sqlReader.Read()
+                Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
+                'Delete invalid LotSerMst record
+                Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
 
-                    sqlStmt = "DELETE FROM LotSerMst WHERE InvtID =" + SParm(bLotSerMstInfo.InvtID) + "AND LotSerNbr =" + SParm(bLotSerMstInfo.LotSerNbr) + "AND SiteID =" + SParm(bLotSerMstInfo.SiteID) + "AND WhseLoc =" + SParm(bLotSerMstInfo.WhseLoc)
+                sqlStmt = "DELETE FROM LotSerMst WHERE InvtID =" + SParm(bLotSerMstInfo.InvtID) + "AND LotSerNbr =" + SParm(bLotSerMstInfo.LotSerNbr) + "AND SiteID =" + SParm(bLotSerMstInfo.SiteID) + "AND WhseLoc =" + SParm(bLotSerMstInfo.WhseLoc)
                 Call sql_1(sqlReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
             End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
 
             If SqlTranConn IsNot Nothing Then
 
@@ -1049,31 +1081,31 @@ Module InventoryCode
             '*** Check for LotSerMst records where WhseLoc is blank ***
             '**********************************************************
             sqlString = "SELECT InvtId, LotSerNbr, SiteId, WhseLoc FROM LotSerMst WHERE RTRIM(LotSerMst.WhseLoc) = ''"
-                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-                If sqlReader.HasRows() Then
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("", oEventLog)
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows() Then
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
 
-                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                    SqlTranConn.Open()
+                SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                SqlTranConn.Open()
 
 
-                End If
+            End If
 
-                While sqlReader.Read()
-                    Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
-                    'Delete invalid LotSerMst record
-                    Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
+            While sqlReader.Read()
+                Call SetLotSerMstValues(sqlReader, bLotSerMstInfo)
+                'Delete invalid LotSerMst record
+                Call LogMessage("Deleted invalid LotSerMst record for InvtID:" + SParm(bLotSerMstInfo.InvtID.Trim) + "and LotSerNbr:" + SParm(bLotSerMstInfo.LotSerNbr.Trim) + "and SiteID:" + SParm(bLotSerMstInfo.SiteID.Trim) + "and WhseLoc:" + SParm(bLotSerMstInfo.WhseLoc.Trim), oEventLog)
 
-                    sqlStmt = "DELETE FROM LotSerMst WHERE InvtID =" + SParm(bLotSerMstInfo.InvtID) + "AND LotSerNbr =" + SParm(bLotSerMstInfo.LotSerNbr) + "AND SiteID =" + SParm(bLotSerMstInfo.SiteID) + "AND WhseLoc =" + SParm(bLotSerMstInfo.WhseLoc)
+                sqlStmt = "DELETE FROM LotSerMst WHERE InvtID =" + SParm(bLotSerMstInfo.InvtID) + "AND LotSerNbr =" + SParm(bLotSerMstInfo.LotSerNbr) + "AND SiteID =" + SParm(bLotSerMstInfo.SiteID) + "AND WhseLoc =" + SParm(bLotSerMstInfo.WhseLoc)
                 Call sql_1(sqlReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text)
 
             End While
-                Call sqlReader.Close()
-                If SqlTranReader IsNot Nothing Then
-                    Call SqlTranReader.Close()
-                    SqlTranReader = Nothing
-                End If
+            Call sqlReader.Close()
+            If SqlTranReader IsNot Nothing Then
+                Call SqlTranReader.Close()
+                SqlTranReader = Nothing
+            End If
             If SqlTranConn IsNot Nothing Then
 
                 If (SqlTranConn.State <> ConnectionState.Closed) Then
@@ -1087,136 +1119,136 @@ Module InventoryCode
             '*** Check for Specific Cost IDs with Qty > 1 ***
             '************************************************
             Try
-                    sqlString = "SELECT ItemCost.InvtID, ItemCost.SiteID, ItemCost.SpecificCostID, ItemCost.Qty FROM ItemCost JOIN Inventory on Inventory.InvtID = ItemCost.InvtID WHERE Inventory.ValMthd = 'S' AND Inventory.LotSerTrack <> 'SI' AND ItemCost.Qty > 1"
-                    Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+                sqlString = "SELECT ItemCost.InvtID, ItemCost.SiteID, ItemCost.SpecificCostID, ItemCost.Qty FROM ItemCost JOIN Inventory on Inventory.InvtID = ItemCost.InvtID WHERE Inventory.ValMthd = 'S' AND Inventory.LotSerTrack <> 'SI' AND ItemCost.Qty > 1"
+                Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
 
-                    If sqlReader.HasRows() Then
-                        'Write Warning message to event log
-                        Call LogMessage("", oEventLog)
-                        Call LogMessage("", oEventLog)
-                        msgText = "ERROR: Specific Cost IDs exist with a quantity greater than 1."
-                        Call LogMessage(msgText, oEventLog)
+                If sqlReader.HasRows() Then
+                    'Write Warning message to event log
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "ERROR: Specific Cost IDs exist with a quantity greater than 1."
+                    Call LogMessage(msgText, oEventLog)
 
-                        msgText = "When migrating on-hand quantities and costs for Specific Cost items, each Specific Cost ID cannot have a quantity greater than 1."
-                        msgText = msgText + " Use the Inventory Adjustments (10.030.00) screen to move quantities greater than 1 to their own individual Specific Cost ID."
-                        msgText = msgText + vbNewLine + "Specific Cost IDs with a quantity greater than 1:"
-                        Call LogMessage(msgText, oEventLog)
+                    msgText = "When migrating on-hand quantities and costs for Specific Cost items, each Specific Cost ID cannot have a quantity greater than 1."
+                    msgText = msgText + " Use the Inventory Adjustments (10.030.00) screen to move quantities greater than 1 to their own individual Specific Cost ID."
+                    msgText = msgText + vbNewLine + "Specific Cost IDs with a quantity greater than 1:"
+                    Call LogMessage(msgText, oEventLog)
+                End If
+
+                While sqlReader.Read()
+
+                    Call SetSpecIDErrorListValues(sqlReader, bSpecIDErrorList)
+                    'Write InvtID, SiteID, SpecificCostID, and Qty to event log
+                    Call LogMessage("Inventory ID: " + bSpecIDErrorList.InvtID + vbTab + "Site ID: " + bSpecIDErrorList.SiteID + vbTab + "Specific Cost ID: " + bSpecIDErrorList.SpecificCostID + vbTab + "Qty: " + bSpecIDErrorList.Qty.ToString, oEventLog)
+                    NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+
+                End While
+
+                Call sqlReader.Close()
+
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message.Trim + vbNewLine + ex.StackTrace, "Error Encountered", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error encountered while checking for Specific Cost IDs with a quantity greater than 1.", oEventLog)
+
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+                Exit Sub
+            End Try
+
+
+            '**************************************
+            '*** Validate on-hand Qty and Costs ***
+            '**************************************
+            Try
+                'Loop through Inventory records
+                sqlStmt = "SELECT  ClassId, InvtId, LotSerTrack, SerAssign, StkUnit, Supplr1, ValMthd  FROM Inventory WHERE TranStatusCode NOT IN ('IN', 'DE') AND StkItem = 1"
+                Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+                ' If any rows are returned, then define a second connection for processing other records.
+                If (sqlReader.HasRows) Then
+
+                    SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                    SqlTranConn.Open()
+
+                End If
+                While sqlReader.Read()
+                    Call SetInventoryValues(sqlReader, bInventoryInfo)
+                    'Initialize variables
+                    qtyItemSite = 0
+                    qtyItemCost = 0
+                    qtyLocation = 0
+                    qtyLotSerMst = 0
+                    costItemSite = 0
+                    costItemCost = 0
+
+
+                    'Loop through ItemSite records
+                    sqlString = "SELECT InvtId, QtyOnHand, SiteId, TotCost FROM ItemSite WHERE InvtID =" + SParm(bInventoryInfo.InvtID.Trim)
+                    Call sqlFetch_1(SqlTranReader, sqlString, SqlTranConn, CommandType.Text)
+
+                    ' Create a second connection for additional queries.
+                    If SqlTranReader.HasRows() Then
+
+                        SqlSumConn = New SqlClient.SqlConnection(AppDbConnStr)
+                        SqlSumConn.Open()
+
+
                     End If
+                    While SqlTranReader.Read()
+                        Call SetItemSiteValues(SqlTranReader, bItemSiteInfo)
+                        'Get ItemSite.QtyOnHand and ItemSite.TotCost
+                        qtyItemSite = bItemSiteInfo.QtyOnHand
+                        costItemSite = bItemSiteInfo.TotCost
 
-                    While sqlReader.Read()
+                        'Look up ItemCost information
+                        Select Case bInventoryInfo.ValMthd
+                            Case "F", "L", "S"  'FIFO, LIFO, Specific Identification
+                                'Get ItemCost.Qty
+                                sqlStmt = "SELECT SUM(Qty) FROM ItemCost WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
+                                Call sqlFetch_Num(qtyItemCost, sqlStmt, SqlSumConn)
 
-                        Call SetSpecIDErrorListValues(sqlReader, bSpecIDErrorList)
-                        'Write InvtID, SiteID, SpecificCostID, and Qty to event log
-                        Call LogMessage("Inventory ID: " + bSpecIDErrorList.InvtID + vbTab + "Site ID: " + bSpecIDErrorList.SiteID + vbTab + "Specific Cost ID: " + bSpecIDErrorList.SpecificCostID + vbTab + "Qty: " + bSpecIDErrorList.Qty.ToString, oEventLog)
-                        NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+
+                                'Get ItemCost.TotCost
+                                sqlStmt = "SELECT SUM(TotCost) FROM ItemCost WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
+                                Call sqlFetch_Num(costItemCost, sqlStmt, SqlSumConn)
+
+
+                            Case "A", "T", "U"  'Average, Standard, User-Specified
+                                qtyItemCost = 0
+                                costItemCost = 0
+                        End Select
+
+                        'Get Location.QtyOnHand
+                        sqlStmt = "SELECT SUM(QtyOnHand) FROM Location WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
+                        Call sqlFetch_Num(qtyLocation, sqlStmt, SqlSumConn)
+
+
+
+                        'Look up LotSerMst information
+                        Select Case bInventoryInfo.LotSerTrack
+                            Case "LI", "SI"
+                                sqlStmt = "SELECT SUM(QtyOnHand) FROM LotSerMst WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
+                                Call sqlFetch_Num(qtyLotSerMst, sqlStmt, SqlSumConn)
+
+                            Case Else
+                                qtyLotSerMst = 0
+                        End Select
 
                     End While
 
-                    Call sqlReader.Close()
-
-
-                Catch ex As Exception
-                    Call MessageBox.Show(ex.Message.Trim + vbNewLine + ex.StackTrace, "Error Encountered", MessageBoxButtons.OK)
-
-                    Call LogMessage("", oEventLog)
-                    Call LogMessage("Error encountered while checking for Specific Cost IDs with a quantity greater than 1.", oEventLog)
-
-                    Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
-                    Call LogMessage("", oEventLog)
-                    OkToContinue = False
-                    NbrOfErrors_Inv = NbrOfErrors_Inv + 1
-                    Exit Sub
-                End Try
-
-
-                '**************************************
-                '*** Validate on-hand Qty and Costs ***
-                '**************************************
-                Try
-                    'Loop through Inventory records
-                    sqlStmt = "SELECT  ClassId, InvtId, LotSerTrack, SerAssign, StkUnit, Supplr1, ValMthd  FROM Inventory WHERE TranStatusCode NOT IN ('IN', 'DE') AND StkItem = 1"
-                    Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
-
-                    ' If any rows are returned, then define a second connection for processing other records.
-                    If (sqlReader.HasRows) Then
-
-                        SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                        SqlTranConn.Open()
-
+                    If SqlTranReader IsNot Nothing Then
+                        Call SqlTranReader.Close()
+                        SqlTranReader = Nothing
                     End If
-                    While sqlReader.Read()
-                        Call SetInventoryValues(sqlReader, bInventoryInfo)
-                        'Initialize variables
-                        qtyItemSite = 0
-                        qtyItemCost = 0
-                        qtyLocation = 0
-                        qtyLotSerMst = 0
-                        costItemSite = 0
-                        costItemCost = 0
-
-
-                        'Loop through ItemSite records
-                        sqlString = "SELECT InvtId, QtyOnHand, SiteId, TotCost FROM ItemSite WHERE InvtID =" + SParm(bInventoryInfo.InvtID.Trim)
-                        Call sqlFetch_1(SqlTranReader, sqlString, SqlTranConn, CommandType.Text)
-
-                        ' Create a second connection for additional queries.
-                        If SqlTranReader.HasRows() Then
-
-                            SqlSumConn = New SqlClient.SqlConnection(AppDbConnStr)
-                            SqlSumConn.Open()
-
-
-                        End If
-                        While SqlTranReader.Read()
-                            Call SetItemSiteValues(SqlTranReader, bItemSiteInfo)
-                            'Get ItemSite.QtyOnHand and ItemSite.TotCost
-                            qtyItemSite = bItemSiteInfo.QtyOnHand
-                            costItemSite = bItemSiteInfo.TotCost
-
-                            'Look up ItemCost information
-                            Select Case bInventoryInfo.ValMthd
-                                Case "F", "L", "S"  'FIFO, LIFO, Specific Identification
-                                    'Get ItemCost.Qty
-                                    sqlStmt = "SELECT SUM(Qty) FROM ItemCost WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
-                                    Call sqlFetch_Num(qtyItemCost, sqlStmt, SqlSumConn)
-
-
-                                    'Get ItemCost.TotCost
-                                    sqlStmt = "SELECT SUM(TotCost) FROM ItemCost WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
-                                    Call sqlFetch_Num(costItemCost, sqlStmt, SqlSumConn)
-
-
-                                Case "A", "T", "U"  'Average, Standard, User-Specified
-                                    qtyItemCost = 0
-                                    costItemCost = 0
-                            End Select
-
-                            'Get Location.QtyOnHand
-                            sqlStmt = "SELECT SUM(QtyOnHand) FROM Location WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
-                            Call sqlFetch_Num(qtyLocation, sqlStmt, SqlSumConn)
-
-
-
-                            'Look up LotSerMst information
-                            Select Case bInventoryInfo.LotSerTrack
-                                Case "LI", "SI"
-                                    sqlStmt = "SELECT SUM(QtyOnHand) FROM LotSerMst WHERE InvtID =" + SParm(bItemSiteInfo.InvtID.Trim) + "AND SiteID =" + SParm(bItemSiteInfo.SiteID.Trim)
-                                    Call sqlFetch_Num(qtyLotSerMst, sqlStmt, SqlSumConn)
-
-                                Case Else
-                                    qtyLotSerMst = 0
-                            End Select
-
-                        End While
-
-                        If SqlTranReader IsNot Nothing Then
-                            Call SqlTranReader.Close()
-                            SqlTranReader = Nothing
-                        End If
-                        If (SqlSumReader IsNot Nothing) Then
-                            Call SqlSumReader.Close()
-                            SqlSumReader = Nothing
-                        End If
+                    If (SqlSumReader IsNot Nothing) Then
+                        Call SqlSumReader.Close()
+                        SqlSumReader = Nothing
+                    End If
 
                     If SqlTranConn IsNot Nothing Then
 
@@ -1230,135 +1262,136 @@ Module InventoryCode
 
                     'Check to see if ItemSite/ItemCost/Location/LotSerMst quantities balance
                     qtyErrorFound = False
-                        Select Case bInventoryInfo.ValMthd
-                            Case "F", "L", "S"  'FIFO, LIFO, Specific Identification
-                                If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then  'Lot or Serial tracked
-                                    If bInventoryInfo.SerAssign = "R" Then  'When Received
-                                        If (qtyItemSite <> qtyItemCost) Or (qtyItemSite <> qtyLocation) Or (qtyItemSite <> qtyLotSerMst) Or (qtyItemCost <> qtyLocation) Or (qtyItemCost <> qtyLotSerMst) Or (qtyLocation <> qtyLotSerMst) Then
-                                            qtyErrorFound = True
-                                        End If
-                                    Else  'When Used
-                                        If (qtyItemSite <> qtyItemCost) Or (qtyItemSite <> qtyLocation) Or (qtyItemCost <> qtyLocation) Then
-                                            qtyErrorFound = True
-                                        End If
+                    Select Case bInventoryInfo.ValMthd
+                        Case "F", "L", "S"  'FIFO, LIFO, Specific Identification
+                            If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then  'Lot or Serial tracked
+                                If bInventoryInfo.SerAssign = "R" Then  'When Received
+                                    If (qtyItemSite <> qtyItemCost) Or (qtyItemSite <> qtyLocation) Or (qtyItemSite <> qtyLotSerMst) Or (qtyItemCost <> qtyLocation) Or (qtyItemCost <> qtyLotSerMst) Or (qtyLocation <> qtyLotSerMst) Then
+                                        qtyErrorFound = True
                                     End If
-                                Else
+                                Else  'When Used
                                     If (qtyItemSite <> qtyItemCost) Or (qtyItemSite <> qtyLocation) Or (qtyItemCost <> qtyLocation) Then
                                         qtyErrorFound = True
                                     End If
                                 End If
+                            Else
+                                If (qtyItemSite <> qtyItemCost) Or (qtyItemSite <> qtyLocation) Or (qtyItemCost <> qtyLocation) Then
+                                    qtyErrorFound = True
+                                End If
+                            End If
 
-                            Case "A", "T", "U"  'Average, Standard, User-Specified
-                                If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then  'Lot or Serial tracked
-                                    If bInventoryInfo.SerAssign = "R" Then  'When Received
-                                        If (qtyItemSite <> qtyLocation) Or (qtyItemSite <> qtyLotSerMst) Or (qtyLocation <> qtyLotSerMst) Then
-                                            qtyErrorFound = True
-                                        End If
-                                    Else  'When Used
-                                        If qtyItemSite <> qtyLocation Then
-                                            qtyErrorFound = True
-                                        End If
+                        Case "A", "T", "U"  'Average, Standard, User-Specified
+                            If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then  'Lot or Serial tracked
+                                If bInventoryInfo.SerAssign = "R" Then  'When Received
+                                    If (qtyItemSite <> qtyLocation) Or (qtyItemSite <> qtyLotSerMst) Or (qtyLocation <> qtyLotSerMst) Then
+                                        qtyErrorFound = True
                                     End If
-                                Else
+                                Else  'When Used
                                     If qtyItemSite <> qtyLocation Then
                                         qtyErrorFound = True
                                     End If
                                 End If
-                        End Select
+                            Else
+                                If qtyItemSite <> qtyLocation Then
+                                    qtyErrorFound = True
+                                End If
+                            End If
+                    End Select
 
-                        'Check to see if ItemSite/ItemCost costs balance
-                        costErrorFound = False
+                    'Check to see if ItemSite/ItemCost costs balance
+                    costErrorFound = False
+                    Select Case bInventoryInfo.ValMthd
+                        Case "F", "L", "S"  'FIFO, LIFO, Specific Identification
+                            If (costItemSite <> costItemCost) Then
+                                costErrorFound = True
+                            End If
+                    End Select
+
+                    'If a Qty or Cost error is found, write message to the event log
+                    If qtyErrorFound = True Or costErrorFound = True Then
+                        Call LogMessage("", oEventLog)
+                        Call LogMessage("", oEventLog)
+                        writeInvVarianceMsg = True
                         Select Case bInventoryInfo.ValMthd
                             Case "F", "L", "S"  'FIFO, LIFO, Specific Identification
-                                If (costItemSite <> costItemCost) Then
-                                    costErrorFound = True
+                                If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then
+                                    msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
+                                    Call LogMessage(msgText, oEventLog)
+
+                                    msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: " + qtyItemCost.ToString + ", Location: " + qtyLocation.ToString + ", LotSerMst: " + qtyLotSerMst.ToString
+                                    Call LogMessage(msgText, oEventLog)
+                                    msgText = vbTab + "Cost - ItemSite: " + costItemSite.ToString + ", ItemCost: " + costItemCost.ToString
+                                    Call LogMessage(msgText, oEventLog)
+                                    NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+                                Else
+                                    msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
+                                    Call LogMessage(msgText, oEventLog)
+
+                                    msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: " + qtyItemCost.ToString + ", Location: " + qtyLocation.ToString + ", LotSerMst: N/A"
+                                    Call LogMessage(msgText, oEventLog)
+                                    msgText = vbTab + "Cost - ItemSite: " + costItemSite.ToString + ", ItemCost: " + costItemCost.ToString
+                                    Call LogMessage(msgText, oEventLog)
+                                    NbrOfErrors_Inv = NbrOfErrors_Inv + 1
                                 End If
+
+                            Case "A", "T", "U"  'Average, Standard, User-Specified
+                                If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then
+                                    msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
+                                    Call LogMessage(msgText, oEventLog)
+
+                                    msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: N/A, Location: " + qtyLocation.ToString + ", LotSerMst: " + qtyLotSerMst.ToString
+                                    Call LogMessage(msgText, oEventLog)
+
+                                    NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+                                Else
+                                    msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
+                                    Call LogMessage(msgText, oEventLog)
+
+                                    msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: N/A, Location: " + qtyLocation.ToString + ", LotSerMst: N/A"
+                                    Call LogMessage(msgText, oEventLog)                                    'msgText = vbTab + "Cost - ItemSite: " + costItemSite.ToString + ", ItemCost: N/A"
+                                    NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+                                End If
+
                         End Select
-
-                        'If a Qty or Cost error is found, write message to the event log
-                        If qtyErrorFound = True Or costErrorFound = True Then
-                            Call LogMessage("", oEventLog)
-                            Call LogMessage("", oEventLog)
-                            writeInvVarianceMsg = True
-                            Select Case bInventoryInfo.ValMthd
-                                Case "F", "L", "S"  'FIFO, LIFO, Specific Identification
-                                    If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then
-                                        msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
-                                        Call LogMessage(msgText, oEventLog)
-
-                                        msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: " + qtyItemCost.ToString + ", Location: " + qtyLocation.ToString + ", LotSerMst: " + qtyLotSerMst.ToString
-                                        Call LogMessage(msgText, oEventLog)
-                                        msgText = vbTab + "Cost - ItemSite: " + costItemSite.ToString + ", ItemCost: " + costItemCost.ToString
-                                        Call LogMessage(msgText, oEventLog)
-                                        NbrOfErrors_Inv = NbrOfErrors_Inv + 1
-                                    Else
-                                        msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
-                                        Call LogMessage(msgText, oEventLog)
-
-                                        msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: " + qtyItemCost.ToString + ", Location: " + qtyLocation.ToString + ", LotSerMst: N/A"
-                                        Call LogMessage(msgText, oEventLog)
-                                        msgText = vbTab + "Cost - ItemSite: " + costItemSite.ToString + ", ItemCost: " + costItemCost.ToString
-                                        Call LogMessage(msgText, oEventLog)
-                                        NbrOfErrors_Inv = NbrOfErrors_Inv + 1
-                                    End If
-
-                                Case "A", "T", "U"  'Average, Standard, User-Specified
-                                    If bInventoryInfo.LotSerTrack = "LI" Or bInventoryInfo.LotSerTrack = "SI" Then
-                                        msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
-                                        Call LogMessage(msgText, oEventLog)
-
-                                        msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: N/A, Location: " + qtyLocation.ToString + ", LotSerMst: " + qtyLotSerMst.ToString
-                                        Call LogMessage(msgText, oEventLog)
-
-                                        NbrOfErrors_Inv = NbrOfErrors_Inv + 1
-                                    Else
-                                        msgText = "ERROR: Variances found in master tables for InvtID:" + SParm(bItemSiteInfo.InvtID.Trim) + "SiteID:" + SParm(bItemSiteInfo.SiteID.Trim)
-                                        Call LogMessage(msgText, oEventLog)
-
-                                        msgText = vbTab + "Quantity - ItemSite: " + qtyItemSite.ToString + ", ItemCost: N/A, Location: " + qtyLocation.ToString + ", LotSerMst: N/A"
-                                        Call LogMessage(msgText, oEventLog)                                    'msgText = vbTab + "Cost - ItemSite: " + costItemSite.ToString + ", ItemCost: N/A"
-                                        NbrOfErrors_Inv = NbrOfErrors_Inv + 1
-                                    End If
-
-                            End Select
-                        End If
-
-                    End While
-                    Call sqlReader.Close()
-
-                    If writeInvVarianceMsg = True Then
-                        'Write suggested action for correcting Inventory master table variances
-                        Call LogMessage("", oEventLog)
-
-                        msgText = "Contact your Microsoft Dynamics SL Partner for assistance with correcting Inventory master table variances."
-                        Call LogMessage(msgText, oEventLog)
-
-                        Call LogMessage("", oEventLog)
-
                     End If
 
+                End While
+                Call sqlReader.Close()
 
-                Catch ex As Exception
-                    Call MessageBox.Show(ex.Message.Trim + vbNewLine + ex.StackTrace, "Error Encountered", MessageBoxButtons.OK)
+                If writeInvVarianceMsg = True Then
+                    'Write suggested action for correcting Inventory master table variances
+                    Call LogMessage("", oEventLog)
+
+                    msgText = "Contact your Microsoft Dynamics SL Partner for assistance with correcting Inventory master table variances."
+                    Call LogMessage(msgText, oEventLog)
 
                     Call LogMessage("", oEventLog)
-                    Call LogMessage("Error encountered while validating on-hand quantities and costs.", oEventLog)
-                    Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
-                    Call LogMessage("", oEventLog)
-                    OkToContinue = False
-                    NbrOfErrors_Inv = NbrOfErrors_Inv + 1
-                    Exit Sub
-                End Try
 
-            End If  'performQtyCostValidations = True
-
-            Call oEventLog.LogMessage(EndProcess, "Validate Inventory")
+                End If
 
 
-        Call MessageBox.Show("Inventory Validation Complete", "Inventory Validation")
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message.Trim + vbNewLine + ex.StackTrace, "Error Encountered", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error encountered while validating on-hand quantities and costs.", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_Inv = NbrOfErrors_Inv + 1
+                Exit Sub
+            End Try
+
+        End If  'performQtyCostValidations = True
+
+
+        Call oEventLog.LogMessage(EndProcess, "Validate Inventory")
+
+
+        Call MessageBox.Show("Inventory validation complete.", "Inventory Validation")
 
         ' Display the event log just created.
-        Call DisplayLog(oEventLog.LogFile.FullName.Trim())
+        ' Call DisplayLog(oEventLog.LogFile.FullName.Trim())
 
         ' Store the filename in the table.
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then

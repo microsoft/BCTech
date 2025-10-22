@@ -1998,9 +1998,9 @@
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StatusLbl})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 582)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 472)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1248, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1197, 22)
         Me.StatusStrip1.TabIndex = 120
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -2014,7 +2014,7 @@
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(1248, 604)
+        Me.ClientSize = New System.Drawing.Size(1197, 494)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.cFiscYr_End)
         Me.Controls.Add(Me.cCpnyIDTxt)
