@@ -45,6 +45,9 @@ Module AccountCode
         Dim delConn As SqlConnection = Nothing
 
         Dim fmtDate As String
+        Dim lbUnusedTermsFound As Boolean = False
+        Dim liSubLengthMAX As Integer = 0
+        Dim liSubLengthMIN As Integer = 0
 
         fmtDate = Date.Now.ToString
         fmtDate = fmtDate.Replace(":", "")
@@ -54,11 +57,44 @@ Module AccountCode
         fmtDate = fmtDate & Date.Now.Millisecond
 
         oEventLog = New clsEventLog
-        oEventLog.FileName = "SL" & "-GL-" & fmtDate & "-" & Trim(UserId) & ".log"
+        oEventLog.FileName = "SL-GL-" & fmtDate & "-" & Trim(UserId) & ".log"
 
         Call oEventLog.LogMessage(StartProcess, "")
         Call oEventLog.LogMessage(0, "")
 
+        '=====================================================================================
+        ' SScatliffe 10/8/2025 - VSTS 134249/145393 - Check for voided batches and warn user
+        '=====================================================================================
+
+        Call VoidedBatchCheck("GL")
+
+        If VBatchesExistGL = True Then
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("WARNING: Voided batches exist in General Ledger.", oEventLog)
+            Call LogMessage("", oEventLog)
+
+
+            ' list voided batches
+            sqlStmt = "SELECT BatNbr, EditScrnNbr, PerPost FROM Batch WHERE Module = 'GL' AND Status = 'V' AND CpnyID = " + SParm(CpnyId) + " AND LedgerID = " + SParm(bGLSetupInfo.LedgerID.Trim)
+
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            While sqlReader.Read()
+
+                Call SetBatchValues(sqlReader, bBatchInfo)
+                'Write Batch info to event log
+                Call LogMessage("Batch: " + bBatchInfo.BatNbr.Trim + vbTab + "Period: " + FormatPeriodNbr(bBatchInfo.PerPost) + vbTab + vbTab + "Screen: " + GetScreenName(bBatchInfo.EditScrnNbr), oEventLog)
+                NbrOfWarnings_COA = NbrOfWarnings_COA + 1
+
+            End While
+
+            Call sqlReader.Close()
+            Call LogMessage("", oEventLog)
+
+        End If
+
+        Call LogMessage("", oEventLog)
 
         '**********************************************************************************************************************************************
         '*** Delete any Account records where Acct field is blank since this is the only key field in this table (Applies to all migration methods) ***
@@ -82,8 +118,8 @@ Module AccountCode
                 Call sql_1(sqlReader, sqlStmt, updConn, OperationType.DeleteOp, CommandType.Text)
 
 
-                    Call LogMessage("Deleted " + CStr(nbrAcctBlank) + " Account record(s) with a blank Acct field.", oEventLog)
-                    Call LogMessage("", oEventLog)
+                Call LogMessage("Deleted " + CStr(nbrAcctBlank) + " Account record(s) with a blank Acct field.", oEventLog)
+                Call LogMessage("", oEventLog)
 
                 updConn.Close()
 
@@ -209,21 +245,106 @@ Module AccountCode
         End If  'If OkToContinue = True
 
 
+        '====================================================================================================================
+        ' SScatliffe 10/14/2025 - VSTS 107710/145392 - Check that Subaccount segment is less than or equal to 20 characters
+        '====================================================================================================================
+
+        If OkToContinue = True Then
+
+            Try
+
+                sqlStmt = "SELECT Active, Crtd_DateTime, Crtd_Prog, Crtd_User, Description, FieldClass, FieldClassName, ID, LUpd_DateTime, LUpd_Prog, LUpd_User, SegNumber, User1, User2, User3, User4 FROM SegDef WHERE FieldClassName = 'SUBACCOUNT' AND LEN(RTRIM(ID)) > 20"
+
+                Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+                If (sqlReader.HasRows = True) Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("ERROR: Subaccount segment found that is longer than 20 characters. " + vbNewLine + "20 characters is the limit per a dimension field in D365 BC." + vbNewLine + "Please reduce the size of the segment before starting the SL Migration.", oEventLog)
+                    Call LogMessage("", oEventLog)
+                End If
+
+                While sqlReader.Read()
+
+                    Call SetSegDefValues(sqlReader, bSegDefInfo)
+                    'Write Batch info to event log
+                    Call LogMessage("Segment: " + bSegDefInfo.SegNumber.Trim + vbTab + "ID: " + bSegDefInfo.ID.Trim + vbTab + "Description: " + bSegDefInfo.Description.Trim, oEventLog)
+                    NbrOfErrors_COA = NbrOfErrors_COA + 1
+
+                End While
+
+                Call sqlReader.Close()
+                Call LogMessage("", oEventLog)
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error in removing time values in checking segment length.", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+            End Try
+
+        End If
+
+        '====================================================================================================================
+        ' SScatliffe 10/15/2025 - VSTS 131647/145394 - Check for AcctHist for Subaccount length values being different
+        '====================================================================================================================
+
+        If OkToContinue = True Then
+
+            Try
+
+                liSubLengthMAX = 0
+                liSubLengthMIN = 0
+
+                Call sqlFetch_Num(liSubLengthMAX, "SELECT MAX(LEN(Sub)) FROM AcctHist", SqlAppDbConn)
+                Call sqlFetch_Num(liSubLengthMIN, "SELECT MIN(LEN(Sub)) FROM AcctHist", SqlAppDbConn)
+
+                If liSubLengthMAX <> liSubLengthMIN Then
+                    Call LogMessage("", oEventLog)
+                    msgText = "ERROR: Subaccount lengths are different in AcctHist."
+                    msgText = msgText + " This can cause issues when migrating to D365 BC since dimensions must be a fixed length."
+                    msgText = msgText + " Please correct the Subaccount lengths before starting the SL Migration." + vbNewLine
+                    Call LogMessage(msgText, oEventLog)
+                    Call LogMessage("Minimum Subaccount Length: " + CStr(liSubLengthMIN), oEventLog)
+                    Call LogMessage("Maximum Subaccount Length: " + CStr(liSubLengthMAX), oEventLog)
+                    Call LogMessage("", oEventLog)
+                    NbrOfErrors_COA = NbrOfErrors_COA + 1
+                End If
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error in checking for AcctHist Subaccount lengths being different.", oEventLog)
+                Call LogMessage("Error Detail:  " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+            End Try
+
+        End If
         '**************************************
         '*** Check for recurring GL Batches ***
         '**************************************
-        Call sqlFetch_Num(recurBatches, "SELECT COUNT(*) FROM Batch WHERE Module = 'GL' AND BatType = 'R' AND NbrCycle > 0", SqlAppDbConn)
+        If OkToContinue = True Then
 
-        If recurBatches > 0 Then
-            'Display a warning message
-            LogMessage("", oEventLog)
-            msgText = "WARNING: Open Recurring GL Batches exists. Recurring batches will not be migrated and will need to be manually entered in the new system."
-            msgText = msgText + " To assist with the move of your recurring batches, the details of your recurring batches can be identified using the"
-            msgText = msgText + " Generate Recurring (01.530.00) screen to identify the GL recurring batches identified by this utility."
-            Call LogMessage(msgText, oEventLog)
+            Call sqlFetch_Num(recurBatches, "SELECT COUNT(*) FROM Batch WHERE Module = 'GL' AND BatType = 'R' AND NbrCycle > 0", SqlAppDbConn)
 
-            NbrOfWarnings_COA = NbrOfWarnings_COA + 1
-            Call LogMessage("", oEventLog)
+            If recurBatches > 0 Then
+                'Display a warning message
+                LogMessage("", oEventLog)
+                msgText = "WARNING: Open Recurring GL Batches exists. Recurring batches will not be migrated and will need to be manually entered in the new system."
+                msgText = msgText + " To assist with the move of your recurring batches, the details of your recurring batches can be identified using the"
+                msgText = msgText + " Generate Recurring (01.530.00) screen to identify the GL recurring batches identified by this utility."
+                Call LogMessage(msgText, oEventLog)
+
+                NbrOfWarnings_COA = NbrOfWarnings_COA + 1
+                Call LogMessage("", oEventLog)
+            End If
+
         End If
 
 
@@ -264,7 +385,17 @@ Module AccountCode
                     End If
 
                     Call sqlReader.Close()
-                Catch
+                Catch ex As Exception
+
+                    Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("Error in detecting AcctHist records with blank key fields.", oEventLog)
+                    Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                    Call LogMessage("", oEventLog)
+                    OkToContinue = False
+                    NbrOfErrors_COA = NbrOfErrors_COA + 1
+
                 End Try
 
             End If
@@ -300,7 +431,17 @@ Module AccountCode
                             Call LogMessage("", oEventLog)
                         End While
                     End If
-                Catch
+                Catch ex As Exception
+
+                    Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("Error in detecting GLTran records with blank key fields.", oEventLog)
+                    Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                    Call LogMessage("", oEventLog)
+                    OkToContinue = False
+                    NbrOfErrors_COA = NbrOfErrors_COA + 1
+
                 End Try
 
                 sqlReader.Close()
@@ -400,21 +541,40 @@ Module AccountCode
 
         checkVal = FPRnd((curBal_I - curBal_E + curBal_L), 2)
 
-        If checkVal <> curBal_A Then
-            diffVal = (checkVal - curBal_A)
-            diffVal = FPRnd(diffVal, 2)
-            Call LogMessage("", oEventLog)
-            msgText = "ERROR: The General Ledger is out of balance by " + diffVal.ToString("N2") + ". Income (" + curBal_I.ToString("N2") + ") minus Expenses (" + curBal_E.ToString("N2")
-            msgText = msgText + ") plus Liabilities (" + curBal_L.ToString("N2") + ") does not equal Assets (" + curBal_A.ToString("N2") + ")."
-            Call LogMessage(msgText, oEventLog)
+        If OkToContinue = True Then
 
-            msgText = "Suggested actions for correcting GL balances are listed below:" + vbNewLine
-            msgText = msgText + " - Turn on Initialize Mode and use Journal Transactions (01.010.00) to enter a one-sided, Adjustment type batch to bring the GL in balance." + vbNewLine
-            msgText = msgText + " - Turn on Initialize Mode and use Account History (01.300.00) to make adjustments to the Beginning Balance or PTD Balance amounts to bring the GL in balance." + vbNewLine
-            msgText = msgText + " - Contact your Microsoft Dynamics SL Partner for further assistance"
-            Call LogMessage(msgText, oEventLog)
-            Call LogMessage("", oEventLog)
-            NbrOfErrors_COA = NbrOfErrors_COA + 1
+            Try
+
+                If checkVal <> curBal_A Then
+                    diffVal = (checkVal - curBal_A)
+                    diffVal = FPRnd(diffVal, 2)
+                    Call LogMessage("", oEventLog)
+                    msgText = "ERROR: The General Ledger is out of balance by " + diffVal.ToString("N2") + ". Income (" + curBal_I.ToString("N2") + ") minus Expenses (" + curBal_E.ToString("N2")
+                    msgText = msgText + ") plus Liabilities (" + curBal_L.ToString("N2") + ") does not equal Assets (" + curBal_A.ToString("N2") + ")."
+                    Call LogMessage(msgText, oEventLog)
+
+                    msgText = "Suggested actions for correcting GL balances are listed below:" + vbNewLine
+                    msgText = msgText + " - Turn on Initialize Mode and use Journal Transactions (01.010.00) to enter a one-sided, Adjustment type batch to bring the GL in balance." + vbNewLine
+                    msgText = msgText + " - Turn on Initialize Mode and use Account History (01.300.00) to make adjustments to the Beginning Balance or PTD Balance amounts to bring the GL in balance." + vbNewLine
+                    msgText = msgText + " - Contact your Microsoft Dynamics SL Partner for further assistance"
+                    Call LogMessage(msgText, oEventLog)
+                    Call LogMessage("", oEventLog)
+                    NbrOfErrors_COA = NbrOfErrors_COA + 1
+
+                End If
+
+            Catch ex As Exception
+
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error in verifying GL is in balance.", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+
+            End Try
 
         End If
 
@@ -646,16 +806,16 @@ Module AccountCode
                 Call LogMessage("", oEventLog)
                 Call LogMessage("Error encountered while validating posted transaction amounts", oEventLog)
                 Call LogMessage("", oEventLog)
-                    OkToContinue = False
-                    NbrOfErrors_COA = NbrOfErrors_COA + 1
-                End Try
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+            End Try
 
             '   End If
         End If
 
-        '*******************************************
-        '*** Remove time values from date fields ***
-        '*******************************************
+        '************************************************************
+        '*** Remove time values from date fields - General Ledger ***
+        '************************************************************
         If OkToContinue = True Then
 
             Try
@@ -676,9 +836,9 @@ Module AccountCode
 
         End If
 
-        '*******************************************
-        '*** Remove time values from date fields ***
-        '*******************************************
+        '****************************************************************
+        '*** Remove time values from date fields - Shared Information ***
+        '****************************************************************
         If OkToContinue = True Then
 
             Try
@@ -780,16 +940,16 @@ Module AccountCode
                 'Write to event log
                 If (retval = 1) Then
 
-                        msgText = "WARNING: GLTran for Batch: " + bGLTranList.BatNbr.Trim + vbTab + " Period to Post does not match Fiscal Year:" + bGLTranList.PerPost.Trim + vbTab + " Fiscal Year: " + bGLTranList.FiscYr.Trim + "13"
-                        msgText = msgText + vbNewLine
-                        msgText = msgText + "The Fiscal Year has been updated to match the Period to Post"
-                        Call LogMessage("", oEventLog)
-                        Call LogMessage(msgText, oEventLog)
-                    End If
+                    msgText = "WARNING: GLTran for Batch: " + bGLTranList.BatNbr.Trim + vbTab + " Period to Post does not match Fiscal Year:" + bGLTranList.PerPost.Trim + vbTab + " Fiscal Year: " + bGLTranList.FiscYr.Trim + "13"
+                    msgText = msgText + vbNewLine
+                    msgText = msgText + "The Fiscal Year has been updated to match the Period to Post"
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage(msgText, oEventLog)
+                End If
 
 
-                    Call TranEnd(updTran)
-                    SqlTranConn.Close()
+                Call TranEnd(updTran)
+                SqlTranConn.Close()
 
 
 
@@ -817,81 +977,89 @@ Module AccountCode
         Dim termsList As New List(Of String)
         Dim sqlTranReader As SqlDataReader = Nothing
 
-        ' For each table that contains terms, add the distinct entries to the list.
-        Call AddTerms(termsList, "APDoc", "Terms")
-        Call AddTerms(termsList, "ARDoc", "Terms")
-        Call AddTerms(termsList, "APSetup", "Terms")
-        Call AddTerms(termsList, "CustClass", "Terms")
-        Call AddTerms(termsList, "Customer", "Terms")
-        Call AddTerms(termsList, "Vendor", "Terms")
-        Call AddTerms(termsList, "VendClass", "Terms")
-        Call AddTerms(termsList, "SOHeader", "TermsId")
-        Call AddTerms(termsList, "SOShipHeader", "TermsId")
-        Call AddTerms(termsList, "PurchOrd", "Terms")
-        Call AddTerms(termsList, "PJSubCon", "Termsid")
-        Call AddTerms(termsList, "PJCont", "Termsid")
-
-        ' Get the list of terms and determine whether each is used.
-        sqlString = "Select Termsid from Terms"
-        Call LogMessage("", oEventLog)
-        Call LogMessage("Identifying and deleting unused Terms", oEventLog)
-        Call LogMessage(" ", oEventLog)
-
-        ' Open the connection to the app database.
-        SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-        SqlTranConn.Open()
-        Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
-
-        ' Add all results to the list of terms.
-        While (sqlReader.Read())
-
-            Call SetTermsListValues(sqlReader, bTermsListInfo, "TermsId")
-            Try
-
-                If (termsList.Contains(bTermsListInfo.TermId.Trim) = False) And (String.IsNullOrEmpty(bTermsListInfo.TermId.Trim) = False) Then
-                    msgText = "Term " + bTermsListInfo.TermId.Trim + " is not used in the system.  This entry will be removed."
-                    Call LogMessage(msgText, oEventLog)
+        If OkToContinue Then
 
 
-                    If (SqlTranConn.State = ConnectionState.Closed) Then
-                        SqlTranConn.Open()
+            ' For each table that contains terms, add the distinct entries to the list.
+            Call AddTerms(termsList, "APDoc", "Terms")
+            Call AddTerms(termsList, "ARDoc", "Terms")
+            Call AddTerms(termsList, "APSetup", "Terms")
+            Call AddTerms(termsList, "CustClass", "Terms")
+            Call AddTerms(termsList, "Customer", "Terms")
+            Call AddTerms(termsList, "Vendor", "Terms")
+            Call AddTerms(termsList, "VendClass", "Terms")
+            Call AddTerms(termsList, "SOHeader", "TermsId")
+            Call AddTerms(termsList, "SOShipHeader", "TermsId")
+            Call AddTerms(termsList, "PurchOrd", "Terms")
+            Call AddTerms(termsList, "PJSubCon", "Termsid")
+            Call AddTerms(termsList, "PJCont", "Termsid")
+
+            ' Get the list of terms and determine whether each is used.
+            sqlString = "Select Termsid from Terms"
+            Call LogMessage("", oEventLog)
+            Call LogMessage("Identifying and deleting unused Terms", oEventLog)
+            Call LogMessage(" ", oEventLog)
+
+            ' Open the connection to the app database.
+            SqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+            SqlTranConn.Open()
+            Call sqlFetch_1(sqlReader, sqlString, SqlAppDbConn, CommandType.Text)
+
+            ' Add all results to the list of terms.
+            While (sqlReader.Read())
+
+                Call SetTermsListValues(sqlReader, bTermsListInfo, "TermsId")
+                Try
+
+                    If (termsList.Contains(bTermsListInfo.TermId.Trim) = False) And (String.IsNullOrEmpty(bTermsListInfo.TermId.Trim) = False) Then
+                        msgText = "Term " + bTermsListInfo.TermId.Trim + " is not used in the system.  This entry will be removed."
+                        Call LogMessage(msgText, oEventLog)
+
+
+                        If (SqlTranConn.State = ConnectionState.Closed) Then
+                            SqlTranConn.Open()
+                        End If
+
+
+                        delTran = TranBeg(SqlTranConn)
+
+                        sqlStmt = "DELETE FROM Terms WHERE Termsid =" + SParm(bTermsListInfo.TermId)
+
+
+                        Call sql_1(sqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text, delTran)
+
+                        Call TranEnd(delTran)
+
+                        If lbUnusedTermsFound = False Then lbUnusedTermsFound = True
+
                     End If
 
+                Catch ex As Exception
 
-                    delTran = TranBeg(SqlTranConn)
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("Error encountered while deleting unused Terms" + vbNewLine, oEventLog)
+                    Call LogMessage("Error: " + ex.Message, oEventLog)
+                    Call LogMessage("", oEventLog)
 
-                    sqlStmt = "DELETE FROM Terms WHERE Termsid =" + SParm(bTermsListInfo.TermId)
+                End Try
+            End While
 
-
-                    Call sql_1(sqlTranReader, sqlStmt, SqlTranConn, OperationType.DeleteOp, CommandType.Text, delTran)
-
-                    Call TranEnd(delTran)
-                End If
-
-            Catch ex As Exception
-
-                Call LogMessage("", oEventLog)
-                Call LogMessage("Error encountered while deleting unused Terms" + vbNewLine, oEventLog)
-                Call LogMessage("Error: " + ex.Message, oEventLog)
-                Call LogMessage("", oEventLog)
-
-            End Try
-        End While
-
-        Call sqlReader.Close()
-        Call SqlTranConn.Close()
-        If (sqlTranReader IsNot Nothing) Then
-            sqlTranReader.Close()
+            If lbUnusedTermsFound = False Then LogMessage("No unused Terms found.", oEventLog)
+            Call sqlReader.Close()
+            Call SqlTranConn.Close()
+            If (sqlTranReader IsNot Nothing) Then
+                sqlTranReader.Close()
+            End If
         End If
 
 
         Call oEventLog.LogMessage(EndProcess, "Validate General Ledger")
 
         ' Indicte that the processing has completed.
-        Call MessageBox.Show("Account validation complete", "Account Validation")
+        Call MessageBox.Show("Account validation complete.", "Account Validation")
 
         ' Display the event log just created.
-        Call DisplayLog(oEventLog.LogFile.FullName.Trim())
+        'Call DisplayLog(oEventLog.LogFile.FullName.Trim())
 
         ' Store the filename in the table.
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then

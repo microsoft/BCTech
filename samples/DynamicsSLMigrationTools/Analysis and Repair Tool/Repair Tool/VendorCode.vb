@@ -44,10 +44,43 @@ Module VendorCode
         fmtDate = fmtDate & Date.Now.Millisecond
 
         oEventLog = New clsEventLog
-        oEventLog.FileName = "SL-AP-" & "-" & fmtDate & "-" & Trim(UserId) & ".log"
+        oEventLog.FileName = "SL-AP-" & fmtDate & "-" & Trim(UserId) & ".log"
 
         Call oEventLog.LogMessage(StartProcess, "")
         Call oEventLog.LogMessage(0, "")
+
+        '=====================================================================================
+        ' SScatliffe 10/8/2025 - VSTS 134249/145393 - Check for voided batches and warn user
+        '=====================================================================================
+
+        Call VoidedBatchCheck("AP")
+
+        If VBatchesExistAP = True Then
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("WARNING: Voided batches exist in Accounts Payable.", oEventLog)
+            Call LogMessage("", oEventLog)
+            ' Call LogMessage("", oEventLog)
+
+            ' list voided batches
+            sqlStmt = "SELECT BatNbr, EditScrnNbr, PerPost FROM Batch WHERE Module = 'AP' AND Status = 'V' AND CpnyID = " + SParm(CpnyId) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim)
+
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            While sqlReader.Read()
+
+                Call SetBatchValues(sqlReader, bBatchInfo)
+                'Write Batch info to event log
+                Call LogMessage("Batch: " + bBatchInfo.BatNbr.Trim + vbTab + "Period: " + FormatPeriodNbr(bBatchInfo.PerPost) + vbTab + vbTab + "Screen: " + GetScreenName(bBatchInfo.EditScrnNbr), oEventLog)
+                NbrOfWarnings_Vend = NbrOfWarnings_Vend + 1
+
+            End While
+
+            Call sqlReader.Close()
+            Call LogMessage("", oEventLog)
+
+        End If
+
 
         Call oEventLog.LogMessage(0, "Processing Vendors")
 
@@ -94,8 +127,49 @@ Module VendorCode
 
         '***************************************************************************************************************
         '*** Check for special characters in VendID that are not valid in D365 BC (Applies to all migration methods) ***
+        '*** Story 145390 - Removed check for '&' character in Vendor ID since this is now allowed in D365 BC        ***
         '***************************************************************************************************************
-        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name FROM Vendor WHERE CHARINDEX('&', VendID) <> 0"
+        '     sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name FROM Vendor WHERE CHARINDEX('&', VendID) <> 0"
+
+        '     Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        '     If sqlReader.HasRows = True Then
+        '         'Write Error message to event log
+        '         Call LogMessage("", oEventLog)
+        '         Call LogMessage("", oEventLog)
+        '         msgText = "ERROR: Vendor IDs with '&' character found. The '&' character is not a valid character for the Vendor No. in Microsoft Dynamics 365 Business Central."
+        '         msgText = msgText + vbNewLine + "List of Vendor IDs with '&' character:"
+        '         Call LogMessage(msgText, oEventLog)
+
+        '         vendIDSpecCharExists = True
+        '     End If
+        '     While (sqlReader.Read())
+
+        '         Call SetVendorValues(sqlReader, bVendorInfo)
+        '         'Write VendID to event log
+        '         Call LogMessage("Vendor ID: " + bVendorInfo.VendId, oEventLog)
+
+        '         NbrOfErrors_Vend = NbrOfErrors_Vend + 1
+        '     End While
+
+        '     sqlReader.Close()
+
+        '     'Display message in Event Log for suggested actions
+        '     If vendIDSpecCharExists = True Then
+        '         Call LogMessage("", oEventLog)
+        '         msgText = "Suggested actions for updating Vendor IDs are listed below:" + vbNewLine
+        '         msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Vendor IDs to remove the '&' character" + vbNewLine
+        '         msgText = msgText + " - Contact your Microsoft Dynamics SL Partner for further assistance"
+        '         Call LogMessage(msgText, oEventLog)
+        '         Call LogMessage("", oEventLog)
+
+        '     End If
+
+        '******************************************************************************************************************
+        '*** Check for special characters in VendID that should not exist in Dynamics SL (problematic during migration) ***
+        '*** Story 145391 - Add check for single quoation mark in Customer ID and Vendor ID                             ***
+        '******************************************************************************************************************
+        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name FROM Vendor WHERE CHARINDEX('''', VendID) <> 0"
 
         Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
 
@@ -104,8 +178,8 @@ Module VendorCode
             'Write Error message to event log
             Call LogMessage("", oEventLog)
             Call LogMessage("", oEventLog)
-            msgText = "ERROR: Vendor IDs with '&' character found. The '&' character is not a valid character for the Vendor No. in Microsoft Dynamics 365 Business Central."
-            msgText = msgText + vbNewLine + "List of Vendor IDs with '&' character:"
+            msgText = "ERROR: Vendor IDs with ' (single quotation mark) character found. The ' (single quotation mark) character is not a valid character for the Vendor ID in Microsoft Dynamics SL."
+            msgText = msgText + vbNewLine + "List of Vendor IDs with ' (single quotation mark) character:"
             Call LogMessage(msgText, oEventLog)
 
             vendIDSpecCharExists = True
@@ -125,7 +199,7 @@ Module VendorCode
         If vendIDSpecCharExists = True Then
             Call LogMessage("", oEventLog)
             msgText = "Suggested actions for updating Vendor IDs are listed below:" + vbNewLine
-			msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Vendor IDs to remove the '&' character" + vbNewLine
+            msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Vendor IDs to remove the ' (single quotation mark) character" + vbNewLine
             msgText = msgText + " - Contact your Microsoft Dynamics SL Partner for further assistance"
             Call LogMessage(msgText, oEventLog)
             Call LogMessage("", oEventLog)
@@ -294,7 +368,7 @@ Module VendorCode
         sqlstrg = sqlstrg + " AND v.Parent = d.RefNbr AND v.ParentType = d.DocType"
         sqlstrg = sqlstrg + " AND v.CpnyID =" + SParm(CpnyId.Trim) + "AND v.DocBal <> 0"
         sqlstrg = sqlstrg + " AND v.DocBal = v.OrigDocAmt"
-		sqlstrg = sqlstrg + " AND d.DocType NOT IN ('RC', 'VT')"
+        sqlstrg = sqlstrg + " AND d.DocType NOT IN ('RC', 'VT')"
         sqlstrg = sqlstrg + " ORDER BY v.VendID, v.Parent, v.Ord, v.RefNbr"
 
         Call sqlFetch_1(sqlReader, sqlstrg, SqlAppDbConn, CommandType.Text)
@@ -440,10 +514,10 @@ Module VendorCode
 
         Call oEventLog.LogMessage(EndProcess, "Validate Accounts Payable")
 
-        Call MessageBox.Show("Vendor Validation Complete", "Vendor Validation")
+        Call MessageBox.Show("Vendor validation complete.", "Vendor Validation")
 
         ' Display the event log just created.
-        Call DisplayLog(oEventLog.LogFile.FullName.Trim())
+        '  Call DisplayLog(oEventLog.LogFile.FullName.Trim())
 
         ' Store the filename in the table.
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then

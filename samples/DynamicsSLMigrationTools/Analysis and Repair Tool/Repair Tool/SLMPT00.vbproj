@@ -109,6 +109,7 @@
     <Compile Include="APVendorDetail.vb" />
     <Compile Include="ardoc.vb" />
     <Compile Include="arsetup.vb" />
+    <Compile Include="batch.vb" />
     <Compile Include="cmsetup.vb" />
     <Compile Include="customer.vb" />
     <Compile Include="CustomerCode.vb" />

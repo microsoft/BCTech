@@ -283,7 +283,7 @@ Module SalesOrder
         End If
         While SqlReader.Read()
 
-            Call setShipperInvtListValues(SqlReader, bShipperInvtListInfo)
+            Call SetShipperInvtListValues(SqlReader, bShipperInvtListInfo)
             'Write Sales Order to event log
             Call LogMessage("Shipper: " + bShipperInvtListInfo.ShipperID, oEventLog)
             Call LogMessage("Inventory ID: " + bShipperInvtListInfo.InvtID + vbNewLine, oEventLog)
@@ -315,10 +315,10 @@ Module SalesOrder
         Call oEventLog.LogMessage(EndProcess, "Validate Sales Order")
 
 
-        Call MessageBox.Show("Sales Order Validation Complete", "Sales Order Validation")
+        Call MessageBox.Show("Sales Order validation complete.", "Sales Order Validation")
 
         ' Display the event log just created.
-        Call DisplayLog(oEventLog.LogFile.FullName.Trim())
+        'Call DisplayLog(oEventLog.LogFile.FullName.Trim())
 
         ' Store the filename in the table.
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then

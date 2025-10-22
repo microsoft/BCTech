@@ -23,7 +23,7 @@ Module CustomerCode
         Dim msgText As String = String.Empty
         Dim docDateStr As String = String.Empty
         Dim docPerNbr As String = String.Empty
-		Dim docOutsidePerPostFound As Boolean = False
+        Dim docOutsidePerPostFound As Boolean = False
         Dim custIDSpecCharExists As Boolean = False
 
         Dim sqlStmt As String = String.Empty
@@ -48,6 +48,38 @@ Module CustomerCode
 
         Call oEventLog.LogMessage(StartProcess, "")
         Call oEventLog.LogMessage(0, "")
+
+        '======================================================================================
+        ' SScatliffe 10/8/2025 - VSTS 134249/145393 - Check for voided batches and warn user
+        '======================================================================================
+
+        Call VoidedBatchCheck("AR")
+
+        If VBatchesExistAR = True Then
+
+            Call LogMessage("", oEventLog)
+            Call LogMessage("WARNING: Voided batches exist in Accounts Receivable.", oEventLog)
+            Call LogMessage("", oEventLog)
+            ' Call LogMessage("", oEventLog)
+
+            ' list voided batches
+            sqlStmt = "SELECT BatNbr, EditScrnNbr, PerPost FROM Batch WHERE Module = 'AR' AND Status = 'V' AND CpnyID = " + SParm(CpnyId) + " AND LedgerID =" + SParm(bGLSetupInfo.LedgerID.Trim)
+
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            While sqlReader.Read()
+
+                Call SetBatchValues(sqlReader, bBatchInfo)
+                'Write Batch info to event log
+                Call LogMessage("Batch: " + bBatchInfo.BatNbr.Trim + vbTab + "Period: " + FormatPeriodNbr(bBatchInfo.PerPost) + vbTab + vbTab + "Screen: " + GetScreenName(bBatchInfo.EditScrnNbr), oEventLog)
+                NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
+
+            End While
+
+            Call sqlReader.Close()
+            Call LogMessage("", oEventLog)
+
+        End If
 
         Call oEventLog.LogMessage(0, "Processing Customers")
 
@@ -78,288 +110,319 @@ Module CustomerCode
                 Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
                 Call LogMessage("", oEventLog)
                 OkToContinue = False
-				NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                NbrOfErrors_Cust = NbrOfErrors_Cust + 1
                 Exit Sub
             End Try
-		End If
+        End If
 
         ' Check the segdef values used in the AR trans.
         Call ValidateSegDefValue("ARTran", "Sub", True, oEventLog)
 
         '***************************************************************************************************************
         '*** Check for special characters in CustID that are not valid in D365 BC (Applies to all migration methods) ***
+        '*** Story 145390 - Removed check for '&' character in Customer ID since this is now allowed in D365 BC      ***
         '***************************************************************************************************************
-        sqlStmt = "SELECT CustId, Name FROM Customer WHERE Status <> 'I' AND CHARINDEX('&', CustId) <> 0"
+        'sqlStmt = "SELECT CustId, Name FROM Customer WHERE Status <> 'I' AND CHARINDEX('&', CustId) <> 0"
 
-        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+        'Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
 
-        If sqlReader.HasRows() Then
-            'Write Error message to event log
-            Call LogMessage("", oEventLog)
-            Call LogMessage("", oEventLog)
-            msgText = "ERROR: Customer IDs with '&' character found. The '&' character is not a valid character for the Customer No. in Microsoft Dynamics 365 Business Central."
-            msgText = msgText + vbNewLine + "List of Customer IDs with '&' character:"
-            Call LogMessage(msgText, oEventLog)
-            custIDSpecCharExists = True
-        End If
-        While sqlReader.Read()
+        'If sqlReader.HasRows() Then
+        '    'Write Error message to event log
+        '    Call LogMessage("", oEventLog)
+        '    Call LogMessage("", oEventLog)
+        '    msgText = "ERROR: Customer IDs with '&' character found. The '&' character is not a valid character for the Customer No. in Microsoft Dynamics 365 Business Central."
+        '    msgText = msgText + vbNewLine + "List of Customer IDs with '&' character:"
+        '    Call LogMessage(msgText, oEventLog)
+        '    custIDSpecCharExists = True
+        'End If
+        'While sqlReader.Read()
 
-            Call SetCustomerValues(sqlReader, bCustomerInfo)
-            'Write CustID to event log
-            Call LogMessage("Customer ID: " + bCustomerInfo.CustId, oEventLog)
-            NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-        End While
+        '    Call SetCustomerValues(sqlReader, bCustomerInfo)
+        '    'Write CustID to event log
+        '    Call LogMessage("Customer ID: " + bCustomerInfo.CustId, oEventLog)
+        '    NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+        'End While
 
-        Call sqlReader.Close()
-        'Display message in Event Log for suggested actions
-        If custIDSpecCharExists = True Then
-            Call LogMessage("", oEventLog)
-            msgText = "Suggested actions for updating Customer IDs are listed below:" + vbNewLine
-			msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Customer IDs to remove the '&' character" + vbNewLine
-			msgText = msgText + " - Set the Status on these Customers to Inactive in Customer Maintenance (08.260.00) to exclude these customers from the migration" + vbNewLine
-            msgText = msgText + " - Contact your Microsoft Dynamics SL Partner for further assistance"
-            Call LogMessage(msgText, oEventLog)
-            Call LogMessage("", oEventLog)
-        End If
+        'Call sqlReader.Close()
+        ''Display message in Event Log for suggested actions
+        'If custIDSpecCharExists = True Then
+        '    Call LogMessage("", oEventLog)
+        '    msgText = "Suggested actions for updating Customer IDs are listed below:" + vbNewLine
+        '    msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Customer IDs to remove the '&' character" + vbNewLine
+        '    msgText = msgText + " - Set the Status on these Customers to Inactive in Customer Maintenance (08.260.00) to exclude these customers from the migration" + vbNewLine
+        '    msgText = msgText + " - Contact your Microsoft Dynamics SL Partner for further assistance"
+        '    Call LogMessage(msgText, oEventLog)
+        '    Call LogMessage("", oEventLog)
+        'End If
 
-        '**********************************************************************
-        '*** Check for Customer names greater than 50 characters in length  ***
-        '**********************************************************************
-        sqlStmt = "SELECT CustId, Name FROM Customer WHERE LEN(RTRIM(NAME)) > 50"
+        If OkToContinue = True Then
 
-        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+            '******************************************************************************************************************
+            '*** Check for special characters in CustID that should not exist in Dynamics SL (problematic during migration) ***
+            '*** Story 145391 - Add check for single quoation mark in Customer ID and Vendor ID                             ***
+            '******************************************************************************************************************
+            sqlStmt = "SELECT CustId, Name FROM Customer WHERE Status <> 'I' AND CHARINDEX('''', CustId) <> 0"
 
-        If sqlReader.HasRows() Then
-            'Write Error message to event log
-            Call LogMessage("", oEventLog)
-            Call LogMessage("", oEventLog)
-            msgText = "ERROR: D365 BC Customer name can only be 50 characters for migration."
-            msgText = msgText + vbNewLine + "List of Customer IDs with names greater than 50 characters:"
-            Call LogMessage(msgText, oEventLog)
-            custIDSpecCharExists = True
-        End If
-        While sqlReader.Read()
-
-            Call SetCustomerValues(sqlReader, bCustomerInfo)
-            'Write CustID to event log
-            Call LogMessage("Customer ID: " + bCustomerInfo.CustId, oEventLog)
-            NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-        End While
-
-        Call sqlReader.Close()
-
-
-
-        '************************************
-        '*** Check for recurring Invoices ***
-        '************************************
-        sqlStmt = "SELECT COUNT(*) FROM ARDoc WHERE DocType = 'RC' AND NbrCycle > 0"
-        Call sqlFetch_Num(recInvoices, sqlStmt, SqlAppDbConn)
-
-        If recInvoices > 0 Then
-            'Display a warning message
-            Call LogMessage("", oEventLog)
-            msgText = "WARNING: Open Recurring Invoices exists. Recurring invoices will not be migrated and will need to be manually entered in the new system."
-            msgText = msgText + " To assist with the move of your recurring batches, the details of your recurring batches can be identified using the"
-            msgText = msgText + " Recurring Invoice (08.670.00) report, Standard format to identify the AR recurring batches identified by this utility."
-
-            Call LogMessage(msgText, oEventLog)
-
-            NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
-        End If
-
-
-
-
-
-        '**************************************************************
-        '*** Check for open Credit Memos, Payments and Pre-Payments ***
-        '**************************************************************
-        'Check for open Credit Memos
-        sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE DocType = 'CM' AND OpenDoc = 1 AND CpnyID =" + SParm(CpnyId)
-        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
-        If sqlReader.HasRows Then
-            'Write Warning message to event log
-            Call LogMessage("", oEventLog)
-            Call LogMessage("", oEventLog)
-            msgText = "WARNING: Open AR Credit Memos exist. It is recommended that all open Credit Memos are applied to Invoices prior to migrating data." + vbNewLine + "List of open AR Credit Memos:"
-
-            Call LogMessage(msgText, oEventLog)
-
-        End If
-
-        While sqlReader.Read()
-            Call SetARDocValues(sqlReader, bARDocInfo)
-            'Write CustID, RefNbr, and DocBal to event log
-            Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Open Balance: " + bARDocInfo.DocBal.ToString + vbTab + "Original Balance: " + bARDocInfo.OrigDocAmt.ToString, oEventLog)
-            NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
-
-        End While
-        Call sqlReader.Close()
-
-        'Check for open Payments
-        sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE DocType = 'PA' AND OpenDoc = 1 AND CpnyID =" + SParm(CpnyId)
-        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
-
-        If sqlReader.HasRows Then
-            'Write Warning message to event log
-            Call LogMessage("", oEventLog)
-            Call LogMessage("", oEventLog)
-            msgText = "WARNING: Open AR Payments exist. It is recommended that all open Payments are applied to Invoices prior to migrating data." + vbNewLine + "List of open AR Payments:"
-
-            Call LogMessage(msgText, oEventLog)
-
-        End If
-
-        While sqlReader.Read()
-            Call SetARDocValues(sqlReader, bARDocInfo)
-            'Write CustID, RefNbr, and DocBal to event log
-            Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Open Balance: " + bARDocInfo.DocBal.ToString + vbTab + "Original Balance: " + bARDocInfo.OrigDocAmt.ToString, oEventLog)
-            NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
-
-        End While
-        Call sqlReader.Close()
-
-        'Check for open Pre-Payments
-        sqlStmt = "SELECT CustId, DocBal, DocDate, DocType,  OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE DocType = 'PP' AND OpenDoc = 1 AND CpnyID =" + SParm(CpnyId)
-        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
-
-        If sqlReader.HasRows() Then
-            'Write Warning message to event log
-            Call LogMessage("", oEventLog)
-            Call LogMessage("", oEventLog)
-            msgText = "WARNING: Open AR Prepayments exist. It is recommended that all open Prepayments are applied to Invoices prior to migrating data." + vbNewLine + "List of open AR Prepayments:"
-
-            Call LogMessage(msgText, oEventLog)
-        End If
-
-        While sqlReader.Read()
-            Call SetARDocValues(sqlReader, bARDocInfo)
-            'Write CustID, RefNbr, and DocBal to event log
-            Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Open Balance: " + bARDocInfo.DocBal.ToString + vbTab + "Original Balance: " + bARDocInfo.OrigDocAmt.ToString, oEventLog)
-            NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
-
-        End While
-        Call sqlReader.Close()
-
-
-        '********************************************************
-        '*** Check for open AR docs with an orphaned Terms ID ***
-        '********************************************************
-        sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE OpenDoc = 1 AND DocBal = OrigDocAmt AND DocType IN ('IN', 'DM', 'CM') AND Terms NOT IN (SELECT TermsId FROM Terms WHERE ApplyTo IN ('B', 'C')) AND CpnyID =" + SParm(CpnyId)
-        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
-
-        If sqlReader.HasRows() Then
-            'Write Warning message to event log
-            Call LogMessage("", oEventLog)
-            Call LogMessage("", oEventLog)
-            msgText = "WARNING: Open AR documents exist with an invalid Payment Terms ID" + vbNewLine + "List of open documents with an invalid Payment Terms ID:"
-
-            Call LogMessage(msgText, oEventLog)
-        End If
-
-        While sqlReader.Read()
-            Call SetARDocValues(sqlReader, bARDocInfo)
-            'Write CustID, RefNbr, and DocBal to event log
-            Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Doc Type: " + bARDocInfo.DocType + vbTab + "Terms ID: " + bARDocInfo.Terms, oEventLog)
-            NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
-
-        End While
-        Call sqlReader.Close()
-
-
-        '*********************************************************************************************
-        'Verify document date falls within the date range for the period to post for open AR documents
-        'Do not include documents with a DocType of 'RC' 
-        '*********************************************************************************************
-        Try
-
-            Dim connStr As String = ""
-            Dim sqlTranConn As SqlConnection = Nothing
-            Dim sqlTranReader As SqlDataReader = Nothing
-
-            Dim RecordParmList As New List(Of ParmList)
-            Dim ParmValues As ParmList
-
-            sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE CpnyID =" + SParm(CpnyId) + "AND DocType <> 'RC' AND OpenDoc = 1 AND DocBal = OrigDocAmt ORDER BY ARDoc.CustId, ARDoc.RefNbr"
             Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
 
-            Call LogMessage("", oEventLog)
+            If sqlReader.HasRows() Then
+                'Write Error message to event log
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                msgText = "ERROR: Customer IDs with ' (single quotation mark) character found. The ' (single quotation mark) character is not a valid character for the Customer ID in Microsoft Dynamics SL."
+                msgText = msgText + vbNewLine + "List of Customer IDs with ' (single quotation mark) character:"
+                Call LogMessage(msgText, oEventLog)
+                custIDSpecCharExists = True
+            End If
+            While sqlReader.Read()
 
-            ' If any rows were found, then open a second connection for reading the GL Period info.
-            If (sqlReader.HasRows) Then
-                ' Open the connection to the app database.
-                sqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
-                sqlTranConn.Open()
+                Call SetCustomerValues(sqlReader, bCustomerInfo)
+                'Write CustID to event log
+                Call LogMessage("Customer ID: " + bCustomerInfo.CustId, oEventLog)
+                NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+            End While
 
-                ' Add the stored procedure parameters to the list.
-                ParmValues = New ParmList
-                ParmValues.ParmName = "Date"
-                ParmValues.ParmType = SqlDbType.SmallDateTime
-                ParmValues.ParmValue = 0
-                RecordParmList.Add(ParmValues)
+            Call sqlReader.Close()
+            'Display message in Event Log for suggested actions
+            If custIDSpecCharExists = True Then
+                Call LogMessage("", oEventLog)
+                msgText = "Suggested actions for updating Customer IDs are listed below:" + vbNewLine
+                msgText = msgText + " - Use the Professional Services Tools Library (PSTL) application to modify the Customer IDs to remove the ' (single quotation mark) character" + vbNewLine
+                msgText = msgText + " - Set the Status on these Customers to Inactive in Customer Maintenance (08.260.00) to exclude these customers from the migration" + vbNewLine
+                msgText = msgText + " - Contact your Microsoft Dynamics SL Partner for further assistance"
+                Call LogMessage(msgText, oEventLog)
+                Call LogMessage("", oEventLog)
+            End If
 
-                ParmValues = New ParmList
-                ParmValues.ParmName = "UseCurrentOMPeriod"
-                ParmValues.ParmType = SqlDbType.SmallInt
-                ParmValues.ParmValue = 0
-                RecordParmList.Add(ParmValues)
+            '**********************************************************************
+            '*** Check for Customer names greater than 50 characters in length  ***
+            '**********************************************************************
+            sqlStmt = "SELECT CustId, Name FROM Customer WHERE LEN(RTRIM(NAME)) > 50"
 
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
 
+            If sqlReader.HasRows() Then
+                'Write Error message to event log
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                msgText = "ERROR: D365 BC Customer name can only be 50 characters for migration."
+                msgText = msgText + vbNewLine + "List of Customer IDs with names greater than 50 characters:"
+                Call LogMessage(msgText, oEventLog)
+                custIDSpecCharExists = True
+            End If
+            While sqlReader.Read()
+
+                Call SetCustomerValues(sqlReader, bCustomerInfo)
+                'Write CustID to event log
+                Call LogMessage("Customer ID: " + bCustomerInfo.CustId, oEventLog)
+                NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+            End While
+
+            Call sqlReader.Close()
+
+            '************************************
+            '*** Check for recurring Invoices ***
+            '************************************
+            sqlStmt = "SELECT COUNT(*) FROM ARDoc WHERE DocType = 'RC' AND NbrCycle > 0"
+            Call sqlFetch_Num(recInvoices, sqlStmt, SqlAppDbConn)
+
+            If recInvoices > 0 Then
+                'Display a warning message
+                Call LogMessage("", oEventLog)
+                msgText = "WARNING: Open Recurring Invoices exists. Recurring invoices will not be migrated and will need to be manually entered in the new system."
+                msgText = msgText + " To assist with the move of your recurring batches, the details of your recurring batches can be identified using the"
+                msgText = msgText + " Recurring Invoice (08.670.00) report, Standard format to identify the AR recurring batches identified by this utility."
+
+                Call LogMessage(msgText, oEventLog)
+
+                NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
+            End If
+
+            '**************************************************************
+            '*** Check for open Credit Memos, Payments and Pre-Payments ***
+            '**************************************************************
+            'Check for open Credit Memos
+            sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE DocType = 'CM' AND OpenDoc = 1 AND CpnyID =" + SParm(CpnyId)
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+            If sqlReader.HasRows Then
+                'Write Warning message to event log
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                msgText = "WARNING: Open AR Credit Memos exist. It is recommended that all open Credit Memos are applied to Invoices prior to migrating data." + vbNewLine + "List of open AR Credit Memos:"
+
+                Call LogMessage(msgText, oEventLog)
 
             End If
 
-            While sqlReader.Read() And OkToContinue = True
+            While sqlReader.Read()
                 Call SetARDocValues(sqlReader, bARDocInfo)
-                'Get Document Date and Document Period Number
-                docDateStr = bARDocInfo.DocDate.ToShortDateString
-                docPerNbr = bARDocInfo.PerPost.Substring(4, 2)
-
-
-
-                'Get Period to Post based on Document Date
-                RecordParmList.Item(0).ParmValue = bARDocInfo.DocDate
-                Call sqlFetch_1(sqlTranReader, "ADG_GLPeriod_GetPeriodFromDate", sqlTranConn, CommandType.StoredProcedure, RecordParmList)
-                If (sqlTranReader.HasRows = True) Then
-                    Call sqlTranReader.Read()
-                    bPerNbrCheckInfo.PerPost = sqlTranReader("Period")
-                End If
-                sqlTranReader.Close()
-
-
-                'Write warnings to the event log
-                If (bARDocInfo.PerPost <> bPerNbrCheckInfo.PerPost) Then
-                    If docOutsidePerPostFound = False Then
-                        'Display Warning message
-                        msgText = "WARNING: Open AR documents exist where the Document Date does not fall within the date range for the Period to Post."
-                        msgText = msgText + " Migrated open documents for the current year will be posted to the new system based on the Document Date, not the SL Period to Post."
-                        msgText = msgText + " If any open documents exist from the prior fiscal year, they will be posted to the first day of the first accounting period in the new system."
-                        msgText = msgText + vbNewLine + "List of open documents where Document Date does not fall within Period to Post date range: "
-                        Call LogMessage("", oEventLog)
-                        Call LogMessage(msgText, oEventLog)
-                        docOutsidePerPostFound = True
-                    End If
-
-                    msgText = "Customer: " + bARDocInfo.CustId + " RefNbr: " + bARDocInfo.RefNbr + " Type: " + bARDocInfo.DocType + vbTab + vbTab + "DocDate: " + docDateStr.ToString + vbTab + "PerPost: " + bARDocInfo.PerPost
-                    Call LogMessage(msgText, oEventLog)
-                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
-                End If
+                'Write CustID, RefNbr, and DocBal to event log
+                Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Open Balance: " + bARDocInfo.DocBal.ToString + vbTab + "Original Balance: " + bARDocInfo.OrigDocAmt.ToString, oEventLog)
+                NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
 
             End While
             Call sqlReader.Close()
 
-        Catch ex As Exception
-            Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+            'Check for open Payments
+            sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE DocType = 'PA' AND OpenDoc = 1 AND CpnyID =" + SParm(CpnyId)
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
 
-            Call LogMessage("", oEventLog)
-            Call LogMessage("Error encountered while validating open AR document dates fall within the assigned period to post date range.", oEventLog)
-            Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
-            Call LogMessage("", oEventLog)
-            OkToContinue = False
-            NbrOfErrors_Cust = NbrOfErrors_Cust + 1
-            Exit Sub
-        End Try
+            If sqlReader.HasRows Then
+                'Write Warning message to event log
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                msgText = "WARNING: Open AR Payments exist. It is recommended that all open Payments are applied to Invoices prior to migrating data." + vbNewLine + "List of open AR Payments:"
 
+                Call LogMessage(msgText, oEventLog)
+
+            End If
+
+            While sqlReader.Read()
+                Call SetARDocValues(sqlReader, bARDocInfo)
+                'Write CustID, RefNbr, and DocBal to event log
+                Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Open Balance: " + bARDocInfo.DocBal.ToString + vbTab + "Original Balance: " + bARDocInfo.OrigDocAmt.ToString, oEventLog)
+                NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
+
+            End While
+            Call sqlReader.Close()
+
+            'Check for open Pre-Payments
+            sqlStmt = "SELECT CustId, DocBal, DocDate, DocType,  OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE DocType = 'PP' AND OpenDoc = 1 AND CpnyID =" + SParm(CpnyId)
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            If sqlReader.HasRows() Then
+                'Write Warning message to event log
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                msgText = "WARNING: Open AR Prepayments exist. It is recommended that all open Prepayments are applied to Invoices prior to migrating data." + vbNewLine + "List of open AR Prepayments:"
+
+                Call LogMessage(msgText, oEventLog)
+            End If
+
+            While sqlReader.Read()
+                Call SetARDocValues(sqlReader, bARDocInfo)
+                'Write CustID, RefNbr, and DocBal to event log
+                Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Open Balance: " + bARDocInfo.DocBal.ToString + vbTab + "Original Balance: " + bARDocInfo.OrigDocAmt.ToString, oEventLog)
+                NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
+
+            End While
+            Call sqlReader.Close()
+
+            '********************************************************
+            '*** Check for open AR docs with an orphaned Terms ID ***
+            '********************************************************
+            sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE OpenDoc = 1 AND DocBal = OrigDocAmt AND DocType IN ('IN', 'DM', 'CM') AND Terms NOT IN (SELECT TermsId FROM Terms WHERE ApplyTo IN ('B', 'C')) AND CpnyID =" + SParm(CpnyId)
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            If sqlReader.HasRows() Then
+                'Write Warning message to event log
+                Call LogMessage("", oEventLog)
+                Call LogMessage("", oEventLog)
+                msgText = "WARNING: Open AR documents exist with an invalid Payment Terms ID" + vbNewLine + "List of open documents with an invalid Payment Terms ID:"
+
+                Call LogMessage(msgText, oEventLog)
+            End If
+
+            While sqlReader.Read()
+                Call SetARDocValues(sqlReader, bARDocInfo)
+                'Write CustID, RefNbr, and DocBal to event log
+                Call LogMessage("Customer: " + bARDocInfo.CustId + vbTab + "Reference Nbr: " + bARDocInfo.RefNbr + vbTab + "Doc Type: " + bARDocInfo.DocType + vbTab + "Terms ID: " + bARDocInfo.Terms, oEventLog)
+                NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
+
+            End While
+            Call sqlReader.Close()
+
+            '*********************************************************************************************
+            'Verify document date falls within the date range for the period to post for open AR documents
+            'Do not include documents with a DocType of 'RC' 
+            '*********************************************************************************************
+            Try
+
+                Dim connStr As String = ""
+                Dim sqlTranConn As SqlConnection = Nothing
+                Dim sqlTranReader As SqlDataReader = Nothing
+
+                Dim RecordParmList As New List(Of ParmList)
+                Dim ParmValues As ParmList
+
+                sqlStmt = "SELECT CustId, DocBal, DocDate, DocType, OrigDocAmt, PerPost, RefNbr, Terms FROM ARDoc WHERE CpnyID =" + SParm(CpnyId) + "AND DocType <> 'RC' AND OpenDoc = 1 AND DocBal = OrigDocAmt ORDER BY ARDoc.CustId, ARDoc.RefNbr"
+                Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+                Call LogMessage("", oEventLog)
+
+                ' If any rows were found, then open a second connection for reading the GL Period info.
+                If (sqlReader.HasRows) Then
+                    ' Open the connection to the app database.
+                    sqlTranConn = New SqlClient.SqlConnection(AppDbConnStr)
+                    sqlTranConn.Open()
+
+                    ' Add the stored procedure parameters to the list.
+                    ParmValues = New ParmList
+                    ParmValues.ParmName = "Date"
+                    ParmValues.ParmType = SqlDbType.SmallDateTime
+                    ParmValues.ParmValue = 0
+                    RecordParmList.Add(ParmValues)
+
+                    ParmValues = New ParmList
+                    ParmValues.ParmName = "UseCurrentOMPeriod"
+                    ParmValues.ParmType = SqlDbType.SmallInt
+                    ParmValues.ParmValue = 0
+                    RecordParmList.Add(ParmValues)
+
+                End If
+
+                While sqlReader.Read() And OkToContinue = True
+                    Call SetARDocValues(sqlReader, bARDocInfo)
+                    'Get Document Date and Document Period Number
+                    docDateStr = bARDocInfo.DocDate.ToShortDateString
+                    docPerNbr = bARDocInfo.PerPost.Substring(4, 2)
+
+
+
+                    'Get Period to Post based on Document Date
+                    RecordParmList.Item(0).ParmValue = bARDocInfo.DocDate
+                    Call sqlFetch_1(sqlTranReader, "ADG_GLPeriod_GetPeriodFromDate", sqlTranConn, CommandType.StoredProcedure, RecordParmList)
+                    If (sqlTranReader.HasRows = True) Then
+                        Call sqlTranReader.Read()
+                        bPerNbrCheckInfo.PerPost = sqlTranReader("Period")
+                    End If
+                    sqlTranReader.Close()
+
+
+                    'Write warnings to the event log
+                    If (bARDocInfo.PerPost <> bPerNbrCheckInfo.PerPost) Then
+                        If docOutsidePerPostFound = False Then
+                            'Display Warning message
+                            msgText = "WARNING: Open AR documents exist where the Document Date does not fall within the date range for the Period to Post."
+                            msgText = msgText + " Migrated open documents for the current year will be posted to the new system based on the Document Date, not the SL Period to Post."
+                            msgText = msgText + " If any open documents exist from the prior fiscal year, they will be posted to the first day of the first accounting period in the new system."
+                            msgText = msgText + vbNewLine + "List of open documents where Document Date does not fall within Period to Post date range: "
+                            Call LogMessage("", oEventLog)
+                            Call LogMessage(msgText, oEventLog)
+                            docOutsidePerPostFound = True
+                        End If
+
+                        msgText = "Customer: " + bARDocInfo.CustId + " RefNbr: " + bARDocInfo.RefNbr + " Type: " + bARDocInfo.DocType + vbTab + vbTab + "DocDate: " + docDateStr.ToString + vbTab + "PerPost: " + bARDocInfo.PerPost
+                        Call LogMessage(msgText, oEventLog)
+                        NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
+                    End If
+
+                End While
+                Call sqlReader.Close()
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error encountered while validating open AR document dates fall within the assigned period to post date range.", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                Exit Sub
+            End Try
+
+        End If
 
         '************************************************************
         '*** Verify Customer Balances for Open Balance migrations ***
@@ -444,11 +507,11 @@ Module CustomerCode
 
         Call oEventLog.LogMessage(EndProcess, "Validate Customer")
 
-        Call MessageBox.Show("Customer validation complete", "Customer Validation")
+        Call MessageBox.Show("Customer validation complete.", "Customer Validation")
 
 
         ' Display the event log just created.
-        Call DisplayLog(oEventLog.LogFile.FullName.Trim())
+        ' Call DisplayLog(oEventLog.LogFile.FullName.Trim())
 
         ' Store the filename in the table.
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then

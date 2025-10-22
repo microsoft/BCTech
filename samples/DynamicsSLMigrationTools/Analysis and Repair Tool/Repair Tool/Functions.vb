@@ -105,6 +105,23 @@ Module Functions
         End Property
     End Class
 
+    Public Class ScreenName
+
+        Private m_Name As String
+
+        Public Property CompanyId() As String
+
+            Get
+                Return m_Name
+            End Get
+
+            Set(ByVal setval As String)
+                m_Name = setval
+            End Set
+
+        End Property
+
+    End Class
 
     Public Function GetConnectionString(SysDB As Boolean) As String
         Dim pwd As String = ""

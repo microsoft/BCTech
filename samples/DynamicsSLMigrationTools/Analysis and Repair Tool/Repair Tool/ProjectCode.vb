@@ -10,14 +10,14 @@ Module ProjectCode
     Dim fetchPJPent As Integer
     Dim msgText As String = String.Empty
     Dim taskID20PlusExists As Boolean = False
-	Dim fetchPJEmploy As Integer
-	Dim fetchPJProj As Integer
-	Dim statusClause As String = String.Empty
-	Dim statusClauseTask As String = String.Empty
+    Dim fetchPJEmploy As Integer
+    Dim fetchPJProj As Integer
+    Dim statusClause As String = String.Empty
+    Dim statusClauseTask As String = String.Empty
 
 
 
-	Public Sub Validate()
+    Public Sub Validate()
         '====================================================================================
         'Validate Project related records
         '	- Verify Project has a Customer assigned
@@ -39,7 +39,7 @@ Module ProjectCode
         fmtDate = fmtDate & Date.Now.Millisecond
 
         oEventLog = New clsEventLog
-        oEventLog.FileName = "SL-PJ-" & "-" & fmtDate & "-" & Trim(UserId) & ".log"
+        oEventLog.FileName = "SL-PJ-" & fmtDate & "-" & Trim(UserId) & ".log"
 
         Call oEventLog.LogMessage(StartProcess, "")
         Call oEventLog.LogMessage(0, "")
@@ -155,10 +155,10 @@ Module ProjectCode
         Call oEventLog.LogMessage(EndProcess, "Validate Project")
 
 
-        Call MessageBox.Show("Project Validation Complete", "Project Validation")
+        Call MessageBox.Show("Project validation complete.", "Project Validation")
 
         ' Display the event log just created.
-        Call DisplayLog(oEventLog.LogFile.FullName.Trim())
+        'Call DisplayLog(oEventLog.LogFile.FullName.Trim())
 
         ' Store the filename in the table.
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then
