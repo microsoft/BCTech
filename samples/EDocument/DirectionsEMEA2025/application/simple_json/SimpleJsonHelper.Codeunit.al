@@ -10,7 +10,7 @@ using System.Utilities;
 /// Helper codeunit with pre-written methods for JSON operations.
 /// These methods are provided to save time during the workshop.
 /// </summary>
-codeunit 81001 "SimpleJson Helper"
+codeunit 50104 "SimpleJson Helper"
 {
     Access = Internal;
 
@@ -57,8 +57,7 @@ codeunit 81001 "SimpleJson Helper"
     begin
         if JsonToken.IsValue then begin
             JsonValue := JsonToken.AsValue();
-            if JsonValue.AsDecimal(DecimalValue) then
-                exit(DecimalValue);
+            exit(JsonValue.AsDecimal());
         end;
         exit(0);
     end;

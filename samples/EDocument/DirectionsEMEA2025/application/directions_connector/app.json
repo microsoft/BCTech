@@ -15,18 +15,20 @@
       "id": "e1d97edc-c239-46b4-8d84-6368bdf67c8b",
       "name": "E-Document Core",
       "publisher": "Microsoft",
-      "version": "25.0.0.0"
+      "version": "27.0.0.0"
     }
   ],
   "screenshots": [],
-  "platform": "25.0.0.0",
+  "platform": "27.0.0.0",
   "idRanges": [
     {
-      "from": 81100,
-      "to": 81199
+      "from": 50121,
+      "to": 50140
     }
   ],
-  "features": [],
-  "target": "OnPrem",
-  "runtime": "13.0"
+  "features": [
+    "NoImplicitWith",
+    "TranslationFile"
+  ],
+  "target": "Cloud"
 }

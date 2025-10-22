@@ -10,11 +10,11 @@ using Microsoft.eServices.EDocument;
 /// Extends the E-Document Format enum to add SimpleJson format.
 /// This enum value is used to identify which format implementation to use.
 /// </summary>
-enumextension 81000 "SimpleJson Format" extends "E-Document Format"
+enumextension 50100 "SimpleJson Format" extends "E-Document Format"
 {
-    value(81000; "SimpleJson")
+    value(50100; "SimpleJson")
     {
-        Caption = 'Simple JSON Format';
-        Implementation = "E-Document" = "SimpleJson Format Impl.";
+        Caption = 'Simple JSON Format - Exercise 1';
+        Implementation = "E-Document" = "SimpleJson Format";
     }
 }

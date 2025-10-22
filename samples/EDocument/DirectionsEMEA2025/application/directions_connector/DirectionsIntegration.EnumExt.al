@@ -18,4 +18,5 @@ enumextension 81100 "Directions Integration" extends "Service Integration V2"
         Implementation = IDocumentSender = "Directions Integration Impl.",
                         IDocumentReceiver = "Directions Integration Impl.";
     }
+    
 }

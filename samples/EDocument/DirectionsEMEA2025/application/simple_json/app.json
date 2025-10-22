@@ -3,6 +3,7 @@
   "name": "SimpleJson E-Document Format",
   "publisher": "Directions EMEA Workshop",
   "version": "1.0.0.0",
+  "application": "28.0.0.0",
   "brief": "SimpleJson format for E-Document workshop",
   "description": "Workshop extension that implements the E-Document format interface for JSON documents",
   "privacyStatement": "https://privacy.microsoft.com",
@@ -15,18 +16,32 @@
       "id": "e1d97edc-c239-46b4-8d84-6368bdf67c8b",
       "name": "E-Document Core",
       "publisher": "Microsoft",
-      "version": "25.0.0.0"
+      "version": "28.0.0.0"
+    },
+    {
+      "id": "dd0be2ea-f733-4d65-bb34-a28f4624fb14",
+      "name": "Library Assert",
+      "publisher": "Microsoft",
+      "version": "28.0.0.0"
+    },
+    {
+      "id": "5d86850b-0d76-4eca-bd7b-951ad998e997",
+      "name": "Tests-TestLibraries",
+      "publisher": "Microsoft",
+      "version": "28.0.0.0"
     }
   ],
   "screenshots": [],
-  "platform": "25.0.0.0",
+  "platform": "28.0.0.0",
   "idRanges": [
     {
-      "from": 81000,
-      "to": 81099
+      "from": 50100,
+      "to": 50150
     }
   ],
-  "features": [],
-  "target": "OnPrem",
-  "runtime": "13.0"
+  "features": [
+    "TranslationFile",
+    "NoImplicitWith"
+  ],
+  "target": "Cloud"
 }

@@ -1,7 +1,16 @@
 {
 	"folders": [
 		{
+			"name": "Folder",
 			"path": "."
+		},
+		{
+			"name": "SimpleJson",
+			"path": "./application/simple_json"
+		},
+		{
+			"name": "Connector",
+			"path": "./application/directions_connector"
 		},
 		{
 			"name": "E-Document Core",
