@@ -1,2 +1,2 @@
-fastapi
-uvicorn[standard]
+flask==3.0.0
+werkzeug==3.0.1

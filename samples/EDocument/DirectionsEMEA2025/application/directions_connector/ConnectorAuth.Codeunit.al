@@ -40,16 +40,14 @@ codeunit 50121 "Connector Auth"
         JsonObject.WriteTo(RequestBody);
 
         // Prepare HTTP request
-        HttpRequest.GetHeaders(HttpHeaders);
+        HttpRequest.Content.WriteFrom(RequestBody);
+        HttpRequest.Content.GetHeaders(HttpHeaders);
         if HttpHeaders.Contains('Content-Type') then
             HttpHeaders.Remove('Content-Type');
         HttpHeaders.Add('Content-Type', 'application/json');
 
-        HttpContent.WriteFrom(RequestBody);
-
         HttpRequest.Method := 'POST';
         HttpRequest.SetRequestUri(ConnectorSetup."API Base URL" + 'register');
-        HttpRequest.Content := HttpContent;
 
         // Send request
         if not HttpClient.Send(HttpRequest, HttpResponse) then
