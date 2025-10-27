@@ -14,7 +14,7 @@ using Microsoft.Purchases.Document;
 /// Simple test runner for workshop participants.
 /// Run this codeunit to validate your exercise implementations.
 /// </summary>
-codeunit 50113 "SimpleJson Test Runner"
+codeunit 50113 "SimpleJson Test"
 {
 
     Subtype = Test;

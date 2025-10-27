@@ -29,10 +29,11 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
         case SourceDocumentHeader.Number of
             Database::"Sales Invoice Header":
                 begin
-                    // Exercise 1.A Solution - Validate required fields
+                    // Validation complete
                     SourceDocumentHeader.Field(SalesInvoiceHeader.FieldNo("Sell-to Customer No.")).TestField();
-                    // Note: In a real implementation, also validate Posting Date exists
-                    // For workshop: validation is considered complete
+
+                    // TODO: Exercise 1.A: Validate Posting Date
+
                 end;
         end;
     end;
