@@ -29,9 +29,6 @@ workshop/
 ├── COMPLETE_WORKSHOP_GUIDE.md  # ⭐ Start here! Complete step-by-step guide
 ├── API_REFERENCE.md            # API endpoint documentation
 ├── README.md                   # This file - overview and quick reference
-├── WORKSHOP_INTRO.md           # Presentation slides (background material)
-├── WORKSHOP_GUIDE.md           # Original exercise instructions
-└── WORKSHOP_PLAN.md            # Implementation plan (for reference)
 
 application/
 ├── simple_json/                # Exercise 1: Format implementation
@@ -51,11 +48,6 @@ application/
     ├── ConnectorTests.Codeunit.al          # ✅ Automated tests
     └── app.json
 
-server/
-├── app.py                      # API server implementation (Python/FastAPI)
-├── requirements.txt            # Python dependencies
-├── startup.sh                  # Deployment script
-└── README.md                   # Server documentation
 ```
 
 ---
@@ -91,7 +83,7 @@ server/
 | 00:10-00:40 | 30 min | Exercise 1: SimpleJson Format | WORKSHOP_GUIDE.md |
 | 00:40-01:10 | 30 min | Exercise 2: DirectionsConnector | WORKSHOP_GUIDE.md |
 | 01:10-01:25 | 15 min | Testing & Live Demo | WORKSHOP_GUIDE.md |
-| 01:25-01:30 | 5 min | Wrap-up & Q&A | - |
+| 01:25-01:30 | 5 min | Wrap-up | - |
 
 ---
 
@@ -186,6 +178,12 @@ Communicates with external systems:
      - Service Integration V2: `Connector`
    - Enable the service
 
+2. **Create E-Document Workflow:**
+   - Create Workflow with E-Document
+     - When E-document Created -> Send E-Document using setup: `CONNECTOR`
+   - Enable workflow, and assign it in document sending profile
+   - Assign document sending profile to Customer.
+
 3. **Start Coding:**
    - Open `application/simple_json/SimpleJsonFormat.Codeunit.al`
    - Find first TODO comment
@@ -204,9 +202,8 @@ Communicates with external systems:
 **Incoming (Receive):**
 ```
 1. E-Document Services → Select CONNECTOR
-2. Click "Get Documents"
-3. E-Documents → Filter Status: "Imported"
-4. Click "Create Document" → Opens Purchase Invoice
+2. Click "Receive"
+3. New E-Documents arrive
 ```
 
 ---
@@ -217,9 +214,6 @@ Communicates with external systems:
 |----------|---------|-------------|
 | [**COMPLETE_WORKSHOP_GUIDE.md**](./COMPLETE_WORKSHOP_GUIDE.md) | ⭐ Main guide with all exercises and solutions | Start here - your primary reference |
 | [**API_REFERENCE.md**](./API_REFERENCE.md) | Complete API endpoint documentation | When implementing HTTP calls |
-| [**WORKSHOP_INTRO.md**](./WORKSHOP_INTRO.md) | Presentation slides (architecture overview) | For understanding concepts |
-| [**WORKSHOP_GUIDE.md**](./WORKSHOP_GUIDE.md) | Original exercise instructions | Alternative detailed guide |
-| [**WORKSHOP_PLAN.md**](./WORKSHOP_PLAN.md) | Implementation plan and structure | For instructors/reference |
 
 ---
 
@@ -268,52 +262,6 @@ You've completed the workshop successfully if you can:
 
 ---
 
-## 🧪 Testing Your Implementation
-
-### Automated Tests
-
-Run the built-in tests to verify your implementation:
-
-1. Open **Test Tool** in Business Central
-2. Select Codeunit **50113 "SimpleJson Test"**
-3. Run all tests - should pass:
-   - `TestExercise1_CheckValidation`
-   - `TestExercise1_CheckCreate`
-   - `TestExercise2_OutgoingMethodsWork`
-   - `TestExercise2_GetBasicInfoFromJSON`
-   - `TestExercise2_CreatePurchaseInvoiceFromJSON`
-
-### Manual Testing
-
-**Test Outgoing:**
-```powershell
-# After sending from BC, check the queue:
-$headers = @{ "X-Service-Key" = "your-api-key" }
-Invoke-RestMethod -Uri "https://[API-URL]/peek" -Headers $headers
-```
-
-**Test Incoming:**
-```powershell
-# Check how many documents are waiting:
-$headers = @{ "X-Service-Key" = "your-api-key" }
-$response = Invoke-RestMethod -Uri "https://[API-URL]/peek" -Headers $headers
-Write-Host "Documents in queue: $($response.queued_count)"
-```
-
----
-
-## 🐛 Common Issues & Solutions
-
-| Issue | Solution |
-|-------|----------|
-| "Unauthorized or invalid key" | Re-register in Connector Connection Setup |
-| "Failed to parse JSON" | Check JSON structure in E-Document log, verify all required fields |
-| "Vendor does not exist" | Create vendor with matching number, or modify JSON to use existing vendor |
-| "Document type not supported" | Verify "Simple JSON Format" is selected in E-Document Service |
-| "Queue empty" | Send documents first, or ask partner/instructor for test data |
-| "Connection failed" | Check API Base URL (must end with `/`), verify server is running |
-
----
 
 ## 💡 Tips for Success
 
@@ -338,50 +286,6 @@ Write-Host "Documents in queue: $($response.queued_count)"
 - [BC Developer Documentation](https://learn.microsoft.com/dynamics365/business-central/dev-itpro/)
 - [AL Language Reference](https://learn.microsoft.com/dynamics365/business-central/dev-itpro/developer/devenv-reference-overview)
 - [AL Samples Repository](https://github.com/microsoft/AL)
-
-### Workshop Materials
-- **This Repository**: [BCTech E-Document Samples](https://github.com/microsoft/BCTech/tree/main/samples/EDocument)
-- **API Server Code**: `server/app.py` (Python FastAPI implementation)
-
----
-
-## 🎓 Advanced Topics (Post-Workshop)
-
-After completing the basics, explore:
-
-**Format Enhancements:**
-- Support for Credit Memos
-- Support for Purchase Orders
-- Custom field mappings
-- Validation rules
-- Document attachments
-
-**Integration Enhancements:**
-- Batch operations
-- Async status checking (`IDocumentResponseHandler`)
-- Approval workflows (`ISentDocumentActions`)
-- Custom actions (`IDocumentAction`)
-- Error handling and retry logic
-
-**Real-World Examples:**
-- PEPPOL format implementation
-- Avalara connector integration
-- Custom XML formats
-- EDI integrations
-
----
-
-## 🤝 Workshop Collaboration
-
-**Share with Others:**
-- Exchange your API key with a partner
-- Send documents to each other's queues
-- Test receiving from different sources
-
-**Group Activities:**
-- Create a shared test queue
-- Send documents to the group
-- Practice handling various document formats
 
 ---
 

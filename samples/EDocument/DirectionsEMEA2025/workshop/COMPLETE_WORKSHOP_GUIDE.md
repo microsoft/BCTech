@@ -557,7 +557,6 @@ You've successfully completed the E-Document Connector Workshop!
 
 ---
 
-
 **Thank you for participating!** We hope you found this workshop valuable and are excited to build E-Document integrations in your projects.
 
 **Happy Coding!** 🚀
