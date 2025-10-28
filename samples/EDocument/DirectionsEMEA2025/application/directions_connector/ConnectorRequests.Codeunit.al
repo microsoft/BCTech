@@ -22,16 +22,15 @@ codeunit 50125 "Connector Requests"
         HttpHeaders: HttpHeaders;
         HttpContent: HttpContent;
     begin
-        HttpContent.WriteFrom(JsonContent);
+        HttpRequest.Content.WriteFrom(JsonContent);
+        HttpRequest.Content.GetHeaders(HttpHeaders);
         // Prepare HTTP request
-        HttpRequest.GetHeaders(HttpHeaders);
         if HttpHeaders.Contains('Content-Type') then
             HttpHeaders.Remove('Content-Type');
         HttpHeaders.Add('Content-Type', 'application/json');
 
         HttpRequest.Method := 'POST';
         HttpRequest.SetRequestUri(Url);
-        HttpRequest.Content := HttpContent;
     end;
 
     /// <summary>

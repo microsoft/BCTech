@@ -5,6 +5,7 @@
 namespace Microsoft.EServices.EDocument.Format;
 
 using System.Utilities;
+using Microsoft.eServices.EDocument;
 
 /// <summary>
 /// Helper codeunit with pre-written methods for JSON operations.
@@ -98,4 +99,18 @@ codeunit 50104 "SimpleJson Helper"
         InStr.ReadText(JsonText);
         exit(JsonObject.ReadFrom(JsonText));
     end;
+
+
+    [EventSubscriber(ObjectType::Table, Database::"E-Document Log", OnBeforeExportDataStorage, '', false, false)]
+    local procedure OnBeforeExportDataStorage(EDocumentLog: Record "E-Document Log"; var FileName: Text)
+    var
+        EDocumentService: Record "E-Document Service";
+    begin
+        EDocumentService.Get(EDocumentLog."Service Code");
+        if EDocumentService."Document Format" <> EDocumentService."Document Format"::"SimpleJson" then
+            exit;
+
+        FileName := StrSubstNo('%1_%2.json', EDocumentLog."Service Code", EDocumentLog."Document No.");
+    end;
+
 }

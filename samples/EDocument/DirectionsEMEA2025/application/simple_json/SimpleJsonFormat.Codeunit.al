@@ -33,7 +33,7 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
                     SourceDocumentHeader.Field(SalesInvoiceHeader.FieldNo("Sell-to Customer No.")).TestField();
 
                     // TODO: Exercise 1.A: Validate Posting Date
-
+                    SourceDocumentHeader.Field(SalesInvoiceHeader.FieldNo("Posting Date")).TestField();
                 end;
         end;
     end;
@@ -72,7 +72,14 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
         RootObject.Add('currencyCode', SalesInvoiceHeader."Currency Code");
         RootObject.Add('totalAmount', Format(SalesInvoiceHeader."Amount Including VAT", 0, 9));
 
-        // TODO: Exercise 1.B - Fill in customerNo and customerName for header
+        // TODO: Exercise 1.B - Fill in customerNo and customerName, vendorNo and VendorName for header
+        // It is important that you have a vendor with the same number in your system, since when you receive the data you will have to pick the vendor based on the VendorNo
+        RootObject.Add('customerNo', SalesInvoiceHeader."Sell-to Customer No.");
+        RootObject.Add('customerName', SalesInvoiceHeader."Sell-to Customer Name");
+        
+        // Hardcoded for simplicity. Normally this would be company information
+        RootObject.Add('vendorNo', '10000');
+        RootObject.Add('vendorName', 'Adatum Corporation');
 
         // Create lines array
         if SalesInvoiceLine.FindSet() then
@@ -85,8 +92,8 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
                 LineObject.Add('lineAmount', SalesInvoiceLine."Amount Including VAT");
 
                 // TODO: Exercise 1.B - Fill in description and quantity for line
-
-
+                LineObject.Add('description', SalesInvoiceLine.Description);
+                LineObject.Add('quantity', SalesInvoiceLine.Quantity);
 
                 LinesArray.Add(LineObject);
             until SalesInvoiceLine.Next() = 0;
@@ -104,7 +111,7 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
 
     // ============================================================================
     // INCOMING DOCUMENTS 
-    // Exercise 2
+    // Exercise 4
     // Parse information from received JSON document.
     // ============================================================================
 
@@ -122,8 +129,8 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
 
         // Extract document number
         if SimpleJsonHelper.SelectJsonToken(JsonObject, 'documentNo', JsonToken) then
-            EDocument."Document No." := CopyStr(SimpleJsonHelper.GetJsonTokenValue(JsonToken), 1, MaxStrLen(EDocument."Document No."));
-
+            EDocument."Incoming E-Document No." := CopyStr(SimpleJsonHelper.GetJsonTokenValue(JsonToken), 1, MaxStrLen(EDocument."Incoming E-Document No."));
+            
         // Extract posting date
         if SimpleJsonHelper.SelectJsonToken(JsonObject, 'postingDate', JsonToken) then
             EDocument."Document Date" := SimpleJsonHelper.GetJsonTokenDate(JsonToken);
@@ -135,21 +142,23 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
 
         // TODO: Exercise 2.A - Fill in the vendor information and total amount
 
-        // TODO: Extract vendor number (from "customerNo" in JSON)
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-            EDocument."Bill-to/Pay-to No." := '';
-        // TODO: Extract vendor name 
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-            EDocument."Bill-to/Pay-to Name" := '';
-        // TODO: Extract total amount 
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-            EDocument."Amount Incl. VAT" := 0;
+        // TODO: Extract vendor number (from "vendorNo" in JSON)
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'vendorNo', JsonToken) then
+            EDocument."Bill-to/Pay-to No." := SimpleJsonHelper.getJsonTokenValue(JsonToken);
+            
+        // TODO: Extract vendor name
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'vendorName', JsonToken) then
+            EDocument."Bill-to/Pay-to Name" := SimpleJsonHelper.getJsonTokenValue(JsonToken);
+
+        // TODO: Extract total amount
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'totalAmount', JsonToken) then
+            EDocument."Amount Incl. VAT" := SimpleJsonHelper.GetJsonTokenDecimal(JsonToken);
     end;
 
     procedure GetCompleteInfoFromReceivedDocument(var EDocument: Record "E-Document"; var CreatedDocumentHeader: RecordRef; var CreatedDocumentLines: RecordRef; var TempBlob: Codeunit "Temp Blob")
     var
-        PurchaseHeader: Record "Purchase Header";
-        PurchaseLine: Record "Purchase Line";
+        PurchaseHeader: Record "Purchase Header" temporary;
+        PurchaseLine: Record "Purchase Line" temporary;
         JsonObject: JsonObject;
         JsonToken: JsonToken;
         JsonArray: JsonArray;
@@ -161,17 +170,17 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
             Error('Failed to parse JSON document');
 
         // Create Purchase Header
-        PurchaseHeader.Init();
         PurchaseHeader."Document Type" := PurchaseHeader."Document Type"::Invoice;
-        PurchaseHeader.Insert();
+        PurchaseHeader.InitRecord();
+        PurchaseHeader.Insert(true);
 
         // Set vendor from JSON
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-            PurchaseHeader.Validate("Buy-from Vendor No.", '');
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'vendorNo', JsonToken) then
+            PurchaseHeader.Validate("Buy-from Vendor No.", SimpleJsonHelper.GetJsonTokenValue(JsonToken));
 
         // Set posting date
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-            PurchaseHeader.Validate("Posting Date", 0D);
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'postingDate', JsonToken) then
+            PurchaseHeader.Validate("Posting Date", SimpleJsonHelper.GetJsonTokenDate(JsonToken));
 
         // Set currency code (if not blank)
         if SimpleJsonHelper.SelectJsonToken(JsonObject, 'currencyCode', JsonToken) then begin
@@ -179,7 +188,7 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
                 PurchaseHeader.Validate("Currency Code", SimpleJsonHelper.GetJsonTokenValue(JsonToken));
         end;
 
-        PurchaseHeader.Modify();
+        PurchaseHeader.Modify(true);
 
         // Create Purchase Lines from JSON array
         if JsonObject.Get('lines', JsonToken) then begin
@@ -199,16 +208,20 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
                     PurchaseLine."No." := SimpleJsonHelper.GetJsonTokenValue(JsonToken);
 
                 // TODO: Set description
-                if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-                    PurchaseLine.Description := '';
+                if SimpleJsonHelper.SelectJsonToken(JsonObject, 'description', JsonToken) then
+                    PurchaseLine.Description := SimpleJsonHelper.GetJsonTokenValue(JsonToken);
 
                 // TODO: Set quantity
-                if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-                    PurchaseLine.Quantity := 0;
+                if SimpleJsonHelper.SelectJsonToken(JsonObject, 'quantity', JsonToken) then
+                    PurchaseLine.Quantity := SimpleJsonHelper.GetJsonTokenDecimal(JsonToken);
+
+                // TODO: Set line amount
+                if SimpleJsonHelper.SelectJsonToken(JsonObject, 'lineAmount', JsonToken) then
+                    PurchaseLine.Amount := SimpleJsonHelper.GetJsonTokenDecimal(JsonToken);
 
                 // Set unit cost
-                if SimpleJsonHelper.SelectJsonToken(JsonObject, '???', JsonToken) then
-                    PurchaseLine."Direct Unit Cost" := 0;
+                if SimpleJsonHelper.SelectJsonToken(JsonObject, 'unitCost', JsonToken) then
+                    PurchaseLine."Direct Unit Cost" := SimpleJsonHelper.GetJsonTokenDecimal(JsonToken);
 
                 PurchaseLine.Insert(true);
                 LineNo += 10000;

@@ -37,7 +37,8 @@ def dequeue():
     key = get_key()
     if not queues[key]:
         abort(404, "Queue empty")
-    return jsonify({"document": queues[key].popleft()})
+    value = queues[key].popleft()
+    return jsonify({"document": value})
 
 @app.route("/peek", methods=["GET"])
 def peek():

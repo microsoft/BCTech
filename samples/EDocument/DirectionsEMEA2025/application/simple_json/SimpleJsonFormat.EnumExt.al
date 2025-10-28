@@ -14,7 +14,7 @@ enumextension 50100 "SimpleJson Format" extends "E-Document Format"
 {
     value(50100; "SimpleJson")
     {
-        Caption = 'Simple JSON Format - Exercise 1';
+        Caption = 'Simple JSON';
         Implementation = "E-Document" = "SimpleJson Format";
     }
 }
