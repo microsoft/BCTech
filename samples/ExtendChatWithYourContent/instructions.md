@@ -43,8 +43,8 @@ This document will help you get started with extending Copilot Chat inside Busin
 6. Ask questions based on the documentation, e.g., "how can I create a sales invoice with My Example App?" We encourage you to ask more questions.
 
 ### Task 3 - Setup Copilot Chat for external app content - Complexity: ⭐⭐
-1. Open your extension code inside Visual Studio Code. Alternativly, create a new extension, follow the [instruction here](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-extension-example).
-2. Make sure your `app.json` file has a reference to the documenation in the property `help`. It needs to contatin a full website address inclduing sub-path if needed, e.g. `"help": "https://your-extension-name.com/docs"`.
+1. Open your extension code inside Visual Studio Code. Alternatively, create a new extension, follow the [instruction here](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-extension-example).
+2. Make sure your `app.json` file has a reference to the documentation in the property `help`. It needs to contain a full website address including sub-path if needed, e.g. `"help": "https://your-extension-name.com/docs"`.
 3. Ask questions based on the documentation to test the integration.
 
 
