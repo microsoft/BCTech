@@ -2,7 +2,7 @@
 ## Introduction
 Welcome! 
 
-This document will help you get started with extending Copilot Chat inside Business Central with your app's extension. By following this guide, you'll experience how seamless it is to plug your documentation into Copilot Chat in Business Central. It might help to reduce support calls, help users onboard faster, and eliminate those repeat questions.
+This document will help you get started with extending Copilot Chat inside Business Central with your app's documentation. By following this guide, you'll experience how seamless it is to plug your documentation into Copilot Chat in Business Central. It might help to reduce support calls, help users onboard faster, and eliminate those repeat questions.
 
 ## Prerequisites
 1. You need to have access to a Business Central Sandbox environment for developing and testing.
