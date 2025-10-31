@@ -14,16 +14,6 @@ table 50104 "ClearModelExtConnectionSetup"
         {
             DataClassification = CustomerContent;
         }
-        field(3; "OAuth Feature GUID"; GUID)
-        {
-            Caption = 'OAuth 2.0 Code';
-            DataClassification = CustomerContent;
-        }
-        field(4; "Authentication URL"; Text[250])
-        {
-            Caption = 'Authentication URL';
-            DataClassification = CustomerContent;
-        }
         field(5; "FileAPI URL"; Text[250])
         {
             Caption = 'FileAPI URL';
@@ -33,16 +23,6 @@ table 50104 "ClearModelExtConnectionSetup"
         {
             Caption = 'Company ID';
             DataClassification = CustomerContent;
-        }
-        field(10; "Client ID"; Guid)
-        {
-            Caption = 'Client ID';
-            DataClassification = EndUserIdentifiableInformation;
-        }
-        field(11; "Client Secret"; Guid)
-        {
-            Caption = 'Client Secret';
-            DataClassification = EndUserIdentifiableInformation;
         }
         field(13; "E-Document Service"; Code[20])
         {
