@@ -1,0 +1,48 @@
+{
+  "id": "12345678-0002-0002-0002-000000000002",
+  "name": "Directions Connector",
+  "publisher": "Directions EMEA Workshop",
+  "version": "1.0.0.0",
+  "application": "27.1.0.0",
+  "brief": "Connector integration for E-Document workshop",
+  "description": "Workshop extension that implements the E-Document integration interfaces to send/receive documents via HTTP API",
+  "privacyStatement": "https://privacy.microsoft.com",
+  "EULA": "https://www.microsoft.com/en-us/legal/intellectualproperty/copyright",
+  "help": "https://learn.microsoft.com/dynamics365/business-central/",
+  "url": "https://github.com/microsoft/BCTech",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "e1d97edc-c239-46b4-8d84-6368bdf67c8b",
+      "name": "E-Document Core",
+      "publisher": "Microsoft",
+      "version": "27.1.0.0"
+    },
+    {
+      "id": "dd0be2ea-f733-4d65-bb34-a28f4624fb14",
+      "name": "Library Assert",
+      "publisher": "Microsoft",
+      "version": "27.1.0.0"
+    },
+    {
+      "id": "5d86850b-0d76-4eca-bd7b-951ad998e997",
+      "name": "Tests-TestLibraries",
+      "publisher": "Microsoft",
+      "version": "27.1.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "27.0.0.0",
+  "idRanges": [
+    {
+      "from": 50121,
+      "to": 50140
+    }
+  ],
+  "features": [
+    "NoImplicitWith",
+    "TranslationFile"
+  ],
+  "target": "Cloud",
+  "runtime": "16.0"
+}

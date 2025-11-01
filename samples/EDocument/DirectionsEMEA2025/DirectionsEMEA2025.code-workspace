@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"name": "SimpleJson",
+			"path": "./application/simple_json"
+		},
+		{
+			"name": "Connector",
+			"path": "./application/directions_connector"
+		},
+		{
+			"name": "Server",
+			"path": "./server"
+		},
+		{
+			"name": "E-Document Core",
+			"path": "C:\\depot\\NAV_1\\App\\BCApps\\src\\Apps\\W1\\EDocument\\App"
+		},
+		{
+			"name": "Avalara Connector",
+			"path": "C:\\depot\\NAV_1\\App\\BCApps\\src\\Apps\\W1\\EDocumentConnectors\\Avalara\\App"
+		},
+		{
+			"name": "Workshop",
+			"path": "workshop"
+		}
+	],
+	"settings": {}
+}
