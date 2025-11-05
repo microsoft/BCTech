@@ -21,7 +21,7 @@ codeunit 54310 "Secrets And Capabilities Setup"
         LearnMoreUrlTxt: Label 'https://example.com/CopilotToolkit', Locked = true;
     begin
         if not CopilotCapability.IsCapabilityRegistered(Enum::"Copilot Capability"::"Find Item Substitutions") then
-            CopilotCapability.RegisterCapability(Enum::"Copilot Capability"::"Find Item Substitutions", Enum::"Copilot Availability"::Preview, LearnMoreUrlTxt);
+            CopilotCapability.RegisterCapability(Enum::"Copilot Capability"::"Find Item Substitutions", Enum::"Copilot Availability"::Preview, Enum::"Copilot Billing Type"::"Not Billed", LearnMoreUrlTxt);
 
         // You will need to use your own key for Azure OpenAI for all your Copilot features (for both development and production).
         //Error('Set up your secrets here before publishing the app.');
