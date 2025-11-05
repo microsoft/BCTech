@@ -32,7 +32,7 @@ This document will help you get started with extending Copilot Chat inside Busin
 ![Extensions Management](img/extension-search.png "Extensions Management")
 2. Click Manage and select an option to Upload extension. <br />
 ![Extensions Management Upload](img/extension-upload.png "Extensions Management Upload")
-3. Download the extension from [example-app (https://github.com/microsoft/BCTech/tree/master/samples/ISVdocs)](https://github.com/microsoft/BCTech/tree/master/samples/ISVdocs)
+3. Download the extension from [example-app (https://github.com/microsoft/BCTech/tree/master/samples/ExtendChatWithYourContent)](https://github.com/microsoft/BCTech/tree/master/samples/ExtendChatWithYourContent)
 4. Open it in the Visual Studio Code. Examine `app.json` file to see URL in the property `help`. This is the documentation it points to.
 4. Upload the extension.
 5. Go to the 'Copilot & agent capabilities' and make sure Bing Search is **enabled**. <br />
