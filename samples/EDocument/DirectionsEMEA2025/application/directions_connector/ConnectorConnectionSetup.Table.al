@@ -89,6 +89,6 @@ table 50122 "Connector Connection Setup"
     /// </summary>
     procedure GetAPIKeyText(): Text
     begin
-        exit(Format("API Key").Replace('{', '').Replace('}', ''));
+        exit(Format("API Key").Replace('{', '').Replace('}', '').ToLower());
     end;
 }

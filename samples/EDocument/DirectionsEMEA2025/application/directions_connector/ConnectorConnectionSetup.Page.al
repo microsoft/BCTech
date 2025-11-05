@@ -50,8 +50,6 @@ page 50122 "Connector Connection Setup"
                     ApplicationArea = All;
                     Caption = 'API Key';
                     ToolTip = 'Specifies the API key received after registration';
-                    Editable = false;
-                    ExtendedDatatype = Masked;
 
                     trigger OnAssistEdit()
                     var

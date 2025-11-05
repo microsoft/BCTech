@@ -60,7 +60,7 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
         ConnectorAuth.AddAuthHeader(HttpRequest, ConnectorSetup);
 
         // TODO: Send the HTTP request and handle the response using HttpClient
-        
+
         if not HttpClient.Send(HttpRequest, HttpResponse) then
             Error('Failed to connect to the API server.');
         // <Add code here>
@@ -110,7 +110,7 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
 
 
         // TODO: Send the HTTP request and handle the response using HttpClient
-    
+
         if not HttpClient.Send(HttpRequest, HttpResponse) then
             Error('Failed to connect to the API server.');
         // <Add code here>
