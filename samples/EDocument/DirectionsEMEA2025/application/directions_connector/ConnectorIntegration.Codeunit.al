@@ -45,24 +45,18 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
         // - Tips: Use SendContext.GetTempBlob()
         // - Tips: Use ConnectorRequests.ReadJsonFromBlob(TempBlob) to read json text from blob
 
-
-        TempBlob := SendContext.GetTempBlob();
-        JsonContent := ConnectorRequests.ReadJsonFromBlob(TempBlob);
         // <Add code here>
 
         // TODO: Create POST request to 'enqueue' endpoint
         // - Tips: Add enqueue to the base URL from ConnectorSetup
 
         // <Add code here>
-        APIEndpoint := ConnectorSetup."API Base URL" + 'enqueue';
 
         ConnectorRequests.CreatePostRequest(APIEndpoint, JsonContent, HttpRequest);
         ConnectorAuth.AddAuthHeader(HttpRequest, ConnectorSetup);
 
         // TODO: Send the HTTP request and handle the response using HttpClient
 
-        if not HttpClient.Send(HttpRequest, HttpResponse) then
-            Error('Failed to connect to the API server.');
         // <Add code here>
 
         SendContext.Http().SetHttpRequestMessage(HttpRequest);
@@ -75,7 +69,7 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
     // ============================================================================
 
     // ============================================================================
-    // TODO: Exercise 3,A (10 minutes)
+    // TODO: Exercise 3.A (10 minutes)
     // Receive a list of documents from the Connector API.
     //
     // TASK: Do the todos 
@@ -101,9 +95,10 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
 
         // TODO: Create Get request to 'peek' endpoint
         // - Tips: Add peek to the base URL from ConnectorSetup
-        APIEndpoint := ConnectorSetup."API Base URL" + 'peek';
 
         // <Add code here>
+
+
 
         ConnectorRequests.CreateGetRequest(APIEndpoint, HttpRequest);
         ConnectorAuth.AddAuthHeader(HttpRequest, ConnectorSetup);
@@ -111,9 +106,9 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
 
         // TODO: Send the HTTP request and handle the response using HttpClient
 
-        if not HttpClient.Send(HttpRequest, HttpResponse) then
-            Error('Failed to connect to the API server.');
         // <Add code here>
+
+
 
         ReceiveContext.Http().SetHttpRequestMessage(HttpRequest);
         ReceiveContext.Http().SetHttpResponseMessage(HttpResponse);
@@ -130,7 +125,7 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
                     ConnectorRequests.WriteTextToBlob(DocumentJson, TempBlob);
 
                     // TODO: Add TempBlob to DocumentsMetadata so we can process it later in DownloadDocument
-                    DocumentsMetadata.Add(TempBlob);
+
                     // <Add code here>
                 end;
             end;
@@ -163,16 +158,14 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
         // TODO: Create Get request to 'dequeue' endpoint
         // - Tips: Add dequeue to the base URL from ConnectorSetup
 
-        APIEndpoint := ConnectorSetup."API Base URL" + 'dequeue';
         // <Add code here>
 
         ConnectorRequests.CreateGetRequest(APIEndpoint, HttpRequest);
         ConnectorAuth.AddAuthHeader(HttpRequest, ConnectorSetup);
 
         // TODO: Send the HTTP request and handle the response using HttpClient
+
         // <Add code here>
-        if not HttpClient.Send(HttpRequest, HttpResponse) then
-            Error('Failed to connect to the API server.');
 
         ReceiveContext.Http().SetHttpRequestMessage(HttpRequest);
         ReceiveContext.Http().SetHttpResponseMessage(HttpResponse);
@@ -183,7 +176,11 @@ codeunit 50123 "Connector Integration" implements IDocumentSender, IDocumentRece
             if JsonObject.Get('document', JsonToken) then begin
                 JsonToken.WriteTo(DocumentJson);
                 TempBlob := ReceiveContext.GetTempBlob();
-                ConnectorRequests.WriteTextToBlob(DocumentJson, TempBlob);
+
+                // TODO: Write DocumentJson to TempBlob
+
+                // <Add code here>
+
             end else
                 Error('No document found in response.');
         end;

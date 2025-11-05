@@ -14,9 +14,6 @@ using System.Utilities;
 /// <summary>
 /// Test suite for Connector Integration exercises.
 /// Tests verify that the three main exercises are implemented correctly:
-/// - Exercise 2.A: Send (enqueue documents)
-/// - Exercise 2.B: ReceiveDocuments (peek at documents)
-/// - Exercise 2.C: DownloadDocument (dequeue documents)
 /// </summary>
 codeunit 50129 "Connector Tests"
 {
@@ -35,14 +32,7 @@ codeunit 50129 "Connector Tests"
         TestVendorNo := 'VEND1';
     end;
 
-    // ============================================================================
-    // EXERCISE 2.A: Test Send (Enqueue) functionality
-    // Verifies that the Send procedure correctly:
-    // - Gets the TempBlob from SendContext
-    // - Reads JSON content from the blob
-    // - Creates POST request to /enqueue endpoint
-    // - Sends the request using HttpClient
-    // ============================================================================
+
     [Test]
     procedure TestExercise2A_Send()
     var
@@ -84,14 +74,6 @@ codeunit 50129 "Connector Tests"
         Assert.IsTrue(HttpHeaders.Contains('Content-Type'), 'Should have Content-Type header');
     end;
 
-    // ============================================================================
-    // EXERCISE 2.B: Test ReceiveDocuments (Peek) functionality  
-    // Verifies that the ReceiveDocuments procedure correctly:
-    // - Creates GET request to /peek endpoint
-    // - Sends the request using HttpClient
-    // - Parses the JSON response array
-    // - Adds each document to DocumentsMetadata
-    // ============================================================================
     [Test]
     procedure TestExercise2B_ReceiveDocuments()
     var
@@ -121,14 +103,6 @@ codeunit 50129 "Connector Tests"
         Assert.IsTrue(RequestUri.EndsWith('/peek'), 'Should call /peek endpoint');
     end;
 
-    // ============================================================================
-    // EXERCISE 2.C: Test DownloadDocument (Dequeue) functionality
-    // Verifies that the DownloadDocument procedure correctly:
-    // - Creates GET request to /dequeue endpoint
-    // - Sends the request using HttpClient
-    // - Parses the document from JSON response
-    // - Writes the document to TempBlob in ReceiveContext
-    // ============================================================================
     [Test]
     procedure TestExercise2C_DownloadDocument()
     var

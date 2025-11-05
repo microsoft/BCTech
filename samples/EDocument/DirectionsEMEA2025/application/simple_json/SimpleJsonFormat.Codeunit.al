@@ -33,7 +33,6 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
                     SourceDocumentHeader.Field(SalesInvoiceHeader.FieldNo("Sell-to Customer No.")).TestField();
 
                     // TODO: Exercise 1.A: Validate Posting Date
-                    SourceDocumentHeader.Field(SalesInvoiceHeader.FieldNo("Posting Date")).TestField();
                 end;
         end;
     end;
@@ -74,9 +73,9 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
 
         // TODO: Exercise 1.B - Fill in customerNo and customerName, vendorNo and VendorName for header
         // It is important that you have a vendor with the same number in your system, since when you receive the data you will have to pick the vendor based on the VendorNo
-        RootObject.Add('customerNo', SalesInvoiceHeader."Sell-to Customer No.");
-        RootObject.Add('customerName', SalesInvoiceHeader."Sell-to Customer Name");
-        
+
+        // TODO: <Add code here>
+
         // Hardcoded for simplicity. Normally this would be company information
         RootObject.Add('vendorNo', '10000');
         RootObject.Add('vendorName', 'Adatum Corporation');
@@ -92,8 +91,8 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
                 LineObject.Add('lineAmount', SalesInvoiceLine."Amount Including VAT");
 
                 // TODO: Exercise 1.B - Fill in description and quantity for line
-                LineObject.Add('description', SalesInvoiceLine.Description);
-                LineObject.Add('quantity', SalesInvoiceLine.Quantity);
+
+                // TODO: <Add code here>
 
                 LinesArray.Add(LineObject);
             until SalesInvoiceLine.Next() = 0;
@@ -130,7 +129,7 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
         // Extract document number
         if SimpleJsonHelper.SelectJsonToken(JsonObject, 'documentNo', JsonToken) then
             EDocument."Incoming E-Document No." := CopyStr(SimpleJsonHelper.GetJsonTokenValue(JsonToken), 1, MaxStrLen(EDocument."Incoming E-Document No."));
-            
+
         // Extract posting date
         if SimpleJsonHelper.SelectJsonToken(JsonObject, 'postingDate', JsonToken) then
             EDocument."Document Date" := SimpleJsonHelper.GetJsonTokenDate(JsonToken);
@@ -140,18 +139,18 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
             EDocument."Currency Code" := CopyStr(SimpleJsonHelper.GetJsonTokenValue(JsonToken), 1, MaxStrLen(EDocument."Currency Code"));
 
 
-        // TODO: Exercise 2.A - Fill in the vendor information and total amount
+        // TODO: Exercise - Fill in the vendor information and total amount
 
         // TODO: Extract vendor number (from "vendorNo" in JSON)
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'vendorNo', JsonToken) then
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, '', JsonToken) then
             EDocument."Bill-to/Pay-to No." := SimpleJsonHelper.getJsonTokenValue(JsonToken);
-            
+
         // TODO: Extract vendor name
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'vendorName', JsonToken) then
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, '', JsonToken) then
             EDocument."Bill-to/Pay-to Name" := SimpleJsonHelper.getJsonTokenValue(JsonToken);
 
         // TODO: Extract total amount
-        if SimpleJsonHelper.SelectJsonToken(JsonObject, 'totalAmount', JsonToken) then
+        if SimpleJsonHelper.SelectJsonToken(JsonObject, '', JsonToken) then
             EDocument."Amount Incl. VAT" := SimpleJsonHelper.GetJsonTokenDecimal(JsonToken);
     end;
 
@@ -208,15 +207,15 @@ codeunit 50102 "SimpleJson Format" implements "E-Document"
                     PurchaseLine."No." := SimpleJsonHelper.GetJsonTokenValue(JsonToken);
 
                 // TODO: Set description
-                if SimpleJsonHelper.SelectJsonToken(JsonObject, 'description', JsonToken) then
+                if SimpleJsonHelper.SelectJsonToken(JsonObject, '', JsonToken) then
                     PurchaseLine.Description := SimpleJsonHelper.GetJsonTokenValue(JsonToken);
 
                 // TODO: Set quantity
-                if SimpleJsonHelper.SelectJsonToken(JsonObject, 'quantity', JsonToken) then
+                if SimpleJsonHelper.SelectJsonToken(JsonObject, '', JsonToken) then
                     PurchaseLine.Quantity := SimpleJsonHelper.GetJsonTokenDecimal(JsonToken);
 
                 // TODO: Set line amount
-                if SimpleJsonHelper.SelectJsonToken(JsonObject, 'lineAmount', JsonToken) then
+                if SimpleJsonHelper.SelectJsonToken(JsonObject, '', JsonToken) then
                     PurchaseLine.Amount := SimpleJsonHelper.GetJsonTokenDecimal(JsonToken);
 
                 // Set unit cost
