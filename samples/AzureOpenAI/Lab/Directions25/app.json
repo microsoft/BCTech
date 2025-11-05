@@ -15,12 +15,12 @@
       "id": "2156302a-872f-4568-be0b-60968696f0d5",
       "publisher": "Microsoft",
       "name": "AI Test Toolkit",
-      "version": "26.0.0.0"
+      "version": "27.0.0.0"
     }
   ],
   "screenshots": [],
-  "platform": "26.0.0.0",
-  "application": "26.0.0.0",
+  "platform": "27.0.0.0",
+  "application": "27.0.0.0",
   "idRanges": [
     {
       "from": 54300,
