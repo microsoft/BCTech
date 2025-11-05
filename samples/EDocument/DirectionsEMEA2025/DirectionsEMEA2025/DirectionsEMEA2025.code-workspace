@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "SimpleJson",
+			"path": "./application/simple_json"
+		},
+		{
+			"name": "Connector",
+			"path": "./application/directions_connector"
+		},
+		{
+			"name": "Server",
+			"path": "./server"
+		},
+		{
+			"name": "Workshop",
+			"path": "workshop"
+		}
+	],
+	"settings": {}
+}
