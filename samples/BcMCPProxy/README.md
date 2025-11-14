@@ -38,13 +38,13 @@ The BC MCP Proxy acts as a bridge between MCP-compatible clients (like Claude De
 
 ### 2. Set-up Business Central Environment
 
-1. Set-Up "Model Context Protocol (MCP) Server Configurations" (Page-Id 8350)
+1. **Set-Up "Model Context Protocol (MCP) Server Configurations" (Page-Id 8350)**
 
-Create a new MCP configuration with the API pages as tools as needed.
+   - Create a new MCP configuration with the API pages as tools as needed.
 
-2. Enable "Feature: Enable MCP Server access" in Feature Management (Page-Id 2610)
+2. **Enable "Feature: Enable MCP Server access" in Feature Management (Page-Id 2610)**
 
-Enable Feature for all users, if not enabled.
+   - Enable Feature for all users, if not enabled.
 
 ### 3.a) Set-up Claude with Business Central MCP Server
 
@@ -125,6 +125,7 @@ Edit or Create mcp configuration file at "$env:APPDATA\Code\User\mcp.json"
    - `<Company-Name>`: Business Central company name
    - `<Configuration-Name>`: Name of the Business Central "Model Context Protocol (MCP) Server Configurations" configuration as defined in Step 2
 
+Reload Window or Restart VS-Code
 
 ## Usage
 
