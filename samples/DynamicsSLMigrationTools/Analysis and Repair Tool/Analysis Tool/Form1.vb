@@ -14,17 +14,17 @@ Imports Microsoft.VisualBasic.FileSystem
 Imports System
 Imports System.IO
 Imports System.Collections
-
+Imports System.Configuration
 Imports System.Data.SqlClient
 Friend Class Form1
-	Inherits System.Windows.Forms.Form
-	
-	Protected m_IsInitializing As Boolean
-	Protected ReadOnly Property IsInitializing() As Boolean
-		Get
-			Return m_IsInitializing
-		End Get
-	End Property
+    Inherits System.Windows.Forms.Form
+
+    Protected m_IsInitializing As Boolean
+    Protected ReadOnly Property IsInitializing() As Boolean
+        Get
+            Return m_IsInitializing
+        End Get
+    End Property
 
     Private Sub Form1_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
 
@@ -40,6 +40,7 @@ Friend Class Form1
         cLastRunDate.Format = DateTimePickerFormat.Custom
         cLastRunDate.CustomFormat = "MM/dd/yyyy"
 
+        lRelease.Text = "Release: 2025-12-04" '& My.Application.Info.Version.ToString()
 
     End Sub
 
@@ -50,6 +51,14 @@ Friend Class Form1
         If (String.IsNullOrEmpty(EventLogDir.Trim())) Then
             result = MessageBox.Show("Export folder path is required.  Please enter a valid directory.", "Error", MessageBoxButtons.OK)
             Exit Sub
+        End If
+
+        ' SOS 11/6/25 ' If Applications path is not blank, make sure it ends in "Applications"
+        If (DynamicsSLDir.Trim() <> "") Then
+            If (String.IsNullOrEmpty(DynamicsSLDir.Trim())) Then
+                result = MessageBox.Show("Dynamics SL Applications path is not valid.  Please enter a valid directory.", "Error", MessageBoxButtons.OK)
+                Exit Sub
+            End If
         End If
 
         ' Set the current date/time.
@@ -84,6 +93,11 @@ Friend Class Form1
         fmtDate = fmtDate.Remove(fmtDate.Length - 3)
         fmtDate = fmtDate.Replace(" ", "-")
         fmtDate = fmtDate & Date.Now.Millisecond
+
+        ' close reader if open
+        If sqlReader IsNot Nothing AndAlso Not sqlReader.IsClosed Then
+            sqlReader.Close()
+        End If
 
         Try
             ExportFilename = "SystemAnalysis_" + fmtDate + ".txt"
@@ -125,6 +139,15 @@ Friend Class Form1
                 UpdateAnalysisToolStatusBar("Finished analyzing Administration Information")
             Else
                 UpdateAnalysisToolStatusBar("Error encountered analyzing Administration Information")
+                Exit Sub
+            End If
+
+            'Analyze DB - Database Objects
+            Call Analyze_DB.Analyze_DB()
+            If OkToContinue = True Then
+                UpdateAnalysisToolStatusBar("Finished analyzing Database Objects")
+            Else
+                UpdateAnalysisToolStatusBar("Error encountered analyzing Database Objects")
                 Exit Sub
             End If
 
@@ -297,6 +320,13 @@ Friend Class Form1
                 sResult = retValDte1.ToShortDateString()
                 cLastRunDate.Value = sResult
                 cmdViewAnalysis.Enabled = True
+
+                If (My.Computer.FileSystem.FileExists(oEventLog.GetLogFile().FullName)) Then
+                    cmdViewAnalysis.Enabled = True
+                Else
+                    cmdViewAnalysis.Enabled = False
+                End If
+
             End If
 
         Catch ex As Exception
@@ -305,9 +335,16 @@ Friend Class Form1
         End Try
 
         Call oEventLog.LogMessage(EndProcess, "Microsoft Dynamics SL Analysis Report")
-        UpdateAnalysisToolStatusBar("Analysis Complete")
+        UpdateAnalysisToolStatusBar("Analysis Completed")
         ' Display message to indicate that analysis is complete.
-        Call MessageBox.Show("Analysis Complete")
+        Call MessageBox.Show("Analysis Completed.")
+
+        If (My.Computer.FileSystem.FileExists(oEventLog.GetLogFile().FullName)) Then
+            cmdViewAnalysis.Enabled = True
+        Else
+            cmdViewAnalysis.Enabled = False
+        End If
+
     End Sub
 
     Private Sub cmdViewAnalysis_Click(sender As System.Object, e As System.EventArgs) Handles cmdViewAnalysis.Click
@@ -360,6 +397,7 @@ Friend Class Form1
             SQLCommand = New SqlClient.SqlCommand()
             SQLCommand.Connection = SqlSysDbConn
             SQLCommand.Connection.Open()
+            SqlSysDbConn1 = New SqlClient.SqlConnection(connStr)
 
             ' If the connection opened successfully, then get the list of companies.
             If (SqlSysDbConn.State = ConnectionState.Open) Then
@@ -443,7 +481,8 @@ Friend Class Form1
             sResult = retValDte.ToShortDateString()
             If sResult.Trim <> "" Then
                 cLastRunDate.Value = sResult
-                cmdViewAnalysis.Enabled = True
+                'cmdViewAnalysis.Enabled = True
+                cmdViewAnalysis.Enabled = False
             Else
                 cLastRunDate.Value = ""
                 cmdViewAnalysis.Enabled = False
@@ -457,7 +496,7 @@ Friend Class Form1
         If (Directory.Exists(cExportFolder.Text.Trim())) Then
             EventLogDir = cExportFolder.Text.Trim()
         Else
-            Call MessageBox.Show("Directory path is invalid.  Please enter a valid directory.", "Invalid Directory", MessageBoxButtons.OK)
+            Call MessageBox.Show("Export folder path is invalid.  Please enter a valid directory.", "Invalid Directory", MessageBoxButtons.OK)
         End If
     End Sub
 
@@ -469,4 +508,47 @@ Friend Class Form1
         UpdateStatusLbl.Text = strStatusBarText
         StatusStrip1.Refresh()
     End Sub
+
+    Private Sub cmdBrowseSL_Click(sender As Object, e As EventArgs) Handles cmdBrowseSL.Click
+
+        Dim myResult As System.Windows.Forms.DialogResult
+        Dim folderBrowserDialog1 As New FolderBrowserDialog
+        Dim strPath As String = String.Empty
+        Dim strSLRootPath As String = String.Empty
+
+        folderBrowserDialog1.Description = "Select the directory for Dynamics SL Applications."
+
+        'Get SL path
+        strSLRootPath = strPath.Replace("file:\", "")
+
+        'Set selected path
+        folderBrowserDialog1.SelectedPath = cUsrRptsPath.Text
+
+        'Open file dialog box
+        myResult = folderBrowserDialog1.ShowDialog()
+        If myResult = Windows.Forms.DialogResult.Cancel Then
+            Exit Sub
+        End If
+
+        'Set folder selected and display the value
+        cUsrRptsPath.Text = folderBrowserDialog1.SelectedPath.Trim
+        DynamicsSLDir = cUsrRptsPath.Text.Trim()
+
+    End Sub
+
+    Private Sub cDynamicsPath_Leave(sender As Object, e As EventArgs) Handles cUsrRptsPath.Leave
+
+        DynamicsSLDir = ""
+
+        ' Verify the validity of the DSL folder.
+        If cUsrRptsPath.Text.Trim() <> "" Then
+            If (Directory.Exists(cUsrRptsPath.Text.Trim())) Then
+                DynamicsSLDir = cUsrRptsPath.Text.Trim()
+            Else
+                Call MessageBox.Show("Dynamics SL Applications folder path is invalid.  Please enter a valid directory.", "Invalid Directory", MessageBoxButtons.OK)
+            End If
+        End If
+
+    End Sub
+
 End Class
