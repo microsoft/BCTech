@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bc-mcp-proxy"
+version = "0.1.2"
+description = "Python-based MCP stdio proxy for Microsoft Dynamics 365 Business Central"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Microsoft" }
+]
+keywords = [
+  "business-central",
+  "dynamics-365",
+  "mcp",
+  "mcp-proxy",
+  "copilot",
+  "agent"
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Application Frameworks"
+]
+dependencies = [
+  "mcp>=1.21.0",
+  "httpx>=0.28.0",
+  "msal>=1.34.0",
+  "msal-extensions>=1.3.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/microsoft/BCTech"
+Repository = "https://github.com/microsoft/BCTech/tree/master/samples/BcMCPProxyPython"
+Issues = "https://github.com/microsoft/BCTech/issues"
+
+
+[project.scripts]
+bc-mcp-proxy = "bc_mcp_proxy.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bc_mcp_proxy*"]
+
