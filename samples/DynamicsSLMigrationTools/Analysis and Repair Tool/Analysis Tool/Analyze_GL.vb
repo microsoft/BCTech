@@ -585,6 +585,7 @@ Module Analyze_GL
                         Call AddStatusInfo(sqlStringExec, sDescr, sResult)
                     End While
                 End If
+                Call sqlReader.Close()
             End If
 
             RecID = RecID + 1

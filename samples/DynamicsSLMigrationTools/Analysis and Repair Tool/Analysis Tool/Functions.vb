@@ -12,6 +12,7 @@ Module Functions
     Public UserId As String = ""
     Public SQLCommand As System.Data.SqlClient.SqlCommand
     Public SqlSysDbConn As System.Data.SqlClient.SqlConnection
+    Public SqlSysDbConn1 As System.Data.SqlClient.SqlConnection
     Public SqlAppDbConn As System.Data.SqlClient.SqlConnection
     Public sqlMsgConn As SqlConnection = Nothing
 
@@ -22,6 +23,7 @@ Module Functions
     Public statusExists As Boolean = False
 
     Public EventLogDir As String = ""
+    Public DynamicsSLDir As String = ""
     Public DBName As String = String.Empty
 
     Public MinDateValue As Date = "01/01/1900"

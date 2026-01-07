@@ -41,6 +41,7 @@
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.DBConnect = New System.Windows.Forms.TabPage()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.lRelease = New System.Windows.Forms.Label()
         Me.lblCpnyRequired = New System.Windows.Forms.Label()
         Me.btnConnectClose = New System.Windows.Forms.Button()
         Me.btnConnectServer = New System.Windows.Forms.Button()
@@ -61,6 +62,10 @@
         Me.NameOfServer = New System.Windows.Forms.TextBox()
         Me.Analyze = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.lDynamicsPathWarning = New System.Windows.Forms.Label()
+        Me.cmdBrowseSL = New System.Windows.Forms.Button()
+        Me.cUsrRptsPath = New System.Windows.Forms.TextBox()
+        Me.lDynamicsPath = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.cLastRunDate = New System.Windows.Forms.DateTimePicker()
         Me.lExportFolder = New System.Windows.Forms.Label()
@@ -91,7 +96,7 @@
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(805, 425)
+        Me.TabControl1.Size = New System.Drawing.Size(613, 366)
         Me.TabControl1.TabIndex = 2
         '
         'DBConnect
@@ -100,7 +105,7 @@
         Me.DBConnect.Location = New System.Drawing.Point(4, 22)
         Me.DBConnect.Name = "DBConnect"
         Me.DBConnect.Padding = New System.Windows.Forms.Padding(3)
-        Me.DBConnect.Size = New System.Drawing.Size(797, 399)
+        Me.DBConnect.Size = New System.Drawing.Size(605, 340)
         Me.DBConnect.TabIndex = 0
         Me.DBConnect.Text = "Database Connection"
         Me.DBConnect.UseVisualStyleBackColor = True
@@ -108,6 +113,7 @@
         'GroupBox8
         '
         Me.GroupBox8.BackColor = System.Drawing.SystemColors.Control
+        Me.GroupBox8.Controls.Add(Me.lRelease)
         Me.GroupBox8.Controls.Add(Me.lblCpnyRequired)
         Me.GroupBox8.Controls.Add(Me.btnConnectClose)
         Me.GroupBox8.Controls.Add(Me.btnConnectServer)
@@ -122,17 +128,30 @@
         Me.GroupBox8.Controls.Add(Me.NameOfServer)
         Me.GroupBox8.Location = New System.Drawing.Point(6, 3)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(774, 351)
+        Me.GroupBox8.Size = New System.Drawing.Size(597, 330)
         Me.GroupBox8.TabIndex = 1
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Database Connection"
+        '
+        'lRelease
+        '
+        Me.lRelease.AutoSize = True
+        Me.lRelease.BackColor = System.Drawing.SystemColors.Control
+        Me.lRelease.Cursor = System.Windows.Forms.Cursors.Default
+        Me.lRelease.Location = New System.Drawing.Point(487, 304)
+        Me.lRelease.Name = "lRelease"
+        Me.lRelease.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.lRelease.Size = New System.Drawing.Size(57, 13)
+        Me.lRelease.TabIndex = 82
+        Me.lRelease.Text = "Release..."
+        Me.lRelease.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'lblCpnyRequired
         '
         Me.lblCpnyRequired.AutoSize = True
         Me.lblCpnyRequired.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCpnyRequired.ForeColor = System.Drawing.Color.Red
-        Me.lblCpnyRequired.Location = New System.Drawing.Point(458, 299)
+        Me.lblCpnyRequired.Location = New System.Drawing.Point(377, 299)
         Me.lblCpnyRequired.Name = "lblCpnyRequired"
         Me.lblCpnyRequired.Size = New System.Drawing.Size(50, 13)
         Me.lblCpnyRequired.TabIndex = 79
@@ -146,7 +165,7 @@
         Me.btnConnectClose.Name = "btnConnectClose"
         Me.btnConnectClose.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnConnectClose.Size = New System.Drawing.Size(107, 25)
-        Me.btnConnectClose.TabIndex = 66
+        Me.btnConnectClose.TabIndex = 69
         Me.btnConnectClose.Text = "Close"
         Me.btnConnectClose.UseVisualStyleBackColor = False
         '
@@ -158,7 +177,7 @@
         Me.btnConnectServer.Name = "btnConnectServer"
         Me.btnConnectServer.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnConnectServer.Size = New System.Drawing.Size(99, 25)
-        Me.btnConnectServer.TabIndex = 67
+        Me.btnConnectServer.TabIndex = 68
         Me.btnConnectServer.Text = "Connect"
         Me.btnConnectServer.UseVisualStyleBackColor = False
         '
@@ -186,7 +205,7 @@
         '
         Me.CpnyIDList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CpnyIDList.FormattingEnabled = True
-        Me.CpnyIDList.Location = New System.Drawing.Point(292, 296)
+        Me.CpnyIDList.Location = New System.Drawing.Point(235, 296)
         Me.CpnyIDList.Name = "CpnyIDList"
         Me.CpnyIDList.Size = New System.Drawing.Size(121, 21)
         Me.CpnyIDList.TabIndex = 70
@@ -197,7 +216,7 @@
         Me.lblCpnyId.Location = New System.Drawing.Point(115, 296)
         Me.lblCpnyId.Name = "lblCpnyId"
         Me.lblCpnyId.Size = New System.Drawing.Size(88, 13)
-        Me.lblCpnyId.TabIndex = 69
+        Me.lblCpnyId.TabIndex = 81
         Me.lblCpnyId.Text = "Select Company:"
         '
         'SysDb
@@ -228,7 +247,7 @@
         Me.GroupBox9.Controls.Add(Me.txtUserId)
         Me.GroupBox9.Location = New System.Drawing.Point(19, 55)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(670, 121)
+        Me.GroupBox9.Size = New System.Drawing.Size(515, 121)
         Me.GroupBox9.TabIndex = 16
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Authentication"
@@ -344,12 +363,16 @@
         Me.Analyze.Location = New System.Drawing.Point(4, 22)
         Me.Analyze.Name = "Analyze"
         Me.Analyze.Padding = New System.Windows.Forms.Padding(3)
-        Me.Analyze.Size = New System.Drawing.Size(797, 399)
+        Me.Analyze.Size = New System.Drawing.Size(605, 340)
         Me.Analyze.TabIndex = 1
         Me.Analyze.Text = "Analyze"
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.lDynamicsPathWarning)
+        Me.GroupBox1.Controls.Add(Me.cmdBrowseSL)
+        Me.GroupBox1.Controls.Add(Me.cUsrRptsPath)
+        Me.GroupBox1.Controls.Add(Me.lDynamicsPath)
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.cLastRunDate)
         Me.GroupBox1.Controls.Add(Me.lExportFolder)
@@ -359,12 +382,47 @@
         Me.GroupBox1.Controls.Add(Me.cmdViewAnalysis)
         Me.GroupBox1.Controls.Add(Me.cmdSysAnalysis)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(-3, 1)
+        Me.GroupBox1.Location = New System.Drawing.Point(5, 1)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(597, 288)
+        Me.GroupBox1.Size = New System.Drawing.Size(597, 333)
         Me.GroupBox1.TabIndex = 2
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "System Analysis"
+        '
+        'lDynamicsPathWarning
+        '
+        Me.lDynamicsPathWarning.AutoSize = True
+        Me.lDynamicsPathWarning.Location = New System.Drawing.Point(28, 274)
+        Me.lDynamicsPathWarning.Name = "lDynamicsPathWarning"
+        Me.lDynamicsPathWarning.Size = New System.Drawing.Size(472, 13)
+        Me.lDynamicsPathWarning.TabIndex = 93
+        Me.lDynamicsPathWarning.Text = "If Dynamics SL Usr_Rpts folder path is not provided, the process will not analyze" &
+    " custom reports."
+        '
+        'cmdBrowseSL
+        '
+        Me.cmdBrowseSL.Location = New System.Drawing.Point(342, 246)
+        Me.cmdBrowseSL.Name = "cmdBrowseSL"
+        Me.cmdBrowseSL.Size = New System.Drawing.Size(75, 23)
+        Me.cmdBrowseSL.TabIndex = 92
+        Me.cmdBrowseSL.Text = "Browse"
+        Me.cmdBrowseSL.UseVisualStyleBackColor = True
+        '
+        'cUsrRptsPath
+        '
+        Me.cUsrRptsPath.Location = New System.Drawing.Point(28, 219)
+        Me.cUsrRptsPath.Name = "cUsrRptsPath"
+        Me.cUsrRptsPath.Size = New System.Drawing.Size(470, 21)
+        Me.cUsrRptsPath.TabIndex = 91
+        '
+        'lDynamicsPath
+        '
+        Me.lDynamicsPath.AutoSize = True
+        Me.lDynamicsPath.Location = New System.Drawing.Point(28, 203)
+        Me.lDynamicsPath.Name = "lDynamicsPath"
+        Me.lDynamicsPath.Size = New System.Drawing.Size(173, 13)
+        Me.lDynamicsPath.TabIndex = 90
+        Me.lDynamicsPath.Text = "Dynamics SL Usr_Rpts folder path:"
         '
         'Label3
         '
@@ -449,10 +507,11 @@
         '
         'StatusStrip1
         '
+        Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnalysisStatusLbl, Me.StatusUpdateLbl, Me.UpdateStatusLbl})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 391)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 369)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(796, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(621, 22)
         Me.StatusStrip1.TabIndex = 68
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -481,7 +540,7 @@
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(796, 413)
+        Me.ClientSize = New System.Drawing.Size(621, 391)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.TabControl1)
         Me.Cursor = System.Windows.Forms.Cursors.Default
@@ -544,5 +603,10 @@
     Friend WithEvents StatusUpdateLbl As ToolStripStatusLabel
     Friend WithEvents UpdateStatusLbl As ToolStripStatusLabel
     Friend WithEvents Label3 As Label
+    Friend WithEvents cmdBrowseSL As Button
+    Friend WithEvents cUsrRptsPath As TextBox
+    Friend WithEvents lDynamicsPath As Label
+    Friend WithEvents lDynamicsPathWarning As Label
+    Public WithEvents lRelease As Label
 #End Region
 End Class
