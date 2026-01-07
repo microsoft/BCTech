@@ -859,6 +859,27 @@ Module AccountCode
 
         End If
 
+        '****************************************************************
+        '*** Remove time values from date fields - Cash Manager ***
+        '****************************************************************
+        If OkToContinue = True Then
+
+            Try
+                sqlReader.Close()
+                Call UpdateDates_CA(oEventLog)
+
+            Catch ex As Exception
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error in removing time values in date fields - Cash Manager", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+            End Try
+
+        End If
         '*********************************************************************************************
         '*** Identify GLTran records with Fiscal Year different from period to post year
         '*********************************************************************************************
