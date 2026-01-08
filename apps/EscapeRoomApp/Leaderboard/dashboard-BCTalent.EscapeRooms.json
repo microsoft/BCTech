@@ -1,0 +1,755 @@
+{
+    "$schema": "https://dataexplorer.azure.com/static/d/schema/63/dashboard.json",
+    "id": "272c2198-052c-4de4-a986-7d7c6046127d",
+    "eTag": "bdf41fb3-1203-4d62-96ba-d05e0945a3b2",
+    "title": "BCTalent.EscapeRooms",
+    "schema_version": 63,
+    "tiles": [
+        {
+            "id": "6ff8eab3-009f-482c-a75c-8cd9f170ecbc",
+            "title": "Last 1000 Events",
+            "visualType": "table",
+            "pageId": "2ad2259a-05fc-45d6-bec0-6ae98f2f8e6f",
+            "layout": {
+                "x": 0,
+                "y": 19,
+                "width": 24,
+                "height": 11
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "7584d0d2-bdae-4d22-b158-18aa310dff82"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "525b2e29-cdce-4732-866f-e547ab81699e",
+            "title": "Hints",
+            "visualType": "table",
+            "pageId": "2ad2259a-05fc-45d6-bec0-6ae98f2f8e6f",
+            "layout": {
+                "x": 16,
+                "y": 0,
+                "width": 8,
+                "height": 10
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "210a9b37-4893-484d-a1df-92d1a1d194dc"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "4a65490d-5b1e-4a99-91ff-ddd0641ade5f",
+            "title": "Tasks",
+            "visualType": "table",
+            "pageId": "2ad2259a-05fc-45d6-bec0-6ae98f2f8e6f",
+            "layout": {
+                "x": 8,
+                "y": 0,
+                "width": 8,
+                "height": 10
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "06cd3467-cef7-47e9-870f-3d9a0bd4d395"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "b60848e3-52c4-48a6-8e57-f479eaa0b6d5",
+            "title": "Rooms",
+            "visualType": "table",
+            "pageId": "2ad2259a-05fc-45d6-bec0-6ae98f2f8e6f",
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 10
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "d1d7d5ab-35d4-4fc0-a3fd-106de4a61d40"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "b335aa3b-baf8-4eae-8c4b-6287c3b2f054",
+            "title": "Started Rooms",
+            "visualType": "table",
+            "pageId": "7c98156e-6279-4bb7-ad4a-a395224a2ed5",
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "width": 12,
+                "height": 6
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "295ad778-da7a-4240-ab98-8b303f8f2f2d"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "f23224d8-2b45-4630-b09f-0e6a5d1a025e",
+            "title": "Finished Rooms",
+            "visualType": "table",
+            "pageId": "7c98156e-6279-4bb7-ad4a-a395224a2ed5",
+            "layout": {
+                "x": 12,
+                "y": 0,
+                "width": 12,
+                "height": 6
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "38e91b80-957f-40ef-9630-8c9b8a5b08ab"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "413c90b8-7ff6-4ff8-870c-7e7e2cd15d0e",
+            "title": "Finished Rooms per user",
+            "visualType": "bar",
+            "pageId": "7c98156e-6279-4bb7-ad4a-a395224a2ed5",
+            "layout": {
+                "x": 0,
+                "y": 6,
+                "width": 24,
+                "height": 8
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "6e230875-4187-4eb2-a9e1-52b461f9ea2f"
+            },
+            "visualOptions": {
+                "multipleYAxes": {
+                    "base": {
+                        "id": "-1",
+                        "label": "",
+                        "columns": [],
+                        "yAxisMaximumValue": null,
+                        "yAxisMinimumValue": null,
+                        "yAxisScale": "linear",
+                        "horizontalLines": []
+                    },
+                    "additional": [],
+                    "showMultiplePanels": false
+                },
+                "hideLegend": false,
+                "legendLocation": "bottom",
+                "xColumnTitle": "",
+                "xColumn": null,
+                "yColumns": null,
+                "seriesColumns": null,
+                "xAxisScale": "linear",
+                "verticalLine": "",
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": []
+            }
+        },
+        {
+            "id": "79c763c1-5f04-40f6-9a4f-6000f8875c46",
+            "title": "Finished Tasks",
+            "visualType": "table",
+            "pageId": "4d083626-fae1-45c7-ab72-e4c477268c9c",
+            "layout": {
+                "x": 0,
+                "y": 8,
+                "width": 11,
+                "height": 15
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "de3079a9-a733-4cb4-bb64-113ce66fa8c9"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "b42353cb-a54f-4676-827f-67b147da2e30",
+            "title": "Finished Tasks per user",
+            "visualType": "bar",
+            "pageId": "4d083626-fae1-45c7-ab72-e4c477268c9c",
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "width": 21,
+                "height": 8
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "ae93ea2a-e108-48d9-ba70-97ad2c132390"
+            },
+            "visualOptions": {
+                "multipleYAxes": {
+                    "base": {
+                        "id": "-1",
+                        "label": "",
+                        "columns": [],
+                        "yAxisMaximumValue": null,
+                        "yAxisMinimumValue": null,
+                        "yAxisScale": "linear",
+                        "horizontalLines": []
+                    },
+                    "additional": [],
+                    "showMultiplePanels": false
+                },
+                "hideLegend": false,
+                "legendLocation": "bottom",
+                "xColumnTitle": "",
+                "xColumn": null,
+                "yColumns": null,
+                "seriesColumns": null,
+                "xAxisScale": "linear",
+                "verticalLine": "",
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": []
+            }
+        },
+        {
+            "id": "74cc2c22-f641-4830-ae09-26e0ec146801",
+            "title": "Hints (Newest first)",
+            "visualType": "table",
+            "pageId": "4d083626-fae1-45c7-ab72-e4c477268c9c",
+            "layout": {
+                "x": 11,
+                "y": 8,
+                "width": 10,
+                "height": 15
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "3d7f620e-0a6b-4845-aaf6-24d3c37ff781"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "0919f25d-6f77-45d0-9a04-777a1a62ceb4",
+            "title": "Attendees",
+            "visualType": "table",
+            "pageId": "2ad2259a-05fc-45d6-bec0-6ae98f2f8e6f",
+            "layout": {
+                "x": 0,
+                "y": 10,
+                "width": 8,
+                "height": 9
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "73859e29-9bf9-4b83-b3dc-755ea0568df2"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "3a808102-6f18-484b-917a-0e91f1e87fd0",
+            "title": "Overall Leaderboard",
+            "visualType": "bar",
+            "pageId": "871aa6d5-30ed-40bc-9acf-0b8b4f611186",
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "width": 21,
+                "height": 9
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "8a6d557a-34b9-4cad-8f4b-82a33fb0b883"
+            },
+            "visualOptions": {
+                "multipleYAxes": {
+                    "base": {
+                        "id": "-1",
+                        "label": "",
+                        "columns": [],
+                        "yAxisMaximumValue": null,
+                        "yAxisMinimumValue": null,
+                        "yAxisScale": "linear",
+                        "horizontalLines": []
+                    },
+                    "additional": [],
+                    "showMultiplePanels": false
+                },
+                "hideLegend": false,
+                "legendLocation": "bottom",
+                "xColumnTitle": "",
+                "xColumn": "AttendeePartner",
+                "yColumns": [
+                    "TotalScore"
+                ],
+                "seriesColumns": null,
+                "xAxisScale": "linear",
+                "verticalLine": "",
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": []
+            }
+        },
+        {
+            "id": "24de3abc-9645-4ac7-bc5e-46d37f20d9ce",
+            "title": "Fastest Venue Completions (Top 5 by completion time)",
+            "visualType": "table",
+            "pageId": "871aa6d5-30ed-40bc-9acf-0b8b4f611186",
+            "layout": {
+                "x": 0,
+                "y": 22,
+                "width": 21,
+                "height": 7
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "4d1f4a51-5747-4134-a214-db990b774afd"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "2a10e415-c8a0-4ded-9497-899bdf7f65ba",
+            "title": "Score Breakdown Analysis",
+            "visualType": "table",
+            "pageId": "871aa6d5-30ed-40bc-9acf-0b8b4f611186",
+            "layout": {
+                "x": 0,
+                "y": 16,
+                "width": 21,
+                "height": 6
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "e56b8546-96f6-4a9a-b0d8-6fdf90363676"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        },
+        {
+            "id": "c34daab3-6eec-456c-a37f-006d0dd38dae",
+            "title": "Overall Leaderboard",
+            "visualType": "table",
+            "pageId": "871aa6d5-30ed-40bc-9acf-0b8b4f611186",
+            "layout": {
+                "x": 0,
+                "y": 9,
+                "width": 21,
+                "height": 7
+            },
+            "queryRef": {
+                "kind": "query",
+                "queryId": "bc7c2e02-ff93-443d-93c0-a1e0db76e80c"
+            },
+            "visualOptions": {
+                "table__enableRenderLinks": true,
+                "colorRulesDisabled": true,
+                "crossFilterDisabled": false,
+                "drillthroughDisabled": false,
+                "crossFilter": [],
+                "drillthrough": [],
+                "table__renderLinks": [],
+                "colorRules": []
+            }
+        }
+    ],
+    "baseQueries": [
+        {
+            "id": "7ba44776-f926-4c97-8cc2-16e6b7de8457",
+            "queryId": "04e089cb-13bd-4f0c-b0fa-d2915641d8cc",
+            "variableName": "EscapeRoomData"
+        }
+    ],
+    "parameters": [
+        {
+            "kind": "duration",
+            "id": "275b8c30-90b3-44e5-ae75-b02514cd9249",
+            "displayName": "Time range",
+            "description": "",
+            "beginVariableName": "_startTime",
+            "endVariableName": "_endTime",
+            "defaultValue": {
+                "kind": "dynamic",
+                "count": 1,
+                "unit": "hours"
+            },
+            "showOnPages": {
+                "kind": "all"
+            }
+        },
+        {
+            "kind": "string",
+            "id": "0881e2f8-8aa5-40a5-acd8-ddfd880f1613",
+            "displayName": "Venue",
+            "description": "",
+            "variableName": "_venue",
+            "selectionType": "array",
+            "includeAllOption": true,
+            "defaultValue": {
+                "kind": "all"
+            },
+            "dataSource": {
+                "kind": "query",
+                "columns": {
+                    "value": "venueId",
+                    "label": "venueId"
+                },
+                "queryRef": {
+                    "kind": "query",
+                    "queryId": "37488be9-8968-441f-bd21-b6cf7703717d"
+                }
+            },
+            "showOnPages": {
+                "kind": "all"
+            }
+        },
+        {
+            "kind": "string",
+            "id": "11653a3e-b00a-4c62-805b-80e7e0084f32",
+            "displayName": "Room",
+            "description": "",
+            "variableName": "_room",
+            "selectionType": "scalar",
+            "includeAllOption": true,
+            "defaultValue": {
+                "kind": "all"
+            },
+            "dataSource": {
+                "kind": "query",
+                "columns": {
+                    "value": "RoomName"
+                },
+                "queryRef": {
+                    "kind": "query",
+                    "queryId": "094763c6-36a3-42e6-90b7-b956c4033d2b"
+                }
+            },
+            "showOnPages": {
+                "kind": "all"
+            }
+        }
+    ],
+    "dataSources": [
+        {
+            "id": "803c0786-1793-49b9-8c52-5d977ac0c74c",
+            "kind": "manual-kusto",
+            "scopeId": "kusto",
+            "name": "BCTalent",
+            "clusterUri": "https://ade.applicationinsights.io/subscriptions/313d31ed-d6ca-42ce-b2a3-676dfff76144",
+            "database": "BCTelemetry"
+        }
+    ],
+    "pages": [
+        {
+            "name": "Base Tables",
+            "id": "2ad2259a-05fc-45d6-bec0-6ae98f2f8e6f"
+        },
+        {
+            "name": "Rooms",
+            "id": "7c98156e-6279-4bb7-ad4a-a395224a2ed5"
+        },
+        {
+            "name": "Tasks",
+            "id": "4d083626-fae1-45c7-ab72-e4c477268c9c"
+        },
+        {
+            "name": "Leaderboard",
+            "id": "871aa6d5-30ed-40bc-9acf-0b8b4f611186"
+        }
+    ],
+    "queries": [
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| order by timestamp desc \n| take 1000\n",
+            "id": "7584d0d2-bdae-4d22-b158-18aa310dff82",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId in (\"ALEscapeRoomHintRequested\")",
+            "id": "210a9b37-4893-484d-a1df-92d1a1d194dc",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId in (\"ALEscapeRoomTaskFinished\")",
+            "id": "06cd3467-cef7-47e9-870f-3d9a0bd4d395",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId in (\"ALEscapeRoomStarted\", \"ALEscapeRoomCompleted\")",
+            "id": "d1d7d5ab-35d4-4fc0-a3fd-106de4a61d40",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId == 'ALEscapeRoomStarted'\n| project \n    Attendee,\n    venueId,\n    roomName",
+            "id": "295ad778-da7a-4240-ab98-8b303f8f2f2d",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId == 'ALEscapeRoomCompleted'\n| project \n    Attendee,\n    Partner,\n    venueId,\n    roomName,\n    roomStartDateTime,\n    roomStopDateTime,\n    durationMinutes",
+            "id": "38e91b80-957f-40ef-9630-8c9b8a5b08ab",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId == 'ALEscapeRoomCompleted'\n| project \n    Attendee,\n    venueId,\n    roomName\n| summarize count() by Attendee\n| order by count_ desc ",
+            "id": "6e230875-4187-4eb2-a9e1-52b461f9ea2f",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId == 'ALEscapeRoomTaskFinished'\n| project \n    Attendee,\n    Partner,\n    venueId,\n    roomName,\n    taskName,\n    Score",
+            "id": "de3079a9-a733-4cb4-bb64-113ce66fa8c9",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId == 'ALEscapeRoomTaskFinished'\n| project \n    Attendee,\n    venueId,\n    roomName,\n    taskName\n| summarize count() by Attendee\n| order by count_ desc ",
+            "id": "ae93ea2a-e108-48d9-ba70-97ad2c132390",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId == 'ALEscapeRoomHintRequested'\n| order by timestamp desc \n| project \n    Attendee,\n    Partner,\n    Hint,\n    venueId,\n    roomName,\n    taskName,\n    Score",
+            "id": "3d7f620e-0a6b-4845-aaf6-24d3c37ff781",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where isnotempty( Partner)\n| summarize by Partner, Attendee",
+            "id": "73859e29-9bf9-4b83-b3dc-755ea0568df2",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty( Partner)\n| extend AttendeePartner = strcat(Attendee,\" (\",Partner,\")\")\n| summarize \n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    LastActivity = max(taskStopDateTime)\n    by AttendeePartner, userId, Partner, environmentName\n| order by TotalScore desc\n| extend Rank = row_number()\n// | where Rank <= 5\n| project \n    Rank,\n    AttendeePartner,\n    Partner,\n    TotalScore,\n    TasksCompleted,\n    RoomsCompleted,\n    VenuesCompleted,\n    HintsUsed,\n    SolutionsUsed,\n    LastActivity\n| order by TotalScore desc",
+            "id": "8a6d557a-34b9-4cad-8f4b-82a33fb0b883",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where eventId == \"ALEscapeRoomVenueCompleted\"\n| where isnotempty(Attendee) and isnotempty(companyName) and VenueCompletionTimeMinutes > 0\n| extend \n    CompletionTimeMinutes = round(VenueCompletionTimeMinutes, 2),\n    CompletionTimeDisplay = strcat(tostring(floor(VenueCompletionTimeMinutes / 60, 1)), \"h \", tostring(round(VenueCompletionTimeMinutes, 2) % 60), \"m\"),\n    CompletionDate = taskStopDateTime,\n    FinalScore = Score\n| order by CompletionTimeMinutes asc\n| extend Rank = row_number()\n| where Rank <= 5\n| project \n    Rank,\n    Attendee,\n    companyName,\n    Partner,\n    environmentName,\n    venueName,\n    CompletionTimeDisplay,\n    CompletionTimeMinutes,\n    FinalScore,\n    CompletionDate\n| order by CompletionTimeMinutes asc",
+            "id": "4d1f4a51-5747-4134-a214-db990b774afd",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty(Partner)\n| summarize \n    TaskPoints = sumif(Score, eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomBonusPoints = sumif(Score, eventId == \"ALEscapeRoomCompleted\"),\n    VenueBonusPoints = sumif(Score, eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintPenalty = sumif(Score, eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionPenalty = sumif(Score, eventId == \"ALEscapeRoomSolutionRequested\"),\n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    FastestVenueCompletion = min(VenueCompletionTimeMinutes)\n    by Attendee, Partner, environmentName\n| extend \n    ScoreEfficiency = iif((TasksCompleted + HintsUsed + SolutionsUsed) > 0, round((todouble(TotalScore) / (TasksCompleted + HintsUsed + SolutionsUsed)) * 100) / 100, todouble(0)),\n    CompletionTimeMinutes = iff(isnull(FastestVenueCompletion), real(null), round(FastestVenueCompletion, 2))\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n| extend Rank = row_number()\n| where Rank <= 10\n| project \n    Rank,\n    Attendee,\n    Partner,\n    TotalScore,\n    TaskPoints,\n    RoomBonusPoints,\n    VenueBonusPoints,\n    HintPenalty,\n    SolutionPenalty,\n    ScoreEfficiency,\n    CompletionTimeMinutes,\n    TasksCompleted,\n    HintsUsed,\n    SolutionsUsed\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n",
+            "id": "e56b8546-96f6-4a9a-b0d8-6fdf90363676",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty(Partner)\n| summarize \n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    LastActivity = max(taskStopDateTime),\n    FastestVenueCompletion = min(VenueCompletionTimeMinutes)\n    by Attendee, userId, Partner, environmentName\n| extend CompletionTimeMinutes = iff(isnull(FastestVenueCompletion), real(null), round(FastestVenueCompletion, 2))\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n| extend Rank = row_number()\n| where Rank <= 5\n| project \n    Rank,\n    Attendee,\n    Partner,\n    TotalScore,\n    TasksCompleted,\n    RoomsCompleted,\n    VenuesCompleted,\n    HintsUsed,\n    SolutionsUsed,\n    CompletionTimeMinutes,\n    LastActivity\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last",
+            "id": "bc7c2e02-ff93-443d-93c0-a1e0db76e80c",
+            "usedVariables": [
+                "EscapeRoomData"
+            ]
+        },
+        {
+            "id": "04e089cb-13bd-4f0c-b0fa-d2915641d8cc",
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "traces\n| where timestamp between (_startTime .. _endTime)\n| where customDimensions.eventId startswith \"ALEscapeRoom\"\n| extend \n    company = tostring(customDimensions.alCompany),\n    venueName = tostring(customDimensions.alVenueName),\n    userId = tostring(customDimensions.alUserId),\n    userRole = tostring(customDimensions.alUserRole),\n    objectType = tostring(customDimensions.alObjectType),\n    eventId = tostring(customDimensions.eventId),\n    companyName = tostring(customDimensions.companyName),\n    callerPublisher = tostring(customDimensions.alCallerPublisher),\n    description = tostring(customDimensions.alDescription),\n    environmentName = tostring(customDimensions.environmentName),\n    roomName = tostring(customDimensions.alRoomName),\n    isEvaluationCompany = tostring(customDimensions.alIsEvaluationCompany),\n    callerAppVersionMinor = tostring(customDimensions.alCallerAppVersionMinor),\n    callerAppVersionMajor = tostring(customDimensions.alCallerAppVersionMajor),\n    taskName = tostring(customDimensions.alTaskName),\n    isAdmin = tostring(customDimensions.alIsAdmin),\n    objectName = tostring(customDimensions.alObjectName),\n    environmentType = tostring(customDimensions.environmentType),\n    Attendee = tostring(customDimensions.alVenueUserName),\n    Partner = tostring(customDimensions.alVenuePartner),\n    venueId = tostring(customDimensions.alVenueId),\n    taskStopDateTime = todatetime(customDimensions.alTaskStopDateTime),\n    Hint = tostring(customDimensions.alHint),\n    HintDateTime = todatetime(customDimensions.alHintDateTime),\n    roomStartDateTime = todatetime(customDimensions.alRoomStartDateTime),\n    roomStopDateTime = todatetime(customDimensions.alRoomStopDateTime),\n    Score = toint(customDimensions.alScorePoints),\n    RoomCompletionTimeMinutes = todecimal(datetime_diff('minute', todatetime(customDimensions.alRoomStopDateTime), todatetime(customDimensions.alRoomStartDateTime))),\n    VenueCompletionTimeMinutes = todecimal(customDimensions.alVenueCompletionTimeMinutes)\n| where venueName has_any (_venue)\n| where roomName has_any (_room)",
+            "usedVariables": [
+                "_endTime",
+                "_room",
+                "_startTime",
+                "_venue"
+            ]
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "traces\n| extend venueId = tostring(customDimensions.alVenueId)\n| where isnotempty( venueId)\n| summarize by venueId",
+            "id": "37488be9-8968-441f-bd21-b6cf7703717d",
+            "usedVariables": []
+        },
+        {
+            "dataSource": {
+                "kind": "inline",
+                "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
+            },
+            "text": "traces\n| extend RoomName = tostring(customDimensions.alRoomName)\n| where isnotempty( RoomName)\n| summarize by RoomName",
+            "id": "094763c6-36a3-42e6-90b7-b956c4033d2b",
+            "usedVariables": []
+        }
+    ]
+}

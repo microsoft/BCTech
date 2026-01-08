@@ -1,0 +1,33 @@
+{
+  "id": "f03c0f0c-d887-4279-b226-dea59737ecf8",
+  "name": "BCTalent.EscapeRoom",
+  "publisher": "waldo & AJ",
+  "version": "1.3.10026.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "26.0.0.0",
+  "idRanges": [
+    {
+      "from": 73920,
+      "to": 73999
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "15.0",
+  "features": [
+    "NoImplicitWith"
+  ],
+  "applicationInsightsConnectionString": "<FillInYourAppInsightsConnectionStringHereToGetTheLeaderboardWorking>"
+}
