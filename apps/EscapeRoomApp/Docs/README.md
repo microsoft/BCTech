@@ -78,17 +78,6 @@ Complete chronological history of all changes to the framework across all develo
 
 ---
 
-## Related Projects
-
-This framework is extended by:
-- **Development.1** - First development-focused escape room venue
-- **Development.2** - AI/Copilot translation-focused escape room venue
-- **Consultant.1** - Business Central functionality-focused venue
-
-See each app's documentation for venue-specific room details.
-
----
-
 ## Support & Contributions
 
 For questions, issues, or contributions related to the framework, see the project repository.

@@ -90,7 +90,7 @@ The framework is designed to be standalone with no dependencies on other apps. T
 
 ### Extension Apps Depend on Framework
 
-All venue apps (Development.1, Development.2, Consultant.1) depend on:
+All venue apps depend on:
 ```json
 {
   "dependencies": [
@@ -234,16 +234,6 @@ git checkout -b feature/your-feature-name
 - Test queries after changes
 
 ---
-
-## Testing Framework Changes
-
-### Test Environments
-
-**Minimum Testing:**
-1. **Clean environment** - Framework only
-2. **With Development.1** - Most commonly used
-3. **With all venues** - Full integration test
-
 ### Test Scenarios
 
 **Core Functionality:**
@@ -289,15 +279,6 @@ Format: `MAJOR.MINOR.PATCH.BUILD`
 - Minor: 3 (feature updates)
 - Patch: 10026 (incremental)
 - Build: 0
-
-### Compatibility Matrix
-
-| Framework | Development.1 | Development.2 | Consultant.1 |
-|-----------|---------------|---------------|--------------|
-| 1.0.x | ✅ All | ✅ All | ✅ All |
-| 1.1.x | ✅ All | ✅ All | ✅ All |
-| 1.2.x | ✅ All | ✅ All | ✅ All |
-| 1.3.x | ✅ All | ✅ All | ✅ All |
 
 **Guarantee:** Any 1.x framework version works with any venue app built for 1.0+
 

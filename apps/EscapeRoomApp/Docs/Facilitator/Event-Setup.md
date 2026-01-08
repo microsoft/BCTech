@@ -180,28 +180,13 @@ Located in `/Scripts/6-publish-apps.ps1`:
 
 **What it does:**
 - Publishes framework app (BCTalent.EscapeRoom)
-- Publishes venue apps (Development.1, Development.2, Consultant.1)
+- Publishes venue apps 
 - Publishes test apps (if applicable)
 - Installs and synchronizes all apps
 
-**Required Files:**
-```
-EscapeRoomApp/
-  waldo & AJ_BCTalent.EscapeRoom_1.3.10026.0.app
-
-Development.1/
-  waldo & AJ_Escape Room Development.1_1.0.0.1.app
-
-Development.2/
-  waldo & AJ_Escape Room Development.2_1.0.10012.0.app
-
-Consultant.1/
-  waldo & AJ_Escape Room Consultant.1_1.0.0.2.app
-```
-
 **Publishing Order (Important):**
 1. Framework app first (BCTalent.EscapeRoom)
-2. Venue apps second (Development.1, Development.2, Consultant.1)
+2. Venue apps second 
 3. Test apps last (if applicable)
 
 ### Manual Publishing Alternative
@@ -254,7 +239,7 @@ For **each environment**, verify:
 
 ✅ **Apps Published**
 - BCTalent.EscapeRoom installed
-- Venue apps installed (Development.1, etc.)
+- Venue apps installed 
 - No installation errors
 - All apps synchronized
 

@@ -125,10 +125,7 @@ Support Contact: [Facilitator Email/Phone]
    - ⚠️ **CRITICAL:** This info identifies them in telemetry!
 
 4. **Choose Venue**
-   - Development.1 - BC development focused
-   - Development.2 - AI/Copilot focused
-   - Consultant.1 - BC functionality focused
-
+   
 5. **Open First Room**
    - Read room description carefully
    - Review all tasks

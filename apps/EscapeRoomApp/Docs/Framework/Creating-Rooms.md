@@ -437,7 +437,7 @@ codeunit 50009 "Install My Venue"
 
 ## Real-World Examples
 
-Based on Development.1 and Development.2 implementations:
+Based on Development.1 and Development.2 implementations by BCTalent:
 
 ### Example: Development.1 Venue Structure
 

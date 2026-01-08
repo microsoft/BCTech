@@ -201,14 +201,6 @@ enumextension 50000 "My Venue" extends "Escape Room Venue"
 }
 ```
 
-**ID Range Recommendations:**
-- 74000-74099: Development.1
-- 74100-74199: Development.2  
-- 74200-74299: Consultant.1
-- 50000+: Custom extensions
-
----
-
 ### Escape Room
 
 **Purpose:** Identifies available rooms

@@ -180,7 +180,7 @@ For facilitators running events:
 
 ### Permissions in Venue Apps
 
-Extension apps (Development.1, Development.2, Consultant.1) define their own permissions for:
+Extension apps define their own permissions for:
 - Custom tables they create
 - Custom pages they add
 - Validation logic access
