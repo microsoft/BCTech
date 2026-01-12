@@ -111,7 +111,8 @@ def generate_client_configs(
     config: ProxyConfig,
 ) -> tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
   """Produce MCP client configuration dictionaries."""
-  executable = sys.executable or "python"
+  # Use the current Python interpreter, with platform-aware fallback
+  executable = sys.executable or ("python3" if sys.platform != "win32" else "python")
   args: List[str] = [
       "-m",
       "bc_mcp_proxy",
@@ -191,7 +192,8 @@ def print_next_steps(config: ProxyConfig, cursor_url: str, vscode_url: str) -> N
   if config.configuration_name:
     args.extend(["--ConfigurationName", config.configuration_name])
 
-  command_preview = " ".join([repr(sys.executable or 'python'), "-m", "bc_mcp_proxy", *map(_shell_quote, args)])
+  python_cmd = sys.executable or ("python3" if sys.platform != "win32" else "python")
+  command_preview = " ".join([repr(python_cmd), "-m", "bc_mcp_proxy", *map(_shell_quote, args)])
 
   print("\nSetup complete! Next steps:")
   print("1) Add the MCP server to your preferred client:")
@@ -205,7 +207,8 @@ def print_next_steps(config: ProxyConfig, cursor_url: str, vscode_url: str) -> N
   print("3) Configuration files have been saved to:")
   print(f"   {OUTPUT_DIR}\n")
 
-  print("You can rerun 'python -m bc_mcp_proxy setup' at any time to update these settings.")
+  python_cmd = "python3" if sys.platform != "win32" else "python"
+  print(f"You can rerun '{python_cmd} -m bc_mcp_proxy setup' at any time to update these settings.")
 
 
 def _shell_quote(value: str) -> str:

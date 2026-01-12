@@ -33,12 +33,20 @@ Run the helper script (PowerShell or Bash) from the package root directory. It i
 Once artifacts exist in `dist/`, publish them with `twine`. The helper scripts
 install `twine` and call `python -m twine upload`.
 
+**Important**: When prompted for credentials:
+- **Username**: `__token__` (literally, with underscores)
+- **Password**: Your PyPI API token (the full token starting with `pypi-`)
+
+Alternatively, you can set the `TWINE_PASSWORD` environment variable to avoid the prompt:
+
 ```powershell
+$env:TWINE_PASSWORD = "pypi-your-token-here"
 ./maintainer/scripts/publish.ps1          # uploads to pypi
 ./maintainer/scripts/publish.ps1 testpypi # uploads to TestPyPI
 ```
 
 ```bash
+export TWINE_PASSWORD="pypi-your-token-here"
 ./maintainer/scripts/publish.sh           # uploads to pypi
 ./maintainer/scripts/publish.sh testpypi  # uploads to TestPyPI
 ```
