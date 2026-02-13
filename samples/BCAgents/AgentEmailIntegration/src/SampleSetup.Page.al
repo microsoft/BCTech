@@ -7,7 +7,7 @@ namespace Microsoft.Agent.Sample;
 
 using System.Agents;
 using System.Email;
-using System.Agents.Playground.CustomAgent;
+using System.Agents.Designer.CustomAgent;
 using System.Threading;
 
 page 50100 "Sample Setup"
@@ -34,7 +34,7 @@ page 50100 "Sample Setup"
                         CustomAgentInfo: Record "Custom Agent Info";
                         CustomAgent: Codeunit "Custom Agent";
                     begin
-                        Rec."Agent User Security ID" := SelectAgents(); // TODO: BCApps change required
+                        Rec."Agent User Security ID" := SelectAgents();
 
                         CustomAgent.GetCustomAgentById(Rec."Agent User Security ID", CustomAgentInfo);
                         AgentName := CustomAgentInfo."User Name";
@@ -156,5 +156,19 @@ page 50100 "Sample Setup"
             if IConnector is "Email Connector v4" then
                 exit(true);
         until EmailAccounts.Next() = 0;
+    end;
+
+    local procedure SelectAgents(): Guid
+    var
+        TempCustomAgentInfo: Record "Custom Agent Info" temporary;
+        CustomAgent: Codeunit "Custom Agent";
+    begin
+        CustomAgent.GetCustomAgents(TempCustomAgentInfo);
+
+        // TODO: Replace with a proper lookup page if there are multiple agents
+        if not TempCustomAgentInfo.FindFirst() then
+            Error('There are no available custom agents.');
+
+        exit(TempCustomAgentInfo."User Security ID");
     end;
 }
