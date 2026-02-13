@@ -32,7 +32,6 @@
 ///   - Source:      {CompanyName}${SourceTableName}
 ///   - Destination: {CompanyName}${BufferTableName}${AppId}
 ///   - Replace '.', '\', '/' with '_' using ConvertStr
-///   - AppId is obtained from BC14MigrationProvider.GetAppId(), formatted as lowercase GUID
 ///
 /// In this example, "Item Category" is master data, so we subscribe to
 /// OnAfterSetupReplicationMappings.
@@ -53,7 +52,6 @@ codeunit 50200 "BC14 Item Category Mapping"
     local procedure AddItemCategoryMapping(CompanyName: Text[30])
     var
         ReplicationMapping: Record "Replication Table Mapping";
-        BC14MigrationProvider: Codeunit "BC14 Migration Provider";
         SourceSqlName: Text[128];
         DestinationSqlName: Text[250];
         AppIdSuffix: Text[50];
@@ -63,8 +61,7 @@ codeunit 50200 "BC14 Item Category Mapping"
         SourceSqlName := ConvertStr(CompanyName + '$Item Category', '.\/', '___');
 
         // Build the destination SQL table name: "{CompanyName}$BC14 Item Category${AppId}"
-        // The AppId suffix is required because buffer tables live in an extension namespace
-        AppIdSuffix := Format(BC14MigrationProvider.GetAppId()).TrimEnd('}').TrimStart('{').ToLower();
+        AppIdSuffix := 'd1a8b9ba-87d2-400c-8310-f4becfe7e909';
         DestinationSqlName := ConvertStr(CompanyName + '$BC14 Item Category$' + AppIdSuffix, '.\/', '___');
 
         // Insert the mapping record that the replication pipeline will use
