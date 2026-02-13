@@ -102,6 +102,20 @@ Module Analyze_AP
 
 
             RecID = RecID + 1
+            sDescr = "Are AP Distributed Liability Vouchers being used?"
+            sqlStmt = "SELECT COUNT(*) FROM APDOC VO WHERE VO.S4Future11 = 'VM' AND EXISTS (SELECT * FROM APDOC VM WHERE VM.DocType = 'VM' AND VO.S4Future12 = VM.RefNbr)"
+            Call sqlFetch_Num(retValInt1, sqlStmt, SqlAppDbConn)
+            If retValInt1 > 0 Then
+                sResult = "YES"
+            Else
+                sResult = "NO"
+            End If
+            sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
+            sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
+            Call AddStatusInfo(sqlStringExec, sDescr, sResult)
+
+
+            RecID = RecID + 1
             sDescr = "Current period for the module:"
             sqlStmt = "SELECT CurrPerNbr, PerNbr, PerRetHist, PerRetTran FROM APSetup"
             Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
@@ -185,7 +199,6 @@ Module Analyze_AP
             sqlStringValues = SParm(sAnalysisType) + "," + SParm(sDescr) + "," + SParm(CurrDateStr) + "," + SParm(sModule) + "," + CStr(RecID) + "," + SParm(sResult)
             sqlStringExec = sqlStringStart + sqlStringValues + sqlStringEnd
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
-            Call oEventLog.LogMessage(0, "")
 
             '***** End of Module Usage section *****
 

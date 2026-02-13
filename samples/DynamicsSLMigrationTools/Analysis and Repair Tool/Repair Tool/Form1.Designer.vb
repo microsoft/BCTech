@@ -213,6 +213,7 @@
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.StatusLbl = New System.Windows.Forms.ToolStripStatusLabel()
         Me.FolderBrowserDialog2 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.lRelease = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.DBConnect.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
@@ -283,6 +284,7 @@
         'GroupBox8
         '
         Me.GroupBox8.BackColor = System.Drawing.SystemColors.Control
+        Me.GroupBox8.Controls.Add(Me.lRelease)
         Me.GroupBox8.Controls.Add(Me.lblDirRequired)
         Me.GroupBox8.Controls.Add(Me.lblCpnyRequired)
         Me.GroupBox8.Controls.Add(Me.lblDbRequired)
@@ -2009,6 +2011,19 @@
         Me.StatusLbl.Name = "StatusLbl"
         Me.StatusLbl.Size = New System.Drawing.Size(0, 17)
         '
+        'lRelease
+        '
+        Me.lRelease.AutoSize = True
+        Me.lRelease.BackColor = System.Drawing.SystemColors.Control
+        Me.lRelease.Cursor = System.Windows.Forms.Cursors.Default
+        Me.lRelease.Location = New System.Drawing.Point(1060, 339)
+        Me.lRelease.Name = "lRelease"
+        Me.lRelease.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.lRelease.Size = New System.Drawing.Size(57, 13)
+        Me.lRelease.TabIndex = 83
+        Me.lRelease.Text = "Release..."
+        Me.lRelease.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2240,5 +2255,6 @@
     Friend WithEvents lblCpnyRequired As Label
     Friend WithEvents lblDbRequired As Label
     Friend WithEvents lblDbStatus As Label
+    Public WithEvents lRelease As Label
 #End Region
 End Class

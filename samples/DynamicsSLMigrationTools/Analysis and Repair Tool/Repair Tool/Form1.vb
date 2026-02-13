@@ -82,6 +82,8 @@ Friend Class Form1
         'Get date values
         CurrDate = Date.Now
 
+        lRelease.Text = "Release: 2025-12-19"
+
     End Sub
 
 

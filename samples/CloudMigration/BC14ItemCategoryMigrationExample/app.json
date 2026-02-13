@@ -1,0 +1,43 @@
+{
+  "id": "d1a8b9ba-87d2-400c-8310-f4becfe7e909",
+  "name": "BC14 Item Category Migration Example",
+  "publisher": "MS",
+  "version": "1.0.0.0",
+  "brief": "Example: Extend the BC14 Reimplementation Tool to migrate Item Categories",
+  "description": "This sample extension demonstrates how partners can extend the BC14 Reimplementation Tool to migrate additional tables (Item Category) from BC14 on-premises to Business Central online.",
+  "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
+  "EULA": "https://go.microsoft.com/fwlink/?linkid=2009120",
+  "help": "https://go.microsoft.com/fwlink/?linkid=2009036",
+  "url": "https://go.microsoft.com/fwlink/?LinkId=724011",
+  "dependencies": [
+    {
+      "id": "2363a2b7-1018-4976-a32a-c77338dc9f16",
+      "publisher": "Microsoft",
+      "name": "BC14ReimplementationTool",
+      "version": "28.0.0.0"
+    },
+    {
+      "id": "58623bfa-0559-4bc2-ae1c-0979c29fd9e0",
+      "publisher": "Microsoft",
+      "name": "Intelligent Cloud Base",
+      "version": "28.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "28.0.0.0",
+  "application": "28.0.0.0",
+  "idRanges": [
+    {
+      "from": 50200,
+      "to": 50209
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "features": [
+    "NoImplicitWith"
+  ]
+}
