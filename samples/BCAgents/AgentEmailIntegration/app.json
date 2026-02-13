@@ -12,15 +12,15 @@
   "logo": "",
   "dependencies": [
     {
-      "id": "00155c68-8cdd-4d60-a451-2034ad094223",
-      "name": "Business Central Agent Playground",
+      "id": "f2d0130c-4b0e-437a-bcfd-0dc9f84ac961",
+      "name": "AI Development Toolkit",
       "publisher": "Microsoft",
-      "version": "27.2.0.0"
+      "version": "27.4.0.0"
     }
   ],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "27.0.0.0",
+  "application": "27.4.0.0",
   "idRanges": [
     {
       "from": 50100,
