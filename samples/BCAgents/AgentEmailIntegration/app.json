@@ -1,0 +1,40 @@
+{
+  "id": "db9ab3df-d57d-47fb-8870-f7617f9341aa",
+  "name": "Sample Agent Email Integration",
+  "publisher": "Microsoft",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "00155c68-8cdd-4d60-a451-2034ad094223",
+      "name": "Business Central Agent Playground",
+      "publisher": "Microsoft",
+      "version": "27.2.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "27.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "16.0",
+  "features": [
+    "NoImplicitWith"
+  ],
+  "target":"Cloud"
+}
