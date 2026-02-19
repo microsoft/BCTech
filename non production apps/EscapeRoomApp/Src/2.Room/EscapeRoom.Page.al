@@ -136,6 +136,16 @@ page 73922 "Escape Room"
                     CurrPage.Update(false);
                 end;
             }
+            action(ResetRoom)
+            {
+                Caption = 'Reset Room';
+                Image = Undo;
+                trigger OnAction()
+                begin
+                    Rec.ResetRoom();
+                    CurrPage.Update(false);
+                end;
+            }
         }
         area(Promoted)
         {
@@ -148,6 +158,10 @@ page 73922 "Escape Room"
                 Visible = true;
             }
             actionref(SolveRef; Solve)
+            {
+                Visible = true;
+            }
+            actionref(ResetRoomRef; ResetRoom)
             {
                 Visible = true;
             }
