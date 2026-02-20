@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup;
+namespace SalesValidationAgent.Setup;
 
 using System.Agents;
 using System.AI;

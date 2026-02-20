@@ -1,10 +1,10 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup.Metadata;
+namespace SalesValidationAgent.Setup.Metadata;
 
 using System.Agents;
 using System.AI;
 using System.Reflection;
 using System.Security.AccessControl;
-using ThirdPartyPublisher.SalesValidationAgent.Setup;
+using SalesValidationAgent.Setup;
 
 codeunit 50100 SalesValAgentFactory implements IAgentFactory
 {

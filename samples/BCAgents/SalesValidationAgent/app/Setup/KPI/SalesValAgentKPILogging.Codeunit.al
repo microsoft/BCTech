@@ -1,8 +1,8 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup.KPI;
+namespace SalesValidationAgent.Setup.KPI;
 
 using Microsoft.Sales.Document;
 using System.Agents;
-using ThirdPartyPublisher.SalesValidationAgent.Setup;
+using SalesValidationAgent.Setup;
 
 /// <summary>
 /// Subscribes to business events to automatically log KPI metrics

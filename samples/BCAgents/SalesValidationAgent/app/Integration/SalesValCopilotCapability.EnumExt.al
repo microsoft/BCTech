@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Integration;
+namespace SalesValidationAgent.Integration;
 
 using System.AI;
 

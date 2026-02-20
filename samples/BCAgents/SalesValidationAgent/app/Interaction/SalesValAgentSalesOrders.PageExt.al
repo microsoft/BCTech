@@ -1,8 +1,8 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Interaction;
+namespace SalesValidationAgent.Interaction;
 
 using Microsoft.Sales.Document;
 using System.Agents;
-using ThirdPartyPublisher.SalesValidationAgent.Setup;
+using SalesValidationAgent.Setup;
 
 /// <summary>
 /// Extends the Sales Order List page to enable Sales Validation Agent task assignment.

@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Interaction;
+namespace SalesValidationAgent.Interaction;
 
 /// <summary>
 /// A simple dialog page that prompts the user to select a shipment date

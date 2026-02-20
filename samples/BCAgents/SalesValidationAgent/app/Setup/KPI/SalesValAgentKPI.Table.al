@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup.KPI;
+namespace SalesValidationAgent.Setup.KPI;
 
 table 50101 "Sales Val. Agent KPI"
 {

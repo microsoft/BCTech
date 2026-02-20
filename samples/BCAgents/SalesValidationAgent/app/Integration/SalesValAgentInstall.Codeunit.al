@@ -1,9 +1,9 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Integration;
+namespace SalesValidationAgent.Integration;
 
 using System.Agents;
 using System.AI;
 using System.Security.AccessControl;
-using ThirdPartyPublisher.SalesValidationAgent.Setup;
+using SalesValidationAgent.Setup;
 
 codeunit 50101 "Sales Val. Agent Install"
 {

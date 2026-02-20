@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup;
+namespace SalesValidationAgent.Setup;
 
 table 50100 "Sales Val. Agent Setup"
 {

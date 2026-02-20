@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup.Profile;
+namespace SalesValidationAgent.Setup.Profile;
 
 using Microsoft.Sales.Document;
 

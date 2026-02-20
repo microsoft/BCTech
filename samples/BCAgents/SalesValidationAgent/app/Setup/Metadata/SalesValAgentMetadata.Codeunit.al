@@ -1,7 +1,7 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup.Metadata;
+namespace SalesValidationAgent.Setup.Metadata;
 
 using System.Agents;
-using ThirdPartyPublisher.SalesValidationAgent.Setup;
+using SalesValidationAgent.Setup;
 
 codeunit 50102 SalesValAgentMetadata implements IAgentMetadata
 {

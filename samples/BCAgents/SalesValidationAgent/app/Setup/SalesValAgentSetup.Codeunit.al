@@ -1,9 +1,9 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup;
+namespace SalesValidationAgent.Setup;
 
 using System.Agents;
 using System.Reflection;
 using System.Security.AccessControl;
-using ThirdPartyPublisher.SalesValidationAgent.Setup.KPI;
+using SalesValidationAgent.Setup.KPI;
 
 codeunit 50103 "Sales Val. Agent Setup"
 {

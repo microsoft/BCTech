@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup.Metadata;
+namespace SalesValidationAgent.Setup.Metadata;
 
 using System.Agents;
 

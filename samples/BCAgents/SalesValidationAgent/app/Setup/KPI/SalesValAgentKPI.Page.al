@@ -1,4 +1,4 @@
-namespace ThirdPartyPublisher.SalesValidationAgent.Setup.KPI;
+namespace SalesValidationAgent.Setup.KPI;
 
 page 50104 "Sales Val. Agent KPI"
 {
