@@ -1,0 +1,35 @@
+{
+  "id": "5878e09e-13b4-4058-a9f6-4a9ee1605d6a",
+  "name": "SalesValidationAgent",
+  "publisher": "ThirdPartyPublisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "27.4.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true,
+    "applyToDevExtension": false
+  },
+  "runtime": "17.0",
+  "features": [
+    "NoImplicitWith"
+  ],
+  "resourceFolders": [".resources"],
+  "target": "Cloud"
+}
