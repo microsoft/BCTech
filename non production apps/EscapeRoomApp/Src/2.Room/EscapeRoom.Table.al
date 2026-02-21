@@ -90,6 +90,11 @@ table 73920 "Escape Room"
     var
         Task: Record "Escape Room Task";
     begin
+        if Rec.Status = Rec.Status::Completed then begin
+            OpenNextRoom();
+            exit;
+        end;
+
         if Rec.Status <> Rec.Status::InProgress then exit;
 
         Task.Setrange("Venue Id", Rec."Venue Id");
