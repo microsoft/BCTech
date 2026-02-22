@@ -25,6 +25,8 @@ Core framework architecture and patterns for developers extending the system:
 - [Architecture Overview](Framework/Architecture.md) - Core components and design patterns
 - [Creating New Rooms](Framework/Creating-Rooms.md) - Step-by-step guide for building rooms
 - [Task Validation System](Framework/Task-Validation.md) - How task validation and interfaces work
+- [Room Content (HTML)](Framework/Room-Content-HTML.md) - Writing Description and Solution HTML files
+- [Performance Room Design](Framework/Performance-Room-Design.md) - Patterns for performance-themed rooms
 - [Telemetry Integration](Framework/Telemetry-Integration.md) - Scoring, tracking, and Application Insights
 
 ### 🎯 [Facilitator Documentation](Facilitator/)
