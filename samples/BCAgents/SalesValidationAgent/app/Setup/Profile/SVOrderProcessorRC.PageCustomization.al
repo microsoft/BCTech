@@ -8,7 +8,7 @@ namespace SalesValidationAgent.Setup.Profile;
 using Microsoft.Sales.RoleCenters;
 
 
-pagecustomization SVOrderProcessorRC customizes "Order Processor Role Center"
+pagecustomization "SV Order Processor RC" customizes "Order Processor Role Center"
 {
     ClearLayout = true;
     ClearActions = true;

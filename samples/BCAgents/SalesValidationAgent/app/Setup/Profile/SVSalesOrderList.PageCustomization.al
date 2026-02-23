@@ -7,7 +7,7 @@ namespace SalesValidationAgent.Setup.Profile;
 
 using Microsoft.Sales.Document;
 
-pagecustomization SVSalesOrderList customizes "Sales Order List"
+pagecustomization "SV Sales Order List" customizes "Sales Order List"
 {
     ClearLayout = true;
     ClearActions = true;

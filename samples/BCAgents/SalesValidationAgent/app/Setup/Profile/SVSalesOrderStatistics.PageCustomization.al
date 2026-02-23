@@ -7,7 +7,7 @@ namespace SalesValidationAgent.Setup.Profile;
 
 using Microsoft.Sales.Document;
 
-pagecustomization SVSalesOrderStatistics customizes "Sales Order Statistics"
+pagecustomization "SV Sales Order Statistics" customizes "Sales Order Statistics"
 {
     ClearLayout = true;
     ClearActions = true;

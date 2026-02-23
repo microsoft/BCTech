@@ -14,5 +14,5 @@ profile "Sales Validation Agent"
     ProfileDescription = 'Functionality for the Sales Validation Agent to efficiently validate and process sales orders.';
     Promoted = false;
     RoleCenter = "Order Processor Role Center";
-    Customizations = SVOrderProcessorRC, SVSalesOrder, SVSalesOrderStatistics, SVSOProcessorActivities, SVSalesOrderList, SVSalesOrderSubform;
+    Customizations = "SV Order Processor RC", "SV Sales Order", "SV Sales Order Statistics", "SV SO Processor Activities", "SV Sales Order List", "SV Sales Order Subform";
 }

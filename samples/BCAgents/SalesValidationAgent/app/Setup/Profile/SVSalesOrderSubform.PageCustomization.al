@@ -7,7 +7,7 @@ namespace SalesValidationAgent.Setup.Profile;
 
 using Microsoft.Sales.Document;
 
-pagecustomization SVSalesOrderSubform customizes "Sales Order Subform"
+pagecustomization "SV Sales Order Subform" customizes "Sales Order Subform"
 {
     ClearLayout = true;
     ClearActions = true;

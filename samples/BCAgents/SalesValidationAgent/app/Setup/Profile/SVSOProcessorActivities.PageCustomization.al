@@ -7,7 +7,7 @@ namespace SalesValidationAgent.Setup.Profile;
 
 using Microsoft.Sales.RoleCenters;
 
-pagecustomization SVSOProcessorActivities customizes "SO Processor Activities"
+pagecustomization "SV SO Processor Activities" customizes "SO Processor Activities"
 {
     ClearLayout = true;
     ClearActions = true;
