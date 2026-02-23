@@ -29,7 +29,6 @@ codeunit 50100 SalesValAgentFactory implements IAgentFactory
     var
         SalesValAgentSetupRec: Record "Sales Val. Agent Setup";
     begin
-        // ShowCanCreateAgent controls UI visibility only; to truly enforce single-instance, the Setup table/page also needs to prevent duplicate records.
         exit(SalesValAgentSetupRec.IsEmpty());
     end;
 

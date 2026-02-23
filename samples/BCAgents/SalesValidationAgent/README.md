@@ -41,7 +41,7 @@ Tracks agent performance metrics. A KPI table records counters per agent user (c
 
 #### Metadata
 
-Implements the `IAgentFactory` and `IAgentMetadata` interfaces required by the Business Central Agent framework. The factory provides default initials, the setup page, the Copilot capability, the default profile, and access control templates. The `ShowCanCreateAgent` method controls UI visibility for agent creation (single-instance by convention); if the app needs to strictly enforce one agent, the Setup table/page must also prevent duplicates. The metadata codeunit supplies page IDs for setup, summary, and task message cards. An enum extension on `Agent Metadata Provider` wires these implementations into the platform.
+Implements the `IAgentFactory` and `IAgentMetadata` interfaces required by the Business Central Agent framework. The factory provides default initials, the setup page, the Copilot capability, the default profile, and access control templates. The `ShowCanCreateAgent` method controls UI visibility for agent creation. The agent here is single-instance. The metadata codeunit supplies page IDs for setup, summary, and task message cards. An enum extension on `Agent Metadata Provider` wires these implementations into the platform.
 
 #### Profile
 
