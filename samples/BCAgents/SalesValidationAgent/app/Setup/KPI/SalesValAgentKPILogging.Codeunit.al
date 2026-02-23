@@ -18,6 +18,8 @@ using System.Agents;
 codeunit 50106 "Sales Val. Agent KPI Logging"
 {
     Access = Internal;
+    EventSubscriberInstance = StaticAutomatic;
+    SingleInstance = true;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnAfterReleaseSalesDoc, '', false, false)]
     local procedure OnAfterReleaseSalesDoc(var SalesHeader: Record "Sales Header")
