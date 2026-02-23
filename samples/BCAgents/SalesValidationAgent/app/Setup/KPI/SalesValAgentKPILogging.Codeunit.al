@@ -1,8 +1,13 @@
+// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+// ------------------------------------------------------------------------------------------------
+
 namespace SalesValidationAgent.Setup.KPI;
 
 using Microsoft.Sales.Document;
-using System.Agents;
 using SalesValidationAgent.Setup;
+using System.Agents;
 
 /// <summary>
 /// Subscribes to business events to automatically log KPI metrics
@@ -13,7 +18,6 @@ using SalesValidationAgent.Setup;
 codeunit 50106 "Sales Val. Agent KPI Logging"
 {
     Access = Internal;
-    SingleInstance = true;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnAfterReleaseSalesDoc, '', false, false)]
     local procedure OnAfterReleaseSalesDoc(var SalesHeader: Record "Sales Header")

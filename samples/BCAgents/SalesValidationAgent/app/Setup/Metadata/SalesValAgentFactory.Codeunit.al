@@ -1,10 +1,15 @@
+// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+// ------------------------------------------------------------------------------------------------
+
 namespace SalesValidationAgent.Setup.Metadata;
 
+using SalesValidationAgent.Setup;
 using System.Agents;
 using System.AI;
 using System.Reflection;
 using System.Security.AccessControl;
-using SalesValidationAgent.Setup;
 
 codeunit 50100 SalesValAgentFactory implements IAgentFactory
 {
@@ -24,8 +29,8 @@ codeunit 50100 SalesValAgentFactory implements IAgentFactory
     var
         SalesValAgentSetupRec: Record "Sales Val. Agent Setup";
     begin
-        // Single instance agent
-        exit(not SalesValAgentSetupRec.FindFirst());
+        // ShowCanCreateAgent controls UI visibility only; to truly enforce single-instance, the Setup table/page also needs to prevent duplicate records.
+        exit(SalesValAgentSetupRec.IsEmpty());
     end;
 
     procedure GetCopilotCapability(): Enum "Copilot Capability"

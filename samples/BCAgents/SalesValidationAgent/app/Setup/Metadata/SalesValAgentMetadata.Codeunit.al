@@ -1,7 +1,12 @@
+// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+// ------------------------------------------------------------------------------------------------
+
 namespace SalesValidationAgent.Setup.Metadata;
 
-using System.Agents;
 using SalesValidationAgent.Setup;
+using System.Agents;
 
 codeunit 50102 SalesValAgentMetadata implements IAgentMetadata
 {

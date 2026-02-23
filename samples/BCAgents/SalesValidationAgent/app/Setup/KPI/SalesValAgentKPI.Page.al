@@ -1,3 +1,8 @@
+// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+// ------------------------------------------------------------------------------------------------
+
 namespace SalesValidationAgent.Setup.KPI;
 
 page 50104 "Sales Val. Agent KPI"
@@ -32,6 +37,12 @@ page 50104 "Sales Val. Agent KPI"
         GetRelevantAgent();
     end;
 
+    /// <summary>
+    /// Retrieves the relevant agent's KPI record for display.
+    /// This page is launched via IAgentMetadata.GetSummaryPageId(). The platform sets a filter on the
+    /// "User Security ID" field before opening the page, so the source record may not be fully populated
+    /// on open - the filter is evaluated here to resolve and load the correct record.
+    /// </summary>
     local procedure GetRelevantAgent()
     var
         UserSecurityIDFilter: Text;

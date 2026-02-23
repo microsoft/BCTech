@@ -1,8 +1,13 @@
+// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+// ------------------------------------------------------------------------------------------------
+
 namespace SalesValidationAgent.Interaction;
 
 using Microsoft.Sales.Document;
-using System.Agents;
 using SalesValidationAgent.Setup;
+using System.Agents;
 
 /// <summary>
 /// Extends the Sales Order List page to enable Sales Validation Agent task assignment.
@@ -35,7 +40,7 @@ pageextension 50101 "Sales Val. Agent Sales Orders" extends "Sales Order List"
                     ShipmentDate: Date;
                     ExternalId: Text;
                 begin
-                    IF not SalesValAgentSetup.TryGetAgent(AgentUserSecurityId) then
+                    if not SalesValAgentSetup.TryGetAgent(AgentUserSecurityId) then
                         Error(SVAgentDoesNotExistErr);
 
                     if not Agent.IsActive(AgentUserSecurityId) then
@@ -53,11 +58,11 @@ pageextension 50101 "Sales Val. Agent Sales Orders" extends "Sales Order List"
                     TaskTitle := CopyStr(StrSubstNo(TaskTitleLbl, ShipmentDate), 1, MaxStrLen(TaskTitle));
                     From := CopyStr(UserId(), 1, MaxStrLen(From));
 
-                    AgentTaskBuilder.Initialize(AgentUserSecurityId, TaskTitle);
                     ExternalId := Format(CreateGuid());
-                    AgentTaskBuilder.SetExternalId(ExternalId);
-                    AgentTaskBuilder.AddTaskMessage(From, Message);
-                    AgentTaskBuilder.Create();
+                    AgentTaskBuilder.Initialize(AgentUserSecurityId, TaskTitle)
+                        .SetExternalId(ExternalId)
+                        .AddTaskMessage(From, Message)
+                        .Create();
 
                     AgentTask.ReadIsolation(IsolationLevel::ReadCommitted);
                     AgentTask.SetRange("External ID", ExternalId);

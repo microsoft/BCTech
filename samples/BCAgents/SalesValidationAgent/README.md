@@ -41,7 +41,7 @@ Tracks agent performance metrics. A KPI table records counters per agent user (c
 
 #### Metadata
 
-Implements the `IAgentFactory` and `IAgentMetadata` interfaces required by the Business Central Agent framework. The factory provides default initials, the setup page, the Copilot capability, the default profile, and access control templates, and enforces a **single-instance** constraint (only one agent can be created). The metadata codeunit supplies page IDs for setup, summary, and task message cards. An enum extension on `Agent Metadata Provider` wires these implementations into the platform.
+Implements the `IAgentFactory` and `IAgentMetadata` interfaces required by the Business Central Agent framework. The factory provides default initials, the setup page, the Copilot capability, the default profile, and access control templates. The `ShowCanCreateAgent` method controls UI visibility for agent creation (single-instance by convention); if the app needs to strictly enforce one agent, the Setup table/page must also prevent duplicates. The metadata codeunit supplies page IDs for setup, summary, and task message cards. An enum extension on `Agent Metadata Provider` wires these implementations into the platform.
 
 #### Profile
 
@@ -51,11 +51,10 @@ Defines a dedicated **Sales Validation Agent (Copilot)** profile based on the *O
 
 ## How It Works
 
-1. **Enable the capability** – An admin enables *Sales Validation Agent* in the Copilot & AI Capabilities page.
-2. **Create the agent** – Open the *Sales Val. Agent Setup* configuration dialog to provision the agent user with the correct profile and permissions.
-3. **Assign a task** – From the **Sales Order List**, choose *Validate with Agent*, pick a shipment date, and a task is created for the agent.
-4. **Agent processes orders** – The agent reads its instructions (loaded from `Instructions/InstructionsV1.txt`), validates open sales orders for the specified shipment date, checks inventory reservation, and releases eligible orders.
-5. **KPIs are tracked** – Each time the agent releases an order, the `OnAfterReleaseSalesDoc` event subscriber increments the *Orders Released* counter, visible on the agent's summary page.
+1. **Create the agent** – The *Sales Validation Agent* Copilot capability is registered as **Preview** and is therefore enabled by default. Open the *Sales Val. Agent Setup* configuration dialog (accessible from the agent avatar in the Role Center) to provision the agent user with the correct profile and permissions.
+2. **Assign a task** – From the **Sales Order List**, choose *Validate with Agent*, pick a shipment date, and a task is created for the agent.
+3. **Agent processes orders** – The agent reads its instructions (loaded from `Instructions/InstructionsV1.txt`), validates open sales orders for the specified shipment date, checks inventory reservation, and releases eligible orders.
+4. **KPIs are tracked** – Each time the agent releases an order, the `OnAfterReleaseSalesDoc` event subscriber increments the *Orders Released* counter, visible on the agent's summary page.
 
 ---
 

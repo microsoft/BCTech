@@ -1,9 +1,14 @@
+// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+// ------------------------------------------------------------------------------------------------
+
 namespace SalesValidationAgent.Setup;
 
+using SalesValidationAgent.Setup.KPI;
 using System.Agents;
 using System.Reflection;
 using System.Security.AccessControl;
-using SalesValidationAgent.Setup.KPI;
 
 codeunit 50103 "Sales Val. Agent Setup"
 {
@@ -55,7 +60,7 @@ codeunit 50103 "Sales Val. Agent Setup"
         exit(Instructions);
     end;
 
-    internal procedure GetDefaultProfile(var TempAllProfile: Record "All Profile" temporary)
+    procedure GetDefaultProfile(var TempAllProfile: Record "All Profile" temporary)
     var
         CurrentModuleInfo: ModuleInfo;
     begin
@@ -63,7 +68,7 @@ codeunit 50103 "Sales Val. Agent Setup"
         Agent.PopulateDefaultProfile(DefaultProfileTok, CurrentModuleInfo.Id, TempAllProfile);
     end;
 
-    internal procedure GetDefaultAccessControls(var TempAccessControlBuffer: Record "Access Control Buffer" temporary)
+    procedure GetDefaultAccessControls(var TempAccessControlBuffer: Record "Access Control Buffer" temporary)
     begin
         Clear(TempAccessControlBuffer);
         TempAccessControlBuffer."Company Name" := CopyStr(CompanyName(), 1, MaxStrLen(TempAccessControlBuffer."Company Name"));

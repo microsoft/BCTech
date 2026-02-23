@@ -1,3 +1,8 @@
+// ------------------------------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+// ------------------------------------------------------------------------------------------------
+
 namespace SalesValidationAgent.Setup.KPI;
 
 table 50101 "Sales Val. Agent KPI"
@@ -12,6 +17,9 @@ table 50101 "Sales Val. Agent KPI"
 
     fields
     {
+        // This field is part of the IAgentMetadata.GetSummaryPageId() contract.
+        // The platform filters on "User Security ID" when opening the summary page,
+        // so it must be the primary key of this table.
         field(1; "User Security ID"; Guid)
         {
             Caption = 'User Security ID';
