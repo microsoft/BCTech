@@ -38,7 +38,6 @@ pageextension 50101 "Sales Val. Agent Sales Orders" extends "Sales Order List"
                     From: Text[250];
                     Message: Text;
                     ShipmentDate: Date;
-                    ExternalId: Text;
                 begin
                     if not SalesValAgentSetup.TryGetAgent(AgentUserSecurityId) then
                         Error(SVAgentDoesNotExistErr);
@@ -58,16 +57,9 @@ pageextension 50101 "Sales Val. Agent Sales Orders" extends "Sales Order List"
                     TaskTitle := CopyStr(StrSubstNo(TaskTitleLbl, ShipmentDate), 1, MaxStrLen(TaskTitle));
                     From := CopyStr(UserId(), 1, MaxStrLen(From));
 
-                    ExternalId := Format(CreateGuid());
-                    AgentTaskBuilder.Initialize(AgentUserSecurityId, TaskTitle)
-                        .SetExternalId(ExternalId)
+                    AgentTask := AgentTaskBuilder.Initialize(AgentUserSecurityId, TaskTitle)
                         .AddTaskMessage(From, Message)
                         .Create();
-
-                    AgentTask.ReadIsolation(IsolationLevel::ReadCommitted);
-                    AgentTask.SetRange("External ID", ExternalId);
-                    if not AgentTask.FindFirst() then
-                        Error(TaskCreateFailedErr);
 
                     Message(TaskAssignedMsg, AgentTask.ID, ShipmentDate);
                 end;
@@ -79,7 +71,6 @@ pageextension 50101 "Sales Val. Agent Sales Orders" extends "Sales Order List"
         SVAgentDoesNotExistErr: Label 'The Sales Validation Agent has not been created.';
         SVAgentNotActiveErr: Label 'The Sales Validation Agent is not active.';
         ShipmentDateRequiredErr: Label 'A shipment date must be specified.';
-        TaskCreateFailedErr: Label 'The agent task could not be created.';
         TaskMessageLbl: Label 'Run and process shipment date %1.', Locked = true, Comment = '%1 = Shipment Date';
         TaskTitleLbl: Label 'Validate Sales Orders for %1', Comment = '%1 = Shipment Date';
         TaskAssignedMsg: Label 'Task %1 assigned successfully to validate sales orders for date: %2.', Comment = '%1 = Task ID, %2 = Shipment Date';
