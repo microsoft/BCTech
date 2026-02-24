@@ -1,4 +1,4 @@
-﻿Import-Module "sqlps" -DisableNameChecking
+  Import-Module "SqlServer" -DisableNameChecking
 
 # The integer values of the types as specified
 # by the "Object Type" option field on the Permission table
@@ -359,7 +359,7 @@ function GetFileContent
 }
 
 # Convert symbols downloaded from the database (in JSON format) to a PowerShell dictionary
-function ProccessSymbols
+function ProcessSymbols
 {
     param(
         [Parameter(Mandatory)]
@@ -371,58 +371,83 @@ function ProccessSymbols
     
     gci $SymbolsFolder | % { $RawSymbols[$_.Name] = Get-Content $_.FullName | Out-String | ConvertFrom-Json }
 
-    Write-Host 'Proccessing Symbols'
+    Write-Host 'Processing Symbols'
     $Symbols = @{}
     
     foreach($App in $RawSymbols.Keys)
     {
         $AppSymbols = @{}
-        $Tables = @{}
-        foreach($Table in $RawSymbols[$App].Tables)
-        {
-            $Tables.Add($Table.Id, $Table.Name)
-        }
+
+        $global:Tables = @{}
+        $global:Codeunits = @{}
+        $global:Pages = @{}
+        $global:Reports = @{}
+        $global:Queries = @{}
+        $global:XMLPorts = @{}
+
+        ProcessNamespace($RawSymbols[$App], [ref]$Tables, [ref]$Codeunits, [ref]$Pages, [ref]$Reports, [ref]$Queries, [ref]$XmlPorts)
+
         $AppSymbols.Tables = $Tables
-        
-        $Codeunits = @{}
-        foreach($Codeunit in $RawSymbols[$App].Codeunits)
-        {
-            $Codeunits.Add($Codeunit.Id, $Codeunit.Name)
-        }
         $AppSymbols.Codeunits = $Codeunits
-        
-        $Pages = @{}
-        foreach($Page in $RawSymbols[$App].Pages)
-        {
-            $Pages.Add($Page.Id, $Page.Name)
-        }
         $AppSymbols.Pages = $Pages
-
-        $Reports = @{}
-        foreach($Report in $RawSymbols[$App].Reports)
-        {
-            $Reports.Add($Report.Id, $Report.Name)
-        }
         $AppSymbols.Reports = $Reports
-
-        $Queries = @{}
-        foreach($Query in $RawSymbols[$App].Queries)
-        {
-            $Queries.Add($Query.Id, $Query.Name)
-        }
         $AppSymbols.Queries = $Queries
-
-        $XMLPorts = @{}
-        foreach($XMLPort in $RawSymbols[$App].XMLPorts)
-        {
-            $XMLPorts.Add($XMLPort.Id, $XMLPort.Name)
-        }
         $AppSymbols.XMLPorts = $XMLPorts
 
         $Symbols[$App] = $AppSymbols
     }
 
     return $Symbols
+}
+
+function ProcessNamespace
+{
+    param(
+        $RawSymbols,
+        [hashtable]$pTables,
+        [hashtable]$pCodeunits,
+        [hashtable]$pPages,
+        [hashtable]$pReports,
+        [hashtable]$pQueries,
+        [hashtable]$pXmlPorts
+    )
+
+        foreach($Namespace in $RawSymbols.Namespaces)
+        {
+            Write-Debug "Processing namespace: $($Namespace.Name)"
+            ProcessNamespace($Namespace, [ref]$Tables, [ref]$Codeunits, [ref]$Pages, [ref]$Reports, [ref]$Queries, [ref]$XmlPorts)
+        }
+
+        foreach($Table in $RawSymbols.Tables)
+        {
+            Write-Debug "Processing table: $($Table.Name)"
+            $Tables.Add($Table.Id, $Table.Name)
+        }
+        
+        foreach($Codeunit in $RawSymbols.Codeunits)
+        {
+            $Codeunits.Add($Codeunit.Id, $Codeunit.Name)
+        }
+        
+        foreach($Page in $RawSymbols.Pages)
+        {
+            $Pages.Add($Page.Id, $Page.Name)
+        }
+
+        foreach($Report in $RawSymbols.Reports)
+        {
+            $Reports.Add($Report.Id, $Report.Name)
+        }
+
+        foreach($Query in $RawSymbols.Queries)
+        {
+            $Queries.Add($Query.Id, $Query.Name)
+        }
+
+        foreach($XMLPort in $RawSymbols.XMLPorts)
+        {
+            $XMLPorts.Add($XMLPort.Id, $XMLPort.Name)
+        }
 }
 
 # Download symbols from the "Published Application" table.
@@ -451,7 +476,7 @@ function DownloadSymbolsFromDatabase
         $Path
     )
 
-    $SymbolsBytes = (Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query "Select [Symbols] from [Published Application] where ID = '$PackageId'" -MaxBinaryLength $PackageSize).Symbols
+    $SymbolsBytes = (Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Encrypt Optional -Query "Select [Symbols] from [Published Application] where ID = '$PackageId'" -MaxBinaryLength $PackageSize).Symbols
     
     $Stream = [System.IO.MemoryStream]::new($SymbolsBytes)
     $Stream.Position = 4 # throw away the header
@@ -478,6 +503,9 @@ function DownloadSymbolsFromDatabase
     Database name from which permission sets will be read.
 .PARAMETER Destination
     The output directory.
+.PARAMETER SymbolsFolder
+    Optional parameter to specify the folder with symbols that will be used to map object ids to names. In this case it will skip downloading them from the database. 
+    It could be helpful, for example, when working with BC14 database, where [Published Application] table does not exist. In this case, you may download the symbols manually and put them to the specfied folder.
 #>
 function Convert-PermissionSets
 {
@@ -492,30 +520,39 @@ function Convert-PermissionSets
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        $Destination
+        $Destination,
+
+        $SymbolsFolder
     )
 
-    Write-Host "Downloading Symbols from $DatabaseServer $DatabaseName"
-    $Apps = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query 'Select ID, Name, Datalength(Symbols) as Size from [Published Application]'
-    $ApplicationAppID = 'C1335042-3002-4257-BF8A-75C898CCB1B8'
 
-    $Apps | % { $_.Name = $_.Name.Replace('_Exclude_', '').TrimEnd('_')}
-    $Apps = $Apps | Where-Object { $_.ID -ne $ApplicationAppID}
-    $SymbolsFolder = Join-Path $env:Temp 'Symbols'
-    if (-not (Test-Path $SymbolsFolder))
+    if (!$SymbolsFolder)
     {
-        New-Item $SymbolsFolder -ItemType Directory | out-Null
-    }
+        Write-Host "Downloading Symbols from $DatabaseServer $DatabaseName"
+        $Apps = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Encrypt Optional -Query 'Select ID, Name, Datalength(Symbols) as Size from [Published Application]'
+        $ApplicationAppID = 'C1335042-3002-4257-BF8A-75C898CCB1B8'
 
-    foreach($App in $Apps)
-    {
-        DownloadSymbolsFromDatabase -DatabaseServer $DatabaseServer -DatabaseName $DatabaseName -PackageId $App.ID -PackageSize $App.Size -Path (Join-Path $SymbolsFolder ($App.Name))
+        $Apps | % { $_.Name = $_.Name.Replace('_Exclude_', '').TrimEnd('_')}
+        $Apps = $Apps | Where-Object { $_.ID -ne $ApplicationAppID}
+
+        $SymbolsFolder = Join-Path $Destination 'Symbols'
+        if (-not (Test-Path $SymbolsFolder))
+        {
+            New-Item $SymbolsFolder -ItemType Directory | out-Null
+        }
+
+        foreach($App in $Apps)
+        {
+            DownloadSymbolsFromDatabase -DatabaseServer $DatabaseServer -DatabaseName $DatabaseName -PackageId $App.ID -PackageSize $App.Size -Path (Join-Path $SymbolsFolder ($App.Name))
+        }
+    } else {
+        Write-Host "Using symbols from $SymbolsFolder"
     }
     
-    $Symbols = ProccessSymbols $SymbolsFolder
+    $Symbols = ProcessSymbols $SymbolsFolder
 
     Write-Host "Quering permissions from $DatabaseServer $DatabaseName"
-    $Permissions = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query 'Select [Role ID],[Object Type],[Object ID],[Read Permission],[Insert Permission],[Modify Permission],[Delete Permission],[Execute Permission],[Security Filter] from Permission UNION Select [Role ID],[Object Type],[Object ID],[Read Permission],[Insert Permission],[Modify Permission],[Delete Permission],[Execute Permission],[Security Filter] from [Tenant Permission] order by [Role ID]'
+    $Permissions = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Encrypt Optional -Query 'Select [Role ID],[Object Type],[Object ID],[Read Permission],[Insert Permission],[Modify Permission],[Delete Permission],[Execute Permission],[Security Filter] from Permission UNION Select [Role ID],[Object Type],[Object ID],[Read Permission],[Insert Permission],[Modify Permission],[Delete Permission],[Execute Permission],[Security Filter] from [Tenant Permission] order by [Role ID]'
     $PermissionSets = @{}
 
     foreach($Permission in $Permissions)
@@ -555,7 +592,7 @@ function Convert-PermissionSets
         }
     }
 
-    $PermissionSetTableContent = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Query 'Select [Role ID], Name from [Permission Set] UNION Select [Role ID], Name from [Tenant Permission Set]'
+    $PermissionSetTableContent = Invoke-Sqlcmd -ServerInstance $DatabaseServer -Database $DatabaseName -Encrypt Optional -Query 'Select [Role ID], Name from [Permission Set] UNION Select [Role ID], Name from [Tenant Permission Set]'
     WritePermissionSets $PermissionSets $Destination $PermissionSetTableContent
 }
 
