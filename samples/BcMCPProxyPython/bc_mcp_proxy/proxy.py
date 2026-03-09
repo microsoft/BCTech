@@ -6,7 +6,7 @@ from typing import Any
 from urllib.parse import unquote
 
 import httpx
-import mcp.types
+import mcp.types  # module-level import so we can patch LATEST_PROTOCOL_VERSION in-place
 from mcp.client.session import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
 from mcp.server import Server
