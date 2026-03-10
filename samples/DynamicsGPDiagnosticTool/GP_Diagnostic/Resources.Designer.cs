@@ -19,7 +19,7 @@ namespace Microsoft.GP.MigrationDiagnostic {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -271,7 +271,7 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active customer phone numbers with alpha characters.
+        ///   Looks up a localized string similar to Active customers with alpha characters in phone/fax numbers.
         /// </summary>
         internal static string GpCustomerPhoneNumberAlphaTaskDescription {
             get {
@@ -280,7 +280,7 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} active customer(s) with phone numbers that contain alpha characters. Business Central does not allow alpha characters in phone numbers. The Customers will still be migrated, but the phone numbers will be skipped..
+        ///   Looks up a localized string similar to {0} active customer(s) with alpha characters in phone/fax numbers. Business Central does not allow alpha characters in phone or fax numbers. The Customers will still be migrated, but the phone/fax numbers will be skipped..
         /// </summary>
         internal static string GpCustomerPhoneNumberAlphaTaskSummary {
             get {
@@ -766,7 +766,7 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active vendor phone numbers with alpha characters.
+        ///   Looks up a localized string similar to Active vendors with alpha characters in phone/fax numbers.
         /// </summary>
         internal static string GpVendorPhoneNumberAlphaTaskDescription {
             get {
@@ -775,7 +775,7 @@ namespace Microsoft.GP.MigrationDiagnostic {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} active vendor(s) detected with phone numbers that contain alpha characters. Business Central does not allow alpha characters in phone numbers. The vendors will still be migrated, but the phone numbers will be skipped..
+        ///   Looks up a localized string similar to {0} active vendor(s) detected with alpha characters in phone/fax numbers. Business Central does not allow alpha characters in phone or fax numbers. The vendors will still be migrated, but the phone/fax numbers will be skipped..
         /// </summary>
         internal static string GpVendorPhoneNumberAlphaTaskSummary {
             get {

@@ -184,10 +184,10 @@
     <comment>{0} = Number of customers</comment>
   </data>
   <data name="GpCustomerPhoneNumberAlphaTaskDescription" xml:space="preserve">
-    <value>Active customer phone numbers with alpha characters</value>
+    <value>Active customers with alpha characters in phone/fax numbers</value>
   </data>
   <data name="GpCustomerPhoneNumberAlphaTaskSummary" xml:space="preserve">
-    <value>{0} active customer(s) with phone numbers that contain alpha characters. Business Central does not allow alpha characters in phone numbers. The Customers will still be migrated, but the phone numbers will be skipped.</value>
+    <value>{0} active customer(s) with alpha characters in phone/fax numbers. Business Central does not allow alpha characters in phone or fax numbers. The Customers will still be migrated, but the phone/fax numbers will be skipped.</value>
     <comment>{0} = Number of customers</comment>
   </data>
   <data name="GpDirectTransactionsPostingToRetainedEarningsAccountTaskDescription" xml:space="preserve">
@@ -363,10 +363,10 @@
     <comment>{0} = Number of vendors</comment>
   </data>
   <data name="GpVendorPhoneNumberAlphaTaskDescription" xml:space="preserve">
-    <value>Active vendor phone numbers with alpha characters</value>
+    <value>Active vendors with alpha characters in phone/fax numbers</value>
   </data>
   <data name="GpVendorPhoneNumberAlphaTaskSummary" xml:space="preserve">
-    <value>{0} active vendor(s) detected with phone numbers that contain alpha characters. Business Central does not allow alpha characters in phone numbers. The vendors will still be migrated, but the phone numbers will be skipped.</value>
+    <value>{0} active vendor(s) detected with alpha characters in phone/fax numbers. Business Central does not allow alpha characters in phone or fax numbers. The vendors will still be migrated, but the phone/fax numbers will be skipped.</value>
     <comment>{0} = Number of vendors</comment>
   </data>
   <data name="GpVerifyPostingTypesTaskDescription" xml:space="preserve">

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 /// <summary>
-/// A task to determine vendor phone numbers with alpha characters.
+/// A task to determine vendor phone or fax numbers with alpha characters.
 /// </summary>
 public class GpVendorPhoneNumberAlphaTask : IDiagnosticTask
 {
@@ -50,7 +50,7 @@ public class GpVendorPhoneNumberAlphaTask : IDiagnosticTask
 FROM
     [PM00200]
 WHERE
-    [PHNUMBR1] LIKE '%[^0-9 ]%'
+    ([PHNUMBR1] LIKE '%[^0-9 ]%' OR [FAXNUMBR] LIKE '%[^0-9 ]%')
     AND VENDSTTS = 1 --Remove to include all Vendors";
 
         using (var reader = await this.database.ExecuteSqlAsync(sql, cancellationToken))
