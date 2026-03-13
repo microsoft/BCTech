@@ -2,7 +2,7 @@
   "id": "f03c0f0c-d887-4279-b226-dea59737ecf8",
   "name": "BCTalent.EscapeRoom",
   "publisher": "waldo & AJ",
-  "version": "1.3.10026.0",
+  "version": "1.3.10026.2",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -29,5 +29,5 @@
   "features": [
     "NoImplicitWith"
   ],
-  "applicationInsightsConnectionString": "<FillInYourAppInsightsConnectionStringHereToGetTheLeaderboardWorking>"
+  "applicationInsightsConnectionString": "InstrumentationKey=bc3a5124-6f0a-4961-b755-d3fde0f2a563;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/;ApplicationId=b4dabdd7-07f8-4166-a6cc-6693e95921fe"
 }

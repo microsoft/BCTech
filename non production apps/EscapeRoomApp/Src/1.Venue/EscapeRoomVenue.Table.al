@@ -124,7 +124,7 @@ table 73926 "Escape Room Venue"
         Room: Record "Escape Room";
     begin
         Room.Setrange("Venue Id", Rec.Id);
-        Room.SetRange(Status, Room.Status::Completed);
+        Room.SetFilter(Status, '<>%1', Room.Status::Completed);
         if not Room.IsEmpty then exit;
 
         Rec.Stop();

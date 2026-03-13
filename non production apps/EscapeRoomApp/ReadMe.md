@@ -25,6 +25,8 @@ Core framework architecture and patterns for developers extending the system:
 - [Architecture Overview](Docs/Framework/Architecture.md) - Core components and design patterns
 - [Creating New Rooms](Docs/Framework/Creating-Rooms.md) - Step-by-step guide for building rooms
 - [Task Validation System](Docs/Framework/Task-Validation.md) - How task validation and interfaces work
+- [Room Content (HTML)](Docs/Framework/Room-Content-HTML.md) - Writing Description and Solution HTML files
+- [Performance Room Design](Docs/Framework/Performance-Room-Design.md) - Patterns for performance-themed rooms
 - [Telemetry Integration](Docs/Framework/Telemetry-Integration.md) - Scoring, tracking, and Application Insights
 
 ### 🎯 [Facilitator Documentation](Docs/Facilitator/)
@@ -58,7 +60,9 @@ Complete chronological history of all changes to the framework across all develo
 1. Understand the [Architecture Overview](Docs/Framework/Architecture.md)
 2. Follow [Creating New Rooms](Docs/Framework/Creating-Rooms.md) guide
 3. Implement [Task Validation System](Docs/Framework/Task-Validation.md) for challenges
-4. Integrate [Telemetry](Docs/Framework/Telemetry-Integration.md) for scoring
+4. Write HTML content following [Room Content (HTML)](Docs/Framework/Room-Content-HTML.md)
+5. For performance rooms, see [Performance Room Design](Docs/Framework/Performance-Room-Design.md)
+6. Integrate [Telemetry](Docs/Framework/Telemetry-Integration.md) for scoring
 
 ### For Framework Contributors
 1. Review [Developer Guide](Docs/Dev/README.md)
@@ -82,4 +86,4 @@ Complete chronological history of all changes to the framework across all develo
 
 For questions, issues, or contributions related to the framework, see the project repository.
 
-**Last Updated:** January 7, 2026
+**Last Updated:** February 22, 2026
