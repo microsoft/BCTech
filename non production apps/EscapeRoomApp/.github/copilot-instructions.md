@@ -36,22 +36,31 @@ Always use the **vjeko-al-objid** tool (`getNextObjectId`) before creating any A
 
 ```
 MyVenueApp/
-├── Venue/
-│   ├── MyVenue.Codeunit.al          (implements iEscapeRoomVenue)
-│   └── EscapeRoomVenueExt.EnumExt.al
-├── Rooms/
-│   ├── Room1MyRoom.Codeunit.al      (implements iEscapeRoom)
-│   └── EscapeRoomExt.EnumExt.al
-├── Tasks/
-│   ├── R1T1MyTask.Codeunit.al       (implements iEscapeRoomTask)
-│   └── EscapeRoomTaskExt.EnumExt.al
-├── Resources/
-│   ├── Room1MyRoomDescription.html
-│   ├── Room1MyRoomSolution.html
-│   └── RoomCompletedImage.png
-└── Install/
-    └── InstallVenue.Codeunit.al     (registers venue via UpdateVenue)
+├── Src/
+│   ├── MyVenue.Codeunit.al              (implements iEscapeRoomVenue)
+│   ├── EscapeRoomVenueExt.EnumExt.al
+│   ├── EscapeRoomExt.EnumExt.al
+│   ├── EscapeRoomTaskExt.EnumExt.al
+│   ├── InstallVenue.Codeunit.al         (registers venue via UpdateVenue)
+│   └── Rooms/
+│       ├── Room1MyRoom/
+│       │   ├── Room1MyRoom.Codeunit.al  (implements iEscapeRoom)
+│       │   └── Tasks/
+│       │       └── R1T1MyTask.Codeunit.al  (implements iEscapeRoomTask)
+│       └── Room2MyRoom/
+│           ├── Room2MyRoom.Codeunit.al
+│           └── Tasks/
+│               └── R2T1MyTask.Codeunit.al
+└── Resources/
+    ├── Room1MyRoomDescription.html
+    ├── Room1MyRoomSolution.html
+    └── RoomCompletedImage.png
 ```
+
+Key conventions:
+- Enum extensions, venue codeunit, and install codeunit live flat at `Src/` root — no `Venue/` or `Install/` subfolders.
+- Each room has its own subfolder under `Src/Rooms/`.
+- Each room subfolder contains the room codeunit plus a `Tasks/` subfolder with all task codeunits for that room.
 
 ---
 
