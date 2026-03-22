@@ -136,4 +136,41 @@ table 73926 "Escape Room Venue"
     begin
         EscapeRoom.UpdateVenue(Rec.Venue);
     end;
+
+    procedure ResetVenue()
+    var
+        Room: Record "Escape Room";
+        Task: Record "Escape Room Task";
+        EscapeRoomMgt: Codeunit "Escape Room";
+        CurrentRoom: Interface iEscapeRoom;
+        ConfirmManagement: Codeunit "Confirm Management";
+        ResetVenueQst: Label 'Are you sure you want to reset this venue? All progress, rooms, tasks, and hints will be permanently lost and there is no way back.';
+    begin
+        if not ConfirmManagement.GetResponseOrDefault(ResetVenueQst, false) then
+            exit;
+
+        Room.SetRange("Venue Id", Rec."Id");
+        if Room.FindSet(true) then
+            repeat
+                Task.SetRange("Venue Id", Room."Venue Id");
+                Task.SetRange("Room Name", Room.Name);
+                Task.DeleteAll();
+
+                CurrentRoom := Room.Room;
+                EscapeRoomMgt.RefreshTasks(CurrentRoom);
+
+                Room.Status := Room.Status::Locked;
+                Room."Start DateTime" := 0DT;
+                Room."Stop DateTime" := 0DT;
+                Room."Solution DateTime" := 0DT;
+                Room.Modify();
+            until Room.Next() = 0;
+
+        Rec."Full Name" := '';
+        Rec."Partner Name" := '';
+        Rec."Start DateTime" := 0DT;
+        Rec."Stop DateTime" := 0DT;
+        Rec.Modify();
+        Commit();
+    end;
 }

@@ -90,9 +90,29 @@ page 73928 "Escape Room Venue Card"
                 ToolTip = 'View the escape rooms for this venue.';
             }
         }
+        area(Processing)
+        {
+            action(ResetVenue)
+            {
+                ApplicationArea = All;
+                Caption = 'Reset Venue';
+                Image = Restore;
+                ToolTip = 'Resets the venue to its initial state. All progress, rooms, tasks, and hints will be permanently lost.';
+
+                trigger OnAction()
+                begin
+                    Rec.ResetVenue();
+                    CurrPage.Update(false);
+                end;
+            }
+        }
         area(Promoted)
         {
             actionref(EscapeRoomsRef; EscapeRooms)
+            {
+                Visible = true;
+            }
+            actionref(ResetVenueRef; ResetVenue)
             {
                 Visible = true;
             }

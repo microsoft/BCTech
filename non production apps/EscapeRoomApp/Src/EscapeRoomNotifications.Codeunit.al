@@ -56,7 +56,7 @@ codeunit 73923 EscapeRoomNotifications
             Base64Image := '';
 
         PictureViewer.SetImage(Base64Image);
-        PictureViewer.Run();
+        PictureViewer.RunModal();
     end;
 
     Procedure Warning(Message: Text)

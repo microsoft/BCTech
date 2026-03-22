@@ -1,9 +1,13 @@
 {
-    "$schema": "https://dataexplorer.azure.com/static/d/schema/63/dashboard.json",
+    "$schema": "https://dataexplorer.azure.com/static/d/schema/69/dashboard.json",
     "id": "272c2198-052c-4de4-a986-7d7c6046127d",
-    "eTag": "bdf41fb3-1203-4d62-96ba-d05e0945a3b2",
+    "eTag": "6a3d4f81-d4c4-4568-abb5-fca48cc32627",
     "title": "BCTalent.EscapeRooms",
-    "schema_version": 63,
+    "schema_version": 69,
+    "autoRefresh": {
+        "enabled": true,
+        "minInterval": "1m"
+    },
     "tiles": [
         {
             "id": "6ff8eab3-009f-482c-a75c-8cd9f170ecbc",
@@ -334,7 +338,7 @@
                 "x": 0,
                 "y": 0,
                 "width": 21,
-                "height": 9
+                "height": 13
             },
             "queryRef": {
                 "kind": "query",
@@ -377,7 +381,7 @@
             "pageId": "871aa6d5-30ed-40bc-9acf-0b8b4f611186",
             "layout": {
                 "x": 0,
-                "y": 22,
+                "y": 28,
                 "width": 21,
                 "height": 7
             },
@@ -403,9 +407,9 @@
             "pageId": "871aa6d5-30ed-40bc-9acf-0b8b4f611186",
             "layout": {
                 "x": 0,
-                "y": 16,
+                "y": 20,
                 "width": 21,
-                "height": 6
+                "height": 8
             },
             "queryRef": {
                 "kind": "query",
@@ -429,7 +433,7 @@
             "pageId": "871aa6d5-30ed-40bc-9acf-0b8b4f611186",
             "layout": {
                 "x": 0,
-                "y": 9,
+                "y": 13,
                 "width": 21,
                 "height": 7
             },
@@ -527,12 +531,12 @@
     ],
     "dataSources": [
         {
-            "id": "803c0786-1793-49b9-8c52-5d977ac0c74c",
             "kind": "manual-kusto",
-            "scopeId": "kusto",
+            "id": "803c0786-1793-49b9-8c52-5d977ac0c74c",
             "name": "BCTalent",
             "clusterUri": "https://ade.applicationinsights.io/subscriptions/313d31ed-d6ca-42ce-b2a3-676dfff76144",
-            "database": "BCTelemetry"
+            "database": "BCTelemetry",
+            "scopeId": "kusto"
         }
     ],
     "pages": [
@@ -680,7 +684,7 @@
                 "kind": "inline",
                 "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
             },
-            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty( Partner)\n| extend AttendeePartner = strcat(Attendee,\" (\",Partner,\")\")\n| summarize \n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    LastActivity = max(taskStopDateTime)\n    by AttendeePartner, userId, Partner, environmentName\n| order by TotalScore desc\n| extend Rank = row_number()\n// | where Rank <= 5\n| project \n    Rank,\n    AttendeePartner,\n    Partner,\n    TotalScore,\n    TasksCompleted,\n    RoomsCompleted,\n    VenuesCompleted,\n    HintsUsed,\n    SolutionsUsed,\n    LastActivity\n| order by TotalScore desc",
+            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty( Partner)\n| extend AttendeePartner = strcat(Attendee,\" (\",Partner,\")\")\n| summarize \n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    LastActivity = max(taskStopDateTime)\n    by AttendeePartner, userId, Partner, environmentName\n| order by TotalScore desc\n| extend Rank = row_number()\n| where Rank <= 10\n| project \n    Rank,\n    AttendeePartner,\n    Partner,\n    TotalScore,\n    TasksCompleted,\n    RoomsCompleted,\n    VenuesCompleted,\n    HintsUsed,\n    SolutionsUsed,\n    LastActivity\n| order by TotalScore desc",
             "id": "8a6d557a-34b9-4cad-8f4b-82a33fb0b883",
             "usedVariables": [
                 "EscapeRoomData"
@@ -691,7 +695,7 @@
                 "kind": "inline",
                 "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
             },
-            "text": "EscapeRoomData\n| where eventId == \"ALEscapeRoomVenueCompleted\"\n| where isnotempty(Attendee) and isnotempty(companyName) and VenueCompletionTimeMinutes > 0\n| extend \n    CompletionTimeMinutes = round(VenueCompletionTimeMinutes, 2),\n    CompletionTimeDisplay = strcat(tostring(floor(VenueCompletionTimeMinutes / 60, 1)), \"h \", tostring(round(VenueCompletionTimeMinutes, 2) % 60), \"m\"),\n    CompletionDate = taskStopDateTime,\n    FinalScore = Score\n| order by CompletionTimeMinutes asc\n| extend Rank = row_number()\n| where Rank <= 5\n| project \n    Rank,\n    Attendee,\n    companyName,\n    Partner,\n    environmentName,\n    venueName,\n    CompletionTimeDisplay,\n    CompletionTimeMinutes,\n    FinalScore,\n    CompletionDate\n| order by CompletionTimeMinutes asc",
+            "text": "EscapeRoomData\n| where eventId == \"ALEscapeRoomVenueCompleted\"\n| where isnotempty(Attendee) and isnotempty(companyName) and VenueCompletionTimeMinutes > 0\n| summarize arg_max(VenueCompletionTimeMinutes, *) by Attendee\n| extend \n    CompletionTimeMinutes = round(VenueCompletionTimeMinutes, 2),\n    CompletionTimeDisplay = strcat(tostring(floor(VenueCompletionTimeMinutes / 60, 1)), \"h \", tostring(round(VenueCompletionTimeMinutes, 2) % 60), \"m\"),\n    CompletionDate = taskStopDateTime,\n    FinalScore = Score\n| order by CompletionTimeMinutes asc\n| extend Rank = row_number()\n| where Rank <= 5\n| project \n    Rank,\n    Attendee,\n    companyName,\n    Partner,\n    environmentName,\n    venueName,\n    CompletionTimeDisplay,\n    CompletionTimeMinutes,\n    FinalScore,\n    CompletionDate\n| order by CompletionTimeMinutes asc",
             "id": "4d1f4a51-5747-4134-a214-db990b774afd",
             "usedVariables": [
                 "EscapeRoomData"
@@ -702,7 +706,7 @@
                 "kind": "inline",
                 "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
             },
-            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty(Partner)\n| summarize \n    TaskPoints = sumif(Score, eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomBonusPoints = sumif(Score, eventId == \"ALEscapeRoomCompleted\"),\n    VenueBonusPoints = sumif(Score, eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintPenalty = sumif(Score, eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionPenalty = sumif(Score, eventId == \"ALEscapeRoomSolutionRequested\"),\n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    FastestVenueCompletion = min(VenueCompletionTimeMinutes)\n    by Attendee, Partner, environmentName\n| extend \n    ScoreEfficiency = iif((TasksCompleted + HintsUsed + SolutionsUsed) > 0, round((todouble(TotalScore) / (TasksCompleted + HintsUsed + SolutionsUsed)) * 100) / 100, todouble(0)),\n    CompletionTimeMinutes = iff(isnull(FastestVenueCompletion), real(null), round(FastestVenueCompletion, 2))\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n| extend Rank = row_number()\n| where Rank <= 10\n| project \n    Rank,\n    Attendee,\n    Partner,\n    TotalScore,\n    TaskPoints,\n    RoomBonusPoints,\n    VenueBonusPoints,\n    HintPenalty,\n    SolutionPenalty,\n    ScoreEfficiency,\n    CompletionTimeMinutes,\n    TasksCompleted,\n    HintsUsed,\n    SolutionsUsed\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n",
+            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty(Partner)\n| summarize \n    TaskPoints = sumif(Score, eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomBonusPoints = sumif(Score, eventId == \"ALEscapeRoomCompleted\"),\n    VenueBonusPoints = sumif(Score, eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintPenalty = sumif(Score, eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionPenalty = sumif(Score, eventId == \"ALEscapeRoomSolutionRequested\"),\n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    FastestVenueCompletion = min(VenueCompletionTimeMinutes)\n    by Attendee, Partner, environmentName\n| extend \n    ScoreEfficiency = iif((TasksCompleted + HintsUsed + SolutionsUsed) > 0, round((todouble(TotalScore) / (TasksCompleted + HintsUsed + SolutionsUsed)) * 100) / 100, todouble(0)),\n    CompletionTimeMinutes = iff(isnull(FastestVenueCompletion), real(null), round(FastestVenueCompletion, 2))\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n| extend Rank = row_number()\n| where Rank <= 10\n| project \n    Rank,\n    Attendee,\n    Partner,\n    TotalScore,\n    TaskPoints,\n    RoomBonusPoints,\n    VenueBonusPoints,\n    HintPenalty,\n    SolutionPenalty,\n    ScoreEfficiency,\n    CompletionTimeMinutes,\n    TasksCompleted,\n    HintsUsed,\n    SolutionsUsed\n| order by TotalScore desc, CompletionTimeMinutes asc  nulls last\n",
             "id": "e56b8546-96f6-4a9a-b0d8-6fdf90363676",
             "usedVariables": [
                 "EscapeRoomData"
@@ -713,7 +717,7 @@
                 "kind": "inline",
                 "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
             },
-            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty(Partner)\n| summarize \n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    LastActivity = max(taskStopDateTime),\n    FastestVenueCompletion = min(VenueCompletionTimeMinutes)\n    by Attendee, userId, Partner, environmentName\n| extend CompletionTimeMinutes = iff(isnull(FastestVenueCompletion), real(null), round(FastestVenueCompletion, 2))\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n| extend Rank = row_number()\n| where Rank <= 5\n| project \n    Rank,\n    Attendee,\n    Partner,\n    TotalScore,\n    TasksCompleted,\n    RoomsCompleted,\n    VenuesCompleted,\n    HintsUsed,\n    SolutionsUsed,\n    CompletionTimeMinutes,\n    LastActivity\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last",
+            "text": "EscapeRoomData\n| where isnotempty(Attendee) and isnotempty(Score) and isnotempty(Partner)\n| summarize \n    TotalScore = sum(Score),\n    TasksCompleted = countif(eventId == \"ALEscapeRoomTaskFinished\"),\n    RoomsCompleted = countif(eventId == \"ALEscapeRoomCompleted\"),\n    VenuesCompleted = countif(eventId == \"ALEscapeRoomVenueCompleted\"),\n    HintsUsed = countif(eventId == \"ALEscapeRoomHintRequested\"),\n    SolutionsUsed = countif(eventId == \"ALEscapeRoomSolutionRequested\"),\n    LastActivity = max(taskStopDateTime),\n    FastestVenueCompletion = min(VenueCompletionTimeMinutes)\n    by Attendee, userId, Partner, environmentName\n| extend CompletionTimeMinutes = iff(isnull(FastestVenueCompletion), real(null), round(FastestVenueCompletion, 2))\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last\n| extend Rank = row_number()\n| where Rank <= 100\n| project \n    Rank,\n    Attendee,\n    Partner,\n    TotalScore,\n    TasksCompleted,\n    RoomsCompleted,\n    VenuesCompleted,\n    HintsUsed,\n    SolutionsUsed,\n    CompletionTimeMinutes,\n    LastActivity\n| order by TotalScore desc, CompletionTimeMinutes asc nulls last",
             "id": "bc7c2e02-ff93-443d-93c0-a1e0db76e80c",
             "usedVariables": [
                 "EscapeRoomData"
@@ -725,7 +729,7 @@
                 "kind": "inline",
                 "dataSourceId": "803c0786-1793-49b9-8c52-5d977ac0c74c"
             },
-            "text": "traces\n| where timestamp between (_startTime .. _endTime)\n| where customDimensions.eventId startswith \"ALEscapeRoom\"\n| extend \n    company = tostring(customDimensions.alCompany),\n    venueName = tostring(customDimensions.alVenueName),\n    userId = tostring(customDimensions.alUserId),\n    userRole = tostring(customDimensions.alUserRole),\n    objectType = tostring(customDimensions.alObjectType),\n    eventId = tostring(customDimensions.eventId),\n    companyName = tostring(customDimensions.companyName),\n    callerPublisher = tostring(customDimensions.alCallerPublisher),\n    description = tostring(customDimensions.alDescription),\n    environmentName = tostring(customDimensions.environmentName),\n    roomName = tostring(customDimensions.alRoomName),\n    isEvaluationCompany = tostring(customDimensions.alIsEvaluationCompany),\n    callerAppVersionMinor = tostring(customDimensions.alCallerAppVersionMinor),\n    callerAppVersionMajor = tostring(customDimensions.alCallerAppVersionMajor),\n    taskName = tostring(customDimensions.alTaskName),\n    isAdmin = tostring(customDimensions.alIsAdmin),\n    objectName = tostring(customDimensions.alObjectName),\n    environmentType = tostring(customDimensions.environmentType),\n    Attendee = tostring(customDimensions.alVenueUserName),\n    Partner = tostring(customDimensions.alVenuePartner),\n    venueId = tostring(customDimensions.alVenueId),\n    taskStopDateTime = todatetime(customDimensions.alTaskStopDateTime),\n    Hint = tostring(customDimensions.alHint),\n    HintDateTime = todatetime(customDimensions.alHintDateTime),\n    roomStartDateTime = todatetime(customDimensions.alRoomStartDateTime),\n    roomStopDateTime = todatetime(customDimensions.alRoomStopDateTime),\n    Score = toint(customDimensions.alScorePoints),\n    RoomCompletionTimeMinutes = todecimal(datetime_diff('minute', todatetime(customDimensions.alRoomStopDateTime), todatetime(customDimensions.alRoomStartDateTime))),\n    VenueCompletionTimeMinutes = todecimal(customDimensions.alVenueCompletionTimeMinutes)\n| where venueName has_any (_venue)\n| where roomName has_any (_room)",
+            "text": "traces\n| where timestamp between (_startTime .. _endTime)\n| where customDimensions.eventId startswith \"ALEscapeRoom\"\n| extend \n    company = tostring(customDimensions.alCompany),\n    venueName = tostring(customDimensions.alVenueName),\n    userId = tostring(customDimensions.alUserId),\n    userRole = tostring(customDimensions.alUserRole),\n    objectType = tostring(customDimensions.alObjectType),\n    eventId = tostring(customDimensions.eventId),\n    companyName = tostring(customDimensions.companyName),\n    callerPublisher = tostring(customDimensions.alCallerPublisher),\n    description = tostring(customDimensions.alDescription),\n    environmentName = tostring(customDimensions.environmentName),\n    roomName = tostring(customDimensions.alRoomName),\n    isEvaluationCompany = tostring(customDimensions.alIsEvaluationCompany),\n    callerAppVersionMinor = tostring(customDimensions.alCallerAppVersionMinor),\n    callerAppVersionMajor = tostring(customDimensions.alCallerAppVersionMajor),\n    taskName = tostring(customDimensions.alTaskName),\n    isAdmin = tostring(customDimensions.alIsAdmin),\n    objectName = tostring(customDimensions.alObjectName),\n    environmentType = tostring(customDimensions.environmentType),\n    Attendee = tostring(customDimensions.alVenueUserName),\n    Partner = tostring(customDimensions.alVenuePartner),\n    venueId = tostring(customDimensions.alVenueId),\n    taskStopDateTime = todatetime(customDimensions.alTaskStopDateTime),\n    Hint = tostring(customDimensions.alHint),\n    HintDateTime = todatetime(customDimensions.alHintDateTime),\n    roomStartDateTime = todatetime(customDimensions.alRoomStartDateTime),\n    roomStopDateTime = todatetime(customDimensions.alRoomStopDateTime),\n    Score = toint(customDimensions.alScorePoints),\n    RoomCompletionTimeMinutes = todecimal(datetime_diff('minute', todatetime(customDimensions.alRoomStopDateTime), todatetime(customDimensions.alRoomStartDateTime))),\n        VenueCompletionTimeMinutes = todecimal(replace_string(tostring(customDimensions.alVenueCompletionTimeMinutes),',','.'))\n| where venueName has_any (_venue)\n| where roomName has_any (_room)",
             "usedVariables": [
                 "_endTime",
                 "_room",
