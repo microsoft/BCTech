@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
+using System.Diagnostics;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 
@@ -7,8 +8,8 @@ namespace BcAdminMcpProxy;
 
 /// <summary>
 /// Acquires Entra ID tokens via MSAL with DPAPI-encrypted persistent cache.
-/// Supports multiple tenants — each tenant gets its own authority but shares the cache.
-/// First call triggers interactive browser login; subsequent calls use silent auth.
+/// Uses a single /common app so refresh tokens work across tenants (GDAP partner scenarios).
+/// After initial interactive login, silently acquires tokens for any tenant the user has access to.
 /// </summary>
 public sealed class MsalTokenProvider
 {
@@ -33,79 +34,159 @@ public sealed class MsalTokenProvider
         new("ProductGroup", "BcMcpProxy");
 
     private readonly ProxyConfiguration config;
+    private readonly TelemetryLogger logger;
     private readonly string clientId;
     private readonly SemaphoreSlim semaphore = new(1, 1);
-    private readonly Dictionary<string, IPublicClientApplication> apps = new(StringComparer.OrdinalIgnoreCase);
+    private IPublicClientApplication? app;
     private MsalCacheHelper? cacheHelper;
 
-    public MsalTokenProvider(ProxyConfiguration config)
+    // The account from the initial interactive login — used for silent acquisition across tenants
+    private IAccount? cachedAccount;
+
+    public MsalTokenProvider(ProxyConfiguration config, TelemetryLogger logger)
     {
         this.config = config;
+        this.logger = logger;
         this.clientId = string.IsNullOrWhiteSpace(config.ClientId) ? DefaultClientId : config.ClientId;
     }
 
     /// <summary>
-    /// Gets an access token for the specified Entra tenant.
-    /// Returns (accessToken, resolvedTenantId).
+    /// Returns true if the MSAL cache has at least one account (i.e., user has logged in before).
     /// </summary>
-    public async Task<(string AccessToken, string TenantId)> GetTokenAsync(string tenantId, CancellationToken ct = default)
+    public async Task<bool> HasCachedAccountsAsync()
     {
-        var app = await this.GetOrCreateAppAsync(tenantId);
+        var msalApp = await this.GetOrCreateAppAsync();
+        var accounts = await msalApp.GetAccountsAsync();
+        return accounts.Any();
+    }
 
-        // Try silent first (from cache)
-        var accounts = await app.GetAccountsAsync();
-        var account = accounts.FirstOrDefault();
+    /// <summary>
+    /// Gets an access token for the specified tenant.
+    /// Uses the cached account from initial login to silently acquire tokens for other tenants (GDAP).
+    /// Returns (accessToken, resolvedTenantId, homeTenantId).
+    /// </summary>
+    public async Task<(string AccessToken, string TenantId, string HomeTenantId)> GetTokenAsync(
+        string tenantId, CancellationToken ct = default)
+    {
+        var sw = Stopwatch.StartNew();
+        var msalApp = await this.GetOrCreateAppAsync();
+
+        // Try silent first using the cached account
+        var account = this.cachedAccount ?? (await msalApp.GetAccountsAsync()).FirstOrDefault();
 
         if (account is not null)
         {
             try
             {
-                var silentResult = await app.AcquireTokenSilent(this.config.Scopes, account)
-                    .WithForceRefresh(false)
-                    .ExecuteAsync(ct);
-                Log($"Token acquired silently for tenant {silentResult.TenantId}");
-                return (silentResult.AccessToken, silentResult.TenantId);
+                var silentBuilder = msalApp.AcquireTokenSilent(this.config.Scopes, account);
+
+                // Target the specific tenant — this is the key for GDAP:
+                // the refresh token from the home tenant is used to get an access token
+                // for the customer tenant that the user has delegated access to.
+                if (tenantId != "common")
+                {
+                    silentBuilder = silentBuilder.WithTenantId(tenantId);
+                }
+
+                var silentResult = await silentBuilder.ExecuteAsync(ct);
+                sw.Stop();
+
+                this.cachedAccount = silentResult.Account;
+                this.logger.TokenAcquired(silentResult.TenantId, "silent", sw.ElapsedMilliseconds);
+                this.LogTokenDebugInfo(silentResult, "silent");
+
+                return (silentResult.AccessToken, silentResult.TenantId,
+                    silentResult.Account.HomeAccountId.TenantId);
             }
-            catch (MsalUiRequiredException)
+            catch (MsalUiRequiredException ex)
             {
-                Log($"Silent auth failed for tenant {tenantId}, launching browser.");
+                this.logger.Info("SilentAuthFailed", new { tenantId, reason = "UiRequired", detail = ex.Message });
             }
+            catch (MsalServiceException ex)
+            {
+                this.logger.Info("SilentAuthFailed", new { tenantId, reason = ex.ErrorCode, detail = ex.Message });
+            }
+        }
+        else
+        {
+            this.logger.Info("NoAccountInCache", new { tenantId });
         }
 
         // Interactive — opens system browser
-        var interactiveResult = await app.AcquireTokenInteractive(this.config.Scopes)
+        var interactiveBuilder = msalApp.AcquireTokenInteractive(this.config.Scopes)
             .WithPrompt(Prompt.SelectAccount)
-            .WithUseEmbeddedWebView(false)
-            .ExecuteAsync(ct);
+            .WithUseEmbeddedWebView(false);
 
-        Log($"Token acquired interactively for tenant {interactiveResult.TenantId}");
-        return (interactiveResult.AccessToken, interactiveResult.TenantId);
+        if (tenantId != "common")
+        {
+            interactiveBuilder = interactiveBuilder.WithTenantId(tenantId);
+        }
+
+        var interactiveResult = await interactiveBuilder.ExecuteAsync(ct);
+        sw.Stop();
+
+        this.cachedAccount = interactiveResult.Account;
+        this.logger.TokenAcquired(interactiveResult.TenantId, "interactive", sw.ElapsedMilliseconds);
+        this.LogTokenDebugInfo(interactiveResult, "interactive");
+
+        return (interactiveResult.AccessToken, interactiveResult.TenantId,
+            interactiveResult.Account.HomeAccountId.TenantId);
     }
 
-    private async Task<IPublicClientApplication> GetOrCreateAppAsync(string tenantId)
+    /// <summary>
+    /// Logs non-sensitive token metadata when debug mode is enabled.
+    /// Never logs the actual access token or refresh token.
+    /// </summary>
+    private void LogTokenDebugInfo(AuthenticationResult result, string method)
+    {
+        if (!this.config.Debug)
+        {
+            return;
+        }
+
+        this.logger.Info("TokenDebugInfo", new
+        {
+            method,
+            tenantId = result.TenantId,
+            homeTenantId = result.Account.HomeAccountId.TenantId,
+            homeAccountId = result.Account.HomeAccountId.Identifier,
+            username = result.Account.Username,
+            expiresOn = result.ExpiresOn.ToString("o"),
+            scopes = string.Join(" ", result.Scopes),
+            correlationId = result.CorrelationId,
+            authenticationResultMetadata = new
+            {
+                tokenSource = result.AuthenticationResultMetadata.TokenSource.ToString(),
+                durationTotalInMs = result.AuthenticationResultMetadata.DurationTotalInMs,
+                durationInHttpInMs = result.AuthenticationResultMetadata.DurationInHttpInMs,
+            },
+        });
+    }
+
+    private async Task<IPublicClientApplication> GetOrCreateAppAsync()
     {
         await this.semaphore.WaitAsync();
         try
         {
-            if (this.apps.TryGetValue(tenantId, out var existing))
+            if (this.app is not null)
             {
-                return existing;
+                return this.app;
             }
 
-            // Build app with tenant-specific authority so all token requests target the right tenant
-            var authority = $"{this.config.LoginAuthority.TrimEnd('/')}/{tenantId}";
-            var app = PublicClientApplicationBuilder
+            // Use /common authority so the refresh token works across tenants.
+            // Per-request .WithTenantId() overrides the target tenant.
+            var authority = $"{this.config.LoginAuthority.TrimEnd('/')}/common";
+            this.app = PublicClientApplicationBuilder
                 .Create(this.clientId)
                 .WithAuthority(authority)
                 .WithDefaultRedirectUri()
                 .Build();
 
             var helper = await this.GetCacheHelperAsync();
-            helper.RegisterCache(app.UserTokenCache);
+            helper.RegisterCache(this.app.UserTokenCache);
 
-            this.apps[tenantId] = app;
-            Log($"Created MSAL app for tenant {tenantId} (clientId: {this.clientId[..8]}...)");
-            return app;
+            this.logger.Info("MsalAppCreated", new { authority, clientId = this.clientId });
+            return this.app;
         }
         finally
         {
@@ -142,12 +223,7 @@ public sealed class MsalTokenProvider
         // Verify the cache is working (DPAPI available, etc.)
         this.cacheHelper.VerifyPersistence();
 
-        Log($"Token cache initialized at {cacheDir}");
+        this.logger.Info("TokenCacheInitialized", new { cacheDir });
         return this.cacheHelper;
-    }
-
-    private static void Log(string message)
-    {
-        Console.Error.WriteLine($"[BcMcpProxy:Auth] {message}");
     }
 }

@@ -20,20 +20,19 @@ public sealed class McpStdioProxy
 
     private readonly ProxyConfiguration config;
     private readonly MsalTokenProvider tokenProvider;
+    private readonly TelemetryLogger logger;
     private readonly HttpClient httpClient;
 
-    // Cached remote tools (populated after first successful auth + tools/list)
+    // Cached remote tools (populated after first successful tools/list with auth)
     private JsonArray? cachedRemoteTools;
-    private string? authenticatedTenantId;
 
-    public McpStdioProxy(ProxyConfiguration config, MsalTokenProvider tokenProvider)
+    public McpStdioProxy(ProxyConfiguration config, MsalTokenProvider tokenProvider, TelemetryLogger logger)
     {
         this.config = config;
         this.tokenProvider = tokenProvider;
+        this.logger = logger;
         this.httpClient = new HttpClient { Timeout = TimeSpan.FromMinutes(5) };
     }
-
-    private bool IsAuthenticated => this.authenticatedTenantId is not null;
 
     public async Task RunAsync(CancellationToken ct)
     {
@@ -64,18 +63,15 @@ public sealed class McpStdioProxy
                 var method = message["method"]?.GetValue<string>();
                 var id = message["id"];
 
-                Log($"← {method ?? "(notification)"} id={id}");
-
+                this.logger.Info("MessageReceived", new { method = method ?? "(notification)", id = id?.ToString() });
                 JsonNode? response = method switch
                 {
                     "initialize" => this.HandleInitialize(message),
                     "notifications/initialized" => null, // notification, no response
-                    "tools/list" => this.HandleToolsList(message),
+                    "tools/list" => await this.HandleToolsList(message, ct),
                     "tools/call" => await this.HandleToolsCall(message, ct),
                     "ping" => CreateResult(id, new JsonObject()),
-                    _ => this.IsAuthenticated
-                        ? await this.ForwardToRemote(message, ct)
-                        : CreateError(id, -32603, "Not authenticated. Call the 'Authenticate' tool first."),
+                    _ => CreateError(id, -32603, $"Unknown method: {method}"),
                 };
 
                 if (response is not null)
@@ -85,7 +81,7 @@ public sealed class McpStdioProxy
             }
             catch (Exception ex)
             {
-                Log($"Error processing message: {ex.Message}");
+                this.logger.Error("MessageProcessingError", ex);
                 try
                 {
                     var parsed = JsonNode.Parse(line);
@@ -123,10 +119,10 @@ public sealed class McpStdioProxy
     }
 
     /// <summary>
-    /// Returns tools list. Before authentication, only the Authenticate tool is returned.
-    /// After authentication, the Authenticate tool plus all remote tools (with entraTenantId injected) are returned.
+    /// Returns tools list. Before authentication, only the authenticate/auth_status tools are returned.
+    /// After authentication, lazily fetches remote tools if not yet cached, then returns all tools.
     /// </summary>
-    private JsonNode HandleToolsList(JsonNode request)
+    private async Task<JsonNode> HandleToolsList(JsonNode request, CancellationToken ct)
     {
         var id = request["id"];
         var tools = new JsonArray
@@ -135,7 +131,21 @@ public sealed class McpStdioProxy
             CreateAuthStatusTool(),
         };
 
-        if (this.IsAuthenticated && this.cachedRemoteTools is not null)
+        // If we have cached accounts in MSAL, show remote tools
+        var hasCachedAccounts = await this.tokenProvider.HasCachedAccountsAsync();
+        if (hasCachedAccounts && this.cachedRemoteTools is null)
+        {
+            try
+            {
+                await this.RefreshRemoteToolsAsync(ct);
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error("RemoteToolDiscoveryFailed", ex);
+            }
+        }
+
+        if (this.cachedRemoteTools is not null)
         {
             foreach (var tool in this.cachedRemoteTools)
             {
@@ -164,62 +174,53 @@ public sealed class McpStdioProxy
 
         if (toolName == AuthStatusToolName)
         {
-            return this.HandleAuthStatus(id);
+            return await this.HandleAuthStatus(id);
         }
 
-        // All other tools require authentication
-        if (!this.IsAuthenticated)
-        {
-            return CreateToolResult(id, isError: true,
-                "Not authenticated. You must call the 'Authenticate' tool with your Entra tenant ID before using any other tools.");
-        }
-
-        // Extract and override entraTenantId if provided (allows switching tenants mid-session)
+        // Extract tenant_id from arguments — required for all remote tool calls
+        string? tenantId = null;
         if (arguments is not null && arguments.ContainsKey(TenantIdParam))
         {
-            var overrideTenantId = arguments[TenantIdParam]?.GetValue<string>();
-            if (!string.IsNullOrWhiteSpace(overrideTenantId))
-            {
-                // Validate against allowlist
-                if (this.config.EntraTenantIds.Length > 0 &&
-                    !this.config.EntraTenantIds.Contains(overrideTenantId, StringComparer.OrdinalIgnoreCase))
-                {
-                    var allowed = string.Join(", ", this.config.EntraTenantIds);
-                    return CreateToolResult(id, isError: true,
-                        $"Tenant '{overrideTenantId}' is not in the allowed tenant list. Allowed tenants: {allowed}");
-                }
-
-                if (overrideTenantId != this.authenticatedTenantId)
-                {
-                    Log($"Tenant override: {overrideTenantId[..8]}... (was {this.authenticatedTenantId?[..8]}...)");
-                    this.authenticatedTenantId = overrideTenantId;
-                }
-            }
-
+            tenantId = arguments[TenantIdParam]?.GetValue<string>();
             arguments.Remove(TenantIdParam);
         }
 
-        return await this.ForwardToRemote(request, ct)
+        if (string.IsNullOrWhiteSpace(tenantId))
+        {
+            return CreateToolResult(id, isError: true,
+                "The 'tenant_id' parameter is required. Provide the Entra tenant ID (GUID) for the target tenant.");
+        }
+
+        // Validate against allowlist
+        if (this.config.EntraTenantIds.Length > 0 &&
+            !this.config.EntraTenantIds.Contains(tenantId, StringComparer.OrdinalIgnoreCase))
+        {
+            var allowed = string.Join(", ", this.config.EntraTenantIds);
+            return CreateToolResult(id, isError: true,
+                $"Tenant '{tenantId}' is not in the allowed tenant list. Allowed tenants: {allowed}");
+        }
+
+        return await this.ForwardToRemote(request, tenantId, ct)
             ?? CreateError(id, -32603, "No response from remote MCP server.");
     }
 
-    private JsonNode HandleAuthStatus(JsonNode? id)
+    private async Task<JsonNode> HandleAuthStatus(JsonNode? id)
     {
-        if (this.IsAuthenticated)
+        var hasCachedAccounts = await this.tokenProvider.HasCachedAccountsAsync();
+        if (hasCachedAccounts)
         {
             var toolCount = this.cachedRemoteTools?.Count ?? 0;
             return CreateToolResult(id, isError: false,
-                $"Authenticated. Tenant: {this.authenticatedTenantId}. {toolCount} remote tools available.");
+                $"Authenticated (cached credentials available). {toolCount} remote tools loaded.");
         }
 
         return CreateToolResult(id, isError: false,
-            "Not authenticated. Call the 'Authenticate' tool to sign in.");
+            "Not authenticated. Call the 'authenticate' tool to sign in.");
     }
 
     private async Task<JsonNode> HandleAuthenticate(JsonNode? id, JsonObject? arguments, CancellationToken ct)
     {
         var tenantId = arguments?[TenantIdParam]?.GetValue<string>();
-        // tenantId is optional — if not provided, user logs in with any account
 
         // Validate against allowlist (only if tenant was explicitly provided)
         if (!string.IsNullOrWhiteSpace(tenantId) &&
@@ -231,13 +232,11 @@ public sealed class McpStdioProxy
                 $"Tenant '{tenantId}' is not in the allowed tenant list. Allowed tenants: {allowed}");
         }
 
-        // Acquire token (may open browser for interactive login)
         try
         {
-            // If no tenant ID provided, use "common" to let user sign in with any account
             var targetTenantId = string.IsNullOrWhiteSpace(tenantId) ? "common" : tenantId;
-            Log($"Authenticating for tenant {targetTenantId}...");
-            var (token, resolvedTenantId) = await this.tokenProvider.GetTokenAsync(targetTenantId, ct);
+            this.logger.Info("Authenticating", new { tenantId = targetTenantId });
+            var (token, resolvedTenantId, resolvedHomeTenantId) = await this.tokenProvider.GetTokenAsync(targetTenantId, ct);
 
             // Validate resolved tenant against allowlist
             if (this.config.EntraTenantIds.Length > 0 &&
@@ -248,50 +247,49 @@ public sealed class McpStdioProxy
                     $"Authenticated tenant '{resolvedTenantId}' is not in the allowed tenant list. Allowed tenants: {allowed}");
             }
 
-            // If we authenticated via "common", prime the tenant-specific app so
-            // subsequent silent calls with the resolved tenant ID find the cached token.
-            if (targetTenantId == "common" && resolvedTenantId != "common")
+            this.logger.Info("Authenticated", new { tenantId = resolvedTenantId, homeTenantId = resolvedHomeTenantId });
+
+            // Fetch remote tools so they appear in subsequent tools/list calls
+            try
             {
-                await this.tokenProvider.GetTokenAsync(resolvedTenantId, ct);
+                await this.RefreshRemoteToolsAsync(resolvedTenantId, ct);
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error("RemoteToolDiscoveryFailed", ex);
             }
 
-            this.authenticatedTenantId = resolvedTenantId;
-            Log($"Authenticated successfully for tenant {resolvedTenantId}");
+            // Notify client that the tool list has changed
+            WriteResponse(new JsonObject
+            {
+                ["jsonrpc"] = "2.0",
+                ["method"] = "notifications/tools/list_changed",
+            });
+
+            var toolCount = this.cachedRemoteTools?.Count ?? 0;
+            return CreateToolResult(id, isError: false,
+                $"Authenticated successfully for tenant {resolvedTenantId} (home: {resolvedHomeTenantId}). {toolCount} remote tools are now available.");
         }
         catch (Exception ex)
         {
-            Log($"Authentication failed: {ex.Message}");
+            this.logger.Error("AuthenticationFailed", ex);
             return CreateToolResult(id, isError: true,
                 $"Authentication failed: {ex.Message}");
         }
-
-        // Now fetch remote tools so they appear in subsequent tools/list calls
-        try
-        {
-            await this.RefreshRemoteToolsAsync(ct);
-        }
-        catch (Exception ex)
-        {
-            Log($"Warning: Failed to fetch remote tools after auth: {ex}");
-            // Auth succeeded but tool discovery failed — still report auth success
-        }
-
-        // Notify client that the tool list has changed
-        WriteResponse(new JsonObject
-        {
-            ["jsonrpc"] = "2.0",
-            ["method"] = "notifications/tools/list_changed",
-        });
-
-        var toolCount = this.cachedRemoteTools?.Count ?? 0;
-        return CreateToolResult(id, isError: false,
-            $"Authenticated successfully for tenant {this.authenticatedTenantId}. {toolCount} remote tools are now available.");
     }
 
     /// <summary>
-    /// Fetches tools from the remote MCP server and caches them (with entraTenantId injected).
+    /// Fetches tools from the remote MCP server and caches them (with tenant_id injected).
+    /// Tool definitions are tenant-agnostic — any valid tenant works for discovery.
     /// </summary>
     private async Task RefreshRemoteToolsAsync(CancellationToken ct)
+    {
+        // Use any cached account to get a token for tool discovery
+        var tenantId = "common";
+        await this.RefreshRemoteToolsAsync(tenantId, ct);
+    }
+
+    private async Task RefreshRemoteToolsAsync(string tenantId, CancellationToken ct)
     {
         var listRequest = new JsonObject
         {
@@ -301,8 +299,8 @@ public sealed class McpStdioProxy
             ["params"] = new JsonObject(),
         };
 
-        var response = await this.ForwardToRemote(listRequest, ct);
-        Log($"Remote tools/list response: {response?.ToJsonString() ?? "null"}");
+        var response = await this.ForwardToRemote(listRequest, tenantId, ct);
+        this.logger.Info("RemoteToolsListResponse", new { hasResult = response?["result"] is not null });
         var tools = response?["result"]?["tools"]?.AsArray();
 
         if (tools is not null)
@@ -313,31 +311,28 @@ public sealed class McpStdioProxy
             }
 
             this.cachedRemoteTools = tools;
-            Log($"Discovered {tools.Count} remote tools.");
+            this.logger.Info("RemoteToolsDiscovered", new { count = tools.Count });
         }
     }
 
-    private async Task<JsonNode?> ForwardToRemote(JsonNode request, CancellationToken ct)
+    private async Task<JsonNode?> ForwardToRemote(JsonNode request, string tenantId, CancellationToken ct)
     {
         string? token = null;
-        if (!string.IsNullOrEmpty(this.authenticatedTenantId))
+        try
         {
-            try
+            token = (await this.tokenProvider.GetTokenAsync(tenantId, ct)).AccessToken;
+        }
+        catch (Exception ex)
+        {
+            this.logger.Error("TokenAcquisitionFailed", ex, new { tenantId });
+            var id = request["id"];
+            if (id is not null)
             {
-                token = (await this.tokenProvider.GetTokenAsync(this.authenticatedTenantId, ct)).AccessToken;
+                return CreateError(id, -32603,
+                    $"Token acquisition failed for tenant {tenantId}. Run the 'authenticate' tool. Error: {ex.Message}");
             }
-            catch (Exception ex)
-            {
-                Log($"Token acquisition failed: {ex.Message}");
-                var id = request["id"];
-                if (id is not null)
-                {
-                    return CreateError(id, -32603,
-                        $"Token acquisition failed for tenant {this.authenticatedTenantId}. Re-run the 'Authenticate' tool. Error: {ex.Message}");
-                }
 
-                return null;
-            }
+            return null;
         }
 
         var body = request.ToJsonString();
@@ -348,18 +343,10 @@ public sealed class McpStdioProxy
 
         httpRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         httpRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("text/event-stream"));
+        httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        httpRequest.Headers.TryAddWithoutValidation("TenantId", tenantId);
 
-        if (!string.IsNullOrEmpty(token))
-        {
-            httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        }
-
-        if (!string.IsNullOrEmpty(this.authenticatedTenantId))
-        {
-            httpRequest.Headers.TryAddWithoutValidation("TenantId", this.authenticatedTenantId);
-        }
-
-        Log($"→ POST {this.config.RemoteUrl} (tenant: {this.authenticatedTenantId?[..8]}...)");
+        this.logger.Info("RemoteRequest", new { url = this.config.RemoteUrl, tenantId });
 
         using var httpResponse = await this.httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, ct);
         var contentType = httpResponse.Content.Headers.ContentType?.MediaType;
@@ -373,7 +360,7 @@ public sealed class McpStdioProxy
 
         if (!httpResponse.IsSuccessStatusCode)
         {
-            Log($"Remote returned {(int)httpResponse.StatusCode}: {responseBody}");
+            this.logger.Warning("RemoteErrorResponse", new { statusCode = (int)httpResponse.StatusCode, body = responseBody });
             var id = request["id"];
             if (id is not null)
             {
@@ -564,10 +551,5 @@ public sealed class McpStdioProxy
         var json = response.ToJsonString();
         Console.Out.WriteLine(json);
         Console.Out.Flush();
-    }
-
-    private static void Log(string message)
-    {
-        Console.Error.WriteLine($"[BcMcpProxy] {message}");
     }
 }

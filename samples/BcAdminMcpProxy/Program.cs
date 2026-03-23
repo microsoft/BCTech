@@ -2,7 +2,6 @@
 
 using BcAdminMcpProxy;
 using Microsoft.Extensions.Configuration;
-
 var config = new ConfigurationBuilder()
     .SetBasePath(AppContext.BaseDirectory)
     .AddJsonFile("appsettings.json", optional: true)
@@ -21,21 +20,19 @@ var proxyConfig = new ProxyConfiguration
         : ["https://api.businesscentral.dynamics.com/.default"],
     LoginAuthority = config["McpProxy:LoginAuthority"] ?? "https://login.microsoftonline.com",
     EntraTenantIds = config.GetSection("McpProxy:EntraTenantIds").GetChildren().Select(c => c.Value!).ToArray(),
+    Debug = bool.TryParse(config["McpProxy:Debug"], out var debug) && debug,
 };
 
-Log($"BC Admin Center MCP Proxy starting...");
-Log($"Remote: {proxyConfig.RemoteUrl}");
-Log($"Auth: MSAL (ClientId: {(string.IsNullOrWhiteSpace(proxyConfig.ClientId) ? "default Azure dev app" : proxyConfig.ClientId)})");if (proxyConfig.EntraTenantIds.Length > 0)
-{
-    Log($"Allowed tenants: {string.Join(", ", proxyConfig.EntraTenantIds)}");
-}
+using var logger = new TelemetryLogger(enableFileLogging: proxyConfig.Debug);
 
-var tokenProvider = new MsalTokenProvider(proxyConfig);
-var proxy = new McpStdioProxy(proxyConfig, tokenProvider);
+logger.Info("ProxyStarting", new
+{
+    remoteUrl = proxyConfig.RemoteUrl,
+    clientId = string.IsNullOrWhiteSpace(proxyConfig.ClientId) ? "default Azure dev app" : proxyConfig.ClientId,
+    allowedTenants = proxyConfig.EntraTenantIds,
+});
+
+var tokenProvider = new MsalTokenProvider(proxyConfig, logger);
+var proxy = new McpStdioProxy(proxyConfig, tokenProvider, logger);
 
 await proxy.RunAsync(CancellationToken.None);
-
-static void Log(string message)
-{
-    Console.Error.WriteLine($"[BcMcpProxy] {message}");
-}

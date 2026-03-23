@@ -17,4 +17,10 @@ public sealed class ProxyConfiguration
     /// Empty array means any tenant is allowed.
     /// </summary>
     public string[] EntraTenantIds { get; set; } = [];
+
+    /// <summary>
+    /// When true, logs additional diagnostic info (token claims, HTTP headers, etc.)
+    /// to the telemetry log file. Never logs secrets or access tokens.
+    /// </summary>
+    public bool Debug { get; set; }
 }
