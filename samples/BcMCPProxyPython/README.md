@@ -14,7 +14,7 @@ This Python implementation was created to provide a simpler, cross-platform alte
 
 - **Easier Installation**: Install directly from PyPI with a single command (`pip install bc-mcp-proxy`), no need to build or download executables
 - **Cross-Platform**: Works on Windows, macOS, and Linux without platform-specific builds
-- **Unified Setup**: Interactive setup command (`python -m bc_mcp_proxy setup`) handles configuration, authentication, and generates client configs automatically
+- **Unified Setup**: Interactive setup command (`python3 -m bc_mcp_proxy setup` on macOS/Linux, `python -m bc_mcp_proxy setup` on Windows) handles configuration, authentication, and generates client configs automatically
 - **Better IDE Integration**: Works seamlessly with Cursor, VS Code, and other MCP clients that expect Python-based tools
 - **Same Functionality**: Provides the same MCP proxy capabilities as the .NET version, connecting stdio-based MCP clients to Business Central's MCP HTTP endpoint
 
@@ -53,8 +53,21 @@ Both versions provide the same core functionality—choose the Python version if
 
 2. **Run the unified setup command** in a terminal (PowerShell, Command Prompt, bash, zsh, etc.):
 
-   ```bash
+   **Windows:**
+   ```powershell
    python -m pip install --upgrade bc-mcp-proxy && python -m bc_mcp_proxy setup
+   ```
+
+   **macOS/Linux:**
+   ```bash
+   python3 -m pip install --upgrade bc-mcp-proxy && python3 -m bc_mcp_proxy setup
+   ```
+   
+   **Important:** On macOS/Linux, use `python3` (not `python`) for both commands. If you see "command not found: python", you're using the wrong command.
+   
+   **Note:** If pip says "already satisfied" but you need the latest version, add `--force-reinstall`:
+   ```bash
+   python3 -m pip install --upgrade --force-reinstall bc-mcp-proxy && python3 -m bc_mcp_proxy setup
    ```
 
    The interactive setup will:
@@ -109,11 +122,19 @@ When no custom bearer token is supplied, the proxy performs a device-code flow. 
 
 After setup, you can run the proxy manually using the command printed by setup, or with:
 
-```bash
+**Windows:**
+```powershell
 python -m bc_mcp_proxy --TenantId "<tenant-id>" --ClientId "<client-id>" --Environment "<environment>" --Company "<company>"
-# or
-bc-mcp-proxy --TenantId "<tenant-id>" --ClientId "<client-id>" --Environment "<environment>" --Company "<company>"
 ```
+
+**macOS/Linux:**
+```bash
+python3 -m bc_mcp_proxy --TenantId "<tenant-id>" --ClientId "<client-id>" --Environment "<environment>" --Company "<company>"
+```
+
+**Note:** On macOS/Linux, if you see a PATH warning during installation, you can either:
+- Add the script directory to your PATH (e.g., `export PATH="$HOME/Library/Python/3.12/bin:$PATH"` in `~/.zshrc` or `~/.bashrc`)
+- Or always use `python3 -m bc_mcp_proxy` instead of the `bc-mcp-proxy` command
 
 When the proxy logs `Connecting to Business Central MCP endpoint...` followed by device-code instructions, sign in (if prompted). The proxy stays running until you stop it.
 
@@ -122,7 +143,7 @@ Configuration files, logs, and generated MCP snippets are stored at:
 - **Windows**: `%USERPROFILE%\.bc_mcp_proxy\`
 - **macOS/Linux**: `~/.bc_mcp_proxy/`
 
-Re-run `python -m bc_mcp_proxy setup` at any time to update or regenerate these files.
+Re-run `python3 -m bc_mcp_proxy setup` (macOS/Linux) or `python -m bc_mcp_proxy setup` (Windows) at any time to update or regenerate these files.
 
 ## Troubleshooting
 
@@ -142,15 +163,16 @@ Re-run `python -m bc_mcp_proxy setup` at any time to update or regenerate these 
    - Confirm the environment supports MCP preview feature
 
 3. **MCP Client Not Detecting Server**
-   - Verify the Python path in your MCP configuration is correct
-   - Check that the `bc-mcp-proxy` package is installed (run `python -m pip list | grep bc-mcp-proxy`)
+   - Verify the Python path in your MCP configuration is correct (use `python3` on macOS/Linux, `python` on Windows)
+   - Check that the `bc-mcp-proxy` package is installed (run `python3 -m pip list | grep bc-mcp-proxy` on macOS/Linux, or `python -m pip list | findstr bc-mcp-proxy` on Windows)
    - If using a virtual environment, ensure the MCP client uses the correct Python interpreter
    - Restart your MCP client after configuration changes
 
 4. **"No module named bc_mcp_proxy" Error**
-   - Install the package globally: `python -m pip install --upgrade bc-mcp-proxy`
-   - Or use `--user` flag: `python -m pip install --user --upgrade bc-mcp-proxy`
+   - Install the package globally: `python3 -m pip install --upgrade bc-mcp-proxy` (macOS/Linux) or `python -m pip install --upgrade bc-mcp-proxy` (Windows)
+   - Or use `--user` flag: `python3 -m pip install --user --upgrade bc-mcp-proxy` (macOS/Linux) or `python -m pip install --user --upgrade bc-mcp-proxy` (Windows)
    - Or update your MCP config to use the full path to the Python interpreter that has the package installed
+   - On macOS/Linux, if you see a PATH warning, use `python3 -m bc_mcp_proxy` instead of the `bc-mcp-proxy` command
 
 5. **Repeated Sign-in Prompts**
    - The token cache may not be writable. Set `--DeviceCacheLocation` to a directory you control
