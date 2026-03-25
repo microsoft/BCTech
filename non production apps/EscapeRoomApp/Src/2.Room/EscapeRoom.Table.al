@@ -90,6 +90,11 @@ table 73920 "Escape Room"
     var
         Task: Record "Escape Room Task";
     begin
+        if Rec.Status = Rec.Status::Completed then begin
+            OpenNextRoom();
+            exit;
+        end;
+
         if Rec.Status <> Rec.Status::InProgress then exit;
 
         Task.Setrange("Venue Id", Rec."Venue Id");
@@ -259,6 +264,34 @@ table 73920 "Escape Room"
             exit(false);
 
         exit(true);
+    end;
+
+    procedure ResetRoom()
+    var
+        Task: Record "Escape Room Task";
+        EscapeRoomMgt: Codeunit "Escape Room";
+        CurrentRoom: Interface iEscapeRoom;
+        ConfirmManagement: Codeunit "Confirm Management";
+        ResetRoomQst: Label 'Are you sure you want to reset this room? All task progress and hints will be permanently lost and there is no way back.';
+    begin
+        if Rec.Status = Rec.Status::Locked then exit;
+
+        if not ConfirmManagement.GetResponseOrDefault(ResetRoomQst, false) then
+            exit;
+
+        Task.SetRange("Venue Id", Rec."Venue Id");
+        Task.SetRange("Room Name", Rec.Name);
+        Task.DeleteAll();
+
+        CurrentRoom := Rec.Room;
+        EscapeRoomMgt.RefreshTasks(CurrentRoom);
+
+        Rec.Status := Rec.Status::InProgress;
+        Rec."Start DateTime" := CurrentDateTime();
+        Rec."Stop DateTime" := 0DT;
+        Rec."Solution DateTime" := 0DT;
+        Rec.Modify();
+        Commit();
     end;
 
 
