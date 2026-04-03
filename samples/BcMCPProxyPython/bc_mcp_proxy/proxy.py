@@ -6,11 +6,17 @@ from typing import Any
 from urllib.parse import unquote
 
 import httpx
+import mcp.types  # module-level import so we can patch LATEST_PROTOCOL_VERSION in-place
 from mcp.client.session import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp.types import Implementation
+
+# Business Central's MCP server only accepts protocol version "2024-11-05".
+# Newer versions of the MCP SDK default to a later protocol version which BC
+# rejects with HTTP 400.  We override the version before calling initialize().
+_BC_PROTOCOL_VERSION = "2024-11-05"
 
 from .auth import TokenProvider, create_token_provider
 from .config import ProxyConfig
@@ -56,7 +62,14 @@ async def run_proxy(config: ProxyConfig) -> None:
         remote_write,
         client_info=client_info,
     ) as remote_session:
-      init_result = await remote_session.initialize()
+      # Temporarily override the protocol version so BC accepts the
+      # initialize handshake (it only supports "2024-11-05").
+      original_protocol_version = mcp.types.LATEST_PROTOCOL_VERSION
+      mcp.types.LATEST_PROTOCOL_VERSION = _BC_PROTOCOL_VERSION
+      try:
+        init_result = await remote_session.initialize()
+      finally:
+        mcp.types.LATEST_PROTOCOL_VERSION = original_protocol_version
       logger.debug("Connected to remote MCP server (protocol %s)", init_result.protocolVersion)
 
       instructions = config.instructions or (
