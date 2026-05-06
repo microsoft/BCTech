@@ -53,7 +53,7 @@ Defines a dedicated **Sales Validation Agent (Copilot)** profile based on the *O
 
 1. **Create the agent** – The *Sales Validation Agent* Copilot capability is registered as **Preview** and is therefore enabled by default. Open the *Sales Val. Agent Setup* configuration dialog (accessible from the agent avatar in the Role Center) to provision the agent user with the correct profile and permissions.
 2. **Assign a task** – From the **Sales Order List**, choose *Validate with Agent*, pick a shipment date, and a task is created for the agent.
-3. **Agent processes orders** – The agent reads its instructions (loaded from `Instructions/InstructionsV1.txt`), validates open sales orders for the specified shipment date, checks inventory reservation, and releases eligible orders.
+3. **Agent processes orders** – The agent reads its instructions (loaded from `Instructions/InstructionsV1.md`), validates open sales orders for the specified shipment date, checks inventory reservation, and releases eligible orders.
 4. **KPIs are tracked** – Each time the agent releases an order, the `OnAfterReleaseSalesDoc` event subscriber increments the *Orders Released* counter, visible on the agent's summary page.
 
 ---

@@ -1,0 +1,83 @@
+suite_setup: SVA-SETUP
+tests:
+- name: INT-NODATE-ASKS
+  description: User omits the shipment date — agent must request user intervention instead of defaulting.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+2M+1D>$"
+             lines:
+               - Quantity: 15
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 15
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all open sales orders"
+         message: "Run and process all open sales orders"
+      expected_data:
+         intervention_request:
+            type: Assistance
+         agent_released_orders: 0
+
+- name: INT-NODATE-PROVIDED-RELEASES
+  description: Agent asks for date, user provides a specific date via intervention, release proceeds normally.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+2M+1D>$"
+             lines:
+               - Quantity: 15
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 15
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all open sales orders"
+         message: "Run and process all open sales orders"
+      expected_data:
+         intervention_request:
+            type: Assistance
+         agent_released_orders: 0
+    - query:
+         intervention:
+            instruction: "Use shipment date $DateFormula-<CW+2M+1D>$"
+      expected_data:
+         agent_released_orders: 1
+
+- name: INT-NODATE-USER-DECLINES
+  description: User declines to provide a shipment date during intervention — agent must stop without releasing any orders.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+2M+1D>$"
+             lines:
+               - Quantity: 15
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 15
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all open sales orders"
+         message: "Run and process all open sales orders"
+      expected_data:
+         intervention_request:
+            type: Assistance
+         agent_released_orders: 0
+    - query:
+         intervention:
+            instruction: "Never mind, cancel this. Do not process any orders."
+      expected_data:
+         agent_released_orders: 0

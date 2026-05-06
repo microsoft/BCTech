@@ -9,10 +9,12 @@ namespace SalesValidationAgent.Interaction;
 /// A simple dialog page that prompts the user to select a shipment date
 /// for the Sales Validation Agent to process open sales orders.
 /// </summary>
-page 50102 "Sales Val. Agent Date Picker"
+page 53608 "Sales Val. Agent Date Picker"
 {
     PageType = StandardDialog;
     Caption = 'Select Shipment Date';
+    InherentEntitlements = X;
+    InherentPermissions = X;
 
     layout
     {
@@ -21,7 +23,7 @@ page 50102 "Sales Val. Agent Date Picker"
             field(ShipmentDate; ShipmentDate)
             {
                 Caption = 'Shipment Date';
-                ToolTip = 'Specify the shipment date to validate sales orders for.';
+                ToolTip = 'Specifies the shipment date to validate sales orders for.';
                 ApplicationArea = All;
             }
         }
