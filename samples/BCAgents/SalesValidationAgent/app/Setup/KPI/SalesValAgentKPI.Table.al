@@ -5,11 +5,11 @@
 
 namespace SalesValidationAgent.Setup.KPI;
 
-table 50101 "Sales Val. Agent KPI"
+table 53607 "Sales Val. Agent KPI"
 {
     Access = Internal;
     Caption = 'Sales Val. Agent KPI';
-    DataClassification = CustomerContent;
+    DataClassification = SystemMetadata;
     InherentEntitlements = RIMDX;
     InherentPermissions = RIMDX;
     ReplicateData = false;
@@ -24,7 +24,6 @@ table 50101 "Sales Val. Agent KPI"
         {
             Caption = 'User Security ID';
             ToolTip = 'Specifies the unique identifier for the agent user.';
-            DataClassification = EndUserPseudonymousIdentifiers;
             Editable = false;
         }
         field(10; "Orders Released"; Integer)

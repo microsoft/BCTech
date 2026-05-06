@@ -15,11 +15,13 @@ using System.Agents;
 ///
 /// - Orders Released: incremented each time the agent releases a sales order.
 /// </summary>
-codeunit 50106 "Sales Val. Agent KPI Logging"
+codeunit 53612 "Sales Val. Agent KPI Logging"
 {
     Access = Internal;
     EventSubscriberInstance = StaticAutomatic;
     SingleInstance = true;
+    InherentEntitlements = X;
+    InherentPermissions = X;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnAfterReleaseSalesDoc, '', false, false)]
     local procedure OnAfterReleaseSalesDoc(var SalesHeader: Record "Sales Header")

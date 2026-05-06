@@ -13,7 +13,7 @@ using System.Agents;
 /// Extends the Sales Order List page to enable Sales Validation Agent task assignment.
 /// Adds an action that allows users to trigger the agent to validate and process open sales orders.
 /// </summary>
-pageextension 50101 "Sales Val. Agent Sales Orders" extends "Sales Order List"
+pageextension 53607 "Sales Val. Agent Sales Orders" extends "Sales Order List"
 {
     actions
     {

@@ -5,10 +5,13 @@
 
 namespace SalesValidationAgent.Setup;
 
+using Microsoft.Sales.Document;
 using System.Agents;
 using System.AI;
 
-page 50100 "Sales Val. Agent Setup"
+#pragma warning disable AL0906
+page 53606 "Sales Val. Agent Setup"
+#pragma warning restore AL0906
 {
     PageType = ConfigurationDialog;
     Extensible = false;
@@ -30,6 +33,49 @@ page 50100 "Sales Val. Agent Setup"
             {
                 ApplicationArea = All;
                 UpdatePropagation = Both;
+            }
+            group(GetStarted)
+            {
+                Caption = 'Get started';
+                group(OpenSalesOrdersGroups)
+                {
+                    Caption = ' Try out the agent';
+                    InstructionalText = 'Open the Sales Orders list and choose the "Validate with Agent" action.';
+
+                    field(OpenSalesOrders; OpenSalesOrdersTxt)
+                    {
+                        ShowCaption = false;
+                        Editable = false;
+                        ToolTip = 'Open the Sales Orders list to assign the first task using the Validate with Agent action.';
+
+                        trigger OnDrillDown()
+                        var
+                            Agent: Codeunit Agent;
+                        begin
+                            if not Agent.IsActive(Rec."User Security ID") then
+                                Error(AgentMustBeActivatedErr);
+                            Page.Run(Page::"Sales Order List");
+                            CurrPage.Close();
+                        end;
+                    }
+                }
+                group(LearnMore)
+                {
+                    Caption = 'Learn more';
+                    InstructionalText = 'To learn more about the Sales Validation Agent''s capabilities and how to prepare the data for the agent to complete its tasks, see the documentation article.';
+
+                    field(OpenDocumentation; OpenDocumentationTxt)
+                    {
+                        ShowCaption = false;
+                        Editable = false;
+                        ToolTip = 'Open the Sales Validation Agent documentation article in your browser.';
+
+                        trigger OnDrillDown()
+                        begin
+                            Hyperlink(AgentLearnMoreUrlTok);
+                        end;
+                    }
+                }
             }
         }
     }
@@ -78,24 +124,13 @@ page 50100 "Sales Val. Agent Setup"
 
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     var
-        Agent: Codeunit Agent;
         SalesValAgentSetup: Codeunit "Sales Val. Agent Setup";
     begin
         if CloseAction = CloseAction::Cancel then
             exit(true);
 
-        CurrPage.AgentSetupPart.Page.GetAgentSetupBuffer(AgentSetupBuffer);
-
-        if IsNullGuid(AgentSetupBuffer."User Security ID") then
-            AgentSetupBuffer."Agent Metadata Provider" := Enum::"Agent Metadata Provider"::"Sales Validation Agent";
-
-        if GlobalAgentSetup.GetChangesMade(AgentSetupBuffer) then begin
-            Rec."User Security ID" := GlobalAgentSetup.SaveChanges(AgentSetupBuffer);
-
-            Agent.SetInstructions(Rec."User Security ID", SalesValAgentSetup.GetInstructions());
-        end;
-
-        SalesValAgentSetup.EnsureSetupExists(Rec."User Security ID");
+        CurrPage.AgentSetupPart.Page.GetAgentSetupBuffer(TempAgentSetupBuffer);
+        Rec."User Security ID" := SalesValAgentSetup.SaveAgent(TempAgentSetupBuffer);
         exit(true);
     end;
 
@@ -106,29 +141,32 @@ page 50100 "Sales Val. Agent Setup"
         if Rec.IsEmpty() then
             Rec.Insert();
 
-        CurrPage.AgentSetupPart.Page.GetAgentSetupBuffer(AgentSetupBuffer);
-        if AgentSetupBuffer.IsEmpty() then
+        CurrPage.AgentSetupPart.Page.GetAgentSetupBuffer(TempAgentSetupBuffer);
+        if TempAgentSetupBuffer.IsEmpty() then
             AgentSetup.GetSetupRecord(
-                AgentSetupBuffer,
+                TempAgentSetupBuffer,
                 Rec."User Security ID",
                 Enum::"Agent Metadata Provider"::"Sales Validation Agent",
                 AgentNameLbl + ' - ' + CompanyName(),
                 DefaultDisplayNameLbl,
                 AgentSummaryLbl);
 
-        CurrPage.AgentSetupPart.Page.SetAgentSetupBuffer(AgentSetupBuffer);
+        CurrPage.AgentSetupPart.Page.SetAgentSetupBuffer(TempAgentSetupBuffer);
         CurrPage.AgentSetupPart.Page.Update(false);
 
         IsUpdated := IsUpdated or CurrPage.AgentSetupPart.Page.GetChangesMade();
     end;
 
     var
-        AgentSetupBuffer: Record "Agent Setup Buffer";
-        GlobalAgentSetup: Codeunit "Agent Setup";
+        TempAgentSetupBuffer: Record "Agent Setup Buffer";
         AzureOpenAI: Codeunit "Azure OpenAI";
         IsUpdated: Boolean;
         SalesValAgentNotEnabledErr: Label 'The Sales Validation Agent capability is not enabled in Copilot capabilities.\\Please enable the capability before setting up the agent.';
         AgentNameLbl: Label 'Sales Validation Agent';
         DefaultDisplayNameLbl: Label 'Sales Validation Agent';
         AgentSummaryLbl: Label 'Validates and processes sales orders by checking inventory reservation and releasing eligible orders to the warehouse.';
+        OpenSalesOrdersTxt: Label 'Open Sales Orders list';
+        OpenDocumentationTxt: Label 'Learn more';
+        AgentMustBeActivatedErr: Label 'The Sales Validation Agent must be activated before opening the Sales Orders list. Please activate the agent to proceed.';
+        AgentLearnMoreUrlTok: Label 'https://go.microsoft.com/fwlink/?linkid=2350506', Locked = true;
 }

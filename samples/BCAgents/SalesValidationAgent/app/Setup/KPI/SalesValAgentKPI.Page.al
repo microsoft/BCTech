@@ -5,7 +5,7 @@
 
 namespace SalesValidationAgent.Setup.KPI;
 
-page 50104 "Sales Val. Agent KPI"
+page 53610 "Sales Val. Agent KPI"
 {
     PageType = CardPart;
     ApplicationArea = All;
@@ -14,6 +14,8 @@ page 50104 "Sales Val. Agent KPI"
     SourceTable = "Sales Val. Agent KPI";
     Editable = false;
     Extensible = false;
+    InherentEntitlements = X;
+    InherentPermissions = X;
 
     layout
     {

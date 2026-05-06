@@ -5,7 +5,7 @@
 
 namespace SalesValidationAgent.Setup;
 
-table 50100 "Sales Val. Agent Setup"
+table 53606 "Sales Val. Agent Setup"
 {
     Access = Internal;
     Caption = 'Sales Val. Agent Setup';
@@ -22,8 +22,8 @@ table 50100 "Sales Val. Agent Setup"
         field(1; "User Security ID"; Guid)
         {
             Caption = 'User Security ID';
-            ToolTip = 'Specifies the unique identifier for the user.';
-            DataClassification = EndUserPseudonymousIdentifiers;
+            ToolTip = 'Specifies the unique identifier for the agent user.';
+            DataClassification = SystemMetadata;
             Editable = false;
         }
     }

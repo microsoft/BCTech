@@ -8,9 +8,11 @@ namespace SalesValidationAgent.Setup.Metadata;
 using SalesValidationAgent.Setup;
 using System.Agents;
 
-codeunit 50102 SalesValAgentMetadata implements IAgentMetadata
+codeunit 53608 SalesValAgentMetadata implements IAgentMetadata
 {
     Access = Internal;
+    InherentEntitlements = X;
+    InherentPermissions = X;
 
     procedure GetInitials(AgentUserId: Guid): Text[4]
     begin

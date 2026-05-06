@@ -1,0 +1,482 @@
+suite_setup: SVA-SETUP
+tests:
+- name: 3ORD-MIX
+  description: 3 orders — Complete+Full, Complete+None, Partial+Partial — mixed (2 released, 1 not).
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Partial
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 0
+                 reserve: false
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+         message: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+      expected_data:
+         agent_released_orders: 2
+
+- name: 3ORD-ALL
+  description: 3 orders — Complete+Full, Partial+Full, Partial+Partial — all released.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Partial
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Partial
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+         message: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+      expected_data:
+         agent_released_orders: 3
+
+- name: 3ORD-NONE
+  description: 3 orders — Complete+None, Complete+Partial, Partial+None — none released.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 0
+                 reserve: false
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Partial
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 0
+                 reserve: false
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+         message: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+      expected_data:
+         agent_released_orders: 0
+
+- name: 3LN-FULL
+  description: Single order, 3 lines — Complete + all lines fully reserved — released.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+               - Quantity: 5
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+               - Quantity: 3
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 3
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+         message: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+      expected_data:
+         agent_released_orders: 1
+
+- name: 3LN-MIX
+  description: Single order, 3 lines — Complete + 2 reserved, 1 not — not released.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+               - Quantity: 5
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+               - Quantity: 3
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 0
+                 reserve: false
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+         message: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+      expected_data:
+         agent_released_orders: 0
+
+- name: NO-ORDERS
+  description: No orders matching shipment date — agent finds nothing to process.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+3M+1D>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+         message: "Run and process all with shipment date $DateFormula-<CW+1M+1D>$"
+      expected_data:
+         agent_released_orders: 0
+
+- name: PAST-MATCH-ALL
+  description: 3 orders all at a past shipment date — all Complete+Full — all released.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             lines:
+               - Quantity: 8
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 8
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             lines:
+               - Quantity: 5
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+         message: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+      expected_data:
+         agent_released_orders: 3
+
+- name: PAST-NOMATCH
+  description: 3 orders all at a different past date than the query — agent finds nothing to process.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-2W>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-2W>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 8
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 8
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-2W>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 5
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+         message: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+      expected_data:
+         agent_released_orders: 0
+
+- name: PAST-MIX
+  description: Past query date; 3 orders — one matches and releases, one at a different past date (excluded), one matches but fails Complete rule.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-2W>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 0
+                 reserve: false
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+         message: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+      expected_data:
+         agent_released_orders: 1
+
+- name: PAST-FUT-MIX
+  description: Past query date; mix of past-matching and future-dated orders — only past matches count.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Partial
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Partial
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+         message: "Run and process all with shipment date $DateFormula-<CW-1W>$"
+      expected_data:
+         agent_released_orders: 2
+
+- name: TODAY-ALL
+  description: 3 orders all at today's shipment date — all Complete+Full — all released.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CD>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CD>$"
+             lines:
+               - Quantity: 8
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 8
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CD>$"
+             lines:
+               - Quantity: 5
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CD>$"
+         message: "Run and process all with shipment date $DateFormula-<CD>$"
+      expected_data:
+         agent_released_orders: 3
+
+- name: TODAY-NOMATCH
+  description: Query for today; no order is at today (mix of past and future) — agent finds nothing.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-2W>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 8
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 8
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 5
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CD>$"
+         message: "Run and process all with shipment date $DateFormula-<CD>$"
+      expected_data:
+         agent_released_orders: 0
+
+- name: TODAY-MIX
+  description: Query for today; boundary mix — today-matching, past, and future orders — only today-matching that satisfies the rule releases.
+  turns:
+    - turn_setup:
+        setup_actions:
+         - action_type: create_sales_order
+           action_data:
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CD>$"
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CW-1W>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 10
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 10
+                 reserve: true
+           - "Sell-to Customer No.": SVCUST01
+             "Shipping Advice": Complete
+             "Shipment Date": "$DateFormula-<CD>$"
+             lines:
+               - Quantity: 8
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 0
+                 reserve: false
+           - "Sell-to Customer No.": SVCUST02
+             "Shipping Advice": Partial
+             "Shipment Date": "$DateFormula-<CW+1M+1D>$"
+             shipment_date_outofrange: true
+             lines:
+               - Quantity: 5
+                 "Location Code": SVLocation
+                 quantity_in_inventory: 5
+                 reserve: true
+      query:
+         from: Jane Doe
+         title: "Run and process all with shipment date $DateFormula-<CD>$"
+         message: "Run and process all with shipment date $DateFormula-<CD>$"
+      expected_data:
+         agent_released_orders: 1

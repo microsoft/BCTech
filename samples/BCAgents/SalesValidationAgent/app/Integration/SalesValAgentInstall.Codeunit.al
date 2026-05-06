@@ -8,9 +8,8 @@ namespace SalesValidationAgent.Integration;
 using SalesValidationAgent.Setup;
 using System.Agents;
 using System.AI;
-using System.Security.AccessControl;
 
-codeunit 50101 "Sales Val. Agent Install"
+codeunit 53607 "Sales Val. Agent Install"
 {
     Subtype = Install;
     Access = Internal;
@@ -42,6 +41,12 @@ codeunit 50101 "Sales Val. Agent Install"
         SalesValAgentSetup: Codeunit "Sales Val. Agent Setup";
     begin
         Agent.SetInstructions(SalesValAgentSetupRec."User Security ID", SalesValAgentSetup.GetInstructions());
+    end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Copilot AI Capabilities", 'OnRegisterCopilotCapability', '', false, false)]
+    local procedure OnRegisterCopilotCapability()
+    begin
+        RegisterCapability();
     end;
 
     local procedure RegisterCapability()

@@ -11,9 +11,11 @@ using System.AI;
 using System.Reflection;
 using System.Security.AccessControl;
 
-codeunit 50100 SalesValAgentFactory implements IAgentFactory
+codeunit 53606 SalesValAgentFactory implements IAgentFactory
 {
     Access = Internal;
+    InherentEntitlements = X;
+    InherentPermissions = X;
 
     procedure GetDefaultInitials(): Text[4]
     begin

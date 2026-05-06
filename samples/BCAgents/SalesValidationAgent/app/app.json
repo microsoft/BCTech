@@ -1,0 +1,41 @@
+{
+  "id": "5878e09e-13b4-4058-a9f6-4a9ee1605d6a",
+  "name": "Sales Validation Agent Sample",
+  "publisher": "Partner",
+  "version": "28.1.0.0",
+  "brief": "An example of the sales validation agent, implemented as an app via the AI development toolkit.",
+  "description": "A sample agent app implementing the sales validation agent.",
+  "EULA": "https://go.microsoft.com/fwlink/?LinkId=847985",
+  "help": "https://go.microsoft.com/fwlink/?linkid=2344702",
+  "url": "https://go.microsoft.com/fwlink/?linkid=2344702",
+  "contextSensitiveHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2344702",
+  "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
+  "logo": "ExtensionLogo.png",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "28.0.0.0",
+  "application": "28.1.0.0",
+  "idRanges": [
+    {
+      "from": 53606,
+      "to": 53699
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true,
+    "applyToDevExtension": true
+  },
+  "features": [
+    "GenerateCaptions",
+    "TranslationFile",
+    "NoImplicitWith",
+    "NoPromotedActionProperties"
+  ],
+  "resourceFolders": [
+    ".resources"
+  ],
+  "target": "Cloud",
+  "runtime": "17.0"
+}
