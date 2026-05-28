@@ -8,7 +8,7 @@ Loyalty** feature to their on-premises BC14 database and wants the data
 to flow through the BC14 cloud-migration pipeline to BC Online.
 
 The sample demonstrates the three extension patterns described in
-[`../../Extending.md`](../../Extending.md):
+[`../Extending.md`](../Extending.md):
 
 | # | Pattern                          | What it shows                                                                                                                       | Files                                                                                                                                            |
 |---|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|

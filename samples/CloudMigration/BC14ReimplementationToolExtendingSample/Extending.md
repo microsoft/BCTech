@@ -6,7 +6,7 @@ fields, tables, and post-migration logic alongside the data that ships
 out of the box.
 
 A working sample that uses every pattern below lives next to this
-file: [`samples/ContosoBC14LoyaltyMigration`](samples/ContosoBC14LoyaltyMigration/README.md).
+file: [`ContosoBC14LoyaltyMigration`](./ContosoBC14LoyaltyMigration/README.md).
 
 ---
 
@@ -71,7 +71,7 @@ straight to [Pattern A](#pattern-a--add-fields-to-an-entity-that-already-migrate
   (id `2363a2b7-1018-4976-a32a-c77338dc9f16`) and on **Intelligent Cloud Base**.
 - Decide on a namespace for your code (e.g. `Contoso.Loyalty`).
 
-See: [`samples/ContosoBC14LoyaltyMigration/app.json`](samples/ContosoBC14LoyaltyMigration/app.json).
+See: [`./ContosoBC14LoyaltyMigration/app.json`](./ContosoBC14LoyaltyMigration/app.json).
 
 ### Step 2 — Define the destination and the buffer
 
@@ -87,8 +87,8 @@ Don't hand-write wide buffer tables. The BCTech
 [GenerateALTablesFromSQLSchema](https://github.com/microsoft/BCTech/tree/master/samples/CloudMigration/GenerateALTablesFromSQLSchema)
 PowerShell script generates AL buffer definitions directly from your BC14 SQL schema.
 
-See: [`ContosoLoyaltyTier.Table.al`](samples/ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoLoyaltyTier.Table.al)
-and [`ContosoBC14LoyaltyTier.Table.al`](samples/ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoBC14LoyaltyTier.Table.al).
+See: [`ContosoLoyaltyTier.Table.al`](./ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoLoyaltyTier.Table.al)
+and [`ContosoBC14LoyaltyTier.Table.al`](./ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoBC14LoyaltyTier.Table.al).
 
 ### Step 3 — Write the migrator codeunit
 
@@ -107,7 +107,7 @@ Key implementation choices:
   **idempotent** (`Get` first; branch on `IsNew`), populate the production record
   fully *before* `Insert` / `Modify`.
 
-See: [`ContosoLoyaltyTierMigrator.Codeunit.al`](samples/ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoLoyaltyTierMigrator.Codeunit.al).
+See: [`ContosoLoyaltyTierMigrator.Codeunit.al`](./ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoLoyaltyTierMigrator.Codeunit.al).
 
 ### Step 4 — Register the migrator on the right phase
 
@@ -125,7 +125,7 @@ The orchestrator picks up your value automatically — there is no central
 registration list to edit. Intra-phase ordering is set by
 `BC14 Migration Runner.Populate<Phase>Migrators`, not by the numeric enum value.
 
-See: [`ContosoSetupMigratorExt.EnumExt.al`](samples/ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoSetupMigratorExt.EnumExt.al).
+See: [`ContosoSetupMigratorExt.EnumExt.al`](./ContosoBC14LoyaltyMigration/src/LoyaltyTierMigrator/ContosoSetupMigratorExt.EnumExt.al).
 
 ### Step 5 — Ship a permission set
 
@@ -133,7 +133,7 @@ Grant `RIMD` on both your buffer table and your production table. Without this t
 cloud-migration UI and any end user reading the production table hit
 “you do not have permission to read …” errors.
 
-See: [`ContosoLoyalty.PermissionSet.al`](samples/ContosoBC14LoyaltyMigration/src/Permissions/ContosoLoyalty.PermissionSet.al).
+See: [`ContosoLoyalty.PermissionSet.al`](./ContosoBC14LoyaltyMigration/src/Permissions/ContosoLoyalty.PermissionSet.al).
 
 ### (Optional) Step 6 — Add a post-migration validation or action
 
@@ -177,8 +177,8 @@ See: `src/CustomerExtension/*` in the sample.
 > with stable shapes (`OnMigrate<Entity>` for full overrides,
 > `OnTransfer<Entity>CustomFields` for additive fields,
 > `OnAfterMigrate<Entity>` for follow-up work). Browse the migrator
-> codeunits under [`src/Migration/`](../src/Migration/) for the
-> complete list.
+> codeunits in the **Business Central 14 Reimplementation Tool** app
+> (object designer / symbol search) for the complete list.
 
 ### Pattern B — Add a new entity (your own table)
 
@@ -242,9 +242,8 @@ automatically when registered in the enum.
 For validations that should also surface in the platform's
 **Cloud Migration Warning** UI (the standard yellow-banner experience),
 also implement the platform interface `"Cloud Migration Warning"` and
-extend `"Cloud Migration Warning Type"` — see
-[`src/Validation/BC14BalanceWarning.Codeunit.al`](../src/Validation/BC14BalanceWarning.Codeunit.al)
-for a worked example.
+extend `"Cloud Migration Warning Type"` — the **BC14 Balance Warning**
+codeunit in the box product is a worked example.
 
 See: `src/Validation/*` in the sample for the validation variant, and
 `src/PostAction/*` for the action variant.
@@ -299,19 +298,23 @@ When adding a brand-new entity to the migration, work through this list:
 
 ## 6. Reference
 
-The interfaces and enums you extend live under
-[`../src/Migration/`](../src/Migration/):
+The interfaces and enums you extend ship inside the **Business Central 14
+Reimplementation Tool** app. Once you declare a dependency on that app in
+your `app.json`, the AL compiler resolves them by name — use object
+designer or symbol search to inspect the source.
 
-| Concept          | File                                                                                                                                                         |
-|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Migrator interface | [`BC14Migrator.Interface.al`](../src/Migration/BC14Migrator.Interface.al)                                                                                  |
-| Setup enum       | [`BC14SetupMigrator.Enum.al`](../src/Migration/BC14SetupMigrator.Enum.al)                                                                                    |
-| Master enum      | [`BC14MasterMigrator.Enum.al`](../src/Migration/BC14MasterMigrator.Enum.al)                                                                                  |
-| Transaction enum | [`BC14TransactionMigrator.Enum.al`](../src/Migration/BC14TransactionMigrator.Enum.al)                                                                        |
-| Historical enum  | [`BC14HistoricalMigrator.Enum.al`](../src/Migration/BC14HistoricalMigrator.Enum.al)                                                                          |
-| Action interface | [`BC14PostMigrationAction.Interface.al`](../src/Migration/BC14PostMigrationAction.Interface.al)                                                              |
-| Action enum      | [`BC14PostMigrationAction.Enum.al`](../src/Migration/BC14PostMigrationAction.Enum.al)                                                                        |
-| Validation interface | [`BC14MigrationValidation.Interface.al`](../src/Migration/BC14MigrationValidation.Interface.al)                                                          |
-| Validation enum  | [`BC14MigrationValidation.Enum.al`](../src/Migration/BC14MigrationValidation.Enum.al)                                                                        |
-| Shared per-record loop (internal — reference only) | [`BC14MigrationLoop.codeunit.al`](../src/Migration/BC14MigrationLoop.codeunit.al)                                                  |
-| Mapping registration helper | [`BC14MigrationSetup.Codeunit.al`](../src/Setup/BC14MigrationSetup.Codeunit.al)                                                                   |
+| Concept                     | Object name                       |
+|-----------------------------|-----------------------------------|
+| Migrator interface          | `"BC14 Migrator"`                 |
+| Setup phase enum            | `"BC14 Setup Migrator"`           |
+| Master phase enum           | `"BC14 Master Migrator"`          |
+| Transaction phase enum      | `"BC14 Transaction Migrator"`     |
+| Historical phase enum       | `"BC14 Historical Migrator"`      |
+| Post-migration action interface | `"BC14 Post Migration Action"` |
+| Post-migration action enum  | `"BC14 Post Migration Action"`    |
+| Validation interface        | `"BC14 Migration Validation"`     |
+| Validation enum             | `"BC14 Migration Validation"`     |
+| Mapping registration helper | codeunit `"BC14 Migration Setup"` — call `InsertPerCompanyMapping` |
+| Error logger                | codeunit `"BC14 Migration Error Handler"` — call `LogError` from your `Migrate()` |
+| Progress helper             | codeunit `"BC14 Migration Record Tracker"` — call `GetRemainingPercentage` |
+| Shared per-record loop      | codeunit `"BC14 Migration Loop"` (`Access = Internal`; partners roll their own loop) |
