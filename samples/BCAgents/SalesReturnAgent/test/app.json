@@ -1,0 +1,47 @@
+{
+  "id": "45d741e7-0c9e-46b4-828b-550ebd88da2c",
+  "name": "Sales Return Agent Sample Test",
+  "publisher": "Partner",
+  "brief": "Sample tests demonstrating how to implement tests for the Sales Return agent.",
+  "description": "Sample automation tests demonstrating how to implement tests for the Sales Return agent.",
+  "version": "$(app_currentVersion)",
+  "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
+  "EULA": "https://go.microsoft.com/fwlink/?LinkId=847985",
+  "help": "https://go.microsoft.com/fwlink/?LinkId=849257",
+  "url": "https://go.microsoft.com/fwlink/?LinkId=724011",
+  "contextSensitiveHelpUrl": "https://go.microsoft.com/fwlink/?LinkId=849257",
+  "logo": "ExtensionLogo.png",
+  "screenshots": [],
+  "application": "$(app_minimumVersion)",
+  "platform": "$(app_platformVersion)",
+  "dependencies": [
+    {
+      "id": "517f890c-b49f-47de-8120-d0327974b89d",
+      "name": "AI Development Toolkit - Evaluation",
+      "publisher": "Microsoft",
+      "version": "$(app_minimumVersion)"
+    },
+    {
+      "id": "25341373-464d-4087-b195-b91bbcdb2045",
+      "name": "Sales Return Agent Sample",
+      "publisher": "Partner",
+      "version": "$(app_minimumVersion)"
+    }
+  ],
+  "target": "Cloud",
+  "features": [
+    "GenerateCaptions",
+    "TranslationFile",
+    "NoImplicitWith",
+    "NoPromotedActionProperties"
+  ],
+  "idRanges": [
+    {
+      "from": 53745,
+      "to": 53749
+    }
+  ],
+  "resourceFolders": [
+    ".resources"
+  ]
+}
