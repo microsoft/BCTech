@@ -1,0 +1,84 @@
+suite_setup: SR-ACCUR-SETUP
+tests:
+- name: SR-RETURN-WITH-ATTACHMENTS
+  description: Return some items with attachments. The agent should create a credit memo for the damaged chairs and lamps, get approval, post, and respond to the customer.
+  turns:
+    # 1st turn: the customer requests a return, agent creates draft and requests review.
+    - query:
+        from: return.customer02@contoso.com
+        title: "Return request — items from attached invoice"
+        message: >
+          We have received damaged chairs, and want to return all chairs. Since the chairs are matching the lamps, we need to return the lamps as well. Can you refund us and help us with the return process?
+          Let us know if you need any additional information.
+        attachments:
+          - file: datasets/attachments/SR-ScratchedChairs.png
+          - file:
+              action_type: sales-invoice
+              action_data:
+                # START: Agent specific setup
+                customer_no: SRCUST02
+                date: "$DateFormula-<-45D>$" # This is a placeholder date formula to avoid hardcoding dates.
+                lines:
+                  - item_no: SRITEM02
+                    description: USB Keyboard
+                    quantity: 3
+                  - item_no: SRITEM04
+                    description: Office Chair
+                    quantity: 5
+                  - item_no: SRITEM05
+                    description: Desk Lamp
+                    quantity: 2
+                  - item_no: SRITEM06
+                    description: Premium Office Chair
+                    quantity: 1
+                  # END: Agent specific setup
+      expected_data:
+        intervention_request:
+          type: ReviewRecord # Support Assistance, ReviewRecord, and ReviewMessage.
+        # START: Agent specific validation
+        credit_memo_created: true
+        credit_memo_customer: SRCUST02
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM04
+            quantity: 5
+            unit_price: 150
+            line_amount: 750
+          - item_no: SRITEM05
+            quantity: 2
+            unit_price: 40
+            line_amount: 80
+          - item_no: SRITEM06
+            quantity: 1
+            unit_price: 300
+            line_amount: 300
+        credit_memo_total: 1130
+        work_description_contains: "scratch"
+        # END: Agent specific validation
+
+    # 2nd turn: the Business Central user approves the credit memo. The agent posts it and responds to the customer.
+    - query:
+        intervention:
+          instruction: "Approved. Please post the credit memo."
+      expected_data:
+        intervention_request:
+          type: ReviewMessage
+        # START: Agent specific validation
+        credit_memo_created: true
+        credit_memo_customer: SRCUST02
+        credit_memo_posted: true
+        credit_memo_lines:
+          - item_no: SRITEM04
+            quantity: 5
+            unit_price: 150
+            line_amount: 750
+          - item_no: SRITEM05
+            quantity: 2
+            unit_price: 40
+            line_amount: 80
+          - item_no: SRITEM06
+            quantity: 1
+            unit_price: 300
+            line_amount: 300
+        credit_memo_total: 1130
+        # END: Agent specific validation

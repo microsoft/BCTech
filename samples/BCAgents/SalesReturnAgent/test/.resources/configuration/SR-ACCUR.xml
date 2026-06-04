@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Root>
+    <AITSuite Code="SR-ACCUR" Description="Sales Return Agent - Accuracy Tests" Dataset="SR-ACCUR-P0.YAML" Capability="Sales Return Agent" Frequency="Daily" TestRunnerId="130451" TestType="Agent">
+        <Line CodeunitID="53745" Description="Sales Return Agent - P0 Happy Path" Dataset="SR-ACCUR-P0.YAML" />
+        <Line CodeunitID="53745" Description="Sales Return Agent - P0 Happy Path with Attachments" Dataset="SR-ACCUR-ATTACHMENTS.YAML" />
+        <Line CodeunitID="53745" Description="Sales Return Agent - P1 Invoice Lookup Scenarios" Dataset="SR-ACCUR-INVOICE-LOOKUP.YAML" />
+        <Line CodeunitID="53745" Description="Sales Return Agent - P1 Happy Path with Posting" Dataset="SR-ACCUR-POSTING.YAML" />
+    </AITSuite>
+</Root>
