@@ -29,18 +29,29 @@
     .\Analyze-Run.ps1 -Version 66
 
 .EXAMPLE
+    # "Analyze the latest <suite> run" — resolve the newest version automatically:
+    .\Analyze-Run.ps1 -Latest
+    .\Analyze-Run.ps1 -SuiteCode 'SOA-P0' -CodeunitId 0 -GenericOnly -Latest
+
+.EXAMPLE
+    # Authenticate as the current Windows identity (no cached secret):
+    .\Analyze-Run.ps1 -Version 66 -UseDefaultCredentials
+
+.EXAMPLE
     # Machine-readable, or with per-row failures:
     .\Analyze-Run.ps1 -Version 66 -AsJson
     .\Analyze-Run.ps1 -Version 66 -ShowFailures
 #>
 [CmdletBinding(DefaultParameterSetName = 'Analyze')]
 param(
-    [Parameter(ParameterSetName = 'Analyze', Mandatory = $true, Position = 0)]
+    # Explicit version, OR pass -Latest to resolve the newest run for the suite.
+    [Parameter(ParameterSetName = 'Analyze', Position = 0)]
     [int] $Version,
+    [Parameter(ParameterSetName = 'Analyze')] [switch] $Latest,
 
     # --- scenario identity (defaults target the Bank Acc. Rec. GL-matching suite) ---
     [string] $SuiteCode   = 'BAR-AC1',
-    [int]    $CodeunitId  = 133573,
+    [int]    $CodeunitId  = 133573,                                   # 0 = don't filter by codeunit
     [string] $CompanyName = 'CRONUS International Ltd.',
     [string] $BaseUrl     = 'http://localhost:7047/Navision_NAV',
 
@@ -50,6 +61,7 @@ param(
     [Parameter(ParameterSetName = 'Analyze')] [switch] $GenericOnly,   # only task-agnostic metrics (MatchRate, Crash)
 
     # --- credential management ---
+    [Parameter(ParameterSetName = 'Analyze')] [switch] $UseDefaultCredentials,  # current Windows identity (no cached secret)
     [Parameter(ParameterSetName = 'SaveCred', Mandatory = $true)] [switch] $SaveCredential,
     [Parameter(ParameterSetName = 'SaveCred', Mandatory = $true)] [string] $User,
     [Parameter(ParameterSetName = 'SaveCred', Mandatory = $true)] [string] $Password,
@@ -59,6 +71,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 $engine = Join-Path $PSScriptRoot 'Get-AITMetrics.ps1'
 
 # ------------------------------------------------------------------ credential cache
@@ -77,17 +90,40 @@ if ($PSCmdlet.ParameterSetName -eq 'ClearCred') {
 }
 
 # ------------------------------------------------------------------ resolve credential
-# priority: cached clixml -> AIT_USER/AIT_PWD env vars -> actionable error
+# priority: -UseDefaultCredentials -> cached clixml -> AIT_USER/AIT_PWD env vars -> error
 $cred = $null
-if (Test-Path $CredentialPath) {
-    $cred = Import-Clixml -Path $CredentialPath
+if (-not $UseDefaultCredentials) {
+    if (Test-Path $CredentialPath) {
+        $cred = Import-Clixml -Path $CredentialPath
+    }
+    elseif ($env:AIT_USER -and $env:AIT_PWD) {
+        $sec  = ConvertTo-SecureString $env:AIT_PWD -AsPlainText -Force
+        $cred = [System.Management.Automation.PSCredential]::new($env:AIT_USER, $sec)
+    }
+    else {
+        throw "No cached credential. Run once: Analyze-Run.ps1 -SaveCredential -User <u> -Password <p>  (or set AIT_USER/AIT_PWD, or pass -UseDefaultCredentials)."
+    }
 }
-elseif ($env:AIT_USER -and $env:AIT_PWD) {
-    $sec  = ConvertTo-SecureString $env:AIT_PWD -AsPlainText -Force
-    $cred = [System.Management.Automation.PSCredential]::new($env:AIT_USER, $sec)
+
+# ------------------------------------------------------------------ resolve version
+# "Analyze the latest <suite> run" carries no number; -Latest discovers it via the
+# sibling Get-AITRunVersions.ps1 helper (which shares this credential cache).
+if ($Latest) {
+    $versions = Join-Path $PSScriptRoot 'Get-AITRunVersions.ps1'
+    $verArgs  = @{
+        SuiteCode   = $SuiteCode
+        CodeunitId  = $CodeunitId
+        CompanyName = $CompanyName
+        BaseUrl     = $BaseUrl
+        Latest      = $true
+    }
+    if ($UseDefaultCredentials) { $verArgs.UseDefaultCredentials = $true }
+    else                        { $verArgs.CredentialPath        = $CredentialPath }
+    $Version = & $versions @verArgs
+    Write-Host ("Resolved latest version for {0}: v{1}" -f $SuiteCode, $Version) -ForegroundColor DarkCyan
 }
-else {
-    throw "No cached credential. Run once: Analyze-Run.ps1 -SaveCredential -User <u> -Password <p>  (or set AIT_USER/AIT_PWD)."
+if (-not $Version) {
+    throw "Specify -Version N or -Latest (no version resolved for suite '$SuiteCode')."
 }
 
 # ------------------------------------------------------------------ fetch + analyze
@@ -98,8 +134,9 @@ $engineArgs = @{
     TestRunVersion = $Version
     CompanyName    = $CompanyName
     BaseUrl        = $BaseUrl
-    Credential     = $cred
 }
+if ($UseDefaultCredentials) { $engineArgs.UseDefaultCredentials = $true }
+else                        { $engineArgs.Credential            = $cred }
 
 if ($GenericOnly) { $engineArgs.GenericOnly = $true }
 
