@@ -1,0 +1,55 @@
+{
+  "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+  "name": "Record Link Migration Tests",
+  "publisher": "MSFT",
+  "brief": "Tests for the Record Link Migration tool.",
+  "description": "Test coverage for record link and notes migration including transfer logic, duplicate detection, user mapping, and progress tracking.",
+  "version": "1.0.0.0",
+  "privacyStatement": "https://go.microsoft.com/fwlink/?LinkId=724009",
+  "EULA": "https://go.microsoft.com/fwlink/?linkid=2009120",
+  "help": "https://go.microsoft.com/fwlink/?linkid=2009036",
+  "url": "https://go.microsoft.com/fwlink/?LinkId=724011",
+  "logo": "",
+  "dependencies": [
+      {
+      "id": "ff1ee670-a5d9-4446-aee6-a56046fe5e6c",
+      "name": "Record Link Migration",
+      "publisher": "MSFT",
+      "version": "1.0.0.0"
+    },
+    {
+      "id": "58623bfa-0559-4bc2-ae1c-0979c29fd9e0",
+      "name": "Intelligent Cloud Base",
+      "publisher": "Microsoft",
+      "version": "28.0.0.0"
+    },
+    {
+      "id": "5d86850b-0d76-4eca-bd7b-951ad998e997",
+      "name": "Tests-TestLibraries",
+      "publisher": "Microsoft",
+      "version": "28.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "28.0.0.0",
+  "idRanges": [
+    {
+      "from": 57550,
+      "to": 57599
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "target": "Cloud",
+  "application": "28.0.0.0",
+  "runtime": "16.0",
+  "features": [
+    "NoImplicitWith"
+  ],
+  "resourceFolders": [
+    "resources"
+  ]
+}

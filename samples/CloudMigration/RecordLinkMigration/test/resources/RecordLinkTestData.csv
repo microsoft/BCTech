@@ -1,0 +1,21 @@
+Link ID,Record ID,URL1,Description,Type,Note,Created,User ID,Company,Notify,To User ID
+1,,https://docs.microsoft.com/en-us/dynamics365/business-central/,BC Documentation,Link,,2024-01-15T10:30:00Z,JOHN.ONPREM,CRONUS,false,
+2,,https://sharepoint.contoso.com/sites/sales/reports/Q1-2024.xlsx,Q1 Sales Report,Link,,2024-02-20T14:22:33Z,JANE.ONPREM,CRONUS,true,JOHN.ONPREM
+3,,,Customer follow-up note,Note,Called customer RE: order #1042. They requested delivery postponed to March 15. Need to update shipping schedule and notify warehouse team.,2024-03-10T09:15:00Z,JOHN.ONPREM,CRONUS,false,
+4,,https://github.com/contoso/erp-integration/issues/42,ERP Sync Bug #42,Link,,2024-04-01T11:00:00Z,ADMIN.ONPREM,FABRIKAM,false,
+5,,,Pricing update memo,Note,Q2 pricing changes effective April 1: Product A increases 5% to $52.50. Product B decreases 3% to $97.00. All sales reps must update quotes. Approved by CFO on 2024-03-28.,2024-04-15T16:45:00Z,JANE.ONPREM,FABRIKAM,false,
+6,,https://docs.microsoft.com/en-us/dynamics365/business-central/,BC Documentation,Link,,2024-05-01T08:00:00Z,JOHN.ONPREM,CRONUS,false,
+7,,https://intranet.contoso.com/policies/data-retention-2024.pdf,Data Retention Policy 2024,Link,,2024-06-01T12:00:00Z,ADMIN.ONPREM,,false,
+8,,,System maintenance notice,Note,Scheduled downtime: Saturday June 15 from 02:00-06:00 UTC. All services will be unavailable. Contact IT helpdesk ext. 4455 for emergencies.,2024-06-10T09:00:00Z,,,false,
+9,,https://crm.contoso.com/contacts/10482,CRM Contact: Northwind Traders,Link,,2024-06-20T15:30:00Z,JANE.ONPREM,CRONUS,true,ADMIN.ONPREM
+10,,,Vendor negotiation notes,Note,Met with supplier Fabrikam Inc on June 25. Agreed on 8% volume discount for orders over $50k. Contract amendment to be signed by July 10. Legal review pending - assigned to M. Johnson.,2024-06-25T11:45:00Z,ADMIN.ONPREM,CRONUS,false,
+11,,https://azure.devops.contoso.com/project/migration/board,Migration Project Board,Link,,2024-07-01T08:00:00Z,JOHN.ONPREM,FABRIKAM,false,JANE.ONPREM
+12,,,Credit hold notice,Note,Account #4821 placed on credit hold. Outstanding balance: $12450.00 (90+ days). Last payment received 2024-04-02. Sales manager notified. Do not process new orders until resolved.,2024-07-05T14:20:00Z,ADMIN.ONPREM,FABRIKAM,true,JOHN.ONPREM
+13,,https://learn.microsoft.com/en-us/dynamics365/business-central/admin-migrate-data,Cloud Migration Guide,Link,,2024-07-10T09:00:00Z,JOHN.ONPREM,,false,
+14,,https://sharepoint.contoso.com/sites/hr/onboarding/checklist.docx,New Employee Onboarding,Link,,2024-07-15T10:00:00Z,JANE.ONPREM,FABRIKAM,false,
+15,,,Audit trail note,Note,Annual audit 2024: Verified all GL entries for period Jan-Jun. Found 3 reclassification entries needing correction (JE #8842 #8901 #8955). Corrections posted July 18. Signed off by external auditor K. Williams.,2024-07-18T16:30:00Z,ADMIN.ONPREM,CRONUS,false,
+16,,https://docs.microsoft.com/en-us/dynamics365/business-central/,BC Documentation,Link,,2024-08-01T07:00:00Z,ADMIN.ONPREM,FABRIKAM,false,
+17,,,Workflow approval reminder,Note,Purchase order PO-2024-0892 ($78500) awaiting approval from VP Operations since Aug 5. Auto-escalation triggered. Supplier delivery deadline: Aug 20.,2024-08-08T13:15:00Z,JANE.ONPREM,CRONUS,true,JOHN.ONPREM
+18,,https://teams.microsoft.com/l/meetup-join/19%3ameeting_abc123,Weekly Sync Meeting Link,Link,,2024-08-12T09:00:00Z,JOHN.ONPREM,CRONUS,false,
+19,,https://intranet.contoso.com/policies/security-2024-update.pdf,Security Policy Update,Link,,2024-08-15T11:00:00Z,,,false,
+20,,,Intercompany reconciliation,Note,IC balances between CRONUS and FABRIKAM reconciled for July. Difference of $245.67 traced to timing on IC journal posted July 31 at 23:58. No action required - will auto-clear in August.,2024-08-20T10:30:00Z,ADMIN.ONPREM,,false,
