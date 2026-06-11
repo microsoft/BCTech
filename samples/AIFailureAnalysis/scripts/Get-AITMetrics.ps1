@@ -84,6 +84,7 @@ param(
     [Parameter(ParameterSetName = 'Fetch')] [int] $TestRunVersion = 0,
     [Parameter(ParameterSetName = 'Fetch')] [pscredential] $Credential,
     [Parameter(ParameterSetName = 'Fetch')] [switch] $UseDefaultCredentials,
+    [Parameter(ParameterSetName = 'Fetch')] [string] $CredentialPath = (Join-Path $env:TEMP 'ait_cred.xml'),
 
     # --- Parsing (scenario-configurable; these define the matching-scenario metrics) ---
     [string] $LineIdPattern   = 'LID:\s*([0-9]+)',
@@ -103,6 +104,22 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
+
+# Strict-mode safe property read: returns $null when the property is absent
+# (under Set-StrictMode, a bare $obj.Missing reference would throw). Used for the
+# AIT log rows and OData payloads, whose optional fields are not guaranteed present.
+function Get-Prop($obj, [string]$name) {
+    if ($null -ne $obj -and ($obj.PSObject.Properties.Name -contains $name)) { return $obj.$name }
+    return $null
+}
+
+# Under -GenericOnly the matching-scenario block is suppressed, so the default
+# "Bank Acc. Rec." label would mislabel a non-matching run (e.g. an SOA-* agent
+# suite). Fall back to a neutral label unless the caller set one explicitly.
+if ($GenericOnly -and -not $PSBoundParameters.ContainsKey('ScenarioName')) {
+    $ScenarioName = 'Generic (MatchRate + Crash only)'
+}
 
 # ------------------------------------------------------------------ acquire results
 function Get-ResultsFromFile([string]$path) {
@@ -119,12 +136,21 @@ function Get-ResultsFromApi {
     # Auth resolution (enlistment-independent), in priority order:
     #   1. -UseDefaultCredentials  -> current Windows identity (Negotiate/NTLM), no password
     #   2. -Credential             -> explicit PSCredential supplied by the caller
-    #   3. interactive prompt      -> Get-Credential fallback
+    #   3. cached ait_cred.xml     -> the DPAPI cache shared with Get-AITRunVersions.ps1
+    #   4. AIT_USER / AIT_PWD      -> env-var credential
+    #   5. interactive prompt      -> Get-Credential fallback (interactive shells only)
     $apiRoot = "$BaseUrl/api/microsoft/aiTestToolkit/v2.0"
     $irmExtra = @{}
     if ($UseDefaultCredentials) {
         $irmExtra.UseDefaultCredentials = $true
     } else {
+        if (-not $Credential -and (Test-Path $CredentialPath)) {
+            $Credential = Import-Clixml -Path $CredentialPath
+        }
+        if (-not $Credential -and $env:AIT_USER -and $env:AIT_PWD) {
+            $sec = ConvertTo-SecureString $env:AIT_PWD -AsPlainText -Force
+            $Credential = [System.Management.Automation.PSCredential]::new($env:AIT_USER, $sec)
+        }
         if (-not $Credential) {
             # Under an automated agent the session is non-interactive, so Get-Credential
             # throws "PowerShell is in NonInteractive mode". Detect that and fail with an
@@ -132,11 +158,11 @@ function Get-ResultsFromApi {
             $interactive = [Environment]::UserInteractive `
                 -and -not ([Environment]::GetCommandLineArgs() -match '(?i)-NonInteractive')
             if (-not $interactive) {
-                throw "Live fetch needs credentials but the session is non-interactive. Pass -UseDefaultCredentials or build a PSCredential and pass -Credential (see the skill's credential guidance)."
+                throw "Live fetch needs credentials but the session is non-interactive. Pass -UseDefaultCredentials, -Credential, run Analyze-Run.ps1 -SaveCredential once, or set AIT_USER/AIT_PWD (see the skill's credential guidance)."
             }
             $Credential = Get-Credential -Message "Business Central API credential for $BaseUrl"
         }
-        if (-not $Credential) { throw "Live fetch needs -UseDefaultCredentials, -Credential, or an interactive credential." }
+        if (-not $Credential) { throw "Live fetch needs -UseDefaultCredentials, -Credential, a cached credential, or an interactive credential." }
         $irmExtra.Credential = $Credential
     }
     if ($BaseUrl -like 'http://*' -and (Get-Command Invoke-RestMethod).Parameters.ContainsKey('AllowUnencryptedAuthentication')) {
@@ -148,8 +174,9 @@ function Get-ResultsFromApi {
         $encName = [uri]::EscapeDataString($CompanyName)
         $cu = "$apiRoot/companies?`$filter=name eq '$encName'"
         $companies = Invoke-RestMethod -Uri $cu -Method Get @irmExtra
-        if (-not $companies.value) { throw "Company '$CompanyName' not found." }
-        $script:CompanyId = $companies.value[0].id
+        $companyVals = Get-Prop $companies 'value'
+        if (-not $companyVals) { throw "Company '$CompanyName' not found." }
+        $script:CompanyId = Get-Prop $companyVals[0] 'id'
     }
 
     $filter = "aitCode eq '$SuiteCode'"
@@ -158,7 +185,7 @@ function Get-ResultsFromApi {
     $url = "$apiRoot/companies($CompanyId)/aitTestLogEntries?`$filter=$([uri]::EscapeDataString($filter))"
     Write-Verbose "Fetching: $url"
     $resp = Invoke-RestMethod -Uri $url -Method Get @irmExtra
-    return $resp.value
+    return (Get-Prop $resp 'value')
 }
 
 $results = if ($PSCmdlet.ParameterSetName -eq 'Fetch') { Get-ResultsFromApi } else { Get-ResultsFromFile $ResultsPath }
@@ -196,18 +223,26 @@ $rowPsum = 0.0; $rowRsum = 0.0; $rowFsum = 0.0
 $failures = @()
 
 foreach ($r in $results) {
-    $inObj = $r.inputData | ConvertFrom-Json
-    $lids  = Get-LineIds $inObj.input
-    $exp   = Get-ExpectedMap $inObj.expected_output
+    $inputDataRaw  = Get-Prop $r 'inputData'
+    $outputDataRaw = Get-Prop $r 'outputData'
+    $rowStatus     = Get-Prop $r 'status'
+    $rowId         = Get-Prop $r 'datasetLineNumber'
+
+    $inObj = if ($inputDataRaw) { $inputDataRaw | ConvertFrom-Json } else { $null }
+    $lids  = Get-LineIds     ([string](Get-Prop $inObj 'input'))
+    $exp   = Get-ExpectedMap ([string](Get-Prop $inObj 'expected_output'))
 
     $answer = ''
     $parseOk = $true
-    if ($r.outputData) {
-        try { $answer = ($r.outputData | ConvertFrom-Json).answer } catch { $answer = ''; $parseOk = $false }
+    if ($outputDataRaw) {
+        try {
+            $parsed = $outputDataRaw | ConvertFrom-Json
+            $answer = [string](Get-Prop $parsed 'answer')
+        } catch { $answer = ''; $parseOk = $false }
     }
     $ans = Get-AnswerMap $answer
 
-    if ($r.status -eq 'Success') { $passCount++ }
+    if ($rowStatus -eq 'Success') { $passCount++ }
 
     $rowBad = $false
     $reasons = @()
@@ -241,8 +276,8 @@ foreach ($r in $results) {
         else { $TN++ }
     }
 
-    $isCrash = ($r.status -ne 'Success') -and (-not $parseOk -or $answer -eq '')
-    if ($isCrash) { $rowBad = $true; $reasons = @('Crash(row status ' + $r.status + ', unusable answer)') + $reasons }
+    $isCrash = ($rowStatus -ne 'Success') -and (-not $parseOk -or $answer -eq '')
+    if ($isCrash) { $rowBad = $true; $reasons = @('Crash(row status ' + $rowStatus + ', unusable answer)') + $reasons }
 
     if ($rowBad) {
         $cats = @()
@@ -251,8 +286,8 @@ foreach ($r in $results) {
         if ($reasons -match 'SpuriousMatch')  { $cats += 'SpuriousMatch' }
         if ($reasons -match 'Miss')           { $cats += 'Miss' }
         $failures += [pscustomobject]@{
-            Row        = $r.datasetLineNumber
-            Status     = $r.status
+            Row        = $rowId
+            Status     = $rowStatus
             Categories = ($cats | Select-Object -Unique)
             Reasons    = $reasons
         }
@@ -316,7 +351,9 @@ if ($AsJson) {
 }
 
 Write-Host ""
-Write-Host ("=== AIT metrics  (suite {0}  version {1}) ===" -f $SuiteCode, $TestRunVersion) -ForegroundColor Cyan
+$suiteLabel   = if ($SuiteCode)      { $SuiteCode }      else { '(file)' }
+$versionLabel = if ($TestRunVersion) { $TestRunVersion } else { '-' }
+Write-Host ("=== AIT metrics  (suite {0}  version {1}) ===" -f $suiteLabel, $versionLabel) -ForegroundColor Cyan
 Write-Host ("scenario: {0}" -f $ScenarioName) -ForegroundColor DarkCyan
 Write-Host ""
 Write-Host "GENERIC (task-agnostic, any AIT run):" -ForegroundColor Cyan
