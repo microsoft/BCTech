@@ -1,0 +1,57 @@
+{
+    "id": "b7e3f1a2-4d56-4c8e-9a01-1234567890ab",
+    "name": "Contoso BC14 Loyalty Migration",
+    "publisher": "Contoso",
+    "version": "1.0.0.0",
+    "brief": "Sample extension of the BC14 Reimplementation Tool",
+    "description": "Demonstrates three ways to extend the Business Central 14 Reimplementation Tool: (1) transfer custom fields on an existing migrator via events, (2) register a new master-data migrator for a partner table, (3) plug in a post-migration validation.",
+    "privacyStatement": "https://contoso.example/privacy",
+    "EULA": "https://contoso.example/eula",
+    "help": "https://contoso.example/help",
+    "url": "https://contoso.example",
+    "logo": "",
+    "dependencies": [
+        {
+            "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+            "publisher": "Microsoft",
+            "name": "Base Application",
+            "version": "29.0.0.0"
+        },
+        {
+            "id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+            "publisher": "Microsoft",
+            "name": "System Application",
+            "version": "29.0.0.0"
+        },
+        {
+            "id": "58623bfa-0559-4bc2-ae1c-0979c29fd9e0",
+            "publisher": "Microsoft",
+            "name": "Intelligent Cloud Base",
+            "version": "29.0.0.0"
+        },
+        {
+            "id": "2363a2b7-1018-4976-a32a-c77338dc9f16",
+            "publisher": "Microsoft",
+            "name": "Business Central 14 Reimplementation Tool",
+            "version": "29.0.0.0"
+        }
+    ],
+    "screenshots": [],
+    "platform": "29.0.0.0",
+    "application": "29.0.0.0",
+    "idRanges": [
+        {
+            "from": 50100,
+            "to": 50149
+        }
+    ],
+    "resourceExposurePolicy": {
+        "allowDebugging": true,
+        "allowDownloadingSource": true,
+        "includeSourceInSymbolFile": true
+    },
+    "features": [
+        "NoImplicitWith",
+        "TranslationFile"
+    ]
+}
