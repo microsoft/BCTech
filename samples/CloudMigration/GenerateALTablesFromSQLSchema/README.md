@@ -55,7 +55,8 @@ The generated tables are *buffer* tables meant to receive the raw data, so the m
 
 | SQL type | Generated AL type | Note |
 |---|---|---|
-| `nvarchar(n)` / `varchar(n)` | `Text[n]` | In BC, `Code` and `Text` fields are both `nvarchar`. The type cannot be recovered from the SQL schema, so `Text` is used. Change it to `Code[n]` where the source field is a `Code` field. |
+| `nvarchar(n)` | `Text[n]` | In BC, `Code` and `Text` fields are both `nvarchar`. The distinction cannot be recovered from the SQL schema, so `Text` is used. Change it to `Code[n]` where the source field is a `Code` field. |
+| `varchar(n)` | `Text[n]` | In a NAV/BC schema a `varchar` column is almost always a `DateFormula` field — see the note below. In a GP schema it is an ordinary string column. |
 | `nvarchar(max)` | `Blob` | |
 | `int` | `Integer` | BC stores `Option`/`Enum` fields as `int`. Convert the ordinal in your migration code. |
 | `tinyint` | `Boolean` | BC stores `Boolean` as `tinyint`. |
@@ -66,4 +67,6 @@ The generated tables are *buffer* tables meant to receive the raw data, so the m
 | `time` | `Time` | |
 | `image` / `varbinary` | `Blob` | |
 
-A `DateFormula` field (for example `Lead Time Calculation`) is stored as `nvarchar` and therefore becomes `Text`. Evaluate it into a `DateFormula` in your migration code if you need it typed.
+`Code` vs `Text` and `Option`/`Enum` vs `Integer` are both stored identically in SQL (`nvarchar(n)` and `int` respectively), so replication into the buffer table is unaffected — the conversion only matters when you copy from the buffer into the production record.
+
+`DateFormula` is the exception. BC stores it as `varchar`, not `nvarchar`, so the generated `Text[n]` field is the one case where the buffer column's SQL type does not match the source. Review `varchar` columns individually: in a NAV/BC schema they are almost always `DateFormula` (for example `Lead Time Calculation` on `Vendor`). Change the field to `DateFormula`, or evaluate the text in your migration code.
