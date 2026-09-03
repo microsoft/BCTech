@@ -1,8 +1,19 @@
 # SQL Schema Definition to AL
 
-Takes an SQL schema definition (as scripted by SSMS **Script Table as > CREATE To**) and generates the appropriate files to have this as a BC extension that can have its data imported by Cloud Migration.
+Takes an SQL schema definition (as scripted by SSMS **Script Table as > CREATE To**, or by **Tasks > Generate Scripts**) and generates the appropriate files to have this as a BC extension that can have its data imported by Cloud Migration.
 
 Works with **NAV/Business Central on-premises** schemas, where object names contain spaces and `$` (for example `[dbo].[CRONUS Danmark A_S$Vendor]`), as well as with **Dynamics GP** schemas.
+
+### Supported schema syntax
+
+Both identifier styles are recognised, including scripts that mix them:
+
+- Bracketed — `CREATE TABLE [dbo].[Vendor]([No_] [nvarchar](20) NOT NULL, ...)`
+- Double-quoted — `CREATE TABLE "Orders"("OrderID" "int" NOT NULL, ...)`, produced when `QUOTED_IDENTIFIER` is on and by older sample scripts
+
+Primary keys are read from an inline `CONSTRAINT ... PRIMARY KEY` and, when the table has none, from a separate `ALTER TABLE ... ADD CONSTRAINT ... PRIMARY KEY` statement.
+
+If a `CREATE TABLE` statement cannot be parsed, the script says so and reports how many were skipped. The closing line states how many tables were generated out of how many were found — check it before assuming the extension is complete.
 
 ## Usage
 
