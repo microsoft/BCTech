@@ -140,11 +140,16 @@ $script:CodeunitMappings = ''
 $script:SQLStatsQ = @()
 
 # A bracketed SQL identifier may contain spaces, '$', '.', '(' ... anything except ']'.
-$identifier = "(?:\[[^\]]+\]|[A-Za-z0-9_@#\$]+)"
+$identifier = "(?:\[[^\]]+\]|`"[^`"]+`"|[A-Za-z0-9_@#\$]+)"
 
 function Remove-Brackets($v) {
     $t = "$v".Trim()
     if ($t.StartsWith('[') -and $t.EndsWith(']')) {
+        return $t.Substring(1, $t.Length - 2)
+    }
+    # Legacy scripts (and anything generated with QUOTED_IDENTIFIER ON) delimit names with
+    # double quotes instead of brackets.
+    if (($t.Length -ge 2) -and $t.StartsWith('"') -and $t.EndsWith('"')) {
         return $t.Substring(1, $t.Length - 2)
     }
     return $t
@@ -274,19 +279,23 @@ function Get-UniqueALObjectName($candidate) {
 function Split-CommaParams($tablecontent) {
     $pCount = 0
     $bCount = 0
+    $inQuote = $false
     $current = ''
     $params = @()
     for ($i = 0; $i -lt $tablecontent.Length; $i++) {
         $c = $tablecontent[$i]
-        if (($c -eq ',') -and ($pCount -eq 0) -and ($bCount -eq 0)) {
+        if ($c -eq '"') { $inQuote = -not $inQuote }
+        if (($c -eq ',') -and ($pCount -eq 0) -and ($bCount -eq 0) -and (-not $inQuote)) {
             $params += $current
             $current = ''
             continue
         }
-        if ($c -eq '(') { $pCount++ }
-        elseif ($c -eq '[') { $bCount++ }
-        elseif ($c -eq ')') { $pCount-- }
-        elseif ($c -eq ']') { $bCount-- }
+        if (-not $inQuote) {
+            if ($c -eq '(') { $pCount++ }
+            elseif ($c -eq '[') { $bCount++ }
+            elseif ($c -eq ')') { $pCount-- }
+            elseif ($c -eq ']') { $bCount-- }
+        }
         $current += $c
     }
     if ($current.Trim() -ne '') { $params += $current }
@@ -295,7 +304,7 @@ function Split-CommaParams($tablecontent) {
 
 $columnRegex = [Regex]::new("^\s*(?<colid>$identifier)\s+(?<colty>$identifier)\s*(\(\s*(?<len>[^\)]*)\))?", 'IgnoreCase')
 $primKeyRegex = [Regex]::new("primary\s+key[^\(]*\(\s*(?<colkeys>[^\)]+)\)", 'IgnoreCase, Singleline')
-$keyColRegex = [Regex]::new("(?<c>\[[^\]]+\]|[A-Za-z0-9_@#\$]+)", 'IgnoreCase')
+$keyColRegex = [Regex]::new("(?<c>\[[^\]]+\]|`"[^`"]+`"|[A-Za-z0-9_@#\$]+)", 'IgnoreCase')
 
 function ConvertTo-ALTable($tableid, $tablecontent, $tableCount) {
     $sqlTableName = Get-CleanTableName $tableid
@@ -387,6 +396,9 @@ function ConvertTo-ALTable($tableid, $tablecontent, $tableCount) {
 
     # A key can only reference fields that were actually emitted, and BLOB fields cannot be
     # part of a key.
+    if (($keyscontent.Count -eq 0) -and ($script:AlterTablePrimaryKeys.ContainsKey($sqlTableName))) {
+        $keyscontent = @($script:AlterTablePrimaryKeys[$sqlTableName])
+    }
     $droppedKeyCols = @($keyscontent | Where-Object { ($emittedFields -notcontains $_) -or ($blobFields -contains $_) })
     if ($droppedKeyCols.Count -gt 0) {
         Write-Host "Primary key of table $sqlTableName references unusable column(s): $($droppedKeyCols -join ', ')."
@@ -409,6 +421,7 @@ function ConvertTo-ALTable($tableid, $tablecontent, $tableCount) {
     [void]$sb.AppendLine('}')
 
     $sb.ToString() | Out-File -FilePath "$tablesFolder$filename" -Encoding UTF8
+    $script:GeneratedTableCount++
 
     $pxml = $permissionXML -replace 'OBJECTTYPEHERE', 'TableData'
     $pxml = $pxml -replace 'OBJECTIDHERE', $id
@@ -427,10 +440,36 @@ if ($schema -match $useDBregex) {
 $createTableRegex = [Regex]::new("(?i)\bcreate\s+table\s+(?<tableid>$identifier(?:\s*\.\s*$identifier)*)\s*\(", 'IgnoreCase')
 $result = $createTableRegex.Matches($schema)
 
+# Any CREATE TABLE the parser could not understand must be reported. Silently dropping a table
+# would produce an extension that looks complete but is missing data.
+$createTableCount = ([Regex]::Matches($schema, "(?i)\bcreate\s+table\b")).Count
+if ($createTableCount -gt $result.Count) {
+    Write-Host "$($createTableCount - $result.Count) CREATE TABLE statement(s) could not be parsed and were skipped. Check the input schema."
+}
+
 if ($result.Count -eq 0) {
     Write-Host 'Unable to parse schema definitions'
     exit 1
 }
+
+# Primary keys are not always declared inside CREATE TABLE. SSMS 'Generate Scripts' emits them
+# as a separate ALTER TABLE ... ADD CONSTRAINT ... PRIMARY KEY, so collect those as a fallback.
+$alterPKRegex = [Regex]::new("(?i)\balter\s+table\s+(?<tableid>$identifier(?:\s*\.\s*$identifier)*)\s+(?:(?!\b(?:go|alter|create)\b)[\s\S])*?\bprimary\s+key\b[^\(]*\(\s*(?<colkeys>[^\)]+)\)", 'IgnoreCase, Singleline')
+$script:AlterTablePrimaryKeys = @{}
+foreach ($m in $alterPKRegex.Matches($schema)) {
+    $name = Get-CleanTableName $m.Groups['tableid'].Value
+    if (-not $script:AlterTablePrimaryKeys.ContainsKey($name)) {
+        $cols = @()
+        foreach ($km in $keyColRegex.Matches($m.Groups['colkeys'].Value)) {
+            $c = Remove-Brackets $km.Groups['c'].Value
+            if ($c -match '^(?i)(asc|desc)$') { continue }
+            $cols += $c
+        }
+        if ($cols.Count -gt 0) { $script:AlterTablePrimaryKeys[$name] = $cols }
+    }
+}
+
+$script:GeneratedTableCount = 0
 
 for ($i = 0; $i -lt $result.Count; $i++) {
     $tableidValue = $result[$i].Groups['tableid'].Value
@@ -478,4 +517,4 @@ if ($GenSQLStatsQuery) {
     $sqlscript | Out-File -FilePath "${extensionFolder}stats.sql" -Encoding UTF8
 }
 
-Write-Host "Generated $($result.Count) table definition(s) in $tablesFolder"
+Write-Host "Generated $script:GeneratedTableCount of $($result.Count) table definition(s) in $tablesFolder"
