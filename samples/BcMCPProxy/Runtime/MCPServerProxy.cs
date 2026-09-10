@@ -43,11 +43,13 @@ public class MCPServerProxy
         var transportOptions = new HttpClientTransportOptions
         {
             Name = "Test Server",
-            Endpoint = new Uri(this.configOptions.Url.TrimEnd('/') + "/v2.0/" + this.configOptions.Environment + "/mcp"),
+            Endpoint = new Uri(this.configOptions.Url.TrimEnd('/')),
             TransportMode = HttpTransportMode.StreamableHttp,
             AdditionalHeaders = new Dictionary<string, string>
             {
-                { "Company",  HttpUtility.UrlDecode(this.configOptions.Company) },
+                { "TenantId", this.configOptions.TenantId },
+                { "EnvironmentName", this.configOptions.Environment },
+                { "Company", HttpUtility.UrlDecode(this.configOptions.Company) },
                 { "X-Client-Application", "BcMCPProxy" }
             }
         };

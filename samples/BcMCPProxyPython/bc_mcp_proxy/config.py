@@ -14,8 +14,8 @@ class ProxyConfig:
 
   tenant_id: Optional[str] = None
   client_id: Optional[str] = None
-  token_scope: str = "https://api.businesscentral.dynamics.com/.default"
-  base_url: str = "https://api.businesscentral.dynamics.com"
+  token_scope: str = "https://mcp.businesscentral.dynamics.com/.default"
+  base_url: str = "https://mcp.businesscentral.dynamics.com"
   environment: str = "Production"
   company: Optional[str] = None
   configuration_name: Optional[str] = None

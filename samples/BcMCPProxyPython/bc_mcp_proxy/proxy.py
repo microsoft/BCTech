@@ -91,6 +91,10 @@ def _build_transport_headers(config: ProxyConfig) -> dict[str, str]:
   headers: dict[str, str] = {
       "X-Client-Application": config.server_name,
   }
+  if config.tenant_id:
+    headers["TenantId"] = config.tenant_id
+  if config.environment:
+    headers["EnvironmentName"] = config.environment
   if config.company:
     headers["Company"] = unquote(config.company)
   if config.configuration_name:
@@ -99,8 +103,7 @@ def _build_transport_headers(config: ProxyConfig) -> dict[str, str]:
 
 
 def _build_endpoint_url(config: ProxyConfig) -> str:
-  base = config.base_url.rstrip("/")
-  return f"{base}/v2.0/{config.environment}/mcp"
+  return config.base_url.rstrip("/")
 
 
 def run_sync(config: ProxyConfig) -> None:

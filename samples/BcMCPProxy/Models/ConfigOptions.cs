@@ -16,9 +16,9 @@
 
         public string ClientId { get; set; } = "3acde393-18cc-4b12-803c-4c85fa111c21";
 
-        public string TokenScope { get; set; } = "https://api.businesscentral.dynamics.com/.default";
+        public string TokenScope { get; set; } = "https://mcp.businesscentral.dynamics.com/.default";
 
-        public string Url { get; set; } = "https://api.businesscentral.dynamics.com";
+        public string Url { get; set; } = "https://mcp.businesscentral.dynamics.com";
 
         public string Environment { get; set; } = "Production";
 

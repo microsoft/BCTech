@@ -94,8 +94,8 @@ Example interactions:
 | Company | `--Company` | `BC_COMPANY` | Business Central company name | Yes |
 | Configuration Name | `--ConfigurationName` | `BC_CONFIGURATION_NAME` | Name of the Business Central configuration | No |
 | Custom Auth Header | `--CustomAuthHeader` | `BC_CUSTOM_AUTH_HEADER` | Pre-issued bearer token (skips device flow) | No |
-| Base URL | `--BaseUrl` | `BC_BASE_URL` | Base API URL (default: `https://api.businesscentral.dynamics.com`) | No |
-| Token Scope | `--TokenScope` | `BC_TOKEN_SCOPE` | OAuth scope (default: `https://api.businesscentral.dynamics.com/.default`) | No |
+| Base URL | `--BaseUrl` | `BC_BASE_URL` | MCP server URL (default: `https://mcp.businesscentral.dynamics.com`) | No |
+| Token Scope | `--TokenScope` | `BC_TOKEN_SCOPE` | OAuth scope (default: `https://mcp.businesscentral.dynamics.com/.default`) | No |
 | Log Level | `--LogLevel` | `BC_LOG_LEVEL` | Logging level (default: `INFO`) | No |
 | Debug | `--Debug` | `BC_DEBUG=1` | Enable verbose logging | No |
 
