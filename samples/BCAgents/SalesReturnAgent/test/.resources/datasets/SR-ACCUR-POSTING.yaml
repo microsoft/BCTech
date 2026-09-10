@@ -1,0 +1,130 @@
+suite_setup: SR-ACCUR-SETUP
+tests:
+- name: SR-SINGLE-ITEM-RETURN-POSTED
+  description: Single item return — credit memo created, user approves, agent posts and responds to customer.
+  turns:
+    # The first turn: the customer requests to return some items. The agent creates a draft credit memo and requests review.
+    - query:
+        from: return.customer01@contoso.com
+        title: "Create credit memo for returned items"
+        message: "Hi, we'd like to return 2 Wireless Mouse (SRITEM01). They're defective — the scroll wheel stopped working after 3 days. Our account number is SRCUST01."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 2
+            unit_price: 15
+            line_amount: 30
+        credit_memo_total: 30
+        work_description_contains: "defective"
+    # The second turn: the Business Central user approves the credit memo. The agent posts it and responds to the customer.
+    - query:
+        intervention:
+          instruction: "Approved. Please post the credit memo."
+      expected_data:
+        intervention_request:
+          type: ReviewMessage
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: true
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 2
+            unit_price: 15
+            line_amount: 30
+        credit_memo_total: 30
+
+- name: SR-SINGLE-ITEM-RETURN-POSTED-ALT
+  description: Single item return alt — credit memo created, user approves, agent posts and responds to customer.
+  turns:
+    # The first turn: the customer requests to return some items. The agent creates a draft credit memo and requests review.
+    - query:
+        from: return.customer01@contoso.com
+        title: "Create credit memo for returned items"
+        message: "Hi, we'd like to return 2 Wireless Mouse (SRITEM01). They're defective — the scroll wheel stopped working after 3 days. Our account number is SRCUST01."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 2
+            unit_price: 15
+            line_amount: 30
+        credit_memo_total: 30
+        work_description_contains: "defective"
+    # The second turn: the Business Central user approves the credit memo. The agent posts it and responds to the customer.
+    - query:
+        intervention:
+          instruction: "Approved"
+      expected_data:
+        intervention_request:
+          type: ReviewMessage
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: true
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 2
+            unit_price: 15
+            line_amount: 30
+        credit_memo_total: 30
+
+- name: SR-SINGLE-ITEM-RETURN-DECLINED-AND-RESUBMITTED
+  description: Credit memo created, user requests changes, agent updates and re-requests review, then user approves and agent posts.
+  turns:
+    # Turn 1: customer requests a return, agent creates draft and requests review.
+    - query:
+        from: return.customer01@contoso.com
+        title: "Create credit memo for returned items"
+        message: "Hi, we'd like to return 2 Wireless Mouse (SRITEM01). They're defective. Our account number is SRCUST01."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 2
+            unit_price: 15
+            line_amount: 30
+        credit_memo_total: 30
+    # Turn 2: user declines and requests a quantity change. Agent updates and re-requests review.
+    - query:
+        intervention:
+          instruction: "The quantity is wrong. The customer actually wants to return 3 Wireless Mouse, not 2. Please update the credit memo and resubmit for review."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 3
+            unit_price: 15
+            line_amount: 45
+        credit_memo_total: 45
+    # Turn 3: user approves, agent posts and responds to customer.
+    - query:
+        intervention:
+          instruction: "Approved. Please post the credit memo."
+      expected_data:
+        intervention_request:
+          type: ReviewMessage
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: true
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 3
+            unit_price: 15
+            line_amount: 45
+        credit_memo_total: 45

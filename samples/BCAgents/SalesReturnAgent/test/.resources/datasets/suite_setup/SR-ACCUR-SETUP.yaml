@@ -1,0 +1,103 @@
+name: SR-ACCUR-SETUP
+description: Setup suite for testing handling of attachments in sales return scenarios. It creates customers, items, and posted sales invoices that will be used in the tests.
+suite_setup:
+  setup_actions:
+    # First, create the customers.
+    - action_type: create_customers
+      action_data:
+        # START: Agent specific setup
+        - "No.": SRCUST01
+          Name: Return Customer 01
+          Email: return.customer01@contoso.com
+          Address: 123 Main Street
+          City: Seattle
+          "Post Code": "98101"
+          "Country/Region Code": US
+        - "No.": SRCUST02
+          Name: Return Customer 02
+          Email: return.customer02@contoso.com
+          Address: 456 Oak Avenue
+          City: Portland
+          "Post Code": "97201"
+          "Country/Region Code": US
+        - "No.": SRCUST03
+          Name: Return Customer 03
+          Email: return.customer03@contoso.com
+          Address: 789 Pine Road
+          City: San Francisco
+          "Post Code": "94102"
+          "Country/Region Code": US
+        - "No.": SRCUST04
+          Name: Return Customer 04
+          Email: return.customer04@contoso.com
+          Address: 321 Elm Boulevard
+          City: Denver
+          "Post Code": "80201"
+          "Country/Region Code": US
+          # END: Agent specific setup
+          
+    # Then, create the items.
+    - action_type: create_items
+      action_data:
+        # START: Agent specific setup
+        - "No.": SRITEM01
+          Description: Wireless Mouse
+          "Unit of Measure Code": PCS
+          "Unit Price": 15
+        - "No.": SRITEM02
+          Description: USB Keyboard
+          "Unit of Measure Code": PCS
+          "Unit Price": 30
+        - "No.": SRITEM03
+          Description: Monitor Stand
+          "Unit of Measure Code": PCS
+          "Unit Price": 150
+        - "No.": SRITEM04
+          Description: Office Chair
+          "Unit of Measure Code": PCS
+          "Unit Price": 150
+        - "No.": SRITEM05
+          Description: Desk Lamp
+          "Unit of Measure Code": PCS
+          "Unit Price": 40
+        - "No.": SRITEM06
+          Description: Premium Office Chair
+          "Unit of Measure Code": PCS
+          "Unit Price": 300
+          # END: Agent specific setup
+
+    # Finally, create posted sales invoices for the customers, which will be referenced in the tests.
+    - action_type: create_posted_sales_invoices
+      action_data:
+        # START: Agent specific setup
+        - customer_no: SRCUST01
+          date: "$DateFormula-<-60D>$" # This is a placeholder data formula to avoid hardcoding dates.
+          lines:
+            - item_no: SRITEM01
+              quantity: 5
+            - item_no: SRITEM02
+              quantity: 3
+        - customer_no: SRCUST02
+          date: "$DateFormula-<-45D>$"
+          lines:
+            - item_no: SRITEM02
+              quantity: 3
+            - item_no: SRITEM04
+              quantity: 5
+            - item_no: SRITEM05
+              quantity: 2
+            - item_no: SRITEM06
+              quantity: 1
+        - customer_no: SRCUST03
+          date: "$DateFormula-<-30D>$"
+          lines:
+            - item_no: SRITEM01
+              quantity: 5
+        - customer_no: SRCUST04
+          date: "$DateFormula-<-30D>$"
+          lines:
+            - item_no: SRITEM01
+              quantity: 5
+            - item_no: SRITEM02
+              quantity: 3
+          # END: Agent specific setup

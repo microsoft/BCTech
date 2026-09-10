@@ -1,0 +1,92 @@
+suite_setup: SR-ACCUR-SETUP
+tests:
+- name: SR-SINGLE-ITEM-FULL-RETURN
+  description: Single item type return — customer returns all mouses from the order.
+  turns:
+    - query:
+        from: return.customer03@contoso.com
+        title: "Create credit memo for returned items"
+        message: "Hi, we'd like to return all 5 Wireless Mouse. They're defective — the scroll wheels stopped working after a few days. Our account number is SRCUST03."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST03
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 5
+            unit_price: 15
+            line_amount: 75
+        credit_memo_total: 75
+        work_description_contains: "defective"
+
+- name: SR-SINGLE-ITEM-PARTIAL-RETURN
+  description: Single item type return — customer returns only some of the mouses from the order.
+  turns:
+    - query:
+        from: return.customer03@contoso.com
+        title: "Create credit memo for returned items"
+        message: "Hi, we'd like to return 2 Wireless Mouse. They're defective — the scroll wheel stopped working after 3 days. Our account number is SRCUST03."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST03
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 2
+            unit_price: 15
+            line_amount: 30
+        credit_memo_total: 30
+        work_description_contains: "defect"
+- name: SR-MULTI-ITEM-FULL-RETURN
+  description: Multi-item order — customer returns all mouses and all keyboards.
+  turns:
+    - query:
+        from: return.customer04@contoso.com
+        title: "Create credit memo for returned items"
+        message: "Hi, we need to return all 5 Wireless Mouse and all 3 USB Keyboard. They were all damaged during shipping. Our account number is SRCUST04."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST04
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 5
+            unit_price: 15
+            line_amount: 75
+          - item_no: SRITEM02
+            quantity: 3
+            unit_price: 30
+            line_amount: 90
+        credit_memo_total: 165
+        work_description_contains: "damage"
+
+- name: SR-MULTI-ITEM-PARTIAL-RETURN
+  description: Multi-item order — customer returns some mouses and some keyboards but not all.
+  turns:
+    - query:
+        from: return.customer04@contoso.com
+        title: "Create credit memo for returned items"
+        message: "Hi, we need to return 3 of the 5 Wireless Mouse and 1 of the 3 USB Keyboard. They are defective — the buttons stopped clicking on the mouses and one keyboard has a broken spacebar. Our account number is SRCUST04."
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST04
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 3
+            unit_price: 15
+            line_amount: 45
+          - item_no: SRITEM02
+            quantity: 1
+            unit_price: 30
+            line_amount: 30
+        credit_memo_total: 75
+        work_description_contains: "defect"

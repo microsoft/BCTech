@@ -1,0 +1,155 @@
+suite_setup: SR-ACCUR-SETUP
+tests:
+
+# Scenario 1: Invoice is attached as a PDF (generated from posted invoice data)
+- name: SR-RETURN-WITH-INVOICE-ATTACHED
+  description: >
+    Customer attaches the original sales invoice PDF.
+    Agent should cross-reference and create a credit memo for the requested items.
+  turns:
+    - query:
+        from: return.customer02@contoso.com
+        title: "Return request with invoice attached"
+        message: >
+          Hi, we received damaged Office Chairs and would like to return them.
+          I've attached the original invoice for reference. Please process
+          the return for all 5 Office Chairs (SRITEM04).
+        attachments:
+          - file:
+              action_type: sales-invoice
+              action_data:
+                customer_no: SRCUST02
+                date: "$DateFormula-<-45D>$"
+                lines:
+                  - item_no: SRITEM02
+                    description: USB Keyboard
+                    quantity: 3
+                  - item_no: SRITEM04
+                    description: Office Chair
+                    quantity: 5
+                  - item_no: SRITEM05
+                    description: Desk Lamp
+                    quantity: 2
+                  - item_no: SRITEM06
+                    description: Premium Office Chair
+                    quantity: 1
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST02
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM04
+            quantity: 5
+            unit_price: 150
+            line_amount: 750
+        credit_memo_total: 750
+        work_description_contains: "damage"
+
+# Scenario 2: Invoice referenced by date in the message
+- name: SR-RETURN-WITH-INVOICE-REFERENCE
+  description: >
+    Customer references the original invoice by date.
+    Agent should find the matching posted invoice and create a credit memo.
+  turns:
+    - query:
+        from: return.customer01@contoso.com
+        title: "Return -- referencing original invoice"
+        message: >
+          Hi, we need to return 2 Wireless Mouse (SRITEM01). They stopped
+          working after a week. The original invoice was from about
+          $DateFormula-<-60D>$ (60 days ago).
+          Our account number is SRCUST01.
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM01
+            quantity: 2
+            unit_price: 15
+            line_amount: 30
+        credit_memo_total: 30
+        work_description_contains: "stopped working"
+
+# Scenario 3: No invoice provided, agent finds a matching one
+- name: SR-RETURN-NO-INVOICE-AGENT-FINDS-MATCH
+  description: >
+    Customer does not provide or reference an invoice.
+    A matching posted invoice exists. Agent should find it and proceed.
+  turns:
+    - query:
+        from: return.customer01@contoso.com
+        title: "Return request"
+        message: >
+          Hi, we'd like to return 1 USB Keyboard (SRITEM02). The keys
+          are sticking. Our account number is SRCUST01.
+      expected_data:
+        intervention_request:
+          type: ReviewRecord
+        credit_memo_created: true
+        credit_memo_customer: SRCUST01
+        credit_memo_posted: false
+        credit_memo_lines:
+          - item_no: SRITEM02
+            quantity: 1
+            unit_price: 30
+            line_amount: 30
+        credit_memo_total: 30
+        work_description_contains: "sticking"
+
+# Scenario 4: No matching invoice found -- agent should NOT create a credit memo
+- name: SR-RETURN-NO-INVOICE-NO-MATCH
+  description: >
+    Customer requests a return for an item that was never sold to them.
+    No matching posted invoice exists. Agent should ask for proof of purchase.
+  turns:
+    - query:
+        from: return.customer01@contoso.com
+        title: "Return request"
+        message: >
+          Hi, we'd like to return 3 Monitor Stands (SRITEM03). They
+          don't fit our desks. Our account number is SRCUST01.
+      expected_data:
+        intervention_request:
+          type: Assistance
+        credit_memo_created: false
+
+# Scenario 5: Customer references a non-existent invoice by ID
+- name: SR-RETURN-INVOICE-ID-NOT-FOUND
+  description: >
+    Customer references a specific invoice number that does not exist
+    in the system. Agent should request assistance from the BC user.
+  turns:
+    - query:
+        from: return.customer01@contoso.com
+        title: "Return request with invoice reference"
+        message: >
+          Hi, we need to return 2 Wireless Mouse (SRITEM01). They're
+          defective. Our invoice number is PSI-99999 and our account
+          number is SRCUST01.
+      expected_data:
+        intervention_request:
+          type: Assistance
+        credit_memo_created: false
+
+# Scenario 6: Customer references a valid invoice but items are not in it
+- name: SR-RETURN-INVOICE-ITEMS-MISMATCH
+  description: >
+    Customer references an invoice that exists but wants to return items
+    that are not in that invoice. Agent should request assistance.
+  turns:
+    - query:
+        from: return.customer01@contoso.com
+        title: "Return request -- items not on invoice"
+        message: >
+          Hi, we'd like to return 2 Monitor Stands (SRITEM03). We believe
+          they were on our invoice from about $DateFormula-<-60D>$
+          (60 days ago). Our account number is SRCUST01.
+      expected_data:
+        intervention_request:
+          type: Assistance
+        credit_memo_created: false
