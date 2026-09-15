@@ -92,19 +92,34 @@ table 73926 "Escape Room Venue"
         Rec.StartFirstRoom();
     end;
 
-    procedure Stop()
+    /// <summary>
+    /// Marks the venue as completed. Idempotent: a venue that already has a Stop DateTime is left alone.
+    /// Showing the completion image is up to the caller (see "Escape Room".Stop()).
+    /// </summary>
+    /// <returns>True when the venue got completed by this call.</returns>
+    procedure Stop(): Boolean
     var
-        Venue: Interface iEscapeRoomVenue;
-        EscapeRoomNotifications: Codeunit EscapeRoomNotifications;
         EscapeRoomTelemetry: Codeunit "Escape Room Telemetry";
     begin
+        if not LockAndRefresh() then exit(false);
+        if Rec."Stop DateTime" <> 0DT then exit(false);
+
         Rec."Stop DateTime" := CurrentDateTime();
         Rec.Modify();
+        Commit();
 
-        Commit;
-
-        EscapeRoomNotifications.venueFinished(Rec);
         EscapeRoomTelemetry.LogVenueCompleted(Rec);
+        exit(true);
+    end;
+
+    local procedure LockAndRefresh(): Boolean
+    var
+        Found: Boolean;
+    begin
+        Rec.ReadIsolation := IsolationLevel::UpdLock;
+        Found := Rec.Find('=');
+        Rec.ReadIsolation := IsolationLevel::Default;
+        exit(Found);
     end;
 
     procedure StartFirstRoom()
@@ -119,15 +134,16 @@ table 73926 "Escape Room Venue"
         Room.Start();
     end;
 
-    procedure CloseVenueIfCompleted()
+    /// <returns>True when the venue got completed by this call.</returns>
+    procedure CloseVenueIfCompleted(): Boolean
     var
         Room: Record "Escape Room";
     begin
         Room.Setrange("Venue Id", Rec.Id);
         Room.SetFilter(Status, '<>%1', Room.Status::Completed);
-        if not Room.IsEmpty then exit;
+        if not Room.IsEmpty then exit(false);
 
-        Rec.Stop();
+        exit(Rec.Stop());
     end;
 
     procedure RefreshRooms()

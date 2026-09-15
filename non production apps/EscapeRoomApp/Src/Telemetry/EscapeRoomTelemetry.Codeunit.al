@@ -170,11 +170,11 @@ codeunit 73925 "Escape Room Telemetry"
 
     local procedure MergeExtraDimensions(var CustomDimensions: Dictionary of [Text, Text]; ExtraDimensions: Dictionary of [Text, Text])
     var
-        Key: Text;
+        DimensionKey: Text;
     begin
-        foreach Key in ExtraDimensions.Keys() do
-            if not CustomDimensions.ContainsKey(Key) then
-                CustomDimensions.Add(Key, ExtraDimensions.Get(Key));
+        foreach DimensionKey in ExtraDimensions.Keys() do
+            if not CustomDimensions.ContainsKey(DimensionKey) then
+                CustomDimensions.Add(DimensionKey, ExtraDimensions.Get(DimensionKey));
     end;
 
     local procedure GetCustomDimensionsForRoom(var Room: Record "Escape Room"; var CustomDimensions: Dictionary of [Text, Text])
