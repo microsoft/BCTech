@@ -51,6 +51,7 @@ EscapeRoomData
     VenuesCompleted = countif(eventId == "ALEscapeRoomVenueCompleted"),
     HintsUsed = countif(eventId == "ALEscapeRoomHintRequested"),
     SolutionsUsed = countif(eventId == "ALEscapeRoomSolutionRequested"),
+    CustomEvents = countif(eventId == "ALEscapeRoomCustomEvent"),
     LastActivity = max(taskStopDateTime),
     FastestVenueCompletion = min(VenueCompletionTimeMinutes)
     by Attendee, userId, Partner, environmentName
@@ -83,12 +84,14 @@ EscapeRoomData
     VenueBonusPoints = sumif(Score, eventId == "ALEscapeRoomVenueCompleted"),
     HintPenalty = sumif(Score, eventId == "ALEscapeRoomHintRequested"),
     SolutionPenalty = sumif(Score, eventId == "ALEscapeRoomSolutionRequested"),
+    CustomEventPoints = sumif(Score, eventId == "ALEscapeRoomCustomEvent"),
     TotalScore = sum(Score),
     TasksCompleted = countif(eventId == "ALEscapeRoomTaskFinished"),
     RoomsCompleted = countif(eventId == "ALEscapeRoomCompleted"),
     VenuesCompleted = countif(eventId == "ALEscapeRoomVenueCompleted"),
     HintsUsed = countif(eventId == "ALEscapeRoomHintRequested"),
     SolutionsUsed = countif(eventId == "ALEscapeRoomSolutionRequested"),
+    CustomEvents = countif(eventId == "ALEscapeRoomCustomEvent"),
     FastestVenueCompletion = min(VenueCompletionTimeMinutes)
     by Attendee, Partner, environmentName
 | extend 
@@ -107,11 +110,13 @@ EscapeRoomData
     VenueBonusPoints,
     HintPenalty,
     SolutionPenalty,
+    CustomEventPoints,
     ScoreEfficiency,
     CompletionTimeMinutes,
     TasksCompleted,
     HintsUsed,
-    SolutionsUsed
+    SolutionsUsed,
+    CustomEvents
 | order by TotalScore desc, CompletionTimeMinutes asc nulls last
 
 // =================================================================
@@ -140,3 +145,21 @@ EscapeRoomData
     FinalScore,
     CompletionDate
 | order by CompletionTimeMinutes asc
+
+// =================================================================
+// Query 4: Custom Events Overview
+// =================================================================
+EscapeRoomData
+| where eventId == "ALEscapeRoomCustomEvent"
+| extend
+    CustomEventId = tostring(customDimensions.alEventId),
+    EventSource = tostring(customDimensions.alEventSource)
+| project
+    timestamp,
+    Attendee,
+    Partner,
+    venueId,
+    roomName,
+    CustomEventId,
+    Score
+| order by timestamp desc

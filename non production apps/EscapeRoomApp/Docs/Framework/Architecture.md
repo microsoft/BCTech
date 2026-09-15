@@ -363,9 +363,11 @@ codeunit 50103 "My Task Validation" implements "IEscape Room Task Validation"
 9. Telemetry tracks all events for leaderboard
 
 **Room Navigation:**
-- `OpenNextRoom()` procedure finds next room by sequence
-- Sets current key and ascending order for proper ordering
-- Only InProgress or NotStarted rooms can be opened
+- `OpenNextRoom()` opens the first *Locked* room with a higher sequence than the room that was just completed
+- It is idempotent: when a later room is already *InProgress* it does nothing, so calling it twice (concurrent sessions, or "Update Status" pressed on an already completed room) can never open a second room
+- When no later room is left, it calls `CloseVenueIfCompleted()`, which closes the venue only when *every* room is Completed
+- All status transitions (`Start()`, `Stop()` on rooms and tasks, `Stop()` on the venue) re-read the row under an update lock (`ReadIsolation = UpdLock`) and re-check the status before modifying, so two sessions completing the same task/room serialize instead of both performing the transition
+- State transitions are committed *before* the completion image is shown, so an interrupted or UI-less (background) session cannot leave the next room locked
 
 ---
 
@@ -398,12 +400,19 @@ procedure Start()
 
 ```al
 procedure UpdateStatus()
-// Checks task completion and updates room status
+// Re-validates open tasks and completes the room when none remain
+// On an already completed room it only runs the (idempotent) OpenNextRoom() recovery
 
 procedure CloseRoomIfCompleted()
-// Sets room to Completed when all tasks done
-// Opens next room automatically
-// Logs telemetry for room completion
+// Completes the room when all tasks are done (calls Stop())
+
+procedure Stop()
+// Locks the row, sets Completed, commits, logs telemetry,
+// opens the next room (or closes the venue), then shows the completion image(s)
+
+internal procedure OpenNextRoom() VenueCompleted: Boolean
+// Opens the next Locked room; no-op when a later room is InProgress
+// Returns true when the venue got completed by this call
 ```
 
 ### Escape Room Task Table Procedures

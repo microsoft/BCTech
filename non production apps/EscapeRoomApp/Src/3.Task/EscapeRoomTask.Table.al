@@ -107,14 +107,27 @@ table 73922 "Escape Room Task"
         EscapeRoomNotifications: Codeunit EscapeRoomNotifications;
         EscapeRoomTelemetry: Codeunit "Escape Room Telemetry";
     begin
-        if Rec.Status = Rec.Status::Open then begin
-            Rec.Status := Rec.Status::Completed;
-            Rec."Stop DateTime" := CurrentDateTime();
-            Rec.Modify();
-            Commit();
+        // Re-read under an update lock: task completion is often triggered from event subscribers
+        // that fire in several sessions at once (e.g. the concurrency simulations).
+        if not LockAndRefresh() then exit;
+        if Rec.Status <> Rec.Status::Open then exit;
 
-            EscapeRoomNotifications.TaskFinished(Rec);
-            EscapeRoomTelemetry.LogFinishedTask(Rec);
-        end
+        Rec.Status := Rec.Status::Completed;
+        Rec."Stop DateTime" := CurrentDateTime();
+        Rec.Modify();
+        Commit();
+
+        EscapeRoomTelemetry.LogFinishedTask(Rec);
+        EscapeRoomNotifications.TaskFinished(Rec);
+    end;
+
+    local procedure LockAndRefresh(): Boolean
+    var
+        Found: Boolean;
+    begin
+        Rec.ReadIsolation := IsolationLevel::UpdLock;
+        Found := Rec.Find('=');
+        Rec.ReadIsolation := IsolationLevel::Default;
+        exit(Found);
     end;
 }

@@ -110,6 +110,24 @@ The framework logs seven distinct event types:
 
 ---
 
+#### 8. **EscapeRoomCustomEvent**
+
+**When:** Room extension app calls `LogCustomEvent(...)` to emit a custom scoring or diagnostic event  
+**Score Impact:** -5 to +5 points (caller-defined, clamped)  
+**Custom Dimensions:**
+- VenueId, VenueName
+- PartnerName, FullName
+- RoomName
+- TaskName (when task-scoped)
+- ScorePoints (clamped to -5..+5)
+- EventId (caller-provided identifier, max 80 chars)
+- EventSource: `Custom`
+- Any additional caller-provided dimensions (cannot overwrite standard keys)
+
+**Logged By:** `LogCustomEvent(...)` overloads
+
+---
+
 ## Scoring System
 
 ### Point Values
@@ -122,6 +140,7 @@ The framework logs seven distinct event types:
 | Request hint | **-1** | EscapeRoomHintRequested |
 | View solution | **-3** | EscapeRoomSolutionRequested |
 | Start room | **0** | EscapeRoomStarted |
+| Custom event | **-5..+5** (caller-defined) | EscapeRoomCustomEvent |
 
 ### Scoring Examples
 
@@ -159,6 +178,10 @@ procedure LogRoomStarted(var Room: Record "Escape Room")
 procedure LogRoomCompleted(var Room: Record "Escape Room")
 procedure LogVenueCompleted(var Venue: Record "Escape Room Venue")
 procedure LogNotification(NotificationText: Text)
+procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
+procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
 ```
 
 **Internal Procedures:**
@@ -218,6 +241,54 @@ Every telemetry event includes rich context:
   "ScorePoints": "3"  // or -1, -3, 5, 10, 0
 }
 ```
+
+---
+
+## Custom Events (for room developers)
+
+Room extension apps can emit custom telemetry events using the `LogCustomEvent` overloads on codeunit 73925. Custom events participate in the standard leaderboard scoring pipeline.
+
+### API Signatures
+
+```al
+// Task-scoped (includes task + room + venue dimensions)
+procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
+
+// Room-scoped (includes room + venue dimensions)
+procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
+```
+
+### Usage Example
+
+```al
+// Award a bonus point when participant discovers an easter egg
+procedure OnEasterEggFound(var Task: Record "Escape Room Task")
+var
+    EscapeRoomTelemetry: Codeunit "Escape Room Telemetry";
+begin
+    EscapeRoomTelemetry.LogCustomEvent(
+        Task,
+        'DEV1-EasterEggFound',
+        'Participant discovered the hidden easter egg in Room 3.',
+        2  // +2 bonus points
+    );
+end;
+```
+
+### Rules
+
+- **Score clamping:** `ScorePoints` is clamped to **-5..+5**. Values outside this range are silently clamped to the nearest bound.
+- **EventId convention:** Prefix with your venue/app id, e.g. `DEV1-EasterEggFound`. Max 80 characters; empty defaults to `Unspecified`.
+- **Event name:** All custom events use the fixed Application Insights message `EscapeRoomCustomEvent`. The caller's `EventId` is a custom dimension — not the event name.
+- **EventSource dimension:** Always set to `Custom` to distinguish from built-in framework events.
+- **No overwriting standard dimensions:** Caller-provided `ExtraDimensions` cannot overwrite standard keys (`VenueId`, `VenueName`, `RoomName`, `TaskName`, `ScorePoints`, `EventId`, `EventSource`, etc.). Conflicting keys are silently skipped.
+- **Never throws:** The telemetry call is defensive — empty records produce empty dimension values, same as built-in behavior.
+
+### Leaderboard Impact
+
+Custom events flow into the standard leaderboard queries. The `ScorePoints` dimension is summed alongside all other scoring events. Use the "Custom Events Overview" query in `LeaderboardQueries.kql` to audit custom scoring during events.
 
 ---
 
@@ -446,4 +517,4 @@ end;
 
 ---
 
-**Last Updated:** January 7, 2026
+**Last Updated:** June 10, 2026

@@ -527,6 +527,52 @@ procedure UpdateStatus()
 
 ---
 
+## Telemetry API — Codeunit 73925 "Escape Room Telemetry"
+
+### Built-in Event Procedures
+
+```al
+procedure LogFinishedTask(var Task: Record "Escape Room Task")
+procedure LogHintRequested(var Task: Record "Escape Room Task")
+procedure LogSolutionRequested(var Room: record "Escape Room")
+procedure LogRoomStarted(var Room: Record "Escape Room")
+procedure LogRoomCompleted(var Room: Record "Escape Room")
+procedure LogVenueCompleted(var Venue: Record "Escape Room Venue")
+procedure LogNotification(NotificationText: Text)
+```
+
+### Custom Event Procedures
+
+```al
+/// Task-scoped custom event (standard task/room/venue dimensions added automatically)
+procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+
+/// Room-scoped custom event (standard room/venue dimensions added automatically)
+procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+
+/// Task-scoped custom event with additional caller-provided dimensions
+procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
+
+/// Room-scoped custom event with additional caller-provided dimensions
+procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
+```
+
+**Parameters:**
+- `EventId` — Caller-defined identifier (max 80 chars, trimmed; empty defaults to `Unspecified`). Recommend prefix with venue id, e.g. `DEV1-EasterEggFound`.
+- `EventMessage` — Human-readable message logged to Application Insights.
+- `ScorePoints` — Points added to leaderboard, clamped to -5..+5.
+- `ExtraDimensions` — Optional additional dimensions. Keys that conflict with standard dimensions are silently skipped.
+
+**Behavior:**
+- Application Insights event name is always `EscapeRoomCustomEvent`.
+- Adds `EventId` and `EventSource = Custom` dimensions automatically.
+- Standard dimensions (VenueId, VenueName, RoomName, TaskName, ScorePoints, etc.) cannot be overwritten by caller.
+- Never throws — defensive against empty records.
+
+See [Telemetry Integration](../Framework/Telemetry-Integration.md#custom-events-for-room-developers) for full documentation.
+
+---
+
 ## Backward Compatibility Guarantee
 
 **Framework Version 1.x Promise:**
@@ -553,4 +599,4 @@ procedure UpdateStatus()
 
 ---
 
-**Last Updated:** January 7, 2026
+**Last Updated:** June 10, 2026

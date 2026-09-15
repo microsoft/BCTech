@@ -1011,6 +1011,22 @@ Once your venue is created:
 
 ---
 
+## Custom Scoring with Telemetry
+
+Room apps can emit custom telemetry events for bonus challenges, easter eggs, or penalties using the `LogCustomEvent` overloads on codeunit 73925 "Escape Room Telemetry". Custom events carry the same standard dimensions as built-in events and participate in the leaderboard scoring pipeline (score clamped to -5..+5).
+
+```al
+var
+    EscapeRoomTelemetry: Codeunit "Escape Room Telemetry";
+begin
+    EscapeRoomTelemetry.LogCustomEvent(Task, 'DEV1-BonusChallenge', 'Participant completed the bonus challenge.', 2);
+end;
+```
+
+See [Telemetry Integration - Custom Events](Telemetry-Integration.md#custom-events-for-room-developers) for the full API reference, clamping rules, and EventId conventions.
+
+---
+
 ## Related Documentation
 
 - [Architecture Overview](Architecture.md) - Framework design patterns
@@ -1020,4 +1036,4 @@ Once your venue is created:
 
 ---
 
-**Last Updated:** January 7, 2026
+**Last Updated:** June 10, 2026

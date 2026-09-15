@@ -173,6 +173,11 @@ The queries work with these primary event types:
 - **`ALEscapeRoomHintRequested`**: Hint usage with penalty
 - **`ALEscapeRoomSolutionRequested`**: Solution usage with penalty
 - **`ALEscapeRoomStarted`**: Room/venue start tracking
+- **`ALEscapeRoomCustomEvent`**: Custom events emitted by room extensions (score -5..+5)
+
+### Custom Events & Scoring
+
+Room extension apps can emit custom telemetry events that participate in leaderboard scoring. These events use the `EscapeRoomCustomEvent` event name and carry a caller-defined score (clamped to -5..+5). Use the **"Custom Events Overview"** query in `LeaderboardQueries.kql` to audit custom scoring during an event — it lists timestamp, attendee, partner, venue, room, EventId, and ScorePoints for all custom events.
 
 ### Calculated Fields  
 - **`durationMinutes`**: Calculated from start/stop timestamps

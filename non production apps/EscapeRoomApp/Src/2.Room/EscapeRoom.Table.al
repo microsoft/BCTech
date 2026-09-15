@@ -89,9 +89,18 @@ table 73920 "Escape Room"
     procedure UpdateStatus()
     var
         Task: Record "Escape Room Task";
+        Venue: Record "Escape Room Venue";
+        EscapeRoomNotifications: Codeunit EscapeRoomNotifications;
     begin
         if Rec.Status = Rec.Status::Completed then begin
-            OpenNextRoom();
+            // Recovery path only: if this room was completed but the next room never got started
+            // (e.g. the session was interrupted), open it now. OpenNextRoom() is idempotent and does
+            // nothing while a later room is already in progress, so pressing "Update Status" on a
+            // completed room can never open a second room or close the venue prematurely.
+            if OpenNextRoom() then begin
+                Venue.Get(Rec."Venue Id");
+                EscapeRoomNotifications.VenueFinished(Venue);
+            end;
             exit;
         end;
 
@@ -113,8 +122,6 @@ table 73920 "Escape Room"
         if not Task.IsEmpty() then exit;
 
         Rec.Stop();
-
-        OpenNextRoom();
     end;
 
     procedure CloseRoomIfCompleted()
@@ -129,57 +136,100 @@ table 73920 "Escape Room"
         if not task.IsEmpty then exit;
 
         Rec.Stop();
-
-        OpenNextRoom();
     end;
 
-    internal procedure OpenNextRoom()
+    /// <summary>
+    /// Opens the next locked room after this one, or closes the venue when every room is completed.
+    /// Idempotent: does nothing when a later room is already in progress.
+    /// </summary>
+    /// <returns>True when the venue got completed by this call.</returns>
+    internal procedure OpenNextRoom() VenueCompleted: Boolean
     var
         NextRoom: Record "Escape Room";
         Venue: Record "Escape Room Venue";
     begin
+        NextRoom.ReadIsolation := IsolationLevel::UpdLock;
         NextRoom.SetCurrentKey(Sequence);
         NextRoom.Ascending := true;
         NextRoom.SetRange("Venue Id", Rec."Venue Id");
         NextRoom.SetFilter(Sequence, '>%1', Rec.Sequence);
+
+        // A later room is already open: nothing to do. This is what prevents a second room from
+        // being opened when this procedure runs twice (concurrent sessions, or "Update Status"
+        // pressed on an already completed room).
+        NextRoom.SetRange(Status, NextRoom.Status::InProgress);
+        if NextRoom.FindFirst() then
+            exit(false);
+
         NextRoom.SetRange(Status, NextRoom.Status::Locked);
         if NextRoom.FindFirst() then begin
             NextRoom.Start();
-        end
-        else begin
-            Venue.Get(Rec."Venue Id");
-            Venue.Stop();
+            exit(false);
         end;
+
+        // No later room left to open. Close the venue, but only when every room is really completed.
+        Venue.Get(Rec."Venue Id");
+        exit(Venue.CloseVenueIfCompleted());
     end;
 
     procedure Start()
     var
         EscapeRoomTelemetry: Codeunit "Escape Room Telemetry";
     begin
-        if Rec.Status = Rec.Status::Locked then begin
-            Rec.Status := Rec.Status::InProgress;
-            Rec."Start DateTime" := CurrentDateTime();
-            Rec.Modify();
-            Commit();
+        if not LockAndRefresh() then exit;
+        if Rec.Status <> Rec.Status::Locked then exit;
 
-            EscapeRoomTelemetry.LogRoomStarted(Rec);
+        Rec.Status := Rec.Status::InProgress;
+        Rec."Start DateTime" := CurrentDateTime();
+        Rec.Modify();
+        Commit();
+
+        EscapeRoomTelemetry.LogRoomStarted(Rec);
+    end;
+
+    /// <summary>
+    /// Completes this room, opens the next one and then shows the completion image(s).
+    /// The state transitions are committed before any UI is shown, so an interrupted or
+    /// UI-less (background) session can no longer leave the next room locked.
+    /// </summary>
+    procedure Stop()
+    var
+        Venue: Record "Escape Room Venue";
+        EscapeRoomNotifications: Codeunit EscapeRoomNotifications;
+        EscapeRoomTelemetry: Codeunit "Escape Room Telemetry";
+        VenueCompleted: Boolean;
+    begin
+        if not LockAndRefresh() then exit;
+        if Rec.Status <> Rec.Status::InProgress then exit;
+
+        Rec.Status := Rec.Status::Completed;
+        Rec."Stop DateTime" := CurrentDateTime();
+        Rec.Modify();
+        Commit();
+
+        EscapeRoomTelemetry.LogRoomCompleted(Rec);
+
+        VenueCompleted := OpenNextRoom();
+
+        EscapeRoomNotifications.RoomFinished(Rec);
+        if VenueCompleted then begin
+            Venue.Get(Rec."Venue Id");
+            EscapeRoomNotifications.VenueFinished(Venue);
         end;
     end;
 
-    procedure Stop()
+    /// <summary>
+    /// Re-reads this room from the database while taking an update lock on its row, so that
+    /// concurrent sessions serialize on the status transition instead of both performing it.
+    /// </summary>
+    local procedure LockAndRefresh(): Boolean
     var
-        EscapeRoomNotifications: Codeunit EscapeRoomNotifications;
-        EscapeRoomTelemetry: Codeunit "Escape Room Telemetry";
+        Found: Boolean;
     begin
-        if Rec.Status = Rec.Status::InProgress then begin
-            Rec.Status := Rec.Status::Completed;
-            Rec."Stop DateTime" := CurrentDateTime();
-            Rec.Modify();
-            Commit();
-
-            EscapeRoomNotifications.RoomFinished(Rec);
-            EscapeRoomTelemetry.LogRoomCompleted(Rec);
-        end;
+        Rec.ReadIsolation := IsolationLevel::UpdLock;
+        Found := Rec.Find('=');
+        Rec.ReadIsolation := IsolationLevel::Default;
+        exit(Found);
     end;
 
     procedure GetHint()

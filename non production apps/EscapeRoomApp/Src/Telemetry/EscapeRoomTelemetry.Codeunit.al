@@ -97,6 +97,86 @@ codeunit 73925 "Escape Room Telemetry"
             );
     end;
 
+    /// <summary>Log a custom telemetry event scoped to a task. Standard task/room/venue dimensions are added automatically.</summary>
+    procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+    var
+        ExtraDimensions: Dictionary of [Text, Text];
+    begin
+        LogCustomEvent(EscapeRoomTask, EventId, EventMessage, ScorePoints, ExtraDimensions);
+    end;
+
+    /// <summary>Log a custom telemetry event scoped to a room. Standard room/venue dimensions are added automatically.</summary>
+    procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer)
+    var
+        ExtraDimensions: Dictionary of [Text, Text];
+    begin
+        LogCustomEvent(EscapeRoom, EventId, EventMessage, ScorePoints, ExtraDimensions);
+    end;
+
+    /// <summary>Task-scoped custom event with additional caller-provided dimensions.</summary>
+    procedure LogCustomEvent(var EscapeRoomTask: Record "Escape Room Task"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
+    var
+        CustomDimensions: Dictionary of [Text, Text];
+    begin
+        GetCustomDimensionsForTask(EscapeRoomTask, CustomDimensions);
+        AddScorePoints(CustomDimensions, ClampScorePoints(ScorePoints));
+        AddCustomEventDimensions(CustomDimensions, EventId);
+        MergeExtraDimensions(CustomDimensions, ExtraDimensions);
+
+        this.LogMessage(
+                'EscapeRoomCustomEvent',
+                EventMessage,
+                CustomDimensions
+            );
+    end;
+
+    /// <summary>Room-scoped custom event with additional caller-provided dimensions.</summary>
+    procedure LogCustomEvent(var EscapeRoom: Record "Escape Room"; EventId: Text; EventMessage: Text; ScorePoints: Integer; ExtraDimensions: Dictionary of [Text, Text])
+    var
+        CustomDimensions: Dictionary of [Text, Text];
+    begin
+        GetCustomDimensionsForRoom(EscapeRoom, CustomDimensions);
+        AddScorePoints(CustomDimensions, ClampScorePoints(ScorePoints));
+        AddCustomEventDimensions(CustomDimensions, EventId);
+        MergeExtraDimensions(CustomDimensions, ExtraDimensions);
+
+        this.LogMessage(
+                'EscapeRoomCustomEvent',
+                EventMessage,
+                CustomDimensions
+            );
+    end;
+
+    local procedure ClampScorePoints(ScorePoints: Integer): Integer
+    begin
+        if ScorePoints < -5 then
+            exit(-5);
+        if ScorePoints > 5 then
+            exit(5);
+        exit(ScorePoints);
+    end;
+
+    local procedure AddCustomEventDimensions(var CustomDimensions: Dictionary of [Text, Text]; EventId: Text)
+    begin
+        EventId := EventId.Trim();
+        if EventId = '' then
+            EventId := 'Unspecified';
+        if StrLen(EventId) > 80 then
+            EventId := CopyStr(EventId, 1, 80);
+
+        CustomDimensions.Add('EventId', EventId);
+        CustomDimensions.Add('EventSource', 'Custom');
+    end;
+
+    local procedure MergeExtraDimensions(var CustomDimensions: Dictionary of [Text, Text]; ExtraDimensions: Dictionary of [Text, Text])
+    var
+        DimensionKey: Text;
+    begin
+        foreach DimensionKey in ExtraDimensions.Keys() do
+            if not CustomDimensions.ContainsKey(DimensionKey) then
+                CustomDimensions.Add(DimensionKey, ExtraDimensions.Get(DimensionKey));
+    end;
+
     local procedure GetCustomDimensionsForRoom(var Room: Record "Escape Room"; var CustomDimensions: Dictionary of [Text, Text])
     var
         Venue: Record "Escape Room Venue";
