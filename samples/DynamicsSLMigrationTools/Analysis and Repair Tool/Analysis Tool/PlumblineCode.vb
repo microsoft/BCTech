@@ -133,7 +133,7 @@ Module PlumblineCode
     Public gcPS_TIStagingFolder$ = ""   ' Staging folder of file to upload via Transaction Import
     Public gcTI_ControlFile$ = ""       ' Tranaction Import control file
     Public gcTI_LogFile$ = ""           ' Tranaction Import log file
-    Public gcReleaseVersion$ = "Release: 2026-04-07"    ' Version of the release being deployed, used for logging
+    Public gcReleaseVersion$ = "Release: 2026-09-28"    ' Version of the release being deployed, used for logging
 
     Public Class VersionSLCls
 
