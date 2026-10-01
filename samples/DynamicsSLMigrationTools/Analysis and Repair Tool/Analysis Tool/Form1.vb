@@ -151,14 +151,6 @@ Friend Class Form1
                 Exit Sub
             End If
 
-            Call Analyze_DB.Analyze_DB()
-            If OkToContinue = True Then
-                UpdateAnalysisToolStatusBar("Finished analyzing Database Objects")
-            Else
-                UpdateAnalysisToolStatusBar("Error encountered analyzing Database Objects")
-                Exit Sub
-            End If
-
             'Analyze MC - Multi-Company
             Call Analyze_MC.Analyze_MC()
             If OkToContinue = True Then
@@ -309,6 +301,24 @@ Friend Class Form1
                 UpdateAnalysisToolStatusBar("Finished analyzing Currency Manager at " + Now.ToString("hh:mm:ss"))
             Else
                 UpdateAnalysisToolStatusBar("Error encountered analyzing the Currency Manager Module")
+                Exit Sub
+            End If
+
+            'Analyze Customizations
+            Call Analyze_CU.Analyze_CU()
+            If OkToContinue = True Then
+                UpdateAnalysisToolStatusBar("Finished analyzing Customizations")
+            Else
+                UpdateAnalysisToolStatusBar("Error encountered analyzing Customizations")
+                Exit Sub
+            End If
+
+            'Analyze Database Objects
+            Call Analyze_DB.Analyze_DB()
+            If OkToContinue = True Then
+                UpdateAnalysisToolStatusBar("Finished analyzing Database Objects")
+            Else
+                UpdateAnalysisToolStatusBar("Error encountered analyzing Database Objects")
                 Exit Sub
             End If
 
@@ -557,6 +567,6 @@ Friend Class Form1
                 Call MessageBox.Show("Dynamics SL Applications folder path is invalid.  Please enter a valid directory.", "Invalid Directory", MessageBoxButtons.OK)
             End If
         End If
-
     End Sub
+
 End Class

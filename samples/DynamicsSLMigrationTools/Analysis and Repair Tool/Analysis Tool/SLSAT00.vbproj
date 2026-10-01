@@ -79,6 +79,7 @@
     <Compile Include="Analyze_BM.vb" />
     <Compile Include="Analyze_CA.vb" />
     <Compile Include="Analyze_CM.vb" />
+    <Compile Include="Analyze_CU.vb" />
     <Compile Include="Analyze_DB.vb" />
     <Compile Include="Analyze_GL.vb" />
     <Compile Include="Analyze_IN.vb" />
