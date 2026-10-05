@@ -1,5 +1,4 @@
-﻿
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
 
 Module CustomerCode
     '=======================================================================================
@@ -219,6 +218,73 @@ Module CustomerCode
             End While
 
             Call sqlReader.Close()
+
+            '**************************************************
+            '*** Check for invalid Customer Email Addresses ***
+            '**************************************************
+            sqlStmt = "SELECT CustId, Name, EMailAddr, Phone FROM Customer WHERE RTRIM(EMailAddr) <> ''"
+
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            Dim firstInvalidEmailFound As Boolean = False
+
+            While sqlReader.Read()
+                Dim customerId As String = Convert.ToString(sqlReader("CustId")).Trim
+                Dim emailAddress As String = Convert.ToString(sqlReader("EMailAddr")).Trim
+
+                If Not HelperFunctions.IsValidEmail(emailAddress) Then
+                    If Not firstInvalidEmailFound Then
+                        Call LogMessage("", oEventLog)
+                        Call LogMessage("", oEventLog)
+                        msgText = "ERROR: Invalid Customer email address(es) found. Email addresses must be in a valid format."
+                        msgText = msgText + vbNewLine + "List of Customer IDs with invalid email addresses:"
+                        Call LogMessage(msgText, oEventLog)
+                        firstInvalidEmailFound = True
+                    End If
+
+                    Call LogMessage("Customer ID: " + customerId + vbTab + "Email Address: " + emailAddress, oEventLog)
+                    NbrOfErrors_Cust = NbrOfErrors_Cust + 1
+                End If
+            End While
+
+            sqlReader.Close()
+
+
+            '***************************************************************************************************************
+            '*** Check for invalid Customer Phone Numbers ***
+            '***************************************************************************************************************
+            sqlStmt = "SELECT CustId, Name, EMailAddr, Phone FROM Customer WHERE RTRIM(Phone) <> ''"
+
+            Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+            Dim firstInvalidPhoneFound As Boolean = False
+
+            While (sqlReader.Read())
+
+                Call SetCustomerValues(sqlReader, bCustomerInfo)
+
+                'Check if phone number is valid using HelperFunctions.IsValidPhoneNumber
+                If Not HelperFunctions.IsValidPhoneNumber(bCustomerInfo.Phone) Then
+
+                    'Check if this is the first occurrence of an invalid phone number
+                    If Not firstInvalidPhoneFound Then
+                        Call LogMessage("", oEventLog)
+                        Call LogMessage("", oEventLog)
+                        msgText = "WARNING: Invalid Customer phone number(s) found. Phone numbers must be in a valid format."
+                        msgText = msgText + vbNewLine + "List of Customer IDs with invalid phone numbers:"
+                        Call LogMessage(msgText, oEventLog)
+                        firstInvalidPhoneFound = True
+                    End If
+
+                    'Write CustID and phone number to event log
+                    Call LogMessage("Customer ID: " + bCustomerInfo.CustId + vbTab + "Phone: " + bCustomerInfo.Phone, oEventLog)
+                    NbrOfWarnings_Cust = NbrOfWarnings_Cust + 1
+                End If
+
+            End While
+
+            sqlReader.Close()
+
 
             '************************************
             '*** Check for recurring Invoices ***
@@ -481,7 +547,6 @@ Module CustomerCode
                     Call LogMessage("Number of AR_Balances records found with a blank Key Field: " + CStr(nbrKeysBlk), oEventLog)
 
                     Call LogMessage("", oEventLog)
-
 
                     ' Get the list of accthist records with one or more blank keys.
                     sqlStmt = "SELECT CpnyId, CustId FROM AR_Balances WHERE RTRIM(CpnyId) = '' or RTRIM(CustId) = ''"

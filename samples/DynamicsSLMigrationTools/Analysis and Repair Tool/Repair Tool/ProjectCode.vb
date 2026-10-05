@@ -140,6 +140,79 @@ Module ProjectCode
         End While
         Call sqlReader.Close()
 
+
+        '*********************************************************
+        '*** Check for invalid Project Address email addresses ***
+        '*********************************************************
+        sqlStmt = "SELECT addr_key_cd, addr_key, addr_type_cd, email FROM PJADDR WHERE RTRIM(email) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidEmailFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetPJAddrValues(sqlReader, bPJAddrInfo)
+
+            'Check if email address is valid using HelperFunctions.IsValidEmail
+            If Not HelperFunctions.IsValidEmail(bPJAddrInfo.email) Then
+
+                'Check if this is the first occurrence of an invalid email address
+                If Not firstInvalidEmailFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "ERROR: Invalid Project Address email address(es) found. Email addresses must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Project Addresses with invalid email addresses:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidEmailFound = True
+                End If
+
+                'Write Project Address details and email address to event log
+                Call LogMessage("Address Key Code: " + bPJAddrInfo.addr_key_cd + vbTab + "Address Key: " + bPJAddrInfo.addr_key + vbTab + "Address Type: " + bPJAddrInfo.addr_type_cd + vbTab + "Email Address: " + bPJAddrInfo.email, oEventLog)
+                NbrOfErrors_Proj = NbrOfErrors_Proj + 1
+            End If
+
+        End While
+
+        Call sqlReader.Close()
+
+
+        '*******************************************************
+        '*** Check for invalid Project Address phone numbers ***
+        '*******************************************************
+        sqlStmt = "SELECT addr_key_cd, addr_key, addr_type_cd, email, phone FROM PJADDR WHERE TRIM(phone) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidPhoneFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetPJAddrValues(sqlReader, bPJAddrInfo)
+
+            'Check if phone number is valid using HelperFunctions.IsValidPhoneNumber
+            If Not HelperFunctions.IsValidPhoneNumber(bPJAddrInfo.phone) Then
+
+                'Check if this is the first occurrence of an invalid phone number
+                If Not firstInvalidPhoneFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid Project Address phone number(s) found. Phone numbers must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Project Addresses with invalid phone numbers:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidPhoneFound = True
+                End If
+
+                'Write Project Address details and phone number to event log
+                Call LogMessage("Address Key Code: " + bPJAddrInfo.addr_key_cd + vbTab + "Address Key: " + bPJAddrInfo.addr_key + vbTab + "Address Type: " + bPJAddrInfo.addr_type_cd + vbTab + "Phone: " + bPJAddrInfo.phone, oEventLog)
+                NbrOfWarnings_Proj = NbrOfWarnings_Proj + 1
+            End If
+
+        End While
+
+        Call sqlReader.Close()
+
+
         '*******************************************
         '*** Remove time values from date fields ***
         '*******************************************
