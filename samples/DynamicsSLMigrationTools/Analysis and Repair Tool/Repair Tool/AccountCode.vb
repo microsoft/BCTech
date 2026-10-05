@@ -232,6 +232,81 @@ Module AccountCode
         End If
 
 
+        '**********************************************************************
+        '*** Check for inactive General Ledger accounts that have a balance ***
+        '**********************************************************************
+
+        If OkToContinue = True Then
+
+            Try
+                sqlStmt = "WITH RowBalances AS (" +
+                    " SELECT ah.CpnyID, ah.Acct, ah.Sub, ah.LedgerID, ah.FiscYr," +
+                    " COALESCE(ah.BegBal, 0)" +
+                    " + COALESCE(ah.PtdBal00, 0)" +
+                    " + COALESCE(ah.PtdBal01, 0)" +
+                    " + COALESCE(ah.PtdBal02, 0)" +
+                    " + COALESCE(ah.PtdBal03, 0)" +
+                    " + COALESCE(ah.PtdBal04, 0)" +
+                    " + COALESCE(ah.PtdBal05, 0)" +
+                    " + COALESCE(ah.PtdBal06, 0)" +
+                    " + COALESCE(ah.PtdBal07, 0)" +
+                    " + COALESCE(ah.PtdBal08, 0)" +
+                    " + COALESCE(ah.PtdBal09, 0)" +
+                    " + COALESCE(ah.PtdBal10, 0)" +
+                    " + COALESCE(ah.PtdBal11, 0)" +
+                    " + COALESCE(ah.PtdBal12, 0) AS RowBalance" +
+                    " FROM AcctHist AS ah" +
+                    " WHERE EXISTS (SELECT 1 FROM GLSetup AS gl WHERE gl.LedgerID = ah.LedgerID)" +
+                    " AND EXISTS (SELECT 1 FROM Account AS a WHERE a.Acct = ah.Acct AND a.Active = 0)" +
+                    "), Balances AS (" +
+                    " SELECT CpnyID, Acct, Sub, LedgerID, FiscYr, SUM(RowBalance) AS Balance" +
+                    " FROM RowBalances" +
+                    " GROUP BY CpnyID, Acct, Sub, LedgerID, FiscYr" +
+                    ")" +
+                    " SELECT CpnyID, Acct, Sub, LedgerID, FiscYr, Balance" +
+                    " FROM Balances" +
+                    " WHERE Balance <> 0" +
+                    " ORDER BY Acct"
+
+                Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+                If (sqlReader.HasRows = True) Then
+                    Call LogMessage("", oEventLog)
+
+                    While sqlReader.Read()
+                        msgText = "ERROR: Inactive General Ledger account has a nonzero balance."
+                        msgText = msgText + vbTab + "Company: " + Convert.ToString(sqlReader("CpnyID")).Trim
+                        msgText = msgText + vbTab + "Account: " + Convert.ToString(sqlReader("Acct")).Trim
+                        msgText = msgText + vbTab + "Subaccount: " + Convert.ToString(sqlReader("Sub")).Trim
+                        msgText = msgText + vbTab + "Ledger: " + Convert.ToString(sqlReader("LedgerID")).Trim
+                        msgText = msgText + vbTab + "Fiscal Year: " + Convert.ToString(sqlReader("FiscYr")).Trim
+                        msgText = msgText + vbTab + "Balance: " + Convert.ToDecimal(sqlReader("Balance")).ToString("N2")
+
+                        Call LogMessage(msgText, oEventLog)
+                        NbrOfErrors_COA = NbrOfErrors_COA + 1
+                    End While
+
+                    Call LogMessage("", oEventLog)
+                End If
+
+                Call sqlReader.Close()
+
+            Catch ex As Exception
+                If sqlReader IsNot Nothing AndAlso sqlReader.IsClosed = False Then
+                    sqlReader.Close()
+                End If
+
+                Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
+                Call LogMessage("", oEventLog)
+                Call LogMessage("Error while checking for inactive General Ledger accounts with balances.", oEventLog)
+                Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
+                Call LogMessage("", oEventLog)
+                OkToContinue = False
+                NbrOfErrors_COA = NbrOfErrors_COA + 1
+            End Try
+
+        End If
 
 
         '***********************************************************************************'
@@ -348,7 +423,6 @@ Module AccountCode
             End If
 
         End If
-
 
         '  Detect AcctHist records with blank key fields - keys are CpnyId, Acct, Sub, LedgerID, FiscYr
         If OkToContinue = True Then
@@ -868,12 +942,16 @@ Module AccountCode
         '**********************************************************
         '*** Remove time values from date fields - Cash Manager ***
         '**********************************************************
+
         If OkToContinue = True Then
+
             Try
                 sqlReader.Close()
                 Call UpdateDates_CA(oEventLog)
+
             Catch ex As Exception
                 Call MessageBox.Show(ex.Message + vbNewLine + ex.StackTrace, "Error", MessageBoxButtons.OK)
+
                 Call LogMessage("", oEventLog)
                 Call LogMessage("Error in removing time values in date fields - Cash Manager", oEventLog)
                 Call LogMessage("Error Detail: " + ex.Message.Trim + vbNewLine + ex.StackTrace, oEventLog)
@@ -881,10 +959,13 @@ Module AccountCode
                 OkToContinue = False
                 NbrOfErrors_COA = NbrOfErrors_COA + 1
             End Try
+
         End If
+
         '*********************************************************************************************
         '*** Identify GLTran records with Fiscal Year different from period to post year
         '*********************************************************************************************
+
         Dim SqlTranConn As SqlConnection = Nothing
         Dim cmdText As String = ""
         Dim Operation As OperationType
@@ -1075,7 +1156,6 @@ Module AccountCode
             End If
         End If
 
-
         'Call oEventLog.LogMessage(EndProcess, "Validate General Ledger")
         Call oEventLog.LogMessage(EndProcess, "Repair Tool " & gcReleaseVersion.Trim & vbNewLine & "Validate General Ledger")
 
@@ -1092,7 +1172,40 @@ Module AccountCode
 
         termsList.Clear()
 
+
+        '***********************************************
+        '*** Check for invalid Address Phone Numbers ***
+        '***********************************************
+        sqlStmt = "SELECT AddrId, Phone FROM Address WHERE TRIM(Phone) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidAddressPhoneFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetAddressValues(sqlReader, bAddressInfo)
+
+            'Check if phone number is valid using HelperFunctions.IsValidPhoneNumber
+            If Not HelperFunctions.IsValidPhoneNumber(bAddressInfo.Phone) Then
+
+                'Check if this is the first occurrence of an invalid phone number
+                If Not firstInvalidAddressPhoneFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid Address phone number(s) found. Phone numbers must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Address IDs with invalid phone numbers:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidAddressPhoneFound = True
+                End If
+
+                'Write Address ID and phone number to event log
+                Call LogMessage("Address ID: " + bAddressInfo.AddrId + vbTab + "Phone: " + bAddressInfo.Phone, oEventLog)
+                NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
+            End If
+
+        End While
+
+        Call sqlReader.Close()
     End Sub
-
-
 End Module

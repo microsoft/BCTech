@@ -1,5 +1,4 @@
-﻿
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
 
 
 Module PurchasingCode
@@ -273,6 +272,201 @@ Module PurchasingCode
 
         End While
         sqlReader.Close()
+
+        '*******************************************************************************************
+        '*** Check for invalid BuyerEmail, ShipEmail, and VendEmail addresses on Purchase Orders ***
+        '*******************************************************************************************
+        sqlStmt = "SELECT PONbr, POType, Status, VendID, BuyerEmail, ShipEmail, VendEmail FROM PurchOrd WHERE RTRIM(PONbr) <> '' AND (RTRIM(BuyerEmail) <> '' OR RTRIM(ShipEmail) <> '' OR RTRIM(VendEmail) <> '')"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidEmailFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetPurchOrdValues(sqlReader, bPurchOrdInfo)
+
+            Dim hasInvalidEmail As Boolean = False
+
+            ' Check BuyerEmail
+            If Not String.IsNullOrWhiteSpace(bPurchOrdInfo.BuyerEmail) AndAlso Not HelperFunctions.IsValidEmail(bPurchOrdInfo.BuyerEmail) Then
+                hasInvalidEmail = True
+            End If
+
+            ' Check ShipEmail
+            If Not String.IsNullOrWhiteSpace(bPurchOrdInfo.ShipEmail) AndAlso Not HelperFunctions.IsValidEmail(bPurchOrdInfo.ShipEmail) Then
+                hasInvalidEmail = True
+            End If
+
+            ' Check VendEmail
+            If Not String.IsNullOrWhiteSpace(bPurchOrdInfo.VendEmail) AndAlso Not HelperFunctions.IsValidEmail(bPurchOrdInfo.VendEmail) Then
+                hasInvalidEmail = True
+            End If
+
+            ' If any email is invalid, log it
+            If hasInvalidEmail Then
+
+                ' Check if this is the first occurrence of an invalid email address
+                If Not firstInvalidEmailFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid email address(es) found on Purchase Orders. Email addresses must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Purchase Orders with invalid email addresses:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidEmailFound = True
+                End If
+
+                ' Write PO details and invalid email addresses to event log
+                Call LogMessage("PO Number: " + bPurchOrdInfo.PONbr + vbTab + "Vendor ID: " + bPurchOrdInfo.VendID, oEventLog)
+
+                If Not String.IsNullOrWhiteSpace(bPurchOrdInfo.BuyerEmail) AndAlso Not HelperFunctions.IsValidEmail(bPurchOrdInfo.BuyerEmail) Then
+                    Call LogMessage("  - Other Information tab: " + bPurchOrdInfo.BuyerEmail, oEventLog)
+                End If
+
+                If Not String.IsNullOrWhiteSpace(bPurchOrdInfo.ShipEmail) AndAlso Not HelperFunctions.IsValidEmail(bPurchOrdInfo.ShipEmail) Then
+                    Call LogMessage("  - Shipping Information tab: " + bPurchOrdInfo.ShipEmail, oEventLog)
+                End If
+
+                If Not String.IsNullOrWhiteSpace(bPurchOrdInfo.VendEmail) AndAlso Not HelperFunctions.IsValidEmail(bPurchOrdInfo.VendEmail) Then
+                    Call LogMessage("  - Vendor Information tab: " + bPurchOrdInfo.VendEmail, oEventLog)
+                End If
+
+                Call LogMessage("", oEventLog)
+                NbrOfWarnings_PO = NbrOfWarnings_PO + 1
+            End If
+
+        End While
+
+        Call sqlReader.Close()
+
+
+        '****************************************************************
+        '*** Check for invalid Purchase Order Address email addresses ***
+        '****************************************************************
+        sqlStmt = "SELECT VendId, OrdFromId, EmailAddr, Phone FROM POAddress WHERE RTRIM(EmailAddr) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidPOAddressEmailFound As Boolean = False
+
+        While sqlReader.Read()
+            Dim vendorId As String = Convert.ToString(sqlReader("VendId")).Trim
+            Dim orderFromId As String = Convert.ToString(sqlReader("OrdFromId")).Trim
+            Dim emailAddress As String = Convert.ToString(sqlReader("EmailAddr")).Trim
+
+            If Not HelperFunctions.IsValidEmail(emailAddress) Then
+
+                If Not firstInvalidPOAddressEmailFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid Purchase Order Address email address(es) found. Email addresses must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of PO Addresses with invalid email addresses:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidPOAddressEmailFound = True
+                End If
+
+                Call LogMessage("Vendor ID: " + vendorId + vbTab + "Order From ID: " + orderFromId + vbTab + "Email Address: " + emailAddress, oEventLog)
+                NbrOfWarnings_PO = NbrOfWarnings_PO + 1
+            End If
+        End While
+
+        Call sqlReader.Close()
+
+
+        '**************************************************************
+        '*** Check for invalid Purchase Order Setup email addresses ***
+        '**************************************************************
+        sqlStmt = "SELECT SetupID, BillEmail, ShipEmail FROM POSetup WHERE RTRIM(BillEmail) <> '' OR RTRIM(ShipEmail) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidPOSetupEmailFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetPOSetupValues(sqlReader, bPOSetupInfo)
+
+            Dim hasInvalidEmail As Boolean = False
+
+            ' Check BillEmail
+            If Not String.IsNullOrEmpty(bPOSetupInfo.BillEmail) AndAlso Not HelperFunctions.IsValidEmail(bPOSetupInfo.BillEmail) Then
+                hasInvalidEmail = True
+            End If
+
+            ' Check ShipEmail
+            If Not String.IsNullOrEmpty(bPOSetupInfo.ShipEmail) AndAlso Not HelperFunctions.IsValidEmail(bPOSetupInfo.ShipEmail) Then
+                hasInvalidEmail = True
+            End If
+
+            ' If any email is invalid, log it
+            If hasInvalidEmail Then
+
+                ' Check if this is the first occurrence of an invalid email address
+                If Not firstInvalidPOSetupEmailFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid Purchase Order Setup email address(es) found. Email addresses must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of PO Setup records with invalid email addresses:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidPOSetupEmailFound = True
+                End If
+
+                ' Write PO Setup details and invalid email addresses to event log
+                Call LogMessage("Setup ID: " + bPOSetupInfo.SetupID, oEventLog)
+
+                If Not String.IsNullOrEmpty(bPOSetupInfo.BillEmail) AndAlso Not HelperFunctions.IsValidEmail(bPOSetupInfo.BillEmail) Then
+                    Call LogMessage("  - Bill Email: " + bPOSetupInfo.BillEmail, oEventLog)
+                End If
+
+                If Not String.IsNullOrEmpty(bPOSetupInfo.ShipEmail) AndAlso Not HelperFunctions.IsValidEmail(bPOSetupInfo.ShipEmail) Then
+                    Call LogMessage("  - Ship Email: " + bPOSetupInfo.ShipEmail, oEventLog)
+                End If
+
+                Call LogMessage("", oEventLog)
+                NbrOfWarnings_PO = NbrOfWarnings_PO + 1
+            End If
+
+        End While
+
+        Call sqlReader.Close()
+
+
+        '***********************************************************************************************************************
+        '*** Check for invalid Purchase Order Address phone numbers ***
+        '***********************************************************************************************************************
+        sqlStmt = "SELECT VendId, OrdFromId, Phone FROM POAddress WHERE TRIM(Phone) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidPOAddressPhoneFound As Boolean = False
+
+        While sqlReader.Read()
+            Dim vendorId As String = Convert.ToString(sqlReader("VendId")).Trim
+            Dim orderFromId As String = Convert.ToString(sqlReader("OrdFromId")).Trim
+            Dim phoneNumber As String = Convert.ToString(sqlReader("Phone")).Trim
+
+            'Check if phone number is valid using HelperFunctions.IsValidPhoneNumber
+            If Not HelperFunctions.IsValidPhoneNumber(phoneNumber) Then
+
+                'Check if this is the first occurrence of an invalid phone number
+                If Not firstInvalidPOAddressPhoneFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid Purchase Order Address phone number(s) found. Phone numbers must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of PO Addresses with invalid phone numbers:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidPOAddressPhoneFound = True
+                End If
+
+                'Write PO Address details and phone number to event log
+                Call LogMessage("Vendor ID: " + vendorId + vbTab + "Order From ID: " + orderFromId + vbTab + "Phone: " + phoneNumber, oEventLog)
+                NbrOfWarnings_PO = NbrOfWarnings_PO + 1
+            End If
+
+        End While
+
+        Call sqlReader.Close()
+
 
         '*******************************************
         '*** Remove time values from date fields ***

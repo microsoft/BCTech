@@ -1,8 +1,4 @@
-﻿
-Imports System.Data.SqlClient
-
-
-
+﻿Imports System.Data.SqlClient
 
 Module SalesOrder
 
@@ -291,6 +287,42 @@ Module SalesOrder
             NbrOfErrors_SO = NbrOfErrors_SO + 1
         End While
         Call SqlReader.Close()
+
+        '***********************************************************************************************************************************************
+        '*** Check for invalid SOAddress Email Addresses ***
+        '***********************************************************************************************************************************************
+        sqlStmt = "SELECT CustId, ShipToId, EmailAddr FROM SOAddress WHERE RTRIM(EmailAddr) <> ''"
+
+        Call sqlFetch_1(SqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidEmailFound As Boolean = False
+
+        While (SqlReader.Read())
+
+            Call SetSOAddressValues(SqlReader, bSOAddressInfo)
+
+            'Check if email address is valid using HelperFunctions.IsValidEmail
+            If Not HelperFunctions.IsValidEmail(bSOAddressInfo.EmailAddr) Then
+
+                'Check if this is the first occurrence of an invalid email address
+                If Not firstInvalidEmailFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "ERROR: Invalid Ship To email address(es) found. Email addresses must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Customer IDs and Ship To IDs with invalid email addresses:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidEmailFound = True
+                End If
+
+                'Write CustId, ShipToId, and email address to event log
+                Call LogMessage("Customer ID: " + bSOAddressInfo.CustId + vbTab + "Ship To ID: " + bSOAddressInfo.ShipToId + vbTab + "Email Address: " + bSOAddressInfo.EmailAddr, oEventLog)
+                NbrOfErrors_SO = NbrOfErrors_SO + 1
+            End If
+
+        End While
+
+        Call SqlReader.Close()
+
 
         '*******************************************
         '*** Remove time values from date fields ***

@@ -28,12 +28,13 @@ Module Analyze_DB
 
             '=== Objects ===
 
-            Form1.UpdateAnalysisToolStatusBar("Analyzing Custom Objects")
+            Form1.UpdateAnalysisToolStatusBar("Analyzing Custom Database Objects")
 
-            Call oEventLog.LogMessage(0, "CUSTOM OBJECTS")
+            Call oEventLog.LogMessage(0, "")
+            Call oEventLog.LogMessage(0, "CUSTOM DATABASE OBJECTS")
             Call oEventLog.LogMessage(0, "")
 
-            Call oEventLog.LogMessage(0, "Analyzing Custom Objects")
+            Call oEventLog.LogMessage(0, "Analyzing Custom Database Objects")
 
             '============
             ' TABLES

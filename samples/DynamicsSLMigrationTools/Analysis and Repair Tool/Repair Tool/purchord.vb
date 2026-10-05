@@ -7,6 +7,9 @@ Module PURCHORD
         Private m_POType As String
         Private m_Status As String
         Private m_VendId As String
+        Private m_BuyerEmail As String
+        Private m_ShipEmail As String
+        Private m_VendEmail As String
 
         Public Property PONbr() As String
 
@@ -55,6 +58,42 @@ Module PURCHORD
 
         End Property
 
+        Public Property BuyerEmail() As String
+
+            Get
+                Return m_BuyerEmail
+            End Get
+
+            Set(ByVal setval As String)
+                m_BuyerEmail = setval
+            End Set
+
+        End Property
+
+        Public Property ShipEmail() As String
+
+            Get
+                Return m_ShipEmail
+            End Get
+
+            Set(ByVal setval As String)
+                m_ShipEmail = setval
+            End Set
+
+        End Property
+
+        Public Property VendEmail() As String
+
+            Get
+                Return m_VendEmail
+            End Get
+
+            Set(ByVal setval As String)
+                m_VendEmail = setval
+            End Set
+
+        End Property
+
 
 
     End Class
@@ -66,12 +105,18 @@ Module PURCHORD
             PurchOrdBuf.POType = sqlReader("POType")
             PurchOrdBuf.Status = sqlReader("Status")
             PurchOrdBuf.VendID = sqlReader("VendId")
+            PurchOrdBuf.BuyerEmail = sqlReader("BuyerEmail")
+            PurchOrdBuf.ShipEmail = sqlReader("ShipEmail")
+            PurchOrdBuf.VendEmail = sqlReader("VendEmail")
 
         Catch
             PurchOrdBuf.PONbr = String.Empty
             PurchOrdBuf.POType = String.Empty
             PurchOrdBuf.Status = String.Empty
             PurchOrdBuf.VendID = String.Empty
+            PurchOrdBuf.BuyerEmail = String.Empty
+            PurchOrdBuf.ShipEmail = String.Empty
+            PurchOrdBuf.VendEmail = String.Empty
 
         End Try
 

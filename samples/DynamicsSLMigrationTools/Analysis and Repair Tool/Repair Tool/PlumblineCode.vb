@@ -64,7 +64,7 @@ Module PlumblineCode
 
     Public DateField_LogMess_Line1 As String = "WARNING: Date Field Time Values Removed"
     Public DateField_LogMess_Line2 As String = "During the migration from Dynamics SL To D365 Business Central, Date fields containing time values may result in incorrect Date mappings. To ensure accurate data migration, all time values have now been removed from date fields for the following tables:"
-    Public gcReleaseVersion$ = "Release: 2026-04-07"
+    Public gcReleaseVersion$ = "Release: 2026-09-30"
 
     '************************
     '***** Public Subs ******

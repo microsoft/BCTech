@@ -50,6 +50,8 @@ Module Analyze_CM
             Call AddStatusInfo(sqlStringExec, sDescr, sResult)
 
             If sResult = "NO" Then
+                Call oEventLog.LogMessage(0, "")
+                Call oEventLog.LogMessage(0, "")
                 Exit Sub
             End If
 

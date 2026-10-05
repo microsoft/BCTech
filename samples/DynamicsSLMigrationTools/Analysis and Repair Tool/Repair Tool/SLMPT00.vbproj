@@ -126,6 +126,7 @@
     <Compile Include="Functions.vb" />
     <Compile Include="glsetup.vb" />
     <Compile Include="gltran.vb" />
+    <Compile Include="HelperFunctions.vb" />
     <Compile Include="INSetup.vb" />
     <Compile Include="inventory.vb" />
     <Compile Include="InventoryCode.vb" />
@@ -150,17 +151,23 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="pcsetup.vb" />
+    <Compile Include="PJAddr.vb" />
     <Compile Include="pjcontrl.vb" />
     <Compile Include="pjemploy.vb" />
     <Compile Include="pjpent.vb" />
     <Compile Include="pjproj.vb" />
     <Compile Include="PlumblineCode.vb" />
+    <Compile Include="POAddress.vb" />
+    <Compile Include="POSetup.vb" />
     <Compile Include="ProjectCode.vb" />
     <Compile Include="PurchasingCode.vb" />
-    <Compile Include="purchord..vb" />
+    <Compile Include="purchord.vb" />
     <Compile Include="PurOrdDet.vb" />
     <Compile Include="SalesOrder.vb" />
+    <Compile Include="Address.vb" />
+    <Compile Include="Site.vb" />
     <Compile Include="segdef.vb" />
+    <Compile Include="SOAddress.vb" />
     <Compile Include="vendor.vb" />
     <Compile Include="VendorCode.vb" />
     <Compile Include="WrkIChk.vb" />

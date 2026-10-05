@@ -1,5 +1,4 @@
-﻿
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
 
 Module InventoryCode
     '=======================================================================================
@@ -356,6 +355,42 @@ Module InventoryCode
                 Exit Sub
             End Try
         End If
+
+
+        '*********************************************************
+        '*** Check for invalid Site Phone Numbers ***
+        '*********************************************************
+        sqlStmt = "SELECT SiteId, Phone FROM Site WHERE TRIM(Phone) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidSitePhoneFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetSiteValues(sqlReader, bSiteInfo)
+
+            'Check if phone number is valid using HelperFunctions.IsValidPhoneNumber
+            If Not HelperFunctions.IsValidPhoneNumber(bSiteInfo.Phone) Then
+
+                'Check if this is the first occurrence of an invalid phone number
+                If Not firstInvalidSitePhoneFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid Site phone number(s) found. Phone numbers must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Site IDs with invalid phone numbers:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidSitePhoneFound = True
+                End If
+
+                'Write SiteID and phone number to event log
+                Call LogMessage("Site ID: " + bSiteInfo.SiteId + vbTab + "Phone: " + bSiteInfo.Phone, oEventLog)
+                NbrOfWarnings_Inv = NbrOfWarnings_Inv + 1
+            End If
+
+        End While
+
+        Call sqlReader.Close()
 
 
         '*****************************************************************************************************************

@@ -1,5 +1,4 @@
-﻿
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
 
 Module VendorCode
     '=======================================================================================
@@ -209,7 +208,7 @@ Module VendorCode
         '***************************************************************************************************************
         '*** Check for Vendor Names that are greater than 50 characters in length ***
         '***************************************************************************************************************
-        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name FROM Vendor WHERE LEN(RTRIM(Name)) > 50"
+        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name, EMailAddr FROM Vendor WHERE LEN(RTRIM(Name)) > 50"
 
         Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
 
@@ -234,6 +233,78 @@ Module VendorCode
 
         sqlReader.Close()
 
+        '***************************************************************************************************************
+        '*** Check for invalid Vendor Email Addresses ***
+        '***************************************************************************************************************
+        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name, EMailAddr FROM Vendor WHERE RTRIM(EMailAddr) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidEmailFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetVendorValues(sqlReader, bVendorInfo)
+
+            'Check if email address is valid using HelperFunctions.IsValidEmail
+            If Not HelperFunctions.IsValidEmail(bVendorInfo.EMailAddr) Then
+
+                'Check if this is the first occurrence of an invalid email address
+                If Not firstInvalidEmailFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "ERROR: Invalid Vendor email address(es) found. Email addresses must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Vendor IDs with invalid email addresses:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidEmailFound = True
+                End If
+
+                'Write VendID and email address to event log
+                Call LogMessage("Vendor ID: " + bVendorInfo.VendId + vbTab + "Email Address: " + bVendorInfo.EMailAddr, oEventLog)
+                NbrOfErrors_Vend = NbrOfErrors_Vend + 1
+            End If
+
+        End While
+
+        sqlReader.Close()
+
+
+        '**********************************************
+        '*** Check for invalid Vendor Phone Numbers ***
+        '**********************************************
+        sqlStmt = "SELECT APAcct, ExpAcct, PerNbr, VendId, Name, EMailAddr, Phone FROM Vendor WHERE RTRIM(Phone) <> ''"
+
+        Call sqlFetch_1(sqlReader, sqlStmt, SqlAppDbConn, CommandType.Text)
+
+        Dim firstInvalidPhoneFound As Boolean = False
+
+        While (sqlReader.Read())
+
+            Call SetVendorValues(sqlReader, bVendorInfo)
+
+            'Check if phone number is valid using HelperFunctions.IsValidPhoneNumber
+            If Not HelperFunctions.IsValidPhoneNumber(bVendorInfo.Phone) Then
+
+                'Check if this is the first occurrence of an invalid phone number
+                If Not firstInvalidPhoneFound Then
+                    Call LogMessage("", oEventLog)
+                    Call LogMessage("", oEventLog)
+                    msgText = "WARNING: Invalid Vendor phone number(s) found. Phone numbers must be in a valid format."
+                    msgText = msgText + vbNewLine + "List of Vendor IDs with invalid phone numbers:"
+                    Call LogMessage(msgText, oEventLog)
+                    firstInvalidPhoneFound = True
+                End If
+
+                'Write VendID and phone number to event log
+                Call LogMessage("Vendor ID: " + bVendorInfo.VendId + vbTab + "Phone: " + bVendorInfo.Phone, oEventLog)
+                NbrOfWarnings_Vend = NbrOfWarnings_Vend + 1
+            End If
+
+        End While
+
+        sqlReader.Close()
+
+
         '************************************
         '*** Check for recurring Vouchers ***
         '************************************
@@ -243,11 +314,11 @@ Module VendorCode
         If recVouchers > 0 Then
             'Display a warning message
             Call LogMessage("", oEventLog)
+            Call LogMessage("", oEventLog)
             msgText = "WARNING: Open Recurring Vouchers exists. Recurring vouchers will not be migrated and will need to be manually entered in the new system."
             msgText = msgText + " To assist with the move of your recurring batches, the details of your recurring batches can be identified using the"
             msgText = msgText + " Recurring Vouchers (03.700.00) report, Standard format to identify the AP recurring batches identified by this utility."
             Call LogMessage(msgText, oEventLog)
-
 
             NbrOfWarnings_Vend = NbrOfWarnings_Vend + 1
             Call LogMessage("", oEventLog)
@@ -523,8 +594,6 @@ Module VendorCode
         If (My.Computer.FileSystem.FileExists(oEventLog.LogFile.FullName.Trim())) Then
             bSLMPTStatus.VendEventLogName = oEventLog.LogFile.FullName
         End If
-
-
 
     End Sub
 
