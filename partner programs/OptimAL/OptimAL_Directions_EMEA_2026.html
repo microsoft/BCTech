@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>OptimAL – Performance for Business Central Partners | Directions EMEA 2026</title>
+<style>
+h1,h2,h3,.big,.stat b{font-family:"Segoe UI Variable Display","Segoe UI","Segoe UI Web (West European)",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif}
+button,input{font-family:inherit}
+:root{
+  --font:"Segoe UI Variable Text","Segoe UI","Segoe UI Web (West European)",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  --navy:#003580; --navy-2:#0a2a5c; --blue:#0F9ED5; --teal:#1392B4; --sky:#C9E3F2;
+  --ink:#16243A; --muted:#5B6672; --bg:#F5F8FC; --card:#FFFFFF; --line:#DCE6F0;
+  --orange:#B04A08;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.55;font-size:17px;-webkit-text-size-adjust:100%}
+a{color:var(--blue)}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+/* top bar */
+.topbar{background:var(--navy-2);color:#fff;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.topbar .wrap{display:flex;justify-content:space-between;gap:12px;padding-block:8px;flex-wrap:wrap}
+.topbar b{color:var(--sky)}
+.logobar{background:#fff;border-bottom:1px solid var(--line)}
+.logobar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.logobar img{height:64px;width:auto;display:block}
+.logobar .ev{font-size:13px;font-weight:700;color:var(--navy);text-align:end;line-height:1.3}
+.logobar .ev span{display:block;color:var(--muted);font-weight:600}
+.foot-logo{display:inline-block;background:#fff;border-radius:10px;padding:6px 8px;margin-bottom:10px}
+.foot-logo img{height:34px;width:auto;display:block}
+@media (max-width:560px){.logobar img{height:50px}}
+/* hero */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#0b4fa3 55%,var(--teal) 100%);color:#fff;padding:56px 0 64px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset-inline-end:-120px;top:-120px;width:360px;height:360px;border-radius:50%;border:48px solid rgba(255,255,255,.07)}
+.brand{font-weight:700;font-size:44px;letter-spacing:-.02em;margin:0 0 4px}
+.brand span{color:var(--sky)}
+.hero h1{font-size:28px;line-height:1.25;margin:10px 0 14px;font-weight:600;max-width:680px}
+.hero p.lead{font-size:18px;color:#E3EEF8;max-width:640px;margin:0 0 26px}
+.btn{display:inline-block;background:#fff;color:var(--navy);text-decoration:none;font-weight:700;padding:13px 22px;border-radius:999px;margin:4px 8px 4px 0}
+.btn.ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:999px;font-size:14px}
+/* nav */
+nav.jump{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav.jump .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;white-space:nowrap}
+nav.jump a{text-decoration:none;color:var(--navy);font-weight:600;font-size:14px;padding:6px 12px;border-radius:999px;background:var(--bg)}
+/* sections */
+section{padding:52px 0}
+section.alt{background:#fff}
+.eyebrow{color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:13px;margin:0 0 6px}
+h2{font-size:30px;line-height:1.2;color:var(--navy);margin:0 0 14px}
+h3{font-size:19px;margin:0 0 6px;color:var(--navy)}
+p.intro{color:var(--muted);max-width:720px;margin:0 0 26px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+section.alt .card{background:var(--bg)}
+.card p{margin:0;color:var(--muted);font-size:16px}
+.num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;margin-bottom:10px}
+/* audience */
+.fit li{margin-bottom:8px}
+.fit{padding-inline-start:20px;margin:10px 0 0;color:var(--ink);font-size:16px}
+.track{border-top:5px solid var(--navy)}
+.track.var{border-top-color:var(--orange)}
+.tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px;background:var(--sky);color:var(--navy);margin-bottom:10px}
+.track.var .tag{background:#F8E3D5;color:var(--orange)}
+/* phases */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.phase{background:var(--navy);color:#fff;border-radius:14px;padding:22px}
+.phase:nth-child(2){background:#0b4fa3}
+.phase:nth-child(3){background:var(--teal)}
+.phase h3{color:#fff;font-size:22px}
+.phase p{color:#E3EEF8;margin:0;font-size:16px}
+.phase small{display:block;color:var(--sky);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+/* results */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:26px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+.stat b{display:block;font-size:34px;color:var(--navy);line-height:1.1}
+.stat span{font-size:14px;color:var(--muted)}
+.quote{background:#fff;border-inline-start:5px solid var(--blue);border-radius:12px;padding:18px 20px;font-size:17px;color:var(--navy);font-weight:600}
+.quote cite{display:block;font-style:normal;font-weight:600;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:8px}
+.quote.voice{font-weight:400;color:var(--ink);border-inline-start-color:var(--teal);background:var(--bg)}
+.case{background:linear-gradient(135deg,var(--navy),#0b4fa3);color:#fff;border-radius:16px;padding:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;align-items:center;margin-bottom:22px}
+.case h3{color:#fff;font-size:22px}
+.case p{color:#E3EEF8;margin:0}
+.big{font-size:56px;font-weight:700;line-height:1;color:#fff}
+.big small{font-size:18px;font-weight:600;display:block;color:var(--sky);margin-top:6px}
+.logos{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.logos span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--navy)}
+.patterns{columns:2 220px;column-gap:24px;padding-inline-start:20px;margin:0;color:var(--ink);font-size:16px}
+.patterns li{margin-bottom:6px;break-inside:avoid}
+/* cta */
+.cta{background:var(--navy-2);color:#fff;text-align:center;padding:60px 0}
+.cta h2{color:#fff}
+.cta p{color:#C9E3F2;max-width:620px;margin:0 auto 22px}
+.cta .facts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 26px}
+.cta .facts span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 16px;font-weight:600}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;max-width:760px;margin:0 auto 28px;text-align:start}
+.steps div{background:rgba(255,255,255,.08);border-radius:12px;padding:14px}
+.steps b{display:block;color:#fff}
+.steps span{font-size:14px;color:#C9E3F2}
+footer{background:#06183a;color:#9fb3cc;font-size:13px;padding:22px 0;text-align:center}
+@media (max-width:560px){
+  body{font-size:16px}
+  .brand{font-size:36px}
+  .hero h1{font-size:23px}
+  h2{font-size:25px}
+  section{padding:40px 0}
+  .big{font-size:46px}
+}
+@media (prefers-color-scheme: dark){
+  :root{color-scheme:light}
+}
+@media print{
+  nav.jump{display:none}
+  .hero,.case,.phase,.cta{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><span><b>Directions EMEA 2026</b> · Microsoft Dynamics 365 Business Central</span><span>Partner initiative</span></div></div>
+
+<div class="logobar"><div class="wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPgAAABfCAIAAABKqp0KAAAACXBIWXMAAAsSAAALEgHS3X78AAAgAElEQVR42u19eVQUZ7r+t1R1093sNPsOgrK5oBgFNRpxSdRo1CRzmXudjMZocm5mkvuLJxNjTMyMzpjJjXoni3o1MclkcYkTTcQdlzhEIC4IioLsCDRr003vXfX9/ijE7qpicQHaufWcOpzupuqrt6qeeuv93q0gIQRIkPCvDiSdAgkS0SVIkIguQYJEdAkSJKJLkCARXYIEiegSJEhElyBBIroEiegSJEhElyBBIroECRLRJUiQiC5BwqCCkk7BQwGDybbj+wutOhOC0PF3hmXHDA96IiPeTTaUl9JksX928FJjW6dQvOTYgLmT4lUKmUR0CX2AEHAiv/yVzccAgAA41w9APDMtcmJKeLDaYwgl1Bssb35yUmuwA0CcJYTe7rID73tMGRMpmS4S+gBL2M278yCmIAIQQacF44zREUF+7kMroUohe+qxREhhgYSgw8zuyykxmKwS0SX0gYKr9aevNADIAgSdFoxiQtwzx0dDZ4NhKIhOL5+fSgDhS4ggAOyuI1ea2o0S0SX0gXc+OwuRGIcQyhgVkZ4S7gpCDgvzWTBlGKAogZCg0wa+OVHMDmnRpkR0V8eFGw3HLtZCQCAPCAX6KhdNHeEicvr7qBZNS6AQgQjxRSXs5r0FWr1ZIrqEHvHmjjMQEoAhwBBgdPsDhBiOjgucM3GY64j66OjI8UmhjkJ2LYi0mtjPD1+RiC5BHOev3TpVWAMRhAhBhBw+ILmMWj53DMYudAXDAzxnT4iVy3C3kHcWYN+4+7zRbJOILkEE6774JwuAmHUO4yP8Fj463NUEfm7WyBC1u4jAELZ02j48cEEiugQ+8q/XF1U1Awj5LkUEIcarnh3vgjKH+XvMmRhLUUhEZki2/OMXO8NIRJfghE+PFWk6TKLOlrAA96zpSa4p9isL0+RySvQppDXY/jf7ikR0CXdQVNX8c0kDwEiEMTS9/reTXVby6GDvOY/EikpuJWT7EYnoEhxw4nJNya02iADE0HnBgV6yrGmJriz82l+ny2QIYsQXHoHaFv2OoeC6RHRXRFWT7mBeOcAUgJC/yNw2PDfZxTtmjojwm/tILMBYKL/Owh7IqzBb7YMskpTU1Tdqa2tzcnKqq6tpmk5PT3/kkUfc3NwGbncsS366Wpd7owECAJCzJoIoNsDt8XExQx7z7xPrl0z+R14lRAJNCkHBzcYThdVz02L/RYheVFRUVVVlt9s59YMQUqvV48ePl8lkDxHLf/755y1btlRXV3MHcvz48czMzFdeeUWpVA7QHnUm65enSwBFAZYBBACO0twHSv77J1N9Pfq4zYrLm9Zszalq0AqSZsmICL/df366P2LsOV68ftc5jPgjbHpl1mNp0X1uPizY+9nJcXt+rgSs/Y78AAAA2s1M9oWqqckR7gr6ISZ6YWHht99+m5uba7fbWZblm0oIRUZGzp07Nysry/VZ3traunv37vLy8m5TQafT7d+/Pykpaf78+QO008LK5jOlTQCwwJlkAKK4QLfJSaE88glxvKDiYG45IKyI9qluf7uyKTE6oE8xapr0RVWt/EEgqmvW9/NA1jz9yJ786jsEvzMI+Ud+xfKZKWNiAgbtUj5IG/3q1atLlix5/vnnjx8/bjAYLBaLTQCLxVJaWvrBBx9MmTLl0KFDQ8tjQgjLsizLNjc390T06upq/mWC8OLFizqdbiBEYlh2048XIQBQCIznjouND/HpfYRmrfGnK3UAY4CR2AI//bF/c0HxzRHot9EU5KtaMC4cYpp/IAC0m8mhC5VWO/OQEd1sNm/duvU3v/lNSUlJP+dJRqPx7bfffuutt5qamgaZ3wzD6HQ6jUZz6tSpP//5z9OmTVu8eLHomhaLpbOzU3hENptN+LB6ILhW136kWNOlzp0zckN83GalRlJ9xfxrm3TnS25BDCCFRBYEdh3vF9EhBBALNuechv2Dl1K+ZFoiQUTE1QiYz86UtHUOXprXAzBdOjo63n///cOHD3M68q62PXr0qFarXbVqVURExOAcsN1uP3LkyOHDhwsLC202G6fU/f39RVdWq9WRkZFarZZ3XHFxcZ6engMh3upvciGGANHcEwcAAAgLCAEQTogPzhge3OcD4ZfSxiYzgRQEPeherZk58M/S+RnxfelACGkICBLQ/y7mwWOiA6Ynh54qaQQMz81C6vXMP/LKX5w18uHQ6J2dnR9++CHHcjGtANFtiDoKWJbNy8vbuHFjR0fH4BywxWL5/PPPCwoKzGYzwzC9K+bAwMAFCxYolUrkkHqalJQ0depUhB68Z7a6RWeyMbNTQp6dEPPshJhZo8ImDAuQyzCg5So3+umJw2QU7n0Eg9n+xcmrELKAQgAjQCGnD11fwf/2J5EQQoCx04YUghiDu/H3hPio5qRGyzAACPEXYv/rocv6wao8ui+NzrLsDz/8cODAAZEbCCGapseOHRscHOzr69vR0VFfX3/p0iWj0cjTjizL5ufnf/LJJ3/4wx8G4YAhhDKZrJ9PHoTQrFmzvLy8Tp482dHRgTGOiIiYN29edHT0QMimlNHbX3hMTmGlnAIAGCw2k9Ve2aTLK9PcaNTOTe17p7XNurybTRAB2KsKK7ipqWvWh/n3VmYKEUQU4lWoAoggujvP5uOjI77OLb1ULZjXAtLYafvqn6UrM5Ndneg1NTUffvihKGmmTZu2bNmywMBAmqZpmrbb7Tabrbm5efv27SdPnhROCr/77rvp06enpaW5muOFpunJkyenpqYyDAMAkMvlcrl8gPbl76nw91R0f/VRyQEAcUHeUxND9WYbTaG+5tbg6zMlkKYBY3OyWwQV1UY7s/unG/9v4bjeTReAhaYLAnfpwY8J9JoxMvxqfZuVEW5p/+OBCyumJw1CWOC+nr/bt2+3Wq08omOMFy1atGHDhvj4eC8vL6VSSdO0QqHw9PSMjY3duHHjnDlzRB0gf/nLX1zWz6hSqTw9PT09PQeO5b1ARmE/975DVAzLfny0CCIW0shx8fJwgzR2/MUKyIGCij4ffbxxupa7J+W/pcerPZUiUV4I243WD08Uu7RG12g0x48fF6rzxMTEN954o5cN161bV1dXd+XKFd62NTU1BQUFjkrdaDS2t7c7nllCiK+vr0Kh4KztysrK06dP37p1ixCCMQ4LC5s6dWpkZKQwJqXX6/V6PQDAZDLZ7XbhDLW9vd1kMnG78PDw6J5r6vV6nU7nKAPG2MfHx3EXFoulubmZZ7V7eHh4eHhwg7e2th47dqy8vNxms1EUFRcXl5mZqVarKYpyNOGMRmN+fn5eXp7BYIAQKhSKCRMmPPLIIwqFoj9TguOXa0wEQew0DfVWuW1ZOuU3n5wGdqsji+u0nedLGybEB/c2GcVY6EcH6K6JPjzYe/KI4L0F5aIG4/8cK3p5RorrEv27774T0T0yWX9M7bfffnvRokXC30+cOOFI9Ozs7Pfff9/xfoAQrl279oknnrh69erHH3+cn58PIexeAUK4ffv2yZMnr1ixYvhwp6KEbdu27d69GyFEbsPxv+3t7bNnz+4eZPHixa+99hr3dceOHbt373Zc39PTc+PGjampqd2/XLp06dVXX3Wc17Ism5WV9eqrr9bX1+/cufPgwYM8OTdv3rx06dIlS5a4u7tzc/qDBw9u27bNZDI57uvAgQOenp6rVq2aPn06xn3MRHeevgYQABA58nL+hNj0ESEIMiyFHSwY2GKw5hTX9U50IGajg3uyMv7r8VEHr1SbrSKO8zaTdde5689NGtji13s3XbKzs4XqPC0tjccwUUREREyaNIn3ECSE5OXlOd2FFMU4g2VZmUx26tSpl19+uaCggHMOdnOX+3zu3LkXX3wxJyeHdwdijLkRRCcVjnuhadpxQ5ZlHf+rUCh4nMMY89bBGFMUVVhY+Lvf/e7gwYNCOQEAu3btWrdundVqbW5uXrdu3QcffGAwGBxXI4QwDKPValevXr1v377eT2mTznSoqA4iAjG6s1DUf0xJ8FDKpo8MRzTt8C9ogyi/sknXs9MDIug0FEYQI4QRuCd3U0qY32OJYRBjYe6umWW/PH9zoINH90j05uZmjUYjtOp+/etf93OEp556SmjtGQyGysrKXudbJD8//91339Xr9T15BlmW1ev177zzzpUrQ1aNCyG8cePGxo0bq6ure/LwsCx7+vTpjz/++NNPPz116lQvhwwA2LlzZ1lZWS973JZTzA8S0TjAWz5pRLC7nH40KQzIaefoDyiub79c09LzMYiEnACF7nniuGHheIDFykkhvN6oPVhY7YpEv3btmuj1Gz16dD9HSExMFJ4yu93e2NjYO9EPHTrERSu7nfTCcQghJpPJcXbLMIzdbr8dge5h7tXVRQLdfxIswzCXLl0qLS3lfJQ9hREIIfv27eNSIXo5HM64EnXjdmPfhUqIoRMvZfTC8bEAAAqjsTEBPkoMaewQ44QNBuvFqpbeblax2Cq4VwdJXKDXnJGhgBYpPuqwMtnFdcaBzN29Rxu9ra1N+KOfn1//MxNlMplcLjca+Q2cLBZL7xtyK2CMZ8yYMXLkSLvdXlRUdOLECR47CSHl5eWHDx9+/PHHAQBRUVEZGRmcXXHt2jWDwcDzIY4fP55zINrt9sjI+20UyLKsxWKBEHLzTpVKVVxcLBpWM5vNHKnGjBkzZcoUjPH58+dzc3OFN1tlZaXJZOIm4jycvHarXmcCXDTndp4gpOjnJncZvtH+nqMi1WfKNMDxMYjx2ZuNWRPjAjwVoqYLoBBgIS+ycA+T0TtKfUFadulhAMzCm+rMzYaLta2TYgNdi+jClCYIYVRU1F3smKKCg4MrKiocr6jdbtdqtX1u6+3tvWnTppSUFG7brKysJUuWLF++nCONI9uys7M5oi9YsIDLNzQajStWrCgtLXXcr5eX15YtW7ptoQfi1oUQzpo167XXXvP29iaEPP3001OmTFm9erWQwRDCrKysFStWcCReuHDh3//+961btzquSQjRaDRVVVUJCQnCfe25VGkhBFJO09BgL9mwQC/uW5TaIzXK/2xVq1MoHoIz5ZoGnVGU6ABBiBFAPK/L3aUA8BDmo5qXEPDDtQZBRgBoMrPHS26Ni1C70diFTBeeRuzm7l0Ncm/lCxDCdevWpaSkdNsbAICEhIS1a9fyfHCEkNraWpvNBpyTEUTH7LYxejIe7vqihoVlZWV5e3t3733cuHEZGRm8wSGECQkJixYtUiqV3OHI5fLp06fHxcXx1uSsLxGrxmgpvNVGnOvWkIx+Ni1G5pABNjZK7aPEnNHSXdhmw/Tp0gYbw4pPRin+ZBRS6H5CL3IKv/hoIhCbkgLA7rtcVdmqHyCNfo9Si3Ka80P3H0IrBWOsUql6Z3lKSkpGRobwXxMnTvT19eWRw2w29z6HGzhERkYmJjpVdqpUqqSkJKGvKTk5mZfT5uPjExvb3wKck6UN9Z3m2wktXHYKJhjOHRlBOxB9VJhfuNrj9gpdKxNIDhTXihrHBEF+kgyFAMZO7su7x4hAr1nxAZCmIeJuttsLILUm9nR5o31g0kLvUWhOUfEu2M2bN/s/gt1ur6qq4j3HIYS9V+5ACDlTRAiM8ahRo3g/Wq3W/qQBP/ASTIRQaGiocFqiVqt5PyoUCqHJ5+XlFRoaKrwlRPd1ulyjtRNIIUhxc02MaKx2p3UWe2F9++X6tsv1bYX17UYb46GU314Nd62MyS8afXmLTuxUI0Rjh5UxpDCi0X0+7Tzd6HGRatjVi9QpfRcCkl/dYmMGpBz2Hm10LuYn1OhGo7GfNWbC3AGOrMJbSKgpeyK6l5eXY1yGI4fV2nd+3APPtUAIic4ahTuiKIqLGfHQz9NY1qIr1mghhjz3tg2AP2RfcqxFQhDU60wQ87UbpPDXlypTw9VC9yLAEAqKVu/zXLUYLAeu1gLCdI0MnXJyHk8MlVMDUrB/j4OKTokIIb34g3k4e/askOgKhYL3uBdClED3NkkYfAgP+T4fJlcbOy5pOhy6YnSZ4J0MU9FhLGs3dC832gx6O+PcgoLLF2C+La4VMdO7bHTnfhUUIvfBQ5aAE6UN19pMAJKupLE7zWqo8eHeE6MC0MAkeN2j1FFRUULCEUK++eabfo7AxQt5P0ZERNyzwuByRYS/O4Y5B810GRx0mK0nKzRI7miQ3P4g7KnCMdvJFEHcmgaAj5Q1iExGMd90uasKIyFsDLM1rwxCcsdAd5Bt8aiocG+Va01GAQCzZs0SkrK0tPTnn3/uc9v8/PyrV6/y6IUQ6sn+7tPhwzkl6urqeGPSNO3j4zP4psvgQGOwnK1tAZjwp4x3u2Cy63KV8KSIrEmj+3EvnirXXNdaAGH5aYwIJ6hVGVH+A3eu7p3oCxYsEFWrGzdubG1t7U0PdXSsWbNGqETd3d2feOKJvq3SHrwonZ2dRUVFvGHd3Nz64754GDU6IeB6i66OxV3Fnbfdf87TTdHFYWXuAwI5Nc1tRmcnGBZzL2KM7sPr8pcz1wixi7VlBFNigpKDvF2R6MnJyRMmTBDqwrq6utdff13UA8NFK1euXCkMrEIIf/vb3/aZjEoI+eGHH0TdyaK2kJ+fn+i8+V9Ao5vtzBfFNZC18YqXMYW8FLTaXd7DInOTU90rd39AFPryag3vnPBzCigEMWy3WDUGS53eJLrU6k0Gm3h61qkKzZV2EwREaFCFeikWJIUN6Om6r9nbiy++ePnyZbPZzGNYYWHhm2+++eSTTyYlJfn6+mKM7XZ7c3NzUVHR/v37hdksEML4+PhnnnmmP6q3oqJi+/btL7zwguPU89SpU19++SUvzQshNG3atP7Q+mHU6K1m66m6FgiRU0AUwGB3t/9MjfFXykXfGUQheLhCs6+sAQjc1d+XN/4+Lc7JRqcE+egAfnW97mRtS08vJLKw7LKUyPlxIVhwkjecLSGMrcvEh5Cr+AaEQAjGhPpOjFC7LtGHDx++YsWKzZs3i9Jx06ZNwcHBPj4+CCGGYVpaWlpaWoSsghB6eHisWbOm/8U7n3/+eX19fUZGRlBQkFarzc/PP3bsGC/+z/lAn3zySSHLfX19hWbPV199NXPmTKPR2NbWNmrUqIGofX6wOFKpkauUxGpxrpqDCf4eL4zurbo0Se15oKYV2Phe1zq98UJj+9ggn26nC00jIHDGlOtN5T23qYC0/Gqrbt6wYB7RT1ZoLja2Q8cMAtjFeBlGz48d8PZ090V0rmqusbGRV5rQzeaGhoZu/S2qNSGEbm5ua9euFfVX9gSGYY4cOXLu3DmFQmG1WkU7CCCEli1bJvTKI4RCQkJ47naz2bxt27Z9+/YxDKPX648ePer6ffM+vnSTZm3AOTHEjUKz++rCNczHfaSP7Hq7nafUGcD+WNFwh+iIyLBoywy2VyOQkYm5Zf77fCmBQNRjkxrmOzU6wKWJDgBQKBQvvfSSyWTqKYm0F6uAi4OuXr360Ucf7f8euzna2dnZ2dnZ0zppaWm/+tWvhP/iMkn279/P+91oNHLeSYTQxYsXJ0yY4MosP9/Q2gmBjAI8JnrI0KTQvm2AuTHBVVdrWGelDiEsbu3otNrcZTQAACMopyAhdzd7QZRIM6+faprL2juBaOslhP5rQvwgnLEH8IBWKpVvvfXW0qVLZTJZ/2d1EMLg4ODNmzeLuil72WrhwoW9m9QQwhEjRrz33ns9mR+xsbETJ07saaeEkNzcXBdX59kV9XJI5BjylhB3RZxP32+RXhAXKqMRb1sZhs0m08WmruxRjICMgjJ8lwuFhO8P+/pqbZvFLtJkD+ERfu6ZMYEPB9E5vPTSSzt37kxPT/f29u4pRsNxS6FQBAQEZGVl7d69e8yYMXe1Fwjh+PHjN23a5OHhIZpmqFAoZsyYsXXr1l6Sw3x9fV966aURI0b0FEl1TBznStoc2gaCnkoo+O/W7MFUAw5FHo4PqJ6OV3S/h6rrZZiV09BxcZPBZ0f0y3fhp5CN9VHI5dhpBAro7Lai1i6i0wjKKOBGw7ta5BSRY6fqlvO3Wn/RaEXf9AJo/Gb6IL0n9UHGzBMSErZs2VJWVnbmzJni4mKtVqvT6ThXIFfT7uXl5e/vn5aWxtUi3NteGIaZPn36jh07vv7667KyMp1OxzAMRVFeXl4hISGzZs2aMmVKn4+I4cOHb9myZc+ePcXFxS0tLd1GC1e6P3LkSMeDmj17dvctwbKsr68vLwilVqszMzMdH2gIIdFZR0RExIwZM7gOShzFFQpFeHi46GNn5syZ3SqDZVk/Pz9uv51W21OxoZzRwo3DfcAYzowM6s85dMN4eUrs0apGLo+3WxgWgBgvFfc10c9rfkxITwVF3M3JbdX9FwBgZdm0QF/HbY5XN1fqLRACfqQJ4wQf1Zy44MEhOhw4z1pra2t9fT2Xi4sQ8vT0jIiIuKtJ3vfff79+/XpHCRFCf/rTn2bOnMl9bW5urq2t5YgeHh4uzA3sEyzLVlRUtLe3AwAoigoKCgoOHqRT/38B5VrD0uwLJe1GwvKd61Dmtisz6fGYwMEJYgxgFpSfn5+fn9+ASu/v799Tf9D+mm4IDRs2TGLkQIAh5FxdS6nOiKGg1zvGKT7yyeHqQQvVSa92kTBQ0Fvt316vpRAkwOmNFwAAKKdfGB3tLhs8+klEdzk0GMyz9/4EIN+xRwCgEPx0dtoof2/XPwpCSH59a0mnBQOG7/JAONFTNjbQezDzLh5iolsslkuXLmk0mtDQ0NTUVIRQe3s790qZqKgorqj0xx9/RAjFxcXFx8dDCHU6XU5ODkIoPDycc/h0dnbu3btXqVQuXLiQm/nl5eU1NTVhjCdNmsQ1pjt//nxTUxPXMvLChQtGo3HcuHFctURpaWl5efnUqVO5pOUbN27U1NRkZmZaLJaLFy8mJiZyEauGhobs7Gxvb+/Zs2crFIrc3Ny2tjauWkro+fGUUdOjAw5WtRBB8BLJ5IfKG+J9PBQUdvGrwwKwo7iSIgwRBIkghWZGBUZ5qgZTnof49YsdHR3btm07e/bsq6+++t577wEAqqurP/jgg6NHj3LNBex2+7vvvnv48OGVK1f+9NNPAID6+voNGzbk5uZyKZA3b96cO3fuuXPnDh48uHTpUq45465du/bs2fP9998/88wzXPLMF198sX79+hs3blit1jVr1nz00UdcLgMA4K9//euGDRu6+wPn5OS88cYb+/btMxqNO3bsqKurAwCcPHly0aJF+fn5ly9f5txQf/vb3w4dOnT+/HlG7H3hKppaGBtCMVYKQ16SLGKt+2/eajZZXP/qXG7WXtGbMWH4qb4UilTRj4arBzmP7iEmOudgnjdvXnp6Okcpbgacnp6enp7ORYvc3d3HjRs3YsQITltzm2RmZnIOxG+++SYpKWnnzp07d+5kWfby5csAAIxxdHR0ZmZmUFAQlz+DMR42bNju3btv3LhhNpvlcjk3hbp161ZxcfFzzz2XnZ3dLVJCQsKOHTtKSkq41wcAAD766KMlS5Zs27btj3/8Y3BwMMuyGOOxY8c+9thjPaX3JKq9ZkcHUTTFf4MQIGaMv79Z5/pXZ9MvN7DdJvISJMCOC/IZE+AzyPI83C/UpSjq6NGjAIDly5dzPLNarQ0NDd2lRhaL5ciRI3a7vTsrnWGYgoICrvGdwWDgTA4IIU3TnH7FGNfW1u7cuXPs2LFc4abVal28eHFOTs6ePXvmzZvH9c8AAOzduxcAUFZWVl5ezg1ICAkPD1+xYsX69eu7k8ysVqtjVSh3s7W0tNTW1vZ0XL5ussciAlSIUBjxkskRY/3merXWbHXl6/KLpu2KVo8hK0iGR/5K2fzYkMEXyaWJbrfbkQDdyeiEEKPRmJGRsWrVKq7+n2VZs9lsNptLSko4qwNj/OyzzxJCCgoKwO3IyOuvv871zl28eHF+fv7atWtXr17NMAzXT89kMiUkJKxcufL48ePc2+rMZnN8fHx0dHR+fv6MGTO6S5wOHz48f/785ORktVp9+vRpTmCj0bhgwYL4+Phbt25xq82cOfOzzz57991333vvvcbGRgihzWYzGAwmk6mXF9pMDFYn+HlQFHJKCMeQgsBGUfvKXVqp//fF6xRghQ3taAyS1J7pIf6DLxJ+5513XFlhBwQEpDlgzJgx48eP5wKEEEKVSpWWlhYQENC9PtexPyAgIDIykksAnjFjRkxMDIQwLCyMoihfX9/Ro0dztkdQUNCkSZMqKirCw8O5lloAALlcnpSUNGnSJIVC4eHhoVar3dzc4uPjhw8fPmbMmJSUFG9v7+TkZJ1Op1Qqly1bNnLkyIiICC8vr8jISJqmo6Ojo6OjU1NT/fz8kpOTlUrl6NGjo6Ojm5qaQkJCxo0bx/WuUalUbm5uiYmJPUXQVDTVbrYUt7QTQGD3q+m4ujOWKWrW/ntiFIauqKfyGlv3lNYQQPjv1YNARqFXRg+PHNxpaNeD1MVrDkQbuDn+t6fmJ92B8e5kEsdfnPwDLOvYfNQxuA2co9yOX4Fz+J23CW9HjgkzQiF7QrPJ/MKJvEajWXSC8nxizLJkVwx1vXy64BdNmyjZoj0VXz8+eUikcnUbXZjx1hPpees7riD8xekUOCeHOSZROWZTCZOrHD/0viOuJR1v/T6Dgv4Kt0mhATRGWFi6CcGemzUueL0KW9pr9EaMha3VIUWhF1Lih0qwh3sy+i+Pf4uPdJfhO23kHPrJsYDde7PK1QQ+VdeotZpFWg1QMEhJTw0LlIguQQQh7spHQwMoCmPMvfQcdn3AgIXkeG2DmWFcR9ryDn1hSxvNeUWx0yJTyH8/OmEIZZOI7upYljSMhsTxlRNdCwQak+lozS0XkZMl5GJza73JiAX+FpqmouXUxEC1RHQJPULt5jY7IoSW011q0iH4YofgYnNL522//tCi1WzJbdSIBLkQkCnk/z4idmjrzSWiPwR4LmFYVwsW5z4rGJAbWt21dtHICRYAAADuSURBVO2QS0gAKNN2VBjNmGWE6jySwok+3kPbOkci+kMAd5qeFayWucn4yhISG4YXmluG3FI32e2H6+ooRITqnJZT08ODfeRD3FVBStN9CIAhnBMZca5Rg2UYOte22Qmrt1nNdrsbHsp8RivDVun1SgSgc4o5S0iQnB7l54uGuhcafEgbyf5fA0NIlV7fZrE4xxEAy5IQpSpUpRzarnosITWdnU0mE0LQ8R28BIAAhSJcpZKILkGCZKNLkCARXYIEiegSJEhElyARXYIEiegSJEhElyBBIroECRLRJUiQiC5BgkR0CRIkokuQcAf/H+X4+ubg8LU0AAAAAElFTkSuQmCC" alt="OptimAL Performance logo" width="248" height="95"><div class="ev">Directions EMEA 2026<span>Business Central partners</span></div></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Faster Business Central solutions. Happier customers. A team that builds performance in by design.</h1>
+    <p class="lead">OptimAL is a Microsoft-coordinated, 10-week engagement that helps Business Central ISVs and resellers find the performance issues hidden in their AL code, fix what matters most first and embed agentic engineering in the way they work.</p>
+    <a class="btn" href="https://aka.ms/OptimAL">Join the next cohort</a>
+    <a class="btn ghost" href="#results">See partner results</a>
+    <div class="chips">
+      <span class="chip">10-week engagement</span>
+      <span class="chip">12–15 partners per cohort</span>
+      <span class="chip">Cohorts: Jan · Mar · May 2027</span>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Sections"><div class="wrap">
+  <a href="#who">Who it's for</a>
+  <a href="#gets">What you get</a>
+  <a href="#journey">The journey</a>
+  <a href="#results">Results</a>
+  <a href="#voices">Partner voices</a>
+  <a href="#join">Join</a>
+</div></nav>
+
+<section id="why">
+  <div class="wrap">
+    <p class="eyebrow">Why performance, why now</p>
+    <h2>Better performance isn't just an engineering outcome — it's a growth opportunity.</h2>
+    <p class="intro">Business Central solutions are increasingly complex: apps, PTEs, integrations, Copilot and agents. Customers expect speed — always — yet performance is often assumed and rarely measured or proven. The good news: the biggest problems aren't rocket science.</p>
+    <div class="grid g3">
+      <div class="card"><h3>Increase capacity</h3><p>Deliver more with the same team.</p></div>
+      <div class="card"><h3>Protect margins</h3><p>Reduce rework and support cost.</p></div>
+      <div class="card"><h3>Unlock growth</h3><p>Win complex deals and migrations with confidence.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="who" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Target audience</p>
+    <h2>Who OptimAL is for</h2>
+    <p class="intro">OptimAL is built for <strong>Microsoft Dynamics 365 Business Central partners</strong> who own and maintain AL code — and who want to move from reactive firefighting to proactive performance management. One program, two tracks: you choose the one that fits your business.</p>
+    <div class="grid g2">
+      <div class="card track">
+        <span class="tag">ISV track</span>
+        <h3>Independent Software Vendors</h3>
+        <p>You ship Business Central apps to many customers — often with years (or decades) of legacy code.</p>
+        <ul class="fit">
+          <li>Code scan of your solution</li>
+          <li>Use case review and recommendations</li>
+          <li>Learnings and measurable performance gains</li>
+        </ul>
+      </div>
+      <div class="card track var">
+        <span class="tag">VAR track</span>
+        <h3>Resellers &amp; implementation partners</h3>
+        <p>You build customer-specific extensions and integrations and need them to scale.</p>
+        <ul class="fit">
+          <li>Co-development of 2 use cases</li>
+          <li>Learning and code review</li>
+          <li>Measurement of the impact</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>You're a great fit if…</h3>
+      <ul class="fit">
+        <li>Your customers are feeling slow pages, long batch jobs or timeouts — or you want to get ahead of it.</li>
+        <li>You have a technical team (developers, architects, tech leads) who can commit time during the 10 weeks.</li>
+        <li>You have leadership backing to turn learnings into a prioritized backlog — and act on it.</li>
+        <li>You want to adopt agentic engineering in a safe, guided way, starting with performance.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="gets">
+  <div class="wrap">
+    <p class="eyebrow">What your company gets</p>
+    <h2>Inside OptimAL: assess, discuss, learn, improve, transform</h2>
+    <p class="intro">A focused 10-week engagement, coordinated by Microsoft in collaboration with Ciellos, Business Central MVPs and the Business Central product team.</p>
+    <div class="grid g3">
+      <div class="card"><span class="num">1</span><h3>Agentic engineering kickoff</h3><p>Learn how to use agentic engineering and BCQuality to build and optimize better code.</p></div>
+      <div class="card"><span class="num">2</span><h3>Codebase assessment &amp; backlog</h3><p>Scan your legacy code, identify the highest-impact opportunities and turn findings into an actionable, prioritized backlog.</p></div>
+      <div class="card"><span class="num">3</span><h3>Expert architecture guidance</h3><p>Review your solution with experienced architects and get hands-on advice on where and how to improve.</p></div>
+      <div class="card"><span class="num">4</span><h3>Best practices &amp; learning</h3><p>Learn proven engineering practices directly from Business Central SMEs and MVPs in practical "OptimAL Mondays" sessions.</p></div>
+      <div class="card"><span class="num">5</span><h3>Community &amp; peer learning</h3><p>Work alongside other partners, share experiences, compare approaches and learn from real-world solutions — including an in-person workshop at Microsoft in Copenhagen.</p></div>
+      <div class="card"><span class="num">6</span><h3>Structured execution</h3><p>Leadership commitment, focus, time and rhythm to turn learning into measurable improvements.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="journey" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">The journey</p>
+    <h2>From code optimization to agentic engineering</h2>
+    <div class="phases">
+      <div class="phase"><small>Step 1 · Optimize</small><h3>Fix today's challenges</h3><p>Identify and eliminate the most impactful anti-patterns in existing code. Faster code, measurable customer impact.</p></div>
+      <div class="phase"><small>Step 2 · Learn</small><h3>Better code by design</h3><p>Build better engineering practices with proven patterns — with BCQuality as the foundation.</p></div>
+      <div class="phase"><small>Step 3 · Transform</small><h3>Embed agentic engineering</h3><p>Continuously assess, refactor and improve solutions across the full lifecycle.</p></div>
+    </div>
+    <div class="card" style="margin-top:22px">
+      <h3>Typical anti-patterns OptimAL uncovers</h3>
+      <p style="margin-bottom:12px">Thousands of these hide across decades of legacy code:</p>
+      <ul class="patterns">
+        <li>IsEmpty vs. Count</li><li>Missing SetLoadFields</li><li>FindFirst in loops</li><li>CalcFields in loops</li><li>Summing in loops instead of CalcSums</li><li>Unbuffered inserts</li><li>Missing bulk operations</li><li>Nested loops</li><li>N+1 lookups</li><li>Poor index usage</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <p class="eyebrow">Proven results</p>
+    <h2>Real partner code. Real, measured gains.</h2>
+    <p class="intro">ISVs and resellers brought real partner code to OptimAL — not lab scenarios.</p>
+    <div class="case">
+      <div>
+        <h3>Turning around a legacy solution</h3>
+        <p>1 million lines of code, a decade without optimization, key product expertise gone — and customers feeling the impact. The OptimAL code scan produced a prioritized, actionable backlog; agentic engineering turned findings into fixes.</p>
+      </div>
+      <div class="big">+54%<small>performance after 1 hour of agentic engineering — measured in telemetry</small></div>
+    </div>
+    <div class="grid g3">
+      <div class="quote">"We reduced a critical batch job run time from 5+ hours to under 20 min."<cite>ISV</cite></div>
+      <div class="quote">"We improved a page load time by 93%."<cite>ISV</cite></div>
+      <div class="quote">"We cut execution time by 76% in some of our app functionality."<cite>ISV</cite></div>
+      <div class="quote">"We optimized slow running code and cut execution times by 40–65%."<cite>ISV</cite></div>
+      <div class="quote">"Our overall processing time improved by 30%."<cite>Reseller</cite></div>
+      <div class="quote">"The pick creation process in our warehouse app is now 2.4x faster."<cite>ISV</cite></div>
+      <div class="quote">"It enabled us to move from reactive to proactive performance management."<cite>ISV</cite></div>
+      <div class="quote">"We learned to trust AI-powered code optimization — combining intelligent agents and data insights to deliver real impact."<cite>ISV</cite></div>
+      <div class="quote">"OptimAL boosted our confidence, quality and reliability."<cite>Reseller</cite></div>
+    </div>
+  </div>
+</section>
+
+<section id="voices" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Previous participants</p>
+    <h2>What partners say about the experience</h2>
+    <p class="intro">Feedback from participants at the OptimAL Performance in-person workshop at Microsoft Development Center Copenhagen, September 2026.</p>
+    <div class="stats">
+      <div class="stat"><b>9.1/10</b><span>average likelihood to recommend OptimAL to another partner</span></div>
+      <div class="stat"><b>10 of 11</b><span>rated the workshop 4 or 5 out of 5</span></div>
+      <div class="stat"><b>21</b><span>partners whose performance learnings were shared</span></div>
+    </div>
+    <div class="grid g2">
+      <div class="quote voice">"I really liked the practical approach, the open exchange of knowledge, and the opportunity to discuss real-life examples … valuable insights that we can apply in our daily work."<cite>Developer, ISV</cite></div>
+      <div class="quote voice">"How small things can make a big difference."<cite>Software Developer, ISV</cite></div>
+      <div class="quote voice">"Meeting IRL. Even more suggestions of how to increase performance. Testimonials from the other partners, that prove the fact."<cite>System Developer, Reseller</cite></div>
+      <div class="quote voice">"I believe I learned the right tooling — now it's about teaching the rest of my organization and continuing our performance optimizations in all of our projects."<cite>Developer, Reseller</cite></div>
+      <div class="quote voice">"The friendly and pleasant atmosphere shared with the hosts and guests."<cite>Senior Developer, Partner</cite></div>
+      <div class="quote voice">Most valued: talks with Microsoft experts, input from the MVPs and direct contact with the Business Central product team.<cite>Development Lead · CEO/CTO · Team Lead</cite></div>
+    </div>
+    <h3 style="margin-top:30px">OptimAL alumni include</h3>
+    <div class="logos">
+      <span>Binary Stream</span><span>Bravx</span><span>Continia</span><span>COSMO CONSULT</span><span>Edaf</span><span>Elbek &amp; Vejrup</span><span>Fellowmind</span><span>K3</span><span>MAC IT-Solutions</span><span>NEVARIS</span><span>profor software</span><span>RSM</span><span>Sysco Software</span><span>TRIMIT</span><span>Yaveon</span><span>Zig</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="join">
+  <div class="wrap">
+    <h2>Ready to join OptimAL?</h2>
+    <p>Embrace agentic engineering with your team — starting with performance.</p>
+    <div class="facts">
+      <span>New cohorts: January, March &amp; May 2027</span>
+      <span>12–15 partners per cohort</span>
+      <span>Partner co-investment required</span>
+    </div>
+    <div class="steps">
+      <div><b>1. Identify the team</b><span>Who will own performance?</span></div>
+      <div><b>2. Get your telemetry</b><span>Know where you stand today.</span></div>
+      <div><b>3. Set up BCPT</b><span>Business Central Performance Toolkit.</span></div>
+      <div><b>4. Plan the budget</b><span>Time and co-investment.</span></div>
+    </div>
+    <a class="btn" href="https://aka.ms/OptimAL">Learn more &amp; talk to the team · aka.ms/OptimAL</a>
+  </div>
+</section>
+
+<footer><div class="wrap"><span class="foot-logo"><img src="data:image/png;base64,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" alt="OptimAL icon" width="60" height="50"></span><br>OptimAL is a Microsoft-coordinated initiative in collaboration with Ciellos · Directions EMEA 2026</div></footer>
+
+</body>
+</html>
